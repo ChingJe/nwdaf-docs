@@ -1,10 +1,14 @@
-# .agent documentation repository
+# .agent
 
-This nested Git repository preserves selected development documents under `.agent`.
+`.agent/` is a chat-support workspace used during conversations with coding agents.
 
-Tracked directories:
-- docs/
-- specs/
-- archive/
+Typical contents include:
 
-Everything else under `.agent/` is ignored by this nested repository.
+- spec excerpts
+- plans and working notes
+- archived discussion material
+- external reference snapshots
+
+The tracked long-term development rules for this project are kept in:
+
+- [`docs/development_policy.md`](./docs/development_policy.md)
