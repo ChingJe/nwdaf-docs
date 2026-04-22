@@ -134,6 +134,7 @@ test/retrain-monitoring-<topic>
 
 - `PredictionRecord.ScopeKey` 必須是 snapshot，不能在 maturity 後重新反查 live subscription
 - direct SUPI scope 必須視為一等公民，不能只優先照顧 group flow
+- 主專案中的 code comment、log、API-facing string 與一般文件不應出現 `checkpoint A/B/C` 等內部階段性字眼；若需要描述當前狀態，請改用中性、對外可理解的行為描述
 - 若出現設計更動，先在本文件記錄「決策變更」，再視需要同步主計畫
 
 ---
@@ -144,9 +145,9 @@ test/retrain-monitoring-<topic>
 
 | ID | Checkpoint | Work Item | Status | Owner/Branch | Commit | Last Update | Notes |
 |----|------------|-----------|--------|--------------|--------|-------------|-------|
-| A1 | A | Scope key materialization (`PredictionRecord.ScopeKey`) | todo | - | - | - | canonicalize subscription `TargetUe` |
-| A2 | A | Metric candidates (`MAE/MSE/WAPE/NRMSE`) | todo | - | - | - | observation only |
-| A3 | A | `AccuracyReport` contract | todo | - | - | - | AnLF → MTLF report interface |
+| A1 | A | Scope key materialization (`PredictionRecord.ScopeKey`) | review | feat/retrain-monitoring-observability | - | 2026-04-22 | canonicalize subscription `TargetUe`; unresolved scope keeps legacy prediction path |
+| A2 | A | Metric candidates (`MAE/MSE/WAPE/NRMSE`) | review | feat/retrain-monitoring-observability | - | 2026-04-22 | multi-metric computation added for observability; legacy decision still uses model-level sMAPE |
+| A3 | A | `AccuracyReport` contract | review | feat/retrain-monitoring-observability | - | 2026-04-22 | internal report callback added alongside legacy deviation callback |
 | A4 | A | CSV output (`metrics.csv`, `pairs.csv`) | todo | - | - | - | do not alter legacy decision |
 | A5 | A | Checkpoint A compatibility tests | todo | - | - | - | legacy sMAPE trigger must stay unchanged |
 | B1 | B | MTLF per-scope state store | todo | - | - | - | recent buffer + breach state |
