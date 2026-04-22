@@ -40,7 +40,7 @@ Checkpoint A must remain compatible with the current production logic:
 
 - MTLF per-scope baseline or ring buffer
 - primary-metric decision cutover
-- two-layer gate
+- degradation dual-gate / new retrain policy flow
 - cold-start policy on the MTLF side
 - config cleanup of legacy trigger fields
 

@@ -29,15 +29,15 @@
 - **Monitoring scope 以 subscription / Target UE 語意定義**：scope key 來自 analytics consumer 的 `TargetUe`，兼容 group 與 direct SUPI；不是由 `corrId` 或事後 traffic grouping 反推
 - **AnLF / MTLF 角色切開**：AnLF 負責 accuracy monitoring 與 metric 計算；MTLF 負責 baseline、degradation policy、retrain 決策與執行
 - **Drift 建立在 recent baseline**：每條 scope 保留 recent metric ring buffer，以 mean / std / z-score 當 drift statistic
-- **Retrain 需通過兩層 gate**：
-  - 第一層（absolute）：error 本身夠高
-  - 第二層（relative）：相對於 recent baseline 明顯偏離
-  - 兩層 AND 才算該 scope 本輪觸發；再連續 N 輪觸發才真正 retrain
+- **Retrain policy flow 分成三段**：
+  - eligibility guard：先確認 `baselineReady`，並在 chronic path 上額外確認 `chronicEligible`
+  - path-level gates：degradation path 採 `fixedFloor + z-score` 的 dual-gate；chronic poor-quality path 則看 sustained quality signal 是否長期過差
+  - decision window：單輪 hit 不直接 retrain，而是由 `M-of-N` window 決定是否真正觸發
 - **可觀測 / 可除錯**：每輪把統計值與 raw pred/actual 寫入 CSV，方便離線畫圖、選 metric、調 threshold
 
 ### 1.3 本文件範圍
 
-- In-scope：scope-level 分桶、AnLF→MTLF accuracy report、recent baseline、兩層 gate、cold start 保護、觀測 CSV（暫時性）、config 擴充
+- In-scope：scope-level 分桶、AnLF→MTLF accuracy report、recent baseline、degradation dual-gate、chronic poor-quality path、decision window、cold start 保護、觀測 CSV（暫時性）、config 擴充
 - Out-of-scope：訂閱 filter / AoI 細粒度拆分為額外 scope key（保留至未來版本）
 - CSV 是**過渡期觀察工具**：待 threshold / primary metric 調穩後可移除；不規劃升級到 Prometheus / Mongo
 
@@ -89,12 +89,12 @@ ConsumeMaturePredictions → lookupGroundTruth
                       (ring buffer + mean/std + breach)
                                   │
                                   ▼
-                    two-layer gate on primary per scope
+              degradation dual-gate / chronic gate per scope
                                   │
                     └─────────── OR ─────────────────────┘
                                   │
                                   ▼
-                consecutive N rounds any-scope triggered
+            M-of-N decision window satisfied for any scope/path
                                   │
                                   ▼
                           startRetrainWorkflow
@@ -110,7 +110,7 @@ ConsumeMaturePredictions → lookupGroundTruth
 | `AccuracyReport`（AnLF → MTLF） | `internal/anlf` / `internal/mtlf` | 新 |
 | `PathState` / `ScopeState`（ring buffer + stats） | `internal/mtlf` | 新 |
 | `MonitorStateStore` | `internal/mtlf` | 新 |
-| 兩層 gate decision | `internal/mtlf/trigger.go` | 改寫 |
+| Retrain policy flow（eligibility + path gates + window） | `internal/mtlf/trigger.go` | 改寫 |
 | Cold start 保護（minBufferSamples、minStd） | `internal/mtlf/trigger.go` | 新邏輯 |
 | CSV dumper（metrics.csv + pairs.csv） | `internal/anlf` 或獨立 pkg | 新 |
 | Config 欄位 | `pkg/factory/config.go` | 新增/移除 |
@@ -282,14 +282,14 @@ ConsumeMaturePredictions → lookupGroundTruth
 
 ---
 
-### 4.5 兩層 retrain decision（degradation path）
+### 4.5 Degradation dual-gate（degradation path）
 
 **目的**：只有「error 夠高」且「相對 baseline 明顯偏離」同時成立時才視為某個 scope 觸發，再加 breach policy dampen 偶發波動。
 
 **為什麼這樣設計**
 - 只看絕對門檻：對不同 scope 流量差異無能為力
 - 只看 z-score：當 baseline 很低且很穩時，小幅變差也可能被放大成高 z-score
-- 兩層 AND + breach policy：能同時要求「業務上夠大」與「統計上夠異常」，也能擋掉偶發 spike
+- dual-gate + decision window：能同時要求「業務上夠大」與「統計上夠異常」，也能擋掉偶發 spike
 
 **判斷邏輯**
 ```
@@ -308,7 +308,7 @@ if any scope.breach >= consecutiveBreaches:
 ```
 
 **決策結論**
-- 兩層保留、AND 觸發
+- degradation path 保留 dual-gate、以 AND 觸發單輪 hit
 - 第一層只檢查「當前 error 本身是否夠大」；第二層只檢查「相對 baseline 是否明顯異常」
 - Primary metric：**MAE**（測試期間可能調整）
 - `fixedFloor` 預設值先暫定（見 §4.8），測試階段用 CSV 觀察後再回填
@@ -326,17 +326,22 @@ if any scope.breach >= consecutiveBreaches:
 
 **任務**
 - 移除 `TriggerStrategy / EmaAlpha / checkEMATrigger`
-- 改寫 `HandleDeviationReport` 為 report-based per-scope two-layer gate
+- 改寫 `HandleDeviationReport` 為 report-based per-scope degradation dual-gate
 - Model-level OR + consecutive counter
 - 單元測試：
   - 低 error + 高 z：不觸發（absGate 擋）
   - 高 error + 低 z：不觸發（zGate 擋）
-  - 兩層皆過 + 連續 3 輪：觸發
+  - degradation dual-gate 皆過 + 連續 3 輪：觸發
   - 中間一輪低於 threshold：breach 歸零
 
 ### 4.5.2 Chronic poor-quality path
 
 **目的**：補足目前 degradation path 抓不到的情況，也就是模型不是「後來變差」，而是「一開始就差，而且長時間持續差」。
+
+**命名邏輯**
+- `degradation` 強調的是「相對於近期 baseline 變差」
+- `chronic` 強調的是「即使沒有明顯再變差，整體品質仍長時間持續不好」
+- 因此本文件使用 `chronic poor-quality path` 來表示一條平行於 degradation path 的 sustained poor-quality decision path
 
 **為什麼需要**
 - 現行 `fixedFloor + z-score` 比較像 relative-anomaly detector

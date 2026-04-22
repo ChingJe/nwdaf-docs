@@ -341,6 +341,9 @@ shared `M-of-N` decision window.
 
 #### Chronic Path Principles
 
+- the name `chronic poor-quality path` is intentional: it targets scopes whose
+  quality remains poor over time, not scopes that merely show a new degradation
+  spike relative to baseline
 - the chronic path must use a sustained-quality signal, not a relative-anomaly signal
 - `std > mean` or other high-variance indicators are not sufficient trigger
   conditions by themselves
@@ -581,7 +584,7 @@ Recommended order inside Checkpoint B:
 1. add the MTLF state-store types and unit tests
 2. switch processor wiring to the report-based callback
 3. rewrite `internal/mtlf/trigger.go` around per-scope degradation path
-4. add chronic path and `M-of-N` decision-window handling
+4. add `chronic poor-quality path` and `M-of-N` decision-window handling
 5. migrate config and remove legacy trigger fields/helpers
 6. add retrain lifecycle and race-focused tests
 
