@@ -149,7 +149,7 @@ test/retrain-monitoring-<topic>
 | A2 | A | Metric candidates (`MAE/MSE/WAPE/NRMSE`) | review | feat/retrain-monitoring-observability | - | 2026-04-22 | multi-metric computation added for observability; legacy decision still uses model-level sMAPE |
 | A3 | A | `AccuracyReport` contract | review | feat/retrain-monitoring-observability | - | 2026-04-22 | internal report callback added alongside legacy deviation callback |
 | A4 | A | CSV output (`metrics.csv`, `pairs.csv`) | review | feat/retrain-monitoring-observability | - | 2026-04-22 | process-level CSV observability with config gate and per-round flush; legacy decision unchanged |
-| A5 | A | Checkpoint A compatibility tests | todo | - | - | - | legacy sMAPE trigger must stay unchanged |
+| A5 | A | Checkpoint A compatibility tests | review | feat/retrain-monitoring-observability | - | 2026-04-22 | legacy model-level sMAPE path verified against scope/report/CSV additions; `go test ./internal/...`, `make build`, `make lint` |
 | B1 | B | MTLF per-scope state store | todo | - | - | - | recent buffer + breach state |
 | B2 | B | Two-layer gate | todo | - | - | - | primary metric in decision starts here |
 | B3 | B | Cold start protection | todo | - | - | - | `minBufferSamples`, `minStd`, both-zero policy |
