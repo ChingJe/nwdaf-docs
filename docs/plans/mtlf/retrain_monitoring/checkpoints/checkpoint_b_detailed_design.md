@@ -11,8 +11,10 @@ This phase delivers:
 
 - MTLF-owned per-scope monitoring state
 - report-based retrain decision input
-- two-layer gate on a primary metric
+- degradation-path gate on a primary metric
+- chronic poor-quality path for models that start bad and stay bad
 - per-scope cold-start protection
+- configurable `M-of-N` breach policy
 - config migration away from legacy EMA / deviation-threshold logic
 - retrain lifecycle tests for the new decision path
 
@@ -31,10 +33,11 @@ phase is expected to replace the current legacy trigger path.
 ### In Scope
 
 - B1 MTLF per-scope state store and recent buffer
-- B2 report-based two-layer gate and retrain trigger cutover
+- B2 report-based degradation path and retrain trigger cutover
 - B3 per-scope cold-start protection and both-zero handling
-- B4 config migration and legacy trigger cleanup
-- B5 retrain lifecycle, hot-swap, and concurrency tests
+- B4 chronic poor-quality path and breach policy design
+- B5 config migration and legacy trigger cleanup
+- B6 retrain lifecycle, hot-swap, and concurrency tests
 
 ### Out of Scope
 
@@ -53,7 +56,7 @@ phase is expected to replace the current legacy trigger path.
    reconstruct scope or metric data from live subscription state.
 4. The model-level in-flight retrain guard remains in `ModelAccuracyStore`.
 5. A single degraded scope is sufficient to trigger model retraining once its
-   own consecutive-breach counter reaches the configured threshold.
+   own decision window reaches the configured threshold.
 
 ## 5. Current Baseline
 
@@ -173,7 +176,7 @@ IncrementBreach() int
 - `internal/mtlf/trigger_test.go`
 - possibly a new dedicated state-store test file under `internal/mtlf/`
 
-### B2. Report-Based Two-Layer Gate Cutover
+### B2. Report-Based Degradation Path Cutover
 
 #### Objective
 
@@ -229,18 +232,20 @@ else:
     relGate = skipped
 ```
 
-5. trigger rule:
+5. degradation trigger rule:
 
 - cold-start phase: no trigger decision; this round only contributes to baseline history
-- baseline-ready phase: `scopeTriggered = absGate AND relGate`
+- baseline-ready phase: `scopeTriggeredByDegradation = absGate AND relGate`
 
-6. breach handling:
+6. decision-window handling:
 
-- if `baselineReady == false`, reset this scope's breach counter and do not evaluate retrain
-- else if `scopeTriggered`, increment this scope's breach counter
-- otherwise, reset this scope's breach counter
-- if any scope reaches `consecutiveBreaches`, set `store.SetRetraining(true)`,
-  reset all breach counters for that model, and start retrain workflow
+- if `baselineReady == false`, do not record a degradation hit for this round
+- else record one degradation hit/miss for this scope
+- the degradation path is satisfied when the scope's decision window reaches the
+  configured `requiredHitsInWindow` inside the latest `decisionWindowSize`
+  rounds
+- if any scope satisfies the decision window, set `store.SetRetraining(true)`,
+  reset all scope decision windows for that model, and start retrain workflow
 
 #### Logging Contract
 
@@ -248,7 +253,8 @@ Checkpoint B logs should expose policy reasoning explicitly:
 
 ```text
 scope=<scope> metric=<metric> current=<...> mean=<...> std=<...> zscore=<...>
-absGate=<T/F> relGate=<T/F|skipped> baselineReady=<T/F> breach=<n>/<required>
+absGate=<T/F> relGate=<T/F|skipped> baselineReady=<T/F>
+degradationHits=<n>/<window> chronicHits=<n>/<window> triggerReason=<...>
 ```
 
 #### Missing-Metric Handling
@@ -307,15 +313,117 @@ For each metric in `report.Metrics`:
   retrain trigger state
 - no extra `BaselineEligible` contract field is introduced in Checkpoint B
 
-This keeps data handling simple and lets `fixedFloor + z-score +
-consecutiveBreaches` own the retrain decision.
+This keeps data handling simple and lets the retrain decision paths own trigger
+semantics without inventing a second eligibility channel.
 
 #### Files Expected To Change
 
 - `internal/mtlf/trigger.go`
 - `internal/mtlf/trigger_test.go`
 
-### B4. Config Migration And Legacy Cleanup
+### B4. Chronic Poor-Quality Path And Breach Policy Design
+
+#### Objective
+
+Add a second retrain path that captures scopes whose model quality is bad from
+the beginning and remains bad, even when no strong relative anomaly is present.
+At the same time, generalize the current strict consecutive-breach logic into a
+shared `M-of-N` decision window.
+
+#### Why This Is Needed
+
+- the degradation path is intentionally a relative-anomaly detector
+- it is effective when the baseline is mostly healthy and then worsens
+- it is not sufficient when the baseline itself is already poor and highly
+  variable
+- in those cases, `fixedFloor` may pass but `z-score` may stay low because the
+  recent baseline is already noisy
+
+#### Chronic Path Principles
+
+- the chronic path must use a sustained-quality signal, not a relative-anomaly signal
+- `std > mean` or other high-variance indicators are not sufficient trigger
+  conditions by themselves
+- the first implementation should prefer normalized quality metrics over raw
+  `MAE`
+- the first implementation should not switch metrics by traffic regime
+- traffic-regime handling should instead use an eligibility guard such as
+  `minTrafficScale`
+
+#### Chronic Metric Candidates
+
+- `WAPE`
+- `NRMSE`
+- `MAE`
+
+`MAE` remains available only as an explicit opt-in because it is sensitive to
+traffic scale.
+
+#### Aggregation Candidates
+
+Checkpoint B should expose only:
+
+- `mean`
+- `percentile`
+
+`median` is not a separate core mode; users should express it as
+`percentile=50`.
+
+#### Candidate Rule
+
+```text
+chronicValue = aggregate(recent chronicMetric history)
+chronicEligible =
+    baselineReady
+    AND trafficScaleIsMeaningful
+    AND notInWarmup
+    AND notRetrainingInFlight
+
+scopeTriggeredByChronic =
+    chronicEligible
+    AND chronicValue > chronicThreshold
+```
+
+#### Breach Policy Generalization
+
+Instead of a strict reset-on-miss counter, Checkpoint B should generalize the
+trigger dampening rule to:
+
+```text
+within the latest M rounds:
+    if hits >= N:
+        decision window satisfied
+```
+
+Constraints:
+
+- `1 <= N <= M`
+- `M = N` degenerates to the current strict consecutive behavior
+- degradation path and chronic path may share one window config in the first
+  implementation, even if internal bookkeeping remains per-path
+
+#### Config Surface
+
+Checkpoint B should add config for:
+
+- `decisionWindowSize`
+- `requiredHitsInWindow`
+- `chronicPolicy.enabled`
+- `chronicPolicy.metric`
+- `chronicPolicy.aggregator`
+- `chronicPolicy.percentile`
+- `chronicPolicy.threshold`
+- `chronicPolicy.minTrafficScale`
+
+#### Implementation Status
+
+This design is agreed but not yet implemented. Current code still uses:
+
+- degradation path only
+- strict consecutive breach behavior
+- no chronic policy config
+
+### B5. Config Migration And Legacy Cleanup
 
 #### Objective
 
@@ -330,7 +438,8 @@ and remove obsolete trigger state from the project.
 - `checkInterval`
 - `minSamples`
 - `warmupDuration`
-- `consecutiveBreaches`
+- `consecutiveBreaches` (current implemented form; may be superseded by
+  `decisionWindowSize / requiredHitsInWindow` when the new breach policy lands)
 - `csvDumpDir`
 - `csvDumpEnabled`
 
@@ -361,7 +470,9 @@ The detailed plan should start from the parent-plan defaults:
 - `minStd = 0.01`
 - `zScoreThreshold = 3.0`
 - `scopeStateTTL = 600`
-- `consecutiveBreaches = 3`
+- `consecutiveBreaches = 3` for the currently implemented path
+- `decisionWindowSize = 3`
+- `requiredHitsInWindow = 3`
 
 `fixedFloor` is intentionally provisional and should be implemented with a
 helper default, then tuned later from observed MAE scale.
@@ -398,7 +509,7 @@ dead fields after the cutover.
 - `internal/mtlf/trigger.go`
 - `internal/mtlf/trigger_test.go`
 
-### B5. Retrain Lifecycle And Compatibility Test Design
+### B6. Retrain Lifecycle And Compatibility Test Design
 
 #### Goal
 
@@ -415,8 +526,8 @@ compatible with the existing retrain / hot-swap lifecycle.
 - report-based gate
   - low error + high z-score does not trigger
   - high error + low z-score does not trigger
-  - both gates pass for N consecutive rounds triggers retrain
-  - one non-trigger round resets only that scope's breach counter
+  - both gates pass until the `M-of-N` window is satisfied triggers retrain
+  - window hit/miss bookkeeping behaves correctly as old rounds expire
   - one triggering scope does not contaminate a second scope
 - cold start
   - before `minBufferSamples`, reports build baseline only and do not trigger
@@ -425,6 +536,12 @@ compatible with the existing retrain / hot-swap lifecycle.
   - `minStd` prevents z-score explosion when variance is near zero
   - both-zero rounds are retained in recent history and do not require a
     special eligibility flag
+- chronic path
+  - `WAPE / NRMSE / MAE` chronic metric selection is parsed correctly
+  - `mean / percentile` aggregation works; `percentile=50` behaves as median
+  - `minTrafficScale` suppresses chronic decisions in low-volume regions
+  - chronic path and degradation path can trigger independently but dispatch
+    retrain only once
 - startup-only warmup
   - `warmupDuration` is consumed only on the first monitor start after NWDAF
     boot
@@ -460,9 +577,10 @@ Recommended order inside Checkpoint B:
 
 1. add the MTLF state-store types and unit tests
 2. switch processor wiring to the report-based callback
-3. rewrite `internal/mtlf/trigger.go` around per-scope two-layer policy
-4. migrate config and remove legacy trigger fields/helpers
-5. add retrain lifecycle and race-focused tests
+3. rewrite `internal/mtlf/trigger.go` around per-scope degradation path
+4. add chronic path and `M-of-N` decision-window handling
+5. migrate config and remove legacy trigger fields/helpers
+6. add retrain lifecycle and race-focused tests
 
 ## 8. Expected Branch
 
