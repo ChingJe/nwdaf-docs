@@ -221,6 +221,7 @@ For each report:
 
 ```text
 absGate = current > fixedFloor
+baselineReady = existingHistoryCount >= minBufferSamples
 if enough baseline:
     zscore = (current - mean) / max(std, minStd)
     relGate = zscore > zScoreThreshold
@@ -230,12 +231,13 @@ else:
 
 5. trigger rule:
 
-- cold-start phase: `scopeTriggered = absGate`
+- cold-start phase: no trigger decision; this round only contributes to baseline history
 - baseline-ready phase: `scopeTriggered = absGate AND relGate`
 
 6. breach handling:
 
-- if `scopeTriggered`, increment this scope's breach counter
+- if `baselineReady == false`, reset this scope's breach counter and do not evaluate retrain
+- else if `scopeTriggered`, increment this scope's breach counter
 - otherwise, reset this scope's breach counter
 - if any scope reaches `consecutiveBreaches`, set `store.SetRetraining(true)`,
   reset all breach counters for that model, and start retrain workflow
@@ -268,15 +270,19 @@ If the configured primary metric is absent from a report:
 
 #### Objective
 
-Prevent unstable early buffers from producing false positives while keeping the
-first real degradation visible.
+Prevent unstable early buffers from producing false positives while keeping
+recent history truthful and available once baseline becomes usable.
 
 #### Cold-Start Rules
 
 - `minBufferSamples` controls when z-score evaluation becomes active
-- before that threshold, decision uses only `absGate`
+- `baselineReady` is computed from the existing recent history before the
+  current round is inserted
+- before that threshold, the report is recorded into recent history but retrain
+  decision is skipped entirely
 - `minStd` is applied as the denominator floor for z-score computation
 - monitor rounds with no ground-truth match remain fully excluded upstream
+- scope breach counters must not accumulate during this baseline-building phase
 
 #### Both-Zero Handling
 
@@ -295,8 +301,10 @@ This means:
 
 For each metric in `report.Metrics`:
 
-- always evaluate the current report for logging and immediate gates
+- always evaluate the current report for logging
 - always record the metric into the ring buffer when a scope report exists
+- when `baselineReady == false`, do not let this round affect breach counting or
+  retrain trigger state
 - no extra `BaselineEligible` contract field is introduced in Checkpoint B
 
 This keeps data handling simple and lets `fixedFloor + z-score +
@@ -358,6 +366,10 @@ The detailed plan should start from the parent-plan defaults:
 `fixedFloor` is intentionally provisional and should be implemented with a
 helper default, then tuned later from observed MAE scale.
 
+`warmupDuration` remains in config, but its semantics must be clarified in the
+implementation and docs: it is a startup-only AnLF monitor warmup, not a
+post-hot-swap grace period.
+
 #### Project Cleanup
 
 Checkpoint B should remove legacy trigger ownership from `ModelAccuracyStore`:
@@ -407,11 +419,17 @@ compatible with the existing retrain / hot-swap lifecycle.
   - one non-trigger round resets only that scope's breach counter
   - one triggering scope does not contaminate a second scope
 - cold start
-  - before `minBufferSamples`, only `absGate` is used
+  - before `minBufferSamples`, reports build baseline only and do not trigger
+    retrain or breach accumulation
   - after `minBufferSamples`, `relGate` is enforced
   - `minStd` prevents z-score explosion when variance is near zero
   - both-zero rounds are retained in recent history and do not require a
     special eligibility flag
+- startup-only warmup
+  - `warmupDuration` is consumed only on the first monitor start after NWDAF
+    boot
+  - hot-swap restarts must not re-enter warmup or discard fresh post-swap
+    predictions under the name of warmup
 - processor wiring
   - `SetOnAccuracyReports` is the active MTLF input
   - legacy deviation callback is no longer part of decision tests
@@ -433,6 +451,7 @@ The first runtime validation for Checkpoint B should verify:
 - retrain logs show per-scope gate reasoning
 - one degraded scope can trigger retrain even if another scope is stable
 - post-swap monitoring starts from fresh MTLF state for the new model URL
+- post-swap monitor restart does not perform startup warmup again
 - the example config and runtime behavior match the documented defaults
 
 ## 7. Implementation Order

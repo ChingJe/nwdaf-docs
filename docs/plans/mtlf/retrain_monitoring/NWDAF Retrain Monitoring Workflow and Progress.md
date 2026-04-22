@@ -154,9 +154,9 @@ test/retrain-monitoring-<topic>
 | A5 | A | Checkpoint A compatibility tests | done | master | 5da65cb | 2026-04-22 | legacy model-level sMAPE path verified against scope/report/CSV additions; `go test ./internal/...`, `make build`, `make lint` |
 | B1 | B | MTLF per-scope state store | review | feat/retrain-monitoring-degradation-policy | - | 2026-04-22 | `MonitorStateStore` / `ScopeState` / ring buffer / TTL GC added under `internal/mtlf` |
 | B2 | B | Two-layer gate | review | feat/retrain-monitoring-degradation-policy | - | 2026-04-22 | processor cut over to `AccuracyReport`; MTLF now uses `fixedFloor + z-score + consecutiveBreaches` on per-scope primary metric |
-| B3 | B | Cold start protection | review | feat/retrain-monitoring-degradation-policy | - | 2026-04-22 | `minBufferSamples` and `minStd` enforced; both-zero rounds retained in recent buffer and handled by policy gate |
+| B3 | B | Cold start protection | review | feat/retrain-monitoring-degradation-policy | - | 2026-04-22 | `minBufferSamples` 改為 baseline 建立期 gate；baseline 未就緒前只累積 recent history、不做 retrain decision；both-zero rounds retained in recent buffer |
 | B4 | B | Config migration | review | feat/retrain-monitoring-degradation-policy | - | 2026-04-22 | legacy `deviationThreshold / triggerStrategy / emaAlpha` removed; new policy config and example YAML updated |
-| B5 | B | Retrain lifecycle tests | review | feat/retrain-monitoring-degradation-policy | - | 2026-04-22 | multi-scope trigger tests, hot-swap cleanup, `go test -race ./internal/mtlf/...`, `go test ./internal/...`, `make build`, `make lint` |
+| B5 | B | Retrain lifecycle tests | review | feat/retrain-monitoring-degradation-policy | - | 2026-04-22 | multi-scope trigger tests, hot-swap cleanup, and the final design correction to make `warmupDuration` startup-only rather than post-swap |
 | C1 | C | Threshold tuning | todo | - | - | - | based on observed CSV |
 | C2 | C | Cleanup and code removal | todo | - | - | - | remove temporary observation code when stable |
 | C3 | C | Final documentation sync | todo | - | - | - | sync outcomes back to main docs if needed |
@@ -175,6 +175,8 @@ test/retrain-monitoring-<topic>
 | 2026-04-22 | Two-layer gate 簡化為 `fixedFloor + z-score`；不再使用 `mean + k*std` 作為第一層 | 第一層只處理「error 本身太小」，第二層只處理 relative anomaly，`std` 過小由 `minStd` 處理 |
 | 2026-04-22 | Checkpoint B 的 both-zero round 視為真實觀測，保留在 recent buffer / baseline 中 | 不另外排除 both-zero；retrain 抑制交由 `fixedFloor + z-score + consecutiveBreaches` 處理 |
 | 2026-04-22 | Checkpoint B 不新增 `BaselineEligible` 類型欄位 | `AccuracyReport` 維持較小契約，MTLF 直接以 scope report 寫入 recent buffer |
+| 2026-04-22 | `baselineReady=false` 改為純 baseline 建立期，不再允許 absGate-only trigger，也不累 breach | cold-start 期間仍保留真實樣本進 recent buffer，但 retrain decision 必須等 baseline ready 後才開始 |
+| 2026-04-22 | `warmupDuration` 改為 startup-only monitor warmup，不再於 hot-swap 後重跑 | post-swap 直接依 fresh model state 重新監測；若未來需要 swap 後 grace，必須另立設計，不重用 startup warmup |
 
 ---
 

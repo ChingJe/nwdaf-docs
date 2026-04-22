@@ -54,7 +54,7 @@
 | Cold start | `AccuracyMonitorConfig.WarmupDuration` | 僅 model-level 一次性 warmup；無 per-scope 保護 |
 | Config | `pkg/factory/config.go: AccuracyMonitorConfig` | `DeviationThreshold / MinSamples / WarmupDuration / EmaAlpha / ConsecutiveBreaches` |
 | Scope 候選資料 | `PredictionRecord.NwdafSubId`、`NwdafSubResource.OriginalGroupId` | 已有 subscription 與 group 關聯資訊，但尚未 materialize 成 immutable scope key |
-| Retrain 重入保護 | `store.IsRetraining` | 在 flight 時 skip；hot-swap 完會走新 monitor 的 WarmupDuration（見 §6.4） |
+| Retrain 重入保護 | `store.IsRetraining` | 在 flight 時 skip；hot-swap 後監測直接以 fresh model state 接續，不再重跑 warmup（見 §6.4） |
 
 ---
 
@@ -318,7 +318,7 @@ if any scope.breach >= consecutiveBreaches:
 - 沿用 model-level retrain in-flight guard，不變
 
 **注意事項**
-- Cold start：buffer 填充未達 `minBufferSamples` 時只走 `absGate`，跳過 `relGate`（見 §4.6）
+- Cold start：buffer 填充未達 `minBufferSamples` 時只建立 baseline，不做 retrain decision，也不累 breach（見 §4.6）
 - `mean` 不做額外保護；若 baseline 很低導致 relative 判斷過敏，優先透過 `fixedFloor` 擋下
 - 多 scope 之中只要任一觸發就 retrain，不做「多 scope 同時觸發才算」的 AND
 - 觸發之後立刻 `store.SetRetraining(true)` 並呼叫 `startRetrainWorkflow`；同 model 下所有 scope 的 breach 同時歸零
@@ -351,21 +351,22 @@ if any scope.breach >= consecutiveBreaches:
 
 | 機制 | 作用 |
 |------|------|
-| `minBufferSamples`（預設 8） | recent buffer 樣本數未達門檻前，decision 只走 `absGate`，跳過 `relGate` |
+| `minBufferSamples`（預設 8） | recent buffer 樣本數未達門檻前，只建立 baseline；不做 retrain decision，也不累 breach |
 | `minStd`（預設 0.01） | 算 z-score 時以 `max(std, minStd)` 防止 std 太小把小波動放大成高 z-score |
 | both-zero 保留 | `actual=0 AND pred=0` 的 sample 視為真實觀測，保留在 recent buffer 與 baseline 中；是否 retrain 交由 `fixedFloor + z-score + consecutiveBreaches` 決定 |
 | no-ground-truth 跳過 | `lookupGroundTruth` 返回 nil 時完全跳過（現行為），不入 buffer |
 
 **注意事項**
 - `minBufferSamples` 與 config `minSamples`（每輪最少 matched pairs 才評估）是不同層概念，不要混淆
-- Post hot-swap 靠現有 `WarmupDuration` 處理 model 層級冷啟動（見 §6.4），scope-level 仍靠上述機制
-- Cold start 期間的 CSV 資料照常寫（方便觀察 warmup 行為）
+- `baselineReady` 的判斷應以「寫入本輪前的既有 recent history」為準；本輪資料仍照常寫入 buffer
+- Post hot-swap 不再額外依賴 `WarmupDuration`；scope-level baseline 與新的 model state 直接從 swap 後重新建立（見 §6.4）
+- Cold start 期間的 CSV 資料照常寫（方便觀察 baseline 建立過程）
 
 **任務**
-- `minBufferSamples` gate 加進 §4.5 decision 邏輯
+- `minBufferSamples` gate 加進 §4.5 decision 邏輯，明確規定 baseline 未就緒前不做 trigger / breach decision
 - `Std` 計算內建 `max(std, minStd)`（或在 `ZScore` 內套）
 - `both-zero` 樣本照常傳入 `RecordMetric`
-- 單元測試：buffer=0~7 時只判 absGate；buffer=8 起啟用 z-score
+- 單元測試：buffer=0~7 時只建 baseline、不觸發；buffer=8 起啟用 z-score
 
 ---
 
@@ -461,6 +462,7 @@ predUl, actualUl, predDl, actualDl
 | `csvDumpEnabled` | `bool` | 是否寫 CSV（過渡期功能，穩定後可移除） | `true` |
 
 **注意事項**
+- `warmupDuration` 的語意需明確限定為「NWDAF 啟動後第一次 accuracy monitor 啟動時的 startup warmup」，不是每次 hot-swap 後都重跑
 - `fixedFloor` 依 primary metric 單位（MAE: bytes）先給一個暫定值不卡住實作；測試期間看 CSV 再調
 - Checkpoint A 保留舊 config 的 `deviationThreshold / emaAlpha / triggerStrategy`；Checkpoint B 才在 `config/nwdafcfg.yaml` 同步清掉
 
@@ -485,7 +487,8 @@ predUl, actualUl, predDl, actualDl
 | Checkpoint A 相容性 | 新增 scope / metrics / CSV / report 後，既有 sMAPE threshold decision 不回歸 |
 | Baseline | Ring buffer 溢位後舊值被捨棄、mean/std 正確 |
 | No ground truth / both-zero | no-ground-truth 不入 baseline；both-zero 進 recent buffer，且 report / CSV 行為符合設計 |
-| Cold start | Buffer 0~7 只走 absGate；8 起啟用 z；std=0 時不爆 |
+| Cold start | 既有 history 未達 `minBufferSamples` 時只建 baseline、不觸發；達門檻後後續 round 才啟用 z；std=0 時不爆 |
+| Startup warmup | `warmupDuration` 只在第一次 monitor start 生效；hot-swap 後不再重跑 warmup |
 | Two-layer gate | `fixedFloor` 能擋下「error 很小但 z 很高」；`minStd` 能擋下「std 太小造成 z 爆高」；連續 N 輪邏輯正確 |
 | Retrain lifecycle | in-flight retrain 時新 report 被忽略；failure 會清 retrain guard；觸發後 breach 歸零；post-swap 舊 model state 清理 |
 | Concurrency | `RecordMetric` / `HandleDeviationReport` / GC 並發不 race |
@@ -571,7 +574,13 @@ predUl, actualUl, predDl, actualDl
 目前預設每輪 flush；若 scope 數 × metric 數過多導致 I/O 壓力，再改成緩衝 N 筆或每 T 秒。
 
 ### 6.4 Post-swap 額外 grace
-Model-level 已靠現有 `WarmupDuration` 處理（`swapModelAfterRetrain` → `onModelSwapped` → `StartAccuracyMonitorForModel` → `runModelAccuracyLoop` 起始的 warmup，`internal/anlf/monitor.go:81-92`、`internal/sbi/processor/processor.go:54,100`、`internal/mtlf/training.go:236`）。目前判斷不必新增 `postSwapGraceDuration`；若 Checkpoint B 觀察到 retrain 完成後立刻又被觸發的情形，再補。
+Checkpoint B 設計修正後，`WarmupDuration` 明確只用於 NWDAF 啟動後第一次 accuracy monitor 啟動，不再作為 hot-swap 後的額外 grace。原因如下：
+
+- startup warmup 的目的，是吸收系統剛啟動時 ground truth 回補節奏尚未穩定、monitor 初次開始時的前置雜訊
+- hot-swap 後屬於新 model URL / fresh monitoring state，若再重跑 warmup，會把正常的 swap 後監測錯誤地視為系統冷啟動
+- post-swap 若需要避免舊 state 汙染，應靠 fresh model state、舊 model state 清理、以及 scope baseline 重新建立處理，而不是再 sleep 一段 `warmupDuration`
+
+因此目前不新增 `postSwapGraceDuration`，也不沿用 post-swap warmup。若未來觀察到 swap 後仍有新的穩定性問題，再以獨立機制設計，而不重用 startup warmup。
 
 ### 6.5 `pairs.csv` 是否寫無 ground truth 的列
 初版先寫（看 match rate），量太大再移除。
