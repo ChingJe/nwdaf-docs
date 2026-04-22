@@ -457,7 +457,7 @@ predUl, actualUl, predDl, actualDl
 | `fixedFloor` | `float64` | 第一層絕對下限（MAE 單位：bytes） | 先暫定（測試後調整） |
 | `zScoreThreshold` | `float64` | 第二層 z-score 門檻 | 3.0 |
 | `scopeStateTTL` | `int`（秒） | scope state 被動 GC 時間 | 600 |
-| `csvDumpDir` | `string` | 觀察 CSV 輸出目錄（過渡期） | `logs/accuracy/` |
+| `csvDumpDir` | `string` | 觀察 CSV 輸出目錄（過渡期） | `log/accuracy/` |
 | `csvDumpEnabled` | `bool` | 是否寫 CSV（過渡期功能，穩定後可移除） | `true` |
 
 **注意事項**
