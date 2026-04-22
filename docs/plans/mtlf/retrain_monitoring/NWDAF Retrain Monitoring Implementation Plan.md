@@ -140,7 +140,7 @@ ConsumeMaturePredictions → lookupGroundTruth
 - `MSE` 量綱是 bytes²，很容易跨 scope 尺度爆炸 → CSV 照寫，但不建議當 primary
 - `WAPE` 分母是 `sum(|actual|)`，若整段都 0 要能安全回傳 0 而非 NaN
 - `NRMSE` 分母選用 range 或 mean 要固定，單元測試時也要鎖定
-- 所有 metric 在 `actual=0 AND pred=0` 的 sample 都視為 0 貢獻，不計入 baseline（見 §4.6）
+- 所有 metric 在 `actual=0 AND pred=0` 的 sample 都視為 0 貢獻，並保留在 recent baseline / buffer 中（見 §4.6）
 
 **任務**
 - 實作 `computeMAE / computeMSE / computeWAPE / computeNRMSE`
@@ -249,7 +249,7 @@ ConsumeMaturePredictions → lookupGroundTruth
   type ScopeState struct {
       scopeKey     string
       buffers      map[string]*ringBuffer
-      validSamples map[string]int
+      reportCounts  map[string]int
       lastUpdate   time.Time
       breach       int
       // mutex
@@ -351,9 +351,9 @@ if any scope.breach >= consecutiveBreaches:
 
 | 機制 | 作用 |
 |------|------|
-| `minBufferSamples`（預設 8） | 有效樣本數未達門檻前，decision 只走 `absGate`，跳過 `relGate` |
+| `minBufferSamples`（預設 8） | recent buffer 樣本數未達門檻前，decision 只走 `absGate`，跳過 `relGate` |
 | `minStd`（預設 0.01） | 算 z-score 時以 `max(std, minStd)` 防止 std 太小把小波動放大成高 z-score |
-| both-zero 排除 | `actual=0 AND pred=0` 的 sample 不計入 baseline（`validSamples` 不增），但 metric 值仍寫 CSV |
+| both-zero 保留 | `actual=0 AND pred=0` 的 sample 視為真實觀測，保留在 recent buffer 與 baseline 中；是否 retrain 交由 `fixedFloor + z-score + consecutiveBreaches` 決定 |
 | no-ground-truth 跳過 | `lookupGroundTruth` 返回 nil 時完全跳過（現行為），不入 buffer |
 
 **注意事項**
@@ -364,7 +364,7 @@ if any scope.breach >= consecutiveBreaches:
 **任務**
 - `minBufferSamples` gate 加進 §4.5 decision 邏輯
 - `Std` 計算內建 `max(std, minStd)`（或在 `ZScore` 內套）
-- `both-zero` 樣本 `isValid=false` 傳入 `RecordMetric`
+- `both-zero` 樣本照常傳入 `RecordMetric`
 - 單元測試：buffer=0~7 時只判 absGate；buffer=8 起啟用 z-score
 
 ---
@@ -484,7 +484,7 @@ predUl, actualUl, predDl, actualDl
 | AccuracyReport | AnLF 產出報告欄位正確、可被 MTLF 消費；空 metrics / 缺 primary metric / `SampleCount=0` 的錯誤案例明確處理 |
 | Checkpoint A 相容性 | 新增 scope / metrics / CSV / report 後，既有 sMAPE threshold decision 不回歸 |
 | Baseline | Ring buffer 溢位後舊值被捨棄、mean/std 正確 |
-| No ground truth / both-zero | no-ground-truth 不入 baseline；both-zero 不增 validSamples；report / CSV 行為符合設計 |
+| No ground truth / both-zero | no-ground-truth 不入 baseline；both-zero 進 recent buffer，且 report / CSV 行為符合設計 |
 | Cold start | Buffer 0~7 只走 absGate；8 起啟用 z；std=0 時不爆 |
 | Two-layer gate | `fixedFloor` 能擋下「error 很小但 z 很高」；`minStd` 能擋下「std 太小造成 z 爆高」；連續 N 輪邏輯正確 |
 | Retrain lifecycle | in-flight retrain 時新 report 被忽略；failure 會清 retrain guard；觸發後 breach 歸零；post-swap 舊 model state 清理 |
