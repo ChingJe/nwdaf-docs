@@ -142,14 +142,16 @@ test/retrain-monitoring-<topic>
 ## 5. 進度表
 
 > 更新方式：每次至少改 `Status`、`Owner/Branch`、`Last Update` 三欄；合併後補 `Commit`。
+>
+> Checkpoint A 目前已完成既定實作與驗證，開發範圍先行收斂；狀態維持 `review`，待主專案 branch 合併後再統一改為 `done`。
 
 | ID | Checkpoint | Work Item | Status | Owner/Branch | Commit | Last Update | Notes |
 |----|------------|-----------|--------|--------------|--------|-------------|-------|
-| A1 | A | Scope key materialization (`PredictionRecord.ScopeKey`) | review | feat/retrain-monitoring-observability | - | 2026-04-22 | canonicalize subscription `TargetUe`; unresolved scope keeps legacy prediction path |
-| A2 | A | Metric candidates (`MAE/MSE/WAPE/NRMSE`) | review | feat/retrain-monitoring-observability | - | 2026-04-22 | multi-metric computation added for observability; legacy decision still uses model-level sMAPE |
-| A3 | A | `AccuracyReport` contract | review | feat/retrain-monitoring-observability | - | 2026-04-22 | internal report callback added alongside legacy deviation callback |
-| A4 | A | CSV output (`metrics.csv`, `pairs.csv`) | review | feat/retrain-monitoring-observability | - | 2026-04-22 | process-level CSV observability with config gate and per-round flush; legacy decision unchanged |
-| A5 | A | Checkpoint A compatibility tests | review | feat/retrain-monitoring-observability | - | 2026-04-22 | legacy model-level sMAPE path verified against scope/report/CSV additions; `go test ./internal/...`, `make build`, `make lint` |
+| A1 | A | Scope key materialization (`PredictionRecord.ScopeKey`) | review | feat/retrain-monitoring-observability | - | 2026-04-22 | canonicalize subscription `TargetUe`; unresolved scope keeps legacy prediction path; Checkpoint A scope closed |
+| A2 | A | Metric candidates (`MAE/MSE/WAPE/NRMSE`) | review | feat/retrain-monitoring-observability | - | 2026-04-22 | multi-metric computation added for observability; legacy decision still uses model-level sMAPE; Checkpoint A scope closed |
+| A3 | A | `AccuracyReport` contract | review | feat/retrain-monitoring-observability | - | 2026-04-22 | internal report callback added alongside legacy deviation callback; Checkpoint A scope closed |
+| A4 | A | CSV output (`metrics.csv`, `pairs.csv`) | review | feat/retrain-monitoring-observability | - | 2026-04-22 | process-level CSV observability with config gate and per-round flush; legacy decision unchanged; Checkpoint A scope closed |
+| A5 | A | Checkpoint A compatibility tests | review | feat/retrain-monitoring-observability | - | 2026-04-22 | legacy model-level sMAPE path verified against scope/report/CSV additions; `go test ./internal/...`, `make build`, `make lint`; Checkpoint A scope closed |
 | B1 | B | MTLF per-scope state store | todo | - | - | - | recent buffer + breach state |
 | B2 | B | Two-layer gate | todo | - | - | - | primary metric in decision starts here |
 | B3 | B | Cold start protection | todo | - | - | - | `minBufferSamples`, `minStd`, both-zero policy |
