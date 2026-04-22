@@ -144,6 +144,7 @@ test/retrain-monitoring-<topic>
 > 更新方式：每次至少改 `Status`、`Owner/Branch`、`Last Update` 三欄；合併後補 `Commit`。
 >
 > Checkpoint A 已完成既定實作、驗證與主專案合併；A1-A5 統一改為 `done`，merge commit 為 `5da65cb`。
+> Checkpoint B 已完成既定實作、驗證與主專案合併；B1-B7 統一改為 `done`，merge commit 為 `a1fed3d`。
 
 | ID | Checkpoint | Work Item | Status | Owner/Branch | Commit | Last Update | Notes |
 |----|------------|-----------|--------|--------------|--------|-------------|-------|
@@ -152,13 +153,13 @@ test/retrain-monitoring-<topic>
 | A3 | A | `AccuracyReport` contract | done | master | 5da65cb | 2026-04-22 | internal report callback added alongside legacy deviation callback |
 | A4 | A | CSV output (`metrics.csv`, `pairs.csv`) | done | master | 5da65cb | 2026-04-22 | process-level CSV observability with config gate and per-round flush; legacy decision unchanged |
 | A5 | A | Checkpoint A compatibility tests | done | master | 5da65cb | 2026-04-22 | legacy model-level sMAPE path verified against scope/report/CSV additions; `go test ./internal/...`, `make build`, `make lint` |
-| B1 | B | MTLF per-scope state store | review | feat/retrain-monitoring-degradation-policy | 2406fdc | 2026-04-22 | `MonitorStateStore` / `ScopeState` / ring buffer / TTL GC landed under `internal/mtlf`; validated by `go test ./...` |
-| B2 | B | Degradation path | review | feat/retrain-monitoring-degradation-policy | 2406fdc | 2026-04-22 | processor cut over to `AccuracyReport`; `fixedFloor + z-score` degradation path remains active alongside the new policy additions |
-| B3 | B | Cold start protection | review | feat/retrain-monitoring-degradation-policy | 2406fdc | 2026-04-22 | `minBufferSamples` 作為 baseline 建立期 gate；baseline 未就緒前只累積 recent history、不做 retrain decision；both-zero rounds retained in recent buffer |
-| B4 | B | Chronic poor-quality path | review | feat/retrain-monitoring-degradation-policy | 2406fdc | 2026-04-22 | normalized chronic metric path landed with `mean | percentile` aggregation and `minTrafficScale` eligibility guard |
-| B5 | B | Flexible `M-of-N` breach policy | review | feat/retrain-monitoring-degradation-policy | 2406fdc | 2026-04-22 | strict consecutive replaced by configurable decision window; `M=N` remains the strict-behavior degenerate case |
-| B6 | B | Config migration | review | feat/retrain-monitoring-degradation-policy | 2406fdc | 2026-04-22 | `decisionWindowSize` / `requiredHitsInWindow` / `chronicPolicy.*` added; YAML and defaults updated; legacy decision fields no longer drive retrain policy |
-| B7 | B | Retrain lifecycle tests | review | feat/retrain-monitoring-degradation-policy | 2406fdc | 2026-04-22 | branch verification completed with `go test ./...`, `go test -race ./internal/mtlf/...`, `make build`, and `make lint` |
+| B1 | B | MTLF per-scope state store | done | master | a1fed3d | 2026-04-23 | `MonitorStateStore` / `ScopeState` / ring buffer / TTL GC merged to master via Checkpoint B merge |
+| B2 | B | Degradation path | done | master | a1fed3d | 2026-04-23 | processor cut over to `AccuracyReport`; degradation dual-gate merged alongside the new policy flow |
+| B3 | B | Cold start protection | done | master | a1fed3d | 2026-04-23 | `minBufferSamples` 作為 baseline 建立期 gate；baseline 未就緒前只累積 recent history、不做 retrain decision；both-zero rounds retained in recent buffer |
+| B4 | B | Chronic poor-quality path | done | master | a1fed3d | 2026-04-23 | normalized chronic metric path merged with `mean | percentile` aggregation and `minTrafficScale` eligibility guard |
+| B5 | B | Flexible `M-of-N` breach policy | done | master | a1fed3d | 2026-04-23 | strict consecutive replaced by configurable decision window; `M=N` remains the strict-behavior degenerate case |
+| B6 | B | Config migration | done | master | a1fed3d | 2026-04-23 | `decisionWindowSize` / `requiredHitsInWindow` / `chronicPolicy.*` merged; YAML and defaults updated; legacy decision fields no longer drive retrain policy |
+| B7 | B | Retrain lifecycle tests | done | master | a1fed3d | 2026-04-23 | merged after branch verification with `go test ./...`, `go test -race ./internal/mtlf/...`, `make build`, and `make lint` |
 | C1 | C | Threshold tuning | todo | - | - | - | based on observed CSV |
 | C2 | C | Cleanup and code removal | todo | - | - | - | remove temporary observation code when stable |
 | C3 | C | Final documentation sync | todo | - | - | - | sync outcomes back to main docs if needed |
