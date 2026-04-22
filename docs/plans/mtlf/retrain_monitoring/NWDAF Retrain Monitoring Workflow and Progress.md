@@ -45,15 +45,16 @@
 - 每個 branch 應能對應一個明確、可驗證、可合併的實作增量
 - 同一 checkpoint 內的 work item 直接在同一 branch 內推進
 - 不為更細的 feature 額外拆 branch
+- branch 名稱應反映交付內容，不直接使用文件內部的 `checkpoint-a/b/c` 命名
 
 ### 2.2 建議命名
 
-Checkpoint branch：
+建議以階段目標命名，並在進度表中記錄它對應哪個 checkpoint：
 
 ```text
-feat/retrain-monitoring-checkpoint-a
-feat/retrain-monitoring-checkpoint-b
-feat/retrain-monitoring-checkpoint-c
+feat/retrain-monitoring-observability
+feat/retrain-monitoring-degradation-policy
+feat/retrain-monitoring-tuning-cleanup
 ```
 
 修補性 branch：
@@ -91,22 +92,22 @@ test/retrain-monitoring-<topic>
 ### 3.2 Checkpoint merge 原則
 
 - **Checkpoint A**：
-  - 直接在 checkpoint A branch 上逐步完成
+  - 直接在對應的 observability branch 上逐步完成
   - 但只有在「不改變既有 retrain decision」前提下才可合併
 - **Checkpoint B**：
-  - 直接在 checkpoint B branch 上完成
+  - 直接在對應的 degradation-policy branch 上完成
   - 因為 state store / gate / cold start 彼此耦合較高，不再拆 feature branch
 - **Checkpoint C**：
-  - 直接在 checkpoint C branch 上完成調參、清理、移除觀測性程式碼
+  - 直接在對應的 tuning-cleanup branch 上完成調參、清理、移除觀測性程式碼
   - 應在 A/B 穩定後再進行
 
 ### 3.3 Merge 順序建議
 
 建議順序：
 
-1. Checkpoint A branch
-2. Checkpoint B branch
-3. Checkpoint C branch
+1. `feat/retrain-monitoring-observability`
+2. `feat/retrain-monitoring-degradation-policy`
+3. `feat/retrain-monitoring-tuning-cleanup`
 
 ---
 
