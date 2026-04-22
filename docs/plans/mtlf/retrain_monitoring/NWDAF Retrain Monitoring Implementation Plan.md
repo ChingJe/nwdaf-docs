@@ -287,13 +287,13 @@ ConsumeMaturePredictions → lookupGroundTruth
 **目的**：只有「error 夠高」且「相對 baseline 明顯偏離」同時成立時才視為某個 scope 觸發，再加連續 N 輪 dampen 偶發波動。
 
 **為什麼這樣設計**
-- 單層絕對門檻：對不同 scope 流量差異無能為力
-- 單層 z-score：低 error 下的 outlier 也會觸發，造成 baseline 低且穩定的 scope 被誤判
-- 兩層 AND + 連續 N 輪：能擋掉低量 false positive，也能擋掉偶發 spike
+- 只看絕對門檻：對不同 scope 流量差異無能為力
+- 只看 z-score：當 baseline 很低且很穩時，小幅變差也可能被放大成高 z-score
+- 兩層 AND + 連續 N 輪：能同時要求「業務上夠大」與「統計上夠異常」，也能擋掉偶發 spike
 
 **判斷邏輯**
 ```
-absGate     = current > max(fixedFloor, mean + dynamicFloorK * std)
+absGate     = current > fixedFloor
 zScore      = (current - mean) / max(std, minStd)
 relGate     = zScore > zScoreThreshold
 scopeTriggered = absGate AND relGate
@@ -309,7 +309,7 @@ if any scope.breach >= consecutiveBreaches:
 
 **決策結論**
 - 兩層保留、AND 觸發
-- Threshold 只作用在 z-score（scale-invariant），不做 per-metric 配置
+- 第一層只檢查「當前 error 本身是否夠大」；第二層只檢查「相對 baseline 是否明顯異常」
 - Primary metric：**MAE**（測試期間可能調整）
 - `fixedFloor` 預設值先暫定（見 §4.8），測試階段用 CSV 觀察後再回填
 - `zScoreThreshold` 先用預設 `3.0`，測試階段調整
@@ -319,6 +319,7 @@ if any scope.breach >= consecutiveBreaches:
 
 **注意事項**
 - Cold start：buffer 填充未達 `minBufferSamples` 時只走 `absGate`，跳過 `relGate`（見 §4.6）
+- `mean` 不做額外保護；若 baseline 很低導致 relative 判斷過敏，優先透過 `fixedFloor` 擋下
 - 多 scope 之中只要任一觸發就 retrain，不做「多 scope 同時觸發才算」的 AND
 - 觸發之後立刻 `store.SetRetraining(true)` 並呼叫 `startRetrainWorkflow`；同 model 下所有 scope 的 breach 同時歸零
 - Log 格式建議標註每層結果：`scope=X metric=Y cur=... mean=... std=... z=... absGate=T zGate=F breach=2/3`
@@ -351,7 +352,7 @@ if any scope.breach >= consecutiveBreaches:
 | 機制 | 作用 |
 |------|------|
 | `minBufferSamples`（預設 8） | 有效樣本數未達門檻前，decision 只走 `absGate`，跳過 `relGate` |
-| `minStd`（預設 0.01） | 算 z-score 時以 `max(std, minStd)` 防除 0 / 爆值 |
+| `minStd`（預設 0.01） | 算 z-score 時以 `max(std, minStd)` 防止 std 太小把小波動放大成高 z-score |
 | both-zero 排除 | `actual=0 AND pred=0` 的 sample 不計入 baseline（`validSamples` 不增），但 metric 值仍寫 CSV |
 | no-ground-truth 跳過 | `lookupGroundTruth` 返回 nil 時完全跳過（現行為），不入 buffer |
 
@@ -442,7 +443,7 @@ predUl, actualUl, predDl, actualDl
 **移除**
 - `triggerStrategy`（新版為唯一策略，不再切換）
 - `emaAlpha`（EMA 整個拿掉）
-- `deviationThreshold`（改用動態 floor + z-score）
+- `deviationThreshold`（改用 `fixedFloor + z-score`）
 
 **新增**
 
@@ -454,7 +455,6 @@ predUl, actualUl, predDl, actualDl
 | `minBufferSamples` | `int` | 啟用 z-score 前的最少有效樣本數 | 8 |
 | `minStd` | `float64` | std floor，避免 /0 | 0.01 |
 | `fixedFloor` | `float64` | 第一層絕對下限（MAE 單位：bytes） | 先暫定（測試後調整） |
-| `dynamicFloorK` | `float64` | 動態 floor `mean + k*std` 的 k | 2.0 |
 | `zScoreThreshold` | `float64` | 第二層 z-score 門檻 | 3.0 |
 | `scopeStateTTL` | `int`（秒） | scope state 被動 GC 時間 | 600 |
 | `csvDumpDir` | `string` | 觀察 CSV 輸出目錄（過渡期） | `logs/accuracy/` |
@@ -486,7 +486,7 @@ predUl, actualUl, predDl, actualDl
 | Baseline | Ring buffer 溢位後舊值被捨棄、mean/std 正確 |
 | No ground truth / both-zero | no-ground-truth 不入 baseline；both-zero 不增 validSamples；report / CSV 行為符合設計 |
 | Cold start | Buffer 0~7 只走 absGate；8 起啟用 z；std=0 時不爆 |
-| Two-layer gate | 四象限（abs T/F × z T/F）各一案、連續 N 輪正確 |
+| Two-layer gate | `fixedFloor` 能擋下「error 很小但 z 很高」；`minStd` 能擋下「std 太小造成 z 爆高」；連續 N 輪邏輯正確 |
 | Retrain lifecycle | in-flight retrain 時新 report 被忽略；failure 會清 retrain guard；觸發後 breach 歸零；post-swap 舊 model state 清理 |
 | Concurrency | `RecordMetric` / `HandleDeviationReport` / GC 並發不 race |
 | GC | scope 被動清理 `lastUpdate > TTL` |
@@ -539,7 +539,7 @@ predUl, actualUl, predDl, actualDl
 - `primaryMetric = MAE`
 - `zScoreThreshold = 3.0`
 - `fixedFloor` 依實測 MAE 量級先估（例如觀察幾輪後取大致 median 當參考）
-- `dynamicFloorK = 2.0`、`consecutiveBreaches = 3`、`recentBufferSize = 20`、`minBufferSamples = 8`
+- `consecutiveBreaches = 3`、`recentBufferSize = 20`、`minBufferSamples = 8`
 
 **驗收**
 - 單元測試全過（含 `-race`）
@@ -553,7 +553,7 @@ predUl, actualUl, predDl, actualDl
 **目標**：根據 A + B 的運作資料微調 threshold 與 primary metric；穩定後清掉觀察性質的程式碼。
 
 **內容**
-- 按 CSV 調 `primaryMetric` / `fixedFloor` / `zScoreThreshold` / `dynamicFloorK`
+- 按 CSV 調 `primaryMetric` / `fixedFloor` / `zScoreThreshold`
 - 確認穩定後移除 CSV dump（§4.6 定位為過渡期工具）
 - 舊程式碼 / 註解清理 / 文件化
 

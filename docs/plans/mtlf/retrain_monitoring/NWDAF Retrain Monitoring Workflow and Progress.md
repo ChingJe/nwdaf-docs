@@ -168,6 +168,7 @@ test/retrain-monitoring-<topic>
 | 2026-04-21 | AnLF 只負責 accuracy monitoring / metric computation；MTLF 負責 degradation policy 與 retrain decision | state store 與 two-layer gate 移到 MTLF |
 | 2026-04-21 | Monitoring scope 以 subscription `TargetUe` 語意定義，不再以 group-only path 描述 | `ScopeKey` 必須兼容 group 與 SUPI |
 | 2026-04-21 | 進度不再維護於主計畫文件勾選，改由本文件統一維護 | 後續進度更新只改本文件 |
+| 2026-04-22 | Two-layer gate 簡化為 `fixedFloor + z-score`；不再使用 `mean + k*std` 作為第一層 | 第一層只處理「error 本身太小」，第二層只處理 relative anomaly，`std` 過小由 `minStd` 處理 |
 
 ---
 
