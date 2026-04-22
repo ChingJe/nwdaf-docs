@@ -152,11 +152,11 @@ test/retrain-monitoring-<topic>
 | A3 | A | `AccuracyReport` contract | done | master | 5da65cb | 2026-04-22 | internal report callback added alongside legacy deviation callback |
 | A4 | A | CSV output (`metrics.csv`, `pairs.csv`) | done | master | 5da65cb | 2026-04-22 | process-level CSV observability with config gate and per-round flush; legacy decision unchanged |
 | A5 | A | Checkpoint A compatibility tests | done | master | 5da65cb | 2026-04-22 | legacy model-level sMAPE path verified against scope/report/CSV additions; `go test ./internal/...`, `make build`, `make lint` |
-| B1 | B | MTLF per-scope state store | todo | - | - | - | recent buffer + breach state |
-| B2 | B | Two-layer gate | todo | - | - | - | primary metric in decision starts here |
-| B3 | B | Cold start protection | todo | - | - | - | `minBufferSamples`, `minStd`, both-zero policy |
-| B4 | B | Config migration | todo | - | - | - | remove legacy trigger config after cutover |
-| B5 | B | Retrain lifecycle tests | todo | - | - | - | in-flight skip / failure reset / post-swap cleanup |
+| B1 | B | MTLF per-scope state store | review | feat/retrain-monitoring-degradation-policy | - | 2026-04-22 | `MonitorStateStore` / `ScopeState` / ring buffer / TTL GC added under `internal/mtlf` |
+| B2 | B | Two-layer gate | review | feat/retrain-monitoring-degradation-policy | - | 2026-04-22 | processor cut over to `AccuracyReport`; MTLF now uses `fixedFloor + z-score + consecutiveBreaches` on per-scope primary metric |
+| B3 | B | Cold start protection | review | feat/retrain-monitoring-degradation-policy | - | 2026-04-22 | `minBufferSamples` and `minStd` enforced; both-zero rounds retained in recent buffer and handled by policy gate |
+| B4 | B | Config migration | review | feat/retrain-monitoring-degradation-policy | - | 2026-04-22 | legacy `deviationThreshold / triggerStrategy / emaAlpha` removed; new policy config and example YAML updated |
+| B5 | B | Retrain lifecycle tests | review | feat/retrain-monitoring-degradation-policy | - | 2026-04-22 | multi-scope trigger tests, hot-swap cleanup, `go test -race ./internal/mtlf/...`, `go test ./internal/...`, `make build`, `make lint` |
 | C1 | C | Threshold tuning | todo | - | - | - | based on observed CSV |
 | C2 | C | Cleanup and code removal | todo | - | - | - | remove temporary observation code when stable |
 | C3 | C | Final documentation sync | todo | - | - | - | sync outcomes back to main docs if needed |
