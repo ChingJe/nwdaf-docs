@@ -152,13 +152,13 @@ test/retrain-monitoring-<topic>
 | A3 | A | `AccuracyReport` contract | done | master | 5da65cb | 2026-04-22 | internal report callback added alongside legacy deviation callback |
 | A4 | A | CSV output (`metrics.csv`, `pairs.csv`) | done | master | 5da65cb | 2026-04-22 | process-level CSV observability with config gate and per-round flush; legacy decision unchanged |
 | A5 | A | Checkpoint A compatibility tests | done | master | 5da65cb | 2026-04-22 | legacy model-level sMAPE path verified against scope/report/CSV additions; `go test ./internal/...`, `make build`, `make lint` |
-| B1 | B | MTLF per-scope state store | review | feat/retrain-monitoring-degradation-policy | - | 2026-04-22 | `MonitorStateStore` / `ScopeState` / ring buffer / TTL GC added under `internal/mtlf` |
-| B2 | B | Degradation path | review | feat/retrain-monitoring-degradation-policy | - | 2026-04-22 | processor cut over to `AccuracyReport`; current code implements `fixedFloor + z-score` degradation path only |
-| B3 | B | Cold start protection | review | feat/retrain-monitoring-degradation-policy | - | 2026-04-22 | `minBufferSamples` 改為 baseline 建立期 gate；baseline 未就緒前只累積 recent history、不做 retrain decision；both-zero rounds retained in recent buffer |
-| B4 | B | Chronic poor-quality path | todo | feat/retrain-monitoring-degradation-policy | - | 2026-04-22 | new path for scopes that start bad and stay bad; planned around normalized metric + traffic-scale eligibility guard; not implemented yet |
-| B5 | B | Flexible `M-of-N` breach policy | todo | feat/retrain-monitoring-degradation-policy | - | 2026-04-22 | replace strict consecutive breach with configurable decision window; `M=N` should degenerate to current behavior |
-| B6 | B | Config migration | in_progress | feat/retrain-monitoring-degradation-policy | - | 2026-04-22 | base B config already landed, but chronic-path and `M-of-N` config additions are not implemented yet |
-| B7 | B | Retrain lifecycle tests | in_progress | feat/retrain-monitoring-degradation-policy | - | 2026-04-22 | existing degradation-path tests landed; chronic-path and decision-window tests are still pending |
+| B1 | B | MTLF per-scope state store | review | feat/retrain-monitoring-degradation-policy | 2406fdc | 2026-04-22 | `MonitorStateStore` / `ScopeState` / ring buffer / TTL GC landed under `internal/mtlf`; validated by `go test ./...` |
+| B2 | B | Degradation path | review | feat/retrain-monitoring-degradation-policy | 2406fdc | 2026-04-22 | processor cut over to `AccuracyReport`; `fixedFloor + z-score` degradation path remains active alongside the new policy additions |
+| B3 | B | Cold start protection | review | feat/retrain-monitoring-degradation-policy | 2406fdc | 2026-04-22 | `minBufferSamples` 作為 baseline 建立期 gate；baseline 未就緒前只累積 recent history、不做 retrain decision；both-zero rounds retained in recent buffer |
+| B4 | B | Chronic poor-quality path | review | feat/retrain-monitoring-degradation-policy | 2406fdc | 2026-04-22 | normalized chronic metric path landed with `mean | percentile` aggregation and `minTrafficScale` eligibility guard |
+| B5 | B | Flexible `M-of-N` breach policy | review | feat/retrain-monitoring-degradation-policy | 2406fdc | 2026-04-22 | strict consecutive replaced by configurable decision window; `M=N` remains the strict-behavior degenerate case |
+| B6 | B | Config migration | review | feat/retrain-monitoring-degradation-policy | 2406fdc | 2026-04-22 | `decisionWindowSize` / `requiredHitsInWindow` / `chronicPolicy.*` added; YAML and defaults updated; legacy decision fields no longer drive retrain policy |
+| B7 | B | Retrain lifecycle tests | review | feat/retrain-monitoring-degradation-policy | 2406fdc | 2026-04-22 | branch verification completed with `go test ./...`, `go test -race ./internal/mtlf/...`, `make build`, and `make lint` |
 | C1 | C | Threshold tuning | todo | - | - | - | based on observed CSV |
 | C2 | C | Cleanup and code removal | todo | - | - | - | remove temporary observation code when stable |
 | C3 | C | Final documentation sync | todo | - | - | - | sync outcomes back to main docs if needed |
@@ -175,14 +175,14 @@ test/retrain-monitoring-<topic>
 | 2026-04-21 | Monitoring scope 以 subscription `TargetUe` 語意定義，不再以 group-only path 描述 | `ScopeKey` 必須兼容 group 與 SUPI |
 | 2026-04-21 | 進度不再維護於主計畫文件勾選，改由本文件統一維護 | 後續進度更新只改本文件 |
 | 2026-04-22 | Two-layer gate 簡化為 `fixedFloor + z-score`；不再使用 `mean + k*std` 作為第一層 | 第一層只處理「error 本身太小」，第二層只處理 relative anomaly，`std` 過小由 `minStd` 處理 |
-| 2026-04-22 | Checkpoint B 的 both-zero round 視為真實觀測，保留在 recent buffer / baseline 中 | 不另外排除 both-zero；retrain 抑制交由 `fixedFloor + z-score + consecutiveBreaches` 處理 |
+| 2026-04-22 | Checkpoint B 的 both-zero round 視為真實觀測，保留在 recent buffer / baseline 中 | 不另外排除 both-zero；retrain 抑制交由 `fixedFloor + z-score + decision window` 處理 |
 | 2026-04-22 | Checkpoint B 不新增 `BaselineEligible` 類型欄位 | `AccuracyReport` 維持較小契約，MTLF 直接以 scope report 寫入 recent buffer |
 | 2026-04-22 | `baselineReady=false` 改為純 baseline 建立期，不再允許 absGate-only trigger，也不累 breach | cold-start 期間仍保留真實樣本進 recent buffer，但 retrain decision 必須等 baseline ready 後才開始 |
 | 2026-04-22 | `warmupDuration` 改為 startup-only monitor warmup，不再於 hot-swap 後重跑 | post-swap 直接依 fresh model state 重新監測；若未來需要 swap 後 grace，必須另立設計，不重用 startup warmup |
-| 2026-04-22 | Checkpoint B 補入 `chronic poor-quality path` 設計，用來抓「模型一開始就差且持續差」的情況 | retrain policy 不再只有 degradation path；新路徑尚未實作 |
+| 2026-04-22 | Checkpoint B 補入 `chronic poor-quality path` 設計，用來抓「模型一開始就差且持續差」的情況 | retrain policy 不再只有 degradation path；實作採 shared window config、per-path internal bookkeeping |
 | 2026-04-22 | chronic path 第一版不做依流量量級切換 metric；改採固定 metric + `minTrafficScale` eligibility guard | 降低 regime 邊界複雜度；高低流量切換不透過切 metric 處理 |
 | 2026-04-22 | chronic path 的 aggregator 核心只保留 `mean | percentile`；`median` 以 `percentile=50` 表示 | config 與實作維持一致，不另外引入 `median` 作為獨立核心模式 |
-| 2026-04-22 | breach policy 改為通用 `M-of-N` decision window；`M=N` 可退化成現行 strict consecutive | 對 noisy runtime 更有容錯性；此設計尚未實作 |
+| 2026-04-22 | breach policy 改為通用 `M-of-N` decision window；`M=N` 可退化成現行 strict consecutive | 對 noisy runtime 更有容錯性；實作上 degradation/chronic 共用 window config、各自維護 hit bookkeeping |
 
 ---
 

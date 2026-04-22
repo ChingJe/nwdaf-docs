@@ -417,11 +417,14 @@ Checkpoint B should add config for:
 
 #### Implementation Status
 
-This design is agreed but not yet implemented. Current code still uses:
+This design has landed on branch `feat/retrain-monitoring-degradation-policy`
+in commit `2406fdc`.
 
-- degradation path only
-- strict consecutive breach behavior
-- no chronic policy config
+Current code now uses:
+
+- degradation path plus chronic poor-quality path
+- configurable `decisionWindowSize / requiredHitsInWindow`
+- `chronicPolicy.*` config with shared window config and per-path hit tracking
 
 ### B5. Config Migration And Legacy Cleanup
 
@@ -438,8 +441,8 @@ and remove obsolete trigger state from the project.
 - `checkInterval`
 - `minSamples`
 - `warmupDuration`
-- `consecutiveBreaches` (current implemented form; may be superseded by
-  `decisionWindowSize / requiredHitsInWindow` when the new breach policy lands)
+- `consecutiveBreaches` (kept only as a backward-compatible fallback when the
+  newer decision-window fields are omitted)
 - `csvDumpDir`
 - `csvDumpEnabled`
 
