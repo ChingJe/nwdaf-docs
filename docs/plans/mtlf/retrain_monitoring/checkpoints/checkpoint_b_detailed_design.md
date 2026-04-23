@@ -248,6 +248,13 @@ else:
 - if any scope satisfies the decision window, set `store.SetRetraining(true)`,
   reset all scope decision windows for that model, and start retrain workflow
 
+The decision window is per model + scope + path. Degradation and chronic paths
+share the same configured `decisionWindowSize / requiredHitsInWindow`, but
+their hit bookkeeping is separate. When retrain is triggered for a model, all
+scope decision windows for that model are reset so stale hits do not immediately
+re-trigger after dispatch. While `store.IsRetraining()` is true, report
+evaluation is skipped.
+
 #### Logging Contract
 
 Checkpoint B logs should expose policy reasoning explicitly:
@@ -255,8 +262,24 @@ Checkpoint B logs should expose policy reasoning explicitly:
 ```text
 scope=<scope> metric=<metric> current=<...> mean=<...> std=<...> zscore=<...>
 degradationEligible=<T/F> degradationSignal=<T/F|skipped> baselineReady=<T/F>
+trafficScale=<...> chronicEligible=<T/F> chronicSignal=<T/F> chronicValue=<...>
 degradationHits=<n>/<window> chronicHits=<n>/<window> hitReason=<...>
 ```
+
+| Field | Meaning |
+|-------|---------|
+| `current` | Current report value for `primaryMetric` |
+| `mean` / `std` | Existing recent history before the current report is inserted |
+| `zscore` | `(current - mean) / max(std, minStd)` when `baselineReady=true`; otherwise `0` |
+| `baselineReady` | Existing history count is at least `minBufferSamples` |
+| `degradationEligible` | `current > fixedFloor`; eligibility only, not a hit by itself |
+| `degradationSignal` | `zscore > zScoreThreshold`; `skipped` before baseline is ready |
+| `trafficScale` | Mean recent actual traffic scale used by chronic eligibility |
+| `chronicEligible` | chronic path enabled, baseline ready, and traffic scale is meaningful |
+| `chronicSignal` | `chronicValue > chronicPolicy.threshold` |
+| `chronicValue` | Aggregated recent chronic metric value |
+| `degradationHits` / `chronicHits` | Hit count in each path's current decision window |
+| `hitReason` | Which path produced a single-round hit in this log line; final retrain still depends on the window count |
 
 #### Missing-Metric Handling
 
@@ -356,6 +379,21 @@ shared `M-of-N` decision window.
 - traffic-regime handling should instead use an eligibility guard such as
   `minTrafficScale`
 
+#### Traffic Scale Semantics
+
+`TrafficScale` is computed by AnLF from matched ground-truth actual volumes at
+channel level:
+
+```text
+trafficScale = sum(abs(actualUL) + abs(actualDL)) / (matchedPairCount * 2)
+```
+
+If UPF `ul_vol / dl_vol` are bytes, `trafficScale` is bytes per channel
+observation. It is not throughput and not bytes/sec. MTLF stores this value in a
+recent buffer and uses the buffer mean for chronic eligibility, so
+`minTrafficScale` is applied to a smoothed traffic-scale value rather than to a
+single raw monitor round.
+
 #### Chronic Metric Candidates
 
 - `WAPE`
@@ -384,10 +422,12 @@ chronicEligible =
     AND trafficScaleIsMeaningful
     AND notInWarmup
     AND notRetrainingInFlight
+chronicSignal =
+    chronicValue > chronicThreshold
 
 scopeTriggeredByChronic =
     chronicEligible
-    AND chronicValue > chronicThreshold
+    AND chronicSignal
 ```
 
 #### Breach Policy Generalization
@@ -407,6 +447,8 @@ Constraints:
 - `M = N` degenerates to the current strict consecutive behavior
 - degradation path and chronic path may share one window config in the first
   implementation, even if internal bookkeeping remains per-path
+- a miss is recorded as `false` in the path window once the path is eligible for
+  decision; old hits expire as the ring window advances
 
 #### Config Surface
 
@@ -490,6 +532,21 @@ helper default, then tuned later from observed MAE scale.
 implementation and docs: it is a startup-only AnLF monitor warmup, not a
 post-hot-swap grace period.
 
+#### Config Fallback Rules
+
+- `decisionWindowSize`: explicit value, else `consecutiveBreaches`, else `3`
+- `requiredHitsInWindow`: explicit value, else `consecutiveBreaches`, else `3`;
+  values above `decisionWindowSize` are clamped down to `decisionWindowSize`
+- `chronicPolicy.enabled`: missing or nil means `false`
+- `chronicPolicy.metric`: only `WAPE`, `NRMSE`, and `MAE` are accepted; invalid
+  values fallback to `WAPE`
+- `chronicPolicy.aggregator`: only `mean` and `percentile` are accepted; invalid
+  values fallback to `percentile`
+- `chronicPolicy.percentile`: missing or `<=0` means `75`; values above `99`
+  are clamped to `99`
+- `chronicPolicy.threshold`: missing or `<=0` means `1.0`
+- `chronicPolicy.minTrafficScale`: missing or `<=0` means `1024`
+
 #### Project Cleanup
 
 Checkpoint B should remove legacy trigger ownership from `ModelAccuracyStore`:
@@ -535,7 +592,8 @@ compatible with the existing retrain / hot-swap lifecycle.
 - report-based gate
   - low error + high z-score does not trigger
   - high error + low z-score does not trigger
-  - both gates pass until the `M-of-N` window is satisfied triggers retrain
+  - degradation eligibility and signal both pass until the `M-of-N` window is
+    satisfied triggers retrain
   - window hit/miss bookkeeping behaves correctly as old rounds expire
   - one triggering scope does not contaminate a second scope
 - cold start

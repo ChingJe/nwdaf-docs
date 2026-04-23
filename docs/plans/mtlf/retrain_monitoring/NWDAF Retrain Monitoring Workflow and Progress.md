@@ -175,7 +175,7 @@ test/retrain-monitoring-<topic>
 | 2026-04-21 | AnLF 只負責 accuracy monitoring / metric computation；MTLF 負責 degradation policy 與 retrain decision | state store 與 retrain policy flow（eligibility guard / decision signal / decision window）移到 MTLF |
 | 2026-04-21 | Monitoring scope 以 subscription `TargetUe` 語意定義，不再以 group-only path 描述 | `ScopeKey` 必須兼容 group 與 SUPI |
 | 2026-04-21 | 進度不再維護於主計畫文件勾選，改由本文件統一維護 | 後續進度更新只改本文件 |
-| 2026-04-22 | Degradation path 採 `fixedFloor` eligibility guard + `z-score` decision signal；不再使用 `mean + k*std` 作為第一層 | `fixedFloor` 只處理「error 本身太小」，`z-score` 只處理 relative anomaly，`std` 過小由 `minStd` 處理 |
+| 2026-04-22 | Degradation path 採 `fixedFloor` eligibility guard + `z-score` decision signal；不再使用 `mean + k*std` 作為 eligibility 條件 | `fixedFloor` 只處理「error 本身太小」，`z-score` 只處理 relative anomaly，`std` 過小由 `minStd` 處理 |
 | 2026-04-22 | Checkpoint B 的 both-zero round 視為真實觀測，保留在 recent buffer / baseline 中 | 不另外排除 both-zero；retrain 抑制交由 path eligibility、decision signal 與 decision window 處理 |
 | 2026-04-22 | Checkpoint B 不新增 `BaselineEligible` 類型欄位 | `AccuracyReport` 維持較小契約，MTLF 直接以 scope report 寫入 recent buffer |
 | 2026-04-22 | `baselineReady=false` 改為純 baseline 建立期，不再允許 eligibility-only trigger，也不累 breach | cold-start 期間仍保留真實樣本進 recent buffer，但 retrain decision 必須等 baseline ready 後才開始 |

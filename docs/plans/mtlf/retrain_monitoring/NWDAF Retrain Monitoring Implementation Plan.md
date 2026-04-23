@@ -136,6 +136,26 @@ ConsumeMaturePredictions → lookupGroundTruth
 - Primary metric **預計在 Checkpoint B 先用 `MAE`** 驅動 decision（理由：單位直覺、低流量不像 sMAPE 那樣爆）；其餘 metric 只當觀察用
 - 日後若 CSV 分析顯示其他 metric 更適合，只需改 config `primaryMetric`
 
+**UL / DL aggregation semantics**
+
+目前 UL 與 DL 視為同等權重的 channel observation。每個 matched pair 會貢獻兩個 observation：
+
+```text
+UL channel: predUl vs actualUl
+DL channel: predDl vs actualDl
+```
+
+Metric 聚合在 channel level 進行，不是先把 `UL + DL` 合成 total volume 後再算誤差。
+
+| Metric | UL / DL 聚合方式 |
+|--------|------------------|
+| `MAE` | `sum(abs(errUL) + abs(errDL)) / (pairCount * 2)` |
+| `MSE` | `sum(errUL^2 + errDL^2) / (pairCount * 2)` |
+| `WAPE` | `sum(abs(errUL) + abs(errDL)) / sum(abs(actualUL) + abs(actualDL))` |
+| `NRMSE` | `sqrt(MSE) / mean(abs(actualUL), abs(actualDL))` |
+
+這代表 UL / DL 沒有額外業務權重；若未來要讓 DL 或 UL 有較高權重，需新增明確的 weighted metric 設計，不應混入目前 metric 定義。
+
 **注意事項**
 - `MSE` 量綱是 bytes²，很容易跨 scope 尺度爆炸 → CSV 照寫，但不建議當 primary
 - `WAPE` 分母是 `sum(|actual|)`，若整段都 0 要能安全回傳 0 而非 NaN
@@ -209,15 +229,25 @@ ConsumeMaturePredictions → lookupGroundTruth
       ScopeKey      string
       NwdafSubID    string
       Metrics       map[string]float64
+      TrafficScale  float64
       SampleCount   int
       InferenceNum  int
       WindowStart   time.Time
       WindowEnd     time.Time
-      AccuMeetInd   *bool // optional, for future TS 29.520 alignment
   }
   ```
 - AnLF 在 `checkModelAccuracy` 完成 per-scope metric 後產生一批 reports，透過 callback 通知 MTLF
 - MTLF 只依 report 做 policy evaluation，不再依賴 AnLF 內部 state
+
+**`TrafficScale` 語意**
+
+`TrafficScale` 是該 scope 當輪 matched pairs 的 actual traffic channel-level 平均量級：
+
+```text
+TrafficScale = sum(abs(actualUL) + abs(actualDL)) / (pairCount * 2)
+```
+
+若 UPF `ul_vol / dl_vol` 單位是 bytes，則 `TrafficScale` 單位是 **bytes per channel observation**。它不是 throughput，也不是 bytes/sec。MTLF 會把每輪 `TrafficScale` 寫入 recent buffer；chronic path 的 `minTrafficScale` eligibility 使用的是 recent buffer 內 `TrafficScale` 的 mean，而不是只看當輪 raw value。
 
 **生命週期（決策）**
 - `AccuracyReport` 是單輪快照，不保留歷史
@@ -312,12 +342,21 @@ if any scope/path satisfies M-of-N decision window:
 - EMA 策略整個移除
 - 沿用 model-level retrain in-flight guard，不變
 
+**Path predicate summary**
+
+| Path | Eligibility guard | Decision signal | Single-round hit |
+|------|-------------------|-----------------|------------------|
+| Degradation | `baselineReady AND current > fixedFloor` | `zScore > zScoreThreshold` | `degradationEligible AND degradationSignal` |
+| Chronic | `baselineReady AND trafficScaleMean >= minTrafficScale` | `chronicValue > chronicThreshold` | `chronicEligible AND chronicSignal` |
+
+`eligible=true` 只代表該 path 本輪有資格判斷，不代表已經 hit；必須同時滿足 decision signal 才會寫入該 path 的 hit window。
+
 **注意事項**
 - Cold start：buffer 填充未達 `minBufferSamples` 時只建立 baseline，不做 retrain decision，也不累 breach（見 §4.6）
 - `mean` 不做額外保護；若 baseline 很低導致 relative 判斷過敏，優先透過 `fixedFloor` 擋下
 - 多 scope 之中只要任一觸發就 retrain，不做「多 scope 同時觸發才算」的 AND
 - 觸發之後立刻 `store.SetRetraining(true)` 並呼叫 `startRetrainWorkflow`；同 model 下所有 scope 的 breach 同時歸零
-- 程式與 log 命名應對齊為 `degradationEligible` / `degradationSignal`，避免把 `fixedFloor` 誤解為與 z-score 同層的獨立 trigger reason
+- 程式與 log 命名對齊為 `degradationEligible` / `degradationSignal`，避免把 `fixedFloor` 誤解為與 z-score 同層的獨立 decision signal
 
 **任務**
 - 移除 `TriggerStrategy / EmaAlpha / checkEMATrigger`
@@ -339,7 +378,7 @@ if any scope/path satisfies M-of-N decision window:
 - 因此本文件使用 `chronic poor-quality path` 來表示一條平行於 degradation path 的 sustained poor-quality decision path
 
 **為什麼需要**
-- 現行 `fixedFloor + z-score` 比較像 relative-anomaly detector
+- degradation path 以 `fixedFloor` 作為 eligibility guard，再以 z-score 作為 relative-anomaly decision signal
 - 如果 baseline 本身就很差、而且 `std` 很大，z-score 可能長時間不高
 - 這時候模型即使一直很爛，也不一定會被當成 degradation
 
@@ -377,6 +416,13 @@ scopeTriggeredByChronic =
 - traffic scale 必須達到最小可信門檻
 - startup warmup / baseline building / retraining in-flight 時不啟用
 - retrain 完成後需保留觀察窗口或 cooldown，避免 retrain loop
+
+**`trafficScale` 與 `chronicValue`**
+
+- `trafficScale` 採 channel-level actual volume mean，公式見 §4.3
+- MTLF chronic eligibility 使用 recent `trafficScale` buffer 的平均值，降低單輪流量尖峰或空窗造成的誤判
+- `chronicValue` 則來自 recent chronic metric history，依 config 選擇 `mean` 或 `percentile`
+- `chronicPolicy.metric = MAE` 時，`chronicPolicy.threshold` 的單位跟 MAE 一樣是 bytes；`WAPE / NRMSE` 則為 normalized ratio
 
 ### 4.5.3 Breach policy
 
@@ -501,12 +547,12 @@ predUl, actualUl, predDl, actualDl
 
 **沿用**
 - `enabled`、`checkInterval`、`minSamples`、`warmupDuration`
-- `consecutiveBreaches` 目前仍存在於已實作版本；待 `M-of-N` breach policy 落地後，再決定是否由新欄位正式取代
+- `consecutiveBreaches` 保留為 backward-compatible fallback；新設定應優先使用 `decisionWindowSize / requiredHitsInWindow`
 
 **移除**
 - `triggerStrategy`（新版為唯一策略，不再切換）
 - `emaAlpha`（EMA 整個拿掉）
-- `deviationThreshold`（改用 `fixedFloor + z-score`）
+- `deviationThreshold`（改用 degradation eligibility floor + z-score decision signal）
 
 **新增**
 
@@ -517,8 +563,8 @@ predUl, actualUl, predDl, actualDl
 | `recentBufferSize` | `int` | per-scope ring buffer 長度 | 20 |
 | `minBufferSamples` | `int` | 啟用 z-score 前的最少有效樣本數 | 8 |
 | `minStd` | `float64` | std floor，避免 /0 | 0.01 |
-| `fixedFloor` | `float64` | 第一層絕對下限（MAE 單位：bytes） | 先暫定（測試後調整） |
-| `zScoreThreshold` | `float64` | 第二層 z-score 門檻 | 3.0 |
+| `fixedFloor` | `float64` | degradation eligibility floor；單位依 `primaryMetric` 而定，MAE 時為 bytes | 先暫定（測試後調整） |
+| `zScoreThreshold` | `float64` | degradation decision signal 的 z-score 門檻 | 3.0 |
 | `decisionWindowSize` | `int` | retrain decision window 長度 `M` | 3 |
 | `requiredHitsInWindow` | `int` | window 內所需 hit 數 `N` | 3 |
 | `scopeStateTTL` | `int`（秒） | scope state 被動 GC 時間 | 600 |
@@ -533,8 +579,21 @@ predUl, actualUl, predDl, actualDl
 | `chronicPolicy.metric` | `string` | chronic path 使用的 metric；第一版候選 `WAPE / NRMSE / MAE` | `WAPE` |
 | `chronicPolicy.aggregator` | `string` | `mean` 或 `percentile` | `percentile` |
 | `chronicPolicy.percentile` | `int` | percentile 的 `p` 值；`50` 等價於 median | `75` |
-| `chronicPolicy.threshold` | `float64` | chronic metric 門檻；單位由 metric 決定 | 保守暫定 |
-| `chronicPolicy.minTrafficScale` | `float64` | 啟用 chronic path 前 required traffic scale | 保守暫定 |
+| `chronicPolicy.threshold` | `float64` | chronic decision signal 門檻；單位由 metric 決定 | `1.0` |
+| `chronicPolicy.minTrafficScale` | `float64` | 啟用 chronic path 前的 traffic-scale eligibility floor；bytes per channel observation | `1024` |
+
+**Config fallback / normalization**
+
+| 欄位 | fallback / normalization |
+|------|--------------------------|
+| `decisionWindowSize` | explicit value > `consecutiveBreaches` > `3` |
+| `requiredHitsInWindow` | explicit value > `consecutiveBreaches` > `3`，且 clamp 到 `decisionWindowSize` |
+| `chronicPolicy.enabled` | missing / nil 時為 `false` |
+| `chronicPolicy.metric` | 只接受 `WAPE / NRMSE / MAE`，不合法時 fallback `WAPE` |
+| `chronicPolicy.aggregator` | 只接受 `mean / percentile`，不合法時 fallback `percentile` |
+| `chronicPolicy.percentile` | missing 或 `<=0` 時為 `75`；`>99` 時 clamp 到 `99` |
+| `chronicPolicy.threshold` | missing 或 `<=0` 時為 `1.0` |
+| `chronicPolicy.minTrafficScale` | missing 或 `<=0` 時為 `1024` |
 
 **注意事項**
 - `warmupDuration` 的語意需明確限定為「NWDAF 啟動後第一次 accuracy monitor 啟動時的 startup warmup」，不是每次 hot-swap 後都重跑
@@ -567,8 +626,8 @@ predUl, actualUl, predDl, actualDl
 | No ground truth / both-zero | no-ground-truth 不入 baseline；both-zero 進 recent buffer，且 report / CSV 行為符合設計 |
 | Cold start | 既有 history 未達 `minBufferSamples` 時只建 baseline、不觸發；達門檻後後續 round 才啟用 z；std=0 時不爆 |
 | Startup warmup | `warmupDuration` 只在第一次 monitor start 生效；hot-swap 後不再重跑 warmup |
-| Two-layer gate | `fixedFloor` 能擋下「error 很小但 z 很高」；`minStd` 能擋下「std 太小造成 z 爆高」；decision window 邏輯正確 |
-| Chronic path | normalized metric 候選、`mean / percentile` 聚合、`percentile=50` 等價於 median、`minTrafficScale` eligibility guard、與 degradation path 的 trigger reason 區分正確 |
+| Policy flow | degradation eligibility 能擋下「error 很小但 z 很高」；`minStd` 能擋下「std 太小造成 z 爆高」；decision signal 與 decision window 邏輯正確 |
+| Chronic path | normalized metric 候選、`mean / percentile` 聚合、`percentile=50` 等價於 median、`minTrafficScale` eligibility guard、與 degradation path 的 hit reason 區分正確 |
 | Retrain lifecycle | in-flight retrain 時新 report 被忽略；failure 會清 retrain guard；觸發後 breach 歸零；post-swap 舊 model state 清理 |
 | Concurrency | `RecordMetric` / `HandleDeviationReport` / GC 並發不 race |
 | GC | scope 被動清理 `lastUpdate > TTL` |

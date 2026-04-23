@@ -173,6 +173,17 @@ Design notes:
 - `NRMSE` denominator choice must be fixed and documented in tests
 - all metric functions must avoid `NaN` and `Inf`
 
+UL and DL are treated as equal channel observations. Each matched pair
+contributes one UL observation and one DL observation; metrics are computed at
+channel level rather than by first summing `UL + DL` into total volume.
+
+| Metric | Channel-level aggregation |
+|--------|---------------------------|
+| `MAE` | `sum(abs(errUL) + abs(errDL)) / (pairCount * 2)` |
+| `MSE` | `sum(errUL^2 + errDL^2) / (pairCount * 2)` |
+| `WAPE` | `sum(abs(errUL) + abs(errDL)) / sum(abs(actualUL) + abs(actualDL))` |
+| `NRMSE` | `sqrt(MSE) / mean(abs(actualUL), abs(actualDL))` |
+
 #### Aggregation Strategy
 
 In `checkModelAccuracy`:
