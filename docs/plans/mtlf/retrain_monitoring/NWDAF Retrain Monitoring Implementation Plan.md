@@ -317,7 +317,7 @@ if any scope/path satisfies M-of-N decision window:
 - `mean` 不做額外保護；若 baseline 很低導致 relative 判斷過敏，優先透過 `fixedFloor` 擋下
 - 多 scope 之中只要任一觸發就 retrain，不做「多 scope 同時觸發才算」的 AND
 - 觸發之後立刻 `store.SetRetraining(true)` 並呼叫 `startRetrainWorkflow`；同 model 下所有 scope 的 breach 同時歸零
-- 後續程式與 log 命名應對齊為 `degradationEligible` / `degradationSignal`；既有 `absGate` / `relGate` 僅視為過渡期欄位名
+- 程式與 log 命名應對齊為 `degradationEligible` / `degradationSignal`，避免把 `fixedFloor` 誤解為與 z-score 同層的獨立 trigger reason
 
 **任務**
 - 移除 `TriggerStrategy / EmaAlpha / checkEMATrigger`

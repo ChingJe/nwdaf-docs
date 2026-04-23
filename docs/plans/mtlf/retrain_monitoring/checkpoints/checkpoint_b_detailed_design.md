@@ -255,7 +255,7 @@ Checkpoint B logs should expose policy reasoning explicitly:
 ```text
 scope=<scope> metric=<metric> current=<...> mean=<...> std=<...> zscore=<...>
 degradationEligible=<T/F> degradationSignal=<T/F|skipped> baselineReady=<T/F>
-degradationHits=<n>/<window> chronicHits=<n>/<window> triggerReason=<...>
+degradationHits=<n>/<window> chronicHits=<n>/<window> hitReason=<...>
 ```
 
 #### Missing-Metric Handling
