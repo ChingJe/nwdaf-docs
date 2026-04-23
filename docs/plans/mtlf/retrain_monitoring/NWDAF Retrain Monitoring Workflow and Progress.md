@@ -160,9 +160,10 @@ test/retrain-monitoring-<topic>
 | B5 | B | Flexible `M-of-N` breach policy | done | master | a1fed3d | 2026-04-23 | strict consecutive replaced by configurable decision window; `M=N` remains the strict-behavior degenerate case |
 | B6 | B | Config migration | done | master | a1fed3d | 2026-04-23 | `decisionWindowSize` / `requiredHitsInWindow` / `chronicPolicy.*` merged; YAML and defaults updated; legacy decision fields no longer drive retrain policy |
 | B7 | B | Retrain lifecycle tests | done | master | a1fed3d | 2026-04-23 | merged after branch verification with `go test ./...`, `go test -race ./internal/mtlf/...`, `make build`, and `make lint` |
-| C1 | C | Threshold tuning | todo | - | - | - | based on observed CSV |
-| C2 | C | Cleanup and code removal | todo | - | - | - | remove temporary observation code when stable |
-| C3 | C | Final documentation sync | todo | - | - | - | sync outcomes back to main docs if needed |
+| C1 | C | Offline retrain analysis report tool | todo | - | - | 2026-04-23 | design added in `checkpoints/checkpoint_c_detailed_design.md`; first version should generate a single HTML report from CSV/log/config |
+| C2 | C | Threshold tuning | todo | - | - | - | based on observed CSV and analysis report output |
+| C3 | C | Cleanup and code removal | todo | - | - | - | remove temporary observation code when stable |
+| C4 | C | Final documentation sync | todo | - | - | - | sync outcomes back to main docs if needed |
 
 ---
 

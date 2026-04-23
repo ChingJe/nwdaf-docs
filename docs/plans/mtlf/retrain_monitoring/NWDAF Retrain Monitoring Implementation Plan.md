@@ -701,6 +701,7 @@ predUl, actualUl, predDl, actualDl
 **目標**：根據 A + B 的運作資料微調 threshold 與 primary metric；穩定後清掉觀察性質的程式碼。
 
 **內容**
+- 新增 offline retrain analysis report tool（詳見 `checkpoints/checkpoint_c_detailed_design.md`），用 CSV/log/config 產生單一 HTML 報表
 - 按 CSV 調 `primaryMetric` / `fixedFloor` / `zScoreThreshold`
 - 確認穩定後移除 CSV dump（§4.6 定位為過渡期工具）
 - 舊程式碼 / 註解清理 / 文件化
