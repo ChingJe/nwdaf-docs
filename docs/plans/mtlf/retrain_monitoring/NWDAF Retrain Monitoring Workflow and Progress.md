@@ -154,7 +154,7 @@ test/retrain-monitoring-<topic>
 | A4 | A | CSV output (`metrics.csv`, `pairs.csv`) | done | master | 5da65cb | 2026-04-22 | process-level CSV observability with config gate and per-round flush; legacy decision unchanged |
 | A5 | A | Checkpoint A compatibility tests | done | master | 5da65cb | 2026-04-22 | legacy model-level sMAPE path verified against scope/report/CSV additions; `go test ./internal/...`, `make build`, `make lint` |
 | B1 | B | MTLF per-scope state store | done | master | a1fed3d | 2026-04-23 | `MonitorStateStore` / `ScopeState` / ring buffer / TTL GC merged to master via Checkpoint B merge |
-| B2 | B | Degradation path | done | master | a1fed3d | 2026-04-23 | processor cut over to `AccuracyReport`; degradation dual-gate merged alongside the new policy flow |
+| B2 | B | Degradation path | done | master | a1fed3d | 2026-04-23 | processor cut over to `AccuracyReport`; degradation path merged as eligibility guard + decision signal |
 | B3 | B | Cold start protection | done | master | a1fed3d | 2026-04-23 | `minBufferSamples` 作為 baseline 建立期 gate；baseline 未就緒前只累積 recent history、不做 retrain decision；both-zero rounds retained in recent buffer |
 | B4 | B | Chronic poor-quality path | done | master | a1fed3d | 2026-04-23 | normalized chronic metric path merged with `mean | percentile` aggregation and `minTrafficScale` eligibility guard |
 | B5 | B | Flexible `M-of-N` breach policy | done | master | a1fed3d | 2026-04-23 | strict consecutive replaced by configurable decision window; `M=N` remains the strict-behavior degenerate case |
@@ -172,13 +172,13 @@ test/retrain-monitoring-<topic>
 
 | Date | Decision | Impact |
 |------|----------|--------|
-| 2026-04-21 | AnLF 只負責 accuracy monitoring / metric computation；MTLF 負責 degradation policy 與 retrain decision | state store 與 retrain policy flow（eligibility guard / path-level gates / decision window）移到 MTLF |
+| 2026-04-21 | AnLF 只負責 accuracy monitoring / metric computation；MTLF 負責 degradation policy 與 retrain decision | state store 與 retrain policy flow（eligibility guard / decision signal / decision window）移到 MTLF |
 | 2026-04-21 | Monitoring scope 以 subscription `TargetUe` 語意定義，不再以 group-only path 描述 | `ScopeKey` 必須兼容 group 與 SUPI |
 | 2026-04-21 | 進度不再維護於主計畫文件勾選，改由本文件統一維護 | 後續進度更新只改本文件 |
-| 2026-04-22 | Two-layer gate 簡化為 `fixedFloor + z-score`；不再使用 `mean + k*std` 作為第一層 | 第一層只處理「error 本身太小」，第二層只處理 relative anomaly，`std` 過小由 `minStd` 處理 |
-| 2026-04-22 | Checkpoint B 的 both-zero round 視為真實觀測，保留在 recent buffer / baseline 中 | 不另外排除 both-zero；retrain 抑制交由 `fixedFloor + z-score + decision window` 處理 |
+| 2026-04-22 | Degradation path 採 `fixedFloor` eligibility guard + `z-score` decision signal；不再使用 `mean + k*std` 作為第一層 | `fixedFloor` 只處理「error 本身太小」，`z-score` 只處理 relative anomaly，`std` 過小由 `minStd` 處理 |
+| 2026-04-22 | Checkpoint B 的 both-zero round 視為真實觀測，保留在 recent buffer / baseline 中 | 不另外排除 both-zero；retrain 抑制交由 path eligibility、decision signal 與 decision window 處理 |
 | 2026-04-22 | Checkpoint B 不新增 `BaselineEligible` 類型欄位 | `AccuracyReport` 維持較小契約，MTLF 直接以 scope report 寫入 recent buffer |
-| 2026-04-22 | `baselineReady=false` 改為純 baseline 建立期，不再允許 absGate-only trigger，也不累 breach | cold-start 期間仍保留真實樣本進 recent buffer，但 retrain decision 必須等 baseline ready 後才開始 |
+| 2026-04-22 | `baselineReady=false` 改為純 baseline 建立期，不再允許 eligibility-only trigger，也不累 breach | cold-start 期間仍保留真實樣本進 recent buffer，但 retrain decision 必須等 baseline ready 後才開始 |
 | 2026-04-22 | `warmupDuration` 改為 startup-only monitor warmup，不再於 hot-swap 後重跑 | post-swap 直接依 fresh model state 重新監測；若未來需要 swap 後 grace，必須另立設計，不重用 startup warmup |
 | 2026-04-22 | Checkpoint B 補入 `chronic poor-quality path` 設計，用來抓「模型一開始就差且持續差」的情況 | retrain policy 不再只有 degradation path；實作採 shared window config、per-path internal bookkeeping |
 | 2026-04-22 | chronic path 第一版不做依流量量級切換 metric；改採固定 metric + `minTrafficScale` eligibility guard | 降低 regime 邊界複雜度；高低流量切換不透過切 metric 處理 |

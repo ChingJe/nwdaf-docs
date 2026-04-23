@@ -30,14 +30,14 @@
 - **AnLF / MTLF 角色切開**：AnLF 負責 accuracy monitoring 與 metric 計算；MTLF 負責 baseline、degradation policy、retrain 決策與執行
 - **Drift 建立在 recent baseline**：每條 scope 保留 recent metric ring buffer，以 mean / std / z-score 當 drift statistic
 - **Retrain policy flow 分成三段**：
-  - eligibility guard：先確認 `baselineReady`，並在 chronic path 上額外確認 `chronicEligible`
-  - path-level gates：degradation path 採 `fixedFloor + z-score` 的 dual-gate；chronic poor-quality path 則看 sustained quality signal 是否長期過差
+  - eligibility guard：先確認 `baselineReady`；各 path 再檢查自己的 eligibility（例如 degradation 的 `fixedFloor`、chronic 的 `minTrafficScale`）
+  - path decision signal：degradation path 看 `z-score` 是否異常；chronic poor-quality path 看 sustained quality signal 是否長期過差
   - decision window：單輪 hit 不直接 retrain，而是由 `M-of-N` window 決定是否真正觸發
 - **可觀測 / 可除錯**：每輪把統計值與 raw pred/actual 寫入 CSV，方便離線畫圖、選 metric、調 threshold
 
 ### 1.3 本文件範圍
 
-- In-scope：scope-level 分桶、AnLF→MTLF accuracy report、recent baseline、degradation dual-gate、chronic poor-quality path、decision window、cold start 保護、觀測 CSV（暫時性）、config 擴充
+- In-scope：scope-level 分桶、AnLF→MTLF accuracy report、recent baseline、path eligibility guard、path decision signal、chronic poor-quality path、decision window、cold start 保護、觀測 CSV（暫時性）、config 擴充
 - Out-of-scope：訂閱 filter / AoI 細粒度拆分為額外 scope key（保留至未來版本）
 - CSV 是**過渡期觀察工具**：待 threshold / primary metric 調穩後可移除；不規劃升級到 Prometheus / Mongo
 
@@ -89,7 +89,7 @@ ConsumeMaturePredictions → lookupGroundTruth
                       (ring buffer + mean/std + breach)
                                   │
                                   ▼
-              degradation dual-gate / chronic gate per scope
+              path eligibility + path decision signal per scope
                                   │
                     └─────────── OR ─────────────────────┘
                                   │
@@ -110,7 +110,7 @@ ConsumeMaturePredictions → lookupGroundTruth
 | `AccuracyReport`（AnLF → MTLF） | `internal/anlf` / `internal/mtlf` | 新 |
 | `PathState` / `ScopeState`（ring buffer + stats） | `internal/mtlf` | 新 |
 | `MonitorStateStore` | `internal/mtlf` | 新 |
-| Retrain policy flow（eligibility + path gates + window） | `internal/mtlf/trigger.go` | 改寫 |
+| Retrain policy flow（eligibility + decision signal + window） | `internal/mtlf/trigger.go` | 改寫 |
 | Cold start 保護（minBufferSamples、minStd） | `internal/mtlf/trigger.go` | 新邏輯 |
 | CSV dumper（metrics.csv + pairs.csv） | `internal/anlf` 或獨立 pkg | 新 |
 | Config 欄位 | `pkg/factory/config.go` | 新增/移除 |
@@ -282,38 +282,33 @@ ConsumeMaturePredictions → lookupGroundTruth
 
 ---
 
-### 4.5 Degradation dual-gate（degradation path）
+### 4.5 Degradation path（eligibility + decision signal）
 
-**目的**：只有「error 夠高」且「相對 baseline 明顯偏離」同時成立時才視為某個 scope 觸發，再加 breach policy dampen 偶發波動。
+**目的**：只有「error 量級夠大」且「相對 baseline 明顯偏離」同時成立時才視為某個 scope 的 degradation hit，再加 decision window dampen 偶發波動。
 
 **為什麼這樣設計**
 - 只看絕對門檻：對不同 scope 流量差異無能為力
 - 只看 z-score：當 baseline 很低且很穩時，小幅變差也可能被放大成高 z-score
-- dual-gate + decision window：能同時要求「業務上夠大」與「統計上夠異常」，也能擋掉偶發 spike
+- eligibility guard + decision signal + decision window：能同時要求「業務上夠大」與「統計上夠異常」，也能擋掉偶發 spike
 
 **判斷邏輯**
 ```
-absGate     = current > fixedFloor
-zScore      = (current - mean) / max(std, minStd)
-relGate     = zScore > zScoreThreshold
-scopeTriggered = absGate AND relGate
+degradationEligible = current > fixedFloor
+zScore              = (current - mean) / max(std, minStd)
+degradationSignal   = zScore > zScoreThreshold
+degradationHit      = baselineReady AND degradationEligible AND degradationSignal
 
-if scopeTriggered:
-    scope.breach += 1
-else:
-    scope.breach = 0
-
-if any scope.breach >= consecutiveBreaches:
+if any scope/path satisfies M-of-N decision window:
     startRetrainWorkflow()
 ```
 
 **決策結論**
-- degradation path 保留 dual-gate、以 AND 觸發單輪 hit
-- 第一層只檢查「當前 error 本身是否夠大」；第二層只檢查「相對 baseline 是否明顯異常」
+- degradation path 分成 eligibility guard 與 decision signal
+- eligibility guard 只檢查「當前 error 本身是否夠大」；decision signal 只檢查「相對 baseline 是否明顯異常」
 - Primary metric：**MAE**（測試期間可能調整）
 - `fixedFloor` 預設值先暫定（見 §4.8），測試階段用 CSV 觀察後再回填
 - `zScoreThreshold` 先用預設 `3.0`，測試階段調整
-- breach policy 後續可延伸為通用 `M-of-N` window（見 §4.5.3），並在 `M=N` 時保留 strict consecutive 語意
+- breach policy 使用通用 `M-of-N` window（見 §4.5.3），並在 `M=N` 時保留 strict consecutive 語意
 - EMA 策略整個移除
 - 沿用 model-level retrain in-flight guard，不變
 
@@ -322,16 +317,16 @@ if any scope.breach >= consecutiveBreaches:
 - `mean` 不做額外保護；若 baseline 很低導致 relative 判斷過敏，優先透過 `fixedFloor` 擋下
 - 多 scope 之中只要任一觸發就 retrain，不做「多 scope 同時觸發才算」的 AND
 - 觸發之後立刻 `store.SetRetraining(true)` 並呼叫 `startRetrainWorkflow`；同 model 下所有 scope 的 breach 同時歸零
-- Log 格式建議標註每層結果：`scope=X metric=Y cur=... mean=... std=... z=... absGate=T zGate=F breach=2/3`
+- 後續程式與 log 命名應對齊為 `degradationEligible` / `degradationSignal`；既有 `absGate` / `relGate` 僅視為過渡期欄位名
 
 **任務**
 - 移除 `TriggerStrategy / EmaAlpha / checkEMATrigger`
-- 改寫 `HandleDeviationReport` 為 report-based per-scope degradation dual-gate
+- 改寫 `HandleDeviationReport` 為 report-based per-scope policy flow
 - Model-level OR + consecutive counter
 - 單元測試：
-  - 低 error + 高 z：不觸發（absGate 擋）
-  - 高 error + 低 z：不觸發（zGate 擋）
-  - degradation dual-gate 皆過 + 連續 3 輪：觸發
+  - 低 error + 高 z：不觸發（degradation eligibility 擋）
+  - 高 error + 低 z：不觸發（degradation signal 擋）
+  - degradation eligibility / signal 皆過 + 連續 3 輪：觸發
   - 中間一輪低於 threshold：breach 歸零
 
 ### 4.5.2 Chronic poor-quality path
@@ -353,6 +348,7 @@ if any scope.breach >= consecutiveBreaches:
 - 新增第二條 `chronic poor-quality path`
 - 這條 path 不看「有沒有比 baseline 更差」，而是看「最近一段時間的整體品質是否持續不好」
 - 第一版不做依流量量級切換 metric；改採固定 chronic metric + `minTrafficScale` eligibility guard
+- chronic path 與 degradation path 對齊為「eligibility guard + decision signal」形式：前者用 `minTrafficScale` 判斷是否有資格，後者用 `chronicValue > chronicThreshold` 判斷單輪 hit
 
 **metric 與 aggregation**
 - chronic metric 候選：`WAPE`、`NRMSE`、`MAE`

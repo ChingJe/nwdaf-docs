@@ -223,19 +223,20 @@ For each report:
 4. evaluate:
 
 ```text
-absGate = current > fixedFloor
+degradationEligible = current > fixedFloor
 baselineReady = existingHistoryCount >= minBufferSamples
 if enough baseline:
     zscore = (current - mean) / max(std, minStd)
-    relGate = zscore > zScoreThreshold
+    degradationSignal = zscore > zScoreThreshold
 else:
-    relGate = skipped
+    degradationSignal = skipped
 ```
 
 5. degradation trigger rule:
 
 - cold-start phase: no trigger decision; this round only contributes to baseline history
-- baseline-ready phase: `scopeTriggeredByDegradation = absGate AND relGate`
+- baseline-ready phase:
+  `scopeTriggeredByDegradation = degradationEligible AND degradationSignal`
 
 6. decision-window handling:
 
@@ -253,7 +254,7 @@ Checkpoint B logs should expose policy reasoning explicitly:
 
 ```text
 scope=<scope> metric=<metric> current=<...> mean=<...> std=<...> zscore=<...>
-absGate=<T/F> relGate=<T/F|skipped> baselineReady=<T/F>
+degradationEligible=<T/F> degradationSignal=<T/F|skipped> baselineReady=<T/F>
 degradationHits=<n>/<window> chronicHits=<n>/<window> triggerReason=<...>
 ```
 
@@ -344,6 +345,8 @@ shared `M-of-N` decision window.
 - the name `chronic poor-quality path` is intentional: it targets scopes whose
   quality remains poor over time, not scopes that merely show a new degradation
   spike relative to baseline
+- the chronic path follows the same high-level shape as degradation:
+  eligibility guard first, then path-specific decision signal
 - the chronic path must use a sustained-quality signal, not a relative-anomaly signal
 - `std > mean` or other high-variance indicators are not sufficient trigger
   conditions by themselves
@@ -538,7 +541,7 @@ compatible with the existing retrain / hot-swap lifecycle.
 - cold start
   - before `minBufferSamples`, reports build baseline only and do not trigger
     retrain or breach accumulation
-  - after `minBufferSamples`, `relGate` is enforced
+- after `minBufferSamples`, `degradationSignal` is enforced
   - `minStd` prevents z-score explosion when variance is near zero
   - both-zero rounds are retained in recent history and do not require a
     special eligibility flag
