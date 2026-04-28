@@ -896,14 +896,21 @@ daisy:
   callback_port: null
 
 report:
+  progress_every_slots: 120
   chart_downsample: null
   emit_synthetic_log: false
 ```
 
 欄位原則：
 
+- `dataset.groups`
+  - 指定要納入 replay 的 dataset groups；未指定時，自動掃描 `dataset-root` 下的子目錄
 - `dataset.report_period_sec`
   - 控制 packet 聚合到 slot 的時間粒度
+- `dataset.start_offset_sec`
+  - 從正規化後的 dataset timeline 起點往後跳過前 N 秒，再開始建立 slot
+- `dataset.max_slots`
+  - 限制每個 run 最多載入多少個 slot，方便做短時間 smoke test 或局部除錯
 - `dataset.use_pseudo_warmstart`
   - `true` 時比照 pseudo driver，依 `breaking time` 先做 Phase 1 preload，再開始 Phase 2 live replay
 - `dataset.breaking_time_sec`
@@ -914,14 +921,32 @@ report:
   - `null` 時沿用目前 runtime 語意：`samplingInterval * 2` 的成熟消費視窗規則
 - `retrain.window_sec`
   - `null` 時沿用 `nwdafcfg.yaml` 的 `adrf.retrainWindow`
+- `retrain.upload_batch_size`
+  - Daisy `/upload_data` 每次上傳的 notification docs 批次大小；資料窗很大時可避免單次 payload 過大
+- `retrain.max_concurrent_jobs`
+  - 預留的併發 retrain 控制欄位；目前實作仍以單一 active retrain job 為主，尚未真正啟用多 job 排程
+- `retrain.swap_effective_mode`
+  - 控制新模型在 simulated timeline 上何時生效；目前實作固定等同 `wall_duration_projection`
+  - `wall_duration_projection` 的意義是：`swap_effective_sim_time = trigger_time + training_wall_duration_sec`
 - `retrain.mock_training_duration_sec`
   - `--skip-daisy` 時用於 mock retrain lifecycle 與 swap 投影
+- `daisy.auto_manage`
+  - `true` 時由 replay tool 自動啟動 Daisy master；`false` 時要求外部 Daisy endpoint 已先可用
+- `daisy.reuse_existing`
+  - `true` 時若偵測到 endpoint 已可連通，直接沿用既有 Daisy，不重啟 master
 - `daisy.python_bin`
   - 指向 Daisy 專用 Python interpreter，可與 replay tool 自身的 Python 環境分離
+- `daisy.publish_timeout_sec`
+  - Daisy task publish、callback 等待、artifact download 共用的逾時上限
 - `daisy.callback_host` / `daisy.callback_port`
   - 控制本地 callback receiver 的綁定位址
+- `report.progress_every_slots`
+  - terminal progress log 的週期；每處理多少個 live slots 印一次進度摘要
+  - 這只影響 console 可見性，不影響 trace 或報表內容
 - `report.chart_downsample`
   - 控制長時間 replay 的圖表降採樣
+- `report.emit_synthetic_log`
+  - 預留的 compatibility export 欄位；目前主要 trace 消費路徑仍以 `manifest/parquet/events.jsonl` 為主，未作為常態輸出
 
 整體原則是：
 
