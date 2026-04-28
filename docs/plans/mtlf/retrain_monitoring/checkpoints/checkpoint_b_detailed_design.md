@@ -262,7 +262,7 @@ Checkpoint B logs should expose policy reasoning explicitly:
 ```text
 scope=<scope> metric=<metric> current=<...> mean=<...> std=<...> zscore=<...>
 degradationEligible=<T/F> degradationSignal=<T/F|skipped> baselineReady=<T/F>
-trafficScale=<...> chronicEligible=<T/F> chronicSignal=<T/F> chronicValue=<...>
+trafficScale=<...> chronicEligible=<T/F> chronicSignal=<T/F|skipped> chronicValue=<...>
 degradationHits=<n>/<window> chronicHits=<n>/<window> hitReason=<...>
 ```
 
@@ -270,16 +270,16 @@ degradationHits=<n>/<window> chronicHits=<n>/<window> hitReason=<...>
 |-------|---------|
 | `current` | Current report value for `primaryMetric` |
 | `mean` / `std` | Existing recent history before the current report is inserted |
-| `zscore` | `(current - mean) / max(std, minStd)` when `baselineReady=true`; otherwise `0` |
+| `zscore` | `(current - mean) / max(std, minStd)` when existing history is available; `baselineReady=false` only disables decision use, not value computation |
 | `baselineReady` | Existing history count is at least `minBufferSamples` |
 | `degradationEligible` | `current > fixedFloor`; eligibility only, not a hit by itself |
 | `degradationSignal` | `zscore > zScoreThreshold`; `skipped` before baseline is ready |
 | `trafficScale` | Mean recent actual traffic scale used by chronic eligibility |
-| `chronicEligible` | chronic path enabled, baseline ready, and traffic scale is meaningful |
-| `chronicSignal` | `chronicValue > chronicPolicy.threshold` |
-| `chronicValue` | Aggregated recent chronic metric value |
+| `chronicEligible` | chronic path enabled and traffic scale is meaningful; final decision use still requires `baselineReady=true` |
+| `chronicSignal` | `chronicValue > chronicPolicy.threshold`; `skipped` before baseline is ready |
+| `chronicValue` | Aggregated recent chronic metric value; continue computing during baseline-building when chronic history exists |
 | `degradationHits` / `chronicHits` | Hit count in each path's current decision window |
-| `hitReason` | Which path produced a single-round hit in this log line; final retrain still depends on the window count |
+| `hitReason` | Which path produced a single-round hit in this log line; final retrain still depends on the window count, and no hit is accumulated before `baselineReady=true` |
 
 #### Missing-Metric Handling
 
@@ -310,6 +310,11 @@ recent history truthful and available once baseline becomes usable.
   current round is inserted
 - before that threshold, the report is recorded into recent history but retrain
   decision is skipped entirely
+- `zscore` and `chronicValue` should continue to be computed and logged when
+  sufficient prior history exists, even if `baselineReady=false`
+- `degradationSignal` and `chronicSignal` should be logged as `skipped` during
+  this baseline-building phase so observability stays truthful while decision
+  logic remains disabled
 - `minStd` is applied as the denominator floor for z-score computation
 - monitor rounds with no ground-truth match remain fully excluded upstream
 - scope breach counters must not accumulate during this baseline-building phase
@@ -491,8 +496,6 @@ and remove obsolete trigger state from the project.
 - `warmupDuration`
 - `consecutiveBreaches` (kept only as a backward-compatible fallback when the
   newer decision-window fields are omitted)
-- `csvDumpDir`
-- `csvDumpEnabled`
 
 It should add:
 

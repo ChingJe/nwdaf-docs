@@ -352,7 +352,8 @@ For each selected model/scope, show:
 
 Boolean states can be visualized as step charts or heatmap rows.
 
-`degradationSignal=skipped` should be shown as a third state, e.g. gray.
+`degradationSignal=skipped` and `chronicSignal=skipped` should be shown as a
+third state, e.g. gray.
 
 ### 6.5 Chronic Detail
 
@@ -478,4 +479,3 @@ These can be added after the single-report workflow proves useful.
 8. Add chronic detail view.
 9. Add trigger explanation section.
 10. Validate against `.agent/tmp/0422-23`.
-

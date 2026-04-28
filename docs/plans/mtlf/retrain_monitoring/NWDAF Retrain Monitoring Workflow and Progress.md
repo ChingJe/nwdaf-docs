@@ -151,8 +151,8 @@ test/retrain-monitoring-<topic>
 | A1 | A | Scope key materialization (`PredictionRecord.ScopeKey`) | done | master | 5da65cb | 2026-04-22 | canonicalize subscription `TargetUe`; unresolved scope keeps legacy prediction path |
 | A2 | A | Metric candidates (`MAE/MSE/WAPE/NRMSE`) | done | master | 5da65cb | 2026-04-22 | multi-metric computation added for observability; legacy decision still uses model-level sMAPE |
 | A3 | A | `AccuracyReport` contract | done | master | 5da65cb | 2026-04-22 | internal report callback added alongside legacy deviation callback |
-| A4 | A | CSV output (`metrics.csv`, `pairs.csv`) | done | master | 5da65cb | 2026-04-22 | process-level CSV observability with config gate and per-round flush; legacy decision unchanged |
-| A5 | A | Checkpoint A compatibility tests | done | master | 5da65cb | 2026-04-22 | legacy model-level sMAPE path verified against scope/report/CSV additions; `go test ./internal/...`, `make build`, `make lint` |
+| A4 | A | Accuracy observability output | done | master | 5da65cb | 2026-04-22 | Checkpoint A 先以 process-level CSV observability 交付；後續已於 2026-04-28 改為 log-only 並移除 CSV dump |
+| A5 | A | Checkpoint A compatibility tests | done | master | 5da65cb | 2026-04-22 | legacy model-level sMAPE path verified against scope/report additions; `go test ./internal/...`, `make build`, `make lint` |
 | B1 | B | MTLF per-scope state store | done | master | a1fed3d | 2026-04-23 | `MonitorStateStore` / `ScopeState` / ring buffer / TTL GC merged to master via Checkpoint B merge |
 | B2 | B | Degradation path | done | master | a1fed3d | 2026-04-23 | processor cut over to `AccuracyReport`; degradation path merged as eligibility guard + decision signal |
 | B3 | B | Cold start protection | done | master | a1fed3d | 2026-04-23 | `minBufferSamples` 作為 baseline 建立期 gate；baseline 未就緒前只累積 recent history、不做 retrain decision；both-zero rounds retained in recent buffer |
@@ -160,8 +160,8 @@ test/retrain-monitoring-<topic>
 | B5 | B | Flexible `M-of-N` breach policy | done | master | a1fed3d | 2026-04-23 | strict consecutive replaced by configurable decision window; `M=N` remains the strict-behavior degenerate case |
 | B6 | B | Config migration | done | master | a1fed3d | 2026-04-23 | `decisionWindowSize` / `requiredHitsInWindow` / `chronicPolicy.*` merged; YAML and defaults updated; legacy decision fields no longer drive retrain policy |
 | B7 | B | Retrain lifecycle tests | done | master | a1fed3d | 2026-04-23 | merged after branch verification with `go test ./...`, `go test -race ./internal/mtlf/...`, `make build`, and `make lint` |
-| C1 | C | Offline retrain analysis report tool | todo | - | - | 2026-04-23 | design added in `checkpoints/checkpoint_c_detailed_design.md`; first version should generate a single HTML report from CSV/log/config |
-| C2 | C | Threshold tuning | todo | - | - | - | based on observed CSV and analysis report output |
+| C1 | C | Offline retrain analysis report tool | done | feat/retrain-analysis-report | 2e9c0dc | 2026-04-28 | HTML report tool implemented under `tools/retrain_analysis`; input source unified to log + config |
+| C2 | C | Threshold tuning | todo | - | - | - | based on observed log-derived analysis report output |
 | C3 | C | Cleanup and code removal | todo | - | - | - | remove temporary observation code when stable |
 | C4 | C | Final documentation sync | todo | - | - | - | sync outcomes back to main docs if needed |
 
@@ -185,6 +185,8 @@ test/retrain-monitoring-<topic>
 | 2026-04-22 | chronic path 第一版不做依流量量級切換 metric；改採固定 metric + `minTrafficScale` eligibility guard | 降低 regime 邊界複雜度；高低流量切換不透過切 metric 處理 |
 | 2026-04-22 | chronic path 的 aggregator 核心只保留 `mean | percentile`；`median` 以 `percentile=50` 表示 | config 與實作維持一致，不另外引入 `median` 作為獨立核心模式 |
 | 2026-04-22 | breach policy 改為通用 `M-of-N` decision window；`M=N` 可退化成現行 strict consecutive | 對 noisy runtime 更有容錯性；實作上 degradation/chronic 共用 window config、各自維護 hit bookkeeping |
+| 2026-04-28 | cold-start 期間 `zscore` / `chronicValue` 持續計算與記錄，但 `degradationSignal` / `chronicSignal` 統一標為 `skipped` | 觀測值與決策值分離；baseline 建立期資訊保留完整，同時避免誤觸發 retrain |
+| 2026-04-28 | accuracy CSV dump 移除，Checkpoint C 分析流程統一改為 log-only | 主專案移除 CSV writer / config；離線報表工具改由 log + config 重建 metric、policy、traffic 與 lifecycle timeline |
 
 ---
 
