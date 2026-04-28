@@ -214,9 +214,96 @@ uv run retrain_replay.py report ...
 
 也可保留和現有 `tools/retrain_analysis` 的整合，讓現有報表工具新增一個 `trace input` backend。
 
+### 4.1 常用指令
+
+在 `tools/retrain_replay/` 目錄：
+
+```bash
+uv run retrain_replay.py run \
+  --dataset-root ../../.agent/go-upf/pre_data \
+  --config ../../.agent/tmp/nwdafcfg.yaml \
+  --replay-config ./replay_config.yaml \
+  --initial-bundle ../../.agent/NWDAF-ML-Service/artifacts/initial \
+  --daisy-example-dir ../../.agent/daisy/examples/07_MTLF_training \
+  --out ../../.agent/tmp/replay-test
+```
+
+只驗證 policy / trace，不啟動 Daisy：
+
+```bash
+uv run retrain_replay.py run \
+  --dataset-root ../../.agent/go-upf/pre_data \
+  --config ../../.agent/tmp/nwdafcfg.yaml \
+  --replay-config ./replay_config.yaml \
+  --initial-bundle ../../.agent/NWDAF-ML-Service/artifacts/initial \
+  --daisy-example-dir ../../.agent/daisy/examples/07_MTLF_training \
+  --out ../../.agent/tmp/replay-test \
+  --skip-daisy
+```
+
+在 `tools/retrain_analysis/` 目錄產生報表：
+
+```bash
+uv run retrain_report.py \
+  --input ../../.agent/tmp/replay-test \
+  --out ../../.agent/tmp/replay-test/report.html
+```
+
 ---
 
 ## 5. 核心執行流程
+
+### 5.0 E2E 流程圖
+
+```mermaid
+flowchart TD
+    A["Dataset Root<br/>pre_data/group*/training_packets_run*.parquet + file.json"] --> B["Dataset Loader<br/>filter ts<0<br/>normalize per-file timeline<br/>concatenate files"]
+    B --> C["Pseudo Warmstart Split<br/>read breaking time<br/>Phase 1 preload / Phase 2 live replay"]
+
+    C --> D["Phase 1 Preload<br/>aggregate to reportPeriod slots<br/>append historical slots into model history"]
+    C --> E["Phase 2 Live Replay<br/>aggregate to 5s slot stream"]
+
+    D --> F["Active Model Bundle<br/>initial bundle or swapped retrain bundle"]
+    E --> F
+
+    F --> G["Local Predictor<br/>log1p + scaler + TCN + inverse transform"]
+    G --> H["predictions.parquet / prediction_emitted"]
+
+    E --> I["slots.parquet<br/>actual UL / DL / throughput / notificationDoc"]
+    H --> J["Maturity Gate<br/>targetTime + maturityLag"]
+    I --> J
+
+    J --> K["Monitor Round<br/>every checkInterval<br/>match matured predictions with actual slots"]
+    K --> L["monitor_rounds.parquet<br/>metrics + sampleCount + trafficScale"]
+
+    L --> M["Policy Evaluation<br/>degradation path + chronic path<br/>shared M-of-N window"]
+    M --> N["policy.parquet / policy_evaluated"]
+
+    N --> O{"Retrain Trigger?"}
+    O -- "No" --> E
+    O -- "Yes" --> P["Select Retrain Window<br/>[triggerTime - retrainWindow, triggerTime]"]
+    P --> Q["Collect notification docs by group"]
+    Q --> R["Daisy Runner<br/>upload_data -> publish_task -> callback -> download artifact"]
+    R --> S["Measure wall-clock training duration"]
+    S --> T["Schedule swap_effective_sim_time<br/>triggerSimTime + trainingWallDuration"]
+    T --> U["Load retrained bundle<br/>set pending activation"]
+    U --> E
+
+    E --> V{"sim_time >= swap_effective_sim_time?"}
+    V -- "Yes" --> W["Activate new model<br/>reset monitor decision windows<br/>emit hot_swap_complete"]
+    V -- "No" --> E
+    W --> F
+
+    I --> X["Structured Trace Writer"]
+    H --> X
+    L --> X
+    N --> X
+    R --> X
+    W --> X
+
+    X --> Y["manifest.json / config.snapshot.yaml / events.jsonl / retrain_jobs.parquet"]
+    Y --> Z["tools/retrain_analysis<br/>trace backend -> report.html"]
+```
 
 ### 5.1 輸入
 
@@ -226,11 +313,11 @@ uv run retrain_replay.py report ...
 uv run retrain_replay.py run \
   --dataset-root .agent/go-upf/pre_data \
   --groups group1 group2 \
-  --config config/nwdafcfg.yaml \
+  --config .agent/tmp/nwdafcfg.yaml \
   --replay-config tools/retrain_replay/replay_config.yaml \
   --initial-bundle .agent/NWDAF-ML-Service/artifacts/initial \
   --daisy-example-dir .agent/daisy/examples/07_MTLF_training \
-  --out .agent/tmp/replay-<ts>
+  --out .agent/tmp/replay-test
 ```
 
 可選參數：
@@ -322,7 +409,8 @@ config 管理，而不是散落成硬編碼常數或大量 CLI flag。
 建議 mirror 現行邏輯：
 
 - sampling interval 由 config `analytics.ueCommunication.samplingInterval`
-- prediction maturity 採 `targetTime + samplingInterval`
+- prediction maturity 規則預設採 `targetTime + 2 * samplingInterval`
+- `monitor.maturity_lag_sec` 可覆寫這個成熟延遲
 - monitor cadence 採 `accuracyMonitor.checkInterval`
 - 每個 monitor round 只消費已成熟、且尚未被消費的 predictions
 
@@ -344,6 +432,12 @@ v1 建議 scope 先固定為：
 
 因為目前 `pre_data` 與 Daisy 07 的資料流本來就是 group aggregate 導向。
 
+另外需注意：
+
+- `minSamples` gate 應比照 NWDAF runtime，以 **整個 monitor round 的成熟 pair 總數** 判斷
+- per-scope `SampleCount` 仍各自記錄在 report 內
+- 不能把 `minSamples` 錯套成每個 scope 各自判斷，否則會和真實 NWDAF 觸發條件不一致
+
 ### 5.6 Retrain policy 評估
 
 對每個 report 套用與 `internal/mtlf/trigger.go` 等價的 decision flow：
@@ -357,6 +451,12 @@ v1 建議 scope 先固定為：
 - emit retrain trigger if hit threshold
 
 這一層要輸出的不是字串 log，而是結構化 policy record。
+
+目前實作語意還包含：
+
+- monitor round 在 retrain / pending swap 期間仍持續記錄
+- 但 policy evaluation 會在 `retraining_until` 之前暫停
+- 因此 `monitor_rounds.parquet` 可能連續，但 `policy.parquet` 會在 retrain 期間出現刻意保留的空窗
 
 每筆 policy record 建議至少保留：
 
@@ -388,7 +488,7 @@ v1 建議 scope 先固定為：
    - `/upload_data`
    - `/publish_task`
 5. 記錄 wall-clock `training_started_at`
-6. 等待訓練完成並取得 artifact
+6. 等待 callback 回傳訓練結果並取得 artifact
 
 與這個流程相關的控制項，應統一來自 config，至少包含：
 
@@ -437,7 +537,7 @@ swap_effective_sim_time = retrain_trigger_sim_time + training_wall_duration_sec
 因此建議流程為：
 
 1. retrain trigger 發生時先記錄 trigger event
-2. 同步等待 Daisy training 完成，拿到 `duration_sec`
+2. 等待 Daisy callback 回傳 `model_url` 與完成狀態，拿到 `duration_sec`
 3. 在 trace 中建立一筆 scheduled swap event
 4. replay 後續 slot 時，直到 `sim_time >= swap_effective_sim_time` 才切到新模型
 
@@ -543,27 +643,26 @@ swap_effective_sim_time = retrain_trigger_sim_time + training_wall_duration_sec
 
 ### 6.7 `events.jsonl`
 
-保留人類可讀、但仍具結構化欄位的 event stream：
+保留人類可讀、但仍具結構化欄位的 event stream。
 
-- `kind`
-- `simTime`
-- `wallTime`
-- `groupId`
+目前實作欄位為：
+
+- `timestamp`
+- `eventType`
+- `model`
 - `scope`
-- `modelVersion`
+- `reason`
 - `detail`
 
-建議 event kinds：
+目前主要 event types：
 
-- `slot_ready`
 - `prediction_emitted`
 - `monitor_round`
 - `policy_evaluated`
-- `retrain_triggered`
-- `training_started`
-- `training_completed`
-- `swap_scheduled`
-- `model_swapped`
+- `retrain_trigger`
+- `training_accepted`
+- `training_complete`
+- `hot_swap_complete`
 
 ### 6.8 可選：synthetic log
 
@@ -638,25 +737,18 @@ v1 已定案：工具 **自動管理 Daisy example 的 lifecycle**：
 
 ### 8.2 callback 需求
 
-若直接沿用 Daisy async callback，需要一個最小本地 callback receiver。
+目前已定案並落地的方式是：
 
-因此新工具可內建一個簡單本地 HTTP callback server，只處理：
+- replay tool 內建最小本地 callback receiver
+- `publish_task` 帶 `CALLBACK_URL`
+- Daisy 透過 async callback 回傳 `task_id / status / model_url`
+- replay tool 再依 callback 回來的 `model_url` 下載 artifact
 
-- training accepted
-- training complete
-- training failed
+理由：
 
-如果不想引入 callback server，另一種方式是：
-
-- 使用 sync publish path
-- 等待 Daisy `/publish_task` 結束
-- 再從 `download/<tid>` 取得 artifact
-
-v1 建議優先採 **同步等待**：
-
-- 工具較簡單
-- 不需要額外 callback server
-- replay 是 offline tool，不需要 runtime 那種 fully async 複雜度
+- Daisy artifact packaging 實際依賴 callback workflow
+- 這條路徑和 NWDAF 現行 async training lifecycle 更一致
+- 可避免 sync publish path 完成後 artifact 尚未可下載的競態問題
 
 ---
 
@@ -678,7 +770,7 @@ v1 建議優先採 **同步等待**：
 - policy trigger 點是否接近真實 NWDAF
 - trace schema 是否足夠
 
-### Phase 2: Daisy sync retrain
+### Phase 2: Daisy async callback retrain
 
 補上：
 
@@ -754,7 +846,7 @@ v1 建議優先採 **同步等待**：
 3. 直接重用 ML Service 的本地 model bundle / predictor 邏輯
 4. MTLF policy 先以 Python mirror 方式重現
 5. Daisy retrain 採 07 example 的 **Mongo/TID path**
-6. Daisy v1 採 **同步等待 training 完成**
+6. Daisy v1 採 **async callback + 本地 callback receiver**
 7. canonical output 採 **Parquet/JSONL structured trace**
 8. HTML / 報表產生以 `tools/retrain_analysis` 為主，新增 trace backend
 9. v1 scope 固定只做 `group:<groupId>`
@@ -781,6 +873,8 @@ dataset:
   report_period_sec: 5
   start_offset_sec: 0
   max_slots: null
+  use_pseudo_warmstart: true
+  breaking_time_sec: null
 
 monitor:
   check_interval_sec: null
@@ -791,11 +885,15 @@ retrain:
   upload_batch_size: 500
   max_concurrent_jobs: 1
   swap_effective_mode: wall_duration_projection
+  mock_training_duration_sec: 120
 
 daisy:
   auto_manage: true
   reuse_existing: false
+  python_bin: python3.8
   publish_timeout_sec: 3600
+  callback_host: 127.0.0.1
+  callback_port: null
 
 report:
   chart_downsample: null
@@ -806,12 +904,22 @@ report:
 
 - `dataset.report_period_sec`
   - 控制 packet 聚合到 slot 的時間粒度
+- `dataset.use_pseudo_warmstart`
+  - `true` 時比照 pseudo driver，依 `breaking time` 先做 Phase 1 preload，再開始 Phase 2 live replay
+- `dataset.breaking_time_sec`
+  - `null` 時讀各 group 的 `file.json`
 - `monitor.check_interval_sec`
   - `null` 時沿用 `nwdafcfg.yaml` 的 `accuracyMonitor.checkInterval`
 - `monitor.maturity_lag_sec`
   - `null` 時沿用目前 runtime 語意：`samplingInterval * 2` 的成熟消費視窗規則
 - `retrain.window_sec`
   - `null` 時沿用 `nwdafcfg.yaml` 的 `adrf.retrainWindow`
+- `retrain.mock_training_duration_sec`
+  - `--skip-daisy` 時用於 mock retrain lifecycle 與 swap 投影
+- `daisy.python_bin`
+  - 指向 Daisy 專用 Python interpreter，可與 replay tool 自身的 Python 環境分離
+- `daisy.callback_host` / `daisy.callback_port`
+  - 控制本地 callback receiver 的綁定位址
 - `report.chart_downsample`
   - 控制長時間 replay 的圖表降採樣
 
