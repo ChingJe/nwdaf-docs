@@ -167,6 +167,7 @@ test/retrain-monitoring-<topic>
 | C4 | C | Final documentation sync | todo | - | - | - | sync outcomes back to main docs if needed |
 | C5 | C | Replay-driven follow-up adjustment note | done | master | - | 2026-04-29 | supplemental note added and later expanded for per-scope `minSamples`, policy-scoped traffic-scale guards, degradation reference buffer, observation buffers, and low-traffic overprediction ideas |
 | C6 | C | Follow-up design convergence | done | master | - | 2026-04-29 | main plan converged to policy-scoped traffic-scale naming, observation-buffer direction, `PredictedTrafficScale`, and degradation-reference-buffer terminology |
+| C7 | C | Follow-up observability alignment | done | feat/retrain-monitoring-followups | 43e89e7 | 2026-04-29 | runtime log, replay trace, and analysis report aligned on explicit `actualTrafficScale` / `recentTrafficScaleMean` / `PredictedTrafficScale` fields plus low-traffic policy observability |
 
 ---
 
@@ -195,6 +196,7 @@ test/retrain-monitoring-<topic>
 | 2026-04-29 | degradation path 的 baseline follow-up 收斂為 `degradationReferenceBuffer`，而不是直接稱作 frozen baseline | 強調 healthy-only reference history 與 admission rule，而不是一次 freeze 後完全不更新 |
 | 2026-04-29 | MTLF metric history follow-up 收斂為 per-round observation buffers，並把 `PredictedTrafficScale` 納入 report / observation contract | 同一輪的 metric、sampleCount、actual/predicted traffic scale 保持時間對齊，支撐 chronic / degradation / low-traffic path 共用輸入 |
 | 2026-04-29 | low-traffic 區域的 blind spot 收斂為獨立 `lowTrafficOverprediction` path，而不是直接放寬 chronic path | low-traffic actual 與 high predicted 的情況應同時看 actual guard、predicted absolute floor、relative overshoot ratio |
+| 2026-04-29 | policy observability contract 收斂為顯式 `actualTrafficScale` / `recentTrafficScaleMean` / `PredictedTrafficScale`，analysis 不再把 recent mean 誤當 low-traffic actual | runtime log、replay trace、analysis chart 使用同一組欄位語意呈現 decision 輸入；degradation/chronic/low-traffic 三條 path 的觀測值與 decision input 一致可追蹤 |
 
 ---
 

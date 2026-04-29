@@ -320,6 +320,23 @@ type ScopeObservation struct {
 - analysis/report 工具補新欄位與新 path 顯示
 - 確認 log / trace schema 一致
 
+目前 runtime / replay / analysis 需至少對齊下列 policy observability 欄位：
+- `degradationBaselineReady`
+- `recentBaselineReady`
+- `actualTrafficScale`
+- `recentTrafficScaleMean`
+- `PredictedTrafficScale`
+- `lowTrafficEligible`
+- `lowTrafficSignal`
+- `lowTrafficOvershootRatio`
+- `degradationReferenceSamples`
+- `recentSamples`
+
+其中：
+- `actualTrafficScale` 應代表當輪 decision 使用的 actual-side traffic scale
+- `recentTrafficScaleMean` 應代表 chronic path 使用的 recent observation mean
+- analysis/report 若要畫 low-traffic overprediction detail，必須優先使用 `actualTrafficScale` 而不是 recent mean
+
 ### 8.2 建議順序
 
 較保守的順序可為：
