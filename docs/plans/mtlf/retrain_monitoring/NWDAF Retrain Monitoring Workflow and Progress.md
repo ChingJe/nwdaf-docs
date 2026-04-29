@@ -129,6 +129,7 @@ test/retrain-monitoring-<topic>
 
 - 以收斂與清理為主，不應再引入新的核心設計
 - 若要移除 CSV，必須先確認調參已完成，且已有替代的觀測方式或明確結論
+- 若 replay / offline analysis 暴露出會改變 retrain semantics 的問題，先寫入補充設計文件，再決定是否進入程式修改
 
 ### 4.4 共通注意事項
 
@@ -164,6 +165,8 @@ test/retrain-monitoring-<topic>
 | C2 | C | Threshold tuning | todo | - | - | - | based on observed log-derived analysis report output |
 | C3 | C | Cleanup and code removal | todo | - | - | - | remove temporary observation code when stable |
 | C4 | C | Final documentation sync | todo | - | - | - | sync outcomes back to main docs if needed |
+| C5 | C | Replay-driven follow-up adjustment note | done | master | - | 2026-04-29 | supplemental note added and later expanded for per-scope `minSamples`, policy-scoped traffic-scale guards, degradation reference buffer, observation buffers, and low-traffic overprediction ideas |
+| C6 | C | Follow-up design convergence | done | master | - | 2026-04-29 | main plan converged to policy-scoped traffic-scale naming, observation-buffer direction, `PredictedTrafficScale`, and degradation-reference-buffer terminology |
 
 ---
 
@@ -187,6 +190,11 @@ test/retrain-monitoring-<topic>
 | 2026-04-22 | breach policy 改為通用 `M-of-N` decision window；`M=N` 可退化成現行 strict consecutive | 對 noisy runtime 更有容錯性；實作上 degradation/chronic 共用 window config、各自維護 hit bookkeeping |
 | 2026-04-28 | cold-start 期間 `zscore` / `chronicValue` 持續計算與記錄，但 `degradationSignal` / `chronicSignal` 統一標為 `skipped` | 觀測值與決策值分離；baseline 建立期資訊保留完整，同時避免誤觸發 retrain |
 | 2026-04-28 | accuracy CSV dump 移除，Checkpoint C 分析流程統一改為 log-only | 主專案移除 CSV writer / config；離線報表工具改由 log + config 重建 metric、policy、traffic 與 lifecycle timeline |
+| 2026-04-29 | `minSamples` 語意改為 per-scope `SampleCount` gate，不再以整個 monitor round 的成熟 pair 合計數決定單一 scope 是否能參與 policy evaluation | runtime、replay、analysis 文件都需同步調整 gate 語意；`minBufferSamples` 仍維持 baseline-history 門檻 |
+| 2026-04-29 | degradation / chronic 的 traffic-scale guard 命名收斂為 policy-scoped `minDecisionTrafficScale` | `degradationPolicy.minDecisionTrafficScale` 與 `chronicPolicy.minDecisionTrafficScale` 對齊，避免欄位散落且保留 path 區別性 |
+| 2026-04-29 | degradation path 的 baseline follow-up 收斂為 `degradationReferenceBuffer`，而不是直接稱作 frozen baseline | 強調 healthy-only reference history 與 admission rule，而不是一次 freeze 後完全不更新 |
+| 2026-04-29 | MTLF metric history follow-up 收斂為 per-round observation buffers，並把 `PredictedTrafficScale` 納入 report / observation contract | 同一輪的 metric、sampleCount、actual/predicted traffic scale 保持時間對齊，支撐 chronic / degradation / low-traffic path 共用輸入 |
+| 2026-04-29 | low-traffic 區域的 blind spot 收斂為獨立 `lowTrafficOverprediction` path，而不是直接放寬 chronic path | low-traffic actual 與 high predicted 的情況應同時看 actual guard、predicted absolute floor、relative overshoot ratio |
 
 ---
 

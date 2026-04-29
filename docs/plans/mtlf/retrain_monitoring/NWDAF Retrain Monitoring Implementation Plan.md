@@ -8,6 +8,9 @@
 >
 > 進度、branch、merge 與 blocker 維護改由 `NWDAF Retrain Monitoring Workflow and Progress.md` 負責。
 > 本文件中的任務條列只保留設計拆項，不再作為進度勾選來源。
+>
+> 2026-04-29 之後的 replay-driven 後續調整，另記於
+> `NWDAF Retrain Monitoring Follow-up Adjustments.md`；其中已確認可收斂的設計會逐步同步回本文件。
 
 ---
 
@@ -28,10 +31,11 @@
 - **Scope-level 與 model-level 分離**：metric 先在 monitoring scope 分開算；model-level retrain decision 只看「任一 scope 退化」
 - **Monitoring scope 以 subscription / Target UE 語意定義**：scope key 來自 analytics consumer 的 `TargetUe`，兼容 group 與 direct SUPI；不是由 `corrId` 或事後 traffic grouping 反推
 - **AnLF / MTLF 角色切開**：AnLF 負責 accuracy monitoring 與 metric 計算；MTLF 負責 baseline、degradation policy、retrain 決策與執行
-- **Drift 建立在 recent baseline**：每條 scope 保留 recent metric ring buffer，以 mean / std / z-score 當 drift statistic
+- **MTLF state 以 per-round observation 為中心**：同一 monitor round 產生的 `metrics / sampleCount / actual traffic scale / predicted traffic scale` 應保留時間對齊，而不是拆成多條互相獨立的 metric slices
+- **Degradation 與 chronic 可使用不同 history buffer**：chronic / observability 使用 `recentObservationBuffer`；degradation path 使用獨立的 `degradationReferenceBuffer`
 - **Retrain policy flow 分成三段**：
-  - eligibility guard：先確認 `baselineReady`；各 path 再檢查自己的 eligibility（例如 degradation 的 `fixedFloor`、chronic 的 `minTrafficScale`）
-  - path decision signal：degradation path 看 `z-score` 是否異常；chronic poor-quality path 看 sustained quality signal 是否長期過差
+  - eligibility guard：先確認 `baselineReady`；各 path 再檢查自己的 eligibility（例如 degradation 的 `fixedFloor` 與 `degradationPolicy.minDecisionTrafficScale`、chronic 的 `chronicPolicy.minDecisionTrafficScale`）
+  - path decision signal：degradation path 看 `z-score` 是否異常；chronic poor-quality path 看 sustained quality signal 是否長期過差；low-traffic 區域可由獨立 path 處理
   - decision window：單輪 hit 不直接 retrain，而是由 `M-of-N` window 決定是否真正觸發
 - **可觀測 / 可除錯**：每輪把統計值與 raw pred/actual 寫入 CSV，方便離線畫圖、選 metric、調 threshold
 
@@ -85,8 +89,8 @@ ConsumeMaturePredictions → lookupGroundTruth
                     └────────── notify AnLF → MTLF ──────┘
                                   │
                                   ▼
-                      MTLF PathState.RecordMetric
-                      (ring buffer + mean/std + breach)
+                      MTLF RecordObservation
+            (recentObservationBuffer + degradationReferenceBuffer)
                                   │
                                   ▼
               path eligibility + path decision signal per scope
@@ -108,7 +112,8 @@ ConsumeMaturePredictions → lookupGroundTruth
 | `MetricResult`（或 `map[string]float64`） | `internal/anlf` | 新 |
 | `ScopeKey` materialization（subscription `TargetUe` → canonical scope） | `internal/anlf` / `internal/context` | 新 |
 | `AccuracyReport`（AnLF → MTLF） | `internal/anlf` / `internal/mtlf` | 新 |
-| `PathState` / `ScopeState`（ring buffer + stats） | `internal/mtlf` | 新 |
+| `ScopeObservation` / observation buffer | `internal/mtlf` | Follow-up 收斂方向 |
+| `PathState` / `ScopeState`（observation buffers + stats + windows） | `internal/mtlf` | 新/調整 |
 | `MonitorStateStore` | `internal/mtlf` | 新 |
 | Retrain policy flow（eligibility + decision signal + window） | `internal/mtlf/trigger.go` | 改寫 |
 | Cold start 保護（minBufferSamples、minStd） | `internal/mtlf/trigger.go` | 新邏輯 |
@@ -230,6 +235,7 @@ Metric 聚合在 channel level 進行，不是先把 `UL + DL` 合成 total volu
       NwdafSubID    string
       Metrics       map[string]float64
       TrafficScale  float64
+      PredictedTrafficScale float64
       SampleCount   int
       InferenceNum  int
       WindowStart   time.Time
@@ -239,7 +245,7 @@ Metric 聚合在 channel level 進行，不是先把 `UL + DL` 合成 total volu
 - AnLF 在 `checkModelAccuracy` 完成 per-scope metric 後產生一批 reports，透過 callback 通知 MTLF
 - MTLF 只依 report 做 policy evaluation，不再依賴 AnLF 內部 state
 
-**`TrafficScale` 語意**
+**`TrafficScale` / `PredictedTrafficScale` 語意**
 
 `TrafficScale` 是該 scope 當輪 matched pairs 的 actual traffic channel-level 平均量級：
 
@@ -247,7 +253,13 @@ Metric 聚合在 channel level 進行，不是先把 `UL + DL` 合成 total volu
 TrafficScale = sum(abs(actualUL) + abs(actualDL)) / (pairCount * 2)
 ```
 
-若 UPF `ul_vol / dl_vol` 單位是 bytes，則 `TrafficScale` 單位是 **bytes per channel observation**。它不是 throughput，也不是 bytes/sec。MTLF 會把每輪 `TrafficScale` 寫入 recent buffer；chronic path 的 `minTrafficScale` eligibility 使用的是 recent buffer 內 `TrafficScale` 的 mean，而不是只看當輪 raw value。
+`PredictedTrafficScale` 則是對應 prediction side 的 channel-level 平均量級：
+
+```text
+PredictedTrafficScale = sum(abs(predUL) + abs(predDL)) / (pairCount * 2)
+```
+
+若 UPF `ul_vol / dl_vol` 單位是 bytes，則兩者單位都為 **bytes per channel observation**。它們不是 throughput，也不是 bytes/sec。MTLF 會把每輪 actual / predicted traffic scale 一起寫入 observation buffer；chronic path 的 traffic-scale eligibility 仍使用 recent actual traffic-scale history，而 low-traffic overprediction path 則需要同時看 actual 與 predicted traffic scale。
 
 **生命週期（決策）**
 - `AccuracyReport` 是單輪快照，不保留歷史
@@ -265,34 +277,49 @@ TrafficScale = sum(abs(actualUL) + abs(actualDL)) / (pairCount * 2)
 
 ---
 
-### 4.4 Per-scope recent buffer & baseline 統計（MTLF 擁有）
+### 4.4 Per-scope observation buffers & baseline 統計（MTLF 擁有）
 
-**目的**：由 MTLF 替每條 monitoring scope 維護近期 metric 歷史，供 degradation policy 與 retrain 決策使用。
+**目的**：由 MTLF 替每條 monitoring scope 維護近期 observation history，供 degradation policy、chronic policy 與 retrain 決策使用。
 
 **為什麼這樣設計**
 - 根據規格，AnLF 應負責監測與通知 accuracy information；MTLF 應根據多次通知與本地 policy 決定 degradation / retraining
 - baseline、breach counter、global decision 都是 retrain policy 的一部分，邏輯上應放在 MTLF
 
 **實作要點**
-- 新型別 `ScopeState`（建議放 `internal/mtlf`）：
+- observation 應以「每輪一筆」存放，而不是 `metric -> []float64`。建議先定義：
   ```go
+  type ScopeObservation struct {
+      Timestamp            time.Time
+      SampleCount          int
+      TrafficScaleActual   float64
+      TrafficScalePred     float64
+      Metrics              map[string]float64
+  }
+
   type ScopeState struct {
-      scopeKey     string
-      buffers      map[string]*ringBuffer
-      reportCounts  map[string]int
-      lastUpdate   time.Time
-      breach       int
-      // mutex
+      scopeKey                  string
+      recentObservationBuffer   *observationBuffer
+      degradationReferenceBuffer *observationBuffer
+      lastUpdate                time.Time
+      // degradationWindow / chronicWindow / mutex
   }
   ```
 - 另有 per-model 的 `MonitorStateStore`：
   - key: `modelUrl`
   - value: `map[scopeKey]*ScopeState`
-- Ring buffer 容量由 config `recentBufferSize` 控制（預設 20）
+- 兩種 observation buffer：
+  - `recentObservationBuffer`：保留完整 monitor history，服務 chronic path、observability、low-traffic 特例路徑
+  - `degradationReferenceBuffer`：只服務 degradation path，admission rule 較嚴
+- observation buffer 容量由 config `recentBufferSize` 控制（第一版可共用同一個容量）
+- `degradationReferenceBuffer` 的 admission rule 至少包含：
+  - `SampleCount >= minSamples`
+  - `TrafficScaleActual >= degradationPolicy.minDecisionTrafficScale`
+  - 該輪未命中 degradation signal
 - 方法：
-  - `RecordMetric(metric string, value float64, isValid bool)`
-  - `Mean(metric) / Std(metric) / ZScore(metric, current)`
-  - `SampleCount(metric) int`
+  - `RecordObservation(obs ScopeObservation)`
+  - `RecordDegradationReference(obs ScopeObservation)`
+  - `Mean(metric) / Std(metric) / ZScore(metric, current)`：由指定 buffer 對應的 observation 集合推導
+  - `ObservationCount() int`
 
 **生命週期（決策）**
 - **建立**：某 scope 首次收到 `AccuracyReport` 時 lazy create
@@ -301,11 +328,12 @@ TrafficScale = sum(abs(actualUL) + abs(actualDL)) / (pairCount * 2)
 
 **注意事項**
 - 多 goroutine 可能同時收到多份 report、跑 retrain callback、做 GC → concurrency 是重點
-- Ring buffer 用 slice 實作，`append` + modulo 即可，不必引外部套件
+- observation buffer 用 slice 實作，`append` + modulo 即可，不必引外部套件
 - 統計值（mean/std）每次 on-demand 算，不快取（buffer 小、不值得）
+- recent 與 degradation reference 應共用同一種 observation struct，path 差異只反映在 admission rule
 
 **任務**
-- `ScopeState` 型別 + ring buffer
+- `ScopeObservation` 型別 + observation buffer
 - `MonitorStateStore.GetOrCreateScope(modelUrl, scopeKey)`
 - 定期 GC
 - Concurrency 測試（`go test -race`）
@@ -323,8 +351,10 @@ TrafficScale = sum(abs(actualUL) + abs(actualDL)) / (pairCount * 2)
 
 **判斷邏輯**
 ```
-degradationEligible = current > fixedFloor
-zScore              = (current - mean) / max(std, minStd)
+degradationEligible =
+    current > fixedFloor
+    AND actualTrafficScale >= degradationPolicy.minDecisionTrafficScale
+zScore              = (current - degradationRefMean) / max(degradationRefStd, minStd)
 degradationSignal   = zScore > zScoreThreshold
 degradationHit      = baselineReady AND degradationEligible AND degradationSignal
 
@@ -335,10 +365,11 @@ if any scope/path satisfies M-of-N decision window:
 **決策結論**
 - degradation path 分成 eligibility guard 與 decision signal
 - eligibility guard 只檢查「當前 error 本身是否夠大」；decision signal 只檢查「相對 baseline 是否明顯異常」
+- degradation path 的 baseline 以 `degradationReferenceBuffer` 為主，而不是直接與 chronic 共用完整 recent history
 - Primary metric：**MAE**（測試期間可能調整）
 - `fixedFloor` 預設值先暫定（見 §4.8），測試階段用 CSV 觀察後再回填
 - `zScoreThreshold` 先用預設 `3.0`，測試階段調整
-- breach policy 使用通用 `M-of-N` window（見 §4.5.3），並在 `M=N` 時保留 strict consecutive 語意
+- breach policy 使用通用 `M-of-N` window（見 §4.5.4），並在 `M=N` 時保留 strict consecutive 語意
 - EMA 策略整個移除
 - 沿用 model-level retrain in-flight guard，不變
 
@@ -346,21 +377,23 @@ if any scope/path satisfies M-of-N decision window:
 
 | Path | Eligibility guard | Decision signal | Single-round hit |
 |------|-------------------|-----------------|------------------|
-| Degradation | `baselineReady AND current > fixedFloor` | `zScore > zScoreThreshold` | `degradationEligible AND degradationSignal` |
-| Chronic | `baselineReady AND trafficScaleMean >= minTrafficScale` | `chronicValue > chronicThreshold` | `chronicEligible AND chronicSignal` |
+| Degradation | `baselineReady AND current > fixedFloor AND actualTrafficScale >= degradationPolicy.minDecisionTrafficScale` | `zScore > zScoreThreshold` | `degradationEligible AND degradationSignal` |
+| Chronic | `baselineReady AND recentActualTrafficScaleMean >= chronicPolicy.minDecisionTrafficScale` | `chronicValue > chronicThreshold` | `chronicEligible AND chronicSignal` |
+| LowTrafficOverprediction | `baselineReady AND actualTrafficScale <= lowTrafficOverpredictionPolicy.maxActualTrafficScale` | `predictedTrafficScale` 達 absolute floor 且 relative overshoot 條件成立 | `lowTrafficEligible AND lowTrafficSignal` |
 
 `eligible=true` 只代表該 path 本輪有資格判斷，不代表已經 hit；必須同時滿足 decision signal 才會寫入該 path 的 hit window。
 
 **注意事項**
 - Cold start：buffer 填充未達 `minBufferSamples` 時只建立 baseline，不做 retrain decision，也不累 breach（見 §4.6）
-- `mean` 不做額外保護；若 baseline 很低導致 relative 判斷過敏，優先透過 `fixedFloor` 擋下
+- `mean` 不做額外保護；若 baseline 很低導致 relative 判斷過敏，優先透過 `fixedFloor` 與 `degradationPolicy.minDecisionTrafficScale` 擋下
 - 多 scope 之中只要任一觸發就 retrain，不做「多 scope 同時觸發才算」的 AND
 - 觸發之後立刻 `store.SetRetraining(true)` 並呼叫 `startRetrainWorkflow`；同 model 下所有 scope 的 breach 同時歸零
+- 已命中 degradation signal 的 observation 不應回寫到 `degradationReferenceBuffer`
 - 程式與 log 命名對齊為 `degradationEligible` / `degradationSignal`，避免把 `fixedFloor` 誤解為與 z-score 同層的獨立 decision signal
 
 **任務**
 - 移除 `TriggerStrategy / EmaAlpha / checkEMATrigger`
-- 改寫 `HandleDeviationReport` 為 report-based per-scope policy flow
+- 改寫 MTLF decision entry point 為 report-based per-scope policy flow
 - Model-level OR + consecutive counter
 - 單元測試：
   - 低 error + 高 z：不觸發（degradation eligibility 擋）
@@ -386,8 +419,8 @@ if any scope/path satisfies M-of-N decision window:
 - 保留現有 degradation path，不替代
 - 新增第二條 `chronic poor-quality path`
 - 這條 path 不看「有沒有比 baseline 更差」，而是看「最近一段時間的整體品質是否持續不好」
-- 第一版不做依流量量級切換 metric；改採固定 chronic metric + `minTrafficScale` eligibility guard
-- chronic path 與 degradation path 對齊為「eligibility guard + decision signal」形式：前者用 `minTrafficScale` 判斷是否有資格，後者用 `chronicValue > chronicThreshold` 判斷單輪 hit
+- 第一版不做依流量量級切換 metric；改採固定 chronic metric + `chronicPolicy.minDecisionTrafficScale` eligibility guard
+- chronic path 與 degradation path 對齊為「eligibility guard + decision signal」形式：前者用 `chronicPolicy.minDecisionTrafficScale` 判斷是否有資格，後者用 `chronicValue > chronicThreshold` 判斷單輪 hit
 
 **metric 與 aggregation**
 - chronic metric 候選：`WAPE`、`NRMSE`、`MAE`
@@ -424,7 +457,34 @@ scopeTriggeredByChronic =
 - `chronicValue` 則來自 recent chronic metric history，依 config 選擇 `mean` 或 `percentile`
 - `chronicPolicy.metric = MAE` 時，`chronicPolicy.threshold` 的單位跟 MAE 一樣是 bytes；`WAPE / NRMSE` 則為 normalized ratio
 
-### 4.5.3 Breach policy
+### 4.5.3 Low-traffic overprediction path
+
+**目的**：補足 chronic path 在 low-traffic 區域的 blind spot，也就是 actual traffic 幾乎沒有，但模型仍持續預測出明顯偏高的流量。
+
+**為什麼需要**
+- chronic path 在 low-traffic 區域應該保守，避免 normalized metric 誤判
+- 但若只靠 `minDecisionTrafficScale` 直接關閉該 path，會漏掉「實際接近 0、預測卻持續很高」的真實錯誤
+- 這類情況與一般 chronic poor-quality 不同，較合理的是獨立成一條 path，而不是硬塞回 chronic signal
+
+**設計方向**
+- 新增候選 path：`lowTrafficOverprediction`
+- actual-side eligibility：
+  - `actualTrafficScale <= lowTrafficOverpredictionPolicy.maxActualTrafficScale`
+- decision signal 同時要求：
+  - `predictedTrafficScale >= lowTrafficOverpredictionPolicy.minPredictedTrafficScale`
+  - `predictedTrafficScale >= lowTrafficOverpredictionPolicy.predictionOvershootRatio * max(actualTrafficScale, epsilonBase)`
+
+**注意事項**
+- 不能只看 relative ratio，否則 actual 接近 0 時容易爆炸
+- 必須同時要求 predicted-side absolute floor，避免 near-zero noise 誤判
+- 這條 path 使用 actual / predicted traffic scale，而不是 normalized error metric 當唯一依據
+
+**任務**
+- 在 `AccuracyReport` / observation contract 中補入 `PredictedTrafficScale`
+- 設計 low-traffic overprediction path config
+- 為 actual≈0、predicted 高估、predicted 很低等情境補單元測試
+
+### 4.5.4 Breach policy
 
 **目的**：將目前 strict consecutive breach 改成較通用的 `M-of-N` window 規則，讓 decision 對 noisy runtime 更有容錯性。
 
@@ -464,16 +524,17 @@ within the latest M rounds:
 | no-ground-truth 跳過 | `lookupGroundTruth` 返回 nil 時完全跳過（現行為），不入 buffer |
 
 **注意事項**
-- `minBufferSamples` 與 config `minSamples`（每輪最少 matched pairs 才評估）是不同層概念，不要混淆
+- `minBufferSamples` 與 config `minSamples`（每個 scope 在單輪中至少要有多少 matched pairs 才評估）是不同層概念，不要混淆
 - `baselineReady` 的判斷應以「寫入本輪前的既有 recent history」為準；本輪資料仍照常寫入 buffer
 - `baselineReady=false` 時，`zscore` / `chronicValue` 仍可持續計算與記錄；只是 `degradationSignal` / `chronicSignal` 應標示為 `skipped`，且不得累 breach / hit
+- low-traffic round 可進入 `recentObservationBuffer` 作為 observability / chronic / follow-up path 的輸入，但不應在不符合 admission rule 時污染 `degradationReferenceBuffer`
 - Post hot-swap 不再額外依賴 `WarmupDuration`；scope-level baseline 與新的 model state 直接從 swap 後重新建立（見 §6.4）
 - baseline 建立過程的觀測資訊統一由 log 提供，不再依賴額外 CSV dump
 
 **任務**
 - `minBufferSamples` gate 加進 §4.5 decision 邏輯，明確規定 baseline 未就緒前不做 trigger / breach decision
 - `Std` 計算內建 `max(std, minStd)`（或在 `ZScore` 內套）
-- `both-zero` 樣本照常傳入 `RecordMetric`
+- `both-zero` 樣本照常寫入 observation buffer
 - 單元測試：buffer=0~7 時只建 baseline、不觸發；buffer=8 起啟用 decision signal
 
 ---
@@ -539,7 +600,8 @@ within the latest M rounds:
 |------|------|------|------|
 | `metricsToRecord` | `[]string` | 候選 metric，會在 accuracy scope log 中輸出 | `[sMAPE, MAE, MSE, WAPE, NRMSE]` |
 | `primaryMetric` | `string` | Checkpoint B 起進 decision 的 metric | `MAE` |
-| `recentBufferSize` | `int` | per-scope ring buffer 長度 | 20 |
+| `degradationPolicy.minDecisionTrafficScale` | `float64` | 啟用 degradation path 前，當輪 primary metric 的最小可信 traffic-scale；bytes per channel observation | `0`（disabled） |
+| `recentBufferSize` | `int` | per-scope observation buffer 長度 | 20 |
 | `minBufferSamples` | `int` | 啟用 z-score 前的最少有效樣本數 | 8 |
 | `minStd` | `float64` | std floor，避免 /0 | 0.01 |
 | `fixedFloor` | `float64` | degradation eligibility floor；單位依 `primaryMetric` 而定，MAE 時為 bytes | 先暫定（測試後調整） |
@@ -556,7 +618,11 @@ within the latest M rounds:
 | `chronicPolicy.aggregator` | `string` | `mean` 或 `percentile` | `percentile` |
 | `chronicPolicy.percentile` | `int` | percentile 的 `p` 值；`50` 等價於 median | `75` |
 | `chronicPolicy.threshold` | `float64` | chronic decision signal 門檻；單位由 metric 決定 | `1.0` |
-| `chronicPolicy.minTrafficScale` | `float64` | 啟用 chronic path 前的 traffic-scale eligibility floor；bytes per channel observation | `1024` |
+| `chronicPolicy.minDecisionTrafficScale` | `float64` | 啟用 chronic path 前的 traffic-scale eligibility floor；bytes per channel observation | `1024` |
+| `lowTrafficOverpredictionPolicy.enabled` | `bool` | 是否啟用 low-traffic overprediction path | `false` |
+| `lowTrafficOverpredictionPolicy.maxActualTrafficScale` | `float64` | 視為 low-traffic 的 actual traffic 上限 | `1024` |
+| `lowTrafficOverpredictionPolicy.minPredictedTrafficScale` | `float64` | 形成 overprediction signal 前，predicted traffic 的最小絕對量級 | `4096` |
+| `lowTrafficOverpredictionPolicy.predictionOvershootRatio` | `float64` | predicted / actual 的最小 overshoot ratio | `4.0` |
 
 **Config fallback / normalization**
 
@@ -564,18 +630,26 @@ within the latest M rounds:
 |------|--------------------------|
 | `decisionWindowSize` | explicit value > `consecutiveBreaches` > `3` |
 | `requiredHitsInWindow` | explicit value > `consecutiveBreaches` > `3`，且 clamp 到 `decisionWindowSize` |
+| `degradationPolicy.minDecisionTrafficScale` | missing 或 `<0` 時為 `0`；`0` 代表停用這個 guard |
 | `chronicPolicy.enabled` | missing / nil 時為 `false` |
 | `chronicPolicy.metric` | 只接受 `WAPE / NRMSE / MAE`，不合法時 fallback `WAPE` |
 | `chronicPolicy.aggregator` | 只接受 `mean / percentile`，不合法時 fallback `percentile` |
 | `chronicPolicy.percentile` | missing 或 `<=0` 時為 `75`；`>99` 時 clamp 到 `99` |
 | `chronicPolicy.threshold` | missing 或 `<=0` 時為 `1.0` |
-| `chronicPolicy.minTrafficScale` | missing 或 `<=0` 時為 `1024` |
+| `chronicPolicy.minDecisionTrafficScale` | missing 或 `<=0` 時為 `1024` |
+| `lowTrafficOverpredictionPolicy.enabled` | missing / nil 時為 `false` |
+| `lowTrafficOverpredictionPolicy.maxActualTrafficScale` | missing 或 `<=0` 時為 `1024` |
+| `lowTrafficOverpredictionPolicy.minPredictedTrafficScale` | missing 或 `<=0` 時為 `4096` |
+| `lowTrafficOverpredictionPolicy.predictionOvershootRatio` | missing 或 `<=1.0` 時為 `4.0` |
 
 **注意事項**
 - `warmupDuration` 的語意需明確限定為「NWDAF 啟動後第一次 accuracy monitor 啟動時的 startup warmup」，不是每次 hot-swap 後都重跑
 - `fixedFloor` 依 primary metric 單位（MAE: bytes）先給一個暫定值不卡住實作；測試期間看分析報表與 log 再調
+- `minSamples` 的語意應定義為 per-scope `SampleCount` gate，不再以整個 monitor round 的成熟 pair 合計數代表單一 scope 足夠穩定
 - `decisionWindowSize / requiredHitsInWindow` 是新的通用 breach policy；`M=N` 時等價於目前 strict consecutive
-- chronic policy 第一版不做依流量量級切換 metric；改採固定 chronic metric + `minTrafficScale` eligibility guard
+- 若 primary metric 對 low-traffic 區域不穩定（例如 WAPE），degradation path 應額外用 `degradationPolicy.minDecisionTrafficScale` 保護；低於門檻的 round 僅保留 observability，不記 hit，也不記 miss
+- chronic policy 第一版不做依流量量級切換 metric；改採固定 chronic metric + `chronicPolicy.minDecisionTrafficScale` eligibility guard
+- 若要補 low-traffic 區域的 blind spot，應優先考慮獨立的 `lowTrafficOverpredictionPolicy`，而不是直接放寬 chronic path 的 low-traffic guard
 - `median` 不作為核心獨立選項；若要 median，應用 `percentile=50`
 - Checkpoint A 保留舊 config 的 `deviationThreshold / emaAlpha / triggerStrategy`；Checkpoint B 才在 `config/nwdafcfg.yaml` 同步清掉
 
@@ -598,15 +672,16 @@ within the latest M rounds:
 | Scope 分桶 | group 與 SUPI scope 分別退化，只有退化者被計入 |
 | AccuracyReport | AnLF 產出報告欄位正確、可被 MTLF 消費；空 metrics / 缺 primary metric / `SampleCount=0` 的錯誤案例明確處理 |
 | Checkpoint A 相容性 | 新增 scope / metrics / report 後，既有 sMAPE threshold decision 不回歸 |
-| Baseline | Ring buffer 溢位後舊值被捨棄、mean/std 正確 |
+| Baseline | observation / degradation reference buffer 溢位後舊值被捨棄、mean/std 正確 |
 | No ground truth / both-zero | no-ground-truth 不入 baseline；both-zero 進 recent buffer，且 report / log 行為符合設計 |
 | Cold start | 既有 history 未達 `minBufferSamples` 時只建 baseline、不觸發；達門檻後後續 round 才啟用 z；std=0 時不爆 |
 | Cold start observability | `baselineReady=false` 時 `zscore` / `chronicValue` 持續計算；`degradationSignal` / `chronicSignal` 記為 `skipped`；不累 decision window |
 | Startup warmup | `warmupDuration` 只在第一次 monitor start 生效；hot-swap 後不再重跑 warmup |
-| Policy flow | degradation eligibility 能擋下「error 很小但 z 很高」；`minStd` 能擋下「std 太小造成 z 爆高」；decision signal 與 decision window 邏輯正確 |
-| Chronic path | normalized metric 候選、`mean / percentile` 聚合、`percentile=50` 等價於 median、`minTrafficScale` eligibility guard、與 degradation path 的 hit reason 區分正確 |
+| Policy flow | degradation eligibility 能擋下「error 很小但 z 很高」；`minStd` 能擋下「std 太小造成 z 爆高」；`degradationPolicy.minDecisionTrafficScale` 能擋下 low-traffic unreliable rounds；decision signal 與 decision window 邏輯正確 |
+| Chronic path | normalized metric 候選、`mean / percentile` 聚合、`percentile=50` 等價於 median、`chronicPolicy.minDecisionTrafficScale` eligibility guard、與 degradation path 的 hit reason 區分正確 |
+| Low-traffic overprediction path | actual low-traffic guard、predicted absolute floor、relative overshoot ratio、與 chronic / degradation path 的 hit reason 區分正確 |
 | Retrain lifecycle | in-flight retrain 時新 report 被忽略；failure 會清 retrain guard；觸發後 breach 歸零；post-swap 舊 model state 清理 |
-| Concurrency | `RecordMetric` / `HandleDeviationReport` / GC 並發不 race |
+| Concurrency | `RecordObservation` / report-based policy evaluation / GC 並發不 race |
 | GC | scope 被動清理 `lastUpdate > TTL` |
 | Log-based report | policy / metric / traffic / lifecycle log 可被離線報表完整解析 |
 
@@ -650,20 +725,24 @@ within the latest M rounds:
 2. degradation path（§4.5）
 3. Cold start 保護（§4.6）
 4. chronic poor-quality path（§4.5.2）
-5. `M-of-N` breach policy（§4.5.3）
-6. Config 擴充、移除 EMA 與舊 threshold（§4.8）
-7. scope state 被動 GC（§4.4）
-8. 單元測試（§4.9）
+5. low-traffic overprediction path（§4.5.3）
+6. `M-of-N` breach policy（§4.5.4）
+7. Config 擴充、移除 EMA 與舊 threshold（§4.8）
+8. scope state 被動 GC（§4.4）
+9. 單元測試（§4.9）
 
 **暫定值**（可在 A 的 CSV 累積後再回頭調）
 - `primaryMetric = MAE`
 - `zScoreThreshold = 3.0`
 - `fixedFloor` 依實測 MAE 量級先估（例如觀察幾輪後取大致 median 當參考）
+- `degradationPolicy.minDecisionTrafficScale = 0`
 - `decisionWindowSize = 3`、`requiredHitsInWindow = 3`
 - `chronicPolicy.enabled = false`
 - `chronicPolicy.metric = WAPE`
 - `chronicPolicy.aggregator = percentile`
 - `chronicPolicy.percentile = 75`
+- `chronicPolicy.minDecisionTrafficScale = 1024`
+- `lowTrafficOverpredictionPolicy.enabled = false`
 - `recentBufferSize = 20`、`minBufferSamples = 8`
 
 **驗收**
@@ -679,7 +758,11 @@ within the latest M rounds:
 
 **內容**
 - 新增 offline retrain analysis report tool（詳見 `checkpoints/checkpoint_c_detailed_design.md`），用 CSV/log/config 產生單一 HTML 報表
-- 按 CSV 調 `primaryMetric` / `fixedFloor` / `zScoreThreshold`
+- 按分析結果調 `primaryMetric` / `fixedFloor` / `zScoreThreshold`
+- 視 primary metric 的 low-traffic 特性決定 `degradationPolicy.minDecisionTrafficScale`
+- 確認 `minSamples` per-scope gate 的實際效果
+- 若要導入 `degradationReferenceBuffer` 與 observation-buffer state store，先完成對應設計與測試
+- 視需要評估 `PredictedTrafficScale` 與 `lowTrafficOverpredictionPolicy`
 - 確認穩定後移除 CSV dump（§4.6 定位為過渡期工具）
 - 舊程式碼 / 註解清理 / 文件化
 
