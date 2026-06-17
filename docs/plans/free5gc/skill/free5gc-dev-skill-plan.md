@@ -595,3 +595,367 @@ description: Develop, review, and debug free5GC or free5GC-style 5G Core compone
 4. 先完成 `SKILL.md`、`source-orientation.md`、`nf-architecture.md`、`sbi-development.md`、`review-checklist.md`
 5. 跑 validation
 6. 用本工作區做一次 review forward test
+
+---
+
+## 11. Coverage Gap Audit（2026-06-17）
+
+### 11.1 背景
+
+已建立第一版 `free5gc-dev-skill`，目前 skill repo 位置：
+
+```text
+free5gc-dev-skill/
+├── SKILL.md
+├── agents/openai.yaml
+├── references/
+│   ├── source-orientation.md
+│   ├── nf-architecture.md
+│   ├── sbi-development.md
+│   ├── openapi-contract.md
+│   ├── testing.md
+│   ├── debugging.md
+│   ├── review-checklist.md
+│   └── publishing-and-licensing.md
+├── scripts/inspect_free5gc_repo.sh
+├── NOTICE
+└── LICENSE
+```
+
+第一版已能覆蓋：
+
+- repo orientation
+- NF 目錄責任分層
+- control-plane NF 與 UPF/data-plane 的基本區分
+- SBI `server/router/handler/processor/consumer` flow
+- OpenAPI generated model 的使用原則
+- gock/gomock/httptest/H2C test pattern
+- runtime debug 分層
+- review checklist
+- public publishing/licensing 注意事項
+
+但這一版仍是「minimal usable skill」，有多處只停留在原則層，未完整轉成可執行 workflow。OpenAPI Generator 就是典型案例：目前 skill 只說「prefer regenerating from the correct OpenAPI source」，但沒有指導 agent 如何判斷何時要 regenerate、如何選 generator、如何驗證 output、如何避免混入 handwritten code。
+
+### 11.2 Coverage Gap 分類
+
+以下缺口按優先順序排列。
+
+| 優先級 | 缺口 | 現況 | 風險 | 補強方向 |
+|--------|------|------|------|----------|
+| P0 | OpenAPI Generator workflow | 只涵蓋 contract 原則，缺少 CLI/Docker/JAR/generator option/驗證流程 | Agent 可能手改 generated code、手刻 models、或不知道何時 regenerate | 擴充 `openapi-contract.md`，必要時新增 `openapi-generation.md` |
+| P0 | Config/factory lifecycle | 只在 architecture/debug/review 中點到 `pkg/factory` | Agent 修改 config 時可能漏掉 defaults、validation、sample config、CLI config path、tests | 新增 `config-and-lifecycle.md` |
+| P0 | NRF registration/discovery/OAuth/cert flow | 只列為 checklist | Cross-NF 行為最容易壞，agent 缺少註冊、發現、OAuth、certificate 的追蹤方法 | 新增 `nf-registration-discovery.md` |
+| P1 | Build/run/environment workflow | 目前只說讀 Makefile/CI，缺少 build/run prerequisites 與環境限制 | Agent 可能用錯 Go/MongoDB/gtp5g/kernel/NAT/UERANSIM 假設 | 新增 `build-run-environment.md` |
+| P1 | UPF/data-plane implementation workflow | debug 有工具，architecture 有分類，但缺少 PDR/FAR/QER/URR/PFCP/netlink 變更檢查流程 | Agent 可能只跑 Go tests 就宣稱 data-plane 正確 | 新增或擴充 `data-plane-upf.md` |
+| P1 | Concurrency and service lifecycle | 只提 goroutine lifecycle，缺少 context cancellation、WaitGroup、shutdown、server goroutine 管理規則 | Agent 可能新增 goroutine leak、shutdown hang、race | 新增 `concurrency-lifecycle.md` |
+| P1 | Metrics/logging/observability | 只提 logging boundary 與 metrics server，缺少 free5GC metrics/context/logging conventions | Agent 可能漏 metrics、亂用 logger、或破壞 request metrics | 新增 `observability.md` 或併入 lifecycle |
+| P2 | Interface/protocol-specific NF guidance | AMF/N3IWF/TNGF/SMF/CHF 僅概念區分 | Agent 可能把 AMF NAS/NGAP、SMF PFCP、CHF CDR 等都當一般 SBI | 新增 `nf-specific-routing.md` |
+| P2 | CI/release/contribution workflow | 只讀 CI workflow，缺少 regression/integration/unit testing 與 PR contribution expectations | 若 skill 公開給貢獻者，對提 PR 的 guidance 不足 | 新增 `ci-release-contribution.md` |
+| P2 | Webconsole / frontend/backend boundary | 目前幾乎未覆蓋 | Agent 處理 webconsole 時會套用 NF 規則 | 新增 webconsole routing，或在 `source-orientation.md` 標記不適用範圍 |
+| P2 | Script capability | `inspect_free5gc_repo.sh` 只列 shape，無風險檢查或 machine-readable output | Forward testing 時仍需 agent 自己重組很多資訊 | 擴充 script summary 與 flags |
+| P3 | Public packaging / install instructions | 有 licensing，但沒有 release/install layout 決策 | 開放給他人使用時不清楚要 clone 到哪裡、如何安裝到 Codex | 依 skill 發佈方式再補，不急於第一輪 |
+
+### 11.3 課程章節對應缺口
+
+課程中尚未完整轉換成 skill workflow 的內容：
+
+- `5. Exploring the free5GC Source Code.md`
+  - `Code Generation Tools`
+  - `Code Generation Examples from 3GPP Specifications`
+  - `Common Options Explained`
+  - `OpenAPI Code Analysis`
+  - `Integration with free5GC Architecture`
+- `4. Building and Running free5GC.md`
+  - VM/network prerequisites
+  - Go/MongoDB/kernel/build dependencies
+  - gtp5g install/build
+  - Webconsole build
+  - IP forwarding/NAT
+  - UERANSIM connectivity validation
+- `6. free5GC Development Basics.md`
+  - goroutines/channels/select/WaitGroup 在 control plane 的使用守則
+  - netlink family development
+  - PDU session establishment flow from control plane to data plane
+- `7. Debugging free5GC.md`
+  - gtp5g-tunnel 的具體 PDR/FAR/QER 調查流程
+  - eBPF attach workflow 與使用前提
+  - Delve 常用命令與 breakpoint workflow
+- `8. Summary and Next Steps.md`
+  - version assignment
+  - regression/integration/unit testing 的 release gate 語義
+  - contribution workflow
+
+---
+
+## 12. 補充實作計畫
+
+### Phase 6: OpenAPI Generator Workflow 補強（P0）
+
+目標：讓 agent 能處理「需要從 3GPP OpenAPI YAML 產生或更新 Go code」的任務，而不是只知道 generated model 很重要。
+
+動作：
+
+- 擴充 `references/openapi-contract.md`，或新增 `references/openapi-generation.md`
+- 在 `SKILL.md` 增加 routing：
+  - API contract/model mismatch → `openapi-contract.md`
+  - regenerate/update generated code → `openapi-generation.md`
+- 補入 workflow：
+  1. 判斷是否真的需要 regeneration
+  2. 找出 target repo 使用的 `github.com/free5gc/openapi` 版本
+  3. 找出對應 3GPP OpenAPI YAML 或 free5GC openapi source
+  4. 選擇 Docker 或 JAR generator path
+  5. 使用 target repo 指定或相容的 OpenAPI Generator version
+  6. 使用 Go generator 與 package options
+  7. 檢查 generated models/interfaces/client/server files
+  8. 將 handwritten business logic 維持在 processor/service，不混進 generated code
+  9. 跑 compile/test，並比較 generated diff 是否只包含預期 contract changes
+- 補入常用 option 說明：
+  - `-i`
+  - `-g go`
+  - `-o`
+  - `packageName`
+  - `withGoCodegenComment`
+  - `enumClassPrefix`
+  - `isGoSubmodule`
+
+完成條件：
+
+- Agent 能說明何時不該 regenerate
+- Agent 能列出 regeneration 前必讀的 repo/spec/version 資訊
+- Agent 能避免手改 generated code
+- Agent 能在 PR/review 中辨識 generated diff 與 handwritten diff 是否混雜
+
+### Phase 7: Config、Factory、Lifecycle 補強（P0）
+
+目標：讓 agent 修改 NF config 或 startup/shutdown 行為時，能對齊 free5GC 的 `cmd -> factory -> service -> context` 路徑。
+
+動作：
+
+- 新增 `references/config-and-lifecycle.md`
+- 補入 workflow：
+  - CLI `--config` path 與 default config path
+  - `pkg/factory` config struct、validation、default values
+  - root `config/*cfg.yaml` 或 NF sample config 的同步
+  - `service.NewApp` wiring
+  - context initialization
+  - server startup
+  - graceful shutdown / signal / cancel / WaitGroup
+  - metrics server lifecycle
+- 在 `testing.md` 補 config test pattern：
+  - table-driven validation
+  - invalid/missing config cases
+  - config default compatibility
+- 在 `review-checklist.md` 增加 config-specific checklist
+
+完成條件：
+
+- Agent 修改 config 時會同步 schema、default、example yaml、validation、tests
+- Agent 不會把 startup logic 塞進 handler/processor
+- Agent 能指出 goroutine/shutdown 風險
+
+### Phase 8: NRF Registration、Discovery、OAuth、Certificate 補強（P0）
+
+目標：補足 cross-NF 行為中最容易出錯的 service registration/discovery 與授權流程。
+
+動作：
+
+- 新增 `references/nf-registration-discovery.md`
+- 內容包含：
+  - NF profile 與 `nfInstanceId`
+  - NRF registration/deregistration lifecycle
+  - discovery request/response trace
+  - service consumer / producer roles
+  - OAuth enabled/disabled branch
+  - access token request/validation path
+  - certificate path、root cert、NF cert、URI/ID matching
+  - config 中 NRF URI、SBI register/bind address 差異
+- 對照 `resources/references/free5gc-main/NFs/nrf/internal/sbi/api_accesstoken.go`
+- 對照 `resources/references/free5gc-main/NFs/nrf/internal/sbi/processor/access_token.go`
+- 在 `debugging.md` 增加 registration/discovery debug checklist
+
+完成條件：
+
+- Agent 能追蹤一個 NF 從 startup 到 NRF registration 的路徑
+- Agent 能辨識 discovery/OAuth/cert 問題應看 config、context、consumer、NRF processor 還是 certificate
+- Agent 不會只用 hardcoded peer URI 解決 cross-NF 問題
+
+### Phase 9: Build、Run、Environment 補強（P1）
+
+目標：讓 agent 在建置/執行/驗證 free5GC 時能正確處理環境依賴，不把 unit test、build、runtime、connectivity test 混為一談。
+
+動作：
+
+- 新增 `references/build-run-environment.md`
+- 內容包含：
+  - Go version 來源優先序：target `go.mod`/CI > course notes
+  - MongoDB requirement and AVX caveat
+  - build dependencies
+  - root `make`, `make <nf>`, `make webconsole`
+  - gtp5g build/install for UPF
+  - `run.sh`
+  - IP forwarding
+  - NAT rule
+  - firewall caveat
+  - UERANSIM validation boundary
+  - Webconsole default role as subscriber data management UI
+- 明確標記：
+  - local build pass 不等於 runtime pass
+  - runtime pass 不等於 UE connectivity pass
+  - UE connectivity pass 需要 network/kernel/simulator prerequisites
+
+完成條件：
+
+- Agent 會先讀 target repo 的 build docs 和 CI
+- Agent 能列出未執行 integration/connectivity test 的環境原因
+- Agent 不會把課程中的版本號當硬規則
+
+### Phase 10: UPF/Data Plane Workflow 補強（P1）
+
+目標：把目前 debug 中的 UPF 工具列表提升成可操作的 data-plane implementation/review workflow。
+
+動作：
+
+- 新增 `references/data-plane-upf.md`
+- 內容包含：
+  - control plane 到 data plane 的 PDU session path
+  - SMF policy/PFCP instruction → UPF session/rule translation
+  - PDR/FAR/QER/URR 的責任與關聯
+  - Rtnetlink vs Generic Netlink
+  - go-upf / gtp5g / kernel module boundary
+  - runtime update path
+  - data-plane review checklist
+  - data-plane validation tiers：
+    1. Go unit tests
+    2. PFCP/session tests
+    3. gtp5g rule inspection
+    4. packet forwarding/connectivity
+    5. kernel tracing
+- 在 `SKILL.md` 將 UPF 任務 routing 到 `data-plane-upf.md`
+
+完成條件：
+
+- Agent 能說明 PDR/FAR/QER 的變更影響
+- Agent 能區分 PFCP control issue、UPF translation issue、kernel rule issue、routing/NAT issue
+- Agent 不會用 SBI handler/processor 規則套 UPF
+
+### Phase 11: Concurrency、Lifecycle、Observability 補強（P1）
+
+目標：補足 control-plane Go runtime 行為，避免 agent 寫出 goroutine leak、shutdown hang 或不可觀測的流程。
+
+動作：
+
+- 新增 `references/concurrency-lifecycle.md`
+- 視內容量決定是否另開 `references/observability.md`
+- 內容包含：
+  - goroutine 啟動條件
+  - context cancellation
+  - channel/select timeout
+  - WaitGroup add/done/wait discipline
+  - panic recovery and fatal behavior
+  - graceful shutdown
+  - log boundary and severity
+  - metrics server and request metrics
+- 對照 free5GC `pkg/service/init.go` 類型的 lifecycle pattern
+
+完成條件：
+
+- Agent 新增 background worker 時會同時設計 cancellation 和 test
+- Agent 修改 service lifecycle 時會檢查 shutdown path
+- Agent review 時能指出 goroutine leak / duplicate logging / missing observability
+
+### Phase 12: NF-Specific Routing 補強（P2）
+
+目標：讓 skill 對 AMF、SMF、UPF、N3IWF、TNGF、CHF、UDM/UDR 等不同 NF 有基本 routing，不把所有任務都導向 generic SBI。
+
+動作：
+
+- 新增 `references/nf-specific-routing.md`
+- 內容不寫完整 spec，只寫「遇到此 NF 應優先看哪些 package 與介面」：
+  - AMF: NAS, NGAP, GMM, SCTP, N1/N2
+  - SMF: PDU session, PFCP, user plane information, UPF selection
+  - UPF: PFCP, GTP-U, forwarder, gtp5g
+  - N3IWF/TNGF: non-3GPP access, IKE/IPsec/NGAP path
+  - NRF: NF management, discovery, OAuth
+  - UDM/UDR: subscription/auth data, MongoDB/data repository path
+  - CHF: charging/CDR path
+- 在 `source-orientation.md` 增加 NF-specific routing table
+
+完成條件：
+
+- Agent 能在任務開始時判斷「這不是 generic SBI 問題」
+- Agent 能選擇正確 package 先讀
+
+### Phase 13: CI、Release、Contribution 補強（P2）
+
+目標：支援公開使用者用 skill 準備 PR 或 review CI failure。
+
+動作：
+
+- 新增 `references/ci-release-contribution.md`
+- 內容包含：
+  - unit / integration / regression testing 的語義
+  - root GitHub workflow 的 build/test pattern
+  - OAuth and non-OAuth integration test paths
+  - release/version assignment：version、commit hash、build time injection
+  - PR preparation checklist
+  - issue/feature scope description
+- 在 `review-checklist.md` 補 PR readiness checklist
+
+完成條件：
+
+- Agent 能把測試結果對應到 release gate 語義
+- Agent 能在 PR summary 中清楚說明測試範圍和未覆蓋風險
+
+### Phase 14: Script Enhancement（P2）
+
+目標：讓 `inspect_free5gc_repo.sh` 不只列檔，也能輔助找出缺口。
+
+動作：
+
+- 新增 flags：
+  - `--json` 或 `--summary`
+  - `--nf <name>`
+  - `--checks`
+- 增加檢查：
+  - NF 是否有 `cmd/pkg/internal`
+  - control-plane NF 是否有 `internal/sbi/processor`
+  - `go.mod` Go version 與 CI go-version 是否不一致
+  - root Makefile 是否支援目標 NF
+  - test files 是否存在
+  - UPF 是否有 data-plane packages
+- 保持 script 為輔助工具，不讓它取代人工閱讀
+
+完成條件：
+
+- Script 可作為 review 起始輸入
+- Script failure 不會阻斷 agent 手動分析
+
+---
+
+## 13. 更新後的建議實作順序
+
+短期應先補 P0：
+
+1. Phase 6: OpenAPI Generator Workflow
+2. Phase 7: Config、Factory、Lifecycle
+3. Phase 8: NRF Registration、Discovery、OAuth、Certificate
+
+接著補 P1：
+
+4. Phase 9: Build、Run、Environment
+5. Phase 10: UPF/Data Plane Workflow
+6. Phase 11: Concurrency、Lifecycle、Observability
+
+最後補 P2：
+
+7. Phase 12: NF-Specific Routing
+8. Phase 13: CI、Release、Contribution
+9. Phase 14: Script Enhancement
+
+每個 phase 完成後都應：
+
+- 更新 `SKILL.md` routing
+- 保持 reference 一層直連，不做深層 reference chain
+- 跑 `quick_validate.py`
+- 用 `resources/references/free5gc-main` 做 smoke test
+- 至少做一個 forward-test prompt，確認 agent 會讀到新增 reference
