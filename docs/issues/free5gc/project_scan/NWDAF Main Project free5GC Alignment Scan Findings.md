@@ -364,6 +364,166 @@ Why this matters:
 - A stale README increases environment mismatch risk for future contributors and
   reviewers.
 
+### 10. Medium — internal dependency mocking, handler coverage, and lifecycle-oriented tests do not meet the local free5GC testing baseline
+
+Type: structural test gap
+
+Evidence:
+
+- The local testing guidance expects:
+  - `gomock` for app/context dependencies: `free5gc-dev-skill/references/testing.md:13,51-63`
+  - `httptest` plus `gin.CreateTestContext` for SBI procedure/handler work:
+    `free5gc-dev-skill/references/testing.md:10,20-35`
+  - lifecycle/concurrency tests for cancellation or timeout when the local app
+    interface allows it: `free5gc-dev-skill/references/testing.md:14`
+- Current processor tests use handwritten stubs instead of interface mocks:
+  - `internal/sbi/processor/upf_notify_test.go:18-39`
+- Some tests instantiate real consumers or concrete services rather than
+  mocking internal dependencies through the app boundary:
+  - `internal/sbi/processor/data_collection_test.go:36-40,213-216,285-288`
+  - `internal/sbi/consumer/ml_service_test.go:223-228`
+- The current `internal/sbi` test set covers consumer and processor packages,
+  but the scan did not find handler-focused `api_*_test.go` coverage for:
+  - `internal/sbi/api_eventssubscription.go`
+  - `internal/sbi/api_collector.go`
+  - `internal/sbi/api_mlmodelprovision.go`
+  - `internal/sbi/api_daisy_callback.go`
+  - `internal/sbi/api_adrf_notify.go`
+- The notifier test set currently checks helper/control logic only:
+  - `internal/notifier/notifier_test.go:11-240`
+  - the scan did not find tests for `sendNotification()`, HTTP failure handling,
+    or shutdown/cancellation interaction
+
+Why this is a problem:
+
+- The current unit tests verify a useful subset of package logic, but they do
+  not yet align with the skill's intended free5GC-style split between:
+  - internal dependency mocking with `gomock`
+  - handler/procedure verification at the HTTP boundary
+  - lifecycle-aware cancellation and timeout tests
+- That leaves the most architecture-sensitive seams under-tested.
+
+Impact:
+
+- App-boundary refactors remain risky because there is no established mock
+  contract protecting those seams.
+- Handler error semantics and callback parsing behavior are largely unverified.
+- Concurrency and shutdown fixes will be harder to validate mechanically.
+
+### 11. Medium — SBI error response handling is inconsistent across endpoints and partly bypasses the normal `ProblemDetails` pattern
+
+Type: confirmed issue plus structural gap
+
+Evidence:
+
+- Subscription and collector handlers return `models.ProblemDetails` on parse or
+  procedure errors:
+  - `internal/sbi/api_eventssubscription.go:19-32,54-67,78-81`
+  - `internal/sbi/api_collector.go:42-60,73-93`
+- Callback-oriented handlers instead return ad hoc `gin.H{"error": ...}` bodies:
+  - `internal/sbi/api_daisy_callback.go:25-32`
+  - `internal/sbi/api_adrf_notify.go:28-32`
+  - `internal/sbi/api_mlmodelprovision.go:39-42`
+- `HandleCollectorNotify` and `HandleUpfNotify` use `c.BindJSON(...)` rather
+  than `c.ShouldBindJSON(...)`:
+  - `internal/sbi/api_collector.go:42`
+  - `internal/sbi/api_collector.go:73`
+
+Why this is a problem:
+
+- The review guidance asks whether responses and error bodies are aligned with
+  local helpers and generated models:
+  - `free5gc-dev-skill/references/review-checklist.md:22-27,60-64`
+- Right now the same SBI server exposes multiple incompatible error-body styles.
+- Using `BindJSON` also weakens control over when Gin writes status and body
+  state compared with the explicit `ShouldBindJSON` path already used elsewhere
+  in the same server.
+
+Impact:
+
+- Callback consumers cannot rely on one stable error contract.
+- Handler behavior is harder to reason about and harder to test consistently.
+- Future refactors may accidentally diverge further because there is no single
+  enforced response pattern.
+
+### 12. Medium — several async and callback flows cannot propagate business-processing failures, so success is inferred only from logs
+
+Type: confirmed issue
+
+Evidence:
+
+- Daisy callback handler delegates to a void processor method and always
+  responds `204` after basic payload parsing:
+  - `internal/sbi/api_daisy_callback.go:23-39`
+  - `internal/sbi/processor/processor.go:84-87`
+  - downstream failures are only logged in MTLF:
+    `internal/mtlf/training.go:155-202`
+- ADRF retrieval callback handler also delegates to a void processor method and
+  returns `204` once JSON parsing succeeds:
+  - `internal/sbi/api_adrf_notify.go:27-42`
+  - `internal/sbi/processor/processor.go:89-92`
+- ML model provision callback starts downstream initialization work in a
+  goroutine and still returns `204` immediately:
+  - `internal/sbi/api_mlmodelprovision.go:53-58,88-103`
+- Subscription create starts external data-collection side effects in a
+  goroutine whose failure path is reduced to panic logging:
+  - `internal/sbi/processor/eventssubscription.go:99-109`
+
+Why this is a problem:
+
+- For these paths, HTTP success currently means only that the callback payload
+  parsed and dispatch started; it does not mean the associated business
+  procedure completed successfully.
+- That may be acceptable for some asynchronous workflows, but the current code
+  does not make that contract explicit through naming, tests, or response
+  handling.
+
+Impact:
+
+- Callback senders and maintainers must infer real outcome from logs.
+- Retriable versus non-retriable failures are not expressed at the API boundary.
+- Operational troubleshooting becomes dependent on log inspection rather than
+  controlled procedure outcomes.
+
+### 13. Low — logging uses dedicated NF loggers, but message boundaries and payload hygiene are still loose
+
+Type: structural logging gap
+
+Evidence:
+
+- The code does attach logs to purpose-specific logger groups such as
+  `SBILog`, `ProcLog`, `InitLog`, `NotifierLog`, and `AnlfLog`, which is a good
+  baseline:
+  - `internal/sbi/api_eventssubscription.go:16,51,76`
+  - `internal/sbi/processor/eventssubscription.go:18,71,133,239`
+  - `pkg/service/init.go:128,134,142,201`
+- At the same time, several consumer paths log full outbound request payloads:
+  - `internal/sbi/consumer/smf_service.go:170`
+  - `internal/sbi/consumer/mtlf_service.go:149`
+  - `internal/sbi/consumer/daisy_service.go:92`
+- Entry/background paths also still use fatal process-exit logging inside
+  goroutine-driven control flow:
+  - `pkg/service/init.go:177-179,185-190`
+  - `internal/sbi/server.go:151-157`
+
+Why this is a problem:
+
+- The review guidance asks whether sensitive values stay out of logs and whether
+  warning/error/fatal levels are appropriate:
+  - `free5gc-dev-skill/references/review-checklist.md:58-64`
+- Logging raw request bodies is convenient during development, but it is a weak
+  long-term boundary for an NF that already carries SUPIs, notification URIs,
+  model URLs, and task payloads.
+- `Fatalf` in background control paths also makes failure handling more abrupt
+  than the rest of the repository's return-and-log style.
+
+Impact:
+
+- Log output is less ready for harder operational environments than the current
+  structure suggests.
+- Future cleanup will need to distinguish observability logs from debug payload
+  dumps and process-exit paths.
+
 ## Open Questions And Deferred Risks
 
 ### SMF event exposure model strategy
@@ -386,6 +546,18 @@ The workspace currently contains local `.venv` and cache directories under
 repository issue because the current git state was clean, but it remains worth
 checking in a follow-up hygiene pass.
 
+### Async callback contract intent
+
+Some callback endpoints may be intentionally designed as “accept and dispatch”
+operations rather than synchronous success/failure procedures. If that is the
+intended contract, the project should make it explicit and test for it.
+
+At the moment the code does not clearly distinguish:
+
+- accepted for asynchronous processing
+- fully processed successfully
+- accepted but internally failed later
+
 ## Summary
 
 The most important confirmed problems are:
@@ -393,7 +565,11 @@ The most important confirmed problems are:
 1. subscription update does not reconcile external collection/model side effects
 2. periodic notification goroutines are not owned by the app lifecycle
 3. app/consumer/config boundaries are weaker than normal free5GC NF structure
+4. test coverage does not yet protect the app boundary, handlers, and async
+   lifecycle seams the way the local free5GC guidance expects
+5. SBI error and callback outcome contracts are still inconsistent across the
+   server
 
 The repository currently compiles and its present unit tests pass, but that
 mainly shows local consistency. It does not prove the update path, shutdown
-path, or free5GC lifecycle alignment are sound.
+path, handler error contract, or free5GC lifecycle alignment are sound.

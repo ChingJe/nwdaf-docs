@@ -122,12 +122,20 @@ Why fifth:
 Target findings:
 
 - outbound SBI tests do not follow the preferred free5GC mock pattern
+- internal dependency mocking and handler coverage are too weak for the current
+  app / SBI boundaries
 - handwritten standardized or release-extended payload models need a clearer
   contract strategy
 
 Concrete goals:
 
 - add `gock`-based consumer tests where the code is mocking peer NF behavior
+- add `gomock`-based tests around the real app/interface boundary instead of
+  handwritten stubs where the processor or consumer depends on app services
+- add handler-level tests for JSON parsing, status code, and `ProblemDetails`
+  behavior on the SBI edge
+- add cancellation/timeout tests for notifier and other long-running paths when
+  the app interface allows it
 - use `openapi.InterceptH2CClient()` when tests need the free5GC client path
 - keep Python or multi-process fixtures classified as explicit integration
   helpers rather than substitutes for unit coverage
@@ -156,6 +164,30 @@ Concrete goals:
   local experiment data
 - avoid mixing this batch with runtime-correctness changes
 
+## Batch 8 — Normalize SBI Error Contracts And Logging Boundaries
+
+Target findings:
+
+- SBI handlers do not use one consistent error-body strategy
+- async callback paths cannot communicate downstream business failures clearly
+- logging still mixes useful boundaries with raw payload dumps and fatal worker
+  exits
+
+Concrete goals:
+
+- standardize handler parse/procedure failures on one explicit response pattern
+  such as `ProblemDetails` or a consciously documented local callback error
+  model
+- replace `BindJSON` with the explicit binding path used elsewhere when handler
+  control over response state matters
+- decide which callback endpoints are true synchronous procedures versus
+  accept-and-dispatch asynchronous entrypoints, then reflect that in code and
+  tests
+- reduce raw outbound payload logging to cases that are clearly justified for
+  debug mode
+- move worker/goroutine fatal exits toward owned error propagation or shutdown
+  coordination where practical
+
 ## Suggested Execution Rule
 
 Do not combine Batches 1 to 3 in one code change.
@@ -169,6 +201,7 @@ Recommended order:
 5. Batch 5
 6. Batch 6
 7. Batch 7
+8. Batch 8
 
 This ordering keeps the early work focused on correctness and lifecycle, then
 uses that stabilized base for structural cleanup.
