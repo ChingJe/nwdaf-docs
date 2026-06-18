@@ -227,30 +227,127 @@ Impact:
 - Future refactors that start using `GetSbiBindingAddr()` will inherit a broken
   helper.
 
-### 6. Low — the ML model provision callback redefines a standardized model that already exists in the local OpenAPI reference
+### 6. Medium — cross-NF unit tests do not follow the free5GC-style mock boundary and are supplemented by external Python harnesses
+
+Type: structural test gap
+
+Evidence:
+
+- The local free5GC testing guidance explicitly separates:
+  - processor procedure tests with `httptest`: `free5gc-dev-skill/references/testing.md:10`
+  - outbound SBI consumer tests with `gock`: `free5gc-dev-skill/references/testing.md:11`
+  - H2C client-path tests with `openapi.InterceptH2CClient()`: `free5gc-dev-skill/references/testing.md:12,20-35`
+- Current NWDAF outbound/client-facing tests still use `httptest.NewServer`:
+  - `internal/sbi/consumer/daisy_service_test.go:4-7,33-45,72-97`
+  - `internal/sbi/consumer/ml_service_test.go:4-10,62-76,147-160,220-239`
+  - `internal/sbi/processor/data_collection_test.go:4-11,27-40,204-216,277-288`
+- The module does not currently carry `gock` in `go.mod`:
+  - `go.mod:5-57`
+- Repository testing guidance still depends on a separate Python callback setup:
+  - `docs/testing.md:12-23`
+- The repo also carries standalone Python fake peers and callback fixtures:
+  - `test/fake_daisy/fake_daisy_server.py:1-17,50-109`
+  - `test/fake_smf_upf/README.md:13-39`
+  - `test/callback/README.md:7-25`
+
+Why this is a problem:
+
+- The current tests prove local request/response logic, but they do not follow
+  the free5GC-oriented test split that keeps peer-NF mocking inside Go tests
+  and reserves separate scripts/harnesses for explicit integration checks.
+- The boundary between unit-level validation and ad hoc multi-process testing is
+  therefore blurred.
+
+Impact:
+
+- Consumer behavior is not exercised through the preferred free5GC mock path.
+- Cross-NF API regression coverage is weaker than the scan result initially
+  suggested.
+- The main NF repository is carrying auxiliary test fixtures that compensate for
+  missing mock-based coverage.
+
+### 7. Medium — contract governance for handwritten Release 18/19 and standardized payload models is not defined
 
 Type: structural issue
 
 Evidence:
 
-- NWDAF defines local callback structs:
+- The skill guidance says standardized SBI payloads should use generated models
+  where available and contract changes should prefer regeneration over ad hoc
+  structs:
+  - `free5gc-dev-skill/references/openapi-contract.md:5-32`
+  - `free5gc-dev-skill/references/openapi-generation.md:3-18,35-47`
+- NWDAF redefines a standardized ML model provision notification locally:
   - `internal/sbi/api_mlmodelprovision.go:12-29`
-- The workspace OpenAPI reference already contains the generated model:
+- The workspace already contains the generated counterpart:
   - `resources/openapi/openapi/models/model_nwdaf_ml_model_prov_notif.go:15-20`
+- NWDAF also carries handwritten SMF/UPF exposure extension models directly in
+  the main codebase:
+  - `internal/sbi/consumer/models.go:5-100`
 
 Why this is a problem:
 
-- The skill guidance prefers generated models where they exist.
-- Keeping a local parallel struct for a standardized payload increases drift
-  risk if the dependency or schema changes later.
+- Some local extensions may be justified because the pinned OpenAPI dependency
+  is still tied to an earlier 3GPP release, but the project currently has no
+  explicit rule for when to regenerate, when to isolate an extension layer, and
+  when a handwritten struct is acceptable.
+- Without that governance, standardized payloads and local compatibility
+  payloads are mixed together in the same implementation boundary.
 
-Qualification:
+Impact:
 
-- This is not as severe as the update-path or lifecycle issues because the code
-  may have been written before the local OpenAPI reference was fully available.
-- It is still a traceability and maintenance problem.
+- Schema provenance becomes hard to audit.
+- Future alignment to newer Release 18/19 features will be harder to review
+  because there is no clean distinction between “dependency snapshot gap” and
+  “project-local contract invention”.
 
-### 7. Low — repository guidance is inconsistent about supported Go version
+### 8. Medium — main-repo and package boundaries are overloaded with auxiliary assets and MTLF-specific ownership
+Type: structural alignment gap
+
+Evidence:
+
+- The main implementation repo contains project-internal documentation and
+  standalone Python peer fixtures:
+  - `docs/testing.md:1-23`
+  - `test/callback/README.md:1-25`
+  - `test/fake_smf_upf/README.md:1-39`
+  - `test/fake_daisy/fake_daisy_server.py:1-17`
+- free5GC reference NF trees do not show an equivalent per-NF Python fixture
+  layout; the broader project keeps runtime config centralized under a root
+  `config/` tree:
+  - `resources/references/free5gc-main/config/udrcfg.yaml:1-24`
+  - `resources/references/free5gc-main/NFs/udr/internal/sbi/api_sanity_test.go`
+- Daisy async callback HTTP handling is defined under generic SBI files even
+  though the behavior itself belongs to the MTLF workflow:
+  - `internal/sbi/api_daisy_callback.go:11-52`
+  - `internal/sbi/server.go:83-90`
+  - `internal/sbi/processor/processor.go:84-86`
+  - `internal/mtlf/training.go:41-58,110-171`
+- The sample config and config structs currently bundle NF runtime settings,
+  group-resolution fallback data, ML service settings, Daisy task payloads, and
+  ADRF retrieval workflow configuration in one main-repo boundary:
+  - `config/nwdafcfg.yaml:17-158`
+  - `pkg/factory/config.go:34-46,62-67,151-221`
+
+Why this is a problem:
+
+- This is larger than a style issue. The repo boundary currently mixes:
+  - core NF runtime code
+  - external-system test harnesses
+  - workflow-specific callback HTTP glue
+  - config that partly acts as deployment/runtime data and partly as local lab
+    fixture state
+- That makes it harder to preserve a clean free5GC-style separation between NF
+  runtime, auxiliary resources, and domain-specific ownership such as MTLF.
+
+Impact:
+
+- `internal/sbi` ends up carrying non-3GPP workflow details that would more
+  naturally live behind `internal/mtlf`.
+- Future cleanup of config, tests, or external integration assets will be more
+  invasive because the repository boundary is already blurred.
+
+### 9. Low — repository guidance is inconsistent about supported Go version
 
 Type: documentation/process issue
 
