@@ -2,206 +2,314 @@
 
 Date: 2026-06-18
 
-This document groups the first scan findings into execution batches. The order
-is chosen to reduce behavior risk before tackling broader structural cleanup.
+This document reorganizes the scan findings into a stricter execution order.
+The new ordering is based on three criteria:
 
-## Batch 1 — Fix Subscription Correctness First
+- direct user-visible correctness risk
+- runtime/lifecycle risk during operation or shutdown
+- dependency order for safer later refactors
 
-Target findings:
+The larger original batches are split below into smaller work items so the next
+implementation phase can progress with narrower, reviewable changes.
 
-- update path does not reconcile SMF/ML side effects
-- create/update notification-method behavior is inconsistent
+## Tier A — Immediate Correctness And Runtime Risk
 
-Concrete goals:
+### Priority 1 — Repair Subscription Update Correctness
 
-- decide whether `PUT` is full replacement or constrained update
-- make `PUT` re-run the same effective notification-method/default logic as
-  `POST`
-- explicitly reconcile existing SMF subscriptions, correlation mappings, traffic
-  buckets, ADRF state, and ML-model provisioning when the request changes the
-  effective collection shape
-- add processor tests that prove update-time cleanup and re-subscription
+Scope:
 
-Why first:
+- `PUT /subscriptions/{id}` does not reconcile SMF, ADRF, traffic-bucket, and
+  ML-model side effects
+- create/update notification-method/default handling is inconsistent
+
+Sub-items:
+
+1. Define update semantics explicitly.
+   Decide whether `PUT` is full replacement or constrained update.
+2. Align effective request semantics.
+   Re-run the same defaulting and notification-method resolution used by
+   `POST`.
+3. Reconcile external collection state.
+   Clean up and recreate SMF subscriptions, correlation mappings, traffic
+   buckets, ADRF state, and MTLF/ML state when the effective shape changes.
+4. Add update-path proof tests.
+   Add focused processor tests that prove cleanup, re-subscription, and failure
+   handling.
+
+Why here:
 
 - This is the clearest confirmed correctness bug in the current codebase.
 
-## Batch 2 — Put All Long-Running Work Under App Lifecycle Control
+### Priority 2 — Make Async Outcome Contracts Explicit
 
-Target findings:
+Scope:
+
+- several callback and goroutine-based flows return HTTP success before business
+  success is known
+- downstream failures are often only inferable from logs
+
+Sub-items:
+
+1. Classify callback semantics.
+   Decide which endpoints are synchronous procedures and which are
+   accept-and-dispatch asynchronous entrypoints.
+2. Normalize callback completion behavior.
+   Make handler responses, processor return types, and later-failure reporting
+   reflect that decision.
+3. Reduce “204 means only parsing succeeded” ambiguity.
+   Make accepted-versus-completed semantics explicit in code paths and tests.
+4. Contain goroutine side effects.
+   Avoid hiding business failure entirely behind background dispatch where the
+   workflow needs stronger observability.
+
+Why here:
+
+- This does not outrank the broken `PUT` path, but it directly affects whether
+  operators can trust callback/API success semantics during the next fixes.
+
+### Priority 3 — Put Long-Running Work Under App Lifecycle Control
+
+Scope:
 
 - periodic notifier scheduler is detached from app shutdown
-- server run/shutdown signatures ignore passed context
+- some run/shutdown signatures ignore passed context
+- background worker ownership is inconsistent across notifier, SBI server, AnLF,
+  and MTLF-related paths
 
-Concrete goals:
+Sub-items:
 
-- give periodic notification work an app-owned cancellation path
-- make scheduler goroutines observable by the app waitgroup or an equivalent
-  owned shutdown mechanism
-- stop all active subscription schedulers during `terminateProcedure()`
-- remove or repurpose unused lifecycle parameters such as the ignored `traceCtx`
+1. Give notifier work an app-owned cancellation path.
+2. Stop active subscription schedulers during termination.
+3. Remove `context.Background()` ownership from runtime-managed long-lived work
+   where app context should apply.
+4. Make goroutine ownership observable.
+   Register scheduler/background work under the app waitgroup or an equivalent
+   owned mechanism.
+5. Clean up ignored lifecycle parameters such as unused `traceCtx`.
 
-Why second:
+Why here:
 
-- This batch reduces shutdown ambiguity before larger refactors change package
-  boundaries.
+- This stabilizes shutdown behavior before test expansion and app-boundary
+  refactors.
 
-## Batch 3 — Rebuild The App Boundary Around One Real Contract
+## Tier B — Safety Net And Boundary Consolidation
 
-Target findings:
+### Priority 4 — Build The Test Safety Net Around The Real Boundaries
+
+Scope:
+
+- outbound SBI tests do not follow the preferred free5GC mock pattern
+- internal dependency mocking is weak
+- handler and lifecycle seams are under-tested
+
+Sub-items:
+
+1. Add `gock` for outbound peer-NF consumer tests.
+2. Add `gomock` at the app/interface seam instead of handwritten stubs.
+3. Add handler-level tests for parsing, status codes, and error bodies.
+4. Add notifier/lifecycle tests for cancellation, timeout, and stop behavior.
+5. Add H2C interception/restoration where the free5GC client path needs it.
+6. Keep Python fixtures explicitly classified as integration helpers.
+
+Why here:
+
+- Later refactors should not proceed without first improving the test seam that
+  protects them.
+
+### Priority 5 — Rebuild One Real App Boundary
+
+Scope:
 
 - `pkg/app` is under-specified
 - internal packages re-declare overlapping app interfaces
-- consumer construction is global-config/global-context oriented
+- consumer construction is detached from the shared boundary
 
-Concrete goals:
+Sub-items:
 
-- expand `pkg/app` so it represents the actual app boundary used by service,
-  server, processor, consumer, and domain packages
-- reduce the number of local `NwdafApp` interface variants
-- move consumer construction toward `NewConsumer(app.App)` or a similarly
-  explicit app-driven form
-- keep the change mechanical and avoid mixing unrelated business rewrites
+1. Expand `pkg/app` into the actual contract used by service, server,
+   processor, consumer, AnLF, and MTLF.
+2. Collapse overlapping local `NwdafApp` interface variants.
+3. Move consumer construction toward an app-driven form such as
+   `NewConsumer(app.App)`.
+4. Align mock/test setup with the new boundary immediately after the interface
+   is stabilized.
 
-Why third:
+Why here:
 
-- After subscription correctness and lifecycle ownership are fixed, the app
-  contract can be tightened with lower regression risk.
+- This is the smallest point at which the repo can stop fighting itself on
+  dependency injection and mocking.
 
-## Batch 4 — Harden Factory, Config, And Documented Runtime Truth
+### Priority 6 — Normalize SBI Error Contracts
 
-Target findings:
+Scope:
+
+- SBI handlers mix `ProblemDetails` and ad hoc `gin.H` error bodies
+- `BindJSON` and `ShouldBindJSON` usage is inconsistent
+- callback/API failure semantics are not uniform
+
+Sub-items:
+
+1. Standardize parse/procedure error response shape.
+2. Replace `BindJSON` where explicit response control is required.
+3. Align callback endpoints with the chosen synchronous/asynchronous contract.
+4. Add tests that lock the response shape and status code behavior.
+
+Why here:
+
+- This cleanup is easier once handler tests exist and before larger contract
+  governance work starts.
+
+### Priority 7 — Tighten Logging Boundaries
+
+Scope:
+
+- logger categories exist, but payload hygiene and fatal/worker boundaries are
+  loose
+
+Sub-items:
+
+1. Remove or downgrade raw outbound payload dumps unless clearly justified.
+2. Review fatal process-exit logging in worker/background control paths.
+3. Keep one meaningful log boundary per failure path where possible.
+4. Re-check sensitive or high-cardinality data in logs after callback semantics
+   are finalized.
+
+Why here:
+
+- This depends partly on the callback/error-contract decisions above, so it
+  should follow them rather than precede them.
+
+## Tier C — Configuration, Contract Governance, And Scope Decisions
+
+### Priority 8 — Harden Factory And Runtime Config Behavior
+
+Scope:
 
 - config parsing lacks strong validation
 - `GetSbiBindingAddr()` is broken
-- advertised supported analytics defaults contradict runtime support
-- README Go version is stale
+- runtime defaults and documented runtime truth drift apart
 
-Concrete goals:
+Sub-items:
 
-- add explicit config validation similar to free5GC NF factories
-- fix `GetSbiBindingAddr()` before it becomes a used dependency
-- align `supportedAnalytics` defaults with actual supported runtime events
-- align README/runtime docs with `go.mod`
-- add focused config tests for invalid/missing combinations
-- decide which config content is true NF runtime config versus local lab or
-  external-system workflow data, then split those boundaries intentionally
+1. Add explicit config validation similar to free5GC NF factories.
+2. Fix concrete helper bugs such as `GetSbiBindingAddr()`.
+3. Align runtime defaults with actual supported analytics/event behavior.
+4. Align README/runtime guidance with `go.mod` and current startup truth.
+5. Add focused config test matrices for valid, missing, and conflicting cases.
 
-Why fourth:
+Why here:
 
-- This batch is important, but it is safer after the runtime behavior bugs are
-  contained.
+- These are important and partly bug-level, but they are safer after the
+  correctness/runtime path and test seams are stabilized.
 
-## Batch 5 — Decide The Intended free5GC Integration Level
+### Priority 9 — Separate Runtime Config From Lab / Workflow Config
 
-Target findings:
+Scope:
 
-- missing NRF registration/deregistration path
+- main config currently mixes deployable NF config with local experiment,
+  fallback, Daisy, and ADRF workflow data
+
+Sub-items:
+
+1. Define which fields are true runtime NF config.
+2. Define which fields are local lab data, test fixture data, or workflow
+   payload templates.
+3. Split or re-home those boundaries intentionally.
+4. Keep migration impact explicit for existing local setups.
+
+Why here:
+
+- This is structurally large and should not be mixed with the earlier
+  bug-fixing work.
+
+### Priority 10 — Establish OpenAPI / Model Governance
+
+Scope:
+
+- handwritten standardized models and release-extended payloads have no clean
+  governance rule
+
+Sub-items:
+
+1. Replace locally duplicated standardized payloads with generated models where
+   already available.
+2. Mark which handwritten models are temporary dependency-snapshot extensions.
+3. Define regeneration inputs/version/options for future Release 18/19 work.
+4. Separate local extension layers from standardized contract layers.
+
+Why here:
+
+- This becomes much easier once handler contracts and tests are already in
+  place.
+
+### Priority 11 — Decide The Intended free5GC Integration Level
+
+Scope:
+
+- missing NRF registration/deregistration
 - missing metrics server wiring
-- lightweight SBI server path compared with free5GC baselines
+- lightweight SBI server path versus reference NF baselines
 
-Decision point:
+Sub-items:
 
-- either explicitly keep NWDAF as a standalone SBI service and document that
-  scope
-- or close the lifecycle gap and implement the normal free5GC NF service hooks
+1. Decide whether NWDAF remains a standalone SBI service or aligns upward as a
+   normal free5GC-style NF.
+2. If aligning upward, wire `nrfUri`, register/deregister flow, metrics server,
+   and closer HTTP/TLS/auth patterns.
+3. If staying standalone, document the divergence explicitly and stop treating
+   the gap as accidental.
 
-If aligning upward:
+Why here:
 
-- wire `nrfUri` into consumer/service startup
-- implement register/deregister behavior
-- add metrics config and metrics server lifecycle
-- evaluate whether TLS/auth middleware should follow nearby free5GC NF patterns
+- This is a deliberate architectural scope decision and should not be hidden
+  inside lower-level cleanups.
 
-Why fifth:
+### Priority 12 — Clean Repo And Package Ownership Boundaries
 
-- This is a bigger architectural decision than the earlier corrective batches.
-
-## Batch 6 — Contract Cleanup, Test Strategy, And Schema Traceability
-
-Target findings:
-
-- outbound SBI tests do not follow the preferred free5GC mock pattern
-- internal dependency mocking and handler coverage are too weak for the current
-  app / SBI boundaries
-- handwritten standardized or release-extended payload models need a clearer
-  contract strategy
-
-Concrete goals:
-
-- add `gock`-based consumer tests where the code is mocking peer NF behavior
-- add `gomock`-based tests around the real app/interface boundary instead of
-  handwritten stubs where the processor or consumer depends on app services
-- add handler-level tests for JSON parsing, status code, and `ProblemDetails`
-  behavior on the SBI edge
-- add cancellation/timeout tests for notifier and other long-running paths when
-  the app interface allows it
-- use `openapi.InterceptH2CClient()` when tests need the free5GC client path
-- keep Python or multi-process fixtures classified as explicit integration
-  helpers rather than substitutes for unit coverage
-- replace local standardized structs with generated models where the workspace
-  already has them
-- document any places where local schemas intentionally extend the current
-  dependency snapshot
-- separate “dependency snapshot limitation” from “local ad hoc model”
-
-## Batch 7 — Clean Repo And Package Ownership Boundaries
-
-Target findings:
+Scope:
 
 - main repo carries auxiliary docs and Python fake peers
-- `internal/sbi` owns Daisy callback HTTP glue that is really MTLF workflow
-  behavior
-- config boundary is overloaded with lab-specific and external-workflow state
+- `internal/sbi` owns Daisy-specific workflow glue that should likely sit
+  behind `internal/mtlf`
 
-Concrete goals:
+Sub-items:
 
-- decide which auxiliary docs, fake peers, and workflow helpers stay in the
-  main repo versus move to a dedicated resource/support repo
-- move non-3GPP Daisy-specific ownership behind `internal/mtlf` while keeping
-  only necessary HTTP binding glue at the SBI edge
-- keep NF runtime config minimal and explicitly separate deployable config from
-  local experiment data
-- avoid mixing this batch with runtime-correctness changes
+1. Decide what remains in the main repo versus a dedicated support/resource
+   repository.
+2. Move Daisy/MTLF-specific ownership behind the correct domain package while
+   keeping only the minimal HTTP binding at the SBI edge.
+3. Clean up leftover package placement that exists only because earlier
+   boundaries were blurred.
 
-## Batch 8 — Normalize SBI Error Contracts And Logging Boundaries
+Why here:
 
-Target findings:
-
-- SBI handlers do not use one consistent error-body strategy
-- async callback paths cannot communicate downstream business failures clearly
-- logging still mixes useful boundaries with raw payload dumps and fatal worker
-  exits
-
-Concrete goals:
-
-- standardize handler parse/procedure failures on one explicit response pattern
-  such as `ProblemDetails` or a consciously documented local callback error
-  model
-- replace `BindJSON` with the explicit binding path used elsewhere when handler
-  control over response state matters
-- decide which callback endpoints are true synchronous procedures versus
-  accept-and-dispatch asynchronous entrypoints, then reflect that in code and
-  tests
-- reduce raw outbound payload logging to cases that are clearly justified for
-  debug mode
-- move worker/goroutine fatal exits toward owned error propagation or shutdown
-  coordination where practical
+- This is valuable, but it is the most invasive and least urgent once the
+  runtime, contract, and test risks above are addressed.
 
 ## Suggested Execution Rule
 
-Do not combine Batches 1 to 3 in one code change.
+Do not combine Priorities 1 to 5 in one code change.
 
-Recommended order:
+Recommended sequence:
 
-1. Batch 1
-2. Batch 2
-3. Batch 3
-4. Batch 4
-5. Batch 5
-6. Batch 6
-7. Batch 7
-8. Batch 8
+1. Priority 1
+2. Priority 2
+3. Priority 3
+4. Priority 4
+5. Priority 5
+6. Priority 6
+7. Priority 7
+8. Priority 8
+9. Priority 9
+10. Priority 10
+11. Priority 11
+12. Priority 12
 
-This ordering keeps the early work focused on correctness and lifecycle, then
-uses that stabilized base for structural cleanup.
+Compressed rule of thumb:
+
+- first stop the system from doing the wrong thing
+- then make runtime behavior observable and stoppable
+- then build the test seam
+- then consolidate boundaries
+- only after that clean up config, contracts, repo scope, and strategic
+  free5GC alignment

@@ -560,7 +560,31 @@ At the moment the code does not clearly distinguish:
 
 ## Summary
 
-The most important confirmed problems are:
+## Revised Priority View
+
+The revised execution order after re-review is:
+
+1. repair subscription update correctness
+2. make async outcome contracts explicit
+3. put long-running work under app lifecycle control
+4. build the test safety net around the real boundaries
+5. rebuild one real app boundary
+6. normalize SBI error contracts
+7. tighten logging boundaries
+8. harden factory and runtime config behavior
+9. separate runtime config from lab/workflow config
+10. establish OpenAPI/model governance
+11. decide the intended free5GC integration level
+12. clean repo and package ownership boundaries
+
+Interpretation:
+
+- Priorities 1 to 3 are direct correctness/runtime-risk containment.
+- Priorities 4 to 7 create the safety net and boundary discipline needed for
+  larger structural work.
+- Priorities 8 to 12 are important, but are safer after the earlier runtime and
+  contract seams are stabilized.
+The most important confirmed problems remain:
 
 1. subscription update does not reconcile external collection/model side effects
 2. periodic notification goroutines are not owned by the app lifecycle
