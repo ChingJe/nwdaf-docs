@@ -12,6 +12,28 @@ The new ordering is based on three criteria:
 The larger original batches are split below into smaller work items so the next
 implementation phase can progress with narrower, reviewable changes.
 
+## Progress Tracking
+
+Use this table as the single progress snapshot for the remediation plan.
+Current status reflects only what is recorded in this document set today; no
+implementation batch is marked as started unless a later update records it
+explicitly.
+
+| Priority | Tier | Work Item | Status | Notes |
+| --- | --- | --- | --- | --- |
+| 1 | A | Repair Subscription Update Correctness | Not started | Highest confirmed correctness risk from the scan findings |
+| 2 | A | Put Long-Running Work Under App Lifecycle Control | Not started | Lifecycle/shutdown ownership work |
+| 3 | B | Build The Test Safety Net Around The Real Boundaries | Not started | Add handler, consumer, and lifecycle coverage needed for round-1 changes |
+| 4 | B | Rebuild One Real App Boundary | Not started | Consolidate shared app contract after initial behavior stabilizes |
+| 5 | B | Normalize SBI Error Contracts | Not started | Align error bodies and parse handling across endpoints |
+| 6 | B | Clarify Post-Subscription Activation And Late-Failure Signaling | Not started | Design completeness and observability work, not an immediate correctness bug |
+| 7 | B | Tighten Logging Boundaries | Not started | Follow error-contract and late-failure signaling cleanup |
+| 8 | C | Harden Factory And Runtime Config Behavior | Not started | Includes config validation and `GetSbiBindingAddr()` fix |
+| 9 | C | Separate Runtime Config From Lab / Workflow Config | Not started | Structural config-scope cleanup |
+| 10 | C | Establish OpenAPI / Model Governance | Not started | Clarify generated vs handwritten model ownership |
+| 11 | C | Decide The Intended free5GC Integration Level | Not started | Architectural scope decision |
+| 12 | C | Clean Repo And Package Ownership Boundaries | Not started | Most invasive cleanup; scheduled last |
+
 ## Tier A — Immediate Correctness And Runtime Risk
 
 ### Priority 1 — Repair Subscription Update Correctness
@@ -25,7 +47,8 @@ Scope:
 Sub-items:
 
 1. Define update semantics explicitly.
-   Decide whether `PUT` is full replacement or constrained update.
+   Treat `PUT` as full replacement of the subscription resource, not a
+   constrained merge update.
 2. Align effective request semantics.
    Re-run the same defaulting and notification-method resolution used by
    `POST`.
@@ -40,34 +63,7 @@ Why here:
 
 - This is the clearest confirmed correctness bug in the current codebase.
 
-### Priority 2 — Make Async Outcome Contracts Explicit
-
-Scope:
-
-- several callback and goroutine-based flows return HTTP success before business
-  success is known
-- downstream failures are often only inferable from logs
-
-Sub-items:
-
-1. Classify callback semantics.
-   Decide which endpoints are synchronous procedures and which are
-   accept-and-dispatch asynchronous entrypoints.
-2. Normalize callback completion behavior.
-   Make handler responses, processor return types, and later-failure reporting
-   reflect that decision.
-3. Reduce “204 means only parsing succeeded” ambiguity.
-   Make accepted-versus-completed semantics explicit in code paths and tests.
-4. Contain goroutine side effects.
-   Avoid hiding business failure entirely behind background dispatch where the
-   workflow needs stronger observability.
-
-Why here:
-
-- This does not outrank the broken `PUT` path, but it directly affects whether
-  operators can trust callback/API success semantics during the next fixes.
-
-### Priority 3 — Put Long-Running Work Under App Lifecycle Control
+### Priority 2 — Put Long-Running Work Under App Lifecycle Control
 
 Scope:
 
@@ -94,7 +90,7 @@ Why here:
 
 ## Tier B — Safety Net And Boundary Consolidation
 
-### Priority 4 — Build The Test Safety Net Around The Real Boundaries
+### Priority 3 — Build The Test Safety Net Around The Real Boundaries
 
 Scope:
 
@@ -116,7 +112,7 @@ Why here:
 - Later refactors should not proceed without first improving the test seam that
   protects them.
 
-### Priority 5 — Rebuild One Real App Boundary
+### Priority 4 — Rebuild One Real App Boundary
 
 Scope:
 
@@ -139,7 +135,7 @@ Why here:
 - This is the smallest point at which the repo can stop fighting itself on
   dependency injection and mocking.
 
-### Priority 6 — Normalize SBI Error Contracts
+### Priority 5 — Normalize SBI Error Contracts
 
 Scope:
 
@@ -159,6 +155,35 @@ Why here:
 - This cleanup is easier once handler tests exist and before larger contract
   governance work starts.
 
+### Priority 6 — Clarify Post-Subscription Activation And Late-Failure Signaling
+
+Scope:
+
+- accepted analytics subscriptions may trigger downstream data collection after
+  the subscription resource is already created
+- late activation failures are not expressed clearly through local state,
+  response wording, or spec-aligned failure signaling
+- local Daisy/MTLF workflow callbacks are currently non-standard integration
+  paths and should not drive early remediation sequencing
+
+Sub-items:
+
+1. Define resource-acceptance versus downstream-activation semantics for
+   `POST /subscriptions` and the later `PUT` reconcile path.
+2. Decide when `failEventReports` is sufficient and when later
+   notification/status signaling should be used for post-acceptance failures.
+3. Add a minimal local observability rule for “accepted but activation degraded
+   or failed later” paths.
+4. Keep Daisy/MTLF-local callback contract redesign explicitly out of this
+   batch unless the local workflow itself is being reworked.
+
+Why here:
+
+- This is a design completeness and operability issue, not the same class as
+  the broken `PUT` path or shutdown-ownership bugs.
+- It should follow the earlier correctness, lifecycle, and test-stabilization
+  work.
+
 ### Priority 7 — Tighten Logging Boundaries
 
 Scope:
@@ -171,13 +196,13 @@ Sub-items:
 1. Remove or downgrade raw outbound payload dumps unless clearly justified.
 2. Review fatal process-exit logging in worker/background control paths.
 3. Keep one meaningful log boundary per failure path where possible.
-4. Re-check sensitive or high-cardinality data in logs after callback semantics
-   are finalized.
+4. Re-check sensitive or high-cardinality data in logs after error contracts and
+   late-failure signaling are stabilized.
 
 Why here:
 
-- This depends partly on the callback/error-contract decisions above, so it
-  should follow them rather than precede them.
+- This depends partly on the error-contract and late-failure signaling
+  decisions above, so it should follow them rather than precede them.
 
 ## Tier C — Configuration, Contract Governance, And Scope Decisions
 
@@ -308,8 +333,9 @@ Recommended sequence:
 Compressed rule of thumb:
 
 - first stop the system from doing the wrong thing
-- then make runtime behavior observable and stoppable
+- then make runtime behavior stoppable and owned
 - then build the test seam
+- then clean up contracts and later-failure signaling
 - then consolidate boundaries
 - only after that clean up config, contracts, repo scope, and strategic
   free5GC alignment

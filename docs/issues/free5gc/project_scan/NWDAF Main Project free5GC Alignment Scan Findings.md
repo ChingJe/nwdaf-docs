@@ -446,44 +446,47 @@ Impact:
 - Future refactors may accidentally diverge further because there is no single
   enforced response pattern.
 
-### 12. Medium — several async and callback flows cannot propagate business-processing failures, so success is inferred only from logs
+### 12. Low — post-subscription activation and late-failure signaling are underspecified once downstream data collection starts asynchronously
 
-Type: confirmed issue
+Type: design completeness gap
 
 Evidence:
 
-- Daisy callback handler delegates to a void processor method and always
-  responds `204` after basic payload parsing:
-  - `internal/sbi/api_daisy_callback.go:23-39`
-  - `internal/sbi/processor/processor.go:84-87`
-  - downstream failures are only logged in MTLF:
-    `internal/mtlf/training.go:155-202`
-- ADRF retrieval callback handler also delegates to a void processor method and
-  returns `204` once JSON parsing succeeds:
-  - `internal/sbi/api_adrf_notify.go:27-42`
-  - `internal/sbi/processor/processor.go:89-92`
-- ML model provision callback starts downstream initialization work in a
-  goroutine and still returns `204` immediately:
-  - `internal/sbi/api_mlmodelprovision.go:53-58,88-103`
-- Subscription create starts external data-collection side effects in a
-  goroutine whose failure path is reduced to panic logging:
+- The analytics subscription procedure in local TS 23.288 separates receiving
+  the consumer subscription from the later decision to trigger new data
+  collection:
+  - `nwdaf-docs/specs/TS 23.288/6.1 Procedures for analytics exposure.md:16-26`
+- The NF-side data collection setup is a later procedure in which NWDAF
+  subscribes to source NFs and then receives notifications:
+  - `nwdaf-docs/specs/TS 23.288/6.2.2 Data Collection from NFs.md:130-140`
+- TS 29.520 provides failure-signaling structures at both the subscription
+  resource and notification layers:
+  - `failEventReports`: `nwdaf-docs/specs/TS 29.520/5.1 Nnwdaf_EventsSubscription Service API.md:731-742`
+  - `failNotifyCode` and `rvWaitTime`:
+    `nwdaf-docs/specs/yaml/TS29520_Nnwdaf_EventsSubscription.yaml:780-789`
+- Current create processing stores the subscription and returns success while
+  downstream data collection is started in a background goroutine:
+  - `internal/sbi/processor/eventssubscription.go:67-125`
   - `internal/sbi/processor/eventssubscription.go:99-109`
 
 Why this is a problem:
 
-- For these paths, HTTP success currently means only that the callback payload
-  parsed and dispatch started; it does not mean the associated business
-  procedure completed successfully.
-- That may be acceptable for some asynchronous workflows, but the current code
-  does not make that contract explicit through naming, tests, or response
-  handling.
+- The spec does not require NWDAF to synchronously complete all downstream
+  data-source subscriptions before accepting the analytics subscription.
+- The local implementation is therefore not wrong simply because it starts
+  data collection asynchronously.
+- The actual gap is that later activation failures are not modeled or signaled
+  clearly enough once the consumer-visible subscription resource has already
+  been created.
 
 Impact:
 
-- Callback senders and maintainers must infer real outcome from logs.
-- Retriable versus non-retriable failures are not expressed at the API boundary.
-- Operational troubleshooting becomes dependent on log inspection rather than
-  controlled procedure outcomes.
+- Operators and tests cannot clearly distinguish:
+  - accepted subscription resource
+  - downstream activation in progress
+  - activation degraded or failed later
+- The current design leaves late failure handling under-specified compared with
+  the spec-supported signaling fields.
 
 ### 13. Low — logging uses dedicated NF loggers, but message boundaries and payload hygiene are still loose
 
@@ -546,17 +549,15 @@ The workspace currently contains local `.venv` and cache directories under
 repository issue because the current git state was clean, but it remains worth
 checking in a follow-up hygiene pass.
 
-### Async callback contract intent
+### Post-subscription activation signaling
 
-Some callback endpoints may be intentionally designed as “accept and dispatch”
-operations rather than synchronous success/failure procedures. If that is the
-intended contract, the project should make it explicit and test for it.
+The local spec material supports a model in which NWDAF accepts an analytics
+subscription and then decides whether and how to start downstream data
+collection. That means asynchronous activation is not, by itself, a defect.
 
-At the moment the code does not clearly distinguish:
-
-- accepted for asynchronous processing
-- fully processed successfully
-- accepted but internally failed later
+What remains open is how the implementation should expose later activation
+problems once the subscription resource already exists, especially if the first
+round of remediation explicitly defers local Daisy/MTLF workflow redesign.
 
 ## Summary
 
@@ -565,11 +566,11 @@ At the moment the code does not clearly distinguish:
 The revised execution order after re-review is:
 
 1. repair subscription update correctness
-2. make async outcome contracts explicit
-3. put long-running work under app lifecycle control
-4. build the test safety net around the real boundaries
-5. rebuild one real app boundary
-6. normalize SBI error contracts
+2. put long-running work under app lifecycle control
+3. build the test safety net around the real boundaries
+4. rebuild one real app boundary
+5. normalize SBI error contracts
+6. clarify post-subscription activation and late-failure signaling
 7. tighten logging boundaries
 8. harden factory and runtime config behavior
 9. separate runtime config from lab/workflow config
@@ -579,9 +580,10 @@ The revised execution order after re-review is:
 
 Interpretation:
 
-- Priorities 1 to 3 are direct correctness/runtime-risk containment.
-- Priorities 4 to 7 create the safety net and boundary discipline needed for
-  larger structural work.
+- Priorities 1 to 3 are direct correctness/runtime-risk containment plus the
+  minimum safety net needed to change them.
+- Priorities 4 to 7 are structural and contract cleanups that become safer once
+  the earlier behavior is stabilized.
 - Priorities 8 to 12 are important, but are safer after the earlier runtime and
   contract seams are stabilized.
 The most important confirmed problems remain:
@@ -591,8 +593,7 @@ The most important confirmed problems remain:
 3. app/consumer/config boundaries are weaker than normal free5GC NF structure
 4. test coverage does not yet protect the app boundary, handlers, and async
    lifecycle seams the way the local free5GC guidance expects
-5. SBI error and callback outcome contracts are still inconsistent across the
-   server
+5. SBI error contracts are still inconsistent across the server
 
 The repository currently compiles and its present unit tests pass, but that
 mainly shows local consistency. It does not prove the update path, shutdown
