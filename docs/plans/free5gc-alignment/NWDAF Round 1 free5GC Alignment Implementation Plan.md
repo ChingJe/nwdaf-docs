@@ -2,6 +2,8 @@
 
 Date: 2026-06-22
 
+Status: Completed on 2026-06-22 and merged to `NWDAF/master`
+
 ---
 
 ## 1. Purpose
@@ -16,6 +18,10 @@ The goal of this round is narrow on purpose:
 3. add the minimum targeted test coverage needed to change those paths safely
 
 This plan does not attempt to solve the entire scan in one pass.
+
+Round-1 implementation and verification are complete.
+The code changes were carried on `NWDAF/` branch `fix/free5gc-alignment-round1`,
+then merged locally into `NWDAF/master` and pushed to `origin/master`.
 
 ---
 
@@ -197,3 +203,41 @@ later:
 - config/model/repo-scope cleanup
 - free5GC integration-level decisions
 - Daisy/MTLF-local workflow redesign
+
+---
+
+## 10. Completion Record
+
+Round 1 was completed with the following outcomes:
+
+1. `PUT /subscriptions/{subscriptionId}` now behaves as full replacement in the
+   local implementation path.
+2. Update reconciles existing scheduler, SMF/data-collection resources, and the
+   current local ML-model state before recreating the effective subscription.
+3. Periodic notification schedulers are now rooted in the app cancellation
+   context and are stopped during application termination.
+4. Focused tests were added for:
+   - update-time default validation re-application
+   - update-time external state reconciliation
+   - notifier cancellation through parent context
+   - application-side scheduler shutdown fan-out
+
+Verification completed on 2026-06-22:
+
+- `make build`
+- `go test ./...`
+- `make lint`
+
+Verification result:
+
+- build passed
+- full Go test suite passed
+- `golangci-lint` reported `0 issues`
+- the verified round-1 code was merged to `NWDAF/master` and pushed to `origin/master`
+
+Round-1 intentionally did not include:
+
+- shared app-boundary reconstruction
+- broader SBI error-contract normalization
+- post-subscription activation and late-failure signaling design
+- Daisy/MTLF-local callback redesign

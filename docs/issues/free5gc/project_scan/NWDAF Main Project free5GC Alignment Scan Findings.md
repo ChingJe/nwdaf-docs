@@ -34,6 +34,31 @@ Interpretation:
 - Several findings below are therefore test-coverage or lifecycle-alignment
   problems rather than compile-time failures.
 
+## Round-1 Status Update
+
+Date: 2026-06-22
+
+Post-implementation verification rerun in `NWDAF/`:
+
+- `make build`
+- `go test ./...`
+- `make lint`
+
+Result:
+
+- Build passed.
+- Full Go test suite passed.
+- `golangci-lint` reported `0 issues`.
+
+Round-1 implementation status:
+
+- Finding 1 was addressed in the subscription update path.
+- Finding 2 was addressed for notifier scheduler ownership and shutdown.
+- Targeted tests were added for update reconciliation and notifier lifecycle.
+- The round-1 code was merged locally to `NWDAF/master` and pushed to
+  `origin/master`.
+- Findings 3 and later remain relevant unless noted otherwise below.
+
 ## Findings
 
 ### 1. High — `PUT /subscriptions/{id}` updates only the local record and leaves upstream collection state stale
@@ -578,23 +603,26 @@ The revised execution order after re-review is:
 11. decide the intended free5GC integration level
 12. clean repo and package ownership boundaries
 
-Interpretation:
+Interpretation after round-1 completion:
 
-- Priorities 1 to 3 are direct correctness/runtime-risk containment plus the
-  minimum safety net needed to change them.
-- Priorities 4 to 7 are structural and contract cleanups that become safer once
-  the earlier behavior is stabilized.
-- Priorities 8 to 12 are important, but are safer after the earlier runtime and
-  contract seams are stabilized.
-The most important confirmed problems remain:
+- Priorities 1 to 3 were the first execution slice because they covered the
+  clearest confirmed correctness bug, the notifier lifecycle gap, and the
+  minimum test seam needed to change those paths safely.
+- Round 1 closed the implementation target for priority 1 and the notifier-owned
+  portion of priority 2, and it added focused tests that partially satisfy
+  priority 3.
+- Priorities 4 to 12 remain the main follow-up backlog after round 1.
 
-1. subscription update does not reconcile external collection/model side effects
-2. periodic notification goroutines are not owned by the app lifecycle
-3. app/consumer/config boundaries are weaker than normal free5GC NF structure
-4. test coverage does not yet protect the app boundary, handlers, and async
-   lifecycle seams the way the local free5GC guidance expects
-5. SBI error contracts are still inconsistent across the server
+The most important open problems after round 1 are:
 
-The repository currently compiles and its present unit tests pass, but that
-mainly shows local consistency. It does not prove the update path, shutdown
-path, handler error contract, or free5GC lifecycle alignment are sound.
+1. the shared app boundary remains under-specified and internally fragmented
+2. SBI error contracts are still inconsistent across handlers and callbacks
+3. post-subscription activation and late-failure signaling are still
+   underspecified as a design/operability issue
+4. config/runtime alignment and broader repository governance issues remain
+   outstanding
+
+The repository now passes `make build`, `go test ./...`, and `make lint` after
+the round-1 changes. That verifies the updated subscription and notifier paths
+at the current repository level, but it does not close the later structural and
+contract-oriented findings.

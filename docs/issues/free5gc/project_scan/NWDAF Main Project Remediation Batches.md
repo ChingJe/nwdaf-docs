@@ -15,15 +15,14 @@ implementation phase can progress with narrower, reviewable changes.
 ## Progress Tracking
 
 Use this table as the single progress snapshot for the remediation plan.
-Current status reflects only what is recorded in this document set today; no
-implementation batch is marked as started unless a later update records it
-explicitly.
+Current status reflects the latest documented implementation and verification
+state in this document set.
 
 | Priority | Tier | Work Item | Status | Notes |
 | --- | --- | --- | --- | --- |
-| 1 | A | Repair Subscription Update Correctness | Not started | Highest confirmed correctness risk from the scan findings |
-| 2 | A | Put Long-Running Work Under App Lifecycle Control | Not started | Lifecycle/shutdown ownership work |
-| 3 | B | Build The Test Safety Net Around The Real Boundaries | Not started | Add handler, consumer, and lifecycle coverage needed for round-1 changes |
+| 1 | A | Repair Subscription Update Correctness | Completed | Closed in round 1 on 2026-06-22; merged to `NWDAF/master` and pushed |
+| 2 | A | Put Long-Running Work Under App Lifecycle Control | Partially completed | Notifier lifecycle ownership closed in round 1 and pushed; broader lifecycle cleanup still remains |
+| 3 | B | Build The Test Safety Net Around The Real Boundaries | Partially completed | Round 1 added focused update/lifecycle tests and pushed; broader handler and consumer test seam work remains |
 | 4 | B | Rebuild One Real App Boundary | Not started | Consolidate shared app contract after initial behavior stabilizes |
 | 5 | B | Normalize SBI Error Contracts | Not started | Align error bodies and parse handling across endpoints |
 | 6 | B | Clarify Post-Subscription Activation And Late-Failure Signaling | Not started | Design completeness and observability work, not an immediate correctness bug |
@@ -63,6 +62,16 @@ Why here:
 
 - This is the clearest confirmed correctness bug in the current codebase.
 
+Status update:
+
+- Completed in round 1 on 2026-06-22.
+- `PUT` now re-applies default/notification validation, reconciles prior
+  scheduler and external collection state, and re-triggers downstream
+  collection for the replacement subscription shape.
+- Focused update-path tests were added and full verification passed.
+- The round-1 implementation was merged locally to `NWDAF/master` and pushed to
+  `origin/master`.
+
 ### Priority 2 — Put Long-Running Work Under App Lifecycle Control
 
 Scope:
@@ -88,6 +97,17 @@ Why here:
 - This stabilizes shutdown behavior before test expansion and app-boundary
   refactors.
 
+Status update:
+
+- Partially completed in round 1 on 2026-06-22.
+- Notifier schedulers now inherit the app cancellation context and are stopped
+  explicitly during application termination.
+- Broader lifecycle cleanup listed in this batch, such as remaining unused
+  lifecycle parameters and cross-component ownership normalization, is still
+  pending.
+- The completed notifier-lifecycle portion is already merged to
+  `NWDAF/master` and pushed.
+
 ## Tier B — Safety Net And Boundary Consolidation
 
 ### Priority 3 — Build The Test Safety Net Around The Real Boundaries
@@ -111,6 +131,17 @@ Why here:
 
 - Later refactors should not proceed without first improving the test seam that
   protects them.
+
+Status update:
+
+- Partially completed in round 1 on 2026-06-22.
+- Focused tests were added for update-time default validation, update-time
+  state reconciliation, notifier parent-context cancellation, and
+  application-side scheduler shutdown.
+- The broader batch goals in this section, especially handler-level error-body
+  coverage and consumer mock-pattern normalization, remain open for a later
+  pass.
+- The round-1 test additions are already merged to `NWDAF/master` and pushed.
 
 ### Priority 4 — Rebuild One Real App Boundary
 
