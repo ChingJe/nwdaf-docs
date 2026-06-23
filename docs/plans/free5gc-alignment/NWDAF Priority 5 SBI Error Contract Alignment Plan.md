@@ -2,7 +2,7 @@
 
 Date: 2026-06-23
 
-Status: In progress
+Status: Implemented for covered scope
 
 Historical remediation item:
 
@@ -24,7 +24,11 @@ Current execution note:
 - however, the round is now split into outward contract alignment first and
   parse/model-path alignment second
 - Phase A outward contract alignment is now implemented in the current
-  `NWDAF/` tree; Phase B remains pending
+  `NWDAF/` tree
+- the currently covered Phase B parse/model alignment work is now also
+  implemented in the current `NWDAF/` tree
+- residual work is limited to intentionally excluded callbacks or future
+  generated-contract availability
 
 2026-06-23 implementation update:
 
@@ -39,7 +43,34 @@ Current execution note:
     handler-originated cases
 - focused verification run:
   - `go test ./internal/sbi`
-- Phase B remains the next follow-up inside this batch
+- Phase B is now implemented for the covered endpoint set in this batch
+
+2026-06-23 Phase B implementation update:
+
+- completed handler-side changes:
+  - `api_eventssubscription.go` create/update now parse through
+    `GetRawData() + openapi.Deserialize(...)`
+  - `api_collector.go` SMF callback now parses through
+    `GetRawData() + openapi.Deserialize(...)`
+  - `api_mlmodelprovision.go` now uses generated
+    `[]models.NwdafMlModelProvNotif` instead of NWDAF-local duplicate structs
+  - `api_adrf_notify.go` now reuses generated nested
+    `models.FetchInstruction` while keeping a local top-level callback type
+- explicitly not covered in this batch:
+  - `POST /collector/upf-notify`
+  - `POST /mtlf/training-complete`
+  - an exact generated top-level ADRF retrieval callback model
+- reasons:
+  - `upf-notify` still depends on NWDAF-local `processor.UpfNotificationData`
+    and no matching generated `openapi/models` type has been confirmed in the
+    current dependency snapshot
+  - Daisy callback is a project-local integration path rather than a verified
+    free5GC standards-facing baseline
+  - ADRF retrieval callback still lacks an exact generated top-level model in
+    `github.com/free5gc/openapi v1.2.3`, so only partial alignment is safe
+- focused verification runs:
+  - `go test ./internal/sbi`
+  - `make build`
 
 ---
 
@@ -282,6 +313,27 @@ Only after Phase A is stable:
 - endpoints without an exact generated type may stay on local structs for now
   or be deferred
 
+Phase B non-coverage that should be tracked explicitly:
+
+- `POST /collector/upf-notify`
+  - reason: the current NWDAF payload uses local
+    `processor.UpfNotificationData`, and no matching
+    `github.com/free5gc/openapi/models` type has been confirmed in the current
+    dependency snapshot
+  - implication: it remains inside the Phase A outward error-contract baseline
+    but is not part of the official parse/model alignment batch
+- `POST /mtlf/training-complete`
+  - reason: this is a Daisy local integration callback rather than a verified
+    free5GC standards-facing NF baseline
+  - implication: keep the outward `ProblemDetails` behavior aligned, but do not
+    let it drive Phase B parse/model decisions
+- `POST /collector/retrieval-notify`
+  - reason: the current dependency snapshot does not provide an exact
+    generated top-level ADRF retrieval callback model
+  - implication: Phase B may only apply partial alignment there, such as using
+    generated nested types where available, while retaining a local top-level
+    request struct
+
 ### 6.3 Endpoint Policy By Class
 
 #### Class A — 3GPP NWDAF API endpoints
@@ -374,6 +426,18 @@ After Phase A:
 - `api_daisy_callback.go`: local integration path; keep out of the official
   parse/model baseline
 
+Current Phase B execution intent:
+
+- migrate `api_eventssubscription.go` create/update handlers to the
+  `GetRawData() + openapi.Deserialize(...)` path while preserving the current
+  processor contract
+- migrate `api_collector.go` SMF callback parsing to the same path
+- replace NWDAF-local ML model provision notification structs with generated
+  `openapi/models` types
+- keep `api_collector.go` UPF callback on its existing local payload contract
+- apply only partial alignment in `api_adrf_notify.go` because only the nested
+  `FetchInstruction` type is generated in the current dependency snapshot
+
 ### Workstream D — Update Direct Handler Tests
 
 Only after the above target is fixed:
@@ -418,6 +482,19 @@ Phase A status on 2026-06-23:
 
 - complete in the current `NWDAF/` tree
 - verified with `go test ./internal/sbi`
+
+Phase B completion target:
+
+1. `api_eventssubscription.go` create/update parse through
+   `GetRawData() + openapi.Deserialize(...)`.
+2. `api_collector.go` SMF callback parse through
+   `GetRawData() + openapi.Deserialize(...)`.
+3. `api_mlmodelprovision.go` uses generated
+   `[]models.NwdafMlModelProvNotif` instead of NWDAF-local duplicate structs.
+4. `api_adrf_notify.go` keeps a local top-level callback type but reuses
+   generated nested types where possible.
+5. The plan explicitly records uncovered endpoints and the reason each one
+   stays outside the official parse/model alignment batch.
 
 Phase B is intentionally not a completion gate for the first outward-contract
 round and is now the active remaining portion of this batch.
