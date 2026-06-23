@@ -59,6 +59,19 @@ Round-1 implementation status:
   `origin/master`.
 - Findings 3 and later remain relevant unless noted otherwise below.
 
+## 2026-06-23 Reassessment Note
+
+This scan file remains the historical finding list from the original pass.
+After rechecking the current `NWDAF/` tree on 2026-06-23:
+
+- the test-gap findings that were later grouped into Priority 3 should now be
+  treated as materially closed by implementation, not as current blockers
+- the most actionable remaining confirmed issues in live code are the SBI
+  error-contract inconsistency, factory/config drift, and the fragmented
+  shared app boundary
+- the updated execution order lives in
+  `nwdaf-docs/docs/issues/free5gc/project_scan/NWDAF Main Project Remediation Batches.md`
+
 ## Findings
 
 ### 1. High — `PUT /subscriptions/{id}` updates only the local record and leaves upstream collection state stale

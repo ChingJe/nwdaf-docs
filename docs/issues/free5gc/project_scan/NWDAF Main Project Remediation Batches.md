@@ -1,6 +1,7 @@
 # NWDAF Main Project Remediation Batches
 
 Date: 2026-06-18
+Last reassessed against current `NWDAF/` code: 2026-06-23
 
 This document reorganizes the scan findings into a stricter execution order.
 The new ordering is based on three criteria:
@@ -12,25 +13,50 @@ The new ordering is based on three criteria:
 The larger original batches are split below into smaller work items so the next
 implementation phase can progress with narrower, reviewable changes.
 
+## 2026-06-23 Reassessment
+
+This document was rechecked against the current `NWDAF/` tree after the
+documented round-1 work and the later Priority-3 test refactor completion.
+
+Current conclusions:
+
+- Priority 3 is materially closed in code, not only in planning notes. The
+  repository now carries direct `api_*_test.go` handler coverage plus active
+  `gock` and `gomock` usage at the intended seams.
+- Priority 2 no longer blocks the next refactor round. The main scheduler
+  ownership issue is fixed; the remaining lifecycle cleanup is narrower and can
+  be absorbed while touching adjacent service/server paths.
+- The next confirmed code-level cleanup target is the inconsistent SBI error
+  contract across callback endpoints.
+- The next confirmed code-level cleanup target after that is factory/config
+  drift, including the latent `GetSbiBindingAddr()` bug.
+- The next architectural cleanup target after those is the fragmented
+  app-boundary/interface ownership and global-config-driven consumer wiring.
+
+The refreshed ordering below therefore favors smaller contract/config cleanups
+before the broader shared app-boundary reconstruction.
+Historical priority numbers are retained in the section headings below; the
+table and execution rule are the current ordering.
+
 ## Progress Tracking
 
 Use this table as the single progress snapshot for the remediation plan.
 Current status reflects the latest documented implementation and verification
 state in this document set.
 
-| Priority | Tier | Work Item | Status | Notes |
+| Current Rank | Tier | Work Item | Status | Notes |
 | --- | --- | --- | --- | --- |
 | 1 | A | Repair Subscription Update Correctness | Completed | Closed in round 1 on 2026-06-22; merged to `NWDAF/master` and pushed |
-| 2 | A | Put Long-Running Work Under App Lifecycle Control | Partially completed | Notifier lifecycle ownership closed in round 1 and pushed; broader lifecycle cleanup still remains |
+| 2 | A | Put Long-Running Work Under App Lifecycle Control | Partially completed | Main notifier ownership problem is closed; remaining `traceCtx`/background-context cleanup is narrower and no longer the next standalone round |
 | 3 | B | Build The Test Safety Net Around The Real Boundaries | Completed | Round 1 closed update/lifecycle basics; the broader test refactor completed on 2026-06-23 with direct handler coverage, normalized consumer test seams, expanded gomock-based processor seams, and one documented SMF raw-HTTP exception that remains deferred to later contract/model-governance work |
-| 4 | B | Rebuild One Real App Boundary | Not started | Consolidate shared app contract after initial behavior stabilizes |
-| 5 | B | Normalize SBI Error Contracts | Not started | Align error bodies and parse handling across endpoints |
-| 6 | B | Clarify Post-Subscription Activation And Late-Failure Signaling | Not started | Design completeness and observability work, not an immediate correctness bug |
-| 7 | B | Tighten Logging Boundaries | Not started | Follow error-contract and late-failure signaling cleanup |
-| 8 | C | Harden Factory And Runtime Config Behavior | Not started | Includes config validation and `GetSbiBindingAddr()` fix |
-| 9 | C | Separate Runtime Config From Lab / Workflow Config | Not started | Structural config-scope cleanup |
-| 10 | C | Establish OpenAPI / Model Governance | Not started | Clarify generated vs handwritten model ownership |
-| 11 | C | Decide The Intended free5GC Integration Level | Not started | Architectural scope decision |
+| 4 | B | Normalize SBI Error Contracts | Not started | Current handlers still mix `ProblemDetails`, `gin.H`, `BindJSON`, and `ShouldBindJSON`; existing handler tests now make this a good next round |
+| 5 | C | Harden Factory And Runtime Config Behavior | Not started | Includes config validation, supported-analytics/runtime drift cleanup, README/go.mod truth alignment, and the latent `GetSbiBindingAddr()` bug |
+| 6 | B | Rebuild One Real App Boundary | Not started | Multiple local app interfaces and `consumer.NewConsumer()` still bypass `pkg/app`; take after narrower handler/config contract cleanup |
+| 7 | B | Clarify Post-Subscription Activation And Late-Failure Signaling | Not started | Design completeness and observability work, not an immediate correctness bug |
+| 8 | B | Tighten Logging Boundaries | Not started | Follow error-contract and late-failure signaling cleanup |
+| 9 | C | Establish OpenAPI / Model Governance | Not started | Generated/reference models already exist for some locally redefined payloads; governance should follow handler/config cleanup |
+| 10 | C | Decide The Intended free5GC Integration Level | Not started | Architectural scope decision |
+| 11 | C | Separate Runtime Config From Lab / Workflow Config | Not started | Structural config-scope cleanup after factory hardening and boundary decisions |
 | 12 | C | Clean Repo And Package Ownership Boundaries | Not started | Most invasive cleanup; scheduled last |
 
 ## Tier A — Immediate Correctness And Runtime Risk
@@ -361,14 +387,14 @@ Recommended sequence:
 1. Priority 1
 2. Priority 2
 3. Priority 3
-4. Priority 4
-5. Priority 5
-6. Priority 6
-7. Priority 7
-8. Priority 8
-9. Priority 9
-10. Priority 10
-11. Priority 11
+4. Priority 5
+5. Priority 8
+6. Priority 4
+7. Priority 6
+8. Priority 7
+9. Priority 10
+10. Priority 11
+11. Priority 9
 12. Priority 12
 
 Compressed rule of thumb:
@@ -376,7 +402,8 @@ Compressed rule of thumb:
 - first stop the system from doing the wrong thing
 - then make runtime behavior stoppable and owned
 - then build the test seam
-- then clean up contracts and later-failure signaling
-- then consolidate boundaries
-- only after that clean up config, contracts, repo scope, and strategic
-  free5GC alignment
+- then normalize the externally visible HTTP contract
+- then remove obvious factory/config drift and latent helper bugs
+- then consolidate the real app boundary
+- only after that tackle later-failure semantics, logging, governance, repo
+  scope, and strategic free5GC alignment
