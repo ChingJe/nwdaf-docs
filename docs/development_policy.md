@@ -161,6 +161,12 @@ feat(mtlf): add retrieval session logging
 - Use imperative mood.
 - Keep the subject concise and specific.
 - Prefer a scope when the affected area is clear, such as `anlf`, `mtlf`, `processor`, `context`, `consumer`, or `docs`.
+- Describe the concrete technical change, not an internal tracking label.
+- Avoid vague project-management terms such as `phase`, `batch`, `round`, or
+  similar labels in the subject unless that wording is itself part of the
+  externally meaningful change being made.
+- A reviewer should be able to infer the main code or document delta from the
+  subject alone, without needing separate plan context.
 
 ---
 
