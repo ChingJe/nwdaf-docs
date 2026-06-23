@@ -2,15 +2,17 @@
 
 Date: 2026-06-22
 
-Status: In Progress
+Status: Completed with documented SMF consumer exception
 
 Phase status update:
 
 - Phase 1 completed on 2026-06-23
-- remaining items are tracked as Phase 2 follow-up
+- Phase 2 implementation completed on 2026-06-23
 - see `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 3 Test Refactor Phase 1 Summary.md`
-  for the implementation snapshot, boundary matrix, coverage summary, and
-  explicit remaining gaps
+  for the Phase 1 implementation snapshot and interim gaps
+- see `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 3 Test Refactor Completion Summary.md`
+  for the final boundary matrix, updated coverage snapshot, completion
+  judgment, and the documented `NsmfService` raw-HTTP exception
 
 ---
 

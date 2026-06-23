@@ -4,6 +4,12 @@ Date: 2026-06-23
 
 Status: Phase 1 Completed
 
+Historical note:
+
+- this document remains the Phase 1 checkpoint
+- the final Priority 3 completion state is recorded in
+  `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 3 Test Refactor Completion Summary.md`
+
 Related plan:
 
 - `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 3 Test Refactor Detailed Plan.md`
