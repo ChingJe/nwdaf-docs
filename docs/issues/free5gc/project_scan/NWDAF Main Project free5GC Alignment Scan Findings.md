@@ -66,11 +66,14 @@ After rechecking the current `NWDAF/` tree on 2026-06-23:
 
 - the test-gap findings that were later grouped into Priority 3 should now be
   treated as materially closed by implementation, not as current blockers
-- the most actionable remaining confirmed issues in live code are the SBI
-  error-contract inconsistency, factory/config drift, and the fragmented
-  shared app boundary
+- the covered standards-facing SBI error-contract work is now implemented and
+  should no longer be treated as the next blocking refactor round
+- the most actionable remaining confirmed issues in live code are now
+  factory/config drift and the fragmented shared app boundary
 - the updated execution order lives in
   `nwdaf-docs/docs/issues/free5gc/project_scan/NWDAF Main Project Remediation Batches.md`
+- the next intended implementation round is documented in
+  `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 8 Factory And Runtime Config Hardening Plan.md`
 
 ## Findings
 

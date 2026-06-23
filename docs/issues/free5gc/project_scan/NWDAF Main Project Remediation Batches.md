@@ -26,11 +26,11 @@ Current conclusions:
 - Priority 2 no longer blocks the next refactor round. The main scheduler
   ownership issue is fixed; the remaining lifecycle cleanup is narrower and can
   be absorbed while touching adjacent service/server paths.
-- The next confirmed code-level cleanup target is the inconsistent SBI error
-  contract across callback endpoints.
-- The next confirmed code-level cleanup target after that is factory/config
-  drift, including the latent `GetSbiBindingAddr()` bug.
-- The next architectural cleanup target after those is the fragmented
+- The previously-next SBI error-contract round is now closed for the covered
+  standards-facing scope and no longer blocks narrower factory work.
+- The next confirmed code-level cleanup target is factory/config drift,
+  including the latent `GetSbiBindingAddr()` bug.
+- The next architectural cleanup target after that is the fragmented
   app-boundary/interface ownership and global-config-driven consumer wiring.
 
 The refreshed ordering below therefore favors smaller contract/config cleanups
@@ -49,8 +49,8 @@ state in this document set.
 | 1 | A | Repair Subscription Update Correctness | Completed | Closed in round 1 on 2026-06-22; merged to `NWDAF/master` and pushed |
 | 2 | A | Put Long-Running Work Under App Lifecycle Control | Partially completed | Main notifier ownership problem is closed; remaining `traceCtx`/background-context cleanup is narrower and no longer the next standalone round |
 | 3 | B | Build The Test Safety Net Around The Real Boundaries | Completed | Round 1 closed update/lifecycle basics; the broader test refactor completed on 2026-06-23 with direct handler coverage, normalized consumer test seams, expanded gomock-based processor seams, and one documented SMF raw-HTTP exception that remains deferred to later contract/model-governance work |
-| 4 | B | Normalize SBI Error Contracts | Partially completed | Re-baselined on 2026-06-23 and Phase A is now closed in code: outward `ProblemDetails` contract alignment and handler-test updates landed; Phase B parse/model alignment remains pending |
-| 5 | C | Harden Factory And Runtime Config Behavior | Not started | Includes config validation, supported-analytics/runtime drift cleanup, README/go.mod truth alignment, and the latent `GetSbiBindingAddr()` bug |
+| 4 | B | Normalize SBI Error Contracts | Completed for covered scope | 2026-06-23 implementation landed for the reviewed standards-facing handlers; intentionally excluded callbacks remain future contract-governance work and no longer block the next round |
+| 5 | C | Harden Factory And Runtime Config Behavior | Planned | Next intended round; see `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 8 Factory And Runtime Config Hardening Plan.md` |
 | 6 | B | Rebuild One Real App Boundary | Not started | Multiple local app interfaces and `consumer.NewConsumer()` still bypass `pkg/app`; take after narrower handler/config contract cleanup |
 | 7 | B | Clarify Post-Subscription Activation And Late-Failure Signaling | Not started | Design completeness and observability work, not an immediate correctness bug |
 | 8 | B | Tighten Logging Boundaries | Not started | Follow error-contract and late-failure signaling cleanup |
@@ -242,7 +242,8 @@ Why here:
 
 Status update:
 
-- Phase A is complete in the current `NWDAF/` tree on 2026-06-23.
+- The covered standards-facing Phase A and Phase B work is implemented in the
+  current `NWDAF/` tree on 2026-06-23.
 - Handler-generated error bodies across the reviewed `internal/sbi/api_*.go`
   endpoints now converge on `models.ProblemDetails`.
 - problem responses are now written through an NF-local
@@ -251,9 +252,13 @@ Status update:
 - the earlier custom malformed-JSON cause drift was removed so malformed
   request failures align more closely with the shared
   `openapi.ProblemDetailsMalformedReqSyntax(...)` pattern.
+- create/update subscription handlers and the covered callback handlers now use
+  `GetRawData() + openapi.Deserialize(...)` where the current dependency
+  snapshot provides an exact or clearly intended model path.
 - direct handler tests were updated and focused verification passed.
-- Phase B remains open for endpoint-by-endpoint parse/model-path alignment,
-  especially where exact generated models exist.
+- intentionally excluded callbacks, such as `upf-notify`, Daisy local callback
+  cleanup, and an exact top-level ADRF retrieval callback model, remain future
+  contract/model-governance work rather than unfinished Priority 5 work.
 
 ### Priority 6 — Clarify Post-Subscription Activation And Late-Failure Signaling
 
