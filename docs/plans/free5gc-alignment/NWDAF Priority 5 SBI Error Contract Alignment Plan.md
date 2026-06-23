@@ -2,18 +2,44 @@
 
 Date: 2026-06-23
 
-Status: Planned
+Status: In progress
 
 Historical remediation item:
 
 - `Priority 5 — Normalize SBI Error Contracts`
 
+2026-06-23 baseline correction:
+
+- the first draft of this plan leaned too quickly from YAML-level intent to a
+  local helper shape
+- the corrected plan below is re-based on actual free5GC NF implementation
+  patterns, plus the current `github.com/free5gc/openapi` dependency snapshot
+  used by `NWDAF/`
+
 Current execution note:
 
 - after the 2026-06-23 reassessment in
   `nwdaf-docs/docs/issues/free5gc/project_scan/NWDAF Main Project Remediation Batches.md`,
-  this is the next intended implementation round even though the historical
-  section title remains "Priority 5"
+  this remains the next intended implementation round
+- however, the round is now split into outward contract alignment first and
+  parse/model-path alignment second
+- Phase A outward contract alignment is now implemented in the current
+  `NWDAF/` tree; Phase B remains pending
+
+2026-06-23 implementation update:
+
+- Phase A is closed in code for the reviewed handler boundary
+- the current implementation now:
+  - returns `models.ProblemDetails` instead of map-style `"error"` bodies
+  - writes problem responses through an NF-local
+    `internal/util/GinProblemJson(...)` helper
+  - sets `Content-Type: application/problem+json`
+  - uses shared `openapi.ProblemDetailsMalformedReqSyntax(...)` and
+    `openapi.ProblemDetailsSystemFailure(...)` helpers for the common
+    handler-originated cases
+- focused verification run:
+  - `go test ./internal/sbi`
+- Phase B remains the next follow-up inside this batch
 
 ---
 
@@ -22,23 +48,24 @@ Current execution note:
 This plan defines the next refactor round for the main `NWDAF/` repository,
 limited to the HTTP error-contract boundary of the current SBI server.
 
-The purpose of this round is to make NWDAF error responses more clearly aligned
-with:
+The purpose of this round is to align NWDAF more carefully with:
 
 1. local 3GPP OpenAPI YAML under `nwdaf-docs/specs/yaml/`
-2. free5GC reference NF handler conventions under
+2. actual free5GC reference NF implementations under
    `resources/references/free5gc-main/NFs/`
-3. the current repository's own handler and test structure
+3. the current `github.com/free5gc/openapi v1.2.3` dependency used by
+   `NWDAF/`
 
-This round is intentionally narrow.
+This round is intentionally narrower than the first draft had implied.
 
 It is about:
 
 - HTTP status and error-body shape
 - `ProblemDetails` usage
 - media type for problem responses
-- handler-side parse and required-input failure behavior
-- test expectations at the handler boundary
+- choosing the correct free5GC-aligned response-writing primitives
+- clarifying which endpoints can realistically move toward
+  `openapi.Deserialize(...)` in the current dependency snapshot
 
 It is not about:
 
@@ -46,7 +73,6 @@ It is not about:
 - late-failure signaling after resource acceptance
 - logging cleanup
 - app-boundary reconstruction
-- model-governance or generated-model replacement
 - repository/package ownership changes
 
 ---
@@ -56,6 +82,7 @@ It is not about:
 This plan is based on the following local sources:
 
 - `nwdaf-docs/specs/yaml/TS29520_Nnwdaf_EventsSubscription.yaml`
+- `nwdaf-docs/specs/yaml/TS29520_Nnwdaf_DataManagement.yaml`
 - `nwdaf-docs/specs/yaml/TS29520_Nnwdaf_MLModelProvision.yaml`
 - `nwdaf-docs/specs/yaml/TS29520_Nnwdaf_MLModelTraining.yaml`
 - `nwdaf-docs/specs/yaml/TS29575_Nadrf_DataManagement.yaml`
@@ -63,166 +90,199 @@ This plan is based on the following local sources:
 - `free5gc-dev-skill/SKILL.md`
 - `free5gc-dev-skill/references/sbi-development.md`
 - `free5gc-dev-skill/references/openapi-contract.md`
+- `resources/openapi/openapi/problem_details.go`
 - `resources/references/free5gc-main/NFs/udr/internal/util/problem_json.go`
 - `resources/references/free5gc-main/NFs/udr/internal/util/util.go`
 - `resources/references/free5gc-main/NFs/nrf/internal/util/problem_json.go`
+- `resources/references/free5gc-main/NFs/nssf/internal/util/problem_json.go`
+- `resources/references/free5gc-main/NFs/nef/internal/sbi/api_callback.go`
+- `resources/references/free5gc-main/NFs/amf/internal/sbi/api_httpcallback.go`
+- `resources/references/free5gc-main/NFs/smf/internal/sbi/api_pdusession.go`
 - `resources/references/free5gc-main/NFs/udm/internal/sbi/api_httpcallback.go`
 - `resources/references/free5gc-main/NFs/udm/internal/sbi/api_eventexposure.go`
 - the current `NWDAF/` tree on 2026-06-23
 
 ---
 
-## 3. Official Alignment Baseline
+## 3. Corrected Alignment Baseline
 
-### 3.1 3GPP YAML Baseline
+### 3.1 YAML Contract Baseline
 
-The local YAML snapshots show a consistent contract for standards-based error
-responses:
+The local YAML snapshots still establish the outward contract target:
 
-- `TS29520_Nnwdaf_EventsSubscription.yaml` defines `400`, `500`, and `default`
-  responses for the subscription resource and its notification callback through
-  `TS29571_CommonData.yaml`.
-- `TS29520_Nnwdaf_MLModelProvision.yaml` does the same for both the resource
-  operations and the `notifUri` callback carrying
-  `NwdafMLModelProvNotif` items.
-- `TS29520_Nnwdaf_MLModelTraining.yaml` does the same for ML-training
-  callbacks.
-- `TS29575_Nadrf_DataManagement.yaml` does the same for ADRF
-  data-retrieval-subscription callbacks.
-
-`TS29571_CommonData.yaml` is the key shared baseline:
-
-- `400`, `401`, `403`, `404`, `408`, `409`, `410`, `411`, `412`, `413`, `414`,
-  `415`, `429`, `500`, `501`, `502`, `503`, and `504` all use
+- standards-based NWDAF APIs and callback receivers use
   `application/problem+json`
-- their body schema is `ProblemDetails`
+- their error body schema is `ProblemDetails`
 
-This means that for standards-based NWDAF APIs and standards-based callback
-receivers, the intended outward-facing error format is not an ad hoc JSON map.
-It is a `ProblemDetails`-shaped response aligned with TS 29.571.
+This remains the standards baseline, but it does not by itself decide which
+local helper or parse path NWDAF should use.
 
-### 3.2 free5GC Reference NF Baseline
+### 3.2 free5GC Implementation Baseline
 
-The free5GC reference NFs do not all use one identical helper, but they do
-show a stable direction:
+The actual free5GC implementation pattern is more specific:
 
-- UDR and NRF provide `GinProblemJson(...)` helpers that write
-  `ProblemDetails` and set `Content-Type: application/problem+json`
-- UDR utility functions such as `ProblemDetailsSystemFailure(...)` and
-  `ProblemDetailsMalformedReqSyntax(...)` centralize common error shapes
-- UDM callback handlers such as `api_httpcallback.go` and ordinary handlers
-  such as `api_eventexposure.go` build `models.ProblemDetails` for parse and
-  system failures instead of returning ad hoc map bodies
+1. Shared `ProblemDetails` constructors already exist in the common
+   `openapi` module.
+   `resources/openapi/openapi/problem_details.go` provides:
+   - `ProblemDetailsSystemFailure(...)`
+   - `ProblemDetailsMalformedReqSyntax(...)`
+   - other generic helpers
+2. Several NFs add only a very thin NF-local writer under `internal/util/`.
+   Examples:
+   - UDR `internal/util/problem_json.go`
+   - NRF `internal/util/problem_json.go`
+   - NSSF `internal/util/problem_json.go`
+   These helpers primarily set `Content-Type: application/problem+json` and
+   write the provided `ProblemDetails`.
+3. Many standards-facing handlers use:
+   - `GetRawData()`
+   - then `openapi.Deserialize(...)`
+   Examples:
+   - UDM `api_httpcallback.go`
+   - UDM `api_eventexposure.go`
+   - AMF `api_httpcallback.go`
+   - NEF `api_callback.go`
+4. free5GC does not use one universal parse path.
+   Some handlers, such as SMF `api_pdusession.go`, still use
+   `ShouldBindJSON(...)` for certain request forms.
+   Therefore parse-path alignment must be decided endpoint by endpoint.
+5. For malformed request syntax, free5GC commonly uses title
+   `Malformed request syntax`.
+   The shared `openapi.ProblemDetailsMalformedReqSyntax(...)` helper does not
+   set a custom cause like `INVALID_JSON`.
+6. For system failures, free5GC commonly uses title `System failure` with
+   cause `SYSTEM_FAILURE`.
+7. `MANDATORY_IE_MISSING` exists in free5GC, but it often appears at the
+   processor or deeper validation boundary rather than as a generic parse
+   helper result.
 
-Important implication:
+### 3.3 Corrected Implications For NWDAF
 
-- free5GC reference code is not proving that every NF must share one exact
-  helper name
-- it is proving that standards-facing handler failures should converge on
-  `ProblemDetails`, with recognizable titles such as:
-  - `Malformed request syntax`
-  - `System failure`
-  - `Mandatory IEs are missing`
+The real free5GC-aligned target is therefore:
 
-This is the alignment target for NWDAF.
+- reuse shared `openapi.ProblemDetails...` constructors where they already
+  exist
+- if NWDAF wants a problem-response writer helper, place it in an NF-local
+  utility package, not as a new `internal/sbi`-local family
+- treat outward response-shape alignment and parse/model-path alignment as two
+  separate decisions
+- do not let Daisy local callback behavior define the standards-facing
+  alignment target
 
 ---
 
 ## 4. Current NWDAF State
 
+2026-06-23 state note after Phase A:
+
+- the table below reflects the baseline that informed the split between Phase A
+  and Phase B
+- after the current implementation round, the major response-shape gaps listed
+  there are now closed
+- the remaining live work in this batch is primarily parse/model alignment
+  rather than outward problem-body normalization
+
 ### 4.1 Current Handler Inventory Inside This Boundary
 
-The current error-contract review is limited to:
+The current review is limited to:
 
 - `internal/sbi/api_eventssubscription.go`
 - `internal/sbi/api_collector.go`
 - `internal/sbi/api_mlmodelprovision.go`
 - `internal/sbi/api_adrf_notify.go`
 - `internal/sbi/api_daisy_callback.go`
-- the direct handler tests that currently lock these responses
+- the direct handler tests that lock these responses
 
 ### 4.2 Current Endpoint Matrix
 
-| Endpoint | Contract Class | Current Parse Path | Current Error Body Style | Current Gap |
+| Endpoint | Contract Class | Current Parse Path | Current Response Shape Gap | Parse/Model Alignment Note |
 | --- | --- | --- | --- | --- |
-| `POST /nnwdaf-eventssubscription/v1/subscriptions` | 3GPP NWDAF API | `ShouldBindJSON` | `ProblemDetails` | closest to target, but still returned as ordinary JSON and not through one shared problem writer |
-| `PUT /nnwdaf-eventssubscription/v1/subscriptions/{id}` | 3GPP NWDAF API | `ShouldBindJSON` | `ProblemDetails` | same as above |
-| `DELETE /nnwdaf-eventssubscription/v1/subscriptions/{id}` | 3GPP NWDAF API | no body parse | processor-returned `ProblemDetails` only | no local helper unifies outbound problem response handling |
-| `POST /collector/notify` | peer NF callback | `BindJSON` | `ProblemDetails` | parse path differs from nearby handlers and weakens explicit response control |
-| `POST /collector/upf-notify` | peer NF callback | `BindJSON` | `ProblemDetails` | same gap as above |
-| `POST /collector/retrieval-notify` | ADRF standard callback | `ShouldBindJSON` | `gin.H{"error": ...}` | not aligned to TS 29.571-style problem response |
-| `POST /mlmodel-notify` | 3GPP ML-model-provision callback | `ShouldBindJSON` | `gin.H{"error": ...}` | not aligned to TS 29.571-style problem response |
-| `POST /mtlf/training-complete` | local Daisy callback | `ShouldBindJSON` | `gin.H{"error": ...}` | local-only contract and inconsistent with the rest of the server |
+| `POST /nnwdaf-eventssubscription/v1/subscriptions` | 3GPP NWDAF API | `ShouldBindJSON` | already returns `ProblemDetails`, but not through a confirmed free5GC-style writer path | exact generated model exists; a later move toward `openapi.Deserialize(...)` is realistic |
+| `PUT /nnwdaf-eventssubscription/v1/subscriptions/{id}` | 3GPP NWDAF API | `ShouldBindJSON` | same as above | exact generated model exists |
+| `DELETE /nnwdaf-eventssubscription/v1/subscriptions/{id}` | 3GPP NWDAF API | no body parse | processor-returned `ProblemDetails` are not yet written through one confirmed path | no parse refactor needed |
+| `POST /collector/notify` | peer NF callback | `BindJSON` | outward error contract is close, but still not on a verified free5GC-style write path | exact generated model exists |
+| `POST /collector/upf-notify` | peer NF callback | `BindJSON` | same as above | payload is local, not current openapi-generated |
+| `POST /collector/retrieval-notify` | ADRF standard callback | `ShouldBindJSON` | still returns ad hoc `gin.H` on parse failure | exact ADRF callback type is not present in the current dependency snapshot |
+| `POST /mlmodel-notify` | 3GPP ML-model-provision callback | `ShouldBindJSON` | still returns ad hoc `gin.H` on parse failure | exact generated model exists as `models.NwdafMlModelProvNotif` |
+| `POST /mtlf/training-complete` | local Daisy callback | `ShouldBindJSON` | still returns ad hoc `gin.H` | local integration path; not a free5GC standards-facing baseline |
 
 ### 4.3 Current Problems Confirmed In Code
 
 Confirmed current issues:
 
 1. The same server exposes multiple incompatible error-body shapes.
-   Some handlers return `models.ProblemDetails`, while others return
-   `gin.H{"error": ...}`.
-2. The collector handlers still use `c.BindJSON(...)` while neighboring
-   handlers use `c.ShouldBindJSON(...)`.
-3. No local shared helper currently owns the outbound problem-response write
-   path.
-4. Current handler-generated `ProblemDetails` payloads are minimal and do not
-   yet intentionally align with the stronger free5GC/reference pattern for
-   titles such as `Malformed request syntax` or `System failure`.
-5. Current NWDAF handlers do not explicitly advertise
-   `application/problem+json` for problem responses.
-
-### 4.4 Current Tests That Lock The Divergence
-
-The current direct handler tests correctly prove the present behavior, but they
-also lock in the current inconsistency:
-
-- `api_eventssubscription_test.go` expects `ProblemDetails` for invalid JSON
-- `api_collector_test.go` expects `ProblemDetails` for invalid JSON
-- `api_mlmodelprovision_test.go` expects a decoded `map[string]string`
-  containing `"error": "Invalid notification format"`
-- `api_adrf_notify_test.go` expects a decoded `map[string]string`
-  containing `"error": "invalid payload"`
-- `api_daisy_callback_test.go` expects the same map-style body for invalid
-  payload, while the missing-`task_id` case only checks the status code
-
-This is useful because the handler boundary is now directly testable, but it
-also means the next refactor must update tests and production code together.
+2. NWDAF has not yet chosen one verified free5GC-style problem-response path.
+3. Response-shape cleanup and parse/model-path cleanup had been treated as one
+   item, but they are not the same refactor.
+4. Some endpoints already have exact generated-model coverage in the current
+   dependency snapshot, while others do not.
+5. Daisy callback behavior is local and should not drive official-alignment
+   decisions.
 
 ---
 
 ## 5. Boundary For This Round
 
-This plan stops at the error-contract boundary.
+This batch should be split into two phases.
+
+### Phase A — Outward ProblemDetails Contract Alignment
 
 In scope:
 
 - handler-generated parse errors
-- handler-generated missing-required-input errors
 - handler-generated internal/system-failure errors
 - how processor-returned `ProblemDetails` are written to the client
-- content type and response body shape for problem responses
-- test updates needed to lock the new contract
+- `Content-Type: application/problem+json`
+- replacing ad hoc `gin.H{"error": ...}` bodies
+- updating direct handler tests for the chosen outward contract
 
-Explicitly out of scope:
+### Phase B — Parse / Model Alignment Follow-Up
+
+In scope only after Phase A:
+
+- deciding endpoint by endpoint whether to move toward
+  `GetRawData() + openapi.Deserialize(...)`
+- switching to exact generated models where the current dependency snapshot
+  already provides them
+- deferring endpoints that would blur into broader model-governance work
+
+Explicitly out of scope for Phase A:
 
 - redesigning processor return types
 - changing subscription procedure semantics
 - changing callback success behavior
-- changing log categories or reducing log duplication
 - moving Daisy callback ownership out of `internal/sbi`
-- replacing local ML-model callback structs with generated types
+- broad generated-code or OpenAPI-regeneration work
 - reworking `pkg/app`, `consumer.NewConsumer()`, or lifecycle ownership
 
 ---
 
-## 6. Target Contract For This Round
+## 6. Execution Target
 
-### 6.1 High-Level Rule
+### 6.1 Phase A Target
 
-All handler-generated failures in `internal/sbi/api_*.go` should return
+All handler-generated failures in the listed files should return
 `models.ProblemDetails` rather than ad hoc JSON maps.
 
-### 6.2 Endpoint Policy By Class
+The preferred free5GC-style primitive stack is:
+
+- shared `openapi.ProblemDetails...` constructors where available
+- optional NF-local writer under `internal/util/` if NWDAF needs one shared
+  place to force `application/problem+json`
+
+This phase should not introduce a new `internal/sbi`-local helper family for
+problem responses.
+
+### 6.2 Phase B Target
+
+Only after Phase A is stable:
+
+- standard endpoints with exact generated types may move toward
+  `GetRawData() + openapi.Deserialize(...)`
+- endpoints without an exact generated type may stay on local structs for now
+  or be deferred
+
+### 6.3 Endpoint Policy By Class
 
 #### Class A — 3GPP NWDAF API endpoints
 
@@ -234,10 +294,10 @@ Includes:
 
 Policy:
 
-- preserve existing success status codes and bodies
+- preserve success-path behavior
 - preserve processor-owned business errors
-- standardize parse and write behavior around one shared local
-  `ProblemDetails` writer
+- align the outward problem writer first
+- treat parse-path migration as a later sub-step
 
 #### Class B — standards-based callback receivers
 
@@ -251,8 +311,9 @@ Includes:
 Policy:
 
 - align callback failures to `ProblemDetails`
-- treat them as real external HTTP contracts, not as internal-only hooks
 - remove ad hoc `gin.H` bodies
+- only migrate parse/model paths where the current dependency snapshot supports
+  it clearly
 
 #### Class C — local integration callback
 
@@ -262,158 +323,114 @@ Includes:
 
 Policy:
 
-- this endpoint is not a 3GPP NWDAF service operation
-- however, it should still align to the same local server-wide problem shape
-  unless there is a strong local-integration reason not to
-- this plan assumes there is no value in preserving a special Daisy-only
-  `{"error": ...}` response format
-
-### 6.3 ProblemDetails Shape Policy
-
-This round should converge on these local rules:
-
-1. Parse failure:
-   - status `400`
-   - title `Malformed request syntax`
-   - detail contains the parse failure context
-   - keep a local cause when it already exists and is stable enough to preserve
-     without widening scope; otherwise title/detail consistency is more
-     important than inventing new causes aggressively
-2. Missing required handler-level input:
-   - status `400`
-   - title should be either `Malformed request syntax` or
-     `Mandatory IEs are missing`
-   - choose one explicit local rule and use it consistently
-3. Handler-level internal/system failure:
-   - status `500`
-   - title `System failure`
-   - cause `SYSTEM_FAILURE`
-4. Processor-returned `ProblemDetails`:
-   - do not reinterpret them in handlers
-   - write them through the same shared problem-response path
-
-### 6.4 Media Type Policy
-
-For error responses that carry `ProblemDetails`, the local writer should set:
-
-- `Content-Type: application/problem+json`
-
-This is the closest direct alignment with `TS29571_CommonData.yaml` and with
-the UDR/NRF helper pattern in the reference NFs.
+- keep it consistent with the server-wide outward problem shape
+- do not use it as the baseline for official free5GC alignment decisions
 
 ---
 
-## 7. Modification Plan
+## 7. Recommended Modification Plan
 
-### Workstream A — Introduce One Shared Problem-Response Writer
+### Workstream A — Lock The Correct free5GC Primitive Choice
 
-Add one local helper in `internal/sbi/` for writing `ProblemDetails`.
+Before touching more code, the implementation target should be fixed as:
 
-Required behavior:
+- use `openapi.ProblemDetailsMalformedReqSyntax(...)` and
+  `openapi.ProblemDetailsSystemFailure(...)` where they fit
+- if NWDAF needs one writer, place it in `internal/util/`
+- avoid introducing a new `internal/sbi`-specific helper family for this
+  concern
 
-- accept `*models.ProblemDetails`
-- write status from `pd.Status`
-- serialize the body through Gin
-- force `Content-Type: application/problem+json`
+### Workstream B — Execute Phase A First
 
-Why first:
+Normalize the outward response contract in:
 
-- it removes repeated response-writing code
-- it gives the later handler conversions one stable path
-
-### Workstream B — Normalize Parse Paths
-
-Convert handlers so the parse boundary is explicit and consistent.
-
-Required outcomes:
-
-- replace `BindJSON` in `api_collector.go` with `ShouldBindJSON`
-- keep direct handler control over when error responses are written
-- do not broaden this round into route or middleware refactors
-
-### Workstream C — Replace Ad Hoc Callback Error Bodies
-
-Convert these handlers away from `gin.H` error bodies:
-
+- `api_eventssubscription.go`
+- `api_collector.go`
 - `api_mlmodelprovision.go`
 - `api_adrf_notify.go`
 - `api_daisy_callback.go`
 
 Required outcomes:
 
-- invalid JSON and missing mandatory local fields return `ProblemDetails`
-- success responses remain `204 No Content`
-- local callback behavior becomes consistent with the rest of the server
+- no handler returns map-style `"error"` bodies
+- problem responses use `application/problem+json`
+- handler-generated `500` problems use `System failure` / `SYSTEM_FAILURE`
+- parse failures use `Malformed request syntax`
+- do not add a new custom malformed-JSON cause unless NWDAF explicitly needs
+  that divergence and documents why
 
-### Workstream D — Tighten ProblemDetails Content
+### Workstream C — Scope Phase B Endpoint By Endpoint
 
-Normalize the actual problem payload content used by handlers.
+After Phase A:
 
-Required outcomes:
+- `api_eventssubscription.go`: exact generated model exists, so a later move
+  toward `openapi.Deserialize(...)` is realistic
+- `api_collector.go`: SMF callback has exact generated coverage; UPF callback
+  remains local
+- `api_mlmodelprovision.go`: exact generated model exists as
+  `models.NwdafMlModelProvNotif`
+- `api_adrf_notify.go`: exact ADRF callback type is not present in the current
+  dependency snapshot; keep local type or defer
+- `api_daisy_callback.go`: local integration path; keep out of the official
+  parse/model baseline
 
-- parse failures use a recognizable free5GC-aligned title
-- handler-generated `500` responses use `System failure`
-- collector internal failures stop using a local `INTERNAL_ERROR` shape when
-  `SYSTEM_FAILURE` is the clearer alignment target
+### Workstream D — Update Direct Handler Tests
 
-Note:
+Only after the above target is fixed:
 
-- this round should not try to rewrite every processor-generated cause string
-- only handler-originated problems are in scope
-
-### Workstream E — Update Direct Handler Tests
-
-Update current tests to lock the new boundary:
-
-- callback error tests should decode `models.ProblemDetails`, not `map[string]string`
-- add assertions for `Content-Type: application/problem+json`
-- keep current success-path coverage
-- keep failure-path coverage close to the handler boundary
+- callback error tests should decode `models.ProblemDetails`
+- tests should assert `Content-Type: application/problem+json`
+- success-path behavior should stay unchanged
 
 ---
 
 ## 8. Recommended Implementation Order
 
-1. Add the shared `ProblemDetails` writer helper.
-2. Convert `api_collector.go` to `ShouldBindJSON` plus the shared writer.
-3. Convert `api_mlmodelprovision.go` and `api_adrf_notify.go`.
-4. Convert `api_daisy_callback.go`.
-5. Normalize handler-generated titles and causes.
-6. Update direct handler tests to match the new contract.
-7. Run focused verification before any broader test pass.
+1. Freeze the corrected target primitive choice.
+2. Complete Phase A across standards-facing handlers.
+3. Update handler tests to lock the outward contract.
+4. Re-assess Phase B separately with generated-model availability in hand.
 
 Reasoning:
 
-- start with the least controversial structural helper
-- then normalize the already-`ProblemDetails` handlers
-- then convert the ad hoc callback handlers
-- leave the local Daisy variant after the standards-based callback paths are
-  settled
+- the first urgent gap is inconsistent outward HTTP contract
+- parse/model alignment is real, but it is not one-size-fits-all
+- forcing parse-path uniformity too early would blur into OpenAPI/model
+  governance work
 
 ---
 
 ## 9. Acceptance Criteria
 
-This round is complete when all of the following are true:
+Phase A is complete when all of the following are true:
 
 1. No handler in `internal/sbi/api_*.go` returns `gin.H{"error": ...}`.
 2. Handler-generated parse failures return `models.ProblemDetails`.
 3. Handler-generated internal failures return `models.ProblemDetails`.
-4. Collector parse paths no longer use `BindJSON`.
-5. Error responses produced through the new shared path advertise
+4. Error responses produced through the chosen shared path advertise
    `application/problem+json`.
+5. The implementation path matches an actually verified free5GC style:
+   shared `openapi` constructors plus, if chosen, an NF-local utility writer.
 6. Direct handler tests explicitly prove the new body shape and media type.
-7. Success responses and processor-owned business semantics remain unchanged.
+7. Success responses and processor-owned semantics remain unchanged.
+
+Phase A status on 2026-06-23:
+
+- complete in the current `NWDAF/` tree
+- verified with `go test ./internal/sbi`
+
+Phase B is intentionally not a completion gate for the first outward-contract
+round and is now the active remaining portion of this batch.
 
 ---
 
-## 10. Non-Goals And Deferred Follow-Up
+## 10. Deferred Follow-Up
 
-This round does not close the following larger topics:
+This batch does not by itself close:
 
 - post-subscription activation and late-failure signaling
 - logging cleanup and payload hygiene
-- generated-versus-handwritten model governance
+- broader generated-versus-handwritten model governance
 - app-boundary reconstruction
 - Daisy/MTLF ownership relocation out of `internal/sbi`
 - full free5GC integration-level decisions such as NRF registration or metrics

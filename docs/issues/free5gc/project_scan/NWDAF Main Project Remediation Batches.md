@@ -49,7 +49,7 @@ state in this document set.
 | 1 | A | Repair Subscription Update Correctness | Completed | Closed in round 1 on 2026-06-22; merged to `NWDAF/master` and pushed |
 | 2 | A | Put Long-Running Work Under App Lifecycle Control | Partially completed | Main notifier ownership problem is closed; remaining `traceCtx`/background-context cleanup is narrower and no longer the next standalone round |
 | 3 | B | Build The Test Safety Net Around The Real Boundaries | Completed | Round 1 closed update/lifecycle basics; the broader test refactor completed on 2026-06-23 with direct handler coverage, normalized consumer test seams, expanded gomock-based processor seams, and one documented SMF raw-HTTP exception that remains deferred to later contract/model-governance work |
-| 4 | B | Normalize SBI Error Contracts | Not started | Current handlers still mix `ProblemDetails`, `gin.H`, `BindJSON`, and `ShouldBindJSON`; existing handler tests now make this a good next round |
+| 4 | B | Normalize SBI Error Contracts | Partially completed | Re-baselined on 2026-06-23 and Phase A is now closed in code: outward `ProblemDetails` contract alignment and handler-test updates landed; Phase B parse/model alignment remains pending |
 | 5 | C | Harden Factory And Runtime Config Behavior | Not started | Includes config validation, supported-analytics/runtime drift cleanup, README/go.mod truth alignment, and the latent `GetSbiBindingAddr()` bug |
 | 6 | B | Rebuild One Real App Boundary | Not started | Multiple local app interfaces and `consumer.NewConsumer()` still bypass `pkg/app`; take after narrower handler/config contract cleanup |
 | 7 | B | Clarify Post-Subscription Activation And Late-Failure Signaling | Not started | Design completeness and observability work, not an immediate correctness bug |
@@ -207,20 +207,53 @@ Why here:
 Scope:
 
 - SBI handlers mix `ProblemDetails` and ad hoc `gin.H` error bodies
-- `BindJSON` and `ShouldBindJSON` usage is inconsistent
-- callback/API failure semantics are not uniform
+- standards-facing handlers do not yet follow one verified free5GC-style
+  problem-response path
+- parse/model alignment and response-shape alignment are currently entangled
+- Daisy local callbacks should not define the official-alignment target
 
 Sub-items:
 
-1. Standardize parse/procedure error response shape.
-2. Replace `BindJSON` where explicit response control is required.
-3. Align callback endpoints with the chosen synchronous/asynchronous contract.
-4. Add tests that lock the response shape and status code behavior.
+1. Re-baseline against actual free5GC NF implementations before further code
+   changes.
+   Confirm the real role of:
+   - shared `openapi.ProblemDetails...` constructors
+   - NF-local `internal/util/GinProblemJson(...)` writers
+   - `GetRawData() + openapi.Deserialize(...)` versus Gin binding
+2. Execute Priority 5A first.
+   Normalize the outward `ProblemDetails` contract and media type for
+   standards-facing handlers without introducing new `internal/sbi`-local
+   abstractions.
+3. Execute Priority 5B second.
+   Revisit parse/model alignment endpoint by endpoint only where the current
+   dependency snapshot has an exact or clearly intended generated model.
+4. Keep Daisy callback cleanup secondary.
+   It may still need server-wide consistency, but it should not drive the
+   free5GC alignment baseline.
+5. Update tests after the verified target contract is fixed.
 
 Why here:
 
 - This cleanup is easier once handler tests exist and before larger contract
   governance work starts.
+- After the re-baseline, the immediate next round is narrower than originally
+  framed: fix the outward `ProblemDetails` path first, then decide which parse
+  boundaries should move closer to `openapi.Deserialize(...)`.
+
+Status update:
+
+- Phase A is complete in the current `NWDAF/` tree on 2026-06-23.
+- Handler-generated error bodies across the reviewed `internal/sbi/api_*.go`
+  endpoints now converge on `models.ProblemDetails`.
+- problem responses are now written through an NF-local
+  `internal/util/GinProblemJson(...)` path that sets
+  `application/problem+json`.
+- the earlier custom malformed-JSON cause drift was removed so malformed
+  request failures align more closely with the shared
+  `openapi.ProblemDetailsMalformedReqSyntax(...)` pattern.
+- direct handler tests were updated and focused verification passed.
+- Phase B remains open for endpoint-by-endpoint parse/model-path alignment,
+  especially where exact generated models exist.
 
 ### Priority 6 — Clarify Post-Subscription Activation And Late-Failure Signaling
 
