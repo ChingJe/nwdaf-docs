@@ -2,7 +2,15 @@
 
 Date: 2026-06-22
 
-Status: Proposed
+Status: In Progress
+
+Phase status update:
+
+- Phase 1 completed on 2026-06-23
+- remaining items are tracked as Phase 2 follow-up
+- see `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 3 Test Refactor Phase 1 Summary.md`
+  for the implementation snapshot, boundary matrix, coverage summary, and
+  explicit remaining gaps
 
 ---
 

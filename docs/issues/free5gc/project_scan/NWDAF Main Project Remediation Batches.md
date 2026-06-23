@@ -22,7 +22,7 @@ state in this document set.
 | --- | --- | --- | --- | --- |
 | 1 | A | Repair Subscription Update Correctness | Completed | Closed in round 1 on 2026-06-22; merged to `NWDAF/master` and pushed |
 | 2 | A | Put Long-Running Work Under App Lifecycle Control | Partially completed | Notifier lifecycle ownership closed in round 1 and pushed; broader lifecycle cleanup still remains |
-| 3 | B | Build The Test Safety Net Around The Real Boundaries | Partially completed | Round 1 added focused update/lifecycle tests and pushed; broader handler and consumer test seam work remains |
+| 3 | B | Build The Test Safety Net Around The Real Boundaries | Partially completed | Round 1 closed update/lifecycle basics; Phase 1 of the broader test refactor completed on 2026-06-23 with handler coverage, standardized consumer test normalization, and remaining Phase 2 tail work explicitly tracked |
 | 4 | B | Rebuild One Real App Boundary | Not started | Consolidate shared app contract after initial behavior stabilizes |
 | 5 | B | Normalize SBI Error Contracts | Not started | Align error bodies and parse handling across endpoints |
 | 6 | B | Clarify Post-Subscription Activation And Late-Failure Signaling | Not started | Design completeness and observability work, not an immediate correctness bug |
@@ -138,9 +138,16 @@ Status update:
 - Focused tests were added for update-time default validation, update-time
   state reconciliation, notifier parent-context cancellation, and
   application-side scheduler shutdown.
-- The broader batch goals in this section, especially handler-level error-body
-  coverage and consumer mock-pattern normalization, remain open for a later
-  pass.
+- Phase 1 of the broader refactor completed on 2026-06-23.
+- Direct handler coverage now exists across all `internal/sbi/api_*.go` files.
+- `gock` and `gomock` were introduced for the highest-value consumer and
+  handler seams.
+- Standardized MTLF consumer structure moved to generated-client ownership.
+- SMF remains a documented raw-HTTP exception for now because the current local
+  `openapi` dependency snapshot does not safely model the required request
+  fields for the existing UPF event workflow.
+- Phase 2 still remains for ADRF consumer tests, broader `gomock` expansion,
+  and full consumer-test strategy convergence.
 - The round-1 test additions are already merged to `NWDAF/master` and pushed.
 
 ### Priority 4 — Rebuild One Real App Boundary
