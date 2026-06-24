@@ -2,7 +2,7 @@
 
 Date: 2026-06-24
 
-Status: Completed
+Status: Completed for the covered Phase 2 scope
 
 Historical remediation items:
 
@@ -15,6 +15,18 @@ Implementation status:
 - implemented in `NWDAF/` on 2026-06-24
 - committed as `6569e02` in the local `NWDAF/` repository
 - completed the stricter root-app and consumer-seam alignment described below
+
+2026-06-24 same-day supplement:
+
+- the covered Phase 2 target remains completed
+- however, the later strict reassessment on the same date found that one
+  narrower residual strictness gap still remains after Phase 2:
+  app-owned runtime code in `internal/anlf`, `internal/mtlf`, and parts of
+  `internal/sbi/processor` still performs direct `factory.NwdafConfig` reads
+- this residual problem is not a reopening of the completed Phase 2 target
+  around `CancelContext()` or exported test assembly constructors
+- it is now tracked separately in:
+  `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 4 Residual Runtime Truth Cleanup Plan.md`
 
 ---
 

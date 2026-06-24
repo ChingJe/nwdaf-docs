@@ -2,7 +2,7 @@
 
 Date: 2026-06-24
 
-Status: Completed across Phase 1 and Phase 2
+Status: Completed across Phase 1 and Phase 2 for the originally planned scope
 
 Historical remediation items:
 
@@ -31,6 +31,20 @@ Phase 2 completion status:
 - removed `CancelContext()` from the root `pkg/app.App` contract
 - narrowed processor-side consumer ownership to a mockable consumer seam
 - removed the exported consumer test-assembly path from the public package API
+
+2026-06-24 strict reassessment note:
+
+- the originally planned Priority 4 and Phase 2 scope should still be treated
+  as completed
+- however, a stricter same-day review confirmed one residual boundary gap
+  remains in already-touched runtime code: several AnLF, MTLF, and
+  processor-owned runtime paths still read `factory.NwdafConfig` directly
+  instead of deriving runtime truth from the owning app seam
+- that residual cleanup is now tracked separately in:
+  `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 4 Residual Runtime Truth Cleanup Plan.md`
+- this means the historical Priority 4 rounds remain completed for their
+  covered implementation target, but they should no longer be read as proving
+  that all app-owned runtime truth drift has been eliminated
 
 ---
 
