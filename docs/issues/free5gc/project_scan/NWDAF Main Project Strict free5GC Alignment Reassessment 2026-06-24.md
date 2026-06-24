@@ -87,8 +87,9 @@ This can happen because:
 
 ### Class C — Not Yet Written Down As Its Own Issue
 
-The issue is real in the current code, but it is not yet clearly captured as a
-named problem in the current `issues/` and `plans/free5gc-alignment/` set.
+The issues below were real in the current code at the time of this
+reassessment. Some already had a named home; others needed one to be created in
+the current `issues/` and `plans/free5gc-alignment/` set.
 
 These are the most important additions from this reassessment.
 
@@ -103,7 +104,7 @@ These are the most important additions from this reassessment.
 | 5 | standalone SBI service vs free5GC NF lifecycle level | A | Priority 11 | already known, not started |
 | 6 | OpenAPI/model governance still incomplete | A | Priority 10 | already known, not started |
 | 7 | logging boundary and payload hygiene | A | Priority 7 | already known, not started |
-| 8 | test ownership is still more package-local than surveyed free5GC baseline | C | none as its own issue | new strictness gap |
+| 8 | test ownership is still more package-local than surveyed free5GC baseline | C | dedicated Priority 3 strict follow-up plan | new strictness gap, now recorded |
 
 ## Detailed Findings
 
@@ -230,7 +231,8 @@ Resolution update later on 2026-06-24:
 
 ### 3. Non-3GPP external clients still bypass the shared consumer/app ownership model
 
-Classification: Class C — not yet written down as its own issue
+Classification: Class C — now recorded as a dedicated Priority 3 strict
+follow-up plan
 
 Why this is a distinct issue:
 
@@ -455,13 +457,15 @@ Judgment:
 
 - this should not be elevated above lifecycle, config-scope, or integration
   level decisions
-- but it is a real strictness gap that is currently not called out as its own
-  issue
+- but it is a real strictness gap that needed a clearer named home than the
+  earlier completed Priority 3 wording provided
 
 Recommended handling:
 
-- record it as a lower-priority structural follow-up
-- likely group it later with repository/package ownership cleanup
+- record it as a narrower strict follow-up in the Priority 3 lineage rather
+  than under Priority 12 repository/package ownership cleanup
+- the dedicated plan is now:
+  `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 3 Strict Test Ownership Alignment Plan.md`
 
 ## Clarifications And Non-Findings
 
@@ -522,6 +526,10 @@ This remains governance work, not a direct bug report.
    - keep under Priority 10
 5. logging boundary cleanup
    - keep under Priority 7
+6. stricter test-ownership alignment around shared app mocks and local mock
+   placement
+   - keep under the dedicated Priority 3 strict follow-up plan:
+     `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 3 Strict Test Ownership Alignment Plan.md`
 
 ### Re-open or annotate completed areas with stricter residual notes
 
@@ -531,8 +539,6 @@ This remains governance work, not a direct bug report.
 ### Add as new issues not yet clearly written down
 
 1. external-client ownership policy for Daisy / ML service style integrations
-2. stricter test-ownership alignment around shared app mocks and local mock
-   placement
 
 ## Final Judgment
 
@@ -543,10 +549,11 @@ The most important distinction from this reassessment is:
 2. one important already-touched area, the app-boundary/global-config story,
    is materially improved but not yet as strict as the completed Priority 4
    wording suggests
-3. a smaller set of structural issues still has no clear named home in the
-   current issue set, especially:
-   - non-3GPP external client ownership
-   - stricter test/mock ownership after the app-boundary reconstruction
+3. a smaller set of structural issues needed clearer naming in the current
+   issue set
+4. after later same-day documentation updates, stricter test/mock ownership
+   now has a dedicated Priority 3 follow-up home, while non-3GPP external
+   client ownership still does not
 
 This means the current document set is directionally correct, but not yet a
 complete record of the remaining work needed to approach the user's stated

@@ -164,14 +164,17 @@ Priority 3 is considered complete because:
   MTLF, ADRF, ML service, and Daisy
 - the highest-value remaining handwritten processor/app stubs were replaced by
   `gomock` seams
-- low-value and transport-heavy test ownership gaps identified in the original
-  plan have been closed
 - the only remaining divergence from the plan's ideal end state is the
   explicitly documented `NsmfService` raw-HTTP exception, which is blocked by
   the local OpenAPI contract snapshot rather than by missing test work
+- a later stricter ownership-only follow-up still remains for shared
+  app-boundary mocks and local mock placement after the same-day
+  app-boundary reconstruction work
 
 Follow-up after this completion:
 
 - Priority 4 may now proceed without the earlier Priority 3 seam gaps
 - any future attempt to remove the SMF exception should be handled as contract
   or model-governance work, not as unfinished test refactor work
+- the stricter shared mock-ownership cleanup is now tracked separately in:
+  `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 3 Strict Test Ownership Alignment Plan.md`

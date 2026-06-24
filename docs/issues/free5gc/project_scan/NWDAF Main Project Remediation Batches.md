@@ -179,6 +179,13 @@ Status update:
   request fields for the existing UPF event workflow
 - this exception is treated as follow-up contract/model-governance work, not as
   unfinished Priority 3 test work
+- a narrower same-lineage strictness follow-up still exists for shared
+  app-boundary mock ownership and local mock placement
+- that follow-up is now tracked separately in:
+  `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 3 Strict Test Ownership Alignment Plan.md`
+- this means Priority 3 remains completed for its primary safety-net purpose,
+  while the stricter mock-ownership cleanup is handled as a later follow-up in
+  the same lineage rather than as Priority 12 repository/package ownership work
 
 ### Priority 4 — Rebuild One Real App Boundary
 
