@@ -2,7 +2,7 @@
 
 Date: 2026-06-24
 
-Status: Planned
+Status: Completed
 
 Historical remediation items:
 
@@ -23,6 +23,42 @@ This plan is the implementation plan for that residual cleanup.
 Related issue record:
 
 - `nwdaf-docs/docs/issues/free5gc/project_scan/NWDAF Main Project Strict free5GC Alignment Reassessment 2026-06-24.md`
+
+Implementation status:
+
+- implemented in `NWDAF/` on 2026-06-24
+- committed as `a912581` in the local `NWDAF/` repository
+- removed direct `factory.NwdafConfig` reads from the covered app-owned
+  runtime paths in `internal/anlf`, `internal/mtlf`, and
+  `internal/sbi/processor`
+- tightened the adjacent notifier-owned UE analytics path so it also derives
+  runtime config through the app seam
+- updated affected tests so the covered app-owned runtime paths receive config
+  through test app seams instead of package-global config setup
+
+Verification rerun after implementation:
+
+- `go test ./internal/anlf`
+- `go test ./internal/mtlf`
+- `go test ./internal/notifier`
+- `go test ./internal/sbi/processor`
+- `go test ./...`
+- `make build`
+- `make lint`
+
+Result:
+
+- all focused package tests passed
+- full repository test suite passed
+- build passed
+- lint passed with `0 issues`
+
+Completion judgment:
+
+- this residual Priority 4 strictness gap should now be treated as completed
+  for the originally defined scope of this plan
+- the remaining repository uses of `factory.NwdafConfig` after this round are
+  outside this plan's target and do not keep this specific issue open
 
 ---
 
@@ -134,8 +170,9 @@ Confirmed current locations:
 5. `internal/sbi/processor/upf_notify.go`
    - MongoDB persistence and ring-buffer size still read `factory.NwdafConfig`
 
-This means the current tree still violates the stricter claim that Priority 4
-had already restored app-owned runtime truth in the touched areas.
+This section records the starting state that motivated the plan.
+That starting gap has now been removed by the implementation status recorded
+above.
 
 ---
 
@@ -404,8 +441,8 @@ Verification notes to report:
 
 ## 13. Follow-Up After This Round
 
-If this residual Priority 4 cleanup completes successfully, the next choices
-become clearer:
+With this residual Priority 4 cleanup now completed, the next choices become
+clearer:
 
 1. continue with existing not-started priorities:
    - Priority 6

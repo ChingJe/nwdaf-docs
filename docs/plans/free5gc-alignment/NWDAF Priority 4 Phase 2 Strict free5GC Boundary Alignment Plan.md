@@ -28,6 +28,14 @@ Implementation status:
 - it is now tracked separately in:
   `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 4 Residual Runtime Truth Cleanup Plan.md`
 
+2026-06-24 residual cleanup completion note:
+
+- the narrower residual runtime-truth gap identified after Phase 2 has now
+  been implemented and closed
+- that cleanup remains a separate follow-up from the covered Phase 2 target,
+  but it is no longer an open issue
+- implemented in `NWDAF/` and committed as `a912581`
+
 ---
 
 ## 1. Purpose

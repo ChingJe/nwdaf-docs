@@ -46,6 +46,18 @@ Phase 2 completion status:
   covered implementation target, but they should no longer be read as proving
   that all app-owned runtime truth drift has been eliminated
 
+2026-06-24 residual cleanup completion note:
+
+- the narrower residual runtime-truth gap identified by the same-day strict
+  reassessment has now been implemented and closed
+- the follow-up is recorded in:
+  `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 4 Residual Runtime Truth Cleanup Plan.md`
+- implemented in `NWDAF/` and committed as `a912581`
+- this means the documented Priority 4 lineage now covers both:
+  - the originally planned boundary reconstruction scope
+  - the later same-day cleanup needed to remove the remaining app-owned runtime
+    `factory.NwdafConfig` reads
+
 ---
 
 ## 1. Purpose

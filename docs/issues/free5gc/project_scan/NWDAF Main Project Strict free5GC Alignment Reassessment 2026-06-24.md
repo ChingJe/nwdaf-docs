@@ -97,7 +97,7 @@ These are the most important additions from this reassessment.
 | ID | Topic | Class | Current Home In Existing Docs | Judgment |
 | --- | --- | --- | --- | --- |
 | 1 | broader lifecycle cancellation and app-owned I/O context | A | Priority 2 residual | already acknowledged, still open |
-| 2 | remaining package-global config reads after Priority 4 | B | partially overlaps Priority 4 | touched area, not strict enough |
+| 2 | remaining package-global config reads after Priority 4 | B | partially overlaps Priority 4 | resolved later on 2026-06-24 by the residual cleanup follow-up |
 | 3 | non-3GPP external clients bypass shared consumer/app ownership | C | none | new issue |
 | 4 | runtime config mixed with lab/workflow config | A | Priority 9 / Priority 12 | already known, not started |
 | 5 | standalone SBI service vs free5GC NF lifecycle level | A | Priority 11 | already known, not started |
@@ -217,6 +217,16 @@ Recommended handling:
 - record this as a residual Priority 4 strictness gap
 - do not create a disconnected new issue unless the follow-up scope grows much
   larger than boundary cleanup
+
+Resolution update later on 2026-06-24:
+
+- the residual cleanup was then implemented in `NWDAF/`
+- committed as `a912581` in the local `NWDAF/` repository
+- the covered app-owned runtime paths in `internal/anlf`, `internal/mtlf`,
+  `internal/sbi/processor`, and the adjacent notifier-owned UE analytics path
+  no longer read `factory.NwdafConfig` directly
+- this means Finding 2 was accurate at reassessment time, but should now be
+  treated as resolved for its defined scope
 
 ### 3. Non-3GPP external clients still bypass the shared consumer/app ownership model
 
