@@ -105,6 +105,21 @@ After implementing the original Priority 4 round in `NWDAF/`:
 - the remaining Phase 2 design is documented in
   `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 4 Phase 2 Strict free5GC Boundary Alignment Plan.md`
 
+## 2026-06-24 App-Boundary Phase-2 Update
+
+After implementing the planned Phase 2 follow-up in `NWDAF/`:
+
+- the stricter remaining Priority 4 exceptions should now be treated as
+  materially closed in code
+- `CancelContext()` was removed from the root `pkg/app.App` contract and kept
+  only on the smaller local seams that require cancellation
+- processor-side consumer ownership now depends on a narrower mockable seam
+  instead of the concrete consumer type
+- the exported consumer test-assembly constructor is no longer part of the
+  public consumer package API
+- Priority 4 should now be treated as completed for the current intended
+  standalone-NWDAF alignment level
+
 ## Findings
 
 ### 1. High — `PUT /subscriptions/{id}` updates only the local record and leaves upstream collection state stale

@@ -52,7 +52,7 @@ state in this document set.
 | 3 | B | Build The Test Safety Net Around The Real Boundaries | Completed | Round 1 closed update/lifecycle basics; the broader test refactor completed on 2026-06-23 with direct handler coverage, normalized consumer test seams, expanded gomock-based processor seams, and one documented SMF raw-HTTP exception that remains deferred to later contract/model-governance work |
 | 4 | B | Normalize SBI Error Contracts | Completed for covered scope | 2026-06-23 implementation landed for the reviewed standards-facing handlers; intentionally excluded callbacks remain future contract-governance work and no longer block the next round |
 | 5 | C | Harden Factory And Runtime Config Behavior | Completed | Implemented on 2026-06-24; explicit config validation, SBI getter normalization, runtime-truth doc alignment, and config test matrix are now in code |
-| 6 | B | Rebuild One Real App Boundary | Phase 1 completed; Phase 2 planned | 2026-06-24 Phase 1 landed in `NWDAF/`; stricter follow-up remains for root `CancelContext()` removal and exported consumer test-seam cleanup |
+| 6 | B | Rebuild One Real App Boundary | Completed | 2026-06-24 Phase 1 and Phase 2 both landed in `NWDAF/`; shared app boundary, root-contract scope, and consumer test-seam ownership are now materially aligned with the intended free5GC-style shape |
 | 7 | B | Clarify Post-Subscription Activation And Late-Failure Signaling | Not started | Design completeness and observability work, not an immediate correctness bug |
 | 8 | B | Tighten Logging Boundaries | Not started | Follow error-contract and late-failure signaling cleanup |
 | 9 | C | Establish OpenAPI / Model Governance | Not started | Generated/reference models already exist for some locally redefined payloads; governance should follow handler/config cleanup |
@@ -211,10 +211,13 @@ Status update:
   `factory.NwdafConfig` as hidden constructor input.
 - overlapping local app interfaces were collapsed onto the shared root seam.
 - adjacent server lifecycle signature drift was cleaned up in the same round.
-- the remaining stricter alignment work is now a separate Phase 2 follow-up:
-  - remove `CancelContext()` from the root app contract
-  - remove the exported consumer test-assembly seam once narrower mockable
-    interfaces are in place
+- Phase 2 also completed in `NWDAF/` on 2026-06-24.
+- `CancelContext()` was removed from the root app contract and moved back to
+  the smaller local seams that actually require cancellation.
+- processor-side consumer ownership now depends on a narrower mockable seam
+  instead of the concrete consumer type.
+- the exported consumer test-assembly path was removed from the public package
+  API.
 
 ### Priority 5 — Normalize SBI Error Contracts
 

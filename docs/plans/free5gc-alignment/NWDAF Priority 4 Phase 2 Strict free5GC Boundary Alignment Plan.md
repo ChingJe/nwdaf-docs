@@ -2,13 +2,19 @@
 
 Date: 2026-06-24
 
-Status: Planned
+Status: Completed
 
 Historical remediation items:
 
 - residual strict-alignment follow-up after `Priority 4 — Rebuild One Real App Boundary`
 - narrower architecture and test-seam cleanup after the completed Priority 4
   Phase 1 implementation
+
+Implementation status:
+
+- implemented in `NWDAF/` on 2026-06-24
+- committed as `6569e02` in the local `NWDAF/` repository
+- completed the stricter root-app and consumer-seam alignment described below
 
 ---
 

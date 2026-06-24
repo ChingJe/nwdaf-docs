@@ -2,7 +2,7 @@
 
 Date: 2026-06-24
 
-Status: Phase 1 completed; Phase 2 planned
+Status: Completed across Phase 1 and Phase 2
 
 Historical remediation items:
 
@@ -23,6 +23,14 @@ The stricter free5GC follow-up that remains after this completed round is now
 tracked separately in:
 
 - `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 4 Phase 2 Strict free5GC Boundary Alignment Plan.md`
+
+Phase 2 completion status:
+
+- implemented in `NWDAF/` on 2026-06-24
+- committed as `6569e02` in the local `NWDAF/` repository
+- removed `CancelContext()` from the root `pkg/app.App` contract
+- narrowed processor-side consumer ownership to a mockable consumer seam
+- removed the exported consumer test-assembly path from the public package API
 
 ---
 
