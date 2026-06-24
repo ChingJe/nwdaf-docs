@@ -75,6 +75,19 @@ After rechecking the current `NWDAF/` tree on 2026-06-23:
 - the next intended implementation round is documented in
   `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 8 Factory And Runtime Config Hardening Plan.md`
 
+## 2026-06-24 Config-Hardening Update
+
+After implementing the planned Priority 8 round in `NWDAF/`:
+
+- the config/factory finding below should now be treated as materially closed
+  for the current repository shape
+- `ReadConfig(...)` now runs explicit validation after defaults
+- the `GetSbiBindingAddr()` helper bug is fixed and normalized getter usage is
+  in place at the current server and callback call sites
+- runtime truth drift around `supportedAnalytics`, `README.md`, and sample
+  config is now reduced for the currently supported standalone SBI runtime
+- the next remaining structural target is the fragmented shared app boundary
+
 ## Findings
 
 ### 1. High — `PUT /subscriptions/{id}` updates only the local record and leaves upstream collection state stale

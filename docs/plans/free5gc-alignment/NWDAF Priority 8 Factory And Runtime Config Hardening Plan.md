@@ -2,23 +2,24 @@
 
 Date: 2026-06-23
 
-Status: Planned
+Status: Completed on 2026-06-24
 
 Historical remediation item:
 
 - `Priority 8 - Harden Factory And Runtime Config Behavior`
 
-Current execution note:
+Completion note:
 
-- after rechecking the current `NWDAF/` tree on 2026-06-23, this is the next
-  intended implementation round
-- Priority 3 test-boundary work is already complete in code
-- Priority 5 handler error-contract alignment is implemented for the covered
-  standards-facing scope and no longer needs to block the next config round
-- the main remaining confirmed low-level bug is still
-  `pkg/factory/config.go:GetSbiBindingAddr()`
-- the broader shared app-boundary reconstruction remains intentionally deferred
-  until after this narrower factory/config round
+- this round was implemented in `NWDAF/` on 2026-06-24
+- `pkg/factory/config.go` now applies defaults, runs explicit validation, and
+  rejects contradictory startup config
+- SBI helper behavior is normalized around binding/register getters and the
+  `GetSbiBindingAddr()` multi-digit port bug is fixed
+- sample config and `README.md` now match the current runtime truth for
+  supported analytics, Go version, HTTP-only SBI, and inactive `nrfUri`
+- focused table-driven config tests were added in `pkg/factory`
+- broader shared app-boundary reconstruction remains intentionally deferred to
+  the next round
 
 ---
 
@@ -414,7 +415,29 @@ Expected reporting standard:
 
 ## 11. Follow-Up After This Round
 
-If this round completes as planned, the next implementation target should be
+This round completed on 2026-06-24.
+
+Verification executed in `NWDAF/`:
+
+- `go test ./pkg/factory`
+- `go test ./...`
+- `make build`
+- `make lint`
+
+Validation scope proven by this round:
+
+- startup-time config validation and defaulting
+- normalized SBI getter behavior at the current server/callback call sites
+- README/sample-config alignment with current runtime truth
+
+Not proven by this round:
+
+- NRF registration or deregistration behavior
+- metrics server runtime behavior
+- MongoDB-backed integration behavior
+- multi-NF end-to-end integration behavior
+
+The next implementation target should be
 the shared app-boundary reconstruction:
 
 - expand `pkg/app` into the real shared contract

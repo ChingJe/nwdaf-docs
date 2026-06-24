@@ -1,7 +1,7 @@
 # NWDAF Main Project Remediation Batches
 
 Date: 2026-06-18
-Last reassessed against current `NWDAF/` code: 2026-06-23
+Last reassessed against current `NWDAF/` code: 2026-06-24
 
 This document reorganizes the scan findings into a stricter execution order.
 The new ordering is based on three criteria:
@@ -28,9 +28,10 @@ Current conclusions:
   be absorbed while touching adjacent service/server paths.
 - The previously-next SBI error-contract round is now closed for the covered
   standards-facing scope and no longer blocks narrower factory work.
-- The next confirmed code-level cleanup target is factory/config drift,
-  including the latent `GetSbiBindingAddr()` bug.
-- The next architectural cleanup target after that is the fragmented
+- The factory/config hardening round is now complete in code, including the
+  explicit validation pass, SBI helper normalization, runtime-truth cleanup,
+  and focused config test matrix.
+- The next confirmed architectural cleanup target is now the fragmented
   app-boundary/interface ownership and global-config-driven consumer wiring.
 
 The refreshed ordering below therefore favors smaller contract/config cleanups
@@ -50,7 +51,7 @@ state in this document set.
 | 2 | A | Put Long-Running Work Under App Lifecycle Control | Partially completed | Main notifier ownership problem is closed; remaining `traceCtx`/background-context cleanup is narrower and no longer the next standalone round |
 | 3 | B | Build The Test Safety Net Around The Real Boundaries | Completed | Round 1 closed update/lifecycle basics; the broader test refactor completed on 2026-06-23 with direct handler coverage, normalized consumer test seams, expanded gomock-based processor seams, and one documented SMF raw-HTTP exception that remains deferred to later contract/model-governance work |
 | 4 | B | Normalize SBI Error Contracts | Completed for covered scope | 2026-06-23 implementation landed for the reviewed standards-facing handlers; intentionally excluded callbacks remain future contract-governance work and no longer block the next round |
-| 5 | C | Harden Factory And Runtime Config Behavior | Planned | Next intended round; see `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 8 Factory And Runtime Config Hardening Plan.md` |
+| 5 | C | Harden Factory And Runtime Config Behavior | Completed | Implemented on 2026-06-24; explicit config validation, SBI getter normalization, runtime-truth doc alignment, and config test matrix are now in code |
 | 6 | B | Rebuild One Real App Boundary | Not started | Multiple local app interfaces and `consumer.NewConsumer()` still bypass `pkg/app`; take after narrower handler/config contract cleanup |
 | 7 | B | Clarify Post-Subscription Activation And Late-Failure Signaling | Not started | Design completeness and observability work, not an immediate correctness bug |
 | 8 | B | Tighten Logging Boundaries | Not started | Follow error-contract and late-failure signaling cleanup |
@@ -331,6 +332,18 @@ Why here:
 
 - These are important and partly bug-level, but they are safer after the
   correctness/runtime path and test seams are stabilized.
+
+Status update:
+
+- Completed on 2026-06-24.
+- `pkg/factory/config.go` now applies defaults, runs explicit validation, and
+  rejects contradictory config at startup.
+- `GetSbiBindingAddr()` was fixed and SBI helper usage was normalized through
+  binding/register URI getters at the current server and callback call sites.
+- `supportedAnalytics`, sample config, and `README.md` now reflect the current
+  `UE_COMMUNICATION` runtime truth and documented environment requirements.
+- focused config validation tests were added and verification passed with:
+  `go test ./pkg/factory`, `go test ./...`, `make build`, and `make lint`.
 
 ### Priority 9 — Separate Runtime Config From Lab / Workflow Config
 
