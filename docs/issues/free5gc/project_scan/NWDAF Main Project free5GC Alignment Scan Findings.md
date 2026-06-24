@@ -72,8 +72,9 @@ After rechecking the current `NWDAF/` tree on 2026-06-23:
   factory/config drift and the fragmented shared app boundary
 - the updated execution order lives in
   `nwdaf-docs/docs/issues/free5gc/project_scan/NWDAF Main Project Remediation Batches.md`
-- the next intended implementation round is documented in
-  `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 8 Factory And Runtime Config Hardening Plan.md`
+- the next intended implementation round after the completed factory work is
+  now documented in
+  `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 4 Rebuild One Real App Boundary Plan.md`
 
 ## 2026-06-24 Config-Hardening Update
 
