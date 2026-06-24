@@ -20,6 +20,19 @@ gap inside the same test-alignment lineage:
 
 This plan is the implementation plan for that narrower cleanup.
 
+2026-06-24 design reset note:
+
+- an initial implementation attempt confirmed that the ownership direction is
+  correct, but also exposed two strict-alignment corrections that must now be
+  treated as fixed design inputs for this plan:
+  1. the shared app-level test seam should be owned by `pkg/mockapp`, not
+     `pkg/service`
+  2. `internal/sbi/server.go` should keep an app-owned server seam rather than
+     being split into an `app + processor` constructor shape just to simplify
+     tests
+- the user explicitly accepted that this round should require generated mocks
+  rather than a hand-maintained shared gomock file
+
 Related issue record:
 
 - `nwdaf-docs/docs/issues/free5gc/project_scan/NWDAF Main Project Strict free5GC Alignment Reassessment 2026-06-24.md`
@@ -137,6 +150,16 @@ Important clarification:
 3. the real issue is that app-boundary mock ownership has not yet been
    consolidated behind the now-canonical NWDAF app/service seam
 
+Additional design truth from the initial implementation attempt:
+
+1. moving shared app-level test ownership out of `internal/sbi` and
+   `internal/sbi/processor` is still the correct direction
+2. however, using `pkg/service` as the shared test-mock owner is not the best
+   fit for NWDAF's current import structure
+3. a stricter free5GC-style result for NWDAF should instead follow the UDM-like
+   shared `pkg/mockapp` pattern while preserving the production server's
+   app-owned seam
+
 ---
 
 ## 5. free5GC Baseline And Design Direction
@@ -164,21 +187,25 @@ Representative local references:
 
 ### 5.2 Best-Fit Baseline For NWDAF
 
-For NWDAF, the closest free5GC-style target is not `pkg/app`.
+For NWDAF, the closest free5GC-style target is not the narrow `pkg/app`, and
+it is also not a forced `pkg/service` mock import at every touched test.
 
-The best fit is a shared service-owned test seam under `pkg/service` because:
+The best fit is a shared richer test seam under `pkg/mockapp` because:
 
-1. the real runtime owner is already `pkg/service.NwdafApp`
-2. the affected tests need more than the narrow root `pkg/app.App`
+1. UDM already demonstrates a free5GC-style shared `pkg/mockapp` pattern for
+   tests that need a richer seam than the root app contract
+2. the affected NWDAF tests need more than the narrow root `pkg/app.App`
 3. the affected seams currently depend on:
    - `Config()`
    - `Context()`
    - `CancelContext()`
    - `Consumer()`
-   - `Processor()`
-4. this is closer to the SMF and AMF pattern than to widening `pkg/app` again
-5. it avoids introducing a second shared package such as `pkg/mockapp` unless
-   the simpler `pkg/service` baseline proves insufficient
+   - in the handler/server path, `Processor()`
+4. the initial implementation attempt showed that forcing the shared mock under
+   `pkg/service` pushes NWDAF toward a less clean production/test separation
+   because `pkg/service` already owns the real app construction path
+5. a dedicated shared mock package lets NWDAF keep the production boundary
+   shape while still centralizing app-level test ownership
 
 ### 5.3 Testing Tool Expectations From `free5gc-dev-skill`
 
@@ -204,20 +231,25 @@ The following decisions are fixed for this plan:
 
 1. treat this as a strictness follow-up after completed Priority 3, not as a
    reopened failure of Priority 3 core boundary coverage
-2. introduce one shared richer app test seam under `NWDAF/pkg/service`
+2. introduce one shared richer app test seam under `NWDAF/pkg/mockapp`
 3. keep the root `pkg/app.App` narrow
    - do not widen it again solely to make tests easier
-4. use `pkg/service` rather than a new `pkg/mockapp` package unless the
-   implementation proves that `pkg/service` cannot cleanly host the seam
+4. preserve an app-owned production server seam in `internal/sbi/server.go`
+   - do not keep a split `NewServer(app, processor)` constructor as the final
+     design
 5. preserve local mocks only where the seam is truly local
    - example: `processorAPI` under `internal/sbi`
    - example: processor-local consumer/client mocks under
      `internal/sbi/processor`
 6. remove package-local fake app ownership from handler tests
 7. keep the production runtime boundary stable unless a minimal supporting
-   signature or interface extraction is required to support the shared mock
-8. follow existing free5GC-style `mockgen` usage
+   interface extraction is required to preserve the existing app-owned shape
+8. the shared app-level mock must be generated
+   - do not keep a hand-maintained shared gomock file as the final result
+9. follow existing free5GC-style `mockgen` usage
    - source the shared mock from a real shared interface
+   - document or add the necessary generation/tooling path if the current repo
+     does not already have one
    - do not maintain multiple hand-diverged app mock shapes
 
 ---
@@ -226,7 +258,7 @@ The following decisions are fixed for this plan:
 
 At the end of this round:
 
-1. `pkg/service` owns the canonical shared app-boundary test mock for the
+1. `pkg/mockapp` owns the canonical shared app-boundary test mock for the
    richer NWDAF seam
 2. `internal/sbi` handler tests no longer define or own a package-local fake
    app
@@ -235,6 +267,9 @@ At the end of this round:
 5. true SBI-local mocks remain local
 6. the repository no longer has multiple separate app-level mock owners for the
    same runtime boundary
+7. `internal/sbi/server.go` still uses an app-owned production seam rather than
+   a test-driven split constructor shape
+8. the shared app-level mock is generated rather than handwritten
 
 ---
 
@@ -242,8 +277,8 @@ At the end of this round:
 
 ### 8.1 In Scope
 
-- `NWDAF/pkg/service/init.go`
-- `NWDAF/pkg/service/mock.go`
+- `NWDAF/pkg/mockapp/app.go`
+- `NWDAF/pkg/mockapp/mock.go`
 - `NWDAF/internal/sbi/api_test_helpers_test.go`
 - `NWDAF/internal/sbi/mock_interfaces_test.go`
 - `NWDAF/internal/sbi/api_*_test.go` files that currently rely on the handler
@@ -251,15 +286,18 @@ At the end of this round:
 - `NWDAF/internal/sbi/processor/mock_interfaces_test.go`
 - `NWDAF/internal/sbi/processor/*_test.go` files that currently use the local
   app mock
+- `NWDAF/internal/sbi/server.go`
 - minimal generator/source-file adjustments required to keep only the correct
   local mocks local
+- minimal tooling/setup documentation or source files required to support
+  generated shared mocks
 
 ### 8.2 Conditionally In Scope
 
 The following may be touched only if needed to support the ownership cleanup
 cleanly:
 
-- `NWDAF/internal/sbi/server.go`
+- `NWDAF/pkg/service/init.go`
 - `NWDAF/internal/sbi/processor/processor.go`
 - small new files that isolate local test-seam interfaces for `mockgen`
 
@@ -277,15 +315,15 @@ cleanly:
 
 ## 9. Proposed Design
 
-### 9.1 Add A Shared Service-Owned Test Seam
+### 9.1 Add A Shared `pkg/mockapp` Test Seam
 
-Add a shared richer interface in `pkg/service` that matches the current real
+Add a shared richer interface in `pkg/mockapp` that matches the current real
 test ownership needs without widening `pkg/app.App`.
 
 Planned direction:
 
-1. define a shared service-level interface close to the real runtime shape
-2. keep `NwdafApp` as the concrete owner
+1. define a shared test interface under `pkg/mockapp`
+2. keep `NwdafApp` as the real concrete owner in `pkg/service`
 3. generate the mock from that shared interface using `mockgen`
 
 The intended interface shape is:
@@ -293,9 +331,10 @@ The intended interface shape is:
 1. embed `app.App`
 2. expose `CancelContext() context.Context`
 3. expose `Consumer() consumer.ConsumerAPI`
-4. expose `Processor() *processor.Processor`
+4. expose `Processor() *processor.Processor` for the server/handler seam
 
-This is intentionally close to the AMF/SMF service-level mock ownership model.
+This is intentionally closer to the UDM shared `pkg/mockapp` ownership model
+than to forcing `pkg/service` imports through every touched NWDAF test.
 
 ### 9.2 Keep `pkg/app.App` Narrow
 
@@ -310,14 +349,33 @@ Rationale:
 3. free5GC references commonly use a narrower root app contract plus a richer
    service-owned or test-owned seam where needed
 
-### 9.3 Move Handler Tests To The Shared Service Mock
+### 9.3 Keep The Production Server Seam App-Owned
+
+The production server constructor should remain aligned with the normal
+free5GC-style shape where the app-owned object exposes the additional methods
+the server needs.
+
+Planned change:
+
+1. keep or restore an app-owned server seam in `internal/sbi/server.go`
+2. do not keep a test-driven constructor split that passes `processor`
+   separately from the app
+3. let the shared `pkg/mockapp` seam satisfy the same shape in tests
+
+This preserves the correct production boundary:
+
+- server ownership remains app-centered
+- handler tests reuse the same boundary shape rather than changing production
+  construction for test convenience
+
+### 9.4 Move Handler Tests To The Shared `pkg/mockapp` Mock
 
 Handler tests under `internal/sbi` should stop owning a package-local fake app.
 
 Planned change:
 
 1. replace `handlerTestApp` in `internal/sbi/api_test_helpers_test.go`
-2. build handler test servers from the shared `pkg/service` mock
+2. build handler test servers from the shared `pkg/mockapp` mock
 3. keep `processorAPI` as the handler-local mock seam
 
 This preserves the correct handler boundary:
@@ -325,14 +383,14 @@ This preserves the correct handler boundary:
 - app ownership is shared
 - processor ownership is local to the handler package
 
-### 9.4 Move Processor Tests To The Shared Service Mock
+### 9.5 Move Processor Tests To The Shared `pkg/mockapp` Mock
 
 Processor tests should stop owning a separate local app mock shape.
 
 Planned change:
 
 1. replace `MockNwdafApp` usage in `internal/sbi/processor/*_test.go`
-2. build processor tests with the shared `pkg/service` mock
+2. build processor tests with the shared `pkg/mockapp` mock
 3. keep processor-local mocks only for:
    - `consumer.ConsumerAPI`
    - local service-client seams such as SMF-specific client helpers
@@ -342,14 +400,14 @@ This preserves the correct processor boundary:
 - app ownership is shared
 - consumer/client helper ownership remains local where appropriate
 
-### 9.5 Separate Shared Ownership From Truly Local Mock Ownership
+### 9.6 Separate Shared Ownership From Truly Local Mock Ownership
 
 This round should not try to delete every local mock.
 
 The intended split is:
 
 1. shared app-boundary mock
-   - owned by `pkg/service`
+   - owned by `pkg/mockapp`
 2. local SBI-specific seam mock
    - owned by `internal/sbi`
 3. local processor-side consumer/client seam mocks
@@ -357,16 +415,35 @@ The intended split is:
 
 This is the closest match to the surveyed free5GC baseline.
 
-### 9.6 Clean Up `mockgen` Source Placement
+### 9.7 Require Generated Shared Mocks
+
+The shared app-level mock must be generated, not handwritten.
+
+Planned direction:
+
+1. add or document the repository's `mockgen` generation path for
+   `pkg/mockapp`
+2. generate the shared mock from a real shared interface source file
+3. treat a handwritten shared gomock file as only an intermediate experiment,
+   not an acceptable final state
+
+Rationale:
+
+1. surveyed free5GC shared mocks are generated
+2. generated mocks reduce drift when the shared app seam changes
+3. this round is explicitly a strict-alignment cleanup, so generation
+   discipline is part of the target rather than a nice-to-have
+
+### 9.8 Clean Up `mockgen` Source Placement
 
 The current generator/source layout should be cleaned up enough that app-level
 mock ownership is not accidentally reintroduced under internal packages.
 
 Planned generator direction:
 
-1. generate the shared app mock from `pkg/service`
+1. generate the shared app mock from `pkg/mockapp`
    - expected command shape:
-     `mockgen -package=service -source=pkg/service/init.go -destination=pkg/service/mock.go`
+     `mockgen -package=mockapp -source=pkg/mockapp/app.go -destination=pkg/mockapp/mock.go`
 2. stop sourcing handler-local generated mocks from a file that forces the
    app-level mock to be emitted again
 3. if needed, isolate truly local seam interfaces into smaller source files so
@@ -381,31 +458,41 @@ the same structural ownership drift in generated output.
 
 ## 10. Implementation Sequence
 
-### Phase 1: Shared Service Mock Introduction
+### Phase 1: Shared `pkg/mockapp` Design Introduction
 
-1. add the shared richer test seam in `pkg/service`
-2. generate `pkg/service/mock.go`
-3. confirm the concrete `NwdafApp` still satisfies the intended service-level
-   interface
+1. add the shared richer test seam in `pkg/mockapp`
+2. add the required generation/tooling path for `mockgen` if the current repo
+   does not already have one
+3. generate `pkg/mockapp/mock.go`
+4. confirm the concrete `NwdafApp` still satisfies the intended shared
+   interface shape
 
-### Phase 2: Handler Test Ownership Migration
+### Phase 2: Restore Or Preserve The App-Owned Server Seam
+
+1. confirm the production `internal/sbi/server.go` seam remains app-owned
+2. avoid keeping any `NewServer(app, processor)` split as the final design
+3. only extract a small shared interface if needed to express the app-owned
+   server dependency cleanly
+
+### Phase 3: Handler Test Ownership Migration
 
 1. update `internal/sbi/api_test_helpers_test.go`
-2. switch all handler tests to the shared service mock
+2. switch all handler tests to the shared `pkg/mockapp` mock
 3. preserve `processorAPI` as the handler-local seam
 
-### Phase 3: Processor Test Ownership Migration
+### Phase 4: Processor Test Ownership Migration
 
-1. update processor test helpers to use the shared service mock
+1. update processor test helpers to use the shared `pkg/mockapp` mock
 2. preserve local consumer/client mocks only where they are genuinely local
 3. remove the local processor-side app mock owner
 
-### Phase 4: Generator And Residual Cleanup
+### Phase 5: Generator And Residual Cleanup
 
 1. prune or split generated/local mock files so app-level mock ownership no
    longer lives under `internal/sbi` or `internal/sbi/processor`
-2. rerun focused package tests
-3. rerun full repository verification
+2. confirm the shared mock is generated rather than handwritten
+3. rerun focused package tests
+4. rerun full repository verification
 
 ---
 
@@ -446,14 +533,15 @@ It is not integration proof.
 
 Before considering this round complete, re-check the following:
 
-1. does `pkg/service` now own the shared richer app mock?
-2. does any handler test still define its own fake app?
-3. does `internal/sbi/processor` still own a separate app mock shape?
-4. are remaining local mocks clearly local in responsibility?
-5. does any generator source still accidentally re-emit an internal app-level
+1. does `pkg/mockapp` now own the shared richer app mock?
+2. is that shared mock generated rather than handwritten?
+3. does any handler test still define its own fake app?
+4. does `internal/sbi/processor` still own a separate app mock shape?
+5. are remaining local mocks clearly local in responsibility?
+6. does any generator source still accidentally re-emit an internal app-level
    mock owner?
-6. were any production interfaces widened only for test convenience?
-7. did the round keep the actual runtime boundary unchanged?
+7. did the round keep the production server seam app-owned?
+8. were any production interfaces widened or split only for test convenience?
 
 ---
 
@@ -461,19 +549,21 @@ Before considering this round complete, re-check the following:
 
 This plan is complete only when all of the following are true:
 
-1. a shared richer app-level test seam exists in `pkg/service`
-2. handler tests use that shared seam instead of a package-local fake app
-3. processor tests use that shared seam instead of a local app mock owner
-4. remaining internal local mocks are limited to genuinely local seams
-5. verification passes with at least:
+1. a shared richer app-level test seam exists in `pkg/mockapp`
+2. the shared `pkg/mockapp` mock is generated
+3. handler tests use that shared seam instead of a package-local fake app
+4. processor tests use that shared seam instead of a local app mock owner
+5. remaining internal local mocks are limited to genuinely local seams
+6. the production `internal/sbi/server.go` seam remains app-owned
+7. verification passes with at least:
    - `go test ./internal/sbi`
    - `go test ./internal/sbi/processor`
    - `go test ./...`
    - `make build`
    - `make lint`
-6. the repository is materially closer to the surveyed free5GC pattern of:
-   - shared app-boundary mock ownership in `pkg/service` or another shared
-     package
+8. the repository is materially closer to the surveyed free5GC pattern of:
+   - shared app-boundary mock ownership in `pkg/mockapp` or another shared
+     package when a richer seam is required
    - local SBI mocks only where the seam is actually local
 
 ---
