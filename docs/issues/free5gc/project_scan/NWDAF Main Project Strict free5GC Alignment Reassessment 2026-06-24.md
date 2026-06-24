@@ -104,7 +104,7 @@ These are the most important additions from this reassessment.
 | 5 | standalone SBI service vs free5GC NF lifecycle level | A | Priority 11 | already known, not started |
 | 6 | OpenAPI/model governance still incomplete | A | Priority 10 | already known, not started |
 | 7 | logging boundary and payload hygiene | A | Priority 7 | already known, not started |
-| 8 | test ownership is still more package-local than surveyed free5GC baseline | C | dedicated Priority 3 strict follow-up plan | new strictness gap, now recorded |
+| 8 | test ownership is still more package-local than surveyed free5GC baseline | C | dedicated Priority 3 strict follow-up plan | resolved later on 2026-06-24 by `NWDAF/` commit `0768839` |
 
 ## Detailed Findings
 
@@ -467,6 +467,22 @@ Recommended handling:
 - the dedicated plan is now:
   `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 3 Strict Test Ownership Alignment Plan.md`
 
+Resolution update later on 2026-06-24:
+
+- the dedicated follow-up was then implemented in `NWDAF/`
+- committed as `0768839` in the local `NWDAF/` repository
+- `pkg/mockapp` now owns the shared generated app-boundary mock
+- `internal/sbi/mock_interfaces_test.go` now keeps only the SBI-local
+  `processorAPI` mock
+- `internal/sbi/processor/mock_interfaces_test.go` no longer owns a separate
+  app mock shape
+- handler tests now use the shared `pkg/mockapp` mock and keep only a thin
+  local `Processor()` adapter because pushing `*processor.Processor` into
+  `pkg/mockapp` would create an import cycle with same-package
+  `internal/sbi/processor` tests
+- this means Finding 8 was accurate at reassessment time, but should now be
+  treated as resolved for its defined strict-alignment scope
+
 ## Clarifications And Non-Findings
 
 ### `internal/sbi/mock_interfaces_test.go` is not, by itself, proof of bad alignment
@@ -528,7 +544,8 @@ This remains governance work, not a direct bug report.
    - keep under Priority 7
 6. stricter test-ownership alignment around shared app mocks and local mock
    placement
-   - keep under the dedicated Priority 3 strict follow-up plan:
+   - resolved later on 2026-06-24 under the dedicated Priority 3 strict
+     follow-up plan:
      `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 3 Strict Test Ownership Alignment Plan.md`
 
 ### Re-open or annotate completed areas with stricter residual notes
@@ -551,9 +568,10 @@ The most important distinction from this reassessment is:
    wording suggests
 3. a smaller set of structural issues needed clearer naming in the current
    issue set
-4. after later same-day documentation updates, stricter test/mock ownership
-   now has a dedicated Priority 3 follow-up home, while non-3GPP external
-   client ownership still does not
+4. later on the same day, the stricter test/mock ownership issue was then
+   implemented and closed under the dedicated Priority 3 follow-up plan, while
+   non-3GPP external client ownership still does not yet have the same level
+   of closure
 
 This means the current document set is directionally correct, but not yet a
 complete record of the remaining work needed to approach the user's stated

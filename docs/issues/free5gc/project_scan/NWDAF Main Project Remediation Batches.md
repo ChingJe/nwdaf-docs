@@ -49,7 +49,7 @@ state in this document set.
 | --- | --- | --- | --- | --- |
 | 1 | A | Repair Subscription Update Correctness | Completed | Closed in round 1 on 2026-06-22; merged to `NWDAF/master` and pushed |
 | 2 | A | Put Long-Running Work Under App Lifecycle Control | Partially completed | Main notifier ownership problem is closed; remaining `traceCtx`/background-context cleanup is narrower and no longer the next standalone round |
-| 3 | B | Build The Test Safety Net Around The Real Boundaries | Completed | Round 1 closed update/lifecycle basics; the broader test refactor completed on 2026-06-23 with direct handler coverage, normalized consumer test seams, expanded gomock-based processor seams, and one documented SMF raw-HTTP exception that remains deferred to later contract/model-governance work |
+| 3 | B | Build The Test Safety Net Around The Real Boundaries | Completed | Round 1 closed update/lifecycle basics; the broader test refactor completed on 2026-06-23, and the stricter shared mock-ownership follow-up in the same Priority 3 lineage landed on 2026-06-24 as `NWDAF/` commit `0768839` |
 | 4 | B | Normalize SBI Error Contracts | Completed for covered scope | 2026-06-23 implementation landed for the reviewed standards-facing handlers; intentionally excluded callbacks remain future contract-governance work and no longer block the next round |
 | 5 | C | Harden Factory And Runtime Config Behavior | Completed | Implemented on 2026-06-24; explicit config validation, SBI getter normalization, runtime-truth doc alignment, and config test matrix are now in code |
 | 6 | B | Rebuild One Real App Boundary | Completed | 2026-06-24 Phase 1 and Phase 2 both landed in `NWDAF/`; shared app boundary, root-contract scope, and consumer test-seam ownership are now materially aligned with the intended free5GC-style shape |
@@ -179,13 +179,16 @@ Status update:
   request fields for the existing UPF event workflow
 - this exception is treated as follow-up contract/model-governance work, not as
   unfinished Priority 3 test work
-- a narrower same-lineage strictness follow-up still exists for shared
-  app-boundary mock ownership and local mock placement
-- that follow-up is now tracked separately in:
-  `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 3 Strict Test Ownership Alignment Plan.md`
-- this means Priority 3 remains completed for its primary safety-net purpose,
-  while the stricter mock-ownership cleanup is handled as a later follow-up in
-  the same lineage rather than as Priority 12 repository/package ownership work
+- the narrower same-lineage strictness follow-up for shared app-boundary mock
+  ownership and local mock placement was then implemented on 2026-06-24
+- that follow-up landed as `NWDAF/` commit `0768839`
+- `pkg/mockapp` now owns the shared generated app-boundary mock, while
+  `internal/sbi` and `internal/sbi/processor` no longer own separate app mock
+  shapes
+- this means Priority 3 is now closed both for its primary safety-net purpose
+  and for the stricter same-lineage mock-ownership cleanup, while the
+  documented SMF raw-HTTP exception still remains later contract/model-
+  governance work
 
 ### Priority 4 — Rebuild One Real App Boundary
 

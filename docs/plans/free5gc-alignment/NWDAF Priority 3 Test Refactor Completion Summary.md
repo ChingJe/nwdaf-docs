@@ -167,14 +167,18 @@ Priority 3 is considered complete because:
 - the only remaining divergence from the plan's ideal end state is the
   explicitly documented `NsmfService` raw-HTTP exception, which is blocked by
   the local OpenAPI contract snapshot rather than by missing test work
-- a later stricter ownership-only follow-up still remains for shared
+- a later stricter ownership-only follow-up was then recorded for shared
   app-boundary mocks and local mock placement after the same-day
-  app-boundary reconstruction work
+  app-boundary reconstruction work, and was later implemented on 2026-06-24
 
 Follow-up after this completion:
 
 - Priority 4 may now proceed without the earlier Priority 3 seam gaps
 - any future attempt to remove the SMF exception should be handled as contract
   or model-governance work, not as unfinished test refactor work
-- the stricter shared mock-ownership cleanup is now tracked separately in:
+- the stricter shared mock-ownership cleanup was first tracked separately in:
   `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 3 Strict Test Ownership Alignment Plan.md`
+- that follow-up was then implemented on 2026-06-24 as `NWDAF/` commit
+  `0768839`, moving the shared app-boundary mock to `pkg/mockapp` and
+  removing separate app mock ownership from `internal/sbi` and
+  `internal/sbi/processor`
