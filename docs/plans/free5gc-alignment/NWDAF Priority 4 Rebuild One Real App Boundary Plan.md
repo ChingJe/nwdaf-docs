@@ -2,12 +2,27 @@
 
 Date: 2026-06-24
 
-Status: Planned
+Status: Phase 1 completed; Phase 2 planned
 
 Historical remediation items:
 
 - `Priority 4 — Rebuild One Real App Boundary`
 - residual cleanup from `Priority 2 — Put Long-Running Work Under App Lifecycle Control`
+
+This document is now the canonical record of the completed Priority 4 Phase 1
+round.
+
+Phase 1 implementation status:
+
+- implemented in `NWDAF/` on 2026-06-24
+- committed as `bbf42c3` in the local `NWDAF/` repository
+- completed the boundary reconstruction and adjacent lifecycle cleanup defined
+  below
+
+The stricter free5GC follow-up that remains after this completed round is now
+tracked separately in:
+
+- `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 4 Phase 2 Strict free5GC Boundary Alignment Plan.md`
 
 ---
 

@@ -89,6 +89,22 @@ After implementing the planned Priority 8 round in `NWDAF/`:
   config is now reduced for the currently supported standalone SBI runtime
 - the next remaining structural target is the fragmented shared app boundary
 
+## 2026-06-24 App-Boundary Phase-1 Update
+
+After implementing the original Priority 4 round in `NWDAF/`:
+
+- the main fragmented shared app-boundary finding should now be treated as
+  materially improved in code
+- `pkg/app` is now the shared runtime root contract used by service, server,
+  processor, AnLF, MTLF, and consumer paths
+- consumer construction is now app-driven and no longer derives ADRF setup from
+  `factory.NwdafConfig`
+- the adjacent unused server lifecycle parameter drift was also cleaned up
+- the stricter remaining follow-up is now Phase 2 rather than a full replay of
+  the original Priority 4 round
+- the remaining Phase 2 design is documented in
+  `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 4 Phase 2 Strict free5GC Boundary Alignment Plan.md`
+
 ## Findings
 
 ### 1. High — `PUT /subscriptions/{id}` updates only the local record and leaves upstream collection state stale
