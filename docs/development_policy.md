@@ -54,6 +54,27 @@ Before editing, also read:
 - Prefer proving compatibility with existing code paths before introducing new ones.
 - When introducing a new internal contract or state machine, document the lifecycle clearly.
 
+## Decision Gates And Blocking Policy
+
+- Do not silently replace the agreed plan with a different implementation strategy just because the original approach becomes inconvenient or blocked.
+- Do not silently work around a missing dependency, tool, package, fixture, or environment requirement by inventing a weaker local substitute.
+- Stop and ask the user for a decision when the current plan depends on an assumption that turns out to be false.
+- Stop and ask the user for a decision when the planned approach is blocked by missing dependencies, tooling, permissions, environment setup, or unavailable reference material.
+- Stop and ask the user for a decision before changing architecture boundaries, data flow, state flow, external contracts, verification scope, or the main implementation strategy.
+- Stop and ask the user for a decision before lowering validation standards, skipping planned tests, or replacing a required dependency with a workaround.
+- Stop and ask the user for a decision when the spec, plan, and existing code suggest conflicting directions and the difference affects implementation choices.
+- Small behavior-preserving cleanup may proceed without interruption when it stays within the already approved plan and does not change the chosen technical direction.
+
+### Required Blocker Report
+
+When blocked or when a design decision is needed, report all of the following before continuing:
+
+1. The original plan or assumption.
+2. The exact blocker or contradiction that was discovered.
+3. The realistic options from that point.
+4. The recommended option and its tradeoffs.
+5. Whether the plan needs to be revised before implementation continues.
+
 ---
 
 ## Build And Verification
@@ -179,10 +200,13 @@ feat(mtlf): add retrieval session logging
    semantics.
 3. If the task needs free5GC alignment, read `free5gc-dev-skill/SKILL.md` and
    the routed references it points to.
-4. Implement the smallest coherent change.
-5. Add or update tests.
-6. Run verification commands.
-7. Write a focused commit message using the format above.
+4. Confirm the current plan, assumptions, dependencies, and verification scope before editing.
+5. If a blocker, contradiction, or design fork appears, stop and ask the user for a decision instead of silently switching strategies.
+6. Replan when the original plan is no longer valid, then continue only after the direction is clarified.
+7. Implement the smallest coherent change that still matches the confirmed plan.
+8. Add or update tests.
+9. Run verification commands.
+10. Write a focused commit message using the format above.
 
 ### Typical Documentation Change Flow
 
