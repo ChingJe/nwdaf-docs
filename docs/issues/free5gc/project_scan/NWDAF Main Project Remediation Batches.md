@@ -78,12 +78,12 @@ state in this document set.
 | Current Rank | Tier | Work Item | Status | Notes |
 | --- | --- | --- | --- | --- |
 | 1 | A | Repair Subscription Update Correctness | Completed | Closed in round 1 on 2026-06-22; merged to `NWDAF/master` and pushed |
-| 2 | A | Put Long-Running Work Under App Lifecycle Control | Partially completed | Main notifier ownership problem is closed; the 2026-06-25 external-client ownership round also landed adjacent parent-context hardening, but shutdown-time ADRF cleanup still remains as a narrower residual |
+| 2 | A | Put Long-Running Work Under App Lifecycle Control | Partially completed | Main notifier ownership problem is closed; the 2026-06-25 external-client ownership round also landed adjacent parent-context hardening plus ADRF teardown/shutdown convergence fixes, but broader lifecycle cancellation and app-owned I/O context cleanup still remain as residual work |
 | 3 | B | Build The Test Safety Net Around The Real Boundaries | Completed | Round 1 closed update/lifecycle basics; the broader test refactor completed on 2026-06-23, and the stricter shared mock-ownership follow-up in the same Priority 3 lineage landed on 2026-06-24 as `NWDAF/` commit `0768839` |
 | 4 | B | Normalize SBI Error Contracts | Completed for covered scope | 2026-06-23 implementation landed for the reviewed standards-facing handlers; intentionally excluded callbacks remain future contract-governance work and no longer block the next round |
 | 5 | C | Harden Factory And Runtime Config Behavior | Completed | Implemented on 2026-06-24; explicit config validation, SBI getter normalization, runtime-truth doc alignment, and config test matrix are now in code |
 | 6 | B | Rebuild One Real App Boundary | Completed | 2026-06-24 Phase 1 and Phase 2 both landed in `NWDAF/`; shared app boundary, root-contract scope, and consumer test-seam ownership are now materially aligned with the intended free5GC-style shape |
-| 7 | B | Normalize Non-3GPP External Client Ownership | Partially completed | Phase 1 landed on 2026-06-25 in `NWDAF/` commit `637235b`; Daisy and ML clients no longer instantiate inside AnLF/MTLF runtime logic, but stricter Phase 2 findings remain on shutdown cleanup context and outer assembly-point alignment |
+| 7 | B | Normalize Non-3GPP External Client Ownership | Completed for current intended scope | Phase 1 `637235b` and Phase 2 `f026e77` both landed on 2026-06-25 in `NWDAF/`; ML/Daisy ownership is now consumer-driven, processor consumes already-owned clients, and the same implementation line also closed ADRF teardown/shutdown convergence follow-up findings |
 | 8 | B | Clarify Post-Subscription Activation And Late-Failure Signaling | Not started | Design completeness and observability work, not an immediate correctness bug |
 | 9 | B | Tighten Logging Boundaries | Not started | Follow error-contract and late-failure signaling cleanup |
 | 10 | C | Establish OpenAPI / Model Governance | Not started | Generated/reference models already exist for some locally redefined payloads; governance should follow handler/config cleanup |
@@ -262,11 +262,11 @@ Status update:
 
 ### Priority 4 Follow-Up — Normalize Non-3GPP External Client Ownership
 
-Scope:
+Original gap at formalization time:
 
-- Daisy and ML service clients are still instantiated directly inside
+- Daisy and ML service clients were still instantiated directly inside
   `internal/mtlf` and `internal/anlf`
-- non-3GPP external integrations still bypass the shared app/service/consumer
+- non-3GPP external integrations still bypassed the shared app/service/consumer
   ownership model that now exists for the main SBI consumer path
 
 Sub-items:
@@ -293,21 +293,25 @@ Why here:
 
 Status update:
 
-- Phase 1 implemented in `NWDAF/` on 2026-06-25.
-- landed as local `NWDAF/` commit `637235b`
+- Phase 1 implemented in `NWDAF/` on 2026-06-25 as local commit `637235b`
+- Phase 2 then implemented in `NWDAF/` on 2026-06-25 as local commit `f026e77`
 - AnLF and MTLF no longer instantiate ML and Daisy clients directly inside
   runtime logic
-- notifier no longer uses `http.DefaultClient`
-- covered external integration request paths now accept parent contexts instead
-  of always deriving from `context.Background()`
-- focused and full repository verification passed for the covered Phase 1
-  implementation
-- the work item is still not fully closed because the post-implementation
-  review recorded two Phase 2 findings in the same plan lineage:
-  1. shutdown-time ADRF retrieval cleanup now inherits the already-canceled app
-     context and can skip remote unsubscribe work
-  2. client assembly still starts in `internal/sbi/processor.NewProcessor(...)`
-     instead of being fully lifted to the outer app/service assembly boundary
+- ML and Daisy client assembly now lives in
+  `internal/sbi/consumer.NewConsumer(...)`
+- processor now consumes already-owned external clients instead of deciding
+  client construction itself
+- the same implementation line also closed the narrower same-round findings on:
+  1. shutdown-time ADRF unsubscribe cleanup context ownership
+  2. retrain-workflow shutdown convergence previously tied to the runtime
+     watchdog
+- focused and full repository verification passed after the covered
+  implementation rerun
+- this work item should now be treated as completed for the current intended
+  standalone-NWDAF alignment scope
+- any broader lifecycle cancellation or app-owned I/O context cleanup that
+  remains open stays under Priority 2 rather than reopening this Priority 4
+  follow-up
 - the canonical implementation and reassessment record now lives in:
   `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 4 External Client Ownership And Priority 2 Residual Lifecycle Hardening Plan.md`
 

@@ -120,6 +120,23 @@ After implementing the planned Phase 2 follow-up in `NWDAF/`:
 - Priority 4 should now be treated as completed for the current intended
   standalone-NWDAF alignment level
 
+## 2026-06-25 External-Client Ownership Follow-Up Update
+
+After implementing the later Priority 4 follow-up in `NWDAF/`:
+
+- ML and Daisy client assembly moved to the app-owned
+  `internal/sbi/consumer.NewConsumer(...)` boundary
+- processor construction now consumes already-owned external clients instead of
+  deciding client construction itself
+- the same implementation line also closed the narrower teardown/shutdown
+  findings that appeared during stricter review of that ownership work
+- this means the non-3GPP external-client ownership issue recorded in this scan
+  file should now be treated as closed for the current intended standalone-NWDAF
+  alignment scope
+- broader lifecycle cancellation and app-owned I/O context cleanup still remain
+  under Priority 2 and should not be conflated with this closed Priority 4
+  follow-up
+
 ## 2026-06-24 Strict Reassessment Absorption Note
 
 The later same-day strict reassessment is now absorbed into this scan file and
@@ -141,7 +158,8 @@ What the absorbed strict reassessment added:
    Priority 4 work
 2. one narrower completed Priority 3 follow-up for stricter test/mock
    ownership
-3. one still-open architecture item for non-3GPP external client ownership
+3. one narrower Priority 4 follow-up that was still open at reassessment time
+   and was later closed in the same plan lineage
 
 Current canonical homes after absorption:
 
@@ -151,8 +169,10 @@ Current canonical homes after absorption:
   `NWDAF/` commit `a912581`
 - the stricter Priority 3 test-ownership follow-up was later closed on
   2026-06-24 by `NWDAF/` commit `0768839`
-- the remaining Daisy / ML service external-client ownership issue is now a
-  formal work item in `NWDAF Main Project Remediation Batches.md`
+- the Daisy / ML service external-client ownership follow-up was later closed
+  on 2026-06-25 by `NWDAF/` commit `f026e77`
+- the latest status and remaining open-work split live in:
+  `NWDAF Main Project Remediation Batches.md`
 
 ## Findings
 
@@ -718,7 +738,7 @@ Their canonical execution home is now the current remediation table in:
 
 ### B. New issues identified after the original scan
 
-#### B1. Non-3GPP external clients still bypass the shared consumer/app ownership model
+#### B1. Non-3GPP external clients originally bypassed the shared consumer/app ownership model
 
 After Priority 4, NWDAF had a recognizable shared app boundary and an
 app-driven `internal/sbi/consumer` path, but some project-local external
@@ -750,6 +770,16 @@ Judgment after absorption:
   `NWDAF Main Project Remediation Batches.md`
 - it is intentionally tracked as a narrower Priority 4 follow-up rather than
   as late repository/package cleanup under Priority 12
+
+Later status:
+
+- this gap was later closed on 2026-06-25 by `NWDAF/` commit `f026e77`
+- ML and Daisy client assembly now lives on the app-owned
+  `internal/sbi/consumer.NewConsumer(...)` path
+- processor now consumes already-owned external clients through the narrower
+  consumer seam instead of constructing them directly
+- the remaining adjacent lifecycle cleanup after that implementation is tracked
+  under Priority 2, not as a still-open Priority 4 ownership gap
 
 #### B2. Test ownership was still more package-local than the surveyed free5GC baseline
 
@@ -836,15 +866,13 @@ Interpretation after round-1 completion:
   stricter same-lineage Priority 3/4 follow-up work recorded elsewhere in this
   document set.
 
-The most important open problems after the absorbed strict reassessment are:
+The most important open problems after the later implemented follow-up rounds are:
 
 1. broader lifecycle cancellation and app-owned I/O context cleanup still
    remains
-2. non-3GPP external clients still bypass the shared consumer/app ownership
-   model
-3. post-subscription activation and late-failure signaling are still
+2. post-subscription activation and late-failure signaling are still
    underspecified as a design/operability issue
-4. OpenAPI/model governance, runtime config scope, integration-level decisions,
+3. OpenAPI/model governance, runtime config scope, integration-level decisions,
    and broader repository/package boundaries remain outstanding
 
 The repository now passes `make build`, `go test ./...`, and `make lint` after
