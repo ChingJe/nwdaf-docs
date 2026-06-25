@@ -38,7 +38,13 @@ Before editing, also read:
 
 ## Language
 
-- Code, identifiers, logs, API-facing strings, and committed documents should use English.
+- `NWDAF/` repository content should use English strictly. This includes code,
+  identifiers, comments, logs, API-facing strings, configuration-facing text,
+  and committed implementation-oriented documents kept with the main project.
+- `nwdaf-docs/` documentation may be written in either English or Traditional
+  Chinese. Choose the language that best fits the document's audience and
+  purpose, but keep each individual document internally consistent unless a
+  bilingual format is intentionally required.
 - Conversation-only notes may use Traditional Chinese.
 
 ## Code Quality
