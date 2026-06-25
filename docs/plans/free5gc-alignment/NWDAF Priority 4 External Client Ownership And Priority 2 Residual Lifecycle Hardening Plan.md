@@ -2,7 +2,7 @@
 
 Date: 2026-06-25
 
-Status: Phase 1 implemented; Phase 2 findings recorded
+Status: Phase 1 implemented; same-round lifecycle-closure follow-up added
 
 Historical remediation items:
 
@@ -34,11 +34,17 @@ Phase 2 finding status:
   closed
 - the remaining issues are now treated as Phase 2 findings of this same
   implementation line, not as a separate unrelated round
-- the two recorded Phase 2 findings are:
+- the originally recorded Phase 2 findings were:
   1. shutdown-time ADRF retrieval cleanup now inherits the already-canceled app
      context and can skip remote unsubscribe work
   2. client assembly is still processor-owned rather than being fully lifted to
      the outer app/service assembly boundary used by the surveyed free5GC NFs
+- after the later local implementation review of those two findings, one more
+  same-round lifecycle-closure residual was identified and is intentionally
+  absorbed into this plan rather than deferred:
+  3. detached ADRF retrain workflow goroutines can outlive the app waitgroup
+     boundary and make shutdown truth less strict than the surveyed free5GC NF
+     lifecycle shape
 
 Verification rerun after Phase 1 implementation:
 
@@ -151,7 +157,10 @@ This plan is based on the following local sources:
 - `resources/references/free5gc-main/NFs/udr/pkg/app/app.go`
 - `resources/references/free5gc-main/NFs/udr/pkg/service/init.go`
 - `resources/references/free5gc-main/NFs/udr/internal/sbi/consumer/consumer.go`
+- `resources/references/free5gc-main/NFs/udm/pkg/service/init.go`
 - `resources/references/free5gc-main/NFs/udm/internal/sbi/consumer/consumer.go`
+- `resources/references/free5gc-main/NFs/pcf/pkg/service/init.go`
+- `resources/references/free5gc-main/NFs/nrf/pkg/service/init.go`
 - the current `NWDAF/` tree on 2026-06-25
 
 Exemplar choice for this round:
@@ -161,12 +170,18 @@ Exemplar choice for this round:
    - clear consumer construction from the app boundary
 2. secondary exemplar: `udm`
    - consumer-heavy control-plane shape with multiple service clients
+   - explicit app waitgroup ownership around service lifecycle work
+3. additional lifecycle evidence: `pcf` and `nrf`
+   - explicit `wg.Add(...)` before owned goroutines
+   - termination path waits on owned service work instead of letting detached
+     runtime work silently outlive the app boundary
 
 These exemplars do not provide a literal Daisy or ML service equivalent.
 Their value here is the ownership rule:
 
 - peer-facing clients are assembled from the app/service boundary
 - domain logic does not rediscover or reconstruct runtime clients ad hoc
+- app-owned lifecycle work is made visible to the owning service shutdown shape
 
 ---
 
@@ -441,6 +456,15 @@ The preferred design direction for this round is:
 This keeps the root app contract stable while still matching the surveyed
 free5GC `service -> consumer -> processor` ownership direction more closely.
 
+For the lifecycle side of this same round, the preferred design direction is:
+
+1. retrain workflow goroutines should have an explicit owner
+2. app-visible long-lived or multi-step workflow goroutines should not silently
+   outlive the service waitgroup boundary
+3. shutdown cleanup may still use bounded fresh timeout contexts, but the
+   surrounding workflow should remain visible to the owner that is declaring the
+   app terminated
+
 ### 9.2 Package Placement Rule For This Round
 
 This plan does not require immediate package relocation of concrete client
@@ -474,6 +498,9 @@ Stricter clarification after the free5GC re-review:
 - in NWDAF that means ADRF retrieval unsubscribe cleanup should receive a
   dedicated owner-created timeout context from MTLF or the surrounding
   shutdown path, while the consumer continues to honor the context it is given
+- the same owner should also decide whether the surrounding retrain workflow is
+  waitgroup-visible lifecycle work rather than leaving it as a detached
+  goroutine lineage
 
 ### 9.4 HTTP Client Rule
 
@@ -573,7 +600,32 @@ Expected outcome:
 - runtime-managed outbound I/O has explicit parent ownership and bounded
   timeout behavior
 
-### Workstream E — Update Tests And Shared Mocks
+### Workstream E — Close Retrain Workflow Lifecycle Ownership
+
+Goal:
+
+- ensure the ADRF retrain workflow does not remain a detached lineage that can
+  outlive the app's declared shutdown boundary
+
+Tasks:
+
+1. inventory the current detached goroutine lineage for:
+   - `runAdrfRetrainWorkflow(...)`
+   - `runFetchLoop(...)`
+   - post-fetch Daisy task dispatch
+2. define which parts are app-owned lifecycle work and therefore should be
+   visible to the owning waitgroup
+3. preserve bounded shutdown cleanup for unsubscribe work without turning
+   termination into an unbounded wait
+4. prevent shutdown from silently expanding the runtime work set by dispatching
+   new Daisy training work after termination has begun
+
+Expected outcome:
+
+- the current round closes both the cleanup-context gap and the adjacent
+  retrain-workflow ownership gap instead of deferring the latter
+
+### Workstream F — Update Tests And Shared Mocks
 
 Goal:
 
@@ -606,9 +658,10 @@ Expected outcome:
 4. move Daisy ownership out of MTLF
 5. tighten notifier and adjacent runtime-I/O context ownership
 6. make shutdown cleanup context explicit for ADRF unsubscribe
-7. update tests and mocks alongside each seam change
-8. rerun focused package tests
-9. rerun full repository verification
+7. close retrain workflow lifecycle ownership so shutdown truth remains strict
+8. update tests and mocks alongside each seam change
+9. rerun focused package tests
+10. rerun full repository verification
 
 This order keeps the most cross-cutting boundary decision first and defers the
 smaller residual lifecycle cleanup until the ownership path is explicit.
@@ -632,11 +685,13 @@ true:
    root background ownership for normal operation.
 7. ADRF unsubscribe cleanup no longer depends on the already-canceled app
    context during teardown.
-8. any remaining background-derived shutdown timeout contexts are deliberate
+8. ADRF retrain workflow goroutines that materially belong to app lifecycle no
+   longer outlive the app waitgroup boundary as detached work.
+9. any remaining background-derived shutdown timeout contexts are deliberate
    and documented by code shape, not accidental leftovers.
-9. focused tests cover the new ownership seams and the most relevant lifecycle
+10. focused tests cover the new ownership seams and the most relevant lifecycle
    behavior.
-10. full repository verification passes.
+11. full repository verification passes.
 
 ---
 
@@ -669,6 +724,8 @@ Verification notes:
 3. if context ownership changes force a test-design decision that current seams
    cannot express cleanly, stop and re-evaluate before widening architecture
    beyond this plan
+4. focused lifecycle verification should explicitly cover retrain-workflow
+   shutdown behavior, not only per-request timeout behavior
 
 ---
 
@@ -682,6 +739,8 @@ Main risks:
    context with an already-canceled app context
 4. over-coupling Daisy and ML client ownership to the main NF consumer API in a
    way that obscures their non-3GPP role
+5. declaring NWDAF terminated while detached retrain cleanup or dispatch work is
+   still running in the background
 
 Guardrails:
 
@@ -690,6 +749,8 @@ Guardrails:
 3. keep behavior-preserving ownership moves separate from later repository
    cleanup
 4. distinguish normal runtime I/O from termination-only cleanup contexts
+5. treat app-declared termination and app-owned workflow completion as one
+   lifecycle contract, unless a narrower documented exception is deliberate
 
 ---
 
@@ -723,7 +784,9 @@ The implementation did solve the original highest-value part of this round:
 3. covered external integration calls now accept a parent context instead of
    always rooting themselves at `context.Background()`
 
-However, two narrower findings remain.
+However, the original two narrower findings were followed by one same-round
+lifecycle-closure residual, and all three are now treated as part of this
+round rather than as deferred later work.
 
 ### 16.1 Phase 2 Finding A — Shutdown Cleanup Context Is Too Narrow
 
@@ -786,3 +849,46 @@ Phase 2 direction:
 - move ML and Daisy client assembly into `internal/sbi/consumer.NewConsumer(...)`
 - have processor consume those already-owned clients through `nwdaf.Consumer()`
   rather than deciding client construction itself
+
+### 16.3 Same-Round Lifecycle Closure Residual — Detached Retrain Workflow
+
+Confirmed issue:
+
+- the local review after implementing the original two Phase 2 findings showed
+  that ADRF retrain workflow goroutines can still outlive the app waitgroup
+  boundary
+- this means shutdown cleanup may now be more correct for remote unsubscribe,
+  but the app can still declare termination before all owned retrain work has
+  actually converged
+
+Confirmed current locations:
+
+- `NWDAF/internal/mtlf/training.go`
+- `NWDAF/internal/mtlf/adrf_retrieval.go`
+- `NWDAF/pkg/service/init.go`
+
+Evidence basis:
+
+- direct exemplar evidence from UDM, PCF, and NRF shows service-owned goroutine
+  startup being registered through the app waitgroup before shutdown waits
+- no exact free5GC ADRF-retrain equivalent exists, so the judgment about this
+  specific workflow shape remains inference from the surveyed ownership and
+  lifecycle discipline rather than from a one-to-one implementation twin
+
+Why this must stay in this round:
+
+1. the new cleanup-context fix intentionally preserved remote unsubscribe work
+   after app cancellation
+2. that improvement makes the surrounding workflow ownership truth more
+   important, not less
+3. deferring this would leave the current round with a stricter cleanup rule but
+   a still-detached workflow boundary
+
+Same-round direction:
+
+- keep the owner-created bounded cleanup context rule introduced for remote
+  unsubscribe
+- also make the surrounding retrain workflow visible to app lifecycle
+  ownership where it is materially long-lived work
+- avoid dispatching new Daisy work from a teardown path once termination has
+  already begun
