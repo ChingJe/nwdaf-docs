@@ -78,7 +78,7 @@ state in this document set.
 | Current Rank | Tier | Work Item | Status | Notes |
 | --- | --- | --- | --- | --- |
 | 1 | A | Repair Subscription Update Correctness | Completed | Closed in round 1 on 2026-06-22; merged to `NWDAF/master` and pushed |
-| 2 | A | Put Long-Running Work Under App Lifecycle Control | Partially completed | Main notifier ownership problem is closed; the 2026-06-25 external-client ownership round also landed adjacent parent-context hardening plus ADRF teardown/shutdown convergence fixes, but broader lifecycle cancellation and app-owned I/O context cleanup still remain as residual work |
+| 2 | A | Put Long-Running Work Under App Lifecycle Control | Partially completed | Completed: notifier-owned cancellation/shutdown, adjacent parent-context hardening, ADRF teardown cleanup, retrain-workflow ownership, and shutdown convergence. Remaining: broader lifecycle cancellation and app-owned I/O context cleanup across the wider repository |
 | 3 | B | Build The Test Safety Net Around The Real Boundaries | Completed | Round 1 closed update/lifecycle basics; the broader test refactor completed on 2026-06-23, and the stricter shared mock-ownership follow-up in the same Priority 3 lineage landed on 2026-06-24 as `NWDAF/` commit `0768839` |
 | 4 | B | Normalize SBI Error Contracts | Completed for covered scope | 2026-06-23 implementation landed for the reviewed standards-facing handlers; intentionally excluded callbacks remain future contract-governance work and no longer block the next round |
 | 5 | C | Harden Factory And Runtime Config Behavior | Completed | Implemented on 2026-06-24; explicit config validation, SBI getter normalization, runtime-truth doc alignment, and config test matrix are now in code |
@@ -158,13 +158,30 @@ Why here:
 Status update:
 
 - Partially completed in round 1 on 2026-06-22.
-- Notifier schedulers now inherit the app cancellation context and are stopped
-  explicitly during application termination.
-- Broader lifecycle cleanup listed in this batch, such as remaining unused
-  lifecycle parameters and cross-component ownership normalization, is still
-  pending.
-- The completed notifier-lifecycle portion is already merged to
-  `NWDAF/master` and pushed.
+- Completed portions:
+  1. notifier schedulers now inherit the app cancellation context and are
+     stopped explicitly during application termination
+  2. the 2026-06-25 external-client ownership implementation line also landed
+     adjacent parent-context hardening for covered external integration calls
+  3. shutdown-time ADRF unsubscribe cleanup now uses an owner-created bounded
+     cleanup context instead of depending on the already-canceled app context
+  4. ADRF retrain workflow follow-up work is now waitgroup-visible rather than
+     detached from the app lifecycle boundary
+  5. shutdown no longer waits for the ADRF runtime watchdog before retrain
+     cleanup can converge
+- Remaining portions:
+  1. broader lifecycle cancellation cleanup outside the covered ownership line
+     is still pending
+  2. broader app-owned I/O context cleanup across the wider repository is still
+     pending
+  3. cross-component ownership normalization beyond the covered notifier/MTLF
+     residuals is still pending
+  4. any still-relevant ignored lifecycle parameters should be evaluated under
+     that broader cleanup rather than treated as solved by this narrower round
+- The completed notifier-lifecycle portion and the later covered residual
+  implementation are already committed and pushed.
+- The current detailed remaining-work plan now lives in:
+  `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 2 Remaining Lifecycle Completion Plan.md`
 
 ## Tier B — Safety Net And Boundary Consolidation
 

@@ -124,18 +124,20 @@ After implementing the planned Phase 2 follow-up in `NWDAF/`:
 
 After implementing the later Priority 4 follow-up in `NWDAF/`:
 
-- ML and Daisy client assembly moved to the app-owned
-  `internal/sbi/consumer.NewConsumer(...)` boundary
-- processor construction now consumes already-owned external clients instead of
-  deciding client construction itself
-- the same implementation line also closed the narrower teardown/shutdown
-  findings that appeared during stricter review of that ownership work
-- this means the non-3GPP external-client ownership issue recorded in this scan
-  file should now be treated as closed for the current intended standalone-NWDAF
-  alignment scope
-- broader lifecycle cancellation and app-owned I/O context cleanup still remain
-  under Priority 2 and should not be conflated with this closed Priority 4
-  follow-up
+- Completed in that implementation line:
+  1. ML and Daisy client assembly moved to the app-owned
+     `internal/sbi/consumer.NewConsumer(...)` boundary
+  2. processor construction now consumes already-owned external clients instead
+     of deciding client construction itself
+  3. the narrower teardown/shutdown findings that appeared during stricter
+     review of that ownership work were also closed
+  4. the non-3GPP external-client ownership issue recorded in this scan file
+     should now be treated as closed for the current intended standalone-NWDAF
+     alignment scope
+- Still open, but under Priority 2 rather than this closed Priority 4
+  follow-up:
+  1. broader lifecycle cancellation cleanup
+  2. broader app-owned I/O context cleanup across the wider repository
 
 ## 2026-06-24 Strict Reassessment Absorption Note
 
@@ -173,6 +175,11 @@ Current canonical homes after absorption:
   on 2026-06-25 by `NWDAF/` commit `f026e77`
 - the latest status and remaining open-work split live in:
   `NWDAF Main Project Remediation Batches.md`
+- within that split, the completed portions and still-open portions of Priority
+  2 are now called out explicitly
+- the current detailed implementation plan for that still-open Priority 2 work
+  lives in:
+  `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 2 Remaining Lifecycle Completion Plan.md`
 
 ## Findings
 
