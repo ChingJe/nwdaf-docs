@@ -106,6 +106,51 @@ make test
 If a change only affects documentation or chat-support materials, a full test run may be skipped,
 but the final note should say so explicitly.
 
+## Optional Completion Review
+
+After implementation, the user may ask for a focused review before commit or
+before the task is considered complete.
+
+Use this review direction when the user wants to confirm implementation
+completeness, free5GC-style alignment, or newly introduced risks.
+
+### Review Focus
+
+Check the following:
+
+1. Whether the implemented result actually satisfies the agreed plan, including
+   required scope, behaviors, tests, and follow-up constraints.
+2. Whether the implementation still aligns with the relevant free5GC
+   conventions, exemplar NF patterns, and local NWDAF structure instead of only
+   being functionally workable.
+3. Whether the change introduced new problems such as regressions, incomplete
+   coverage, inconsistent lifecycle handling, missing config updates, broken
+   assumptions, or test gaps.
+
+### Review Inputs
+
+- The current plan document or agreed task scope.
+- The actual code and config diff.
+- The exemplar NF references used for the implementation when free5GC
+  alignment is part of the task.
+- Verification results and any checks that were skipped.
+
+### Review Output Expectations
+
+- State clearly whether the plan was fully satisfied, partially satisfied, or
+  diverged in some areas.
+- Call out free5GC alignment conclusions using concrete exemplar NF evidence
+  when that comparison is part of the judgment.
+- Lead with bugs, regressions, missing requirements, and missing tests.
+- Separate confirmed issues from assumptions or unresolved questions.
+- State what was verified and what remains unverified.
+- If the implementation diverged from the plan, say whether the fix should be
+  additional implementation work or a deliberate replan.
+
+When the review needs detailed free5GC-oriented comparison, use
+`free5gc-dev-skill/SKILL.md` and its review guidance as the default review
+entry point.
+
 ---
 
 ## Reference Order
@@ -206,7 +251,9 @@ feat(mtlf): add retrieval session logging
 7. Implement the smallest coherent change that still matches the confirmed plan.
 8. Add or update tests.
 9. Run verification commands.
-10. Write a focused commit message using the format above.
+10. If requested, perform an implementation-completion review against the plan,
+    free5GC alignment expectations, and newly introduced risks before commit.
+11. Write a focused commit message using the format above.
 
 ### Typical Documentation Change Flow
 
