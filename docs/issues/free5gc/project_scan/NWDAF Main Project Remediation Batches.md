@@ -78,7 +78,7 @@ state in this document set.
 | Current Rank | Tier | Work Item | Status | Notes |
 | --- | --- | --- | --- | --- |
 | 1 | A | Repair Subscription Update Correctness | Completed | Closed in round 1 on 2026-06-22; merged to `NWDAF/master` and pushed |
-| 2 | A | Put Long-Running Work Under App Lifecycle Control | Partially completed | Completed: notifier-owned cancellation/shutdown, adjacent parent-context hardening, ADRF teardown cleanup, retrain-workflow ownership, and shutdown convergence. Remaining: broader lifecycle cancellation and app-owned I/O context cleanup across the wider repository |
+| 2 | A | Put Long-Running Work Under App Lifecycle Control | Completed for bounded lifecycle / ownership scope | 2026-06-26 implementation closed the remaining bounded Priority 2 inventory: runtime consumer parent-context propagation, DB/runtime helper ownership, async ownership classification within scope, and explicit cleanup-exception narrowing. Adjacent Priority 5, 6, 7, 10, 11, and 12 work remains separate by design |
 | 3 | B | Build The Test Safety Net Around The Real Boundaries | Completed | Round 1 closed update/lifecycle basics; the broader test refactor completed on 2026-06-23, and the stricter shared mock-ownership follow-up in the same Priority 3 lineage landed on 2026-06-24 as `NWDAF/` commit `0768839` |
 | 4 | B | Normalize SBI Error Contracts | Completed for covered scope | 2026-06-23 implementation landed for the reviewed standards-facing handlers; intentionally excluded callbacks remain future contract-governance work and no longer block the next round |
 | 5 | C | Harden Factory And Runtime Config Behavior | Completed | Implemented on 2026-06-24; explicit config validation, SBI getter normalization, runtime-truth doc alignment, and config test matrix are now in code |
@@ -169,15 +169,23 @@ Status update:
      detached from the app lifecycle boundary
   5. shutdown no longer waits for the ADRF runtime watchdog before retrain
      cleanup can converge
-- Remaining portions:
-  1. broader lifecycle cancellation cleanup outside the covered ownership line
-     is still pending
-  2. broader app-owned I/O context cleanup across the wider repository is still
-     pending
-  3. cross-component ownership normalization beyond the covered notifier/MTLF
-     residuals is still pending
-  4. any still-relevant ignored lifecycle parameters should be evaluated under
-     that broader cleanup rather than treated as solved by this narrower round
+- Remaining-plan implementation completed on 2026-06-26.
+- Newly completed portions from the bounded remaining-work plan:
+  1. SMF / MTLF / ML / Daisy / ADRF runtime consumer paths now expose
+     caller-owned parent-context contracts instead of silently rooting runtime
+     I/O at `context.Background()`
+  2. MongoDB query helpers now derive bounded query timeouts from caller-owned
+     contexts, and AnLF ground-truth lookup propagates monitor-owned
+     cancellation into that path
+  3. UPF persistence writes now derive from app-owned cancellation rather than
+     a root background context
+  4. request-triggered async follow-up in subscription data collection and ML
+     model provisioning is now explicitly treated as bounded request-triggered
+     work, and shutdown no longer expands new work through those paths
+  5. the remaining production `context.Background()` usage in the touched
+     Priority 2 scope is now limited to explicit cleanup / shutdown exceptions
+  6. the implementation-completion review against `development_policy.md`
+     found no new confirmed issue inside this bounded Priority 2 scope
 - Boundary clarification for the still-open remainder:
   1. Priority 2 owns lifecycle/ownership cleanup, parent-context propagation,
      async ownership classification, and cleanup-exception classification
@@ -190,8 +198,9 @@ Status update:
      11
   6. Daisy / MTLF callback relocation and broader package-boundary cleanup
      remain Priority 12
-- The completed notifier-lifecycle portion and the later covered residual
-  implementation are already committed and pushed.
+- The completed notifier-lifecycle portion, the later covered residual
+  implementation, and the final bounded remaining-work implementation are all
+  now landed in `NWDAF/`.
 - The current detailed remaining-work plan now lives in:
   `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 2 Remaining Lifecycle Completion Plan.md`
 

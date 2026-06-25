@@ -183,6 +183,14 @@ Current canonical homes after absorption:
 - that remaining-work plan is now explicitly bounded so Priority 2 closes the
   lifecycle/ownership inventory without absorbing adjacent Priority 5, 6, 7,
   10, 11, or 12 issue lines just because some files overlap
+- that bounded remaining-work plan was then implemented on 2026-06-26
+- post-implementation verification reran `make build`, `go test ./...`, and
+  `make lint`, all of which passed
+- the post-implementation review against the workspace development policy found
+  no new confirmed issue inside that bounded Priority 2 scope
+- the canonical current status therefore moves to:
+  - Priority 2 completed for its bounded lifecycle / ownership scope
+  - adjacent still-open work remains under Priority 5, 6, 7, 10, 11, and 12
 
 ## Findings
 
