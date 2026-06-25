@@ -258,18 +258,20 @@ The target is narrower:
 
 ### 5.1 App-Owned Client Construction
 
-The surveyed free5GC control-plane NFs such as UDR and UDM follow one stable
-pattern:
+The surveyed free5GC control-plane NFs such as UDR, UDM, and PCF follow one
+stable pattern:
 
 1. `pkg/service.NewApp(...)` constructs the concrete app
-2. that app constructs consumer-owned clients
-3. runtime logic uses those owned clients through the app or consumer seam
+2. that app constructs `internal/sbi/consumer.NewConsumer(...)`
+3. the consumer owns concrete outbound client assembly
+4. runtime logic uses those owned clients through the app or consumer seam
 
 Implication for NWDAF:
 
 - Daisy and ML service clients should stop being created inside AnLF and MTLF
-- they should be assembled from app-owned wiring and then consumed through a
-  local seam
+- they should stop being created inside `internal/sbi/processor.NewProcessor(...)`
+- they should be assembled from the existing app-to-consumer boundary and then
+  consumed through a local seam
 
 ### 5.2 Keep The Root App Contract Narrow
 
@@ -300,9 +302,12 @@ That means:
 
 - standardized or semi-standard NF interaction may remain under
   `internal/sbi/consumer`
-- project-local external integrations should still be owned from the app
-  boundary, even if their concrete client code temporarily remains in the same
-  package for this round
+- project-local external integrations may also remain under
+  `internal/sbi/consumer` for this round when that is the closest fit to the
+  surveyed free5GC ownership shape
+- the important rule is that app/service owns consumer construction and
+  consumer owns concrete client assembly, even if the target service is not a
+  standardized peer NF
 
 This avoids forcing premature package relocation into a plan that is supposed
 to stay narrower than Priority 12.
@@ -333,18 +338,20 @@ The following decisions are treated as fixed for this plan:
 1. Keep the round narrow and behavior-preserving.
 2. Do not widen the root `pkg/app.App` contract.
 3. Do not perform broad repository/package relocation in this round.
-4. Move Daisy and ML service client construction behind app-owned wiring rather
-   than direct domain-local `New...Client(...)` calls.
-5. Preserve the explicit distinction between:
+4. Move Daisy and ML service client construction behind the existing
+   app-to-consumer boundary rather than direct domain-local
+   `New...Client(...)` calls.
+5. Do not leave ML or Daisy client assembly in
+   `internal/sbi/processor.NewProcessor(...)` as the final target shape.
+6. Preserve the explicit distinction between:
    - shared NF consumer ownership
    - project-local external integration ownership
-6. Prefer local extension seams or small app-owned helper seams over new
-   package-global helpers.
-7. For runtime-managed outbound I/O, prefer a passed parent context plus a
+7. Prefer local extension seams over new package-global helpers.
+8. For runtime-managed outbound I/O, prefer a passed parent context plus a
    local timeout rather than a brand-new root background context.
-8. Keep dedicated background-derived timeout contexts only where they are
+9. Keep dedicated background-derived timeout contexts where they are
    intentionally required for shutdown or cleanup after app cancellation.
-9. Update tests together with the ownership changes.
+10. Update tests together with the ownership changes.
 
 These decisions follow the workspace development policy:
 
@@ -421,28 +428,32 @@ coherent:
 The preferred design direction for this round is:
 
 1. `pkg/service.NewApp(...)` remains the top-level runtime owner
-2. app-owned construction prepares the external clients needed for:
-   - ML service runtime calls
-   - Daisy training workflow calls
-   - existing ADRF calls as needed by the current workflow
-3. AnLF and MTLF receive those clients through narrower app-derived seams or
+2. app-owned construction builds `internal/sbi/consumer.NewConsumer(...)`
+3. the consumer owns the concrete assembly of:
+   - ML service runtime clients
+   - Daisy training workflow clients
+   - existing ADRF clients as needed by the current workflow
+4. `internal/sbi/processor.NewProcessor(...)` receives those owned clients from
+   `nwdaf.Consumer()` instead of assembling them itself
+5. AnLF and MTLF receive those clients through narrower app-derived seams or
    injected local interfaces
 
-This keeps the root app contract stable while still making external ownership
-explicit.
+This keeps the root app contract stable while still matching the surveyed
+free5GC `service -> consumer -> processor` ownership direction more closely.
 
 ### 9.2 Package Placement Rule For This Round
 
 This plan does not require immediate package relocation of concrete client
 implementations.
 
-Acceptable for this round:
+Acceptable and preferred for this round:
 
-- leave the concrete Daisy, ML, and ADRF client types in
-  `internal/sbi/consumer` if that minimizes change
-- but stop allowing AnLF and MTLF to instantiate them directly
+- keep the concrete Daisy, ML, and ADRF client types in
+  `internal/sbi/consumer`
+- assemble them from `consumer.NewConsumer(...)`
+- stop allowing AnLF, MTLF, or processor to instantiate them directly
 
-The key requirement is ownership, not package movement.
+The key requirement is ownership and assembly placement, not package movement.
 
 ### 9.3 Context Rule
 
@@ -455,6 +466,14 @@ The preferred context rule for this round is:
    parent
 4. shutdown-only cleanup may still use a fresh timeout context when the parent
    app context is already canceled
+
+Stricter clarification after the free5GC re-review:
+
+- the shutdown-cleanup exception should be chosen by the owner of the cleanup
+  workflow, not hidden inside the consumer method
+- in NWDAF that means ADRF retrieval unsubscribe cleanup should receive a
+  dedicated owner-created timeout context from MTLF or the surrounding
+  shutdown path, while the consumer continues to honor the context it is given
 
 ### 9.4 HTTP Client Rule
 
@@ -473,22 +492,24 @@ The preferred HTTP client rule for this round is:
 
 Goal:
 
-- choose the minimum app-derived seam through which AnLF and MTLF access owned
-  external clients
+- align the ownership seam with the surveyed free5GC
+  `service -> consumer -> processor` shape while keeping the root app contract
+  stable
 
 Tasks:
 
-1. decide whether the owned clients are exposed through:
-   - a narrowed extension of the existing app seam
-   - a smaller helper seam owned by processor/service and passed into AnLF and
-     MTLF
-2. keep the root `pkg/app.App` unchanged
-3. keep test seams compatible with the shared `pkg/mockapp` pattern
+1. keep the root `pkg/app.App` unchanged
+2. extend `internal/sbi/consumer.Consumer` ownership to cover ML and Daisy
+   runtime clients alongside ADRF
+3. expose those owned clients through the existing `Consumer()` seam or a
+   narrow local extension seam without re-widening `pkg/app.App`
+4. keep test seams compatible with the shared `pkg/mockapp` pattern
 
 Expected outcome:
 
 - domain code no longer needs to call `consumer.NewMlServiceClient(...)` or
   `consumer.NewDaisyClient(...)` directly
+- processor no longer needs to assemble those clients directly
 
 ### Workstream B — Move ML Service Ownership Out Of AnLF
 
@@ -544,6 +565,8 @@ Tasks:
    context where safe
 4. keep shutdown-local timeout contexts only where they are intentionally
    needed for graceful termination
+5. make the shutdown-cleanup exception explicit at the owner boundary, with
+   ADRF unsubscribe as the immediate target case
 
 Expected outcome:
 
@@ -578,12 +601,14 @@ Expected outcome:
 ## 11. Recommended Implementation Order
 
 1. lock the ownership seam first
-2. move ML service ownership out of AnLF
-3. move Daisy ownership out of MTLF
-4. tighten notifier and adjacent runtime-I/O context ownership
-5. update tests and mocks alongside each seam change
-6. rerun focused package tests
-7. rerun full repository verification
+2. move ML and Daisy client assembly into `internal/sbi/consumer`
+3. move ML service ownership out of AnLF
+4. move Daisy ownership out of MTLF
+5. tighten notifier and adjacent runtime-I/O context ownership
+6. make shutdown cleanup context explicit for ADRF unsubscribe
+7. update tests and mocks alongside each seam change
+8. rerun focused package tests
+9. rerun full repository verification
 
 This order keeps the most cross-cutting boundary decision first and defers the
 smaller residual lifecycle cleanup until the ownership path is explicit.
@@ -599,15 +624,19 @@ true:
    logic.
 2. MTLF no longer directly calls `consumer.NewDaisyClient(...)` in runtime
    logic.
-3. the chosen external-client ownership seam is app-owned and mockable.
-4. notifier delivery no longer uses `http.DefaultClient`.
-5. covered runtime-managed outbound request paths no longer create isolated
+3. processor no longer directly assembles ML or Daisy clients from config.
+4. the chosen external-client ownership seam is app-owned, consumer-owned at
+   concrete assembly, and mockable.
+5. notifier delivery no longer uses `http.DefaultClient`.
+6. covered runtime-managed outbound request paths no longer create isolated
    root background ownership for normal operation.
-6. any remaining background-derived shutdown timeout contexts are deliberate
+7. ADRF unsubscribe cleanup no longer depends on the already-canceled app
+   context during teardown.
+8. any remaining background-derived shutdown timeout contexts are deliberate
    and documented by code shape, not accidental leftovers.
-7. focused tests cover the new ownership seams and the most relevant lifecycle
+9. focused tests cover the new ownership seams and the most relevant lifecycle
    behavior.
-8. full repository verification passes.
+10. full repository verification passes.
 
 ---
 
@@ -722,6 +751,8 @@ Phase 2 direction:
 - keep normal runtime request ownership as implemented in Phase 1
 - introduce an explicit shutdown-cleanup context rule for remote ADRF
   unsubscribe work instead of reusing the already-canceled app context
+- keep that exception at the owner boundary rather than hiding it inside the
+  consumer implementation
 
 ### 16.2 Phase 2 Finding B — Assembly Point Still Sits In Processor
 
@@ -752,6 +783,6 @@ Why this remains open:
 Phase 2 direction:
 
 - preserve the now-established owned-client seams
-- decide whether the next tightening step should move client assembly into
-  `pkg/service.NewApp(...)`, an app-owned integration holder, or another
-  similarly outer runtime assembly point
+- move ML and Daisy client assembly into `internal/sbi/consumer.NewConsumer(...)`
+- have processor consume those already-owned clients through `nwdaf.Consumer()`
+  rather than deciding client construction itself
