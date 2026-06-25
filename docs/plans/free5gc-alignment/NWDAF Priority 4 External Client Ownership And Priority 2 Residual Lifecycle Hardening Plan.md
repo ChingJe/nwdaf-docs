@@ -2,7 +2,7 @@
 
 Date: 2026-06-25
 
-Status: Phase 1 implemented; same-round lifecycle-closure follow-up added
+Status: Phase 1 implemented; Phase 2 implementation committed locally
 
 Historical remediation items:
 
@@ -45,8 +45,25 @@ Phase 2 finding status:
   3. detached ADRF retrain workflow goroutines can outlive the app waitgroup
      boundary and make shutdown truth less strict than the surveyed free5GC NF
      lifecycle shape
+- after implementing that lifecycle-closure direction, one further same-round
+  shutdown-convergence issue was identified and is also absorbed into this plan:
+  4. once the retrain workflow becomes waitgroup-visible, `runFetchLoop(...)`
+     can hold shutdown until the runtime ADRF watchdog closes `fetchCh`, which
+     incorrectly ties graceful termination to a business-timeout path
 
-Verification rerun after Phase 1 implementation:
+Phase 2 implementation status:
+
+- Phase 2 implementation landed in `NWDAF/` on 2026-06-25
+- committed as `f026e77` in the local `NWDAF/` repository
+- moved ML and Daisy client assembly into `internal/sbi/consumer.NewConsumer(...)`
+- changed processor construction to consume already-owned external clients
+- kept ADRF unsubscribe teardown on an owner-created bounded cleanup context
+- made the ADRF retrain fetch loop stop on app cancel instead of waiting for
+  the runtime watchdog
+- prevented shutdown from dispatching a new Daisy training task after retrain
+  cleanup
+
+Verification rerun after Phase 2 implementation:
 
 - `go test ./internal/anlf ./internal/mtlf ./internal/notifier ./internal/sbi/consumer ./internal/sbi/processor`
 - `go test ./...`
@@ -619,11 +636,14 @@ Tasks:
    termination into an unbounded wait
 4. prevent shutdown from silently expanding the runtime work set by dispatching
    new Daisy training work after termination has begun
+5. make shutdown convergence independent from the runtime ADRF watchdog by
+   giving `runFetchLoop(...)` an app-cancel exit path
 
 Expected outcome:
 
 - the current round closes both the cleanup-context gap and the adjacent
   retrain-workflow ownership gap instead of deferring the latter
+- shutdown waits only on bounded owned cleanup, not on runtime watchdog expiry
 
 ### Workstream F — Update Tests And Shared Mocks
 
@@ -689,9 +709,11 @@ true:
    longer outlive the app waitgroup boundary as detached work.
 9. any remaining background-derived shutdown timeout contexts are deliberate
    and documented by code shape, not accidental leftovers.
-10. focused tests cover the new ownership seams and the most relevant lifecycle
-   behavior.
-11. full repository verification passes.
+10. shutdown does not wait for the ADRF runtime watchdog once app termination
+    has begun.
+11. focused tests cover the new ownership seams and the most relevant lifecycle
+    behavior.
+12. full repository verification passes.
 
 ---
 
@@ -725,7 +747,8 @@ Verification notes:
    cannot express cleanly, stop and re-evaluate before widening architecture
    beyond this plan
 4. focused lifecycle verification should explicitly cover retrain-workflow
-   shutdown behavior, not only per-request timeout behavior
+   shutdown behavior, including app-cancel convergence before watchdog expiry,
+   not only per-request timeout behavior
 
 ---
 
@@ -741,6 +764,8 @@ Main risks:
    way that obscures their non-3GPP role
 5. declaring NWDAF terminated while detached retrain cleanup or dispatch work is
    still running in the background
+6. making shutdown depend on business watchdog expiry instead of an explicit
+   owner-controlled exit path
 
 Guardrails:
 
@@ -892,3 +917,35 @@ Same-round direction:
   ownership where it is materially long-lived work
 - avoid dispatching new Daisy work from a teardown path once termination has
   already begun
+
+### 16.4 Same-Round Shutdown Convergence Residual — Owned Workflow Still Waits On Runtime Watchdog
+
+Confirmed issue:
+
+- after making the retrain workflow waitgroup-visible, shutdown can still block
+  on `runFetchLoop(...)` until the ADRF runtime watchdog fires
+- this means lifecycle ownership is stricter than before, but shutdown is still
+  coupled to a business-timeout path rather than an owner-controlled cancel path
+
+Confirmed current locations:
+
+- `NWDAF/internal/mtlf/adrf_retrieval.go`
+- `NWDAF/pkg/factory/config.go`
+- `NWDAF/pkg/service/init.go`
+
+Why this remains in-scope for this same round:
+
+1. the detached-work residual and this watchdog-bound wait are two halves of the
+   same lifecycle closure problem
+2. once the workflow is correctly brought under the app waitgroup, its stop
+   condition must also become shutdown-aware
+3. changing the runtime watchdog value would alter normal business behavior and
+   is therefore not the right fix for a termination-only problem
+
+Same-round direction:
+
+- keep the ADRF watchdog as a runtime convergence timeout for normal operation
+- add an app-cancel path so `runFetchLoop(...)` can stop waiting immediately
+  once shutdown begins
+- preserve bounded unsubscribe cleanup after cancellation
+- do not dispatch new Daisy training work from the shutdown path
