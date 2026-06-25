@@ -178,6 +178,18 @@ Status update:
      residuals is still pending
   4. any still-relevant ignored lifecycle parameters should be evaluated under
      that broader cleanup rather than treated as solved by this narrower round
+- Boundary clarification for the still-open remainder:
+  1. Priority 2 owns lifecycle/ownership cleanup, parent-context propagation,
+     async ownership classification, and cleanup-exception classification
+  2. post-acceptance activation semantics and late-failure signaling remain
+     Priority 6 even where they touch the same async subscription paths
+  3. callback contract/model redesign remains Priority 5 or Priority 10
+  4. logging hygiene remains Priority 7
+  5. fuller free5GC integration-level uplift such as NRF registration,
+     metrics-server wiring, and broader NF-lifecycle alignment remains Priority
+     11
+  6. Daisy / MTLF callback relocation and broader package-boundary cleanup
+     remain Priority 12
 - The completed notifier-lifecycle portion and the later covered residual
   implementation are already committed and pushed.
 - The current detailed remaining-work plan now lives in:

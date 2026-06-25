@@ -180,6 +180,9 @@ Current canonical homes after absorption:
 - the current detailed implementation plan for that still-open Priority 2 work
   lives in:
   `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 2 Remaining Lifecycle Completion Plan.md`
+- that remaining-work plan is now explicitly bounded so Priority 2 closes the
+  lifecycle/ownership inventory without absorbing adjacent Priority 5, 6, 7,
+  10, 11, or 12 issue lines just because some files overlap
 
 ## Findings
 
