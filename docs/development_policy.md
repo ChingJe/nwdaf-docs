@@ -15,9 +15,11 @@ Before editing, also read:
 
 ## Scope And Boundaries
 
-- Make the smallest change that fully solves the requested problem.
+- Make a right-sized change that fully resolves the requested problem.
 - Do not mix feature work with unrelated refactors.
 - Preserve existing behavior unless the task explicitly requires a behavior change.
+- Prefer complete fixes over narrow patches that leave known gaps, repeated
+  follow-up work, or temporary workarounds in place.
 - Treat `NWDAF/` as the implementation target unless the user explicitly asks
   to edit `nwdaf-docs/`, `free5gc-dev-skill/`, or `resources/`.
 - Do not modify local reference trees such as
@@ -64,11 +66,19 @@ Before editing, also read:
 
 - Do not silently replace the agreed plan with a different implementation strategy just because the original approach becomes inconvenient or blocked.
 - Do not silently work around a missing dependency, tool, package, fixture, or environment requirement by inventing a weaker local substitute.
+- Do not keep an implementation artificially small when doing so leaves a
+  known defect, workaround, or incomplete fix in place.
 - Stop and ask the user for a decision when the current plan depends on an assumption that turns out to be false.
 - Stop and ask the user for a decision when the planned approach is blocked by missing dependencies, tooling, permissions, environment setup, or unavailable reference material.
+- Stop and ask the user for a decision when the root cause extends beyond the
+  initial task boundary and adjacent changes are needed to close the issue
+  safely.
 - Stop and ask the user for a decision before changing architecture boundaries, data flow, state flow, external contracts, verification scope, or the main implementation strategy.
 - Stop and ask the user for a decision before lowering validation standards, skipping planned tests, or replacing a required dependency with a workaround.
 - Stop and ask the user for a decision when the spec, plan, and existing code suggest conflicting directions and the difference affects implementation choices.
+- Stop and ask the user for a decision when part of the remaining gap is
+  expected to be resolved by planned future work and a temporary containment or
+  alternative is being considered in the meantime.
 - Small behavior-preserving cleanup may proceed without interruption when it stays within the already approved plan and does not change the chosen technical direction.
 
 ### Required Blocker Report
@@ -254,7 +264,8 @@ feat(mtlf): add retrieval session logging
 4. Confirm the current plan, assumptions, dependencies, and verification scope before editing.
 5. If a blocker, contradiction, or design fork appears, stop and ask the user for a decision instead of silently switching strategies.
 6. Replan when the original plan is no longer valid, then continue only after the direction is clarified.
-7. Implement the smallest coherent change that still matches the confirmed plan.
+7. Implement the right-sized change that closes the confirmed problem and still
+   matches the clarified plan.
 8. Add or update tests.
 9. Run verification commands.
 10. If requested, perform an implementation-completion review against the plan,
