@@ -2,7 +2,7 @@
 
 Date: 2026-06-25
 
-Status: Planned
+Status: Phase 1 implemented; Phase 2 findings recorded
 
 Historical remediation items:
 
@@ -17,6 +17,42 @@ Related issue record:
 
 - `nwdaf-docs/docs/issues/free5gc/project_scan/NWDAF Main Project Remediation Batches.md`
 - `nwdaf-docs/docs/issues/free5gc/project_scan/NWDAF Main Project free5GC Alignment Scan Findings.md`
+
+Implementation status:
+
+- Phase 1 implementation landed in `NWDAF/` on 2026-06-25
+- committed as `637235b` in the local `NWDAF/` repository
+- moved ML, Daisy, and ADRF runtime clients behind app-owned runtime seams
+- changed notifier and covered external integration paths to use owned HTTP
+  clients and parent-context-derived request timeouts
+- added focused owned-client tests for AnLF and MTLF
+
+Phase 2 finding status:
+
+- after Phase 1 implementation and verification, a stricter review found that
+  the covered ownership direction is materially improved but not yet fully
+  closed
+- the remaining issues are now treated as Phase 2 findings of this same
+  implementation line, not as a separate unrelated round
+- the two recorded Phase 2 findings are:
+  1. shutdown-time ADRF retrieval cleanup now inherits the already-canceled app
+     context and can skip remote unsubscribe work
+  2. client assembly is still processor-owned rather than being fully lifted to
+     the outer app/service assembly boundary used by the surveyed free5GC NFs
+
+Verification rerun after Phase 1 implementation:
+
+- `go test ./internal/anlf ./internal/mtlf ./internal/notifier ./internal/sbi/consumer ./internal/sbi/processor`
+- `go test ./...`
+- `make build`
+- `make lint`
+
+Result:
+
+- focused package tests passed
+- full repository test suite passed
+- build passed
+- lint passed with `0 issues`
 
 ---
 
@@ -643,3 +679,79 @@ The main value of this round is that those later topics would then build on a
 stricter and more truthful app-owned runtime boundary, rather than on a mixed
 boundary where several important outbound integrations still bypass the owning
 application seam.
+
+---
+
+## 16. Phase 2 Findings After Phase 1 Implementation
+
+This section records the stricter reassessment after the covered Phase 1 code
+was implemented and verified.
+
+The implementation did solve the original highest-value part of this round:
+
+1. AnLF and MTLF no longer construct Daisy or ML service clients directly
+2. notifier no longer uses `http.DefaultClient`
+3. covered external integration calls now accept a parent context instead of
+   always rooting themselves at `context.Background()`
+
+However, two narrower findings remain.
+
+### 16.1 Phase 2 Finding A — Shutdown Cleanup Context Is Too Narrow
+
+Confirmed issue:
+
+- ADRF retrain cleanup now uses the app cancellation context even for remote
+  unsubscribe work during teardown
+- this can cause cleanup to stop immediately once app termination begins,
+  leaving remote ADRF retrieval subscriptions behind
+
+Confirmed current locations:
+
+- `NWDAF/internal/mtlf/adrf_retrieval.go`
+- `NWDAF/internal/sbi/consumer/adrf_service.go`
+
+Why this remains open:
+
+1. normal runtime I/O should inherit app-owned cancellation
+2. shutdown cleanup is a narrower special case
+3. unsubscribe and similar teardown operations may still need a short-lived
+   cleanup timeout context after the main app context has already been canceled
+
+Phase 2 direction:
+
+- keep normal runtime request ownership as implemented in Phase 1
+- introduce an explicit shutdown-cleanup context rule for remote ADRF
+  unsubscribe work instead of reusing the already-canceled app context
+
+### 16.2 Phase 2 Finding B — Assembly Point Still Sits In Processor
+
+Confirmed structural residual:
+
+- external client ownership is improved, but ML and Daisy client construction
+  is still initiated inside `internal/sbi/processor.NewProcessor(...)`
+- the surveyed free5GC control-plane NFs assemble comparable outbound clients
+  from the outer app/service-to-consumer boundary rather than from the
+  processor constructor
+
+Evidence basis:
+
+- direct exemplar evidence from UDR and UDM shows app/service-owned consumer
+  assembly
+- no exact free5GC Daisy or external ML service exemplar exists, so this
+  residual judgment is partly inference from the broader control-plane
+  ownership pattern rather than from a one-to-one implementation twin
+
+Why this remains open:
+
+1. Phase 1 removed the domain-local ad hoc construction problem
+2. Phase 1 did not yet fully lift the assembly point to the outer app/service
+   boundary
+3. this means the code is materially better aligned than before, but still not
+   at the strictest free5GC-style assembly level
+
+Phase 2 direction:
+
+- preserve the now-established owned-client seams
+- decide whether the next tightening step should move client assembly into
+  `pkg/service.NewApp(...)`, an app-owned integration holder, or another
+  similarly outer runtime assembly point
