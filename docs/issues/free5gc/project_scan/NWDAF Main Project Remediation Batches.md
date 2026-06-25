@@ -39,6 +39,36 @@ before the broader shared app-boundary reconstruction.
 Historical priority numbers are retained in the section headings below; the
 table and execution rule are the current ordering.
 
+## 2026-06-24 Strict Reassessment Absorption
+
+The later same-day strict review is now absorbed into this remediation file and
+into:
+
+- `nwdaf-docs/docs/issues/free5gc/project_scan/NWDAF Main Project free5GC Alignment Scan Findings.md`
+
+This document is now the canonical status and ownership map for those stricter
+judgments.
+
+The absorbed strict review distinguished three cases:
+
+1. issues that were already written down and simply still open
+2. issues in already-touched areas that were still not strict enough
+3. issues that needed a clearer formal home in the current document set
+
+The table below replaces the old standalone reassessment file as the primary
+classification map.
+
+| Reassessment ID | Topic | Disposition | Canonical Home | Current Status |
+| --- | --- | --- | --- | --- |
+| 1 | broader lifecycle cancellation and app-owned I/O context | existing open work | Priority 2 | still open as residual lifecycle hardening |
+| 2 | remaining package-global config reads after Priority 4 | residual in completed line | Priority 4 residual follow-up | closed on 2026-06-24 by `NWDAF/` commit `a912581` |
+| 3 | non-3GPP external clients bypass shared consumer/app ownership | newly formalized work item | Priority 4 follow-up in this file | not started |
+| 4 | runtime config mixed with lab/workflow config | existing open work | Priority 9 | not started |
+| 5 | standalone SBI service vs fuller free5GC NF lifecycle level | existing open work | Priority 11 | not started |
+| 6 | OpenAPI/model governance still incomplete | existing open work | Priority 10 | not started |
+| 7 | logging boundary and payload hygiene | existing open work | Priority 7 | not started |
+| 8 | test ownership was still more package-local than surveyed free5GC baseline | newly formalized same-lineage follow-up | Priority 3 strict ownership follow-up | closed on 2026-06-24 by `NWDAF/` commit `0768839` |
+
 ## Progress Tracking
 
 Use this table as the single progress snapshot for the remediation plan.
@@ -53,12 +83,13 @@ state in this document set.
 | 4 | B | Normalize SBI Error Contracts | Completed for covered scope | 2026-06-23 implementation landed for the reviewed standards-facing handlers; intentionally excluded callbacks remain future contract-governance work and no longer block the next round |
 | 5 | C | Harden Factory And Runtime Config Behavior | Completed | Implemented on 2026-06-24; explicit config validation, SBI getter normalization, runtime-truth doc alignment, and config test matrix are now in code |
 | 6 | B | Rebuild One Real App Boundary | Completed | 2026-06-24 Phase 1 and Phase 2 both landed in `NWDAF/`; shared app boundary, root-contract scope, and consumer test-seam ownership are now materially aligned with the intended free5GC-style shape |
-| 7 | B | Clarify Post-Subscription Activation And Late-Failure Signaling | Not started | Design completeness and observability work, not an immediate correctness bug |
-| 8 | B | Tighten Logging Boundaries | Not started | Follow error-contract and late-failure signaling cleanup |
-| 9 | C | Establish OpenAPI / Model Governance | Not started | Generated/reference models already exist for some locally redefined payloads; governance should follow handler/config cleanup |
-| 10 | C | Decide The Intended free5GC Integration Level | Not started | Architectural scope decision |
-| 11 | C | Separate Runtime Config From Lab / Workflow Config | Not started | Structural config-scope cleanup after factory hardening and boundary decisions |
-| 12 | C | Clean Repo And Package Ownership Boundaries | Not started | Most invasive cleanup; scheduled last |
+| 7 | B | Normalize Non-3GPP External Client Ownership | Not started | Daisy and ML service clients still bypass the shared app/service/consumer ownership model after Priority 4 |
+| 8 | B | Clarify Post-Subscription Activation And Late-Failure Signaling | Not started | Design completeness and observability work, not an immediate correctness bug |
+| 9 | B | Tighten Logging Boundaries | Not started | Follow error-contract and late-failure signaling cleanup |
+| 10 | C | Establish OpenAPI / Model Governance | Not started | Generated/reference models already exist for some locally redefined payloads; governance should follow handler/config cleanup |
+| 11 | C | Decide The Intended free5GC Integration Level | Not started | Architectural scope decision |
+| 12 | C | Separate Runtime Config From Lab / Workflow Config | Not started | Structural config-scope cleanup after factory hardening and boundary decisions |
+| 13 | C | Clean Repo And Package Ownership Boundaries | Not started | Most invasive cleanup; scheduled last |
 
 ## Tier A — Immediate Correctness And Runtime Risk
 
@@ -228,6 +259,46 @@ Status update:
   instead of the concrete consumer type.
 - the exported consumer test-assembly path was removed from the public package
   API.
+
+### Priority 4 Follow-Up — Normalize Non-3GPP External Client Ownership
+
+Scope:
+
+- Daisy and ML service clients are still instantiated directly inside
+  `internal/mtlf` and `internal/anlf`
+- non-3GPP external integrations still bypass the shared app/service/consumer
+  ownership model that now exists for the main SBI consumer path
+
+Sub-items:
+
+1. define the intended ownership rule for non-3GPP external clients after the
+   completed Priority 4 boundary reconstruction
+2. move Daisy and ML service client construction behind an app-owned or
+   consumer-owned boundary rather than direct domain-local instantiation
+3. keep the distinction explicit between:
+   - standardized or semi-standard NF interaction under `internal/sbi/consumer`
+   - project-local external integration clients
+4. update tests and mocks so the resulting ownership path follows the same
+   app-boundary injection story used by the surveyed free5GC control-plane NFs
+
+Why here:
+
+- the surveyed free5GC control-plane NFs construct peer-facing clients from
+  the app/service/consumer boundary rather than instantiating them ad hoc
+  inside domain logic
+- after Priority 4, NWDAF now has the shared app boundary needed to clean this
+  up without reopening the whole boundary reconstruction
+- this is narrower and more directly free5GC-alignment-relevant than the later
+  repository/package cleanup in Priority 12
+
+Status update:
+
+- Not started.
+- This work item formally absorbs the same-day strict reassessment finding that
+  Daisy and ML service clients still bypass the shared consumer/app ownership
+  model.
+- Evidence and reference comparison now live in:
+  `nwdaf-docs/docs/issues/free5gc/project_scan/NWDAF Main Project free5GC Alignment Scan Findings.md`
 
 ### Priority 5 — Normalize SBI Error Contracts
 
@@ -467,12 +538,13 @@ Recommended sequence:
 4. Priority 5
 5. Priority 8
 6. Priority 4
-7. Priority 6
-8. Priority 7
-9. Priority 10
-10. Priority 11
-11. Priority 9
-12. Priority 12
+7. Priority 4 follow-up for non-3GPP external client ownership
+8. Priority 6
+9. Priority 7
+10. Priority 10
+11. Priority 11
+12. Priority 9
+13. Priority 12
 
 Compressed rule of thumb:
 

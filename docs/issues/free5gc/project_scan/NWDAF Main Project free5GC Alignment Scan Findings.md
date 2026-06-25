@@ -120,6 +120,40 @@ After implementing the planned Phase 2 follow-up in `NWDAF/`:
 - Priority 4 should now be treated as completed for the current intended
   standalone-NWDAF alignment level
 
+## 2026-06-24 Strict Reassessment Absorption Note
+
+The later same-day strict reassessment is now absorbed into this scan file and
+into:
+
+- `nwdaf-docs/docs/issues/free5gc/project_scan/NWDAF Main Project Remediation Batches.md`
+
+Role split after absorption:
+
+1. this scan file is the evidence ledger
+2. `NWDAF Main Project Remediation Batches.md` is the canonical status,
+   prioritization, and work-item ownership map
+3. the later Priority 3 and Priority 4 strict follow-up plans remain the
+   detailed implementation records for their own completed lineages
+
+What the absorbed strict reassessment added:
+
+1. residual judgments on already-scanned areas after later Priority 3 and
+   Priority 4 work
+2. one narrower completed Priority 3 follow-up for stricter test/mock
+   ownership
+3. one still-open architecture item for non-3GPP external client ownership
+
+Current canonical homes after absorption:
+
+- residual lifecycle hardening remains under Priority 2 in
+  `NWDAF Main Project Remediation Batches.md`
+- the Priority 4 runtime-truth residual was later closed on 2026-06-24 by
+  `NWDAF/` commit `a912581`
+- the stricter Priority 3 test-ownership follow-up was later closed on
+  2026-06-24 by `NWDAF/` commit `0768839`
+- the remaining Daisy / ML service external-client ownership issue is now a
+  formal work item in `NWDAF Main Project Remediation Batches.md`
+
 ## Findings
 
 ### 1. High — `PUT /subscriptions/{id}` updates only the local record and leaves upstream collection state stale
@@ -613,6 +647,138 @@ Impact:
 - Future cleanup will need to distinguish observability logs from debug payload
   dumps and process-exit paths.
 
+## 2026-06-24 Strict Reassessment Addendum
+
+This addendum absorbs the evidence-bearing parts of the later same-day strict
+reassessment so that a separate reassessment file is no longer required to
+understand the remaining project-level gaps.
+
+### A. Residual judgments on already-scanned areas
+
+#### A1. Priority 2 still has broader app-owned I/O context cleanup left
+
+After the notifier scheduler ownership fix, the repository still had several
+runtime network and shutdown paths deriving timeout contexts from
+`context.Background()` rather than from the app cancellation tree.
+
+Representative evidence at reassessment time:
+
+- `NWDAF/pkg/service/init.go:137`
+- `NWDAF/pkg/service/init.go:151`
+- `NWDAF/internal/notifier/notifier.go:196`
+- `NWDAF/internal/sbi/consumer/smf_service.go:124`
+- `NWDAF/internal/sbi/consumer/mtlf_service.go:75`
+- `NWDAF/internal/sbi/consumer/daisy_service.go:94`
+- `NWDAF/internal/sbi/consumer/ml_service.go:120`
+- `NWDAF/internal/sbi/consumer/adrf_service.go:171`
+- `NWDAF/internal/sbi/server.go:163`
+
+Judgment after absorption:
+
+- this is not a new issue family
+- it remains residual lifecycle hardening under Priority 2 in
+  `NWDAF Main Project Remediation Batches.md`
+
+#### A2. Priority 4 had one same-day runtime-truth residual that was later closed
+
+After the original Phase 1 and Phase 2 app-boundary work, stricter re-review
+found that some already-touched app-owned runtime paths still read
+`factory.NwdafConfig` directly.
+
+Representative evidence at reassessment time:
+
+- `NWDAF/internal/anlf/model.go:16`
+- `NWDAF/internal/anlf/monitor.go:22`
+- `NWDAF/internal/mtlf/training.go:28`
+- `NWDAF/internal/sbi/processor/data_collection.go:52`
+- `NWDAF/internal/sbi/processor/upf_notify.go:299`
+
+Judgment after absorption:
+
+- this was a real residual in a completed line, not proof that Priority 4 was
+  wrong
+- it was later closed on 2026-06-24 by `NWDAF/` commit `a912581`
+- the implementation record now lives in:
+  `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 4 Residual Runtime Truth Cleanup Plan.md`
+
+#### A3. Several later findings were stricter scope clarifications, not new issue families
+
+The strict reassessment also confirmed that the following topics were still
+already-known open work rather than new problems created by the completed
+rounds:
+
+- runtime config mixed with lab/workflow config
+- standalone SBI service versus fuller free5GC NF integration level
+- OpenAPI/model governance
+- logging boundary and payload hygiene
+
+Their canonical execution home is now the current remediation table in:
+
+- `nwdaf-docs/docs/issues/free5gc/project_scan/NWDAF Main Project Remediation Batches.md`
+
+### B. New issues identified after the original scan
+
+#### B1. Non-3GPP external clients still bypass the shared consumer/app ownership model
+
+After Priority 4, NWDAF had a recognizable shared app boundary and an
+app-driven `internal/sbi/consumer` path, but some project-local external
+clients still bypassed that ownership model.
+
+Evidence in `NWDAF/` at reassessment time:
+
+- AnLF creates ML service clients directly:
+  - `NWDAF/internal/anlf/model.go:23`
+  - `NWDAF/internal/anlf/model.go:88`
+- MTLF creates Daisy clients directly:
+  - `NWDAF/internal/mtlf/training.go:129`
+
+free5GC baseline comparison used in this reassessment:
+
+- reference control-plane NFs such as UDR keep peer-facing client ownership on
+  the app/service/consumer path:
+  - `resources/references/free5gc-main/NFs/udr/pkg/service/init.go`
+- consumer packages such as NEF construct outbound client groups from an
+  app-owned seam rather than ad hoc domain-local instantiation:
+  - `resources/references/free5gc-main/NFs/nef/internal/sbi/consumer/consumer.go`
+- root app contracts such as UDM's remain the shared dependency boundary for
+  those owned client paths:
+  - `resources/references/free5gc-main/NFs/udm/pkg/app/app.go`
+
+Judgment after absorption:
+
+- this is now a formal work item under
+  `NWDAF Main Project Remediation Batches.md`
+- it is intentionally tracked as a narrower Priority 4 follow-up rather than
+  as late repository/package cleanup under Priority 12
+
+#### B2. Test ownership was still more package-local than the surveyed free5GC baseline
+
+The same strict re-review also found one narrower ownership gap in the already
+completed Priority 3 lineage.
+
+Evidence in `NWDAF/` at reassessment time:
+
+- `internal/sbi` kept generated mocks locally:
+  - `NWDAF/internal/sbi/mock_interfaces_test.go:1`
+- `internal/sbi/processor` kept its own local app mock seam:
+  - `NWDAF/internal/sbi/processor/mock_interfaces_test.go:15`
+- handler tests used a package-local fake app:
+  - `NWDAF/internal/sbi/api_test_helpers_test.go:20`
+
+Reference comparison used in this reassessment:
+
+- shared app-boundary mocks under app/service packages:
+  - `resources/references/free5gc-main/NFs/smf/pkg/service/mock.go`
+  - `resources/references/free5gc-main/NFs/udm/pkg/mockapp/mock.go`
+- SBI-local mocks retained only where the seam is truly local:
+  - `resources/references/free5gc-main/NFs/udr/internal/sbi/api_sanity_test.go`
+
+Judgment after absorption:
+
+- this gap was later closed on 2026-06-24 by `NWDAF/` commit `0768839`
+- the implementation record now lives in:
+  `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 3 Strict Test Ownership Alignment Plan.md`
+
 ## Open Questions And Deferred Risks
 
 ### SMF event exposure model strategy
@@ -649,20 +815,14 @@ round of remediation explicitly defers local Daisy/MTLF workflow redesign.
 
 ## Revised Priority View
 
-The revised execution order after re-review is:
+This scan file now preserves the reasoning behind the revised priority view,
+but the canonical current execution order lives in:
 
-1. repair subscription update correctness
-2. put long-running work under app lifecycle control
-3. build the test safety net around the real boundaries
-4. rebuild one real app boundary
-5. normalize SBI error contracts
-6. clarify post-subscription activation and late-failure signaling
-7. tighten logging boundaries
-8. harden factory and runtime config behavior
-9. separate runtime config from lab/workflow config
-10. establish OpenAPI/model governance
-11. decide the intended free5GC integration level
-12. clean repo and package ownership boundaries
+- `nwdaf-docs/docs/issues/free5gc/project_scan/NWDAF Main Project Remediation Batches.md`
+
+After absorbing the same-day strict reassessment, that current execution order
+now also includes the narrower Priority 4 follow-up for non-3GPP external
+client ownership.
 
 Interpretation after round-1 completion:
 
@@ -672,18 +832,22 @@ Interpretation after round-1 completion:
 - Round 1 closed the implementation target for priority 1 and the notifier-owned
   portion of priority 2, and it added focused tests that partially satisfy
   priority 3.
-- Priorities 4 to 12 remain the main follow-up backlog after round 1.
+- Later rounds then closed the main Priority 4, Priority 5, Priority 8, and
+  stricter same-lineage Priority 3/4 follow-up work recorded elsewhere in this
+  document set.
 
-The most important open problems after round 1 are:
+The most important open problems after the absorbed strict reassessment are:
 
-1. the shared app boundary remains under-specified and internally fragmented
-2. SBI error contracts are still inconsistent across handlers and callbacks
+1. broader lifecycle cancellation and app-owned I/O context cleanup still
+   remains
+2. non-3GPP external clients still bypass the shared consumer/app ownership
+   model
 3. post-subscription activation and late-failure signaling are still
    underspecified as a design/operability issue
-4. config/runtime alignment and broader repository governance issues remain
-   outstanding
+4. OpenAPI/model governance, runtime config scope, integration-level decisions,
+   and broader repository/package boundaries remain outstanding
 
 The repository now passes `make build`, `go test ./...`, and `make lint` after
-the round-1 changes. That verifies the updated subscription and notifier paths
-at the current repository level, but it does not close the later structural and
-contract-oriented findings.
+the implemented rounds recorded above. That verifies the current repository at
+the unit/build/lint level, but it does not close the later structural,
+contract-oriented, and scope-decision findings that remain open.

@@ -35,7 +35,8 @@ This plan is the implementation plan for that narrower cleanup.
 
 Related issue record:
 
-- `nwdaf-docs/docs/issues/free5gc/project_scan/NWDAF Main Project Strict free5GC Alignment Reassessment 2026-06-24.md`
+- `nwdaf-docs/docs/issues/free5gc/project_scan/NWDAF Main Project Remediation Batches.md`
+- `nwdaf-docs/docs/issues/free5gc/project_scan/NWDAF Main Project free5GC Alignment Scan Findings.md`
 
 2026-06-24 implementation completion update:
 
@@ -130,8 +131,8 @@ ownership cleanup that is more about strictness than about missing safety.
 
 This plan is based on the following local sources:
 
-- `nwdaf-docs/docs/issues/free5gc/project_scan/NWDAF Main Project Strict free5GC Alignment Reassessment 2026-06-24.md`
 - `nwdaf-docs/docs/issues/free5gc/project_scan/NWDAF Main Project Remediation Batches.md`
+- `nwdaf-docs/docs/issues/free5gc/project_scan/NWDAF Main Project free5GC Alignment Scan Findings.md`
 - `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 3 Test Refactor Detailed Plan.md`
 - `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 4 Rebuild One Real App Boundary Plan.md`
 - `free5gc-dev-skill/SKILL.md`
@@ -167,7 +168,8 @@ Confirmed current locations:
 3. `NWDAF/internal/sbi/processor/mock_interfaces_test.go`
    - processor tests still own a separate local app mock shape
 
-This is the exact issue described in the strict reassessment.
+This is the exact same issue later absorbed into the project-scan addendum and
+remediation map.
 
 Important clarification:
 

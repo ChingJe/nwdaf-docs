@@ -22,7 +22,8 @@ This plan is the implementation plan for that residual cleanup.
 
 Related issue record:
 
-- `nwdaf-docs/docs/issues/free5gc/project_scan/NWDAF Main Project Strict free5GC Alignment Reassessment 2026-06-24.md`
+- `nwdaf-docs/docs/issues/free5gc/project_scan/NWDAF Main Project Remediation Batches.md`
+- `nwdaf-docs/docs/issues/free5gc/project_scan/NWDAF Main Project free5GC Alignment Scan Findings.md`
 
 Implementation status:
 
@@ -130,8 +131,8 @@ before moving on to lower-priority or broader-scope architecture work.
 
 This plan is based on the following local sources:
 
-- `nwdaf-docs/docs/issues/free5gc/project_scan/NWDAF Main Project Strict free5GC Alignment Reassessment 2026-06-24.md`
 - `nwdaf-docs/docs/issues/free5gc/project_scan/NWDAF Main Project Remediation Batches.md`
+- `nwdaf-docs/docs/issues/free5gc/project_scan/NWDAF Main Project free5GC Alignment Scan Findings.md`
 - `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 4 Rebuild One Real App Boundary Plan.md`
 - `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 4 Phase 2 Strict free5GC Boundary Alignment Plan.md`
 - `free5gc-dev-skill/SKILL.md`
@@ -451,9 +452,8 @@ clearer:
    - Priority 10
    - Priority 11
    - Priority 12
-2. or open the newly-identified Class C issue for:
+2. or continue with the now-recorded adjacent follow-up for:
    - external-client ownership policy for Daisy / ML service style integrations
-   - stricter shared test/mock ownership
 
 The main benefit of completing this round first is that it closes the most
 important remaining gap in the already-touched boundary work before the project
