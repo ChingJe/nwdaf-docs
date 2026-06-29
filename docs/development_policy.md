@@ -64,6 +64,9 @@ Before editing, also read:
 
 ## Decision Gates And Blocking Policy
 
+- During planning or design work, stop and ask the user for a decision when
+  there are meaningful design options, tradeoffs, or scope choices that affect
+  the implementation direction.
 - Do not silently replace the agreed plan with a different implementation strategy just because the original approach becomes inconvenient or blocked.
 - Do not silently work around a missing dependency, tool, package, fixture, or environment requirement by inventing a weaker local substitute.
 - Do not keep an implementation artificially small when doing so leaves a
@@ -196,6 +199,14 @@ this order:
 
 ## Commit Format
 
+This commit message format applies only to commits for the main `NWDAF/`
+repository. It does not define commit message rules for `nwdaf-docs/`,
+`free5gc-dev-skill/`, or other workspace repositories.
+
+The rules in this section apply only to the commit message itself. They do not
+require plan documents, task titles, branch names, PR titles, or issue labels
+to use the same format.
+
 Use a conventional commit subject, and add a body when extra context is useful.
 
 ### Subject
@@ -244,7 +255,7 @@ feat(mtlf): add retrieval session logging
 - Keep the subject concise and specific.
 - Prefer a scope when the affected area is clear, such as `anlf`, `mtlf`, `processor`, `context`, `consumer`, or `docs`.
 - Describe the concrete technical change, not an internal tracking label.
-- Avoid vague project-management terms such as `phase`, `batch`, `round`, or
+- Avoid vague project-management terms such as `phase`, `batch`, `round`, `priority`, or
   similar labels in the subject unless that wording is itself part of the
   externally meaningful change being made.
 - A reviewer should be able to infer the main code or document delta from the
@@ -262,15 +273,17 @@ feat(mtlf): add retrieval session logging
 3. If the task needs free5GC alignment, read `free5gc-dev-skill/SKILL.md` and
    the routed references it points to.
 4. Confirm the current plan, assumptions, dependencies, and verification scope before editing.
-5. If a blocker, contradiction, or design fork appears, stop and ask the user for a decision instead of silently switching strategies.
-6. Replan when the original plan is no longer valid, then continue only after the direction is clarified.
-7. Implement the right-sized change that closes the confirmed problem and still
+5. If planning or design requires a meaningful decision about scope, tradeoffs,
+   or implementation direction, stop and ask the user before continuing.
+6. If a blocker, contradiction, or design fork appears, stop and ask the user for a decision instead of silently switching strategies.
+7. Replan when the original plan is no longer valid, then continue only after the direction is clarified.
+8. Implement the right-sized change that closes the confirmed problem and still
    matches the clarified plan.
-8. Add or update tests.
-9. Run verification commands.
-10. If requested, perform an implementation-completion review against the plan,
+9. Add or update tests.
+10. Run verification commands.
+11. If requested, perform an implementation-completion review against the plan,
     free5GC alignment expectations, and newly introduced risks before commit.
-11. Write a focused commit message using the format above.
+12. Write a focused commit message using the format above.
 
 ### Typical Documentation Change Flow
 
