@@ -319,6 +319,7 @@ Accuracy breach
 
 | 日期 | Commit | 摘要 |
 |------|--------|------|
+| 2026-06-29 | `2ff07af` | logging boundary / payload hygiene / hot-path verbosity cleanup 完成 |
 | 2026-03-27 | `2d6534c` | `runFetchLoop` 加入 per-ID debug log |
 | 2026-03-27 | `db0e1f2` | 訓練提交 log 收斂到 `submitDaisyTask` |
 | 2026-03-26 | `fb28b9b` | UPF notification 拆 item 後再 ADRF 存入 |

@@ -66,7 +66,7 @@ classification map.
 | 4 | runtime config mixed with lab/workflow config | existing open work | Priority 9 | not started |
 | 5 | standalone SBI service vs fuller free5GC NF lifecycle level | existing open work | Priority 11 | not started |
 | 6 | OpenAPI/model governance still incomplete | existing open work | Priority 10 | not started |
-| 7 | logging boundary and payload hygiene | existing open work | Priority 7 | not started |
+| 7 | logging boundary and payload hygiene | existing open work | Priority 7 | completed for current intended scope on 2026-06-29 by `NWDAF/` commit `2ff07af`; local verification passed and Priority 6 late-failure semantics remain separate by design |
 | 8 | test ownership was still more package-local than surveyed free5GC baseline | newly formalized same-lineage follow-up | Priority 3 strict ownership follow-up | closed on 2026-06-24 by `NWDAF/` commit `0768839` |
 
 ## Progress Tracking
@@ -85,7 +85,7 @@ state in this document set.
 | 6 | B | Rebuild One Real App Boundary | Completed | 2026-06-24 Phase 1 and Phase 2 both landed in `NWDAF/`; shared app boundary, root-contract scope, and consumer test-seam ownership are now materially aligned with the intended free5GC-style shape |
 | 7 | B | Normalize Non-3GPP External Client Ownership | Completed for current intended scope | Phase 1 `637235b` and Phase 2 `f026e77` both landed on 2026-06-25 in `NWDAF/`; ML/Daisy ownership is now consumer-driven, processor consumes already-owned clients, and the same implementation line also closed ADRF teardown/shutdown convergence follow-up findings |
 | 8 | B | Clarify Post-Subscription Activation And Late-Failure Signaling | Not started | Design completeness and observability work, not an immediate correctness bug |
-| 9 | B | Tighten Logging Boundaries | Not started | Follow error-contract and late-failure signaling cleanup |
+| 9 | B | Tighten Logging Boundaries | Completed for current intended scope | 2026-06-29 workspace implementation closed the planned boundary, payload-hygiene, message-shape, and hot-path verbosity cleanup in `NWDAF/` commit `2ff07af`; later Priority 6 signaling semantics remain intentionally separate |
 | 10 | C | Establish OpenAPI / Model Governance | Not started | Generated/reference models already exist for some locally redefined payloads; governance should follow handler/config cleanup |
 | 11 | C | Decide The Intended free5GC Integration Level | Not started | Architectural scope decision |
 | 12 | C | Separate Runtime Config From Lab / Workflow Config | Not started | Structural config-scope cleanup after factory hardening and boundary decisions |
@@ -446,6 +446,17 @@ Scope:
 
 - logger categories exist, but payload hygiene and fatal/worker boundaries are
   loose
+
+Current status:
+
+- completed for the current intended Priority 7 scope on 2026-06-29 by
+  `NWDAF/` commit `2ff07af`
+- implemented cleanup covered the main touched handler, processor, consumer,
+  notifier, context, AnLF, MTLF, and ADRF-retrieval paths
+- local verification passed with `make build`, `make lint`, and
+  `go test ./...`
+- this closure does not claim that Priority 6 post-acceptance signaling
+  semantics were resolved here
 
 Sub-items:
 

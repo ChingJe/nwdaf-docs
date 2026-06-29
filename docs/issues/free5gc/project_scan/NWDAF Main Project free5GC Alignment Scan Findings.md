@@ -646,11 +646,30 @@ Impact:
 - The current design leaves late failure handling under-specified compared with
   the spec-supported signaling fields.
 
-### 13. Low — logging uses dedicated NF loggers, but message boundaries and payload hygiene are still loose
+### 13. Historical low finding — logging used dedicated NF loggers, but message boundaries and payload hygiene were still loose
 
 Type: structural logging gap
 
-Evidence:
+Current status on 2026-06-29:
+
+- completed for the current intended Priority 7 scope in `NWDAF/` commit
+  `2ff07af`
+- historical evidence below is preserved as scan-time basis for the later
+  implementation plan, not as the current post-implementation state
+- the implemented cleanup removed the main touched duplicate entry logs,
+  reduced default-level identifier exposure, demoted high-frequency
+  observability detail, and normalized message shape across the main runtime
+  paths
+- the final implementation also removed an intermediate local consumer HTTP
+  error helper so the consumer layer stayed closer to the simpler per-call-site
+  free5GC style seen in local exemplar NFs
+- local verification passed with `make build`, `make lint`, and
+  `go test ./...`
+- the current accepted lifecycle `Fatal` boundaries in `pkg/service/init.go`
+  and `internal/sbi/server.go` were not widened by this round and are no
+  longer treated here as a separate open Priority 7 implementation blocker
+
+Historical evidence at scan time:
 
 - The code does attach logs to purpose-specific logger groups such as
   `SBILog`, `ProcLog`, `InitLog`, `NotifierLog`, and `AnlfLog`, which is a good
