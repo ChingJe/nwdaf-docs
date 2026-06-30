@@ -89,7 +89,7 @@ state in this document set.
 | 10 | C | Establish OpenAPI / Model Governance | Not started | Generated/reference models already exist for some locally redefined payloads; governance should follow handler/config cleanup |
 | 11 | C | Decide The Intended free5GC Integration Level | Not started | Architectural scope decision |
 | 12 | C | Separate Runtime Config From Lab / Workflow Config | Not started | Structural config-scope cleanup after factory hardening and boundary decisions |
-| 13 | C | Clean Repo And Package Ownership Boundaries | Not started | Most invasive cleanup; scheduled last |
+| 13 | C | Clean Repo And Package Ownership Boundaries | Phase 1 completed, Phase 2 planned | Phase 1 landed in `NWDAF/` baseline `9b343ef` on 2026-07-01: inference-engine and Daisy ownership left `internal/sbi`, runtime config uses `inferenceEngine`, and retrain support tools moved out of `NWDAF/`; the remaining planned phase is the separate `sbi` / `anlf` / `mtlf` server-topology split |
 
 ## Tier A — Immediate Correctness And Runtime Risk
 
@@ -572,10 +572,15 @@ Why here:
 
 Scope:
 
-- main repo still carries workflow support tooling that should move to a
-  dedicated sibling resources repo
-- `internal/sbi` still owns inference-engine and Daisy-specific workflow glue
-  that should move behind `internal/anlf` and `internal/mtlf`
+- historical Phase 1:
+  - retrain workflow support tooling left `NWDAF/` for the sibling
+    `nwdaf-resources/` repo
+  - inference-engine and Daisy-specific production ownership left
+    `internal/sbi` for `internal/anlf` and `internal/mtlf`
+- active planned Phase 2:
+  - the main SBI server still carries non-SBI ingress semantics through shared
+    Gin route injection
+  - `AnLF` and `MTLF` still need their own auxiliary inbound HTTP servers
 
 Detailed implementation plan:
 
@@ -583,20 +588,22 @@ Detailed implementation plan:
 
 Sub-items:
 
-1. Decide what remains in the main repo versus a dedicated support/resource
-   repository.
-2. Move retrain replay and retrain analysis tooling out of `NWDAF/` into the
-   sibling workspace repository `nwdaf-resources/`.
-3. Move inference-engine and Daisy-specific ownership fully behind the correct
-   domain packages so no inference-engine or Daisy-specific route, handler,
-   payload, or helper remains under `internal/sbi`.
-4. Clean up leftover package placement that exists only because earlier
-   boundaries were blurred.
+1. Preserve the landed Phase 1 baseline as the starting point for the next
+   implementation round.
+2. Split the current shared inbound HTTP surface into:
+   - a main NWDAF SBI server
+   - an `AnLF` auxiliary server
+   - an `MTLF` auxiliary server
+3. Remove shared-Gin late route injection for Daisy and inference-related
+   ingress.
+4. Derive callback URIs from owned `AnLF` / `MTLF` server config rather than
+   assuming the main SBI listener.
 
 Why here:
 
-- This is valuable, but it is the most invasive and least urgent once the
-  runtime, contract, and test risks above are addressed.
+- This remains valuable and invasive, but the codebase now has a cleaner
+  baseline from which the remaining server-topology phase can proceed
+  deliberately instead of mixing it with the earlier ownership move.
 
 ## Suggested Execution Rule
 
