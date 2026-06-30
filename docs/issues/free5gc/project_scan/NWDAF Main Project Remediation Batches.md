@@ -572,17 +572,25 @@ Why here:
 
 Scope:
 
-- main repo carries auxiliary docs and Python fake peers
-- `internal/sbi` owns Daisy-specific workflow glue that should likely sit
-  behind `internal/mtlf`
+- main repo still carries workflow support tooling that should move to a
+  dedicated sibling resources repo
+- `internal/sbi` still owns inference-engine and Daisy-specific workflow glue
+  that should move behind `internal/anlf` and `internal/mtlf`
+
+Detailed implementation plan:
+
+- `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 12 Domain Boundary And Support Asset Cleanup Plan.md`
 
 Sub-items:
 
 1. Decide what remains in the main repo versus a dedicated support/resource
    repository.
-2. Move Daisy/MTLF-specific ownership behind the correct domain package while
-   keeping only the minimal HTTP binding at the SBI edge.
-3. Clean up leftover package placement that exists only because earlier
+2. Move retrain replay and retrain analysis tooling out of `NWDAF/` into the
+   sibling workspace repository `nwdaf-resources/`.
+3. Move inference-engine and Daisy-specific ownership fully behind the correct
+   domain packages so no inference-engine or Daisy-specific route, handler,
+   payload, or helper remains under `internal/sbi`.
+4. Clean up leftover package placement that exists only because earlier
    boundaries were blurred.
 
 Why here:
