@@ -89,7 +89,7 @@ state in this document set.
 | 10 | C | Establish OpenAPI / Model Governance | Not started | Generated/reference models already exist for some locally redefined payloads; governance should follow handler/config cleanup |
 | 11 | C | Decide The Intended free5GC Integration Level | Not started | Architectural scope decision |
 | 12 | C | Separate Runtime Config From Lab / Workflow Config | Not started | Structural config-scope cleanup after factory hardening and boundary decisions |
-| 13 | C | Clean Repo And Package Ownership Boundaries | Phase 1 completed, Phase 2 planned | Phase 1 landed in `NWDAF/` baseline `9b343ef` on 2026-07-01: inference-engine and Daisy ownership left `internal/sbi`, runtime config uses `inferenceEngine`, and retrain support tools moved out of `NWDAF/`; the remaining planned phase is the separate `sbi` / `anlf` / `mtlf` server-topology split |
+| 13 | C | Clean Repo And Package Ownership Boundaries | Completed for the current intended scope | Phase 1 landed in `NWDAF/` baseline `9b343ef` on 2026-07-01; Phase 2 then landed the separate `sbi` / `anlf` / `mtlf` server-topology split in `NWDAF/` commits `0ddbf3c` and `b547727`, including owned auxiliary listeners, callback-URI ownership cleanup, and focused lifecycle/config regression coverage |
 
 ## Tier A — Immediate Correctness And Runtime Risk
 
@@ -577,10 +577,12 @@ Scope:
     `nwdaf-resources/` repo
   - inference-engine and Daisy-specific production ownership left
     `internal/sbi` for `internal/anlf` and `internal/mtlf`
-- active planned Phase 2:
-  - the main SBI server still carries non-SBI ingress semantics through shared
-    Gin route injection
-  - `AnLF` and `MTLF` still need their own auxiliary inbound HTTP servers
+- implemented Phase 2:
+  - the main SBI server no longer carries non-SBI ingress semantics through
+    shared Gin route injection
+  - `AnLF` and `MTLF` now each own their own auxiliary inbound HTTP server
+  - callback URIs for the touched flows now derive from owned auxiliary-server
+    config instead of the main SBI listener
 
 Detailed implementation plan:
 
@@ -588,9 +590,9 @@ Detailed implementation plan:
 
 Sub-items:
 
-1. Preserve the landed Phase 1 baseline as the starting point for the next
-   implementation round.
-2. Split the current shared inbound HTTP surface into:
+1. Preserve the landed Phase 1 baseline as the starting point for the server-
+   topology round.
+2. Split the shared inbound HTTP surface into:
    - a main NWDAF SBI server
    - an `AnLF` auxiliary server
    - an `MTLF` auxiliary server
@@ -598,12 +600,28 @@ Sub-items:
    ingress.
 4. Derive callback URIs from owned `AnLF` / `MTLF` server config rather than
    assuming the main SBI listener.
+5. Add focused lifecycle and config tests for listener startup, listener
+   cleanup, and callback-URI derivation.
 
 Why here:
 
-- This remains valuable and invasive, but the codebase now has a cleaner
-  baseline from which the remaining server-topology phase can proceed
-  deliberately instead of mixing it with the earlier ownership move.
+- This remained valuable and invasive, but the codebase had a cleaner baseline
+  from which the server-topology phase could proceed deliberately instead of
+  mixing it with the earlier ownership move.
+
+Status update:
+
+- Phase 2 implemented in `NWDAF/` on 2026-07-01 as commits `0ddbf3c` and
+  `b547727`.
+- The implementation now gives `pkg/service` explicit lifecycle ownership of
+  the main SBI listener plus the `AnLF` and `MTLF` auxiliary listeners.
+- `internal/sbi` no longer exposes `Router()`-style late route injection for
+  these non-SBI ingress paths.
+- The follow-up cleanup commit removed the stale `externalMtlf.notifUri`
+  override path so external MTLF callbacks now derive only from
+  `configuration.anlf.server`.
+- Verification reran `go test ./...`, `make build`, and `make lint`; all
+  passed.
 
 ## Suggested Execution Rule
 

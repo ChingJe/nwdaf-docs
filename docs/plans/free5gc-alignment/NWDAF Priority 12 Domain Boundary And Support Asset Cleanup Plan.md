@@ -3,7 +3,7 @@
 Date: 2026-06-30
 Last updated: 2026-07-01
 
-Status: Phase 1 implemented in `NWDAF/` baseline `9b343ef`; Phase 2 drafted, not started
+Status: Phase 1 implemented in `NWDAF/` baseline `9b343ef`; Phase 2 implemented in `NWDAF/` commits `0ddbf3c` and `b547727`
 
 Historical remediation item:
 
@@ -28,10 +28,10 @@ The current document state is:
    That phase moved domain integrations out of shared transport ownership,
    renamed runtime config to `inferenceEngine`, and moved the retrain support
    tools out of the main runtime repo.
-2. Phase 2 is the active planned phase.
-   That phase is about transport meaning and server topology: the main SBI
-   server should serve NWDAF SBI only, while `AnLF` and `MTLF` each gain their
-   own auxiliary HTTP server.
+2. Phase 2 is now implemented in `NWDAF/` commits `0ddbf3c` and `b547727`.
+   That phase completed the transport-meaning and server-topology split: the
+   main SBI server now serves NWDAF SBI only, while `AnLF` and `MTLF` own
+   their own auxiliary HTTP servers and callback URI derivation.
 
 Related issue records:
 
@@ -42,11 +42,11 @@ Related issue records:
 
 ## 1. Purpose
 
-This plan defines the next implementation round for the still-open portions of:
+This plan records the implementation round that closed the still-open portions of:
 
 - `Priority 12 — Clean Repo And Package Ownership Boundaries`
 
-The purpose of this round is:
+The purpose of this round was:
 
 1. remove project-local Daisy workflow ownership from `internal/sbi`
 2. remove local inference-engine integration ownership from `internal/sbi`
@@ -57,7 +57,7 @@ The purpose of this round is:
 
 This round is intentionally about ownership and package boundaries.
 
-The active phase is about:
+The implemented Phase 2 scope was about:
 
 - which inbound HTTP surfaces belong to the main NWDAF SBI server
 - which inbound HTTP surfaces belong to `AnLF` and `MTLF`
@@ -231,47 +231,48 @@ Phase 1 is now materially landed in `NWDAF/` baseline commit `9b343ef`:
 5. retrain replay and retrain analysis tooling left `NWDAF/` for
    `nwdaf-resources/`
 
-This means the active remaining Priority 12 gap is no longer package placement
+This meant the remaining Priority 12 gap was no longer package placement
 alone.
 
-### 5.3 Confirmed Shared-Server Semantics Problem
+### 5.3 Confirmed Phase-2 Topology Completion
 
-The landed baseline still leaves one important transport-boundary issue:
+The previously open shared-server semantics problem is now closed in `NWDAF/`
+by commit `0ddbf3c` and the follow-up contract cleanup commit `b547727`:
 
 1. `pkg/service/init.go`
-   - creates the main SBI server first
-   - then attaches `AnLF` and `MTLF` routes onto that already-created shared
-     Gin engine
+   - explicitly owns three inbound listeners:
+     - the main SBI server
+     - the `AnLF` auxiliary server
+     - the `MTLF` auxiliary server
+   - starts owned listeners before callback-dependent background work
+   - stops all three listeners explicitly during termination
 2. `internal/sbi/server.go`
-   - now exposes router access for this late route injection pattern
+   - no longer exposes router access for late domain-route injection
+   - binds its listener explicitly and serves only the main NWDAF SBI surface
 3. `internal/anlf` and `internal/mtlf`
-   - own their handlers, but do not yet own their own inbound HTTP listener
+   - now each own their own inbound HTTP listener implementation under
+     `internal/anlf/server.go` and `internal/mtlf/server.go`
 
-This means the package move landed, but the runtime meaning is still:
+The runtime meaning is now:
 
-`main SBI server` + `late-injected AnLF/MTLF ingress`
+`main SBI server` + `owned AnLF auxiliary server` + `owned MTLF auxiliary server`
 
-That remains misaligned with the intended free5GC-style story that the main NF
-HTTP server should primarily serve SBI semantics.
+That is materially aligned with the intended free5GC-style story that the main
+NF HTTP server should primarily serve SBI semantics.
 
-### 5.4 Confirmed Auxiliary-Server Need
+### 5.4 Confirmed Callback-URI Ownership Completion
 
-The next unresolved problem is therefore not "should Daisy and inference leave
-`internal/sbi`?" because Phase 1 already answered that.
+The callback-URI ownership split is also now closed:
 
-The unresolved problem is:
-
-1. should non-SBI `AnLF` ingress keep sharing the main SBI Gin engine?
-2. should non-SBI `MTLF` ingress keep sharing the main SBI Gin engine?
-3. should callback URIs keep assuming the shared SBI bind address?
-
-The current agreed answer is no.
-
-This is the reason the active next phase is now a server-topology phase:
-
-1. the main SBI server should serve NWDAF SBI only
-2. `AnLF` should own an auxiliary inbound HTTP server
-3. `MTLF` should own an auxiliary inbound HTTP server
+1. `MTLF` Daisy callback URLs are derived from `configuration.mtlf.server`
+2. external MTLF provision-notification callback URLs are derived from
+   `configuration.anlf.server`
+3. the old `externalMtlf.notifUri` override path was removed from the active
+   runtime contract in follow-up commit `b547727`
+4. focused tests now cover:
+   - `AnLF` auxiliary callback URI derivation
+   - `MTLF` auxiliary callback URI derivation
+   - partial-startup failure cleanup after listener bind errors
 
 ### 5.5 Confirmed Support-Asset Baseline Completion
 
@@ -653,7 +654,7 @@ Required outcomes:
 
 1. plan wording matches baseline commit `9b343ef`
 2. remediation status wording reflects that Phase 1 is complete and Phase 2 is
-   planned
+   implemented
 3. support-asset movement remains documented as completed history
 4. no document still describes the old pre-baseline package state as current
 
@@ -669,15 +670,18 @@ Required outcomes:
    lifecycle wiring match the new topology
 6. finish with Workstream F once the code boundary is stable
 
-Recommended commit grouping:
+Implemented commit grouping:
 
 - `refactor(anlf): add owned auxiliary ingress server`
 - `refactor(mtlf): add owned auxiliary ingress server`
 - `refactor(sbi): narrow transport ownership to standards-facing edges`
 - `refactor(service): add owned anlf and mtlf auxiliary servers`
 - `docs(priority12): split baseline cleanup from server-topology phase`
+- `refactor(service): split anlf and mtlf auxiliary servers`
+- `fix(config): remove stale mtlf callback override`
 
-These subjects are examples, not mandatory final commit messages.
+The first four subjects were planning examples. The last two are the commits
+that actually landed the server-topology phase in `NWDAF/`.
 
 ---
 
@@ -736,6 +740,18 @@ make build
 go test ./...
 make lint
 ```
+
+Verification rerun after the final follow-up cleanup commit `b547727`:
+
+- `go test ./...`
+- `make build`
+- `make lint`
+
+Result:
+
+- full Go test suite passed
+- build passed
+- `golangci-lint` reported `0 issues`
 
 Review checks for this round:
 

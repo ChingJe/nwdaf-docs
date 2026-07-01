@@ -139,6 +139,28 @@ After implementing the later Priority 4 follow-up in `NWDAF/`:
   1. broader lifecycle cancellation cleanup
   2. broader app-owned I/O context cleanup across the wider repository
 
+## 2026-07-01 Priority-12 Completion Update
+
+After implementing the separate Priority 12 server-topology phase in `NWDAF/`:
+
+- the remaining shared-Gin and package-boundary portion of the repository /
+  package-ownership finding should now be treated as materially closed for the
+  current intended scope
+- `pkg/service` now explicitly owns three inbound listeners:
+  - the main SBI listener
+  - the `AnLF` auxiliary listener
+  - the `MTLF` auxiliary listener
+- `internal/sbi` no longer exposes route injection for the `AnLF` / `MTLF`
+  ingress paths
+- `internal/anlf/server.go` and `internal/mtlf/server.go` now own their own
+  transport implementation
+- touched callback URIs now derive from `configuration.anlf.server` and
+  `configuration.mtlf.server` rather than from the main SBI listener
+- the follow-up cleanup commit removed the stale `externalMtlf.notifUri`
+  override path and completed the touched inference-engine rename cleanup
+- post-implementation verification reran `go test ./...`, `make build`, and
+  `make lint`; all passed
+
 ## 2026-06-24 Strict Reassessment Absorption Note
 
 The later same-day strict reassessment is now absorbed into this scan file and
@@ -461,6 +483,17 @@ Impact:
 
 ### 8. Medium — main-repo and package boundaries are overloaded with auxiliary assets and MTLF-specific ownership
 Type: structural alignment gap
+
+Current status:
+
+- The originally recorded finding is now split by scope.
+- The support-asset move and the `internal/sbi` / `internal/anlf` /
+  `internal/mtlf` ownership split are completed for the current intended scope.
+- The server-topology portion of this finding was completed on 2026-07-01 by
+  `NWDAF/` commits `0ddbf3c` and `b547727`.
+- Any remaining later cleanup under this finding is now about broader
+  repository/config-scope discipline rather than the already-implemented
+  Daisy / inference-engine transport ownership split.
 
 Evidence:
 
