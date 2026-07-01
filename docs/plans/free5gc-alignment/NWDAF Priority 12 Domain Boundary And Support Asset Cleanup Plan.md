@@ -413,6 +413,49 @@ This plan treats that distinction as important:
 3. server ownership should follow transport meaning, not only package import
    convenience
 
+### 7.5.1 Auxiliary Server Ownership And Lifecycle Shape
+
+The intended lifecycle shape for these three listeners is deliberately aligned
+with the way free5GC control-plane NFs keep transport servers under
+`pkg/service` ownership while the server implementation stays in the
+transport-owning package.
+
+The target ownership split is:
+
+1. `pkg/service` owns process lifecycle for all inbound servers in the NWDAF
+   process
+2. `internal/sbi/server.go` owns only the main NWDAF SBI listener
+3. `internal/anlf/server.go` owns the `AnLF` auxiliary listener
+4. `internal/mtlf/server.go` owns the `MTLF` auxiliary listener
+
+This means the repository should not introduce:
+
+1. a generic shared server manager abstraction only to avoid explicit fields
+   on the app struct
+2. `AnLF` or `MTLF` code that secretly starts its own listener outside
+   `pkg/service`
+3. a return to the current shared-Gin route mounting pattern
+
+The expected app-level shape is explicit:
+
+1. `NwdafApp` holds the main SBI server plus one `AnLF` auxiliary server plus
+   one `MTLF` auxiliary server
+2. `NewApp` constructs all enabled and required inbound servers before runtime
+   work starts
+3. `Start` starts all owned listeners before callback-dependent background work
+   is allowed to run
+4. `Terminate` and the shutdown path stop all owned listeners explicitly
+5. the app `WaitGroup` remains the single owner-visible synchronization point
+   for the long-lived server goroutines
+
+This plan intentionally keeps transport implementation and lifecycle ownership
+separate:
+
+1. `internal/anlf` and `internal/mtlf` own their transport implementations
+   because those listeners belong to those domains
+2. `pkg/service` still owns startup, shutdown, failure policy, and process
+   convergence because those concerns belong to the app lifecycle boundary
+
 ### 7.6 Repo Scope
 
 The main `NWDAF/` repo should no longer host retrain replay or retrain analysis
@@ -557,6 +600,9 @@ Objectives:
 1. define narrow `AnLF` and `MTLF` server config blocks
 2. derive callback URIs from owned server bind settings
 3. make `pkg/service` start and stop three owned servers explicitly
+4. keep auxiliary-server implementation in `internal/anlf` and `internal/mtlf`
+   while preserving `pkg/service` as the lifecycle owner
+5. make listener bind failure observable before background work begins
 
 Required outcomes:
 
@@ -566,6 +612,32 @@ Required outcomes:
    flows
 4. startup failure for any required auxiliary server fails the app fast
 5. shutdown wiring covers the main SBI server plus both auxiliary servers
+6. `pkg/service` explicitly owns `sbiServer`, `anlfServer`, and `mtlfServer`
+   rather than hiding them behind a generic server registry
+7. `internal/anlf/server.go` and `internal/mtlf/server.go` each build and own
+   only their own router and `http.Server`
+8. listener start order is explicit: listeners first, callback-dependent
+   background work second
+9. termination order is explicit and bounded: cancel context, stop owned
+   background work, shut down auxiliary listeners, shut down the main SBI
+   listener, then wait for goroutine convergence
+10. listener binding should fail fast during startup rather than surfacing only
+    later from a detached goroutine
+
+Implementation notes for this workstream:
+
+1. the plan should prefer synchronous listener acquisition followed by
+   goroutine-based serving so bind errors return directly to `pkg/service`
+2. `Run()` or the equivalent start path for each owned listener should be able
+   to report address-in-use or invalid-bind errors before callback-producing
+   workflows start
+3. this round does not require a generic multi-server framework; an explicit
+   app-owned three-server shape is preferred because it matches free5GC's
+   normal lifecycle style more closely
+4. startup-triggered training or other callback-dependent background work must
+   not begin before the corresponding auxiliary listener is confirmed ready
+5. shutdown must keep timeout-bounded HTTP server stop behavior rather than
+   waiting indefinitely on external peers
 
 ### Workstream F — Close Phase Bookkeeping
 
@@ -631,6 +703,15 @@ Priority 12 is considered complete when all of the following are true:
    are documented under `nwdaf-resources/`
 10. verification shows no regression in the touched `AnLF`, `MTLF`, `SBI`, and
     service assembly paths
+11. `pkg/service` is the visible lifecycle owner for all three inbound
+    listeners in the NWDAF process
+12. `internal/anlf` and `internal/mtlf` each own their own `server.go` or
+    equivalent transport implementation instead of reusing the main SBI router
+13. no `Router()`-style late route injection remains in the final runtime path
+14. startup can fail fast on listener bind errors before callback-dependent
+    background work begins
+15. auxiliary-listener callback URI derivation does not depend on the main SBI
+    bind address
 
 ---
 
@@ -676,6 +757,20 @@ Verification should include focused config tests proving that
 `configuration.anlf.server` / `configuration.mtlf.server` blocks are validated
 correctly.
 
+Verification should also include lifecycle-oriented checks for the new server
+topology:
+
+1. a focused service test that proves `pkg/service` starts and stops all three
+   owned listeners
+2. a focused startup-failure test that proves auxiliary-listener bind failure
+   aborts startup before callback-dependent background work proceeds
+3. a focused shutdown test that proves server stop remains bounded and does not
+   leave auxiliary listeners running after app termination
+4. config tests that reject auxiliary callback-URI derivation from unusable
+   wildcard bind addresses if that remains the chosen narrow config contract
+5. focused `AnLF` and `MTLF` tests that prove callback URLs are derived from
+   owned auxiliary-server config rather than from `GetSbiUri()`
+
 ---
 
 ## 13. Resolved Direction Before Implementation
@@ -710,6 +805,27 @@ The following implementation-direction decisions are fixed:
    - start with narrow server-local bind config
    - do not copy the full SBI config contract unless a later requirement
      forces it
+8. lifecycle owner:
+   - `pkg/service` remains the lifecycle owner for all inbound listeners in
+     the process
+   - `internal/anlf` and `internal/mtlf` own transport implementation, not
+     top-level process lifecycle
+9. app shape:
+   - `NwdafApp` should explicitly hold `sbiServer`, `anlfServer`, and
+     `mtlfServer`
+   - do not introduce a generic server manager abstraction only to reduce
+     visible fields
+10. startup ordering:
+   - required listeners start before callback-dependent background work
+   - bind failure is treated as startup failure, not as a deferred warning
+11. shutdown ordering:
+   - app shutdown cancels context, stops owned background work, shuts down
+     auxiliary listeners, shuts down the main SBI listener, and then waits for
+     goroutine convergence
+12. callback URI derivation:
+   - touched Daisy and inference-related callback URIs derive from owned
+     auxiliary-server config
+   - they must not derive from the main SBI URI
 
 ---
 
