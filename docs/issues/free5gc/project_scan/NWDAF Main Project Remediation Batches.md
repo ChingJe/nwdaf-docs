@@ -90,6 +90,7 @@ state in this document set.
 | 11 | C | Decide The Intended free5GC Integration Level | Not started | Architectural scope decision |
 | 12 | C | Separate Runtime Config From Lab / Workflow Config | Not started | Structural config-scope cleanup after factory hardening and boundary decisions |
 | 13 | C | Clean Repo And Package Ownership Boundaries | Completed for the current intended scope | Phase 1 landed in `NWDAF/` baseline `9b343ef` on 2026-07-01; Phase 2 then landed the separate `sbi` / `anlf` / `mtlf` server-topology split in `NWDAF/` commits `0ddbf3c` and `b547727`, including owned auxiliary listeners, callback-URI ownership cleanup, and focused lifecycle/config regression coverage |
+| 14 | B | Align HTTP Edge Shape And Flow Ownership | Not started | Follows completed Priority 12 topology split; Phase 1 will align `internal/sbi` to a `pcf`-style skeleton while keeping `collector` on the main SBI surface and preserving synchronous startup-failure rollback through a thin preflight bind check, then Phase 2 will align `anlf` / `mtlf` to `api -> processor -> client` without collapsing semantics into one shared server model |
 
 ## Tier A — Immediate Correctness And Runtime Risk
 
@@ -623,6 +624,47 @@ Status update:
 - Verification reran `go test ./...`, `make build`, and `make lint`; all
   passed.
 
+### Priority 14 — Align HTTP Edge Shape And Flow Ownership
+
+Scope:
+
+- the completed Priority 12 split fixed HTTP transport meaning, but the current
+  server implementations still do not present one stable post-split code shape
+- `internal/sbi` should align more closely with the chosen local `pcf`
+  free5GC server skeleton without reopening the semantic server-boundary split
+- `internal/anlf` and `internal/mtlf` should align to one consistent auxiliary
+  flow shape:
+  - `api -> processor -> client`
+- `collector` remains part of the main `internal/sbi` surface because it is an
+  outward NWDAF callback / collection edge for peer NF traffic
+
+Detailed implementation plan:
+
+- `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 14 HTTP Edge Shape And Flow Alignment Plan.md`
+
+Sub-items:
+
+1. Align `internal/sbi` router, middleware, and HTTP-server assembly toward the
+   chosen local `pcf` shape.
+2. Preserve the current `api -> processor -> consumer` story in `internal/sbi`
+   and keep `collector` on the main server.
+3. Introduce explicit auxiliary HTTP-edge ownership in `internal/anlf` and
+   `internal/mtlf` so callback parsing and transport response shaping are no
+   longer owned directly by service structs.
+4. Normalize auxiliary outbound integration naming to `client` while keeping
+   `consumer` for standards-facing service consumption.
+5. Keep all three servers similar in engineering form, but do not introduce a
+   shared generic base HTTP server abstraction.
+6. Preserve current `startOwnedServers()` rollback semantics during the Phase 1
+   `internal/sbi` skeleton alignment by using a thin synchronous preflight
+   bind check before the normal `ListenAndServe()` path.
+
+Why here:
+
+- Priority 12 fixed the semantic boundary question first. The next narrower
+  cleanup is to make the resulting three-server design read as one deliberate
+  repository style instead of three independently evolved HTTP-edge shapes.
+
 ## Suggested Execution Rule
 
 Do not combine Priorities 1 to 5 in one code change.
@@ -642,6 +684,7 @@ Recommended sequence:
 11. Priority 11
 12. Priority 9
 13. Priority 12
+14. Priority 14
 
 Compressed rule of thumb:
 
