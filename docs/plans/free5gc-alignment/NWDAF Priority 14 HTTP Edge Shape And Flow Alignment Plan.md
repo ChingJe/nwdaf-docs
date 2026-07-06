@@ -2,7 +2,7 @@
 
 Date: 2026-07-06
 
-Status: In progress (Phase 1 completed; Phase 2 not started)
+Status: In progress (Phase 1 completed; Phase 1.5 selected next; Phase 2 deferred)
 
 Historical remediation item:
 
@@ -16,7 +16,9 @@ Current execution note:
 - the next work is about implementation shape, not about collapsing the
   topology back into one shared server
 - Phase 1 completed in `NWDAF/` on 2026-07-06 as commit `e8e249a`
-- the current remaining work is Phase 2 only
+- the current active remaining work is Phase 1.5 only
+- Phase 2 remains documented as a possible later continuation, but is not part
+  of the current execution target
 
 Related issue records:
 
@@ -35,9 +37,12 @@ The purpose of this round is to make the current three-server runtime shape in
 
 1. the main `internal/sbi` server should look closer to the chosen free5GC SBI
    exemplar shape, with `pcf` as the primary reference
-2. `internal/anlf` and `internal/mtlf` should keep their non-SBI semantics, but
-   evolve toward one consistent auxiliary-server implementation shape
-3. inbound HTTP ownership and outbound HTTP ownership should be expressed with
+2. the main `internal/sbi` server should also close the immediate HTTPS/TLS gap
+   in a way that still looks like a normal free5GC SBI edge
+3. `internal/anlf` and `internal/mtlf` should keep their non-SBI semantics, but
+   their later shape-alignment work is now explicitly deferred instead of being
+   part of the current active tranche
+4. inbound HTTP ownership and outbound HTTP ownership should be expressed with
    one stable repository rule:
    - `api -> processor -> consumer` for SBI-facing flows
    - `api -> processor -> client` for non-SBI auxiliary flows
@@ -53,6 +58,8 @@ It is not about:
    full-NF lifecycle uplift
 5. changing analytics behavior, retraining behavior, or callback semantics
    unless a narrow implementation seam requires it
+6. forcing Phase 2 auxiliary-server refactoring into the same active execution
+   tranche as the `SBI` HTTPS uplift
 
 ---
 
@@ -88,6 +95,28 @@ constraints during implementation:
    the inference engine and Daisy
 9. the goal is to unify shape and ownership style, not to unify semantics
 10. no cross-package shared base HTTP server should be introduced in this round
+11. Phase 1.5 is limited to the main `internal/sbi` listener plus its
+    `collector` routes
+12. `internal/anlf` and `internal/mtlf` remain unchanged in Phase 1.5 and do
+    not need HTTPS support in that round
+13. Phase 1.5 should keep free5GC-style dual-mode behavior, with
+    `configuration.sbi.scheme` selecting `http` or `https`
+14. Phase 1.5 config shape should align to free5GC NF YAML style by using
+    `configuration.sbi.tls.pem` and `configuration.sbi.tls.key`
+15. Phase 1.5 should follow the free5GC-style resource layout expectation of
+    sibling `config/` and `cert/` directories, with YAML using `cert/...`
+    relative paths
+16. dev/test certificate assets for this round are expected to live in
+    `nwdaf-resources/` rather than in the main `NWDAF/` repository
+17. callback URI scheme should stay consistent with `sbi.scheme` for the
+    currently-owned NWDAF callback surface
+18. current completion proof should emphasize automated config and local TLS
+    listener tests; a full multi-NF runtime smoke test is useful later but is
+    not required in the present environment
+19. Phase 1.5 should continue using `pcf` as the primary `SBI` server
+    exemplar; `amf`, `udm`, and `smf` should be treated as supporting
+    references for config-shape and sibling-consistency checks rather than as
+    alternative primary server-skeleton drivers
 
 These decisions narrow the implementation space on purpose. The remaining work
 is execution, not a fresh architecture vote.
@@ -113,6 +142,9 @@ This plan is based on the following local sources:
 - `resources/references/free5gc-main/NFs/udm/internal/sbi/server.go`
 - `resources/references/free5gc-main/NFs/udm/internal/sbi/consumer/consumer.go`
 - `resources/references/free5gc-main/NFs/nef/internal/sbi/server.go`
+- `resources/references/free5gc-main/config/smfcfg.yaml`
+- `resources/references/free5gc-main/config/amfcfg.yaml`
+- `resources/references/free5gc-main/config/udmcfg.yaml`
 - the current `NWDAF/` tree on 2026-07-06
 
 ---
@@ -156,6 +188,19 @@ The intended inference is therefore:
 2. `anlf` and `mtlf` should become more structurally consistent
 3. but non-SBI flows should stay explicitly non-SBI
 
+### 4.3 Phase 1.5 Exemplar Rule
+
+Phase 1.5 should not reopen the primary exemplar choice.
+
+The intended reference split is:
+
+1. `pcf` remains the primary exemplar for the `SBI` server skeleton,
+   transport-branch shape, and lifecycle form
+2. `amf`, `udm`, and `smf` are supporting references for the operator-facing
+   config shape, `tls.pem/key` conventions, and sibling-NF consistency checks
+3. supporting references may sharpen the config and verification details, but
+   they should not displace `pcf` as the main `server.go` direction
+
 ---
 
 ## 5. Current NWDAF State
@@ -174,22 +219,24 @@ Priority 12 already solved the semantic server-boundary problem:
 
 This current plan must not undermine those decisions.
 
-### 5.2 Remaining Shape Gaps In `internal/sbi`
+### 5.2 Remaining Active Gaps In `internal/sbi` After Phase 1
 
-Current `NWDAF/internal/sbi/server.go` still differs from the chosen reference
-shape in several technical ways:
+Phase 1 already closed the broader `internal/sbi` server-shape divergence:
 
-1. it uses `gin.New()` with manual logger / recovery setup instead of the
-   typical free5GC Gin logger wrapper path
-2. it does not currently add `metrics.InboundMetrics()`
-3. it manually constructs `http.Server`
-4. it manually owns `net.Listener` startup instead of using the more common
-   `httpwrapper.NewHttp2Server(...)` path
-5. its `https` branch remains intentionally incomplete
+1. Gin construction now follows the free5GC logger-helper style
+2. inbound metrics middleware is now attached
+3. server construction now uses `httpwrapper.NewHttp2Server(...)`
+4. the owned-startup lifecycle contract is preserved with preflight bind plus
+   readiness confirmation
 
-None of these invalidate current behavior, but together they mean the main SBI
-edge still looks like an intermediate repo-local form rather than a stable
-aligned form.
+The active remaining gap inside `internal/sbi` is now narrower:
+
+1. the `https` branch remains intentionally incomplete
+2. config and certificate-path shape are still not aligned to the common
+   free5GC `sbi.tls.pem/key` plus `config/` and `cert/` convention
+
+This means the main `SBI` edge is no longer waiting for a broad shape cleanup.
+It is waiting for transport-completion and config-shape completion.
 
 ### 5.3 Remaining Shape Gaps In `AnLF` And `MTLF`
 
@@ -208,7 +255,7 @@ This leaves the repository with correct semantics but an incomplete shape story.
 
 ## 6. Target Architecture Outcome
 
-At the end of this plan, the intended repository shape is:
+Across the documented full roadmap, the intended repository shape is:
 
 ### 6.1 `internal/sbi`
 
@@ -351,12 +398,13 @@ Verification completed for the landed Phase 1 implementation:
 - `make build`
 - `make lint`
 
-What remains for this plan:
+What remains for this plan's current active tranche:
 
-1. Phase 2 refactor for `internal/anlf`
-2. Phase 2 refactor for `internal/mtlf`
-3. any later HTTPS/TLS uplift remains outside the completed Phase 1 scope and
-   should be handled as separate follow-up work if selected
+1. Phase 1.5 external `SBI` HTTPS uplift
+2. re-review of the resulting `SBI` transport shape against free5GC config and
+   server conventions
+3. any later Phase 2 refactor for `internal/anlf` and `internal/mtlf` remains
+   documented, but is intentionally deferred outside the current active tranche
 
 #### C. Keep the PCF-style route-assembly shape
 
@@ -399,14 +447,134 @@ Phase 1 should not:
 
 ---
 
-## 8. Phase 2 — `AnLF` And `MTLF` Shape Alignment
+## 8. Phase 1.5 — External `SBI` HTTPS Uplift
 
 ### 8.1 Objective
 
-Phase 2 should reuse the now-stabilized Phase 1 `sbi` shape as an internal
-reference, but only at the level of engineering form, not semantics.
+Phase 1.5 should close the immediate HTTPS/TLS support gap on the main
+free5GC-facing NWDAF edge without expanding that transport decision into the
+auxiliary listeners.
 
 ### 8.2 Intended Outcome
+
+After Phase 1.5:
+
+1. the main `internal/sbi` server still keeps the Phase 1 `pcf`-style
+   skeleton and lifecycle behavior
+2. the same server can run in free5GC-style dual mode, with `http` or `https`
+   selected by `configuration.sbi.scheme`
+3. `collector` moves with the same main `SBI` transport mode because it is
+   already part of the main outward NWDAF callback surface
+4. config shape and path conventions now look like normal free5GC NF config
+5. `internal/anlf` and `internal/mtlf` remain unchanged and are not pulled into
+   HTTPS support by implication
+
+### 8.3 Planned Changes
+
+#### A. Align `SBI` config shape to free5GC NF TLS conventions
+
+Implementation direction:
+
+1. extend `configuration.sbi` with a nested `tls` block containing `pem` and
+   `key`
+2. add the matching config getters and default-path constants in the same
+   spirit as the surveyed free5GC NFs
+3. keep the YAML shape aligned with the local free5GC config exemplars rather
+   than inventing a repo-local flag such as `enableHttps`
+
+Expected result:
+
+- NWDAF HTTPS config looks like a normal free5GC NF `sbi` block
+
+#### B. Keep free5GC-style dual-mode selection by `sbi.scheme`
+
+Implementation direction:
+
+1. allow `configuration.sbi.scheme` to select `http` or `https`
+2. require `configuration.sbi.tls.pem` and `configuration.sbi.tls.key` when
+   the selected scheme is `https`
+3. keep `http` as a valid mode so local behavior can stay compatible with
+   existing setups that have not switched to TLS yet
+
+Expected result:
+
+- one binary and one server skeleton support both transport modes, with config
+  deciding which one is active
+
+#### C. Extend the existing `SBI` server lifecycle to support HTTPS
+
+Implementation direction:
+
+1. replace the current explicit `https` rejection branch with a normal
+   `ListenAndServeTLS(...)` start path
+2. preserve the already-landed Phase 1 preflight bind check and startup
+   readiness handshake so the local three-listener startup contract does not
+   regress
+3. if touched during alignment, thread any TLS key-log path wiring through the
+   usual `cmd -> service -> sbi` route rather than introducing a local shortcut
+4. keep the concrete start-path shape anchored to the `pcf`-style `SBI`
+   server skeleton rather than drifting toward a different primary NF server
+   form without an explicit replan
+
+Expected result:
+
+- HTTPS support lands as a narrow transport uplift on top of the already-fixed
+  Phase 1 lifecycle skeleton
+
+#### D. Keep callback ownership direct, but validate callback-scheme consistency
+
+Implementation direction:
+
+1. keep callback URIs such as the current `smf.notifUris.*` as direct callback
+   URLs rather than forcing an NRF-discovery rewrite in this round
+2. validate that the relevant callback URL scheme matches `sbi.scheme` for the
+   currently-owned NWDAF callback surface
+3. leave broader peer-discovery redesign questions outside this round
+
+Expected result:
+
+- callback configuration stays semantically correct while avoiding easy
+  transport-mismatch mistakes
+
+#### E. Follow free5GC-style `config/` plus `cert/` layout, but keep cert assets in `nwdaf-resources/`
+
+Implementation direction:
+
+1. assume the same broad layout style used by local free5GC config examples:
+   sibling `config/` and `cert/` directories
+2. keep YAML values in free5GC-style relative form such as `cert/nwdaf.pem`
+   and `cert/nwdaf.key`
+3. place the initial dev/test certificate assets in `nwdaf-resources/`
+4. use one explicit dev/test CA and one NWDAF leaf certificate so later
+   trust-testing has a cleaner base than a one-off leaf-only self-signed cert
+
+Expected result:
+
+- resource layout and YAML shape feel familiar to free5GC-style operators while
+  keeping test certificate assets outside the main implementation repository
+
+### 8.4 Explicit Non-Goals For Phase 1.5
+
+Phase 1.5 should not:
+
+1. move `AnLF` or `MTLF` onto HTTPS
+2. pull the deferred Phase 2 server-shape refactor into the same change line
+3. redesign `smf.endpoints` around NRF discovery in this round
+4. promise full multi-NF trust-chain integration in the current environment
+5. introduce production-grade certificate lifecycle management or secret
+   rotation behavior
+
+---
+
+## 9. Phase 2 — `AnLF` And `MTLF` Shape Alignment
+### 9.1 Objective
+
+Phase 2 should reuse the now-stabilized Phase 1 `sbi` shape as an internal
+reference, but only at the level of engineering form, not semantics.
+This phase is retained here for continuity, but is currently deferred and is
+not part of the active execution tranche after the Phase 1.5 decision.
+
+### 9.2 Intended Outcome
 
 After Phase 2:
 
@@ -416,7 +584,7 @@ After Phase 2:
    structs
 4. outbound non-SBI integrations are named and owned consistently as `client`
 
-### 8.3 Planned Changes
+### 9.3 Planned Changes
 
 #### A. Introduce explicit API handlers for auxiliary callback ingress
 
@@ -477,7 +645,7 @@ Expected result:
 - the three servers look like one coherent repository family while still
   preserving different semantics
 
-### 8.4 Explicit Non-Goals For Phase 2
+### 9.4 Explicit Non-Goals For Phase 2
 
 Phase 2 should not:
 
@@ -489,11 +657,11 @@ Phase 2 should not:
 
 ---
 
-## 9. Verification Expectations
+## 10. Verification Expectations
 
 The implementation should be verified in two layers:
 
-### 9.1 Phase 1 Verification
+### 10.1 Phase 1 Verification
 
 At minimum:
 
@@ -508,7 +676,29 @@ Targeted proof expected:
 3. server startup / shutdown still behaves correctly after the transport-shape
    change
 
-### 9.2 Phase 2 Verification
+### 10.2 Phase 1.5 Verification
+
+At minimum:
+
+- `make build`
+- `make lint`
+- `go test ./...`
+
+Targeted proof expected:
+
+1. config validation accepts `http` and `https` in the intended cases
+2. `https` mode requires `sbi.tls.pem` and `sbi.tls.key`
+3. the owned NWDAF callback URL scheme remains consistent with
+   `configuration.sbi.scheme`
+4. the main `SBI` listener can still be started and shut down under automated
+   test control after the HTTPS branch is introduced
+5. if a local package-level TLS listener proof is practical in the touched test
+   seam, it should be preferred; if not, the missing proof should be stated
+   explicitly rather than hidden
+6. a full multi-NF runtime smoke test is not required in the current
+   environment and should be tracked separately if later needed
+
+### 10.3 Phase 2 Verification
 
 At minimum:
 
@@ -525,7 +715,7 @@ Targeted proof expected:
 
 ---
 
-## 10. Risks And Mitigations
+## 11. Risks And Mitigations
 
 ### Risk 1. The work drifts into a hidden semantic rewrite
 
@@ -552,73 +742,99 @@ Mitigation:
 1. align by repeated structure, not by one shared parent abstraction
 2. only factor helpers that are transport-trivial and semantics-neutral
 
-### Risk 3. Phase 1 gets mixed with broader Priority 11 scope
+### Risk 3. Phase 1.5 gets mixed with broader Priority 11 or Phase 2 scope
 
 Danger:
 
-- adding `httpwrapper`, logger wrappers, or metrics middleware may tempt the
-  work into also reopening NRF registration or full metrics-server ownership
+- adding HTTPS support may tempt the work into also reopening NRF registration,
+  full metrics-server ownership, or the deferred auxiliary-server reshaping
 
 Mitigation:
 
-1. keep this plan explicitly bounded to HTTP edge shape
-2. leave full Priority 11 questions out unless a hard implementation blocker
-   proves they are inseparable
+1. keep this plan explicitly bounded to the main external `SBI` edge
+2. leave full Priority 11 questions and deferred Phase 2 work out unless a
+   hard implementation blocker proves they are inseparable
+
+### Risk 4. Test-environment limits are mistaken for design failure
+
+Danger:
+
+- the current workspace may not be ideal for a full runtime HTTPS smoke flow,
+  and that can create pressure either to over-promise or to under-document the
+  actual proof achieved
+
+Mitigation:
+
+1. prefer automated config and local listener proof inside `go test`
+2. state clearly what could not be proven end-to-end in the current
+   environment
+3. keep any later multi-NF runtime smoke as a separate verification follow-up,
+   not as an unspoken hidden requirement
 
 ---
 
-## 11. Recommended Execution Order
+## 12. Recommended Execution Order
 
-### Step 1. Implement Phase 1 fully inside `internal/sbi`
-
-Reason:
-
-- the repository needs one stable reference shape before aligning the auxiliary
-  servers
-
-### Step 2. Re-review the resulting `sbi` shape against `pcf`
+### Step 1. Record Phase 1 as the stable `SBI` shape baseline
 
 Reason:
 
-- confirm that the implementation actually landed on the intended reference
-  shape rather than on an accidental hybrid
+- the repository already has one stable `SBI` shape baseline, and later work
+  should build on that landed result rather than reopening it casually
 
-### Step 3. Implement Phase 2 in `internal/anlf`
-
-Reason:
-
-- `AnLF` is the smaller auxiliary callback surface and should set the first
-  auxiliary pattern
-
-### Step 4. Implement Phase 2 in `internal/mtlf`
+### Step 2. Implement Phase 1.5 inside the existing `internal/sbi` ownership line
 
 Reason:
 
-- `MTLF` has the richer outbound / callback / follow-up orchestration story and
-  should follow after the auxiliary pattern is proven once
+- HTTPS is the current active follow-up and should stay narrowly attached to the
+  already-aligned `SBI` transport/lifecycle skeleton
 
-### Step 5. Re-check lifecycle and naming consistency across all three servers
+### Step 3. Re-review the resulting `SBI` transport shape against free5GC server and config exemplars
 
 Reason:
 
-- the end state should read as one coherent repository style without erasing
-  semantic differences
+- confirm that the uplift still matches the intended `pcf` / `amf` / `udm` /
+  `smf` style instead of drifting into a repo-local HTTPS convention
+
+### Step 4. Leave Phase 2 documented but deferred until it is explicitly selected
+
+Reason:
+
+- the current user direction does not want to mix auxiliary-server reshaping
+  into the active HTTPS tranche
+
+### Step 5. If Phase 2 is later reopened, implement `internal/anlf` before `internal/mtlf`
+
+Reason:
+
+- `AnLF` is still the smaller auxiliary surface and remains the cleaner place
+  to prove a future auxiliary-server pattern first
 
 ---
 
-## 12. Completion Criteria
+## 13. Completion Criteria
 
-This plan should be considered complete only when all of the following are
-true:
+For the current active tranche, this plan should be considered complete only
+when all of the following are true:
 
 1. `internal/sbi` is materially closer to the intended `pcf`-style server
    skeleton
 2. `collector` still clearly belongs to the main SBI surface
-3. `AnLF` and `MTLF` no longer expose service-owned HTTP callback handlers as
-   the main edge shape
-4. `AnLF` and `MTLF` each present a stable `api -> processor -> client` flow
-5. the repo uses one stable naming rule:
+3. the main external `SBI` edge can run in free5GC-style dual `http` /
+   `https` mode
+4. `SBI` config uses the intended free5GC-style `tls.pem` / `tls.key` shape
+5. the current NWDAF-owned callback URLs do not silently drift to a scheme that
+   contradicts `sbi.scheme`
+6. the repo uses one stable naming rule:
    - `consumer` for SBI / standards-facing outbound consumption
    - `client` for auxiliary non-SBI outbound integrations
-6. no shared base HTTP server abstraction was introduced
-7. verification reruns `make build`, `make lint`, and `go test ./...`
+7. no shared base HTTP server abstraction was introduced
+8. `AnLF` and `MTLF` were not accidentally pulled into the HTTPS uplift by
+   implication
+9. verification reruns `make build`, `make lint`, and `go test ./...`
+
+Deferred future continuation:
+
+- If Phase 2 is later selected, its own auxiliary-server shape criteria should
+  be tracked as a separate completion gate at that time rather than being
+  treated as a hidden requirement of the current HTTPS tranche.

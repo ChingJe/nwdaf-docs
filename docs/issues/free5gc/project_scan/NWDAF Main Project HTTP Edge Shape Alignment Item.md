@@ -11,8 +11,11 @@ Historical remediation item:
 Current progress:
 
 - Phase 1 completed in `NWDAF/` on 2026-07-06 as commit `e8e249a`
-- remaining open scope is Phase 2 alignment for `internal/anlf` and
-  `internal/mtlf`
+- Phase 1.5 is now selected as the next active step: external `SBI` HTTPS
+  uplift only
+- Phase 2 auxiliary-server shape alignment for `internal/anlf` and
+  `internal/mtlf` remains documented, but is intentionally deferred rather
+  than being the current execution target
 
 ## Scope
 
@@ -58,24 +61,26 @@ implementation shape for those boundaries.
 
 ## Confirmed Current Gaps
 
-### 1. `internal/sbi` is semantically right but technically not yet in the intended PCF-style shape
+### 1. `internal/sbi` is now mostly aligned in shape, but still carries the transport-completion gap
 
-Current `NWDAF/internal/sbi/server.go` still differs from the chosen local
-free5GC exemplar direction in several concrete ways:
+Phase 1 closed most of the earlier `internal/sbi` shape divergence:
 
-1. it uses `gin.New()` plus manual Gin logger / recovery setup instead of the
-   more typical `logger_util.NewGinWithLogrus(...)` plus
-   `metrics.InboundMetrics()` shape used by exemplar NFs such as `pcf`, `udm`,
-   and `amf`
-2. it assembles `http.Server` manually and explicitly manages `net.Listener`
-   ownership instead of using the usual `httpwrapper.NewHttp2Server(...)`
-   helper path
-3. `https` support is still a placeholder branch rather than the same
+1. the router now uses the free5GC-style Gin logger helper
+2. inbound metrics middleware is now attached
+3. the server is now built through `httpwrapper.NewHttp2Server(...)`
+4. the owned-startup lifecycle contract is now preserved with preflight bind
+   plus readiness confirmation
+
+The still-open `internal/sbi` gap is narrower now:
+
+1. `https` support is still a placeholder branch rather than the same
    `ListenAndServe` / `ListenAndServeTLS` skeleton used by the reference NF
    server implementations
+2. the `SBI` config shape and certificate-path conventions are not yet aligned
+   to the common free5GC `sbi.tls.pem/key` pattern
 
-This is not a functional correctness bug today, but it keeps the NWDAF SBI
-edge looking repository-local rather than deliberately free5GC-aligned.
+This is no longer a broad server-shape issue. It is now a transport-completion
+issue on an otherwise much more aligned main `SBI` edge.
 
 ### 2. `AnLF` and `MTLF` still mix HTTP edge handling with service-owned callback logic
 
@@ -187,7 +192,42 @@ refining the final startup contract beyond the earlier design-decision note:
    serving goroutine dispatched
 
 This means the still-open part of the issue is no longer Phase 1 `internal/sbi`
-cleanup. The remaining open work is the auxiliary-server alignment in Phase 2.
+cleanup. The next active work is the narrower external `SBI` HTTPS uplift in
+Phase 1.5, while the earlier-planned auxiliary-server alignment is now parked
+as a later follow-up rather than immediate execution.
+
+### Phase 1.5 Decision Record
+
+After Phase 1 review and later free5GC-alignment comparison, the next active
+follow-up is no longer Phase 2. It is a narrower HTTPS/TLS uplift on the main
+external NWDAF edge only.
+
+The selected decisions are:
+
+1. Phase 1.5 applies only to the main `internal/sbi` server and the
+   `collector` routes that already live on that server
+2. `internal/anlf` and `internal/mtlf` are explicitly outside the Phase 1.5
+   HTTPS scope and are not required to adopt HTTPS in this round
+3. the runtime should keep free5GC-style dual-mode operation, with `http` or
+   `https` selected by `configuration.sbi.scheme`
+4. `SBI` config shape should align to free5GC NF config style by using
+   `configuration.sbi.tls.pem` and `configuration.sbi.tls.key`
+5. cert and config layout should follow the same broad free5GC convention of
+   sibling `config/` and `cert/` directories, with YAML using `cert/...`
+   relative paths rather than introducing a custom HTTPS-specific path scheme
+6. the initial certificate strategy should use explicit dev/test assets kept in
+   `nwdaf-resources/`, with one test CA and one NWDAF leaf certificate
+7. callback URIs remain direct callback URLs rather than NRF-discovered
+   service endpoints, but the relevant callback URL scheme should be kept
+   consistent with `sbi.scheme`
+8. verification for this round should focus on config validation, lifecycle
+   behavior, and local HTTPS listener proof that can run under `go test`; a
+   full multi-NF runtime smoke test is useful later but is not required in the
+   current implementation environment
+9. the primary Phase 1.5 exemplar for `SBI` server transport uplift should
+   remain `pcf`; other NFs such as `amf`, `udm`, and `smf` are supporting
+   references for config-shape and sibling-consistency checks rather than the
+   main server-skeleton driver
 
 ## Planned Resolution Shape
 
@@ -198,10 +238,24 @@ The planned resolution is intentionally phased:
    - target shape follows the local `pcf` SBI server style
    - preserve the current three-server topology and the current semantic
      boundary decisions from Priority 12
-2. Phase 2
+2. Phase 1.5
+   - add free5GC-style dual-mode `http` / `https` support to the main
+     `internal/sbi` edge only
+   - keep `collector` under the main `SBI` server and move it with that
+     transport decision
+   - align config and certificate layout to the free5GC `config/` plus
+     `cert/` convention without expanding HTTPS scope to auxiliary listeners
+3. Phase 2
    - align `internal/anlf` and `internal/mtlf` to a consistent
      `server + api + processor + client` shape
    - keep them explicitly non-SBI in naming and role
+
+Current execution intent:
+
+1. Phase 1 is complete
+2. Phase 1.5 is the active next step
+3. Phase 2 remains documented for continuity, but is currently deferred rather
+   than being part of the immediate implementation queue
 
 The detailed implementation plan for this item lives in:
 

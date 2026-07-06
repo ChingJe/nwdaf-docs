@@ -90,7 +90,7 @@ state in this document set.
 | 11 | C | Decide The Intended free5GC Integration Level | Not started | Architectural scope decision |
 | 12 | C | Separate Runtime Config From Lab / Workflow Config | Not started | Structural config-scope cleanup after factory hardening and boundary decisions |
 | 13 | C | Clean Repo And Package Ownership Boundaries | Completed for the current intended scope | Phase 1 landed in `NWDAF/` baseline `9b343ef` on 2026-07-01; Phase 2 then landed the separate `sbi` / `anlf` / `mtlf` server-topology split in `NWDAF/` commits `0ddbf3c` and `b547727`, including owned auxiliary listeners, callback-URI ownership cleanup, and focused lifecycle/config regression coverage |
-| 14 | B | Align HTTP Edge Shape And Flow Ownership | In progress (Phase 1 completed) | Phase 1 landed in `NWDAF/` on 2026-07-06 as commit `e8e249a`, aligning `internal/sbi` to a `pcf`-style skeleton with preflight bind plus startup readiness handshake; Phase 2 for `anlf` / `mtlf` remains open |
+| 14 | B | Align HTTP Edge Shape And Flow Ownership | In progress (Phase 1 completed; Phase 1.5 selected next) | Phase 1 landed in `NWDAF/` on 2026-07-06 as commit `e8e249a`, aligning `internal/sbi` to a `pcf`-style skeleton with preflight bind plus startup readiness handshake; the active next step is a main-`SBI` HTTPS uplift only, while the earlier auxiliary `anlf` / `mtlf` shape-alignment idea remains documented but deferred |
 
 ## Tier A — Immediate Correctness And Runtime Risk
 
