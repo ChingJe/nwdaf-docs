@@ -2,7 +2,7 @@
 
 Date: 2026-07-06
 
-Status: In progress (Phase 1 completed; Phase 1.5 selected next; Phase 2 deferred)
+Status: Current active tranche completed in code (Phase 1 and Phase 1.5 completed; Phase 2 deferred)
 
 Historical remediation item:
 
@@ -16,7 +16,9 @@ Current execution note:
 - the next work is about implementation shape, not about collapsing the
   topology back into one shared server
 - Phase 1 completed in `NWDAF/` on 2026-07-06 as commit `e8e249a`
-- the current active remaining work is Phase 1.5 only
+- Phase 1.5 then landed in `NWDAF/` on 2026-07-06 across commits `8762b35`
+  and `a0fff93`
+- the current active tranche is now complete in code
 - Phase 2 remains documented as a possible later continuation, but is not part
   of the current execution target
 
@@ -398,13 +400,13 @@ Verification completed for the landed Phase 1 implementation:
 - `make build`
 - `make lint`
 
-What remains for this plan's current active tranche:
+Implementation status for this plan's current active tranche:
 
-1. Phase 1.5 external `SBI` HTTPS uplift
-2. re-review of the resulting `SBI` transport shape against free5GC config and
-   server conventions
-3. any later Phase 2 refactor for `internal/anlf` and `internal/mtlf` remains
-   documented, but is intentionally deferred outside the current active tranche
+1. Phase 1 external `SBI` shape alignment is complete
+2. Phase 1.5 external `SBI` HTTPS uplift is complete in code
+3. the only remaining roadmap item in this plan is the later-deferred Phase 2
+   auxiliary-server shape alignment, which is intentionally outside the
+   completed current active tranche
 
 #### C. Keep the PCF-style route-assembly shape
 
@@ -563,6 +565,37 @@ Phase 1.5 should not:
 4. promise full multi-NF trust-chain integration in the current environment
 5. introduce production-grade certificate lifecycle management or secret
    rotation behavior
+
+### 8.5 Implementation Status
+
+Phase 1.5 is now completed in `NWDAF/` across two code commits:
+
+1. `8762b35`
+   - enables free5GC-style dual `http` / `https` operation on the main
+     external `SBI` listener
+   - aligns config shape to `configuration.sbi.tls.pem` and
+     `configuration.sbi.tls.key`
+   - adds callback-scheme validation for the main owned `collector` surface
+   - adds focused config and lifecycle coverage, including a local HTTPS
+     listener proof
+   - documents that the current startup readiness check guarantees
+     listener-readiness and not a full TLS client handshake proof
+2. `a0fff93`
+   - closes the remaining callback-ownership gap by routing ADRF retrieval
+     notifications through the main `SBI` `collector` surface
+   - keeps Daisy training-completion callbacks on the auxiliary `MTLF`
+     listener
+   - separates `MTLF`-owned and `SBI`-owned callback URL builders explicitly
+
+Verification completed for the landed Phase 1.5 implementation:
+
+- `go test ./...`
+- `make build`
+- `make lint`
+
+Phase 1.5 therefore satisfies the active-tranche completion target for this
+plan. The only remaining roadmap content in this document is the still-deferred
+Phase 2 auxiliary-server follow-up.
 
 ---
 
@@ -789,6 +822,10 @@ Reason:
 - HTTPS is the current active follow-up and should stay narrowly attached to the
   already-aligned `SBI` transport/lifecycle skeleton
 
+Status:
+
+- completed in `NWDAF/` on 2026-07-06 across commits `8762b35` and `a0fff93`
+
 ### Step 3. Re-review the resulting `SBI` transport shape against free5GC server and config exemplars
 
 Reason:
@@ -832,6 +869,12 @@ when all of the following are true:
 8. `AnLF` and `MTLF` were not accidentally pulled into the HTTPS uplift by
    implication
 9. verification reruns `make build`, `make lint`, and `go test ./...`
+
+Current assessment:
+
+- all active-tranche completion criteria above are now satisfied in code
+- the remaining Phase 2 material stays documented as a later deferred
+  continuation rather than an open blocker on the completed Phase 1.5 line
 
 Deferred future continuation:
 

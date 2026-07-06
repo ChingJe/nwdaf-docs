@@ -11,8 +11,8 @@ Historical remediation item:
 Current progress:
 
 - Phase 1 completed in `NWDAF/` on 2026-07-06 as commit `e8e249a`
-- Phase 1.5 is now selected as the next active step: external `SBI` HTTPS
-  uplift only
+- Phase 1.5 code implementation is now completed in `NWDAF/` on 2026-07-06
+  across commits `8762b35` and `a0fff93`
 - Phase 2 auxiliary-server shape alignment for `internal/anlf` and
   `internal/mtlf` remains documented, but is intentionally deferred rather
   than being the current execution target
@@ -229,6 +229,38 @@ The selected decisions are:
    references for config-shape and sibling-consistency checks rather than the
    main server-skeleton driver
 
+### Phase 1.5 Implementation Status
+
+Phase 1.5 has now landed in `NWDAF/` across two code commits:
+
+1. `8762b35`
+   - adds free5GC-style dual-mode `http` / `https` support on the main
+     external `SBI` listener
+   - aligns config shape to `configuration.sbi.tls.pem` and
+     `configuration.sbi.tls.key`
+   - validates owned callback-scheme consistency for the main `collector`
+     surface
+   - adds local HTTPS lifecycle/config proof and records the current
+     listener-readiness semantics explicitly
+2. `a0fff93`
+   - corrects the remaining callback-ownership seam so ADRF retrieval
+     notifications are routed through the main `SBI` `collector` surface
+     rather than through the auxiliary `MTLF` listener
+   - keeps Daisy training-completion callbacks on the owned `MTLF` listener
+     while separating the two callback URL builders explicitly
+
+The current active tranche for this item is therefore complete in code:
+
+1. the main external `SBI` edge now supports free5GC-style dual `http` /
+   `https` operation
+2. `collector` remains on the main `SBI` edge and now also owns the ADRF
+   retrieval callback path consistently
+3. verification for the Phase 1.5 code line passed through `go test ./...`,
+   `make build`, and `make lint`
+
+The remaining open part of this overall issue is no longer Phase 1.5. It is
+only the later-deferred Phase 2 auxiliary-server shape-alignment roadmap.
+
 ## Planned Resolution Shape
 
 The planned resolution is intentionally phased:
@@ -253,7 +285,7 @@ The planned resolution is intentionally phased:
 Current execution intent:
 
 1. Phase 1 is complete
-2. Phase 1.5 is the active next step
+2. Phase 1.5 is complete in code
 3. Phase 2 remains documented for continuity, but is currently deferred rather
    than being part of the immediate implementation queue
 
