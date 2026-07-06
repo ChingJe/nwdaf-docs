@@ -2,7 +2,7 @@
 
 Date: 2026-07-06
 
-Status: Current active tranche completed in code (Phase 1 and Phase 1.5 completed; Phase 2 deferred)
+Status: Current active tranche completed in code (Phase 1, Phase 1.5, and the current-stage Phase 2 structural alignment are completed)
 
 Historical remediation item:
 
@@ -18,9 +18,11 @@ Current execution note:
 - Phase 1 completed in `NWDAF/` on 2026-07-06 as commit `e8e249a`
 - Phase 1.5 then landed in `NWDAF/` on 2026-07-06 across commits `8762b35`
   and `a0fff93`
+- the current-stage Phase 2 auxiliary structural alignment then landed in
+  `NWDAF/` on 2026-07-06 as commit `1b06411`
 - the current active tranche is now complete in code
-- Phase 2 remains documented as a possible later continuation, but is not part
-  of the current execution target
+- any later deeper auxiliary-processor consolidation remains future work rather
+  than part of the completed current-stage target
 
 Related issue records:
 
@@ -604,8 +606,42 @@ Phase 2 auxiliary-server follow-up.
 
 Phase 2 should reuse the now-stabilized Phase 1 `sbi` shape as an internal
 reference, but only at the level of engineering form, not semantics.
-This phase is retained here for continuity, but is currently deferred and is
-not part of the active execution tranche after the Phase 1.5 decision.
+
+For the currently selected Phase 2 scope, the goal is structural alignment:
+
+1. make the auxiliary listeners look deliberate and consistent with the rest of
+   the repository
+2. give `AnLF` and `MTLF` explicit `server + api + processor + client`
+   surfaces
+3. keep callback ingress, callback delegation, and outbound non-SBI HTTP usage
+   clearly separated
+
+This Phase 2 scope does not require all remaining local domain logic to move
+into `processor` immediately.
+
+Deeper consolidation of business procedure ownership, or later simplification
+when more logic moves to Python services, should be treated as future work
+rather than as a hidden blocker on Phase 2 completion.
+
+### 9.1.1 Current Implementation Status
+
+The currently selected Phase 2 structural-alignment scope has now landed in
+`NWDAF/` on 2026-07-06 as commit `1b06411`.
+
+What was implemented:
+
+1. `AnLF` and `MTLF` now expose explicit auxiliary `api_*` callback handlers
+2. both packages now carry dedicated `processor/` seams for callback
+   delegation
+3. inference-engine and Daisy outbound HTTP integrations now live under
+   package-local `client/` directories
+4. auxiliary server construction now follows the repository's aligned HTTP edge
+   style more closely while preserving their non-SBI semantics
+5. remaining deeper local workflow consolidation is left intentionally as
+   future work
+
+This means the current-stage Phase 2 scope is complete in code even though the
+longer-horizon Python-oriented simplification work remains open by design.
 
 ### 9.2 Intended Outcome
 
@@ -616,6 +652,45 @@ After Phase 2:
 3. inbound callback parsing no longer lives directly on service-owned workflow
    structs
 4. outbound non-SBI integrations are named and owned consistently as `client`
+5. package-local domain logic that still owns state, monitor loops, retrain
+   bookkeeping, or hot-swap mechanics may remain in the root package when
+   moving it immediately would not materially improve the current design
+
+The intended Phase 2 package shape is therefore closer to:
+
+```text
+internal/anlf/
+  server.go
+  api_*.go
+  anlf.go
+  analytics.go
+  model.go
+  monitor.go
+  scope.go
+  inference_engine.go
+  processor/
+    processor.go
+    ...
+  client/
+    inference_engine.go
+
+internal/mtlf/
+  server.go
+  api_*.go
+  mtlf.go
+  training.go
+  trigger.go
+  adrf_retrieval.go
+  state_store.go
+  daisy.go
+  processor/
+    processor.go
+    ...
+  client/
+    daisy.go
+```
+
+This layout is the current-stage target.
 
 ### 9.3 Planned Changes
 
@@ -639,14 +714,23 @@ Implementation direction:
 
 1. introduce a dedicated processor layer in each package or an equivalent
    package-local processor type
-2. make the processor the owner of callback-driven orchestration
-3. keep deeper domain behavior where it already belongs unless a narrow move is
+2. make the processor the explicit callback delegation seam between the HTTP
+   edge and the package-local workflow logic
+3. move only the callback procedure control that materially improves current
+   ownership clarity
+4. keep deeper domain behavior where it already belongs unless a narrow move is
    required to remove HTTP concerns from that code
+5. do not require all stateful local actions, monitor loops, retrain
+   bookkeeping, or hot-swap logic to move into `processor` in the current
+   stage
 
 Expected result:
 
-- callback-driven orchestration now has the same ownership style as the main
+- callback-driven ingress now has the same visible ownership style as the main
   SBI edge, without pretending the flows are SBI
+- `processor` becomes the stable entry seam for later refactoring, even if some
+  current local workflow logic still lives in the root package during this
+  stage
 
 #### C. Normalize outbound naming as `client`
 
@@ -687,6 +771,26 @@ Phase 2 should not:
 3. introduce one cross-package transport abstraction just because the code now
    looks similar
 4. merge auxiliary clients back into `internal/sbi/consumer`
+5. require a full migration of all remaining local business logic into
+   `processor` before this phase can be considered complete
+6. treat the future Python-side migration of analytics or training logic as a
+   prerequisite for Phase 2 completion
+
+### 9.5 Future Work Beyond Phase 2
+
+The following items are intentionally outside the current Phase 2 completion
+gate:
+
+1. pushing more `AnLF` or `MTLF` business procedure logic out of the Go root
+   packages and into thinner callback-oriented processors
+2. reshaping Go-side packages further once analytics or retraining logic moves
+   behind Python-owned services
+3. revisiting whether the Go side should eventually become a more conventional
+   `api -> processor -> client` shell after local stateful responsibilities
+   shrink
+
+These are valid later continuations, but they are not evidence that the
+current-stage Phase 2 target remains unfinished.
 
 ---
 
@@ -745,6 +849,8 @@ Targeted proof expected:
 2. callback-to-processor delegation is directly testable
 3. outbound `client` seams are mockable at the processor boundary
 4. listener lifecycle and partial-startup cleanup remain covered
+5. Phase 2 verification should not require proving that all remaining local
+   domain logic has already been migrated into `processor`
 
 ---
 
@@ -847,6 +953,15 @@ Reason:
 - `AnLF` is still the smaller auxiliary surface and remains the cleaner place
   to prove a future auxiliary-server pattern first
 
+### Step 6. Treat deeper processor consolidation as later optional continuation
+
+Reason:
+
+- future Python-side ownership changes may alter how much local Go business
+  logic is worth retaining or relocating
+- the current Phase 2 target should stop once the auxiliary package shape,
+  callback delegation seam, and `client` ownership are in place
+
 ---
 
 ## 13. Completion Criteria
@@ -873,11 +988,16 @@ when all of the following are true:
 Current assessment:
 
 - all active-tranche completion criteria above are now satisfied in code
-- the remaining Phase 2 material stays documented as a later deferred
-  continuation rather than an open blocker on the completed Phase 1.5 line
+- the current-stage Phase 2 auxiliary structural-alignment target is also now
+  satisfied in code by `NWDAF/` commit `1b06411`
+- the remaining future work is deeper processor/business-logic consolidation,
+  which stays intentionally outside the current completion gate
 
 Deferred future continuation:
 
 - If Phase 2 is later selected, its own auxiliary-server shape criteria should
   be tracked as a separate completion gate at that time rather than being
   treated as a hidden requirement of the current HTTPS tranche.
+- If a later Python-oriented refactor wants thinner Go-side processors and
+  clients, that follow-up should be tracked as new future work rather than as a
+  retroactive claim that the current-stage Phase 2 target was incomplete.

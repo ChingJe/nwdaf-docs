@@ -13,9 +13,11 @@ Current progress:
 - Phase 1 completed in `NWDAF/` on 2026-07-06 as commit `e8e249a`
 - Phase 1.5 code implementation is now completed in `NWDAF/` on 2026-07-06
   across commits `8762b35` and `a0fff93`
-- Phase 2 auxiliary-server shape alignment for `internal/anlf` and
-  `internal/mtlf` remains documented, but is intentionally deferred rather
-  than being the current execution target
+- the currently selected Phase 2 auxiliary structural-alignment scope then
+  landed in `NWDAF/` on 2026-07-06 as commit `1b06411`
+- any later deeper processor/business-logic consolidation remains future work
+  rather than an indication that the current-stage Phase 2 target is still
+  open
 
 ## Scope
 
@@ -257,6 +259,31 @@ The current active tranche for this item is therefore complete in code:
    retrieval callback path consistently
 3. verification for the Phase 1.5 code line passed through `go test ./...`,
    `make build`, and `make lint`
+
+### Phase 2 Current-Stage Implementation Status
+
+The currently selected structural-alignment scope for Phase 2 has now landed in
+`NWDAF/` as commit `1b06411`.
+
+What this completed:
+
+1. `internal/anlf` and `internal/mtlf` now expose explicit `server + api +
+   processor + client` package surfaces
+2. auxiliary callback parse / validation logic is now separated from
+   service-owned methods
+3. non-SBI outbound HTTP integrations for inference-engine and Daisy now live
+   under package-local `client/` directories
+4. auxiliary server construction now follows a more aligned repository HTTP
+   edge style while preserving non-SBI semantics
+
+What this intentionally did not require:
+
+1. moving all remaining local domain logic into `processor`
+2. treating later Python-oriented simplification as a prerequisite for closing
+   the current-stage Phase 2 target
+
+The remaining follow-up is therefore future work, not a sign that the current
+stage of this item failed to complete.
 
 The remaining open part of this overall issue is no longer Phase 1.5. It is
 only the later-deferred Phase 2 auxiliary-server shape-alignment roadmap.
