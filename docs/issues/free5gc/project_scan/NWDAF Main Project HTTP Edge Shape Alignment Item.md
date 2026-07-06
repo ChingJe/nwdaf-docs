@@ -8,6 +8,12 @@ Historical remediation item:
 
 - `Priority 14 — Align HTTP Edge Shape And Flow Ownership`
 
+Current progress:
+
+- Phase 1 completed in `NWDAF/` on 2026-07-06 as commit `e8e249a`
+- remaining open scope is Phase 2 alignment for `internal/anlf` and
+  `internal/mtlf`
+
 ## Scope
 
 This item records a follow-up alignment gap discovered after the completed
@@ -163,6 +169,25 @@ The chosen resolution for Phase 1 is therefore:
 This choice was selected because it preserves the current startup-unit cleanup
 semantics while still aligning the visible `sbi.Server` transport skeleton much
 more closely with the chosen free5GC exemplar.
+
+### Phase 1 Implementation Status
+
+Phase 1 has now landed in `NWDAF/` as commit `e8e249a`.
+
+The implemented result keeps the intended `pcf`-style server skeleton while
+refining the final startup contract beyond the earlier design-decision note:
+
+1. router construction now uses the free5GC-style Gin logger helper
+2. inbound SBI metrics middleware is attached at the server boundary
+3. HTTP server construction now uses `httpwrapper.NewHttp2Server(...)`
+4. startup still performs a synchronous preflight bind check
+5. `Run()` now also waits for a short startup readiness handshake before
+   reporting success, so `startOwnedServers()` once again means the main SBI
+   listener is actually accepting connections rather than merely having its
+   serving goroutine dispatched
+
+This means the still-open part of the issue is no longer Phase 1 `internal/sbi`
+cleanup. The remaining open work is the auxiliary-server alignment in Phase 2.
 
 ## Planned Resolution Shape
 

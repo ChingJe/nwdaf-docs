@@ -2,7 +2,7 @@
 
 Date: 2026-07-06
 
-Status: Not started
+Status: In progress (Phase 1 completed; Phase 2 not started)
 
 Historical remediation item:
 
@@ -15,6 +15,8 @@ Current execution note:
   question reopened by this plan
 - the next work is about implementation shape, not about collapsing the
   topology back into one shared server
+- Phase 1 completed in `NWDAF/` on 2026-07-06 as commit `e8e249a`
+- the current remaining work is Phase 2 only
 
 Related issue records:
 
@@ -76,6 +78,8 @@ constraints during implementation:
    - keep the `ListenAndServe()`-style serving path
    - add a thin synchronous preflight bind check before launching the serving
      goroutine
+   - wait for a short startup readiness handshake before `Run()` reports
+     success
 6. Phase 2 should move `internal/anlf` and `internal/mtlf` toward
    `api -> processor -> client`
 7. `consumer` naming remains reserved for SBI-facing or standards-facing
@@ -324,6 +328,35 @@ This plan therefore deliberately keeps a very small local adaptation:
 
 This is a conscious lifecycle-preservation choice, not an accidental failure to
 copy the exemplar exactly.
+
+### 7.3.1 Phase 1 Implementation Status
+
+Phase 1 has now landed in `NWDAF/` as commit `e8e249a`.
+
+What was implemented:
+
+1. `internal/sbi` now uses free5GC-style Gin construction via
+   `logger_util.NewGinWithLogrus(...)`
+2. `metrics.InboundMetrics()` is now attached at the main SBI edge
+3. the SBI HTTP server is now constructed with `httpwrapper.NewHttp2Server(...)`
+4. the start path now uses the `ListenAndServe()`-style serving skeleton
+5. a synchronous preflight bind check remains in place
+6. `Run()` now additionally waits for a short readiness handshake before
+   reporting startup success, so the local three-listener lifecycle contract
+   remains stronger than a plain fire-and-forget goroutine launch
+
+Verification completed for the landed Phase 1 implementation:
+
+- `go test ./...`
+- `make build`
+- `make lint`
+
+What remains for this plan:
+
+1. Phase 2 refactor for `internal/anlf`
+2. Phase 2 refactor for `internal/mtlf`
+3. any later HTTPS/TLS uplift remains outside the completed Phase 1 scope and
+   should be handled as separate follow-up work if selected
 
 #### C. Keep the PCF-style route-assembly shape
 

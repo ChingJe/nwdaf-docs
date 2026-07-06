@@ -90,7 +90,7 @@ state in this document set.
 | 11 | C | Decide The Intended free5GC Integration Level | Not started | Architectural scope decision |
 | 12 | C | Separate Runtime Config From Lab / Workflow Config | Not started | Structural config-scope cleanup after factory hardening and boundary decisions |
 | 13 | C | Clean Repo And Package Ownership Boundaries | Completed for the current intended scope | Phase 1 landed in `NWDAF/` baseline `9b343ef` on 2026-07-01; Phase 2 then landed the separate `sbi` / `anlf` / `mtlf` server-topology split in `NWDAF/` commits `0ddbf3c` and `b547727`, including owned auxiliary listeners, callback-URI ownership cleanup, and focused lifecycle/config regression coverage |
-| 14 | B | Align HTTP Edge Shape And Flow Ownership | Not started | Follows completed Priority 12 topology split; Phase 1 will align `internal/sbi` to a `pcf`-style skeleton while keeping `collector` on the main SBI surface and preserving synchronous startup-failure rollback through a thin preflight bind check, then Phase 2 will align `anlf` / `mtlf` to `api -> processor -> client` without collapsing semantics into one shared server model |
+| 14 | B | Align HTTP Edge Shape And Flow Ownership | In progress (Phase 1 completed) | Phase 1 landed in `NWDAF/` on 2026-07-06 as commit `e8e249a`, aligning `internal/sbi` to a `pcf`-style skeleton with preflight bind plus startup readiness handshake; Phase 2 for `anlf` / `mtlf` remains open |
 
 ## Tier A — Immediate Correctness And Runtime Risk
 
@@ -664,6 +664,21 @@ Why here:
 - Priority 12 fixed the semantic boundary question first. The next narrower
   cleanup is to make the resulting three-server design read as one deliberate
   repository style instead of three independently evolved HTTP-edge shapes.
+
+Status update:
+
+- Phase 1 implemented in `NWDAF/` on 2026-07-06 as commit `e8e249a`
+- landed Phase 1 aligned `internal/sbi` router/middleware/server assembly to a
+  `pcf`-style shape using `logger_util.NewGinWithLogrus(...)`,
+  `metrics.InboundMetrics()`, and `httpwrapper.NewHttp2Server(...)`
+- the final landed startup contract preserves a synchronous preflight bind
+  check and adds a short startup readiness handshake so
+  `startOwnedServers()` again means the SBI listener is actually accepting
+  connections
+- verification reran `go test ./...`, `make build`, and `make lint`; all
+  passed
+- remaining open scope is Phase 2 auxiliary-server alignment for `internal/anlf`
+  and `internal/mtlf`
 
 ## Suggested Execution Rule
 
