@@ -265,6 +265,8 @@ The current active tranche for this item is therefore complete in code:
 The currently selected structural-alignment scope for Phase 2 has now landed in
 `NWDAF/` as commit `1b06411`.
 
+A follow-up stabilization pass then landed in `NWDAF/` as commit `e2f677c`.
+
 What this completed:
 
 1. `internal/anlf` and `internal/mtlf` now expose explicit `server + api +
@@ -275,12 +277,22 @@ What this completed:
    under package-local `client/` directories
 4. auxiliary server construction now follows a more aligned repository HTTP
    edge style while preserving non-SBI semantics
+5. `AnLF` callback execution is now flattened across the full callback body so
+   model-provision actions are not split into separate owned batches per
+   top-level notification
+6. `AnLF` now cleans up old shared-model and monitor state when a subscription
+   switches to a new model URL
 
 What this intentionally did not require:
 
 1. moving all remaining local domain logic into `processor`
 2. treating later Python-oriented simplification as a prerequisite for closing
    the current-stage Phase 2 target
+3. fully hardening the `AnLF` model-replacement failure path when a callback
+   switches a subscription from one model URL to another; that edge case is
+   currently tracked as a known limitation and deferred because this workflow
+   is expected to be thinned further once more ownership moves behind Python
+   services
 
 The remaining follow-up is therefore future work, not a sign that the current
 stage of this item failed to complete.

@@ -628,6 +628,9 @@ rather than as a hidden blocker on Phase 2 completion.
 The currently selected Phase 2 structural-alignment scope has now landed in
 `NWDAF/` on 2026-07-06 as commit `1b06411`.
 
+A follow-up stabilization pass then landed in `NWDAF/` on 2026-07-06 as commit
+`e2f677c`.
+
 What was implemented:
 
 1. `AnLF` and `MTLF` now expose explicit auxiliary `api_*` callback handlers
@@ -639,6 +642,11 @@ What was implemented:
    style more closely while preserving their non-SBI semantics
 5. remaining deeper local workflow consolidation is left intentionally as
    future work
+6. `AnLF` callback action execution is now batched across the full callback
+   body instead of spawning one owned batch per top-level notification
+7. `AnLF` now cleans up old shared-model and monitor state when a subscription
+   switches to a new model URL, while still recording the replacement
+   failure-path rollback gap as a known limitation for later work
 
 This means the current-stage Phase 2 scope is complete in code even though the
 longer-horizon Python-oriented simplification work remains open by design.
@@ -788,6 +796,11 @@ gate:
 3. revisiting whether the Go side should eventually become a more conventional
    `api -> processor -> client` shell after local stateful responsibilities
    shrink
+4. revisiting the `AnLF` ML-model replacement failure path so old shared-model
+   and monitor state are not detached until the new model is proven ready;
+   this is currently recorded as a known limitation rather than an active fix
+   target because the longer-horizon direction is to move more of this
+   replacement workflow behind Python-owned services
 
 These are valid later continuations, but they are not evidence that the
 current-stage Phase 2 target remains unfinished.
