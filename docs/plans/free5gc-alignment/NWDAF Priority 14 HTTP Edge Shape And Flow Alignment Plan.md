@@ -802,6 +802,10 @@ gate:
    target because the longer-horizon direction is to move more of this
    replacement workflow behind Python-owned services
 
+These Python-oriented follow-up items are now tracked primarily under:
+
+- `nwdaf-docs/docs/plans/anlf-backend-transition/AnLF Backend Transition Plan.md`
+
 These are valid later continuations, but they are not evidence that the
 current-stage Phase 2 target remains unfinished.
 
@@ -1005,6 +1009,8 @@ Current assessment:
   satisfied in code by `NWDAF/` commit `1b06411`
 - the remaining future work is deeper processor/business-logic consolidation,
   which stays intentionally outside the current completion gate
+- Python-side `AnLF` backend migration is now tracked separately under
+  `nwdaf-docs/docs/plans/anlf-backend-transition/AnLF Backend Transition Plan.md`
 
 Deferred future continuation:
 
