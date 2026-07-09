@@ -243,7 +243,29 @@ Preparation 明確不處理：
 
 ---
 
-## 9. Open Questions
+## 9. Verification Strategy
+
+這條工作線不應只規劃責任遷移，也必須同時規劃對應的驗證出口。
+
+主文件層級至少先要求以下三類測試在後續 phase 規劃中被明確承接：
+
+1. `PyAnLF/` 內部業務邏輯的 unit tests，用於驗證 backend 接手後的 domain
+   behavior
+2. `PyAnLF/` API-level tests，用於驗證 service endpoint、request/response
+   contract 與 error handling
+3. `NWDAF/` 與 `PyAnLF/` 之間的實際交互測試，用於驗證 Go-side caller 與
+   Python backend 的 contract alignment
+
+各 phase 的細部文件應再進一步定義：
+
+1. 該 phase 最低必須補齊哪些測試
+2. 哪些屬於 unit-level 驗證
+3. 哪些屬於 API-level 或 integration-level 驗證
+4. 在當前環境下哪些只能做到局部驗證，哪些需要保留為後續執行驗證
+
+---
+
+## 10. Open Questions
 
 以下問題目前仍屬後續 phase 需要逐步決策的範圍：
 
@@ -257,9 +279,9 @@ Preparation 明確不處理：
 
 ---
 
-## 10. Relation To Other Plans
+## 11. Relation To Other Plans
 
-### 10.1 Relation To Free5GC Alignment
+### 11.1 Relation To Free5GC Alignment
 
 `free5gc-alignment` 既有文件中的 auxiliary future work，現在只保留為來源與引用。
 
@@ -268,7 +290,7 @@ Preparation 明確不處理：
 1. 接手 Python-side migration 相關 future work 的新主文件
 2. 與 `free5gc-alignment` 平行存在的新主題工作線
 
-### 10.2 Future Phase Documents
+### 11.2 Future Phase Documents
 
 當某個 phase 被正式選定後，應在同資料夾下建立對應的細部文件，例如：
 
