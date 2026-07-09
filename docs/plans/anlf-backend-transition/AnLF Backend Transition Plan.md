@@ -2,7 +2,7 @@
 
 Date: 2026-07-07
 
-Status: Preparation completed; Phase 1 not started
+Status: Preparation completed; Phase 1 completed; Phase 2 not started
 
 Related source line:
 
