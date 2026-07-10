@@ -2,7 +2,7 @@
 
 Date: 2026-07-07
 
-Status: Preparation completed; Phase 1 completed; Phase 2 completed; Phase 3 not started
+Status: Preparation completed; Phase 1 completed; Phase 2 completed; Phase 3 planned
 
 Related source line:
 
@@ -251,11 +251,29 @@ Implementation commits:
 
 ### 8.3 Phase 3: Analytics Runtime Migration
 
+Status: Planned
+
 目標：
 
 1. 逐步把 analytics request shaping 與 prediction runtime 搬到 `PyAnLF/`
 2. 讓 Go 端更多扮演 transport / orchestration shell
 3. 收斂 Go-side `AnLF` 對 prediction 細節的本地實作
+
+已確認的方向：
+
+1. 不再保留 production Go-to-PyAnLF `Predict` contract
+2. Go 將正規化 observation 依共享 observation source 傳給 `PyAnLF`
+3. `PyAnLF` 擁有 observation buffer、analytics generation 與 reporting trigger
+4. `PyAnLF` 主動 callback analytics report 給 Go `anlfServer`
+5. Go 保留 external 3GPP mapping 與 NF consumer notification delivery
+6. 目前未支援的 `Nnwdaf_AnalyticsInfo_Request` 不在本 phase 預留 speculative API
+7. Phase 3 只遷移 `UE_COMMUNICATION`，accuracy workflow 保留給 Phase 4
+8. PyAnLF 成為 `UE_COMMUNICATION` 必要 runtime；initial backend unavailable 時，
+   整份拒絕使用 `503 ProblemDetails`，部分 event failure 使用
+   `failEventReports/OTHER`，不保留 Go fallback scheduler
+
+完整 contract、lifecycle、failure handling 與 verification plan 見
+`Phase 3 Analytics Runtime Migration.md`。
 
 ### 8.4 Phase 4: Accuracy Workflow Migration
 
@@ -301,7 +319,6 @@ Phase 2 已確認 subscription runtime activation state 由 `PyAnLF` 擁有。
 2. ground truth 資料與 accuracy monitor 資料的最終 owner 要如何切分
 3. `MTLF` 與 `PyAnLF` 的互動是否要始終經過 `NWDAF/`，還是某些資料可由
    `PyAnLF` 直接承接
-4. 目前為相容性保留的 PyAnLF low-level model endpoints 應在何時移除
 
 這些問題不應在未經 phase 選擇的情況下提前一次解完。
 
