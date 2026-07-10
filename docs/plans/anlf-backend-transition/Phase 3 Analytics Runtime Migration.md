@@ -2,7 +2,7 @@
 
 Date: 2026-07-10
 
-Status: Planned
+Status: Implemented
 
 Parent plan:
 
@@ -1218,3 +1218,68 @@ Phase 4 應基於 Phase 3 的 observation source、analytics report 與 runtime 
 
 Phase 3 不應因為預期 Phase 4 會再搬移，而留下兩套 analytics generation path 或
 繼續保留低階 `Predict` workaround。
+
+---
+
+## 17. Implementation Record
+
+Phase 3 已於 2026-07-10 完成實作，實際結果如下。
+
+### 17.1 PyAnLF
+
+1. `SubscriptionRuntimeManager` 現在擁有 runtime revision、binding activation、
+   model lifecycle 與 reporting lifecycle coordination
+2. 新增 shared `ObservationStore`，包含 source reference、retention 與 bounded
+   `batch_id` dedup
+3. 新增 `AnalyticsRuntime`，接手 per-session alignment、跨 source aggregation、
+   input window shaping、inference 與 confidence-0 fallback
+4. 新增 `ReportingScheduler` 與 `ReportSender`，接手 `immRep`、`repPeriod`、
+   `maxReportNbr`、`monDur`、callback timeout 與有限 retry
+5. 新增 binding 與 source-scoped observation endpoints
+6. 移除 production subscription predict、legacy predict、model load 與 model unload routes
+7. analytics config 已移到 `PyAnLF/config/config.yaml`；default model 改為 backend-local
+   `artifacts/initial`
+8. 每個新 runtime revision 都必須等待 Go 完成 binding sync 才啟動 reporting，避免
+   callback 早於 Go revision state 更新
+
+### 17.2 NWDAF
+
+1. `AnlfBackendAPI` 已移除 `Predict`，新增 binding sync 與 observation delivery contract
+2. `anlfServer` 已新增 `/subscriptions/:subscriptionId/analytics-reports` callback route，
+   維持 API -> processor -> injected dispatcher 形狀
+3. 新增 app-owned bounded observation delivery worker，包含 stable batch ID、timeout、
+   finite retry、queue overflow log 與 shutdown cancellation
+4. UPF callback 現在同時保留 Phase 4 ground-truth path，並把 normalized source
+   observation enqueue 給 PyAnLF
+5. source reuse key 已擴充為 target、SMF endpoint、sampling interval、canonical
+   measurement set 與 periodic source profile 的 exact match
+6. create/update 現在同步完成 initial apply、source reconcile 與 binding sync；update
+   先 sync desired bindings，再釋放 stale source，失敗時執行 previous runtime rollback
+7. backend unavailable 或 initial binding sync 失敗時，以 `503 ProblemDetails` 拒絕建立
+   無法服務的 UE Communication subscription
+8. Go periodic scheduler、local prediction shaping 與 production Predict flow 已移除
+9. report dispatcher 會驗證 subscription、revision、event、report identity 與 ordering，
+   並以 bounded process-local state 處理 delivered/in-flight dedup
+10. Go analytics business config 已移除；只保留 `groundTruthRetention` 供 Phase 4 過渡
+    accuracy workflow 使用，sampling interval 改讀 active collection requirements
+11. delete lifecycle 先停止 backend runtime，再釋放 SMF source references
+
+### 17.3 Verification Result
+
+已執行並通過：
+
+1. `NWDAF`: `go test ./...`
+2. `NWDAF`: `make build`
+3. `NWDAF`: `make lint`，0 issues
+4. `NWDAF`: Phase 3 影響 packages 的 `go test -race`，無 race
+5. `PyAnLF`: `uv run --group dev pytest -q`，20 passed
+6. live cross-repo contract test：Go backend client -> real PyAnLF -> real Go
+   `anlf.Server` -> processor/dispatcher -> external callback consumer
+7. `git diff --check`：`NWDAF` 與 `PyAnLF` 均通過
+
+完整 `go test -race ./...` 仍會被既有 `pkg/service` 平行測試同時修改 global NWDAF
+context 與 Gin mode 的測試隔離問題影響。Phase 3 實際變更 packages 已另外完整執行
+race detector 並通過；這項既有 service test isolation 問題不在本 phase 擴張修正。
+
+完整 SMF、UPF、MTLF 與 external NF consumer 的 5GC end-to-end test 未在目前環境執行，
+不能由 local live contract test 取代宣稱。
