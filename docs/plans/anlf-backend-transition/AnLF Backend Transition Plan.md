@@ -2,7 +2,7 @@
 
 Date: 2026-07-07
 
-Status: Preparation completed; Phase 1 completed; Phase 2 completed; Phase 3 completed; Phase 4 planned
+Status: Preparation completed; Phase 1 completed; Phase 2 completed; Phase 3 completed; Phase 3.5 planned; Phase 4 planned
 
 Related source line:
 
@@ -287,14 +287,37 @@ Status: Completed
 完整 contract、lifecycle、failure handling 與 verification plan 見
 `Phase 3 Analytics Runtime Migration.md`。
 
-### 8.4 Phase 4: Accuracy Workflow Migration
+### 8.4 Phase 3.5: Go Package Boundary Consolidation
+
+Status: Planned
 
 目標：
 
-1. 把 prediction bookkeeping、ground truth matching、accuracy evaluation
-   的主要 runtime 搬到 `PyAnLF/`
+1. 在不改變 Phase 3 observable behavior 的前提下，整理 Go-side AnLF package boundary
+2. 讓 `internal/anlf` 根 package 收斂成 HTTP server 與 API adapter，route declaration
+   沿用現有 SBI 慣例放在對應 `api_*.go`
+3. 將 backend contract、cross-domain coordinator、observation delivery 與 transitional
+   accuracy logic 移到責任明確的子 package
+4. 保留 free5GC-style notifier abstraction，並把目前頂層 `internal/notifier`
+   收斂到 `internal/sbi/notifier`
+5. 移除 `pkg/service` 經由 SBI processor 間接控制 AnLF-owned worker 的 lifecycle passthrough
+
+本 phase 是 behavior-preserving refactor，不得改動 HTTP path、JSON contract、status code、
+subscription lifecycle、retry/dedup、config schema 或 Phase 3 failure semantics。
+
+完整 package layout、dependency direction、搬移順序與 verification plan 見
+`Phase 3.5 Go Package Boundary Consolidation.md`。
+
+### 8.5 Phase 4: Accuracy Workflow Migration
+
+目標：
+
+1. 把 prediction bookkeeping、ground truth matching、AnLF-side Analytics/ML Model
+   Accuracy Information generation 的主要 runtime 搬到 `PyAnLF/`
 2. 重新定義 `MTLF` 需要從 backend 拿到哪些 retrain input materials
 3. 讓 Go 端只保留必要的 subscription / cross-component coordination
+4. 保持 `MTLF` 對 model degradation、retrain/reprovision 的判斷責任，不把
+   MTLF decision policy 誤搬進 AnLF Backend
 
 ---
 
@@ -354,6 +377,7 @@ Phase 2 已確認 subscription runtime activation state 由 `PyAnLF` 擁有。
 1. `Phase 1 Backend Boundary Alignment.md`
 2. `Phase 2 Model Lifecycle Migration.md`
 3. `Phase 3 Analytics Runtime Migration.md`
-4. `Phase 4 Accuracy Workflow Migration.md`
+4. `Phase 3.5 Go Package Boundary Consolidation.md`
+5. `Phase 4 Accuracy Workflow Migration.md`
 
 在那之前，這份主文件維持高層規劃即可。
