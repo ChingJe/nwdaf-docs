@@ -2,7 +2,7 @@
 
 Date: 2026-07-07
 
-Status: Preparation completed; Phase 1 completed; Phase 2 completed; Phase 3 completed; Phase 3.5 planned; Phase 4 planned
+Status: Preparation completed; Phase 1 completed; Phase 2 completed; Phase 3 completed; Phase 3.5 completed; Phase 4 planned
 
 Related source line:
 
@@ -79,44 +79,49 @@ reference NF 作為主要 shape driver。
 
 ### 4.1 Current Go-side AnLF Responsibilities
 
-Phase 2 完成後，`NWDAF/` 已不再直接管理模型的載入、共享、替換、回退與卸載。
+Phase 3.5 完成後，`NWDAF/` 已不再直接執行模型載入、替換、回退、卸載、analytics
+generation 或 reporting lifecycle。
 
 目前仍主要留在 Go 端的責任包括：
 
-1. 5GC subscription、callback ingress 與資料收集流程
-2. 把 subscription 與 model provision context 轉換成 backend runtime apply
-3. UE Communication historical data 對齊、整理與 prediction request shaping
-4. analytics result 轉換成 `models.UeCommunication`
-5. prediction bookkeeping、ground truth matching、accuracy monitor loop
-6. accuracy reports 對 `MTLF` retrain policy 的輸入材料
-7. 為 accuracy 與 retrain 流程保留的 model-reference correlation
+1. 5GC subscription、callback ingress 與 SMF/UPF data collection
+2. subscription runtime request、observation binding 與 backend transport coordination
+3. 將 backend analytics report 映射成標準 Nnwdaf notification 並送至 external consumer
+4. prediction bookkeeping、ground truth matching 與 accuracy monitor loop
+5. accuracy reports 對 `MTLF` degradation/retrain policy 的輸入材料
+6. 為尚未遷移的 accuracy/retrain flow 暫留的 model-reference correlation
 
-Go 端不再持有 backend model ID，也不再執行 load、unload 或 swap procedure。
-但 prediction shaping 與 accuracy workflow 尚未遷移，因此目前仍是可工作的過渡架構，
-而不是最終的薄 transport shell。
+Go-side AnLF code 已拆成 HTTP edge、contract、client、processor、coordinator 與
+transitional accuracy packages；頂層 notifier 也已移入 `internal/sbi/notifier`。
+Go 端不再持有 backend model ID，也不再執行 load、unload、swap、prediction shaping 或
+analytics scheduling。但 accuracy workflow 與 `SharedModelInfo` correlation 尚未遷移，
+因此目前仍是可工作的過渡架構，而不是最終的薄 transport shell。
 
 ### 4.2 Current PyAnLF Responsibilities
 
 `PyAnLF/` 目前是獨立的 Python service。
 
-截至 Phase 2 完成後，它已經完成：
+截至 Phase 3 完成後，它已經完成：
 
 1. repo naming 收斂到 `PyAnLF`
 2. Python package layout 收斂到 `src/py_anlf`
 3. service metadata、imports、runtime entrypoint 命名同步更新
-4. subscription-scoped runtime apply、release 與 predict API
+4. subscription-scoped runtime apply、release 與 observation binding API
 5. model acquisition、shared usage、replacement、fallback 與 release ownership
-6. backend-local default model selection
-7. domain、API 與 concurrency test coverage
+6. shared observation store、window shaping、inference 與 analytics generation
+7. periodic reporting lifecycle 與 Go callback delivery
+8. backend-local default model selection
+9. domain、API、concurrency 與 cross-repo contract test coverage
 
 Preparation 命名整理已在 `PyAnLF/` commit `987e98e` 完成；Phase 2 lifecycle
 遷移則完成於 commit `7a2ebc4`。
 
-功能上，`PyAnLF` 現在已承接 subscription runtime 與 model lifecycle，但尚未承接：
+功能上，`PyAnLF` 現在已承接 subscription runtime、model lifecycle 與 analytics runtime，
+但尚未承接：
 
-1. UE Communication prediction request shaping
-2. prediction bookkeeping 與 ground truth matching
-3. accuracy evaluation 與 retrain input preparation
+1. prediction bookkeeping 與 ground truth matching
+2. accuracy evaluation 與 accuracy information generation
+3. retrain input preparation 所需的 model/subscription correlation
 
 也就是說，它已不再只是 inference-oriented service，但仍未成為完整的
 `AnLF backend`。
@@ -289,7 +294,11 @@ Status: Completed
 
 ### 8.4 Phase 3.5: Go Package Boundary Consolidation
 
-Status: Planned
+Status: Completed
+
+Implementation commit:
+
+- `NWDAF/`: `a7d0693` (`refactor(anlf): consolidate Go package boundaries`)
 
 目標：
 
@@ -305,6 +314,16 @@ Status: Planned
 本 phase 是 behavior-preserving refactor，不得改動 HTTP path、JSON contract、status code、
 subscription lifecycle、retry/dedup、config schema 或 Phase 3 failure semantics。
 
+完成結果：
+
+1. `internal/anlf` 根 package 只保留 server 與 API adapter
+2. backend wire DTO、HTTP transport、callback processing、coordination 與 accuracy 分別移入
+   `contract`、`client`、`processor`、`coordinator` 與 `accuracy`
+3. analytics notifier 移入 `internal/sbi/notifier`
+4. `pkg/service` 直接持有並控制 AnLF coordinator/observation worker lifecycle
+5. broad `AnlfService` 與 SBI processor lifecycle passthrough 已移除
+6. full Go tests、lint、build、targeted race 與真實 PyAnLF live contract 均通過
+
 完整 package layout、dependency direction、搬移順序與 verification plan 見
 `Phase 3.5 Go Package Boundary Consolidation.md`。
 
@@ -318,6 +337,10 @@ subscription lifecycle、retry/dedup、config schema 或 Phase 3 failure semanti
 3. 讓 Go 端只保留必要的 subscription / cross-component coordination
 4. 保持 `MTLF` 對 model degradation、retrain/reprovision 的判斷責任，不把
    MTLF decision policy 誤搬進 AnLF Backend
+5. 將 MTLF model provision event 轉交 AnLF Backend，由 backend 根據自身 runtime state
+   決定受影響的 subscriptions 與 replacement/fallback 行為
+6. 替換 accuracy/retrain 對 Go model-to-subscription registry 的依賴後，移除
+   `SharedModelInfo`、`sharedModelRegistry` 與 coordinator 的 model fan-out
 
 ---
 
@@ -349,8 +372,9 @@ Phase 2 已確認 subscription runtime activation state 由 `PyAnLF` 擁有。
 
 以下問題仍屬後續 phase 需要逐步決策的範圍：
 
-1. prediction 與 accuracy 遷移後，哪些 correlation state 必須繼續留在
-   `NWDAF/` context
+1. prediction 與 accuracy 遷移後，Go 應以何種最小資料保存標準 subscription、MTLF
+   subscription 與 retrain procedure correlation；model-to-subscription ownership 已確認
+   應由 AnLF Backend 擁有
 2. ground truth 資料與 accuracy monitor 資料的最終 owner 要如何切分
 3. `MTLF` 與 `PyAnLF` 的互動是否要始終經過 `NWDAF/`，還是某些資料可由
    `PyAnLF` 直接承接
