@@ -2,7 +2,7 @@
 
 Date: 2026-07-07
 
-Status: Preparation completed; Phase 1 completed; Phase 2 not started
+Status: Preparation completed; Phase 1 completed; Phase 2 completed; Phase 3 not started
 
 Related source line:
 
@@ -79,39 +79,46 @@ reference NF 作為主要 shape driver。
 
 ### 4.1 Current Go-side AnLF Responsibilities
 
-目前 `NWDAF/` 的 Go 端承載的 `AnLF` 邏輯，不只是一個單純的推論 client。
+Phase 2 完成後，`NWDAF/` 已不再直接管理模型的載入、共享、替換、回退與卸載。
 
 目前仍主要留在 Go 端的責任包括：
 
-1. `MTLF` model provision callback 後的 activation orchestration
-2. model load / unload / swap 生命週期管理
-3. per-subscription `MlModelInfo` 與 per-model `SharedModelInfo`
-4. UE Communication historical data 對齊、整理與 prediction request shaping
-5. analytics result 轉換成 `models.UeCommunication`
-6. prediction bookkeeping、ground truth matching、accuracy monitor loop
-7. accuracy reports 對 `MTLF` retrain policy 的輸入材料
+1. 5GC subscription、callback ingress 與資料收集流程
+2. 把 subscription 與 model provision context 轉換成 backend runtime apply
+3. UE Communication historical data 對齊、整理與 prediction request shaping
+4. analytics result 轉換成 `models.UeCommunication`
+5. prediction bookkeeping、ground truth matching、accuracy monitor loop
+6. accuracy reports 對 `MTLF` retrain policy 的輸入材料
+7. 為 accuracy 與 retrain 流程保留的 model-reference correlation
 
-因此，目前的 Go 端實際上仍然是 `AnLF` 主體，而不是只扮演 transport shell。
+Go 端不再持有 backend model ID，也不再執行 load、unload 或 swap procedure。
+但 prediction shaping 與 accuracy workflow 尚未遷移，因此目前仍是可工作的過渡架構，
+而不是最終的薄 transport shell。
 
 ### 4.2 Current PyAnLF Responsibilities
 
 `PyAnLF/` 目前是獨立的 Python service。
 
-截至 Preparation 完成後，它已經完成：
+截至 Phase 2 完成後，它已經完成：
 
 1. repo naming 收斂到 `PyAnLF`
 2. Python package layout 收斂到 `src/py_anlf`
 3. service metadata、imports、runtime entrypoint 命名同步更新
+4. subscription-scoped runtime apply、release 與 predict API
+5. model acquisition、shared usage、replacement、fallback 與 release ownership
+6. backend-local default model selection
+7. domain、API 與 concurrency test coverage
 
-這部分已在 `PyAnLF/` commit `987e98e` 完成。
+Preparation 命名整理已在 `PyAnLF/` commit `987e98e` 完成；Phase 2 lifecycle
+遷移則完成於 commit `7a2ebc4`。
 
-但功能上，`PyAnLF` 目前仍主要只承接：
+功能上，`PyAnLF` 現在已承接 subscription runtime 與 model lifecycle，但尚未承接：
 
-1. model load
-2. model unload
-3. predict
+1. UE Communication prediction request shaping
+2. prediction bookkeeping 與 ground truth matching
+3. accuracy evaluation 與 retrain input preparation
 
-也就是說，它目前仍比較接近 inference-oriented service，而不是完整
+也就是說，它已不再只是 inference-oriented service，但仍未成為完整的
 `AnLF backend`。
 
 ### 4.3 Relationship To Free5GC Alignment
@@ -218,11 +225,29 @@ Preparation 明確不處理：
 
 ### 8.2 Phase 2: Model Lifecycle Migration
 
+Status: Completed
+
+Implementation commits:
+
+1. `NWDAF/`: `62e2f9f` (`refactor(anlf): delegate model lifecycle to backend`)
+2. `PyAnLF/`: `7a2ebc4` (`feat(runtime): manage subscription model lifecycle`)
+
 目標：
 
 1. 把 model load / unload / swap 的主要 runtime 責任逐步移到 `PyAnLF/`
 2. 讓 `MTLF` provision callback 後的 activation path 更偏向 backend-owned
 3. 降低 Go 端對 model lifecycle 細節的直接承載
+
+完成結果：
+
+1. backend contract 收斂成 subscription-scoped apply、release 與 predict
+2. `MTLF` provision callback 與 Daisy retrain completion 收斂到同一條 apply path
+3. Go 端移除 model ID、load、unload 與 swap lifecycle ownership
+4. `PyAnLF` 接手模型共享、替換失敗回退、預設模型選擇與 release
+5. 保留 Go-side model reference 僅供尚未遷移的 accuracy/retrain correlation 使用
+
+完整 contract、實作與驗證紀錄見
+`Phase 2 Model Lifecycle Migration.md`。
 
 ### 8.3 Phase 3: Analytics Runtime Migration
 
@@ -267,13 +292,16 @@ Preparation 明確不處理：
 
 ## 10. Open Questions
 
-以下問題目前仍屬後續 phase 需要逐步決策的範圍：
+Phase 2 已確認 subscription runtime activation state 由 `PyAnLF` 擁有。
 
-1. 哪些 state 必須繼續留在 `NWDAF/` context，而不能下沉到 `PyAnLF/`
-2. model provisioning callback 完成後，誰是 activation state machine 的最終 owner
-3. ground truth 資料與 accuracy monitor 資料的 owner 要如何切分
-4. `MTLF` 與 `PyAnLF` 的互動是否要始終經過 `NWDAF/`，還是某些資料可由
+以下問題仍屬後續 phase 需要逐步決策的範圍：
+
+1. prediction 與 accuracy 遷移後，哪些 correlation state 必須繼續留在
+   `NWDAF/` context
+2. ground truth 資料與 accuracy monitor 資料的最終 owner 要如何切分
+3. `MTLF` 與 `PyAnLF` 的互動是否要始終經過 `NWDAF/`，還是某些資料可由
    `PyAnLF` 直接承接
+4. 目前為相容性保留的 PyAnLF low-level model endpoints 應在何時移除
 
 這些問題不應在未經 phase 選擇的情況下提前一次解完。
 

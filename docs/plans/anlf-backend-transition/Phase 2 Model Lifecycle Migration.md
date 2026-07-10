@@ -2,7 +2,12 @@
 
 Date: 2026-07-10
 
-Status: Planned
+Status: Completed
+
+Implementation commits:
+
+- `NWDAF/`: `62e2f9f` (`refactor(anlf): delegate model lifecycle to backend`)
+- `PyAnLF/`: `7a2ebc4` (`feat(runtime): manage subscription model lifecycle`)
 
 Parent plan:
 
@@ -92,7 +97,7 @@ runtime、prediction data path、accuracy workflow 一起混進來。
 
 ---
 
-## 5. Current State
+## 5. Pre-implementation State
 
 目前 `NWDAF/` 雖然已經在 Phase 1 收斂為 `AnlfBackend` 命名，但 model lifecycle
 主責任仍大多在 Go 端。
@@ -965,3 +970,222 @@ replacement 失敗時，正式語意如下：
 也就是說，`Phase 2` 完成後的理想狀態，不是 Go 端已完全退出 `AnLF` 業務邏輯，
 而是它已不再主導 model lifecycle policy，為後續 prediction 與 accuracy owner
 下沉清出乾淨邊界。
+
+---
+
+## 15. Implementation Record
+
+### 15.1 Completion Summary
+
+`Phase 2` 已在 2026-07-10 完成實作與驗證。
+
+本次完成的核心 ownership 轉移是：
+
+1. `NWDAF/` 不再直接決定 model load、reuse、replacement、unload 的步驟
+2. `PyAnLF/` 成為 subscription runtime、shared model usage 與 replacement fallback
+   的主要 owner
+3. `MTLF` provision callback 與 Daisy retrain completion 已收斂成同一類
+   provision-style apply contract
+4. prediction call 已改以 `subscriptionId` 為主鍵，Go 端不再需要 backend
+   `modelId`
+5. static/default model selection 已移到 `PyAnLF/` 本地 config
+
+完成 commits：
+
+1. `NWDAF/` commit `62e2f9f`
+   - `refactor(anlf): delegate model lifecycle to backend`
+2. `PyAnLF/` commit `7a2ebc4`
+   - `feat(runtime): manage subscription model lifecycle`
+
+### 15.2 Final Internal API Shape
+
+Phase 2 最終採用以下 internal HTTP API：
+
+1. `PUT /subscriptions/{subscriptionId}/runtime`
+   - 對應 `ApplySubscriptionRuntime`
+   - 用於 registration、首次 activation、reuse 與 replacement
+2. `DELETE /subscriptions/{subscriptionId}/runtime`
+   - 對應 `ReleaseSubscriptionRuntime`
+   - backend 解除 subscription usage，最後一個使用者離開時才 unload
+3. `POST /subscriptions/{subscriptionId}/predict`
+   - `Predict` 名稱保留
+   - 主鍵由 `modelId` 改為 `subscriptionId`
+
+optional `GetSubscriptionRuntimeState` 沒有在本 phase 實作，因為目前 Go 端沒有
+立即需要主動查詢 backend runtime state 的流程；這不影響 Phase 2 completion。
+
+Apply request 最終包含：
+
+1. `subscription.subscription_id`
+2. `subscription.notif_corr_id`
+3. `subscription.evt_req`
+4. `subscription.event_subscriptions`
+5. optional `provision_context.source`
+6. optional `provision_context.mtlf_subscription_id`
+7. optional `provision_context.notif_subscription_id`
+8. optional `provision_context.ml_event_notif`
+
+Apply response 最終支援：
+
+1. `PENDING_PROVISION`
+2. `ACTIVATED`
+3. `REUSED`
+4. `REPLACED`
+5. `FAILED_USING_PREVIOUS`
+6. `FAILED_NO_PREVIOUS`
+
+response 另外保留 `active_model_reference`。它不是重新把 active model ownership
+交還 Go，而是暫時提供尚未搬移的 accuracy workflow 做 model-reference correlation。
+
+### 15.3 NWDAF Implementation
+
+`NWDAF/` 完成以下調整：
+
+1. `internal/anlf/backend.go`
+   - `AnlfBackendAPI` 移除 `LoadModel` 與 `UnloadModel`
+   - 新增 apply/release oriented methods
+   - `Predict` 改用 `subscriptionId`
+   - contract 盡量重用 free5GC generated OpenAPI models
+2. `internal/anlf/client/backend.go`
+   - 改用新的三個 subscription-oriented paths
+   - 保留 context、timeout、HTTP client injection 與 error wrapping
+3. `internal/anlf/model.go`
+   - 移除 `InitializeMlModel` 與 `SwapModel` low-level lifecycle policy
+   - 改為建立 subscription snapshot、呼叫 apply/release、處理 backend outcome
+   - 新增 retrain completion 到 provision-style apply 的轉譯
+4. `internal/anlf/mlmodel_notify.go`
+   - callback action 改為攜帶完整 apply request
+   - 先用 `notifCorreId` correlation，必要時再以 MTLF subscription ID 回查
+   - replacement 前不再先拆除舊 runtime correlation
+5. `internal/anlf/analytics.go`
+   - prediction 不再讀取 `modelId`
+   - 直接以 NWDAF subscription ID 呼叫 backend
+6. `internal/context/ml_model.go`
+   - 移除 per-subscription 與 shared `ModelId`
+   - 移除 Go-side load completion channel 與 wait barrier
+   - `SharedModelInfo` 只暫留 accuracy/retrain 所需的 model-reference correlation
+7. `internal/mtlf/`
+   - 移除 `onModelSwapReady` 與 `onModelSwapped` 兩段 callback
+   - Daisy completion 改走單一 `onModelProvisionUpdated`
+   - apply failure 會清除 retraining flag，讓舊模型繼續服務並允許後續重試
+8. `internal/sbi/processor/`
+   - 沒有 external MTLF 時，送出不含模型材料的 registration apply
+   - 有 external MTLF 時，保留 pending correlation 並等待 callback
+   - delete、update cleanup 與 scheduler completion 會送 release
+9. `pkg/factory/config.go` 與 `config/nwdafcfg.yaml`
+   - 移除 Go-side `mtlf.staticModelUrl`
+
+目前 free5GC OpenAPI v1.2.3 generated `MlEventNotif` 尚未包含本地新版
+TS 29.520 YAML 的 `modelUpdateInd`。本次沒有修改 generated code，而是在 internal
+contract 以 `MLEventNotification` 包裝 generated model，補上 retrain update 所需欄位。
+
+### 15.4 PyAnLF Implementation
+
+`PyAnLF/` 完成以下調整：
+
+1. 新增 `src/py_anlf/core/runtime_manager.py`
+   - `SubscriptionRuntimeManager` 成為 lifecycle owner
+   - per-subscription state 由 `SubscriptionRuntime` 保存
+   - per-model shared usage 由 `SharedModelRuntime` 保存
+2. activation 與 reuse
+   - 首次 model acquisition 成功回傳 `ACTIVATED`
+   - 相同 reference 已存在時重用 runtime，回傳 `REUSED`
+3. replacement 與 fallback
+   - candidate model 成功準備後才切換 active runtime
+   - candidate 準備失敗時保留舊 runtime
+   - 有舊 runtime 時回傳 `FAILED_USING_PREVIOUS`
+   - 無舊 runtime 時回傳 `FAILED_NO_PREVIOUS`
+4. release
+   - subscription release 只解除該 subscription 的 usage
+   - 最後一個使用者離開後才真正 unload model
+5. concurrency
+   - 同一 subscription 的 apply/release 會序列化
+   - 同一 model reference 的 concurrent apply 只會 load 一次
+   - reservation 避免 candidate 尚未綁定時被提早 unload
+   - 使用固定 striped locks，避免 lock registry 隨 subscription 永久增長
+6. `src/py_anlf/models.py`
+   - 新增 subscription/provision/apply/release/predict schemas
+   - 以 aliases 保留 `mLFileAddr`、`mLModelUrl`、`notifCorreId` 等規格語意
+   - 允許保留 backend 尚未消費的額外 spec-aligned fields
+7. `src/py_anlf/sbi/routers/analytics.py`
+   - 新增 lifecycle 與 subscription-keyed predict routes
+   - 以 FastAPI `app.state` 完成 dependency injection
+8. `src/py_anlf/sbi/server.py`
+   - 移除 class-level singleton manager dependency
+   - server 建立並持有 `ModelManager` 與 `SubscriptionRuntimeManager`
+9. `src/py_anlf/core/model_manager.py`
+   - 支援 HTTP、HTTPS、`file://` 與本地目錄 model references
+   - model registry 加鎖
+   - tar extraction 使用 Python 3.12 data filter
+   - 補齊 HTTP response、temporary file 與失敗 artifact cleanup
+10. `config/config.yaml`
+   - 新增 backend-local `model.default_model_reference`
+11. README、manual client 與 test dependencies
+   - README 改以 subscription-oriented API 為主要介面
+   - `tests/client_test.py` 改走 apply/predict/release
+   - `pyproject.toml` 與 `uv.lock` 加入 pytest/httpx 開發依賴
+
+舊 `/model/load`、`/model/unload`、`/predict` endpoints 仍暫時保留，符合本文件
+原先的 contract migration 策略；`NWDAF/` 已完全不再依賴它們。正式移除時機留給
+後續 phase 決定。
+
+### 15.5 Verification Record
+
+`NWDAF/` 已執行：
+
+```bash
+make test
+make build
+make lint
+```
+
+結果：
+
+1. full Go test suite 通過
+2. build 通過
+3. `golangci-lint` 回報 `0 issues`
+
+`PyAnLF/` 已執行：
+
+```bash
+uv run --group dev pytest -q
+```
+
+結果：
+
+1. `10 passed`
+2. domain tests 覆蓋 activation、reuse、replacement、fallback、release、default
+   policy 與 concurrent sharing
+3. API tests 覆蓋 apply/release/predict contract 與 invalid request
+
+另外完成一條 local live API interaction：
+
+1. 啟動目前工作樹的真實 PyAnLF service
+2. 以 Go contract 等價 payload 呼叫 registration apply
+3. default model bundle 實際載入並回傳 `ACTIVATED`
+4. subscription-keyed predict 回傳成功
+5. release 回傳 `released`
+
+本次 live interaction 驗證了真實 PyAnLF HTTP API 與模型載入；沒有啟動完整
+NWDAF、MTLF、SMF、UPF 環境，因此不宣稱完成完整 5GC end-to-end validation。
+
+### 15.6 Completion Assessment
+
+本 phase 的 completion criteria 已滿足：
+
+1. lifecycle policy 已移出 Go
+2. MTLF 與 Daisy 更新已收斂
+3. backend contract 已可用並有兩端 tests
+4. model usage tracking 與 fallback 已由 PyAnLF 主責
+5. Go 不再保存 backend `modelId`
+6. prediction 已改用 `subscriptionId`
+7. historical data shaping 與 analytics result formatting 未被提前搬移
+8. fallback 已有明確 implementation 與 tests
+
+仍保留給後續 phase 的項目：
+
+1. Phase 3：prediction request shaping、historical data handling 與 analytics runtime
+2. Phase 4：prediction bookkeeping、ground truth matching、accuracy evaluation 與
+   retrain input logic
+3. optional runtime query API
+4. legacy PyAnLF low-level endpoints 的正式移除
