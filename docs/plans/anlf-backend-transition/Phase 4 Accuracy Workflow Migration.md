@@ -2,7 +2,7 @@
 
 Date: 2026-07-11
 
-Status: Planned
+Status: Completed
 
 Parent plan:
 
@@ -1174,6 +1174,42 @@ Phase 4 完成必須同時滿足：
 
 如果 PyAnLF accuracy flow已加入但 Go舊 flow仍作為長期 fallback，或 Go仍以 model URL
 維護 replacement fan-out，本 phase 不算完成。
+
+### 17.1 Implementation Record
+
+Phase 4已於2026-07-11完成repository-level implementation：
+
+1. `NWDAF/` commit：`64fdf0a refactor(anlf): move accuracy workflow to backend`
+2. `PyAnLF/` commit：`60994c3 feat(accuracy): own model monitoring workflow`
+3. PyAnLF現在擁有model identity/generation mapping、prediction bookkeeping、observation-based
+   ground truth、per-model/per-scope monitor、metric calculation與accuracy report delivery
+4. Go AnLF auxiliary server新增`POST /model-accuracy-reports`，並將identity/generation-aware
+   report交給Go MTLF decision policy
+5. external MTLF subscription建立前後會同步model-provision binding；completion sync失敗時
+   rollback external subscription
+6. external MTLF callback與Daisy completion會正規化成完整model provision event，再由
+   PyAnLF自行resolve affected runtimes與執行replacement/fallback
+7. startup Daisy training透過`mtlf.modelProvider`取得固定bootstrap identity
+8. Go notifier不再記錄prediction；MTLF retrain guard與ADRF retrain inputs不再依賴Go AnLF
+   model usage registry
+9. `internal/anlf/accuracy`、`ModelAccuracyStore`、`SharedModelInfo`、兩個context registry與
+   coordinator model fan-out均已移除
+10. Go config已切換為`mtlf.accuracyPolicy`；PyAnLF `accuracy_monitor`持有measurement、
+    matching、retention與delivery設定
+
+實際驗證結果：
+
+1. `PyAnLF/`：`uv run pytest`，24項測試通過
+2. `NWDAF/`：`make lint`、`go test ./...`與`make build`通過
+3. `NWDAF/`：AnLF、MTLF、context與SBI targeted race tests通過
+4. 真實Go到PyAnLF HTTP contract通過，涵蓋runtime apply、observation binding、observation
+   ingestion、analytics callback與runtime release
+5. `go list -deps ./cmd`確認主程式不再依賴`internal/anlf/accuracy`
+6. 兩個implementation repos的`git diff --check`通過
+
+尚未執行完整5GC、external MTLF、MongoDB/ADRF與Daisy同時運行的環境級實驗。因此本phase
+的Completed代表repository responsibility migration、unit/API/race/build與local live contract
+已完成，不宣稱完整部署環境的端到端實驗已完成。
 
 ---
 

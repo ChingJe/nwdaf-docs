@@ -2,7 +2,7 @@
 
 Date: 2026-07-07
 
-Status: Preparation completed; Phase 1 completed; Phase 2 completed; Phase 3 completed; Phase 3.5 completed; Phase 4 planned
+Status: Preparation completed; Phase 1 completed; Phase 2 completed; Phase 3 completed; Phase 3.5 completed; Phase 4 completed
 
 Related source line:
 
@@ -329,7 +329,7 @@ subscription lifecycle、retry/dedup、config schema 或 Phase 3 failure semanti
 
 ### 8.5 Phase 4: Accuracy Workflow Migration
 
-Status: Planned
+Status: Completed
 
 目標：
 
@@ -365,6 +365,19 @@ Status: Planned
 
 完整 identity、contract、config、migration sequence、failure semantics與 verification plan
 見 `Phase 4 Accuracy Workflow Migration.md`。
+
+完成結果：
+
+1. PyAnLF已接手prediction、ground truth、per-model/per-scope accuracy monitor與report delivery
+2. Go MTLF保留decision/retrain policy，並以model identity、generation與scope接收report
+3. provision binding在external MTLF callback前同步，Daisy與external MTLF completion收斂成
+   backend-owned model provision event
+4. Go-side accuracy package、model accuracy store、shared model registry與coordinator fan-out
+   已移除
+5. Go/Python config ownership已拆分，startup model使用固定bootstrap identity
+6. NWDAF commit為`64fdf0a`，PyAnLF commit為`60994c3`
+7. Python tests、Go tests/lint/build、targeted race與真實cross-repo HTTP contract均通過
+8. 完整5GC、external MTLF、ADRF與Daisy共同運行的環境級實驗尚未執行
 
 ---
 
