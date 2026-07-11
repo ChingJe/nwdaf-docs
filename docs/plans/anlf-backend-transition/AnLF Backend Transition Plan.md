@@ -329,6 +329,8 @@ subscription lifecycle、retry/dedup、config schema 或 Phase 3 failure semanti
 
 ### 8.5 Phase 4: Accuracy Workflow Migration
 
+Status: Planned
+
 目標：
 
 1. 把 prediction bookkeeping、ground truth matching、AnLF-side Analytics/ML Model
@@ -341,6 +343,28 @@ subscription lifecycle、retry/dedup、config schema 或 Phase 3 failure semanti
    決定受影響的 subscriptions 與 replacement/fallback 行為
 6. 替換 accuracy/retrain 對 Go model-to-subscription registry 的依賴後，移除
    `SharedModelInfo`、`sharedModelRegistry` 與 coordinator 的 model fan-out
+
+已確認的方向：
+
+1. 每個 stable model identity 擁有一個 monitor，monitor 內依 Analytics ID、target、
+   filter 等 monitoring context 維護多個 scopes
+2. `modelUniqueId` 與 model URL、Daisy TID、loaded-instance UUID 分離
+3. PyAnLF 從既有 observation stream 形成 ground truth，並擁有 prediction bookkeeping、
+   matching、metrics 與 report trigger
+4. PyAnLF 先將 accuracy information callback Go，再由 Go 交給目前的 MTLF
+5. MTLF degradation/retrain decision policy 保留在 Go；未來 PyMTLF transition 另行規劃
+6. 缺少 stable model identity 的模型可繼續 inference，但不啟動 accuracy monitoring
+7. 同 identity retrain 沿用 model ID，成功後切換 generation並重置 active monitor/policy
+   state；失敗時保留舊 generation
+8. Daisy task ID只作 training correlation，不作 model identity
+9. 完整 model provision event交給 PyAnLF，由 backend決定 affected runtimes與 fallback
+10. 本 phase 不實作完整標準 `Nnwdaf_MLModelMonitor` service lifecycle，但 internal
+    contract欄位應可對應標準語意
+11. external MTLF subscription建立前，Go先將 notification/provision correlation同步給
+    PyAnLF，確保 callback可由 backend自行 resolve runtimes
+
+完整 identity、contract、config、migration sequence、failure semantics與 verification plan
+見 `Phase 4 Accuracy Workflow Migration.md`。
 
 ---
 
@@ -366,20 +390,21 @@ subscription lifecycle、retry/dedup、config schema 或 Phase 3 failure semanti
 
 ---
 
-## 10. Open Questions
+## 10. Confirmed Final Boundary
 
-Phase 2 已確認 subscription runtime activation state 由 `PyAnLF` 擁有。
+Phase 4 planning 已解決原本保留的 ownership questions：
 
-以下問題仍屬後續 phase 需要逐步決策的範圍：
-
-1. prediction 與 accuracy 遷移後，Go 應以何種最小資料保存標準 subscription、MTLF
-   subscription 與 retrain procedure correlation；model-to-subscription ownership 已確認
-   應由 AnLF Backend 擁有
-2. ground truth 資料與 accuracy monitor 資料的最終 owner 要如何切分
-3. `MTLF` 與 `PyAnLF` 的互動是否要始終經過 `NWDAF/`，還是某些資料可由
-   `PyAnLF` 直接承接
-
-這些問題不應在未經 phase 選擇的情況下提前一次解完。
+1. subscription runtime、model usage、model-to-subscription mapping、prediction、ground truth
+   與 accuracy monitor 由 PyAnLF 擁有
+2. Go 保留標準 analytics subscription、MTLF subscription、notification correlation、
+   retrain task 與 MTLF decision state
+3. PyAnLF 與目前 MTLF 的互動先經過 Go；未來若引入 PyMTLF，仍由 Go 維持兩個 backend
+   boundary 之間的 coordination
+4. model provision callback 與 Daisy completion 由 Go 正規化後整體轉交 PyAnLF，不再由 Go
+   決定 per-subscription model fan-out
+5. callback 所需的標準 procedure correlation 會預先同步給 PyAnLF，不以 Go model registry
+   代替 backend runtime resolution
+6. 完整 `Nnwdaf_MLModelMonitor` service 與 persistent model catalog 保留為 future work
 
 ---
 
@@ -394,14 +419,12 @@ Phase 2 已確認 subscription runtime activation state 由 `PyAnLF` 擁有。
 1. 接手 Python-side migration 相關 future work 的新主文件
 2. 與 `free5gc-alignment` 平行存在的新主題工作線
 
-### 11.2 Future Phase Documents
+### 11.2 Phase Documents
 
-當某個 phase 被正式選定後，應在同資料夾下建立對應的細部文件，例如：
+各 phase 的細部文件位於同資料夾：
 
 1. `Phase 1 Backend Boundary Alignment.md`
 2. `Phase 2 Model Lifecycle Migration.md`
 3. `Phase 3 Analytics Runtime Migration.md`
 4. `Phase 3.5 Go Package Boundary Consolidation.md`
 5. `Phase 4 Accuracy Workflow Migration.md`
-
-在那之前，這份主文件維持高層規劃即可。
