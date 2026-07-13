@@ -2,7 +2,7 @@
 
 Date: 2026-07-13
 
-Status: Analytics slice completed with R1; Accuracy, Model, and Reporting slices planned
+Status: Analytics, Accuracy, Model, and Reporting slices implemented and locally verified; R5 closure pending
 
 Parent plan:
 
@@ -327,7 +327,25 @@ Initial failure摘要：
 完整修復前failure inventory另包含anchor drift timestamp、same-slot representative timestamp與獨立
 mean timestamp fixture。正式implementation沒有提交red state；fixtures與fix保持同一個green change。
 
-本slice完成不代表R0整體完成。Accuracy、Model與Reporting slices仍需分別伴隨R2至R4落地。
+2026-07-13完成Analytics slice時，R0整體仍需等待Accuracy、Model與Reporting slices伴隨R2至R4落地；
+目前整體狀態見下一節與文件頂端status。
+
+### 10.2 Reporting Slice Implementation Result（2026-07-14）
+
+R0 Reporting slice已和R4一起完成：
+
+1. `reporting_lifecycle_cases.json`建立6組language-neutral scheduler boundary fixtures
+2. 每組fixture記錄`NWDAF@0db9584` notifier source/test provenance、logical clock、limits與expected reason
+3. Fixtures涵蓋max未達、max已達、zero unlimited、monDur future/expired及兩限制同時成立的priority
+4. `test_reporting.py`另外驗證attempt-before-generation、transient recovery、typed stale stop與explicit stop
+5. 修復前selected test在collection階段因缺少typed stop/completion contract失敗
+6. 修復後Reporting tests為12 passed，PyAnLF full suite為129 passed
+7. Go-side context、coordinator與handler tests驗證inactive transition、missing/duplicate/stale/future semantics
+8. Completion delivery tests驗證stable payload、retry-until-`204`、`400` retention與shutdown abandonment
+
+本slice的approved change仍是`immRep=false`先等待一個period；不恢復historical unconditional immediate
+report。R0四個slices已具有provenance、failure evidence與green tests，但整體remediation仍需R5執行
+environment verification與status closure。
 
 ---
 

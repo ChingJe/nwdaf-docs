@@ -2,7 +2,7 @@
 
 Date: 2026-07-13
 
-Status: R0 Analytics/Accuracy slices and R1-R3 implemented and locally verified; R4-R5 pending
+Status: R0-R4 implemented and locally verified; R5 verification and closure pending
 
 Parent plan:
 
@@ -1120,6 +1120,17 @@ P0/P1 finding。FastAPI與Go client contract tests已通過；live Go/PyAnLF pro
 ### 16.5 R4 Complete
 
 Scheduler completion、transient error recovery與Go inactive callback通過。
+
+2026-07-14 result：R4已完成repository-level implementation與local verification。PyAnLF scheduler只emit
+immutable completion signal；runtime manager finalizer完成revision-aware local cleanup；process-local tombstone
+持續retry至Go `204`；revision high-water避免natural release後重用revision。Go新增AnLF private callback route、
+atomic inactive transition與post-completion observation producer gate，沒有反向DELETE backend或清理SMF/UPF
+references。
+
+R0 Reporting fixture以`NWDAF@0db9584`為provenance，initial red evidence已保存。PyAnLF full tests為129
+passed；NWDAF `make test`、targeted race、`make build`與`make lint`均通過，lint為0 issues。完整review沒有
+未處理P0/P1 finding。`TestLivePyAnLFContract`已涵蓋completion callback，但因未設定
+`PYANLF_LIVE_ENDPOINT`而skip，因此不宣稱environment-level cross-process E2E。
 
 ### 16.6 Remediation Complete
 

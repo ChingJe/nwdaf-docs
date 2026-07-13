@@ -2,7 +2,7 @@
 
 Date: 2026-07-13
 
-Status: R1 analytics, R2 accuracy, and R3 model lifecycle findings remediated locally; R4 findings remain open
+Status: R1-R4 findings remediated and locally verified; R5 environment verification and closure pending
 
 Related plans:
 
@@ -1267,9 +1267,9 @@ R3不是純historical Go parity：shared loading/fallback/release保留historica
 與same-URL reload是migration adaptation；multi-runtime atomic commit與explicit event ID是新增的cross-process
 correctness guarantees。
 
-### 17.3 Remaining Status Rule
+### 17.3 Repository-level Status Rule
 
-在以下條件完成前，Phase 3與Phase 4不得恢復成無條件 `Completed`：
+以下條件是Phase 3與Phase 4恢復repository-level completed的必要條件：
 
 1. historical analytics shaping fixtures在PyAnLF通過
 2. exact-slot、UL/DL與metric compatibility fixtures通過
@@ -1281,17 +1281,35 @@ correctness guarantees。
 Phase 3.5是Go package boundary的behavior-preserving refactor，目前沒有證據需要撤銷其完成狀態。
 Phase 1 naming/boundary work也沒有在本audit發現主要behavior regression。
 
+2026-07-14 R4 closure後上述條件已在repository-level滿足；parent Phase 3/4的最終無條件status restoration
+仍依R5處理environment-level HTTP E2E與完整audit closure。
+
+### 17.4 R4 Closure Update
+
+2026-07-14完成R4 repository-level implementation與verification。BP-24 scheduler completion leak與BP-25
+transient scheduler exit已由manager-owned completion finalizer、retry-until-`204` tombstone、Go revision-aware
+inactive callback與scheduler error recovery closure。
+
+PyAnLF additionally使用process-local per-subscription revision high-water避免old completion關閉natural release後
+重新建立的same-ID runtime。Go的completion compare-and-transition在單一runtime lock內完成；missing、duplicate與
+old revision視為已消費，future revision回`409`等待收斂。UPF producer gate停止inactive-only source的新backend
+enqueue，但沒有改動SMF/UPF collection、traffic storage、ADRF state或single observation worker。
+
+R0 Reporting fixtures與tests保留`NWDAF@0db9584`的max/monDur/attempt semantics；`immRep`維持已核准的新
+行為。PyAnLF 129 tests、NWDAF full/focused tests、targeted race、build與lint通過，review沒有未處理P0/P1
+finding。Live process test因`PYANLF_LIVE_ENDPOINT`未設定而skip，故R4標記repository-level completed，
+environment-level HTTP E2E仍由R5處理。
+
 ---
 
 ## 18. Immediate Next Step
 
-R0至R3的對應implementation已完成。下一步應依`Behavioral Parity Remediation Plan.md`進入R4：
+R0至R4的對應implementation已完成。下一步依`Behavioral Parity Remediation Plan.md`進入R5：
 
-1. 完成scheduler正常終止時的runtime-completed callback
-2. 讓Go idempotently標記subscription inactive並release backend runtime
-3. 補transient scheduler error recovery與completion retry/tombstone
-4. 維持SMF/UPF collection cleanup不在本輪的既定boundary
-5. R4後執行R5 verification與status closure
+1. 執行可用環境下的real Go/PyAnLF HTTP completion contract test
+2. 重新核對cross-language fixtures、MTLF policy input與full repository verification
+3. 確認accepted restart durability、collection cleanup與observation worker risks仍正確記錄
+4. 完成audit closure與parent Phase 3/4 status restoration
 
 本audit的主要原則是：
 

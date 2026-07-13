@@ -2,7 +2,7 @@
 
 Date: 2026-07-14
 
-Status: Planned; implementation not started
+Status: Repository-level implementation completed and locally verified; live cross-process HTTP E2E pending
 
 Parent plan:
 
@@ -1225,13 +1225,84 @@ audit closure與status restoration。
 
 ## 23. Implementation Record
 
-尚未開始。Implementation完成後必須補充：
+Implementation於2026-07-14完成，尚未建立repository commits。
 
-1. PyAnLF commit
-2. NWDAF commit
-3. Initial failure evidence
-4. Implemented contract與state machine差異
-5. Verification commands與結果
-6. Live HTTP E2E是否執行
-7. Remaining accepted risks
-8. Review findings與closure
+### 23.1 Initial Failure Evidence
+
+在production code修改前新增`tests/test_reporting.py`並執行：
+
+```text
+uv run pytest -q tests/test_reporting.py
+```
+
+Test collection因current `py_anlf.core.reporting`不存在`ReportingRuntimeStopped`與completion contract而
+失敗。這是預期的第一個R4 boundary failure：current scheduler只會直接return，沒有typed stale stop、normal
+completion signal或manager-owned finalization。正式worktree隨後一起加入tests與fix，沒有保留red commit。
+
+R0 Reporting slice另外建立
+`tests/fixtures/behavioral_parity/reporting_lifecycle_cases.json`，以`NWDAF@0db9584`的
+`internal/notifier/notifier.go`與`notifier_test.go`記錄max-report、monitoring-duration、zero-unlimited與
+combined-limit check order。Fixture expected values不是由current PyAnLF output產生。
+
+### 23.2 Implemented PyAnLF Behavior
+
+1. `ReportingScheduler`新增subscription/revision-aware immutable completion signal
+2. Max report先於monitoring duration判斷，report sequence維持attempt-before-generation/send
+3. `ReportingRuntimeStopped`直接停止且不建立normal completion
+4. Transient generation或sender exception等待下一個`repPeriod`後繼續
+5. `SubscriptionRuntimeManager`擁有unbounded signal queue與單一finalizer worker
+6. Finalizer在subscription/state lock內驗證revision並移除runtime，鎖外清理accuracy、observation與model
+7. Process-local revision high-water在normal/explicit release後仍保留，防止same-ID revision reuse
+8. `RuntimeCompletionDelivery`保存stable event/tombstone，所有non-`204`結果固定間隔retry
+9. Delivery提供created、acknowledged、retry、contract-error、stale-signal、abandoned與tombstone stats
+10. Dedicated `runtime_completion_delivery` config驗證timeout與retry interval必須為正數
+
+### 23.3 Implemented NWDAF Behavior
+
+1. Apply runtime contract新增required `runtime_completion_callback_uri`
+2. Coordinator依advertised AnLF server URI建立callback address
+3. AnLF server新增`POST /subscriptions/{subscriptionId}/runtime-completions`
+4. HTTP edge保持API -> processor -> coordinator -> context分層
+5. `Subscription.CompleteRuntime`在單一runtime lock內完成revision compare與inactive transition
+6. Current/duplicate/missing/stale completion回`204`；future revision回`409`；invalid request回`400`
+7. Completion path不呼叫PyAnLF DELETE、不刪除`MlModelInfo`、不清理SMF/UPF references
+8. UPF producer只在source仍有active NWDAF subscriber時enqueue PyAnLF；traffic storage與ADRF path不變
+
+### 23.4 Verification
+
+Executed successfully：
+
+```text
+cd PyAnLF
+uv run pytest -q
+# 129 passed
+
+cd NWDAF
+make test
+go test -race ./internal/anlf/... ./internal/context ./internal/sbi/processor
+make build
+make lint
+# golangci-lint: 0 issues
+```
+
+Focused Python tests另驗證scheduler boundaries、transient recovery、stable retry payload、`400` retention、
+revision high-water、stale signal、explicit release、shared model/source與scheduler-to-callback component flow。
+Focused Go tests驗證route/status matrix、atomic transition、coordinator semantics、active-source gate與shared source。
+
+`TestLivePyAnLFContract`已擴充為同時等待analytics report與runtime completion callback，但本環境未設定
+`PYANLF_LIVE_ENDPOINT`，因此`make test`中該running-process test被skip。Repository-level contract tests通過；
+不得描述為完整cross-process E2E。
+
+### 23.5 Review And Remaining Risks
+
+完整diff review沒有未處理P0/P1 finding。確認以下為approved remaining risks：
+
+1. Completion tombstone與revision high-water不跨PyAnLF restart持久化
+2. Completion delivery使用單一bounded-request worker，可能有一個request-timeout的head-of-line delay
+3. Completion前已通過gate或已queued的observation仍可能有限度送達
+4. Go保留`MlModelInfo`、SMF/UPF references、traffic與ADRF state
+5. `monDur`於下一個scheduler tick判斷，最多延遲一個`repPeriod`
+6. Accuracy與analytics report仍採各自既定finite retry policy，不提升為completion tombstone guarantee
+
+R4因此標記為repository-level completed。R5仍需執行cross-language/full environment verification、audit
+closure與parent status restoration。
