@@ -2,7 +2,7 @@
 
 Date: 2026-07-11
 
-Status: Completed
+Status: Responsibility migration implemented; behavioral parity validation incomplete
 
 Parent plan:
 
@@ -11,6 +11,15 @@ Parent plan:
 Previous phase:
 
 - `Phase 3.5 Go Package Boundary Consolidation.md`
+
+Follow-up audit:
+
+- `Behavioral Parity Audit.md`
+- `Behavioral Parity Remediation Plan.md`
+- 2026-07-13 稽核確認 accuracy ownership 與 Go/PyAnLF contract 已切換，但 exact-slot
+  matching、UL/DL channel metrics、periodic cadence、traffic scale、scope canonicalization、
+  model identity/generation registry 與 lifecycle completion 尚未符合原計畫或搬移前 Go
+  行為；目前不得把 repository-level test pass 解讀為 behavioral parity 已完成。
 
 ---
 
@@ -1177,7 +1186,10 @@ Phase 4 完成必須同時滿足：
 
 ### 17.1 Implementation Record
 
-Phase 4已於2026-07-11完成repository-level implementation：
+2026-07-11 完成的是 Phase 4 的 repository-level responsibility migration 與 contract
+cutover。2026-07-13 稽核確認下列紀錄不構成 historical Go accuracy behavioral parity
+證明；已知 matching、metric、cadence、identity 與 lifecycle 差異統一記錄於
+`Behavioral Parity Audit.md`：
 
 1. `NWDAF/` commit：`64fdf0a refactor(anlf): move accuracy workflow to backend`
 2. `PyAnLF/` commit：`60994c3 feat(accuracy): own model monitoring workflow`
@@ -1207,9 +1219,9 @@ Phase 4已於2026-07-11完成repository-level implementation：
 5. `go list -deps ./cmd`確認主程式不再依賴`internal/anlf/accuracy`
 6. 兩個implementation repos的`git diff --check`通過
 
-尚未執行完整5GC、external MTLF、MongoDB/ADRF與Daisy同時運行的環境級實驗。因此本phase
-的Completed代表repository responsibility migration、unit/API/race/build與local live contract
-已完成，不宣稱完整部署環境的端到端實驗已完成。
+尚未執行完整5GC、external MTLF、MongoDB/ADRF與Daisy同時運行的環境級實驗。上述結果只
+代表repository responsibility migration、unit/API/race/build與local live contract已完成，
+既不宣稱完整部署環境的端到端實驗已完成，也不宣稱與搬移前Go行為完全等價。
 
 ---
 

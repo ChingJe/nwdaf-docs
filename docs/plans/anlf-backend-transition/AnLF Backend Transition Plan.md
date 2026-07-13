@@ -2,11 +2,21 @@
 
 Date: 2026-07-07
 
-Status: Preparation completed; Phase 1 completed; Phase 2 completed; Phase 3 completed; Phase 3.5 completed; Phase 4 completed
+Status: Preparation, Phase 1, Phase 2, and Phase 3.5 completed; Phase 3 and Phase 4 responsibility migration implemented, behavioral parity validation incomplete
 
 Related source line:
 
 - `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 14 HTTP Edge Shape And Flow Alignment Plan.md`
+- `Behavioral Parity Audit.md`
+- `Behavioral Parity Remediation Plan.md`
+
+Audit note:
+
+- 2026-07-13 的遷移等價性稽核確認 Phase 3 與 Phase 4 已完成責任邊界切換，但
+  PyAnLF 尚未完整保留搬移前 Go analytics shaping、accuracy measurement、report cadence、
+  scope identity 與 model generation 語意。完整證據、風險與已確認決策以
+  `Behavioral Parity Audit.md` 為來源；R0至R5實作順序、contract、tests與completion criteria
+  由`Behavioral Parity Remediation Plan.md`承接。
 
 ---
 
@@ -256,7 +266,7 @@ Implementation commits:
 
 ### 8.3 Phase 3: Analytics Runtime Migration
 
-Status: Completed
+Status: Responsibility migration implemented; behavioral parity validation incomplete
 
 目標：
 
@@ -278,6 +288,10 @@ Status: Completed
    `failEventReports/OTHER`，不保留 Go fallback scheduler
 
 完成結果：
+
+以下項目只表示 ownership、transport 與 contract 已完成切換。2026-07-13 behavioral
+parity audit 已確認 historical input shaping、timestamp alignment 與 zero-padding 尚未完整
+移植，不能把此處的 repository-level 驗證解讀為 Phase 3 行為等價完成。
 
 1. Go production flow 已移除低階 `Predict`、local analytics scheduler 與 prediction shaping
 2. PyAnLF 已接手 shared observation store、alignment、window shaping、inference 與
@@ -329,7 +343,7 @@ subscription lifecycle、retry/dedup、config schema 或 Phase 3 failure semanti
 
 ### 8.5 Phase 4: Accuracy Workflow Migration
 
-Status: Completed
+Status: Responsibility migration implemented; behavioral parity validation incomplete
 
 目標：
 
@@ -367,6 +381,11 @@ Status: Completed
 見 `Phase 4 Accuracy Workflow Migration.md`。
 
 完成結果：
+
+以下項目只表示 accuracy ownership 與 Go/PyAnLF contract 已完成切換。2026-07-13
+behavioral parity audit 已確認 matching、metric/cadence、scope identity、model
+identity/generation 與 completion lifecycle 尚有不等價或缺口，不能把此處的測試通過
+解讀為 Phase 4 行為等價完成。
 
 1. PyAnLF已接手prediction、ground truth、per-model/per-scope accuracy monitor與report delivery
 2. Go MTLF保留decision/retrain policy，並以model identity、generation與scope接收report
@@ -441,3 +460,4 @@ Phase 4 planning 已解決原本保留的 ownership questions：
 3. `Phase 3 Analytics Runtime Migration.md`
 4. `Phase 3.5 Go Package Boundary Consolidation.md`
 5. `Phase 4 Accuracy Workflow Migration.md`
+6. `Behavioral Parity Audit.md`

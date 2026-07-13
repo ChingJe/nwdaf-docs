@@ -2,7 +2,7 @@
 
 Date: 2026-07-10
 
-Status: Implemented
+Status: Responsibility migration implemented; behavioral parity validation incomplete
 
 Parent plan:
 
@@ -11,6 +11,14 @@ Parent plan:
 Previous phase:
 
 - `Phase 2 Model Lifecycle Migration.md`
+
+Follow-up audit:
+
+- `Behavioral Parity Audit.md`
+- `Behavioral Parity Remediation Plan.md`
+- 2026-07-13 稽核確認 observation transport、runtime ownership 與 callback boundary 已切換，
+  但原 Go `alignAndZipInMemory` 的 source/session identity、two-step alignment、zero-padding、
+  output timestamp 與 rounding 語意尚未完整移植；原訂 PyAnLF parity tests 亦未落地。
 
 ---
 
@@ -1223,7 +1231,10 @@ Phase 3 不應因為預期 Phase 4 會再搬移，而留下兩套 analytics gene
 
 ## 17. Implementation Record
 
-Phase 3 已於 2026-07-10 完成實作，實際結果如下。
+2026-07-10 完成的是 Phase 3 的 responsibility migration 與 repository-level contract
+cutover，實際結果如下。2026-07-13 稽核確認下列紀錄不構成 historical Go analytics
+behavioral parity 證明；已知 shaping 差異與待補驗證統一記錄於
+`Behavioral Parity Audit.md`。
 
 ### 17.1 PyAnLF
 
