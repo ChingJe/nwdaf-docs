@@ -304,6 +304,22 @@ batch ID dedup、confidence-0 fallback 與 shutdown cleanup。
 
 Conclusion: planned acceptance criteria were not satisfied.
 
+### R1 Closure Update（2026-07-13）
+
+BP-01至BP-06已由R0 Analytics slice與R1 implementation關閉：
+
+1. 建立11組具有historical provenance的analytics golden fixtures
+2. 修復前以`8 failed, 3 passed`重現zero-padding、source identity、global origin、mean timestamp與
+   rounding差異
+3. PyAnLF新增source-aware snapshot與pure two-step alignment
+4. Predictor input、first target timestamp、retention、fallback clock與source ordering均有component tests
+5. Focused tests為`24 passed`，PyAnLF full suite為`41 passed`
+
+Closure implementation：`PyAnLF@fc59df2`。
+
+這項closure只代表analytics shaping已恢復。BP-07之後的accuracy、identity/generation與reporting
+lifecycle findings仍維持open；Phase 3/4整體狀態仍是`behavioral parity validation incomplete`。
+
 ---
 
 ## 6. Confirmed Phase 4 Accuracy Findings

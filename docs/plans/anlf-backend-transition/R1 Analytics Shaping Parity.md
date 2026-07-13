@@ -2,7 +2,7 @@
 
 Date: 2026-07-13
 
-Status: Ready for implementation
+Status: Completed in `PyAnLF@fc59df2`
 
 Parent plan:
 
@@ -484,4 +484,76 @@ R1完成必須同時滿足：
 
 ## 16. Progress
 
-尚未開始implementation。
+### 16.1 Initial Failure Evidence（2026-07-13）
+
+Command：
+
+```bash
+uv run pytest -q tests/test_analytics_parity.py
+```
+
+在套用production fix前，tests只作current `_shape_observations()`的最小flatten adapter。結果為：
+
+```text
+8 failed, 3 passed
+```
+
+Failed fixtures：
+
+1. `analytics-missing-middle-slot`
+2. `analytics-anchor-drift`
+3. `analytics-duplicate-last-wins`
+4. `analytics-two-sources-different-anchor`
+5. `analytics-same-metadata-different-source`
+6. `analytics-mean-output-timestamp`
+7. `analytics-round-positive-half`
+8. `analytics-round-negative-half`
+
+Originally passing fixtures為clean single source、same-anchor aggregation與input-window cap。Failure
+內容和BP-01至BP-05一致，沒有調整expected values迎合current output。
+
+### 16.2 Implemented Scope（2026-07-13）
+
+PyAnLF已完成：
+
+1. `ObservationStore`回傳含`observation_source_id`的deep-copied `StoredObservation` snapshot
+2. Source採stable sorted order，source內維持ingest order
+3. Store retention與Analytics runtime共用manager注入的UTC clock dependency
+4. 新增`core/alignment.py`承載Go-compatible Unix seconds、half-away-from-zero與two-step alignment
+5. Session identity加入source、IP、SUPI、DNN與S-NSSAI
+6. 恢復same-session last-wins、cross-session sum、mean center timestamp、internal zero-padding與window cap
+7. `AnalyticsRuntime`一次讀取logical time，並以最後shaped slot推導first prediction timestamp
+8. Accuracy monitor只機械式解包source-aware record，未改matching、cadence、metrics或state lifecycle
+9. HTTP observation contract、Go worker、scheduler、predictor與model lifecycle未修改
+
+Implementation commit：`PyAnLF@fc59df2 fix(analytics): restore historical shaping semantics`。
+
+BP closure：
+
+| Finding | Closure |
+| --- | --- |
+| BP-01 | continuous range fixture固定internal zero-padding |
+| BP-02 | source-aware snapshot與same-metadata/different-source fixture固定source separation |
+| BP-03 | injected inference clock與different-anchor fixture固定global origin |
+| BP-04 | mean timestamp fixtures固定rounded center mean |
+| BP-05 | positive/negative half fixtures固定Go-compatible round |
+| BP-06 | 11組historical fixtures、runtime及store component tests補齊驗證 |
+
+### 16.3 Verification（2026-07-13）
+
+```text
+uv run pytest -q tests/test_analytics_parity.py tests/test_analytics_runtime.py tests/test_accuracy_monitor.py
+24 passed
+
+uv run pytest -q
+41 passed
+
+git diff --check
+passed
+```
+
+未執行NWDAF Go suite、cross-repo HTTP E2E或實際5GC environment test，因R1沒有修改Go/API contract，
+且本stage驗收是deterministic PyAnLF shaping parity。沒有發現需要偏離計畫或擴張R1 scope的blocker。
+
+R1完成只關閉analytics shaping BP-01至BP-06；R2 accuracy findings仍未修正，整體migration狀態繼續
+維持`behavioral parity validation incomplete`。

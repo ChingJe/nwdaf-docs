@@ -17,6 +17,8 @@ Audit note:
   scope identity 與 model generation 語意。完整證據、風險與已確認決策以
   `Behavioral Parity Audit.md` 為來源；R0至R5實作順序、contract、tests與completion criteria
   由`Behavioral Parity Remediation Plan.md`承接。
+- 2026-07-13 已完成R0 Analytics slice與R1，恢復source-aware two-step alignment、internal
+  zero-padding、mean timestamp及Go-compatible rounding；accuracy與後續lifecycle remediation仍未完成。
 
 ---
 

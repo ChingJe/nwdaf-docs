@@ -2,7 +2,7 @@
 
 Date: 2026-07-13
 
-Status: Planned; Analytics slice ready for implementation
+Status: Analytics slice completed with R1; Accuracy, Model, and Reporting slices planned
 
 Parent plan:
 
@@ -300,6 +300,34 @@ Final verification:
 
 Initial failure evidence至少要覆蓋BP-01至BP-05，BP-06由完整fixture/test inventory關閉。
 
+### 10.1 Implementation Result（2026-07-13）
+
+R0 Analytics slice已和R1一起完成：
+
+1. `PyAnLF/tests/fixtures/behavioral_parity/analytics_cases.json`建立11組language-neutral fixtures
+2. Fixture逐組記錄historical commit、source path、test path與expected output
+3. `test_analytics_parity.py`直接驗證pure alignment，不以current PyAnLF output產生expected values
+4. 修復前執行結果為`8 failed, 3 passed`
+5. 修復後11組fixtures、正負half-round helper與source ordering assertion全數通過
+6. Analytics runtime component test另外驗證predictor input與first prediction target timestamp
+
+Implementation commit：`PyAnLF@fc59df2`。
+
+Initial failure摘要：
+
+| Fixture | Current result | Historical expected | Root mismatch |
+| --- | --- | --- | --- |
+| `analytics-missing-middle-slot` | `[t0, t10]` | `[t0, zero@t5, t10]` | existing buckets only |
+| `analytics-same-metadata-different-source` | UL 20 | UL 30 | source ID在shaping前遺失 |
+| `analytics-two-sources-different-anchor` | timestamp 27 | timestamp 26 | maximum raw timestamp取代mean center |
+| `analytics-round-positive-half` | 兩筆合併於raw t5 | centers 0與10 | Python half-to-even |
+| `analytics-round-negative-half` | 只保留一筆 | centers 0與10 | timestamp sort加Python half-to-even |
+
+完整修復前failure inventory另包含anchor drift timestamp、same-slot representative timestamp與獨立
+mean timestamp fixture。正式implementation沒有提交red state；fixtures與fix保持同一個green change。
+
+本slice完成不代表R0整體完成。Accuracy、Model與Reporting slices仍需分別伴隨R2至R4落地。
+
 ---
 
 ## 11. Completion Criteria
@@ -324,4 +352,3 @@ Initial failure evidence至少要覆蓋BP-01至BP-05，BP-06由完整fixture/tes
 5. Parent remediation plan與audit已更新實際verification結果
 
 R0完成只代表compatibility oracle完整；整體remediation仍需通過R5 full verification與code review。
-
