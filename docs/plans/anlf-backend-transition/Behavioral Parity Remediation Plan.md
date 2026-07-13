@@ -18,6 +18,7 @@ Detailed plans:
 - `R1 Analytics Shaping Parity.md`
 - `R2 Accuracy Measurement Parity.md`
 - `R3 Model Identity Generation And Provision Correctness.md`
+- `R4 Scheduler And Subscription Lifecycle.md`
 
 Affected implementation repositories:
 
@@ -769,6 +770,10 @@ Capacity需有bounded default與unit tests；可沿用現有dedup capacity patte
 ---
 
 ## 11. R4: Complete Scheduler And Subscription Lifecycle
+
+Detailed implementation plan:
+
+- `R4 Scheduler And Subscription Lifecycle.md`
 
 ### 11.1 Completion Conditions
 
