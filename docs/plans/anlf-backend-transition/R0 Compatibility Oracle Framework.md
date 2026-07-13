@@ -12,6 +12,7 @@ Related records:
 
 - `Behavioral Parity Audit.md`
 - `R1 Analytics Shaping Parity.md`
+- `R2 Accuracy Measurement Parity.md`
 
 Affected repositories:
 
@@ -216,7 +217,7 @@ Tests必須重複或打亂不具語意的container insertion order，證明：
 | R0 slice | Paired stage | Main fixture families | Completion meaning |
 | --- | --- | --- | --- |
 | Analytics | R1 | alignment、source identity、padding、target timestamp | Model input shaping恢復歷史語意 |
-| Accuracy | R2 | slot matching、UL/DL metrics、cadence、warmup、scope | MTLF measurement input恢復歷史語意 |
+| Accuracy | R2 | slot matching、UL/DL metrics、cadence、confidence readiness、scope、per-session ring cap | MTLF measurement input恢復歷史語意 |
 | Model | R3 | identity、generation、same URL、dedup、atomic replacement | Provision/lifecycle state正確 |
 | Reporting | R4 | max reports、monitoring duration、completion retry | Subscription completion可收斂 |
 

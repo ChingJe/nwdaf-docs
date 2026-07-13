@@ -16,6 +16,7 @@ Detailed plans:
 
 - `R0 Compatibility Oracle Framework.md`
 - `R1 Analytics Shaping Parity.md`
+- `R2 Accuracy Measurement Parity.md`
 
 Affected implementation repositories:
 
@@ -98,15 +99,16 @@ historical Go只作fixture provenance與expected behavior oracle。
 10. historical MAE、MSE、sMAPE、WAPE、NRMSE formulas
 11. actual/predicted traffic scale使用mean absolute samples
 12. per-model periodic accuracy check round
-13. warmup predictions與inference counters discard
+13. confidence-zero作為accuracy data readiness gate
 14. canonical monitoring scope
 15. model identity、generation與artifact reference分離
+16. per-source/IP fixed-size observation ring buffer
 
 ---
 
 ## 3. Approved Decisions
 
-本計畫直接採用audit第15節已確認的九項behavior decisions與三項implementation decisions：
+本計畫直接採用audit第15節已確認的decisions：
 
 | Decision | Approved behavior |
 | --- | --- |
@@ -123,11 +125,16 @@ historical Go只作fixture provenance與expected behavior oracle。
 | Ground-truth timing | exact slot equality；以derived miss count保留`2*SI`等待直覺 |
 | R0 commit strategy | 先在本地證明failure，tests與對應fix一起commit |
 | R1 observation snapshot cutover | Analytics與Accuracy共用source-aware snapshot；Accuracy只作data-shape adaptation |
+| Observation buffer bound | 恢復historical per-source/IP `ringBufferSize=50`；移除time-based `source_retention` |
+| Unresolved accuracy scope | concrete target優先、bindings fallback；仍無法解析時只skip accuracy並記錄observability |
+| Accuracy metric output | 固定回報全部五種historical metrics；不啟用`metrics_to_record` filtering |
+| Accuracy sample-count ownership | PyAnLF以`min_matched_predictions`作唯一report gate；Go不再重複admission |
+| Go transitional ground-truth buffer | PyAnLF ring恢復後移除Go `RawUpfData`與對應config/write path |
 
 另外保留Phase 3、Phase 4已核准的語意：
 
 1. `immRep=false`時先等待一個`repPeriod`，不恢復舊版無條件立即report的bug
-2. model generation replacement後重新warmup
+2. fixed-duration warmup由confidence readiness取代；generation replacement清除舊accuracy state
 3. PyAnLF是`UE_COMMUNICATION`必要runtime，不加入Go fallback scheduler
 4. 未支援的`Nnwdaf_AnalyticsInfo_Request`不新增speculative request/response API
 
@@ -147,6 +154,7 @@ historical Go只作fixture provenance與expected behavior oracle。
 8. Transient scheduler error recovery
 9. Accuracy finite-drop、completion retry與provision dedup observability/tests
 10. Cross-repo HTTP contract與MTLF input compatibility verification
+11. Go端已無reader的ground-truth buffer與重複measurement config/gate清理
 
 ### 4.2 Explicit Non-goals
 
@@ -180,7 +188,7 @@ blocker，不得以隱含擴張scope處理。
 | `core/analytics_runtime.py` | historical alignment、aggregation、padding與prediction targets |
 | `core/accuracy/identity.py` | canonical UE Communication scope |
 | `core/accuracy/metrics.py` | historical UL/DL-aware metrics |
-| `core/accuracy/monitor.py` | periodic check、matching、warmup與bookkeeping |
+| `core/accuracy/monitor.py` | periodic check、matching、readiness與bookkeeping |
 | `core/accuracy/reporting.py` | finite retry/drop與failure counters |
 | `core/model_manager.py` | generation-aware artifact cache/load |
 | `core/runtime_manager.py` | model catalog、atomic replacement、provision dedup、completion orchestration |
@@ -238,7 +246,7 @@ Go端維持Phase 3.5 shape：
 | --- | --- | --- |
 | R0 | Historical oracle與failing compatibility evidence | PyAnLF, docs |
 | R1 | Analytics shaping parity | PyAnLF |
-| R2 | Accuracy measurement parity | PyAnLF；NWDAF只作policy input regression tests |
+| R2 | Accuracy measurement parity與Go過渡state清理 | PyAnLF, NWDAF |
 | R3 | Model identity/generation/provision correctness | PyAnLF, NWDAF |
 | R4 | Scheduler completion與reliability boundary | PyAnLF, NWDAF |
 | R5 | Full verification、review與status closure | all three repos |
@@ -314,11 +322,12 @@ Accuracy fixtures：
 5. all-zero actual traffic
 6. late ground truth before miss-count discard
 7. unmatched prediction miss/discard
-8. warmup prediction discard
+8. confidence readiness與generation state reset
 9. confidence-zero exclusion
-10. per-round minimum samples
+10. per-round minimum matched predictions
 11. canonical SUPI/group ordering and duplicate removal
 12. mixed-event subscription where`UE_COMMUNICATION`不是first event
+13. per-source/IP ring buffer overflow
 
 Lifecycle fixtures：
 
@@ -490,14 +499,14 @@ Prediction {
 
 每個model output step建立獨立record，不得將多步prediction壓成第一個target的一筆total traffic。
 
-### 9.2 Confidence-zero And Warmup
+### 9.2 Confidence-zero And Readiness
 
 1. confidence-zero不建立baseline prediction record
 2. 每次發生時記structured log與in-memory counter
 3. 不新增low-confidence accuracy report
-4. 新generation建立monitor後開始warmup
-5. warmup結束時discard該generation所有pending predictions與inference counters
-6. warmup期間收到的ground truth不得在warmup後重新配對
+4. 不使用固定秒數warmup或`warmup_duration` config
+5. confidence-positive prediction立即進入正常periodic lifecycle
+6. 新generation清除舊generation pending predictions與inference counters，不延遲新prediction
 
 ### 9.3 Periodic Check Loop
 
@@ -508,7 +517,7 @@ Accuracy evaluation回到per-model periodic loop：
 3. 同一round聚合當下已到達的所有sources
 4. 不等待expected source completeness
 5. 本輪matched samples只供本輪report
-6. 未達`min_samples`不跨round累積matched samples
+6. 未達`min_matched_predictions`不跨round累積matched samples
 7. 未matched prediction增加miss count
 8. miss count達derived threshold時discard
 9. round結束後只移除matched/discarded records，不影響snapshot後新增records
@@ -593,22 +602,24 @@ PyAnLF `accuracy_monitor`至少明確擁有：
 accuracy_monitor:
   enabled: true
   check_interval: 90
-  min_samples: 2
-  warmup_duration: 20
-  metrics_to_record:
-    - sMAPE
-    - MAE
-    - MSE
-    - WAPE
-    - NRMSE
+  min_matched_predictions: 2
 ```
 
 `matching_tolerance`與`prediction_retention`從active accuracy config移除。Prediction lifecycle由
-derived `max_miss_count`負責；`analytics.ue_communication.source_retention`仍保留，因為它控制
-observation storage，不是prediction matching/expiry tolerance。
+derived `max_miss_count`負責。`analytics.ue_communication.source_retention`移除，observation storage
+恢復historical per-source/IP `ring_buffer_size` count bound；它與prediction matching/expiry policy分離。
 
-Go只保留MTLF decision policy，例如primary metric、baseline buffers、z-score、traffic gates與retrain
-thresholds。Measurement config不得同時在兩端各自生效。
+PyAnLF固定計算並回報sMAPE、MAE、MSE、WAPE、NRMSE，不新增historical config雖存在但production
+未生效的metric filtering。Go只保留MTLF decision policy，例如primary metric、baseline buffers、
+z-score、traffic gates與retrain thresholds；`primaryMetric`決定使用哪個已回報metric。Measurement config
+不得同時在兩端各自生效。
+
+R2同時清除Go端已失去reader或重複生效的過渡責任：
+
+1. 移除`groundTruthRetention.ringBufferSize`與`RawUpfData` append/cap state
+2. 保留SourceObservation轉送、MongoDB與ADRF資料路徑
+3. 移除Go accuracy的check/min/warmup/metric-list殘留config與helper
+4. 由PyAnLF以`min_matched_predictions`作唯一report gate，移除Go MTLF的重複sample-count admission gate
 
 ### 9.9 Tests
 
@@ -618,20 +629,24 @@ thresholds。Measurement config不得同時在兩端各自生效。
 2. prediction在snapshot後加入不被錯誤移除
 3. two matched、one pending後report context一致
 4. failed accuracy callback後下一round可繼續
-5. generation replacement warmup reset與discard
+5. generation replacement清除舊state且新generation不受time-based warmup阻擋
 6. confidence-zero counter/log path
 7. Go MTLF收到的metrics與traffic scales等於historical fixture
 8. 多組sampling/check interval的derived max miss count
 9. Mongo candidate window包含相鄰slot但slot equality仍拒絕
+10. 固定回報全部五種metrics，不因config缺少metric list而改變
+11. Go移除`RawUpfData`後observation forwarding、MongoDB與ADRF行為不變
+12. PyAnLF未達`min_matched_predictions`不送report；Go不再以第二個threshold重複拒絕
 
 ### 9.10 Completion Criteria
 
-1. BP-07至BP-18與BP-28至BP-30對應tests通過
+1. BP-07至BP-18與BP-28至BP-31對應tests通過
 2. UL/DL direction error不再互相抵消
 3. adjacent slot不會進入ground truth
 4. MTLF policy input單位恢復且不修改threshold config
 5. periodic cadence不依observation ingest數量改變
 6. confidence-zero與finite-drop是唯一明確核准的相關差異
+7. Go過渡ground-truth buffer與重複measurement gate已移除
 
 ---
 

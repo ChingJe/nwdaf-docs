@@ -80,6 +80,10 @@ architecture。
 如果R1實作發現必須改動上述boundary才能恢復shaping parity，應停止並依development policy提出
 blocker，不得在R1隱含擴張scope。
 
+後續provenance audit確認第7項的current time-based `source_retention`不是historical behavior。
+R1的alignment演算法與source-aware snapshot仍維持completed；buffer lifecycle另由BP-31/R2恢復為
+per-source/IP fixed-size ring，不回頭改寫R1 shaping contract。
+
 ---
 
 ## 4. Historical Oracle
