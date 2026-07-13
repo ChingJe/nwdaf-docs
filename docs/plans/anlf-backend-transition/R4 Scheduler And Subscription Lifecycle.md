@@ -2,7 +2,7 @@
 
 Date: 2026-07-14
 
-Status: Repository-level implementation completed and locally verified; live cross-process HTTP E2E pending
+Status: Repository-level implementation and R5 cross-process lifecycle verified; full 5GC environment E2E unverified
 
 Parent plan:
 
@@ -1218,14 +1218,14 @@ Blocker report必須包含原假設、實際證據、可行選項、建議與是
 21. 完整code review沒有未處理P0/P1 finding
 22. Parent plan、audit、R0與本文件progress已更新
 
-R4完成只代表scheduler與subscription lifecycle可收斂。整體behavioral parity仍需R5執行完整verification、
-audit closure與status restoration。
+R4完成只代表scheduler與subscription lifecycle可收斂。整體behavioral parity的R5 V1/V2 verification、
+audit closure與status restoration已於2026-07-14完成；完整5GC V3仍未驗證。
 
 ---
 
 ## 23. Implementation Record
 
-Implementation於2026-07-14完成，尚未建立repository commits。
+Implementation於2026-07-14完成並commit為`PyAnLF@bfd611c`與`NWDAF@68717f8`。
 
 ### 23.1 Initial Failure Evidence
 
@@ -1304,5 +1304,11 @@ Focused Go tests驗證route/status matrix、atomic transition、coordinator sema
 5. `monDur`於下一個scheduler tick判斷，最多延遲一個`repPeriod`
 6. Accuracy與analytics report仍採各自既定finite retry policy，不提升為completion tombstone guarantee
 
-R4因此標記為repository-level completed。R5仍需執行cross-language/full environment verification、audit
-closure與parent status restoration。
+R4因此標記為repository-level completed。
+
+### 23.6 R5 Closure Update
+
+2026-07-14 R5以真實PyAnLF process重跑`TestLivePyAnLFContract`，驗證analytics callback與
+`maxReportNbr=1` completion；另新增live replacement/explicit release case，確認兩者不誤發natural completion。
+R5 full suites、targeted race、lint、build與final review均通過，沒有未處理P0/P1 finding。完整5GC、SMF/UPF、
+Daisy與ADRF V3仍因環境不可用而保持unverified。

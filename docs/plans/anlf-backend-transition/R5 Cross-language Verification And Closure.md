@@ -2,7 +2,7 @@
 
 Date: 2026-07-14
 
-Status: Planned; V1/V2 verification not started, full 5GC V3 environment unavailable
+Status: Implemented; V1 repository and V2 cross-process verification complete, full 5GC V3 environment unavailable
 
 Parent plan:
 
@@ -838,17 +838,152 @@ full 5GC environment E2E unverified.
 
 ---
 
-## 19. Planned Implementation Record
+## 19. Implementation Record
 
-實作完成後在此補充：
+### 19.1 Actual Baseline And Environment
 
-1. actual baseline commits
-2. coverage inventory與新增tests
-3. 發現並修正的defects
-4. PyAnLF verification commands/results
-5. NWDAF verification commands/results
-6. V2 live contract environment/results
-7. V3 environment scenarios/results或blockers
-8. final review findings與closure
-9. remaining accepted risks
-10. final status changes
+R5於2026-07-14以下列source開始：
+
+1. `PyAnLF@bfd611c feat(runtime): complete subscription reporting lifecycle`
+2. `NWDAF@68717f8 feat(anlf): handle backend runtime completion`
+3. `nwdaf-docs@bd2f30d docs: plan AnLF verification closure`
+4. Python `3.12.3`
+5. `uv 0.8.8`
+6. Go `1.25.5`
+7. `golangci-lint 2.8.0`
+
+R5 test-only變更已commit為：
+
+1. `PyAnLF@2ab89fd test(accuracy): verify cross-language report contract`
+2. `NWDAF@c48d1bb test(anlf): verify backend cross-process contracts`
+
+驗證期間`127.0.0.1:9090`由既有Prometheus process使用，因此V2以相同`config/config.yaml`application
+config在`127.0.0.1:19090`啟動真實PyAnLF process，沒有修改production config或使用mock backend。
+
+### 19.2 Coverage Inventory And Added Evidence
+
+Inventory確認R1至R4大部分deterministic evidence已存在，R5只補下列缺口：
+
+1. PyAnLF `test_report_serialization_matches_go_contract`固定accuracy callback的JSON field names、timestamp、
+   model identity/generation、scope、metrics、traffic scales與retrain context
+2. NWDAF `TestPyAnLFAccuracyJSONReachesMtlfWithoutUnitConversion`以同一canonical JSON經真實AnLF HTTP
+   listener、API binding、processor與MTLF workflow，確認數值與units不變
+3. 上述Go test使用`sample_count=1`且`minBufferSamples=8`，證明Go不重複套用AnLF matched-sample gate，
+   report仍進入MTLF policy observation
+4. `TestLivePyAnLFContract`新增backend report ID、sequence與runtime revision assertions
+5. 新增`TestLivePyAnLFExplicitReplacementAndReleaseDoNotComplete`，驗證real process replacement與explicit
+   release不產生natural completion callback
+
+R5沒有修改production source、API contract、domain ownership、MTLF threshold或accepted-risk boundary。
+
+### 19.3 BP-01 To BP-31 Closure
+
+| Finding | Closure | Primary current evidence |
+| --- | --- | --- |
+| BP-01 | fixed | `analytics-missing-middle-slot` golden fixture |
+| BP-02 | fixed | `analytics-same-metadata-different-source`與source-order test |
+| BP-03 | fixed | clean/anchor-drift/different-anchor analytics fixtures |
+| BP-04 | fixed | `analytics-mean-output-timestamp` fixture |
+| BP-05 | fixed | positive/negative half-slot fixtures與`test_go_round_uses_half_away_from_zero` |
+| BP-06 | fixed | 11-case `test_historical_analytics_shaping` matrix |
+| BP-07 | fixed | adjacent-slot與positive/negative half accuracy matching fixtures |
+| BP-08 | fixed to confirmed periodic best-effort | source-aware matching fixture與periodic monitor tests |
+| BP-09 | fixed | `BP-09-directional-error` UL/DL fixture |
+| BP-10 | fixed | zero-actual與historical metric formula fixtures |
+| BP-11 | fixed | `BP-11-multi-pair-scale` fixture與R5 Go policy-unit test |
+| BP-12 | fixed | per-model periodic worker/check tests |
+| BP-13 | fixed | `test_matched_samples_below_minimum_do_not_accumulate_across_rounds` |
+| BP-14 | approved replacement | confidence readiness tests；fixed-duration warmup config已移除 |
+| BP-15 | approved finite retry/drop | delivery retry tests與independent-next-round test |
+| BP-16 | fixed | multi-step prediction bookkeeping、pending commit與context tests |
+| BP-17 | fixed | scope golden、event selection、sort/dedup與binding fallback tests |
+| BP-18 | fixed | accuracy metric/matching/scope golden suites |
+| BP-19 | fixed | different-identity same-reference runtime test |
+| BP-20 | fixed | same-URL new-generation model manager/runtime tests |
+| BP-21 | fixed | full-reference hash與identity/generation cache-key tests |
+| BP-22 | fixed | stale snapshot、candidate failure與concurrent provision commit tests |
+| BP-23 | fixed | sequential/concurrent duplicate event registry與HTTP replay tests |
+| BP-24 | fixed | scheduler completion、tombstone、Go revision semantics與V2 completion flow |
+| BP-25 | fixed | generation/send failure recovery與next-tick tests |
+| BP-26 | approved difference | `immRep=false` delayed-first-report scheduler behavior |
+| BP-27 | accepted future risk | single global Go observation worker保持不變 |
+| BP-28 | fixed | each-output-step prediction record與multi-step runtime tests |
+| BP-29 | approved behavior | confidence-zero observable but excluded from pending/baseline |
+| BP-30 | fixed | PyAnLF-owned accuracy config validation與Go duplicate config removal tests |
+| BP-31 | fixed | per-source/IP-session count-bounded ring-buffer test |
+
+所有fixed項目的current tests皆直接使用production implementation；golden expected仍保留historical commit與
+source provenance。BP-26、BP-29是confirmed behavior，BP-27維持accepted future risk，沒有偽裝成historical
+parity或本輪修復。
+
+### 19.4 Verification Results
+
+PyAnLF V1：
+
+1. focused accuracy slice：`35 passed`
+2. full `uv run pytest -q`：`130 passed`
+3. `pyproject.toml`沒有正式formatter、lint或type-checker entrypoint，因此沒有以臨時工具取代
+
+NWDAF V1：
+
+1. focused AnLF/MTLF/SBI tests：pass
+2. final `make test`：pass；未設定live endpoint時三個`TestLivePyAnLF*`按設計skip，另由V2獨立執行
+3. `go test -race ./internal/anlf/coordinator ./internal/anlf/client ./internal/mtlf`：pass
+4. `make lint`：`0 issues`
+5. `make build`：pass
+
+V2 real-process contract：
+
+```bash
+PYTHONPATH=src uv run python -c '<load config/config.yaml and run SBIServer on 127.0.0.1:19090>'
+PYANLF_LIVE_ENDPOINT=http://127.0.0.1:19090 \
+  go test ./internal/anlf/client -run '^TestLivePyAnLF' -count=1 -v
+```
+
+結果為三個cases全部通過：
+
+1. runtime apply、binding sync、observation ingest、analytics callback與external notification
+2. `maxReportNbr=1` natural completion使Go current runtime inactive
+3. replacement與explicit release不發natural completion
+4. duplicate model provision no-match回傳stable response
+5. PyAnLF在測試後正常shutdown，沒有殘留test process
+
+Accuracy report到MTLF的精確數值證據屬V1 cross-repository fixture contract，不宣稱是V2 live accuracy
+workflow；same-URL artifact swap、stale/retry與`monDur`精確語意也由deterministic V1 tests負責。
+
+### 19.5 Final Review
+
+Review範圍包含`PyAnLF@60994c3..bfd611c`、`NWDAF@64fdf0a..68717f8`與R5 test diff。結論：
+
+1. 沒有未處理P0/P1 finding
+2. alignment、accuracy、model lifecycle與completion tests呼叫的都是current production path，不是dead helper
+3. Go inbound callback維持API parse/validation、processor dispatch、coordinator/MTLF workflow分層
+4. external analytics delivery仍由`internal/sbi/notifier`負責
+5. runtime completion compare-and-transition維持revision-aware atomic operation
+6. R5沒有把PyAnLF-owned measurement config或accuracy bookkeeping搬回Go
+
+### 19.6 Environment Boundary And Remaining Risks
+
+目前沒有完整5GC、SMF/UPF、Daisy與ADRF整合環境，因此V3未執行且所有第13節scenarios維持
+`environment E2E unverified`。V1/V2結果沒有被拿來替代V3。
+
+保留的confirmed risks：
+
+1. accuracy callback有限retry後drop
+2. runtime completion tombstone不跨PyAnLF process restart持久化
+3. Go observation delivery仍是single worker，可能head-of-line blocking
+4. queue overflow/source send failure沒有replay或backfill
+5. natural completion不取消SMF/UPF collection，也不刪除Go subscription
+6. Go仍保留local subscription、traffic、ADRF與必要model metadata
+
+### 19.7 Final Status
+
+R5已達成repository-level與cross-process closure。正式狀態為：
+
+```text
+Repository and cross-process verification complete;
+full 5GC environment E2E unverified.
+```
+
+Phase 3與Phase 4可恢復為repository-level behavioral parity verified；只有取得完整V3證據後，才能加入
+full environment E2E verified聲明。

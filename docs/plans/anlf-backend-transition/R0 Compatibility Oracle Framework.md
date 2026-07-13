@@ -2,7 +2,7 @@
 
 Date: 2026-07-13
 
-Status: Analytics, Accuracy, Model, and Reporting slices implemented and locally verified; R5 closure pending
+Status: Analytics, Accuracy, Model, and Reporting slices verified by R5 V1 closure
 
 Parent plan:
 
@@ -345,7 +345,7 @@ R0 Reporting slice已和R4一起完成：
 
 本slice的approved change仍是`immRep=false`先等待一個period；不恢復historical unconditional immediate
 report。R0四個slices已具有provenance、failure evidence與green tests，但整體remediation仍需R5執行
-environment verification與status closure。
+verification與status closure。2026-07-14 R5已完成V1/V2 closure；完整5GC V3仍維持environment-unverified。
 
 ---
 
@@ -370,4 +370,5 @@ environment verification與status closure。
 4. Fixture README與test helpers能供後續regression持續使用
 5. Parent remediation plan與audit已更新實際verification結果
 
-R0完成只代表compatibility oracle完整；整體remediation仍需通過R5 full verification與code review。
+R0完成只代表compatibility oracle完整。R5 full repository verification與code review已於2026-07-14通過；
+完整5GC V3仍需未來具備環境後另行執行。

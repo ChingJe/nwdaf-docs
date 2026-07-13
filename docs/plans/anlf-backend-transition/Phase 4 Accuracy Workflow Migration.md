@@ -2,7 +2,7 @@
 
 Date: 2026-07-11
 
-Status: Responsibility migration and R2 accuracy parity implemented; R3 identity and R4 lifecycle parity pending
+Status: Repository-level behavioral parity and R5 cross-process contract verified; full 5GC environment E2E unverified
 
 Parent plan:
 
@@ -1222,6 +1222,13 @@ cutover。2026-07-13 稽核確認下列紀錄不構成 historical Go accuracy be
 尚未執行完整5GC、external MTLF、MongoDB/ADRF與Daisy同時運行的環境級實驗。上述結果只
 代表repository responsibility migration、unit/API/race/build與local live contract已完成，
 既不宣稱完整部署環境的端到端實驗已完成，也不宣稱與搬移前Go行為完全等價。
+
+### 17.2 R5 Closure Update
+
+2026-07-14 R5重新驗證historical metric、matching、scope與periodic monitor fixtures，並補上canonical
+PyAnLF accuracy JSON經Go AnLF API、processor與MTLF policy state的cross-repository test。UL/DL metrics、
+traffic scales、sample count、identity/generation與scope均未在Go boundary被重算或改單位。Repository-level
+behavioral parity與cross-process contract已驗證；完整5GC、external MTLF、Daisy與ADRF V3仍未驗證。
 
 ---
 

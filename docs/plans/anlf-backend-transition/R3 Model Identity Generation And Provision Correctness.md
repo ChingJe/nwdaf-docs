@@ -2,7 +2,7 @@
 
 Date: 2026-07-14
 
-Status: Repository-level implementation completed and locally verified; live cross-process HTTP unverified
+Status: Repository-level implementation and R5 cross-process contract verified; full 5GC environment E2E unverified
 
 Parent plan:
 
@@ -1079,7 +1079,7 @@ Go process與running PyAnLF process之間的完整live proof。
 
 ### 23.5 Remaining Risks And Accepted Gaps
 
-1. `environment-level HTTP E2E unverified`：未啟動local PyAnLF並執行`PYANLF_LIVE_ENDPOINT` tests
+1. R5已完成local real-process duplicate no-match contract；完整artifact swap與5GC environment E2E仍未驗證
 2. generation與provision dedup registry仍是process-local；restart durability維持R3 non-goal
 3. old generation artifact cache不自動GC，disk quota與artifact lifecycle維持future work
 4. artifact digest/signature仍未進contract；cache isolation不等於artifact authenticity
@@ -1087,3 +1087,9 @@ Go process與running PyAnLF process之間的完整live proof。
 6. scheduler completion與subscription inactive transition仍屬R4，R3沒有提前處理
 
 上述項目均為既定non-goals或已確認限制，沒有形成R3 repository-level completion blocker。
+
+### 23.6 R5 Closure Update
+
+2026-07-14 R5 real-process contract已驗證Go retry使用的duplicate provision event在PyAnLF回傳stable
+`NO_MATCH` response。Same-URL new generation、different identity、candidate failure與atomic commit仍由deterministic
+V1 tests驗證；沒有使用不穩定的live artifact server取代。完整external MTLF/Daisy/5GC V3仍未驗證。

@@ -2,7 +2,7 @@
 
 Date: 2026-07-10
 
-Status: Responsibility migration implemented; behavioral parity validation incomplete
+Status: Repository-level behavioral parity and R5 cross-process contract verified; full 5GC environment E2E unverified
 
 Parent plan:
 
@@ -1294,3 +1294,10 @@ race detector 並通過；這項既有 service test isolation 問題不在本 ph
 
 完整 SMF、UPF、MTLF 與 external NF consumer 的 5GC end-to-end test 未在目前環境執行，
 不能由 local live contract test 取代宣稱。
+
+### 17.4 R5 Closure Update
+
+2026-07-14 R5以11組historical analytics fixtures重新驗證source-aware two-step alignment、zero-padding、
+Go-compatible rounding、mean timestamp與window cap。Real Go/PyAnLF process也完成runtime apply、binding、
+observation、analytics callback與external notification。Repository與cross-process behavioral parity已驗證；
+完整SMF/UPF與5GC V3仍因環境不可用而保持unverified。

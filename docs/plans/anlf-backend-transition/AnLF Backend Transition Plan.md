@@ -2,7 +2,7 @@
 
 Date: 2026-07-07
 
-Status: Preparation, Phase 1, Phase 2, and Phase 3.5 completed; Phase 3 and Phase 4 responsibility migration implemented, behavioral parity validation incomplete
+Status: Preparation through Phase 4 complete with R5 repository/cross-process verification; full 5GC environment E2E unverified
 
 Related source line:
 
@@ -268,7 +268,7 @@ Implementation commits:
 
 ### 8.3 Phase 3: Analytics Runtime Migration
 
-Status: Responsibility migration implemented; behavioral parity validation incomplete
+Status: Repository-level behavioral parity and cross-process contract verified; full 5GC environment E2E unverified
 
 目標：
 
@@ -345,7 +345,7 @@ subscription lifecycle、retry/dedup、config schema 或 Phase 3 failure semanti
 
 ### 8.5 Phase 4: Accuracy Workflow Migration
 
-Status: Responsibility migration implemented; behavioral parity validation incomplete
+Status: Repository-level behavioral parity and cross-process contract verified; full 5GC environment E2E unverified
 
 目標：
 

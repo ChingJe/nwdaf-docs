@@ -2,7 +2,7 @@
 
 Date: 2026-07-13
 
-Status: R0-R4 implemented and locally verified; R5 verification and closure pending
+Status: R0-R5 repository and cross-process verification complete; full 5GC environment E2E unverified
 
 Parent plan:
 
@@ -1190,9 +1190,16 @@ Blocker report必須包含原假設、證據、選項、建議與是否需要修
 2. `AnLF Backend Transition Plan.md` summary status
 3. Phase 3/4文件的follow-up remediation reference
 
-在remediation complete前，狀態固定維持：
+R5 closure前的暫時狀態為：
 
 ```text
 Responsibility migration implemented;
 behavioral parity validation incomplete.
+```
+
+2026-07-14 R5已完成V1 repository與V2 real-process contract verification。Current status改為：
+
+```text
+Repository and cross-process verification complete;
+full 5GC environment E2E unverified.
 ```

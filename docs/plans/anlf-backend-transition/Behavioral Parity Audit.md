@@ -2,7 +2,7 @@
 
 Date: 2026-07-13
 
-Status: R1-R4 findings remediated and locally verified; R5 environment verification and closure pending
+Status: R1-R5 repository and cross-process closure complete; full 5GC environment E2E unverified
 
 Related plans:
 
@@ -1282,8 +1282,8 @@ correctness guarantees。
 Phase 3.5是Go package boundary的behavior-preserving refactor，目前沒有證據需要撤銷其完成狀態。
 Phase 1 naming/boundary work也沒有在本audit發現主要behavior regression。
 
-2026-07-14 R4 closure後上述條件已在repository-level滿足；parent Phase 3/4的最終無條件status restoration
-仍依R5處理environment-level HTTP E2E與完整audit closure。
+2026-07-14 R4 closure後上述條件已在repository-level滿足。其後R5已完成real-process V2 HTTP contract與
+完整audit closure；full 5GC V3仍因環境不可用而保持unverified。
 
 ### 17.4 R4 Closure Update
 
@@ -1299,18 +1299,25 @@ enqueue，但沒有改動SMF/UPF collection、traffic storage、ADRF state或sin
 R0 Reporting fixtures與tests保留`NWDAF@0db9584`的max/monDur/attempt semantics；`immRep`維持已核准的新
 行為。PyAnLF 129 tests、NWDAF full/focused tests、targeted race、build與lint通過，review沒有未處理P0/P1
 finding。Live process test因`PYANLF_LIVE_ENDPOINT`未設定而skip，故R4標記repository-level completed，
-environment-level HTTP E2E仍由R5處理。
+當時的cross-process HTTP gap後續已由R5 V2關閉；full 5GC V3不在R4/R5本地環境可驗證範圍。
 
 ---
 
-## 18. Immediate Next Step
+## 18. R5 Closure
 
-R0至R4的對應implementation已完成。下一步依`Behavioral Parity Remediation Plan.md`進入R5：
+2026-07-14已完成`R5 Cross-language Verification And Closure.md`：
 
-1. 執行可用環境下的real Go/PyAnLF HTTP completion contract test
-2. 重新核對cross-language fixtures、MTLF policy input與full repository verification
-3. 確認accepted restart durability、collection cleanup與observation worker risks仍正確記錄
-4. 完成audit closure與parent Phase 3/4 status restoration
+1. PyAnLF full suite為`130 passed`
+2. NWDAF full tests、targeted race、lint與build通過
+3. canonical PyAnLF accuracy JSON已經真實Go AnLF HTTP API、processor與MTLF驗證，units沒有改變
+4. real Go/PyAnLF process完成runtime apply、observation、analytics callback、external notification、
+   `maxReportNbr` completion、explicit replacement/release與duplicate provision no-match contract
+5. final review沒有未處理P0/P1 finding
+6. BP-01至BP-25與BP-28至BP-31已由fixed或approved behavior關閉；BP-26為approved difference，
+   BP-27維持accepted future risk
+
+目前沒有完整5GC環境，所以SMF/UPF、Daisy、ADRF與完整model provision/retrain flow仍為V3
+`environment E2E unverified`。Repository與cross-process closure不代表V3通過。
 
 本audit的主要原則是：
 
