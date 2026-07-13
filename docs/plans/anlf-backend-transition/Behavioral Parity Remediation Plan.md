@@ -12,6 +12,11 @@ Audit and decision record:
 
 - `Behavioral Parity Audit.md`
 
+Detailed plans:
+
+- `R0 Compatibility Oracle Framework.md`
+- `R1 Analytics Shaping Parity.md`
+
 Affected implementation repositories:
 
 1. `PyAnLF/`
@@ -117,6 +122,7 @@ historical Go只作fixture provenance與expected behavior oracle。
 | Post-completion observation forwarding | source沒有active subscription時停止backend enqueue |
 | Ground-truth timing | exact slot equality；以derived miss count保留`2*SI`等待直覺 |
 | R0 commit strategy | 先在本地證明failure，tests與對應fix一起commit |
+| R1 observation snapshot cutover | Analytics與Accuracy共用source-aware snapshot；Accuracy只作data-shape adaptation |
 
 另外保留Phase 3、Phase 4已核准的語意：
 
@@ -240,9 +246,16 @@ Go端維持Phase 3.5 shape：
 R1依賴R0；R2依賴R1；R3可在R2後獨立進行；R4依賴current runtime ownership但不依賴R3
 algorithm。為降低cross-repo debugging成本，實際落地仍按表中順序，不平行修改R2至R4。
 
+R0是貫穿R1至R4的compatibility framework，不是先完整結束才進入R1的一次性stage。實際上依
+`R0 Analytics slice + R1`、`R0 Accuracy slice + R2`、`R0 Model slice + R3`、
+`R0 Reporting slice + R4`落地。共通fixture與failure-evidence規則由
+`R0 Compatibility Oracle Framework.md`定義；各stage只選取對應slice並補充domain-specific內容。
+
 ---
 
 ## 7. R0: Compatibility Oracle And Containment
+
+Detailed plan: `R0 Compatibility Oracle Framework.md`
 
 ### 7.1 Objective
 
@@ -340,6 +353,8 @@ evidence，再與對應R1至R4 fix一起commit，確保每個正式implementatio
 
 ## 8. R1: Restore Analytics Shaping
 
+Detailed plan: `R1 Analytics Shaping Parity.md`
+
 ### 8.1 Source-aware Observation Snapshot
 
 `ObservationStore`不得在subscription query時丟失source ID。Internal snapshot使用類似：
@@ -384,7 +399,7 @@ half-away-from-zero，並以正負`.5` tests固定行為。
 
 每次inference shaping依以下順序：
 
-1. 依session取得最早observation作anchor
+1. 依session保留資料中的第一筆ingest observation作anchor，不先按timestamp重新排序
 2. `round((observed_at-anchor)/sampling_interval)`取得session step
 3. 算出snapped session center
 4. 同session同center採last-wins
