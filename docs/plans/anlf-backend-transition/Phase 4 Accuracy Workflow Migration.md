@@ -2,7 +2,7 @@
 
 Date: 2026-07-11
 
-Status: Responsibility migration implemented; behavioral parity validation incomplete
+Status: Responsibility migration and R2 accuracy parity implemented; R3 identity and R4 lifecycle parity pending
 
 Parent plan:
 

@@ -2,7 +2,7 @@
 
 Date: 2026-07-13
 
-Status: R0 Analytics slice and R1 completed; R2-R5 pending
+Status: R0 Analytics/Accuracy slices, R1, and R2 implemented and locally verified; R3-R5 pending
 
 Parent plan:
 
@@ -1086,6 +1086,11 @@ Analytics shaping fixtures通過，Phase 3仍不能單獨標記full parity，因
 ### 16.3 R2 Complete
 
 Accuracy fixtures與MTLF input compatibility通過，Phase 3/4主要data semantics恢復。
+
+2026-07-14 result：R2已完成implementation、local verification與repository commits：
+`PyAnLF@82f9941`、`NWDAF@195e130`。PyAnLF full tests為74 passed；NWDAF full tests、targeted
+race、build與lint通過。Live Go/PyAnLF HTTP contract test因未設定`PYANLF_LIVE_ENDPOINT`而skip；
+舊YAML欄位依追加決策採normal unknown-field靜默忽略，不保留typed ownership或sample config。
 
 ### 16.4 R3 Complete
 

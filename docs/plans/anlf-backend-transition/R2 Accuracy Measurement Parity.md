@@ -2,7 +2,7 @@
 
 Date: 2026-07-13
 
-Status: Planned
+Status: Implemented, locally verified, and committed
 
 Parent plan:
 
@@ -697,8 +697,8 @@ Defaults與validation：
 3. Sampling interval與output window必須大於0
 4. `ring_buffer_size >= input_window`
 5. `min_samples`、`source_retention`、`warmup_duration`、`matching_tolerance`、
-   `prediction_retention`與`metrics_to_record`不得保留為ignored/deprecated
-   config，以避免使用者誤以為仍生效
+   `prediction_retention`與`metrics_to_record`不保留typed ownership、dual-read或sample config；依
+   2026-07-13追加決策，normal YAML unknown-field behavior可靜默忽略舊值
 
 ### 14.1 Config Provenance Audit
 
@@ -1050,11 +1050,55 @@ R2完成後可說Phase 3/4主要data semantics已恢復，但整體behavioral pa
 
 ## 22. Progress Record
 
-尚未開始實作。Implementation開始後需記錄：
+2026-07-13完成R2 implementation與local verification。
 
-1. Initial failing fixture IDs與差異摘要
-2. PyAnLF/NWDAF implementation commits
-3. Focused/full test commands與結果
-4. 與本計畫的偏差
-5. 未執行的environment verification
-6. 新發現但不屬R2的future work
+### 22.1 Initial Failure Evidence
+
+新增R0 Accuracy fixture suite後，current PyAnLF在test collection階段因缺少
+`calculate_pairs`失敗。這證明當時production code尚未提供UL/DL pair-aware compatibility seam；
+後續fixture expected values均由historical Go source/tests人工核對，沒有由修正後PyAnLF output回填。
+
+### 22.2 Implemented Result
+
+PyAnLF：
+
+1. 建立per-model periodic accuracy worker與deterministic manual check seam
+2. Prediction改為per-output-step、UL/DL分離、source/scope/generation snapshot
+3. Ground truth恢復Go rounding、exact slot equality、source/IP last-wins與cross-session sum
+4. Metrics與traffic scale恢復historical all-channel formulas及zero denominator behavior
+5. Matched samples改為round-local，pending records使用snapshot/evaluate/commit與derived miss count
+6. Confidence-zero取代fixed warmup並加入in-memory counters/logs
+7. Scope明確選UE Communication，target ID canonicalization並支援binding fallback
+8. Observation store恢復per-source/IP fixed-size ring；移除time-based retention
+9. Accuracy sender保留finite retry/drop，report ID/payload穩定並提供failure observability
+10. 修正overlapping checks可能重複commit同一prediction的並行問題
+
+NWDAF：
+
+1. 移除`RawUpfData`、`groundTruthRetention`與只寫不讀的Go ring path
+2. 移除Go accuracy measurement欄位與`metricsToRecord` helper
+3. 移除MTLF對`SampleCount`的第二道baseline admission gate
+4. UPF processor tests改為直接驗證送往PyAnLF的`SourceObservation`
+5. 保留既有MTLF thresholds、MongoDB/ADRF與single observation-delivery worker
+
+### 22.3 Verification
+
+已通過：
+
+1. Initial focused suite：修正前collection failure已保存於本次實作紀錄
+2. `cd PyAnLF && uv run pytest -q`：74 passed
+3. `cd NWDAF && make test`：passed；live PyAnLF contract test因未設定`PYANLF_LIVE_ENDPOINT`而skip
+4. `go test -race ./internal/anlf/... ./internal/mtlf/... ./internal/sbi/processor`：passed
+5. `cd NWDAF && make build`：passed
+6. `cd NWDAF && make lint`：0 issues
+7. 兩個implementation repo的`git diff --check`：passed
+
+### 22.4 Approved Deviation And Remaining Scope
+
+1. 依2026-07-13追加決策，舊YAML欄位不特別拒絕；欄位已從typed config與sample移除，normal
+   YAML unknown-field behavior可靜默忽略舊值。
+2. 未執行實際Go/PyAnLF live HTTP E2E；本環境以unit/component/cross-boundary contract tests為主。
+3. Single global observation-delivery worker、finite-drop accuracy callback與best-effort multi-source仍是已接受風險。
+4. Model identity/generation/provision atomicity仍由R3處理；scheduler completion與runtime cleanup仍由R4處理。
+5. Implementation commits已建立：`PyAnLF@82f9941`與`NWDAF@195e130`；本節由後續
+   `nwdaf-docs` progress commit保存。

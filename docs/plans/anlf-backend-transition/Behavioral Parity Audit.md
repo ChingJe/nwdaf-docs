@@ -2,7 +2,7 @@
 
 Date: 2026-07-13
 
-Status: Confirmed findings and decision gates recorded; detailed remediation plan prepared
+Status: R1 analytics and R2 accuracy findings remediated locally; R3/R4 findings remain open
 
 Related plans:
 
@@ -1213,6 +1213,19 @@ PyAnLF output回填成新的expected results。
 ---
 
 ## 17. Documentation Status Rule
+
+### 17.1 R2 Closure Update
+
+2026-07-13完成R2 local implementation與verification。BP-07至BP-18、BP-28至BP-31已由以下
+production changes與tests closure：exact slot matching、periodic per-model evaluation、UL/DL channel
+semantics、historical metrics/traffic scales、round-local samples、confidence readiness、finite-drop
+observability、prediction-owned context、scope canonicalization、per-step bookkeeping及per-source/IP ring。
+
+Go端同步移除`RawUpfData`、ground-truth retention config與MTLF第二道sample gate。PyAnLF 74 tests、
+NWDAF full tests、targeted race、build與lint均通過。Live cross-process HTTP E2E尚未執行；R3 identity/
+generation與R4 reporting completion findings仍保持open，因此Phase 3/4仍不得標記整體parity完成。
+
+### 17.2 Remaining Status Rule
 
 在以下條件完成前，Phase 3與Phase 4不得恢復成無條件 `Completed`：
 
