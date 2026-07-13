@@ -19,6 +19,7 @@ Detailed plans:
 - `R2 Accuracy Measurement Parity.md`
 - `R3 Model Identity Generation And Provision Correctness.md`
 - `R4 Scheduler And Subscription Lifecycle.md`
+- `R5 Cross-language Verification And Closure.md`
 
 Affected implementation repositories:
 
@@ -944,6 +945,10 @@ Cross-repo：
 ---
 
 ## 12. R5: Verification And Closure
+
+Detailed execution plan：
+
+- `R5 Cross-language Verification And Closure.md`
 
 ### 12.1 PyAnLF Verification
 

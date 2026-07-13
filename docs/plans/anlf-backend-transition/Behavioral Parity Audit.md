@@ -12,6 +12,7 @@ Related plans:
 4. `Phase 3.5 Go Package Boundary Consolidation.md`
 5. `Phase 4 Accuracy Workflow Migration.md`
 6. `Behavioral Parity Remediation Plan.md`
+7. `R5 Cross-language Verification And Closure.md`
 
 ---
 
