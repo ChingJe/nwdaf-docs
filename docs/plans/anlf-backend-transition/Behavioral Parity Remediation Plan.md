@@ -2,7 +2,7 @@
 
 Date: 2026-07-13
 
-Status: R0 Analytics/Accuracy slices, R1, and R2 implemented and locally verified; R3-R5 pending
+Status: R0 Analytics/Accuracy slices and R1-R3 implemented and locally verified; R4-R5 pending
 
 Parent plan:
 
@@ -17,6 +17,7 @@ Detailed plans:
 - `R0 Compatibility Oracle Framework.md`
 - `R1 Analytics Shaping Parity.md`
 - `R2 Accuracy Measurement Parity.md`
+- `R3 Model Identity Generation And Provision Correctness.md`
 
 Affected implementation repositories:
 
@@ -1100,6 +1101,16 @@ race、build與lint通過。Live Go/PyAnLF HTTP contract test因未設定`PYANLF
 ### 16.4 R3 Complete
 
 Identity/generation、same URL reload、atomic replacement與provision idempotency通過。
+
+2026-07-14 result：R3已完成repository-level implementation、local verification與repository commits：
+`PyAnLF@01620ce`、`NWDAF@e6d295b`。Identified runtime已改用identity/generation key；anonymous
+runtime獨立；same URL new event會prepare新generation；multi-runtime replacement採snapshot revalidation與atomic
+metadata commit；internal event ID提供process-local sequential/concurrent retry idempotency；artifact cache依identity、
+generation與full reference隔離。
+
+PyAnLF full tests為105 passed；NWDAF focused/full tests、targeted race、build與lint通過，完整review沒有未處理
+P0/P1 finding。FastAPI與Go client contract tests已通過；live Go/PyAnLF process test因未設定
+`PYANLF_LIVE_ENDPOINT`而skip，因此狀態是repository-level completed，不宣稱environment-level HTTP E2E。
 
 ### 16.5 R4 Complete
 

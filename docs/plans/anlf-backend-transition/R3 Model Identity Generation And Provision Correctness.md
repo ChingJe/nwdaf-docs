@@ -2,7 +2,7 @@
 
 Date: 2026-07-14
 
-Status: Detailed plan drafted; implementation not started
+Status: Repository-level implementation completed and locally verified; live cross-process HTTP unverified
 
 Parent plan:
 
@@ -1010,15 +1010,80 @@ R3只有在以下全部成立時才能標記repository-level completed：
 
 ## 23. Implementation Record
 
-尚未開始。
+### 23.1 Repository Commits
 
-完成後至少記錄：
+2026-07-14完成repository-level implementation：
 
-1. NWDAF commit
-2. PyAnLF commit
-3. docs progress commit
-4. initial failure evidence
-5. focused/full/race/build/lint結果
-6. live HTTP contract結果或environment gap
-7. code review findings與closure
-8. 任何經核准的deviation或remaining risk
+1. `PyAnLF@01620ce`：`fix(runtime): make model provision generation-aware`
+2. `NWDAF@e6d295b`：`feat(anlf): add idempotent model provision forwarding`
+3. `nwdaf-docs`：本次R3 progress/closure documentation commit
+
+兩個implementation repositories依boundary分開提交；Go/Python required `event_id`仍應視為同一個deployment
+cutover pair。
+
+### 23.2 Implemented Behavior
+
+PyAnLF：
+
+1. identified runtime改以`(provider_id, model_unique_id, generation)`作registry key
+2. anonymous artifact runtime使用獨立full-reference registry，不污染identified identity/generation
+3. `current_generation`在process lifetime內保持monotonic，最後runtime release後仍保留
+4. provision event採resolve snapshot、lock外candidate prepare、ordered stripe lock、stale revalidation與atomic
+   metadata commit
+5. candidate preparation或snapshot stale時卸載candidate，所有active runtimes維持舊model assignment
+6. 同identity runtimes一起切換；binding correlation可另外納入anonymous或different-identity runtime
+7. accuracy generation reset與membership transition納入model metadata commit，worker start/join延後到cleanup
+8. 新增bounded completed/in-flight provision registry；same ID/same payload replay原response，same ID/different
+   payload拒絕，failed/stale event不進completed registry
+9. identified artifact cache key包含identity、generation與full artifact reference；download/extract依cache stripe
+   serialized並使用temporary candidate directory
+10. config新增`model.provision_event_dedup_capacity: 2048`及process-local provision observability stats/logs
+
+NWDAF：
+
+1. internal `ModelProvisionEvent`新增required `event_id`與client-side preflight validation
+2. Daisy completion使用`daisy:<taskID>`；identity-bearing external MTLF callback在normalization時產生
+   `mtlf:<UUID>`
+3. client在單一120秒operation budget內最多3 attempts，backoff為1秒與2秒
+4. transport error、`409 STALE_RUNTIME_STATE`與`5xx`可retry；permanent `4xx`不retry
+5. 所有attempt重用同一serialized body與event ID，backend error保留HTTP status與detail
+6. 新增可選live `NO_MATCH` duplicate contract probe
+
+### 23.3 Initial Failure Evidence
+
+實作前先加入R3 reproduction tests：
+
+1. PyAnLF focused test collection因缺少`core.provision_events`與`artifact_cache_key`失敗
+2. NWDAF focused tests因`ModelProvisionEvent`沒有`EventID`而compile失敗
+3. reproduction cases固定different identity/same URL污染、same URL update不reload、duplicate event無explicit
+   identity，以及stale fan-out缺少整批guard
+
+正式commits只包含修復後的green tests，沒有提交red test state。
+
+### 23.4 Verification Results
+
+2026-07-14實際結果：
+
+1. `uv run pytest -q`：105 passed
+2. `go test ./internal/anlf/... ./internal/mtlf/...`：passed
+3. `go test -race ./internal/anlf/... ./internal/mtlf/...`：passed
+4. `make test`：passed；兩個live PyAnLF tests因`PYANLF_LIVE_ENDPOINT`未設定而skip
+5. `make build`：passed
+6. `make lint`：0 issues
+7. `git diff --check`：PyAnLF、NWDAF與nwdaf-docs均passed
+8. implementation後完整review未發現未處理P0/P1 finding
+
+FastAPI contract tests已驗證`APPLIED` duplicate replay、generation不增加、event ID conflict及error mapping；Go
+client tests已驗證same-body retry、transport/stale/`5xx` classification與permanent conflict拒絕。這些仍不是running
+Go process與running PyAnLF process之間的完整live proof。
+
+### 23.5 Remaining Risks And Accepted Gaps
+
+1. `environment-level HTTP E2E unverified`：未啟動local PyAnLF並執行`PYANLF_LIVE_ENDPOINT` tests
+2. generation與provision dedup registry仍是process-local；restart durability維持R3 non-goal
+3. old generation artifact cache不自動GC，disk quota與artifact lifecycle維持future work
+4. artifact digest/signature仍未進contract；cache isolation不等於artifact authenticity
+5. external MTLF重新送來的新HTTP callback會取得新UUID，cross-request dedup仍不保證
+6. scheduler completion與subscription inactive transition仍屬R4，R3沒有提前處理
+
+上述項目均為既定non-goals或已確認限制，沒有形成R3 repository-level completion blocker。
