@@ -591,7 +591,7 @@ content update也不會重新下載。
 Recommended direction：
 
 1. runtime registry key使用 `(provider_id, model_unique_id, generation)`
-2. cache至少使用full URL hash + generation
+2. identified cache至少使用model identity + generation + full URL hash
 3. artifact digest有contract source時再加入驗證
 
 Conclusion: valid risk, incorrect attribution if called a new Phase 4 bug.
@@ -940,7 +940,7 @@ model load call count=1
 2. different identities即使artifact URL相同也分離
 3. same identity new generation一定prepare新candidate
 4. candidate commit對affected runtimes具可驗證的atomic boundary
-5. cache key至少加入full URL hash與generation
+5. identified cache key加入model identity、generation與full URL hash
 6. internal provision event加入stable `event_id`，Go retry重用同一ID
 7. 增加same/different identity、same URL update與duplicate event tests
 
@@ -1036,6 +1036,10 @@ same-URL update回傳假成功。
 Confirmed decision（2026-07-13）：選項2。shared runtime以model identity與generation識別；
 generation改變時即使artifact URL相同也必須prepare/reload新candidate。Artifact digest可作完整性
 驗證，但不阻塞第一輪identity/generation修復。
+
+Confirmed refinement（2026-07-14）：identified artifact cache key同時納入model identity、generation與
+full artifact reference。不同identity即使使用相同URL與相同generation number也不共用disk cache；
+未來取得artifact digest後再評估安全的cross-identity cache deduplication。
 
 ### Decision 5: Confidence-zero Accuracy
 

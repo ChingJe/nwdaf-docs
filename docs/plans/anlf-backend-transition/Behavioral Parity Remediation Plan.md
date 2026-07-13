@@ -116,6 +116,7 @@ historical Go只作fixture provenance與expected behavior oracle。
 | Accuracy callback delivery | finite retry後drop；不建立outbox |
 | Subscription completion cleanup | release PyAnLF runtime並將Go subscription設inactive |
 | Same-URL model update | identity/generation改變時必須reload，URL可相同 |
+| Artifact cache isolation | identified cache key包含model identity、generation與full artifact reference |
 | Confidence-zero accuracy | 不進baseline，但保留log與counter |
 | Accuracy sample accumulation | per-check-round，不跨round累積 |
 | Observation delivery concurrency | 保留single global worker |
@@ -652,6 +653,10 @@ R2同時清除Go端已失去reader或重複生效的過渡責任：
 
 ## 10. R3: Correct Model Identity, Generation And Provision
 
+Detailed implementation plan：
+
+- `R3 Model Identity Generation And Provision Correctness.md`
+
 ### 10.1 Target Model State
 
 PyAnLF分離：
@@ -694,11 +699,11 @@ Provision event處理分三段：
 Cache key至少包含：
 
 ```text
-sha256(full artifact reference) + generation
+sha256(canonical model identity + generation + full artifact reference)
 ```
 
-不同host但相同URL尾段不得碰撞。若未來contract提供digest，再把digest納入validation；本輪不要求
-新增外部digest來源。
+不同identity、不同generation，以及不同host但相同URL尾段均不得碰撞。Hash input使用無歧義canonical
+serialization。若未來contract提供digest，再把digest納入validation；本輪不要求新增外部digest來源。
 
 ### 10.4 Provision Event Contract
 
