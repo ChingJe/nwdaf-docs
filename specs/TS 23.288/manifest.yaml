@@ -1,0 +1,2163 @@
+spec: TS 23.288
+version: 18.13.0
+release: '18'
+source_archive: 23288-id0.zip
+source_document: 23288-id0.docx
+source_archive_sha256: 7116a1f4123dcf949818ab56feb6b242eda8819877346ab045654e1d0d8c36aa
+source_document_sha256: 5e4ca6e4e350f62a5d4e4443d36ae93c9df679e1e9aea20ccaa44a4b0eb3e196
+max_source_words_per_semantic_file_target: 4200
+clauses:
+- clause: document-information
+  title: Document information
+  path: 00 Document information.md
+  source_words: 265
+  kind: source-file
+- clause: contents
+  title: Contents
+  path: 01 Original contents.md
+  source_words: 3209
+  kind: source-file
+- clause: foreword
+  title: Foreword
+  path: 02 Foreword.md
+  source_words: 132
+  kind: source-file
+- clause: '1'
+  title: 1 Scope
+  path: 1 Scope.md
+  source_words: 25
+  kind: source-file
+- clause: '2'
+  title: 2 References
+  path: 2 References.md
+  source_words: 740
+  kind: source-file
+- clause: '3'
+  title: 3 Definitions and abbreviations
+  path: 3 Definitions and abbreviations.md
+  source_words: 240
+  kind: source-file
+- clause: '3.1'
+  title: 3.1 Definitions
+  path: 3 Definitions and abbreviations.md
+  source_words: 158
+  kind: embedded-clause
+- clause: '3.2'
+  title: 3.2 Abbreviations
+  path: 3 Definitions and abbreviations.md
+  source_words: 72
+  kind: embedded-clause
+- clause: '4'
+  title: 4 Reference Architecture for Data Analytics
+  path: 4 Reference Architecture for Data Analytics.md
+  source_words: 1637
+  kind: source-file
+- clause: '4.1'
+  title: 4.1 General
+  path: 4 Reference Architecture for Data Analytics.md
+  source_words: 351
+  kind: embedded-clause
+- clause: '4.2'
+  title: 4.2 Non-roaming architecture
+  path: 4 Reference Architecture for Data Analytics.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 4.2.0
+  title: 4.2.0 General
+  path: 4 Reference Architecture for Data Analytics.md
+  source_words: 666
+  kind: embedded-clause
+- clause: 4.2.1
+  title: 4.2.1 Analytics Data Repository Function
+  path: 4 Reference Architecture for Data Analytics.md
+  source_words: 342
+  kind: embedded-clause
+- clause: '4.3'
+  title: 4.3 Roaming architecture
+  path: 4 Reference Architecture for Data Analytics.md
+  source_words: 250
+  kind: embedded-clause
+- clause: '5'
+  title: 5 Network Data Analytics Functional Description
+  path: 5 Network Data Analytics Functional Description.md
+  source_words: 3101
+  kind: source-file
+- clause: '5.1'
+  title: 5.1 General
+  path: 5 Network Data Analytics Functional Description.md
+  source_words: 618
+  kind: embedded-clause
+- clause: '5.2'
+  title: 5.2 NWDAF Discovery and Selection
+  path: 5 Network Data Analytics Functional Description.md
+  source_words: 1661
+  kind: embedded-clause
+- clause: '5.3'
+  title: 5.3 Federated Learning (FL) among multiple NWDAFs
+  path: 5 Network Data Analytics Functional Description.md
+  source_words: 799
+  kind: embedded-clause
+- clause: 5A
+  title: 5A Data Collection Coordination and Delivery Functional Description
+  path: 5A Data Collection Coordination and Delivery Functional Description.md
+  source_words: 3209
+  kind: source-file
+- clause: 5A.1
+  title: 5A.1 General
+  path: 5A Data Collection Coordination and Delivery Functional Description.md
+  source_words: 163
+  kind: embedded-clause
+- clause: 5A.2
+  title: 5A.2 Data Collection Coordination
+  path: 5A Data Collection Coordination and Delivery Functional Description.md
+  source_words: 876
+  kind: embedded-clause
+- clause: 5A.3
+  title: 5A.3 Data Delivery
+  path: 5A Data Collection Coordination and Delivery Functional Description.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5A.3.0
+  title: 5A.3.0 General
+  path: 5A Data Collection Coordination and Delivery Functional Description.md
+  source_words: 63
+  kind: embedded-clause
+- clause: 5A.3.1
+  title: 5A.3.1 Data Delivery via the DCCF or NWDAF
+  path: 5A Data Collection Coordination and Delivery Functional Description.md
+  source_words: 304
+  kind: embedded-clause
+- clause: 5A.3.2
+  title: 5A.3.2 Data Delivery via a Messaging Framework
+  path: 5A Data Collection Coordination and Delivery Functional Description.md
+  source_words: 573
+  kind: embedded-clause
+- clause: 5A.4
+  title: 5A.4 Data Formatting and Processing
+  path: 5A Data Collection Coordination and Delivery Functional Description.md
+  source_words: 945
+  kind: embedded-clause
+- clause: 5A.5
+  title: 5A.5 Historical Data Handling
+  path: 5A Data Collection Coordination and Delivery Functional Description.md
+  source_words: 231
+  kind: embedded-clause
+- clause: 5B
+  title: 5B Analytics Data Repository Functional Description
+  path: 5B Analytics Data Repository Functional Description.md
+  source_words: 975
+  kind: source-file
+- clause: 5B.1
+  title: 5B.1 General
+  path: 5B Analytics Data Repository Functional Description.md
+  source_words: 966
+  kind: embedded-clause
+- clause: 5C
+  title: 5C Analytics/ML Model Accuracy Monitoring Functional Description
+  path: 5C Analytics and ML Model Accuracy Monitoring Functional Description.md
+  source_words: 639
+  kind: source-file
+- clause: 5C.1
+  title: 5C.1 General
+  path: 5C Analytics and ML Model Accuracy Monitoring Functional Description.md
+  source_words: 628
+  kind: embedded-clause
+- clause: '6'
+  title: 6 Procedures to Support Network Data Analytics
+  path: 6 Procedures to Support Network Data Analytics/README.md
+  source_words: 114437
+  kind: navigation-directory
+- clause: '6.0'
+  title: 6.0 General
+  path: 6 Procedures to Support Network Data Analytics/6.0 General.md
+  source_words: 44
+  kind: source-file
+- clause: '6.1'
+  title: 6.1 Procedures for analytics exposure
+  path: 6 Procedures to Support Network Data Analytics/6.1 Procedures for analytics
+    exposure/README.md
+  source_words: 11292
+  kind: navigation-directory
+- clause: 6.1.1
+  title: 6.1.1 Analytics Subscribe/Unsubscribe
+  path: 6 Procedures to Support Network Data Analytics/6.1 Procedures for analytics
+    exposure/6.1.1 Analytics Subscribe and Unsubscribe.md
+  source_words: 1227
+  kind: source-file
+- clause: 6.1.1.1
+  title: 6.1.1.1 Analytics subscribe/unsubscribe by NWDAF service consumer
+  path: 6 Procedures to Support Network Data Analytics/6.1 Procedures for analytics
+    exposure/6.1.1 Analytics Subscribe and Unsubscribe.md
+  source_words: 462
+  kind: embedded-clause
+- clause: 6.1.1.2
+  title: 6.1.1.2 Analytics subscribe/unsubscribe by AFs via NEF
+  path: 6 Procedures to Support Network Data Analytics/6.1 Procedures for analytics
+    exposure/6.1.1 Analytics Subscribe and Unsubscribe.md
+  source_words: 737
+  kind: embedded-clause
+- clause: 6.1.2
+  title: 6.1.2 Analytics Request
+  path: 6 Procedures to Support Network Data Analytics/6.1 Procedures for analytics
+    exposure/6.1.2 Analytics Request.md
+  source_words: 703
+  kind: source-file
+- clause: 6.1.2.1
+  title: 6.1.2.1 Analytics request by NWDAF service consumer
+  path: 6 Procedures to Support Network Data Analytics/6.1 Procedures for analytics
+    exposure/6.1.2 Analytics Request.md
+  source_words: 220
+  kind: embedded-clause
+- clause: 6.1.2.2
+  title: 6.1.2.2 Analytics request by AFs via NEF
+  path: 6 Procedures to Support Network Data Analytics/6.1 Procedures for analytics
+    exposure/6.1.2 Analytics Request.md
+  source_words: 458
+  kind: embedded-clause
+- clause: 6.1.3
+  title: 6.1.3 Contents of Analytics Exposure
+  path: 6 Procedures to Support Network Data Analytics/6.1 Procedures for analytics
+    exposure/6.1.3 Contents of Analytics Exposure.md
+  source_words: 2870
+  kind: source-file
+- clause: 6.1.4
+  title: 6.1.4 Analytics Exposure using DCCF
+  path: 6 Procedures to Support Network Data Analytics/6.1 Procedures for analytics
+    exposure/6.1.4 Analytics Exposure using DCCF.md
+  source_words: 3416
+  kind: source-file
+- clause: 6.1.4.1
+  title: 6.1.4.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.1 Procedures for analytics
+    exposure/6.1.4 Analytics Exposure using DCCF.md
+  source_words: 60
+  kind: embedded-clause
+- clause: 6.1.4.2
+  title: 6.1.4.2 Analytics Exposure via DCCF
+  path: 6 Procedures to Support Network Data Analytics/6.1 Procedures for analytics
+    exposure/6.1.4 Analytics Exposure using DCCF.md
+  source_words: 695
+  kind: embedded-clause
+- clause: 6.1.4.3
+  title: 6.1.4.3 Historical Analytics Exposure via DCCF
+  path: 6 Procedures to Support Network Data Analytics/6.1 Procedures for analytics
+    exposure/6.1.4 Analytics Exposure using DCCF.md
+  source_words: 788
+  kind: embedded-clause
+- clause: 6.1.4.4
+  title: 6.1.4.4 Analytics Exposure via Messaging Framework
+  path: 6 Procedures to Support Network Data Analytics/6.1 Procedures for analytics
+    exposure/6.1.4 Analytics Exposure using DCCF.md
+  source_words: 950
+  kind: embedded-clause
+- clause: 6.1.4.5
+  title: 6.1.4.5 Historical Analytics Exposure via Messaging Framework
+  path: 6 Procedures to Support Network Data Analytics/6.1 Procedures for analytics
+    exposure/6.1.4 Analytics Exposure using DCCF.md
+  source_words: 875
+  kind: embedded-clause
+- clause: 6.1.5
+  title: 6.1.5 Analytics Exposure in Roaming Case
+  path: 6 Procedures to Support Network Data Analytics/6.1 Procedures for analytics
+    exposure/6.1.5 Analytics Exposure in Roaming Case.md
+  source_words: 3070
+  kind: source-file
+- clause: 6.1.5.1
+  title: 6.1.5.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.1 Procedures for analytics
+    exposure/6.1.5 Analytics Exposure in Roaming Case.md
+  source_words: 522
+  kind: embedded-clause
+- clause: 6.1.5.2
+  title: 6.1.5.2 Analytics Exposure from HPLMN to VPLMN
+  path: 6 Procedures to Support Network Data Analytics/6.1 Procedures for analytics
+    exposure/6.1.5 Analytics Exposure in Roaming Case.md
+  source_words: 753
+  kind: embedded-clause
+- clause: 6.1.5.3
+  title: 6.1.5.3 Analytics Exposure from VPLMN to HPLMN
+  path: 6 Procedures to Support Network Data Analytics/6.1 Procedures for analytics
+    exposure/6.1.5 Analytics Exposure in Roaming Case.md
+  source_words: 1036
+  kind: embedded-clause
+- clause: 6.1.5.4
+  title: 6.1.5.4 Contents of Analytics Exposure in roaming case
+  path: 6 Procedures to Support Network Data Analytics/6.1 Procedures for analytics
+    exposure/6.1.5 Analytics Exposure in Roaming Case.md
+  source_words: 715
+  kind: embedded-clause
+- clause: 6.1A
+  title: 6.1A Analytics aggregation from multiple NWDAFs
+  path: 6 Procedures to Support Network Data Analytics/6.1A Analytics aggregation
+    from multiple NWDAFs.md
+  source_words: 2082
+  kind: source-file
+- clause: 6.1A.1
+  title: 6.1A.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.1A Analytics aggregation
+    from multiple NWDAFs.md
+  source_words: 86
+  kind: embedded-clause
+- clause: 6.1A.2
+  title: 6.1A.2 Analytics Aggregation
+  path: 6 Procedures to Support Network Data Analytics/6.1A Analytics aggregation
+    from multiple NWDAFs.md
+  source_words: 386
+  kind: embedded-clause
+- clause: 6.1A.3
+  title: 6.1A.3 Procedure for analytics aggregation
+  path: 6 Procedures to Support Network Data Analytics/6.1A Analytics aggregation
+    from multiple NWDAFs.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.1A.3.1
+  title: 6.1A.3.1 Procedure for analytics aggregation with Provision of Area of Interest
+  path: 6 Procedures to Support Network Data Analytics/6.1A Analytics aggregation
+    from multiple NWDAFs.md
+  source_words: 839
+  kind: embedded-clause
+- clause: 6.1A.3.2
+  title: 6.1A.3.2 Procedure for Analytics Aggregation without Provision of Area of
+    Interest
+  path: 6 Procedures to Support Network Data Analytics/6.1A Analytics aggregation
+    from multiple NWDAFs.md
+  source_words: 720
+  kind: embedded-clause
+- clause: 6.1B
+  title: 6.1B Transfer of analytics context and analytics subscription
+  path: 6 Procedures to Support Network Data Analytics/6.1B Transfer of analytics
+    context and analytics subscription/README.md
+  source_words: 5284
+  kind: navigation-directory
+- clause: 6.1B.1
+  title: 6.1B.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.1B Transfer of analytics
+    context and analytics subscription/6.1B.1 General.md
+  source_words: 340
+  kind: source-file
+- clause: 6.1B.2
+  title: 6.1B.2 Analytics Transfer Procedures
+  path: 6 Procedures to Support Network Data Analytics/6.1B Transfer of analytics
+    context and analytics subscription/6.1B.2 Analytics Transfer Procedures.md
+  source_words: 3567
+  kind: source-file
+- clause: 6.1B.2.1
+  title: 6.1B.2.1 Analytics context transfer initiated by target NWDAF selected by
+    the NWDAF service consumer
+  path: 6 Procedures to Support Network Data Analytics/6.1B Transfer of analytics
+    context and analytics subscription/6.1B.2 Analytics Transfer Procedures.md
+  source_words: 858
+  kind: embedded-clause
+- clause: 6.1B.2.2
+  title: 6.1B.2.2 Analytics Subscription Transfer initiated by source NWDAF
+  path: 6 Procedures to Support Network Data Analytics/6.1B Transfer of analytics
+    context and analytics subscription/6.1B.2 Analytics Transfer Procedures.md
+  source_words: 1523
+  kind: embedded-clause
+- clause: 6.1B.2.3
+  title: 6.1B.2.3 Prepared analytics subscription transfer
+  path: 6 Procedures to Support Network Data Analytics/6.1B Transfer of analytics
+    context and analytics subscription/6.1B.2 Analytics Transfer Procedures.md
+  source_words: 1144
+  kind: embedded-clause
+- clause: 6.1B.3
+  title: 6.1B.3 Analytics Context Transfer
+  path: 6 Procedures to Support Network Data Analytics/6.1B Transfer of analytics
+    context and analytics subscription/6.1B.3 Analytics Context Transfer.md
+  source_words: 493
+  kind: source-file
+- clause: 6.1B.4
+  title: 6.1B.4 Contents of Analytics Context
+  path: 6 Procedures to Support Network Data Analytics/6.1B Transfer of analytics
+    context and analytics subscription/6.1B.4 Contents of Analytics Context.md
+  source_words: 875
+  kind: source-file
+- clause: 6.1C
+  title: 6.1C NWDAF Registration/Deregistration in UDM
+  path: 6 Procedures to Support Network Data Analytics/6.1C NWDAF Registration and
+    Deregistration in UDM.md
+  source_words: 313
+  kind: source-file
+- clause: 6.1C.1
+  title: 6.1C.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.1C NWDAF Registration and
+    Deregistration in UDM.md
+  source_words: 101
+  kind: embedded-clause
+- clause: 6.1C.2
+  title: 6.1C.2 NWDAF Registration in UDM
+  path: 6 Procedures to Support Network Data Analytics/6.1C NWDAF Registration and
+    Deregistration in UDM.md
+  source_words: 93
+  kind: embedded-clause
+- clause: 6.1C.3
+  title: 6.1C.3 NWDAF De-registration from UDM
+  path: 6 Procedures to Support Network Data Analytics/6.1C NWDAF Registration and
+    Deregistration in UDM.md
+  source_words: 94
+  kind: embedded-clause
+- clause: '6.2'
+  title: 6.2 Procedures for Data Collection
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/README.md
+  source_words: 24465
+  kind: navigation-directory
+- clause: 6.2.1
+  title: 6.2.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.1
+    General.md
+  source_words: 1208
+  kind: source-file
+- clause: 6.2.2
+  title: 6.2.2 Data Collection from NFs
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.2
+    Data Collection from NFs/README.md
+  source_words: 4346
+  kind: navigation-directory
+- clause: 6.2.2.1
+  title: 6.2.2.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.2
+    Data Collection from NFs/6.2.2.1 General.md
+  source_words: 2760
+  kind: source-file
+- clause: 6.2.2.2
+  title: 6.2.2.2 Procedure for Data Collection from NFs
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.2
+    Data Collection from NFs/6.2.2.2 Procedure for Data Collection from NFs.md
+  source_words: 517
+  kind: source-file
+- clause: 6.2.2.3
+  title: 6.2.2.3 Procedure for Data Collection from AF via NEF
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.2
+    Data Collection from NFs/6.2.2.3 Procedure for Data Collection from AF via NEF.md
+  source_words: 514
+  kind: source-file
+- clause: 6.2.2.4
+  title: 6.2.2.4 Procedure for Data Collection from NRF
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.2
+    Data Collection from NFs/6.2.2.4 Procedure for Data Collection from NRF.md
+  source_words: 269
+  kind: source-file
+- clause: 6.2.2.5
+  title: 6.2.2.5 Usage of Exposure framework by the NWDAF for Data Collection
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.2
+    Data Collection from NFs/6.2.2.5 Usage of Exposure framework by the NWDAF for
+    Data Collection.md
+  source_words: 279
+  kind: source-file
+- clause: 6.2.3
+  title: 6.2.3 Data Collection from OAM
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.3
+    Data Collection from OAM.md
+  source_words: 681
+  kind: source-file
+- clause: 6.2.3.1
+  title: 6.2.3.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.3
+    Data Collection from OAM.md
+  source_words: 269
+  kind: embedded-clause
+- clause: 6.2.3.2
+  title: 6.2.3.2 Procedure for data collection from OAM
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.3
+    Data Collection from OAM.md
+  source_words: 390
+  kind: embedded-clause
+- clause: 6.2.4
+  title: 6.2.4 Correlation between network data and service data
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.4
+    Correlation between network data and service data.md
+  source_words: 256
+  kind: source-file
+- clause: 6.2.5
+  title: 6.2.5 Time coordination across multiple NWDAF instances
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.5
+    Time coordination across multiple NWDAF instances.md
+  source_words: 425
+  kind: source-file
+- clause: 6.2.5.1
+  title: 6.2.5.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.5
+    Time coordination across multiple NWDAF instances.md
+  source_words: 92
+  kind: embedded-clause
+- clause: 6.2.5.2
+  title: 6.2.5.2 Procedure for time coordination across multiple NWDAFs
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.5
+    Time coordination across multiple NWDAF instances.md
+  source_words: 308
+  kind: embedded-clause
+- clause: 6.2.6
+  title: 6.2.6 Enhanced Procedures for Data Collection
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.6
+    Enhanced Procedures for Data Collection/README.md
+  source_words: 9306
+  kind: navigation-directory
+- clause: 6.2.6.0
+  title: 6.2.6.0 General
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.6
+    Enhanced Procedures for Data Collection/6.2.6.0 General.md
+  source_words: 266
+  kind: source-file
+- clause: 6.2.6.1
+  title: 6.2.6.1 Bulked Data Collection
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.6
+    Enhanced Procedures for Data Collection/6.2.6.1 Bulked Data Collection.md
+  source_words: 1195
+  kind: source-file
+- clause: 6.2.6.1.0
+  title: 6.2.6.1.0 General
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.6
+    Enhanced Procedures for Data Collection/6.2.6.1 Bulked Data Collection.md
+  source_words: 546
+  kind: embedded-clause
+- clause: 6.2.6.1.1
+  title: 6.2.6.1.1 Services for Bulked Data Collection
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.6
+    Enhanced Procedures for Data Collection/6.2.6.1 Bulked Data Collection.md
+  source_words: 626
+  kind: embedded-clause
+- clause: 6.2.6.2
+  title: 6.2.6.2 Procedure for Data Collection from NWDAF
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.6
+    Enhanced Procedures for Data Collection/6.2.6.2 Procedure for Data Collection
+    from NWDAF.md
+  source_words: 1216
+  kind: source-file
+- clause: 6.2.6.3
+  title: 6.2.6.3 Data Collection using DCCF
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.6
+    Enhanced Procedures for Data Collection/6.2.6.3 Data Collection using DCCF/README.md
+  source_words: 6621
+  kind: navigation-directory
+- clause: 6.2.6.3.1
+  title: 6.2.6.3.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.6
+    Enhanced Procedures for Data Collection/6.2.6.3 Data Collection using DCCF/6.2.6.3.1
+    General.md
+  source_words: 258
+  kind: source-file
+- clause: 6.2.6.3.2
+  title: 6.2.6.3.2 Data Collection via DCCF
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.6
+    Enhanced Procedures for Data Collection/6.2.6.3 Data Collection using DCCF/6.2.6.3.2
+    Data Collection via DCCF.md
+  source_words: 1286
+  kind: source-file
+- clause: 6.2.6.3.3
+  title: 6.2.6.3.3 Historical Data Collection via DCCF
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.6
+    Enhanced Procedures for Data Collection/6.2.6.3 Data Collection using DCCF/6.2.6.3.3
+    Historical Data Collection via DCCF.md
+  source_words: 1057
+  kind: source-file
+- clause: 6.2.6.3.4
+  title: 6.2.6.3.4 Data Collection via Messaging Framework
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.6
+    Enhanced Procedures for Data Collection/6.2.6.3 Data Collection using DCCF/6.2.6.3.4
+    Data Collection via Messaging Framework.md
+  source_words: 1483
+  kind: source-file
+- clause: 6.2.6.3.5
+  title: 6.2.6.3.5 Historical Data Collection via Messaging Framework
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.6
+    Enhanced Procedures for Data Collection/6.2.6.3 Data Collection using DCCF/6.2.6.3.5
+    Historical Data Collection via Messaging Framework.md
+  source_words: 1279
+  kind: source-file
+- clause: 6.2.6.3.6
+  title: 6.2.6.3.6 Data collection profile registration
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.6
+    Enhanced Procedures for Data Collection/6.2.6.3 Data Collection using DCCF/6.2.6.3.6
+    Data collection profile registration.md
+  source_words: 438
+  kind: source-file
+- clause: 6.2.6.3.7
+  title: 6.2.6.3.7 DCCF (re-)selection initiated by consumer
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.6
+    Enhanced Procedures for Data Collection/6.2.6.3 Data Collection using DCCF/6.2.6.3.7
+    DCCF (re-)selection initiated by consumer.md
+  source_words: 245
+  kind: source-file
+- clause: 6.2.6.3.8
+  title: 6.2.6.3.8 DCCF and MFAF relocation initiated by DCCF
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.6
+    Enhanced Procedures for Data Collection/6.2.6.3 Data Collection using DCCF/6.2.6.3.8
+    DCCF and MFAF relocation initiated by DCCF.md
+  source_words: 567
+  kind: source-file
+- clause: 6.2.7
+  title: 6.2.7 Data Collection with Event Muting Mechanism
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.7
+    Data Collection with Event Muting Mechanism.md
+  source_words: 1358
+  kind: source-file
+- clause: 6.2.7.1
+  title: 6.2.7.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.7
+    Data Collection with Event Muting Mechanism.md
+  source_words: 59
+  kind: embedded-clause
+- clause: 6.2.7.2
+  title: 6.2.7.2 Procedure for Data Collection with Event Muting Mechanism
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.7
+    Data Collection with Event Muting Mechanism.md
+  source_words: 1273
+  kind: embedded-clause
+- clause: 6.2.8
+  title: 6.2.8 Data Collection from the UE Application
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.8
+    Data Collection from the UE Application.md
+  source_words: 3573
+  kind: source-file
+- clause: 6.2.8.1
+  title: 6.2.8.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.8
+    Data Collection from the UE Application.md
+  source_words: 550
+  kind: embedded-clause
+- clause: 6.2.8.2
+  title: 6.2.8.2 Procedure for data collection from the UE Application
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.8
+    Data Collection from the UE Application.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.2.8.2.1
+  title: 6.2.8.2.1 Connection establishment between UE Application and AF
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.8
+    Data Collection from the UE Application.md
+  source_words: 317
+  kind: embedded-clause
+- clause: 6.2.8.2.2
+  title: 6.2.8.2.2 AF registration and discovery
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.8
+    Data Collection from the UE Application.md
+  source_words: 79
+  kind: embedded-clause
+- clause: 6.2.8.2.3
+  title: 6.2.8.2.3 Data Collection Procedure from UE
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.8
+    Data Collection from the UE Application.md
+  source_words: 794
+  kind: embedded-clause
+- clause: 6.2.8.2.4
+  title: 6.2.8.2.4 Correlation between UE data collection and the NWDAF data request
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.8
+    Data Collection from the UE Application.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.2.8.2.4.1
+  title: 6.2.8.2.4.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.8
+    Data Collection from the UE Application.md
+  source_words: 493
+  kind: embedded-clause
+- clause: 6.2.8.2.4.2
+  title: 6.2.8.2.4.2 AF in trusted domain correlates UE data collection and NWDAF
+    request
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.8
+    Data Collection from the UE Application.md
+  source_words: 365
+  kind: embedded-clause
+- clause: 6.2.8.2.4.3
+  title: 6.2.8.2.4.3 AF in untrusted domain correlates UE data collection and NWDAF
+    request
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.8
+    Data Collection from the UE Application.md
+  source_words: 457
+  kind: embedded-clause
+- clause: 6.2.8.2.4.4
+  title: 6.2.8.2.4.4 NWDAF correlates UE data collection and NWDAF request for trusted
+    AF and untrusted AF
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.8
+    Data Collection from the UE Application.md
+  source_words: 379
+  kind: embedded-clause
+- clause: ''
+  title: 6.2.8.2.4a Void
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.8
+    Data Collection from the UE Application.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.2.9
+  title: 6.2.9 User consent for analytics
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.9
+    User consent for analytics.md
+  source_words: 707
+  kind: source-file
+- clause: 6.2.10
+  title: 6.2.10 Data collection by H-RE-NWDAF from V-RE-NWDAF for outbound roaming
+    users
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.10
+    Data collection by H-RE-NWDAF from V-RE-NWDAF for outbound roaming users.md
+  source_words: 390
+  kind: source-file
+- clause: 6.2.11
+  title: 6.2.11 Data collection by V-RE-NWDAF from H-RE-NWDAF for inbound roaming
+    users
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.11
+    Data collection by V-RE-NWDAF from H-RE-NWDAF for inbound roaming users.md
+  source_words: 329
+  kind: source-file
+- clause: 6.2.12
+  title: 6.2.12 Data Collection using LCS
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.12
+    Data Collection using LCS.md
+  source_words: 539
+  kind: source-file
+- clause: 6.2.12.1
+  title: 6.2.12.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.12
+    Data Collection using LCS.md
+  source_words: 218
+  kind: embedded-clause
+- clause: 6.2.12.2
+  title: 6.2.12.2 Procedure for data collection using LCS
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.12
+    Data Collection using LCS.md
+  source_words: 299
+  kind: embedded-clause
+- clause: 6.2.13
+  title: 6.2.13 Rating untrusted AF data sources
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.13
+    Rating untrusted AF data sources.md
+  source_words: 805
+  kind: source-file
+- clause: 6.2.13.1
+  title: 6.2.13.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.13
+    Rating untrusted AF data sources.md
+  source_words: 93
+  kind: embedded-clause
+- clause: 6.2.13.2
+  title: 6.2.13.2 Procedure for rating untrusted AF data sources
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.13
+    Rating untrusted AF data sources.md
+  source_words: 688
+  kind: embedded-clause
+- clause: 6.2.14
+  title: 6.2.14 Analytics Collection from MDAF
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.14
+    Analytics Collection from MDAF.md
+  source_words: 536
+  kind: source-file
+- clause: 6.2.14.1
+  title: 6.2.14.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.14
+    Analytics Collection from MDAF.md
+  source_words: 68
+  kind: embedded-clause
+- clause: 6.2.14.2
+  title: 6.2.14.2 Procedure for analytics collection from MDAF
+  path: 6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.14
+    Analytics Collection from MDAF.md
+  source_words: 446
+  kind: embedded-clause
+- clause: 6.2A
+  title: 6.2A Procedure for ML Model Provisioning
+  path: 6 Procedures to Support Network Data Analytics/6.2A Procedure for ML Model
+    Provisioning.md
+  source_words: 2519
+  kind: source-file
+- clause: 6.2A.0
+  title: 6.2A.0 General
+  path: 6 Procedures to Support Network Data Analytics/6.2A Procedure for ML Model
+    Provisioning.md
+  source_words: 225
+  kind: embedded-clause
+- clause: 6.2A.1
+  title: 6.2A.1 ML Model Subscribe/Unsubscribe
+  path: 6 Procedures to Support Network Data Analytics/6.2A Procedure for ML Model
+    Provisioning.md
+  source_words: 555
+  kind: embedded-clause
+- clause: 6.2A.2
+  title: 6.2A.2 Contents of ML Model Provisioning
+  path: 6 Procedures to Support Network Data Analytics/6.2A Procedure for ML Model
+    Provisioning.md
+  source_words: 1388
+  kind: embedded-clause
+- clause: 6.2A.3
+  title: 6.2A.3 ML Model request
+  path: 6 Procedures to Support Network Data Analytics/6.2A Procedure for ML Model
+    Provisioning.md
+  source_words: 319
+  kind: embedded-clause
+- clause: 6.2B
+  title: 6.2B Analytics Data and ML Model Repository procedures
+  path: 6 Procedures to Support Network Data Analytics/6.2B Analytics Data and ML
+    Model Repository procedures.md
+  source_words: 3131
+  kind: source-file
+- clause: 6.2B.1
+  title: 6.2B.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.2B Analytics Data and ML
+    Model Repository procedures.md
+  source_words: 90
+  kind: embedded-clause
+- clause: 6.2B.2
+  title: 6.2B.2 Historical Data and Analytics storage
+  path: 6 Procedures to Support Network Data Analytics/6.2B Analytics Data and ML
+    Model Repository procedures.md
+  source_words: 769
+  kind: embedded-clause
+- clause: 6.2B.3
+  title: 6.2B.3 Historical Data and Analytics Storage via Notifications
+  path: 6 Procedures to Support Network Data Analytics/6.2B Analytics Data and ML
+    Model Repository procedures.md
+  source_words: 1260
+  kind: embedded-clause
+- clause: 6.2B.4
+  title: 6.2B.4 Data removal from an ADRF
+  path: 6 Procedures to Support Network Data Analytics/6.2B Analytics Data and ML
+    Model Repository procedures.md
+  source_words: 148
+  kind: embedded-clause
+- clause: 6.2B.5
+  title: 6.2B.5 ML Model Storage in ADRF
+  path: 6 Procedures to Support Network Data Analytics/6.2B Analytics Data and ML
+    Model Repository procedures.md
+  source_words: 183
+  kind: embedded-clause
+- clause: 6.2B.6
+  title: 6.2B.6 ML Model removal from ADRF
+  path: 6 Procedures to Support Network Data Analytics/6.2B Analytics Data and ML
+    Model Repository procedures.md
+  source_words: 92
+  kind: embedded-clause
+- clause: 6.2B.7
+  title: 6.2B.7 ML Model retrieval from ADRF
+  path: 6 Procedures to Support Network Data Analytics/6.2B Analytics Data and ML
+    Model Repository procedures.md
+  source_words: 526
+  kind: embedded-clause
+- clause: 6.2C
+  title: 6.2C Federated Learning among Multiple NWDAFs
+  path: 6 Procedures to Support Network Data Analytics/6.2C Federated Learning among
+    Multiple NWDAFs.md
+  source_words: 2960
+  kind: source-file
+- clause: 6.2C.1
+  title: 6.2C.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.2C Federated Learning among
+    Multiple NWDAFs.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 6.2C.2
+  title: 6.2C.2 Procedures
+  path: 6 Procedures to Support Network Data Analytics/6.2C Federated Learning among
+    Multiple NWDAFs.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.2C.2.1
+  title: 6.2C.2.1 Registration and Discovery procedure for Federated Learning
+  path: 6 Procedures to Support Network Data Analytics/6.2C Federated Learning among
+    Multiple NWDAFs.md
+  source_words: 605
+  kind: embedded-clause
+- clause: 6.2C.2.2
+  title: 6.2C.2.2 General procedure for Federated Learning among Multiple NWDAF Instances
+  path: 6 Procedures to Support Network Data Analytics/6.2C Federated Learning among
+    Multiple NWDAFs.md
+  source_words: 1383
+  kind: embedded-clause
+- clause: 6.2C.2.3
+  title: 6.2C.2.3 Procedures for Maintaining Federated Learning Processes
+  path: 6 Procedures to Support Network Data Analytics/6.2C Federated Learning among
+    Multiple NWDAFs.md
+  source_words: 906
+  kind: embedded-clause
+- clause: 6.2D
+  title: 6.2D AnLF Analytics Accuracy Monitoring Procedures
+  path: 6 Procedures to Support Network Data Analytics/6.2D AnLF Analytics Accuracy
+    Monitoring Procedures.md
+  source_words: 1747
+  kind: source-file
+- clause: 6.2D.1
+  title: 6.2D.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.2D AnLF Analytics Accuracy
+    Monitoring Procedures.md
+  source_words: 357
+  kind: embedded-clause
+- clause: 6.2D.2
+  title: 6.2D.2 Procedures for Analytics Accuracy Information Subscription
+  path: 6 Procedures to Support Network Data Analytics/6.2D AnLF Analytics Accuracy
+    Monitoring Procedures.md
+  source_words: 925
+  kind: embedded-clause
+- clause: 6.2D.3
+  title: 6.2D.3 Procedures for Analytics Accuracy Information Request
+  path: 6 Procedures to Support Network Data Analytics/6.2D AnLF Analytics Accuracy
+    Monitoring Procedures.md
+  source_words: 436
+  kind: embedded-clause
+- clause: 6.2E
+  title: 6.2E MTLF-based ML Model Accuracy Monitoring
+  path: 6 Procedures to Support Network Data Analytics/6.2E MTLF-based ML Model Accuracy
+    Monitoring.md
+  source_words: 3020
+  kind: source-file
+- clause: 6.2E.1
+  title: 6.2E.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.2E MTLF-based ML Model Accuracy
+    Monitoring.md
+  source_words: 30
+  kind: embedded-clause
+- clause: 6.2E.2
+  title: 6.2E.2 Procedure for MTLF-based ML Model Accuracy Monitoring
+  path: 6 Procedures to Support Network Data Analytics/6.2E MTLF-based ML Model Accuracy
+    Monitoring.md
+  source_words: 1065
+  kind: embedded-clause
+- clause: 6.2E.3
+  title: 6.2E.3 Procedure for AnLF-assisted MTLF ML Models Accuracy Monitoring
+  path: 6 Procedures to Support Network Data Analytics/6.2E MTLF-based ML Model Accuracy
+    Monitoring.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.2E.3.1
+  title: 6.2E.3.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.2E MTLF-based ML Model Accuracy
+    Monitoring.md
+  source_words: 224
+  kind: embedded-clause
+- clause: 6.2E.3.2
+  title: 6.2E.3.2 Procedures for registering the monitoring of the analytics accuracy
+    of an ML Model
+  path: 6 Procedures to Support Network Data Analytics/6.2E MTLF-based ML Model Accuracy
+    Monitoring.md
+  source_words: 572
+  kind: embedded-clause
+- clause: 6.2E.3.3
+  title: 6.2E.3.3 Procedures for monitoring the analytics accuracy of an ML Model
+  path: 6 Procedures to Support Network Data Analytics/6.2E MTLF-based ML Model Accuracy
+    Monitoring.md
+  source_words: 1061
+  kind: embedded-clause
+- clause: 6.2F
+  title: 6.2F Procedure for ML Model Training
+  path: 6 Procedures to Support Network Data Analytics/6.2F Procedure for ML Model
+    Training.md
+  source_words: 2071
+  kind: source-file
+- clause: 6.2F.1
+  title: 6.2F.1 ML Model Training Subscribe/Unsubscribe
+  path: 6 Procedures to Support Network Data Analytics/6.2F Procedure for ML Model
+    Training.md
+  source_words: 688
+  kind: embedded-clause
+- clause: 6.2F.2
+  title: 6.2F.2 Contents of ML Model Training
+  path: 6 Procedures to Support Network Data Analytics/6.2F Procedure for ML Model
+    Training.md
+  source_words: 781
+  kind: embedded-clause
+- clause: 6.2F.3
+  title: 6.2F.3 ML Model Training Information Request
+  path: 6 Procedures to Support Network Data Analytics/6.2F Procedure for ML Model
+    Training.md
+  source_words: 571
+  kind: embedded-clause
+- clause: '6.3'
+  title: 6.3 Slice load level related network data analytics
+  path: 6 Procedures to Support Network Data Analytics/6.3 Slice load level related
+    network data analytics.md
+  source_words: 2919
+  kind: source-file
+- clause: 6.3.1
+  title: 6.3.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.3 Slice load level related
+    network data analytics.md
+  source_words: 369
+  kind: embedded-clause
+- clause: 6.3.2
+  title: 6.3.2 Void
+  path: 6 Procedures to Support Network Data Analytics/6.3 Slice load level related
+    network data analytics.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.3.2A
+  title: 6.3.2A Input data
+  path: 6 Procedures to Support Network Data Analytics/6.3 Slice load level related
+    network data analytics.md
+  source_words: 752
+  kind: embedded-clause
+- clause: 6.3.3
+  title: 6.3.3 Void
+  path: 6 Procedures to Support Network Data Analytics/6.3 Slice load level related
+    network data analytics.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.3.3A
+  title: 6.3.3A Output analytics
+  path: 6 Procedures to Support Network Data Analytics/6.3 Slice load level related
+    network data analytics.md
+  source_words: 1288
+  kind: embedded-clause
+- clause: 6.3.4
+  title: 6.3.4 Procedures
+  path: 6 Procedures to Support Network Data Analytics/6.3 Slice load level related
+    network data analytics.md
+  source_words: 475
+  kind: embedded-clause
+- clause: '6.4'
+  title: 6.4 Observed Service Experience related network data analytics
+  path: 6 Procedures to Support Network Data Analytics/6.4 Observed Service Experience
+    related network data analytics/README.md
+  source_words: 6490
+  kind: navigation-directory
+- clause: 6.4.1
+  title: 6.4.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.4 Observed Service Experience
+    related network data analytics/6.4.1 General.md
+  source_words: 1617
+  kind: source-file
+- clause: 6.4.2
+  title: 6.4.2 Input Data
+  path: 6 Procedures to Support Network Data Analytics/6.4 Observed Service Experience
+    related network data analytics/6.4.2 Input Data.md
+  source_words: 1983
+  kind: source-file
+- clause: 6.4.3
+  title: 6.4.3 Output Analytics
+  path: 6 Procedures to Support Network Data Analytics/6.4 Observed Service Experience
+    related network data analytics/6.4.3 Output Analytics.md
+  source_words: 1490
+  kind: source-file
+- clause: 6.4.4
+  title: 6.4.4 Procedures to request Service Experience for an Application
+  path: 6 Procedures to Support Network Data Analytics/6.4 Observed Service Experience
+    related network data analytics/6.4.4 Procedures to request Service Experience
+    for an Application.md
+  source_words: 865
+  kind: source-file
+- clause: 6.4.5
+  title: 6.4.5 Procedures to request Service Experience for a Network Slice
+  path: 6 Procedures to Support Network Data Analytics/6.4 Observed Service Experience
+    related network data analytics/6.4.5 Procedures to request Service Experience
+    for a Network Slice.md
+  source_words: 344
+  kind: source-file
+- clause: 6.4.6
+  title: 6.4.6 Procedures to request Service Experience for a UE
+  path: 6 Procedures to Support Network Data Analytics/6.4 Observed Service Experience
+    related network data analytics/6.4.6 Procedures to request Service Experience
+    for a UE.md
+  source_words: 182
+  kind: source-file
+- clause: '6.5'
+  title: 6.5 NF load analytics
+  path: 6 Procedures to Support Network Data Analytics/6.5 NF load analytics.md
+  source_words: 2724
+  kind: source-file
+- clause: 6.5.1
+  title: 6.5.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.5 NF load analytics.md
+  source_words: 327
+  kind: embedded-clause
+- clause: 6.5.2
+  title: 6.5.2 Input data
+  path: 6 Procedures to Support Network Data Analytics/6.5 NF load analytics.md
+  source_words: 1128
+  kind: embedded-clause
+- clause: 6.5.3
+  title: 6.5.3 Output analytics
+  path: 6 Procedures to Support Network Data Analytics/6.5 NF load analytics.md
+  source_words: 513
+  kind: embedded-clause
+- clause: 6.5.4
+  title: 6.5.4 Procedures
+  path: 6 Procedures to Support Network Data Analytics/6.5 NF load analytics.md
+  source_words: 733
+  kind: embedded-clause
+- clause: '6.6'
+  title: 6.6 Network Performance Analytics
+  path: 6 Procedures to Support Network Data Analytics/6.6 Network Performance Analytics.md
+  source_words: 1570
+  kind: source-file
+- clause: 6.6.1
+  title: 6.6.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.6 Network Performance Analytics.md
+  source_words: 312
+  kind: embedded-clause
+- clause: 6.6.2
+  title: 6.6.2 Input Data
+  path: 6 Procedures to Support Network Data Analytics/6.6 Network Performance Analytics.md
+  source_words: 153
+  kind: embedded-clause
+- clause: 6.6.3
+  title: 6.6.3 Output Analytics
+  path: 6 Procedures to Support Network Data Analytics/6.6 Network Performance Analytics.md
+  source_words: 810
+  kind: embedded-clause
+- clause: 6.6.4
+  title: 6.6.4 Procedures
+  path: 6 Procedures to Support Network Data Analytics/6.6 Network Performance Analytics.md
+  source_words: 272
+  kind: embedded-clause
+- clause: '6.7'
+  title: 6.7 UE related analytics
+  path: 6 Procedures to Support Network Data Analytics/6.7 UE related analytics/README.md
+  source_words: 8562
+  kind: navigation-directory
+- clause: 6.7.1
+  title: 6.7.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.7 UE related analytics/6.7.1
+    General.md
+  source_words: 255
+  kind: source-file
+- clause: 6.7.2
+  title: 6.7.2 UE mobility analytics
+  path: 6 Procedures to Support Network Data Analytics/6.7 UE related analytics/6.7.2
+    UE mobility analytics.md
+  source_words: 2994
+  kind: source-file
+- clause: 6.7.2.1
+  title: 6.7.2.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.7 UE related analytics/6.7.2
+    UE mobility analytics.md
+  source_words: 498
+  kind: embedded-clause
+- clause: 6.7.2.2
+  title: 6.7.2.2 Input Data
+  path: 6 Procedures to Support Network Data Analytics/6.7 UE related analytics/6.7.2
+    UE mobility analytics.md
+  source_words: 597
+  kind: embedded-clause
+- clause: 6.7.2.3
+  title: 6.7.2.3 Output Analytics
+  path: 6 Procedures to Support Network Data Analytics/6.7 UE related analytics/6.7.2
+    UE mobility analytics.md
+  source_words: 1015
+  kind: embedded-clause
+- clause: 6.7.2.4
+  title: 6.7.2.4 Procedures
+  path: 6 Procedures to Support Network Data Analytics/6.7 UE related analytics/6.7.2
+    UE mobility analytics.md
+  source_words: 856
+  kind: embedded-clause
+- clause: 6.7.3
+  title: 6.7.3 UE Communication Analytics
+  path: 6 Procedures to Support Network Data Analytics/6.7 UE related analytics/6.7.3
+    UE Communication Analytics.md
+  source_words: 2091
+  kind: source-file
+- clause: 6.7.3.1
+  title: 6.7.3.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.7 UE related analytics/6.7.3
+    UE Communication Analytics.md
+  source_words: 249
+  kind: embedded-clause
+- clause: 6.7.3.2
+  title: 6.7.3.2 Input Data
+  path: 6 Procedures to Support Network Data Analytics/6.7 UE related analytics/6.7.3
+    UE Communication Analytics.md
+  source_words: 437
+  kind: embedded-clause
+- clause: 6.7.3.3
+  title: 6.7.3.3 Output Analytics
+  path: 6 Procedures to Support Network Data Analytics/6.7 UE related analytics/6.7.3
+    UE Communication Analytics.md
+  source_words: 806
+  kind: embedded-clause
+- clause: 6.7.3.4
+  title: 6.7.3.4 Procedures
+  path: 6 Procedures to Support Network Data Analytics/6.7 UE related analytics/6.7.3
+    UE Communication Analytics.md
+  source_words: 571
+  kind: embedded-clause
+- clause: 6.7.4
+  title: 6.7.4 Expected UE behavioural parameters related network data analytics
+  path: 6 Procedures to Support Network Data Analytics/6.7 UE related analytics/6.7.4
+    Expected UE behavioural parameters related network data analytics.md
+  source_words: 552
+  kind: source-file
+- clause: 6.7.4.1
+  title: 6.7.4.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.7 UE related analytics/6.7.4
+    Expected UE behavioural parameters related network data analytics.md
+  source_words: 211
+  kind: embedded-clause
+- clause: 6.7.4.2
+  title: 6.7.4.2 Input Data
+  path: 6 Procedures to Support Network Data Analytics/6.7 UE related analytics/6.7.4
+    Expected UE behavioural parameters related network data analytics.md
+  source_words: 64
+  kind: embedded-clause
+- clause: 6.7.4.3
+  title: 6.7.4.3 Output Analytics
+  path: 6 Procedures to Support Network Data Analytics/6.7 UE related analytics/6.7.4
+    Expected UE behavioural parameters related network data analytics.md
+  source_words: 40
+  kind: embedded-clause
+- clause: 6.7.4.4
+  title: 6.7.4.4 Procedures
+  path: 6 Procedures to Support Network Data Analytics/6.7 UE related analytics/6.7.4
+    Expected UE behavioural parameters related network data analytics.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.7.4.4.1
+  title: 6.7.4.4.1 NWDAF-assisted expected UE behavioural analytics
+  path: 6 Procedures to Support Network Data Analytics/6.7 UE related analytics/6.7.4
+    Expected UE behavioural parameters related network data analytics.md
+  source_words: 194
+  kind: embedded-clause
+- clause: 6.7.5
+  title: 6.7.5 Abnormal behaviour related network data analytics
+  path: 6 Procedures to Support Network Data Analytics/6.7 UE related analytics/6.7.5
+    Abnormal behaviour related network data analytics.md
+  source_words: 2665
+  kind: source-file
+- clause: 6.7.5.1
+  title: 6.7.5.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.7 UE related analytics/6.7.5
+    Abnormal behaviour related network data analytics.md
+  source_words: 695
+  kind: embedded-clause
+- clause: 6.7.5.2
+  title: 6.7.5.2 Input Data
+  path: 6 Procedures to Support Network Data Analytics/6.7 UE related analytics/6.7.5
+    Abnormal behaviour related network data analytics.md
+  source_words: 233
+  kind: embedded-clause
+- clause: 6.7.5.3
+  title: 6.7.5.3 Output Analytics
+  path: 6 Procedures to Support Network Data Analytics/6.7 UE related analytics/6.7.5
+    Abnormal behaviour related network data analytics.md
+  source_words: 919
+  kind: embedded-clause
+- clause: 6.7.5.4
+  title: 6.7.5.4 Procedure
+  path: 6 Procedures to Support Network Data Analytics/6.7 UE related analytics/6.7.5
+    Abnormal behaviour related network data analytics.md
+  source_words: 787
+  kind: embedded-clause
+- clause: '6.8'
+  title: 6.8 User Data Congestion Analytics
+  path: 6 Procedures to Support Network Data Analytics/6.8 User Data Congestion Analytics.md
+  source_words: 3239
+  kind: source-file
+- clause: 6.8.1
+  title: 6.8.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.8 User Data Congestion Analytics.md
+  source_words: 526
+  kind: embedded-clause
+- clause: 6.8.2
+  title: 6.8.2 Input data
+  path: 6 Procedures to Support Network Data Analytics/6.8 User Data Congestion Analytics.md
+  source_words: 485
+  kind: embedded-clause
+- clause: 6.8.3
+  title: 6.8.3 Output analytics
+  path: 6 Procedures to Support Network Data Analytics/6.8 User Data Congestion Analytics.md
+  source_words: 860
+  kind: embedded-clause
+- clause: 6.8.4
+  title: 6.8.4 Procedures
+  path: 6 Procedures to Support Network Data Analytics/6.8 User Data Congestion Analytics.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.8.4.1
+  title: 6.8.4.1 Procedure for one-time or continuous reporting of analytics for user
+    data congestion in a geographic area
+  path: 6 Procedures to Support Network Data Analytics/6.8 User Data Congestion Analytics.md
+  source_words: 613
+  kind: embedded-clause
+- clause: 6.8.4.2
+  title: 6.8.4.2 Procedure for one-time or continuous reporting of analytics for user
+    data congestion for a specific UE
+  path: 6 Procedures to Support Network Data Analytics/6.8 User Data Congestion Analytics.md
+  source_words: 691
+  kind: embedded-clause
+- clause: '6.9'
+  title: 6.9 QoS Sustainability Analytics
+  path: 6 Procedures to Support Network Data Analytics/6.9 QoS Sustainability Analytics.md
+  source_words: 3498
+  kind: source-file
+- clause: 6.9.1
+  title: 6.9.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.9 QoS Sustainability Analytics.md
+  source_words: 1249
+  kind: embedded-clause
+- clause: 6.9.2
+  title: 6.9.2 Input data
+  path: 6 Procedures to Support Network Data Analytics/6.9 QoS Sustainability Analytics.md
+  source_words: 755
+  kind: embedded-clause
+- clause: 6.9.3
+  title: 6.9.3 Output analytics
+  path: 6 Procedures to Support Network Data Analytics/6.9 QoS Sustainability Analytics.md
+  source_words: 545
+  kind: embedded-clause
+- clause: 6.9.4
+  title: 6.9.4 Procedures
+  path: 6 Procedures to Support Network Data Analytics/6.9 QoS Sustainability Analytics.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.9.4.1
+  title: 6.9.4.1 Procedure for Qos Sustainability in a coarse granularity area
+  path: 6 Procedures to Support Network Data Analytics/6.9 QoS Sustainability Analytics.md
+  source_words: 214
+  kind: embedded-clause
+- clause: 6.9.4.2
+  title: 6.9.4.2 Procedure for QoS Sustainability in a fine granularity area
+  path: 6 Procedures to Support Network Data Analytics/6.9 QoS Sustainability Analytics.md
+  source_words: 686
+  kind: embedded-clause
+- clause: '6.10'
+  title: 6.10 Dispersion Analytics
+  path: 6 Procedures to Support Network Data Analytics/6.10 Dispersion Analytics/README.md
+  source_words: 8516
+  kind: navigation-directory
+- clause: 6.10.1
+  title: 6.10.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.10 Dispersion Analytics/6.10.1
+    General.md
+  source_words: 838
+  kind: source-file
+- clause: 6.10.2
+  title: 6.10.2 Input Data
+  path: 6 Procedures to Support Network Data Analytics/6.10 Dispersion Analytics/6.10.2
+    Input Data.md
+  source_words: 1810
+  kind: source-file
+- clause: 6.10.3
+  title: 6.10.3 Output Analytics
+  path: 6 Procedures to Support Network Data Analytics/6.10 Dispersion Analytics/6.10.3
+    Output Analytics/README.md
+  source_words: 5371
+  kind: navigation-directory
+- clause: 6.10.3.0
+  title: 6.10.3.0 General
+  path: 6 Procedures to Support Network Data Analytics/6.10 Dispersion Analytics/6.10.3
+    Output Analytics/6.10.3.0 General.md
+  source_words: 30
+  kind: source-file
+- clause: 6.10.3.1
+  title: 6.10.3.1 Data Volume Dispersion Analytics
+  path: 6 Procedures to Support Network Data Analytics/6.10 Dispersion Analytics/6.10.3
+    Output Analytics/6.10.3.1 Data Volume Dispersion Analytics.md
+  source_words: 2973
+  kind: source-file
+- clause: 6.10.3.2
+  title: 6.10.3.2 Transactions Dispersion Analytics
+  path: 6 Procedures to Support Network Data Analytics/6.10 Dispersion Analytics/6.10.3
+    Output Analytics/6.10.3.2 Transactions Dispersion Analytics.md
+  source_words: 2363
+  kind: source-file
+- clause: 6.10.4
+  title: 6.10.4 Dispersion Analytic Procedure
+  path: 6 Procedures to Support Network Data Analytics/6.10 Dispersion Analytics/6.10.4
+    Dispersion Analytic Procedure.md
+  source_words: 493
+  kind: source-file
+- clause: '6.11'
+  title: 6.11 WLAN performance analytics
+  path: 6 Procedures to Support Network Data Analytics/6.11 WLAN performance analytics.md
+  source_words: 1450
+  kind: source-file
+- clause: 6.11.1
+  title: 6.11.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.11 WLAN performance analytics.md
+  source_words: 302
+  kind: embedded-clause
+- clause: 6.11.2
+  title: 6.11.2 Input Data
+  path: 6 Procedures to Support Network Data Analytics/6.11 WLAN performance analytics.md
+  source_words: 344
+  kind: embedded-clause
+- clause: 6.11.3
+  title: 6.11.3 Output Analytics
+  path: 6 Procedures to Support Network Data Analytics/6.11 WLAN performance analytics.md
+  source_words: 485
+  kind: embedded-clause
+- clause: 6.11.4
+  title: 6.11.4 Procedures
+  path: 6 Procedures to Support Network Data Analytics/6.11 WLAN performance analytics.md
+  source_words: 296
+  kind: embedded-clause
+- clause: '6.12'
+  title: 6.12 Session Management Congestion Control Experience Analytics
+  path: 6 Procedures to Support Network Data Analytics/6.12 Session Management Congestion
+    Control Experience Analytics.md
+  source_words: 1046
+  kind: source-file
+- clause: 6.12.1
+  title: 6.12.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.12 Session Management Congestion
+    Control Experience Analytics.md
+  source_words: 317
+  kind: embedded-clause
+- clause: 6.12.2
+  title: 6.12.2 Input Data
+  path: 6 Procedures to Support Network Data Analytics/6.12 Session Management Congestion
+    Control Experience Analytics.md
+  source_words: 316
+  kind: embedded-clause
+- clause: 6.12.3
+  title: 6.12.3 Output Analytics
+  path: 6 Procedures to Support Network Data Analytics/6.12 Session Management Congestion
+    Control Experience Analytics.md
+  source_words: 184
+  kind: embedded-clause
+- clause: 6.12.4
+  title: 6.12.4 Procedures
+  path: 6 Procedures to Support Network Data Analytics/6.12 Session Management Congestion
+    Control Experience Analytics.md
+  source_words: 203
+  kind: embedded-clause
+- clause: '6.13'
+  title: 6.13 Redundant Transmission Experience related analytics
+  path: 6 Procedures to Support Network Data Analytics/6.13 Redundant Transmission
+    Experience related analytics.md
+  source_words: 1906
+  kind: source-file
+- clause: 6.13.1
+  title: 6.13.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.13 Redundant Transmission
+    Experience related analytics.md
+  source_words: 218
+  kind: embedded-clause
+- clause: 6.13.2
+  title: 6.13.2 Input Data
+  path: 6 Procedures to Support Network Data Analytics/6.13 Redundant Transmission
+    Experience related analytics.md
+  source_words: 480
+  kind: embedded-clause
+- clause: 6.13.3
+  title: 6.13.3 Output Analytics
+  path: 6 Procedures to Support Network Data Analytics/6.13 Redundant Transmission
+    Experience related analytics.md
+  source_words: 819
+  kind: embedded-clause
+- clause: 6.13.4
+  title: 6.13.4 Procedures
+  path: 6 Procedures to Support Network Data Analytics/6.13 Redundant Transmission
+    Experience related analytics.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.13.4.1
+  title: 6.13.4.1 Analytics Procedure
+  path: 6 Procedures to Support Network Data Analytics/6.13 Redundant Transmission
+    Experience related analytics.md
+  source_words: 358
+  kind: embedded-clause
+- clause: '6.14'
+  title: 6.14 DN Performance Analytics
+  path: 6 Procedures to Support Network Data Analytics/6.14 DN Performance Analytics.md
+  source_words: 2693
+  kind: source-file
+- clause: 6.14.1
+  title: 6.14.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.14 DN Performance Analytics.md
+  source_words: 515
+  kind: embedded-clause
+- clause: 6.14.2
+  title: 6.14.2 Input Data
+  path: 6 Procedures to Support Network Data Analytics/6.14 DN Performance Analytics.md
+  source_words: 318
+  kind: embedded-clause
+- clause: 6.14.3
+  title: 6.14.3 Output Analytics
+  path: 6 Procedures to Support Network Data Analytics/6.14 DN Performance Analytics.md
+  source_words: 1456
+  kind: embedded-clause
+- clause: 6.14.4
+  title: 6.14.4 Procedures to request DN Performance Analytics for an Application
+  path: 6 Procedures to Support Network Data Analytics/6.14 DN Performance Analytics.md
+  source_words: 373
+  kind: embedded-clause
+- clause: '6.15'
+  title: 6.15 Void
+  path: 6 Procedures to Support Network Data Analytics/6.15 Void.md
+  source_words: 3
+  kind: source-file
+- clause: '6.16'
+  title: 6.16 PFD Determination Analytics
+  path: 6 Procedures to Support Network Data Analytics/6.16 PFD Determination Analytics.md
+  source_words: 1459
+  kind: source-file
+- clause: 6.16.1
+  title: 6.16.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.16 PFD Determination Analytics.md
+  source_words: 276
+  kind: embedded-clause
+- clause: 6.16.2
+  title: 6.16.2 Input Data
+  path: 6 Procedures to Support Network Data Analytics/6.16 PFD Determination Analytics.md
+  source_words: 502
+  kind: embedded-clause
+- clause: 6.16.3
+  title: 6.16.3 Output Analytics
+  path: 6 Procedures to Support Network Data Analytics/6.16 PFD Determination Analytics.md
+  source_words: 164
+  kind: embedded-clause
+- clause: 6.16.4
+  title: 6.16.4 Procedures
+  path: 6 Procedures to Support Network Data Analytics/6.16 PFD Determination Analytics.md
+  source_words: 494
+  kind: embedded-clause
+- clause: '6.17'
+  title: 6.17 Location Accuracy Analytics
+  path: 6 Procedures to Support Network Data Analytics/6.17 Location Accuracy Analytics.md
+  source_words: 1748
+  kind: source-file
+- clause: 6.17.1
+  title: 6.17.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.17 Location Accuracy Analytics.md
+  source_words: 375
+  kind: embedded-clause
+- clause: 6.17.2
+  title: 6.17.2 Input Data
+  path: 6 Procedures to Support Network Data Analytics/6.17 Location Accuracy Analytics.md
+  source_words: 371
+  kind: embedded-clause
+- clause: 6.17.3
+  title: 6.17.3 Output Analytics
+  path: 6 Procedures to Support Network Data Analytics/6.17 Location Accuracy Analytics.md
+  source_words: 642
+  kind: embedded-clause
+- clause: 6.17.4
+  title: 6.17.4 Procedures to request Location Accuracy Analytics
+  path: 6 Procedures to Support Network Data Analytics/6.17 Location Accuracy Analytics.md
+  source_words: 332
+  kind: embedded-clause
+- clause: '6.18'
+  title: 6.18 End-to-end data volume transfer time analytics
+  path: 6 Procedures to Support Network Data Analytics/6.18 End-to-end data volume
+    transfer time analytics.md
+  source_words: 3296
+  kind: source-file
+- clause: 6.18.1
+  title: 6.18.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.18 End-to-end data volume
+    transfer time analytics.md
+  source_words: 544
+  kind: embedded-clause
+- clause: 6.18.2
+  title: 6.18.2 Input Data
+  path: 6 Procedures to Support Network Data Analytics/6.18 End-to-end data volume
+    transfer time analytics.md
+  source_words: 1051
+  kind: embedded-clause
+- clause: 6.18.3
+  title: 6.18.3 Output Analytics
+  path: 6 Procedures to Support Network Data Analytics/6.18 End-to-end data volume
+    transfer time analytics.md
+  source_words: 1241
+  kind: embedded-clause
+- clause: 6.18.4
+  title: 6.18.4 Procedures
+  path: 6 Procedures to Support Network Data Analytics/6.18 End-to-end data volume
+    transfer time analytics.md
+  source_words: 434
+  kind: embedded-clause
+- clause: '6.19'
+  title: 6.19 Relative Proximity Analytics
+  path: 6 Procedures to Support Network Data Analytics/6.19 Relative Proximity Analytics.md
+  source_words: 1867
+  kind: source-file
+- clause: 6.19.1
+  title: 6.19.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.19 Relative Proximity Analytics.md
+  source_words: 279
+  kind: embedded-clause
+- clause: 6.19.2
+  title: 6.19.2 Input data
+  path: 6 Procedures to Support Network Data Analytics/6.19 Relative Proximity Analytics.md
+  source_words: 443
+  kind: embedded-clause
+- clause: 6.19.3
+  title: 6.19.3 Output analytics
+  path: 6 Procedures to Support Network Data Analytics/6.19 Relative Proximity Analytics.md
+  source_words: 362
+  kind: embedded-clause
+- clause: 6.19.4
+  title: 6.19.4 Procedures
+  path: 6 Procedures to Support Network Data Analytics/6.19 Relative Proximity Analytics.md
+  source_words: 760
+  kind: embedded-clause
+- clause: '6.20'
+  title: 6.20 PDU Session traffic analytics
+  path: 6 Procedures to Support Network Data Analytics/6.20 PDU Session traffic analytics.md
+  source_words: 1365
+  kind: source-file
+- clause: 6.20.1
+  title: 6.20.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.20 PDU Session traffic analytics.md
+  source_words: 307
+  kind: embedded-clause
+- clause: 6.20.2
+  title: 6.20.2 Input Data
+  path: 6 Procedures to Support Network Data Analytics/6.20 PDU Session traffic analytics.md
+  source_words: 310
+  kind: embedded-clause
+- clause: 6.20.3
+  title: 6.20.3 Output Analytics
+  path: 6 Procedures to Support Network Data Analytics/6.20 PDU Session traffic analytics.md
+  source_words: 362
+  kind: embedded-clause
+- clause: 6.20.4
+  title: 6.20.4 Procedures
+  path: 6 Procedures to Support Network Data Analytics/6.20 PDU Session traffic analytics.md
+  source_words: 362
+  kind: embedded-clause
+- clause: '6.21'
+  title: 6.21 Movement Behaviour Analytics
+  path: 6 Procedures to Support Network Data Analytics/6.21 Movement Behaviour Analytics.md
+  source_words: 1151
+  kind: source-file
+- clause: 6.21.1
+  title: 6.21.1 General
+  path: 6 Procedures to Support Network Data Analytics/6.21 Movement Behaviour Analytics.md
+  source_words: 214
+  kind: embedded-clause
+- clause: 6.21.2
+  title: 6.21.2 Input data
+  path: 6 Procedures to Support Network Data Analytics/6.21 Movement Behaviour Analytics.md
+  source_words: 160
+  kind: embedded-clause
+- clause: 6.21.3
+  title: 6.21.3 Output analytics
+  path: 6 Procedures to Support Network Data Analytics/6.21 Movement Behaviour Analytics.md
+  source_words: 443
+  kind: embedded-clause
+- clause: 6.21.4
+  title: 6.21.4 Procedures
+  path: 6 Procedures to Support Network Data Analytics/6.21 Movement Behaviour Analytics.md
+  source_words: 311
+  kind: embedded-clause
+- clause: '7'
+  title: 7 Nnwdaf Services Description
+  path: 7 Nnwdaf Services Description/README.md
+  source_words: 7227
+  kind: navigation-directory
+- clause: '7.1'
+  title: 7.1 General
+  path: 7 Nnwdaf Services Description/7.1 General.md
+  source_words: 865
+  kind: source-file
+- clause: '7.2'
+  title: 7.2 Nnwdaf_AnalyticsSubscription Service
+  path: 7 Nnwdaf Services Description/7.2 Nnwdaf_AnalyticsSubscription Service.md
+  source_words: 1258
+  kind: source-file
+- clause: 7.2.1
+  title: 7.2.1 General
+  path: 7 Nnwdaf Services Description/7.2 Nnwdaf_AnalyticsSubscription Service.md
+  source_words: 127
+  kind: embedded-clause
+- clause: 7.2.2
+  title: 7.2.2 Nnwdaf_AnalyticsSubscription_Subscribe service operation
+  path: 7 Nnwdaf Services Description/7.2 Nnwdaf_AnalyticsSubscription Service.md
+  source_words: 430
+  kind: embedded-clause
+- clause: 7.2.3
+  title: 7.2.3 Nnwdaf_AnalyticsSubscription_Unsubscribe service operation
+  path: 7 Nnwdaf Services Description/7.2 Nnwdaf_AnalyticsSubscription Service.md
+  source_words: 26
+  kind: embedded-clause
+- clause: 7.2.4
+  title: 7.2.4 Nnwdaf_AnalyticsSubscription_Notify service operation
+  path: 7 Nnwdaf Services Description/7.2 Nnwdaf_AnalyticsSubscription Service.md
+  source_words: 290
+  kind: embedded-clause
+- clause: 7.2.5
+  title: 7.2.5 Nnwdaf_AnalyticsSubscription_Transfer service operation
+  path: 7 Nnwdaf Services Description/7.2 Nnwdaf_AnalyticsSubscription Service.md
+  source_words: 353
+  kind: embedded-clause
+- clause: '7.3'
+  title: 7.3 Nnwdaf_AnalyticsInfo service
+  path: 7 Nnwdaf Services Description/7.3 Nnwdaf_AnalyticsInfo service.md
+  source_words: 488
+  kind: source-file
+- clause: 7.3.1
+  title: 7.3.1 General
+  path: 7 Nnwdaf Services Description/7.3 Nnwdaf_AnalyticsInfo service.md
+  source_words: 31
+  kind: embedded-clause
+- clause: 7.3.2
+  title: 7.3.2 Nnwdaf_AnalyticsInfo_Request service operation
+  path: 7 Nnwdaf Services Description/7.3 Nnwdaf_AnalyticsInfo service.md
+  source_words: 334
+  kind: embedded-clause
+- clause: 7.3.3
+  title: 7.3.3 Nnwdaf_AnalyticsInfo_ContextTransfer service operation
+  path: 7 Nnwdaf Services Description/7.3 Nnwdaf_AnalyticsInfo service.md
+  source_words: 103
+  kind: embedded-clause
+- clause: '7.4'
+  title: 7.4 Nnwdaf_DataManagement Service
+  path: 7 Nnwdaf Services Description/7.4 Nnwdaf_DataManagement Service.md
+  source_words: 855
+  kind: source-file
+- clause: 7.4.1
+  title: 7.4.1 General
+  path: 7 Nnwdaf Services Description/7.4 Nnwdaf_DataManagement Service.md
+  source_words: 31
+  kind: embedded-clause
+- clause: 7.4.2
+  title: 7.4.2 Nnwdaf_DataManagement_Subscribe service operation
+  path: 7 Nnwdaf Services Description/7.4 Nnwdaf_DataManagement Service.md
+  source_words: 403
+  kind: embedded-clause
+- clause: 7.4.3
+  title: 7.4.3 Nnwdaf_DataManagement_Unsubscribe service operation
+  path: 7 Nnwdaf Services Description/7.4 Nnwdaf_DataManagement Service.md
+  source_words: 39
+  kind: embedded-clause
+- clause: 7.4.4
+  title: 7.4.4 Nnwdaf_DataManagement_Notify service operation
+  path: 7 Nnwdaf Services Description/7.4 Nnwdaf_DataManagement Service.md
+  source_words: 302
+  kind: embedded-clause
+- clause: 7.4.5
+  title: 7.4.5 Nnwdaf_DataManagement_Fetch service operation
+  path: 7 Nnwdaf Services Description/7.4 Nnwdaf_DataManagement Service.md
+  source_words: 48
+  kind: embedded-clause
+- clause: '7.5'
+  title: 7.5 Nnwdaf_MLModelProvision services
+  path: 7 Nnwdaf Services Description/7.5 Nnwdaf_MLModelProvision services.md
+  source_words: 392
+  kind: source-file
+- clause: 7.5.1
+  title: 7.5.1 General
+  path: 7 Nnwdaf Services Description/7.5 Nnwdaf_MLModelProvision services.md
+  source_words: 68
+  kind: embedded-clause
+- clause: 7.5.2
+  title: 7.5.2 Nnwdaf_MLModelProvision_Subscribe service operation
+  path: 7 Nnwdaf Services Description/7.5 Nnwdaf_MLModelProvision services.md
+  source_words: 202
+  kind: embedded-clause
+- clause: 7.5.3
+  title: 7.5.3 Nnwdaf_MLModelProvision_Unsubscribe service operation
+  path: 7 Nnwdaf Services Description/7.5 Nnwdaf_MLModelProvision services.md
+  source_words: 28
+  kind: embedded-clause
+- clause: 7.5.4
+  title: 7.5.4 Nnwdaf_MLModelProvision_Notify service operation
+  path: 7 Nnwdaf Services Description/7.5 Nnwdaf_MLModelProvision services.md
+  source_words: 68
+  kind: embedded-clause
+- clause: '7.6'
+  title: 7.6 Nnwdaf_MLModelInfo service
+  path: 7 Nnwdaf Services Description/7.6 Nnwdaf_MLModelInfo service.md
+  source_words: 179
+  kind: source-file
+- clause: 7.6.1
+  title: 7.6.1 General
+  path: 7 Nnwdaf Services Description/7.6 Nnwdaf_MLModelInfo service.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 7.6.2
+  title: 7.6.2 Nnwdaf_MLModelInfo_Request service operation
+  path: 7 Nnwdaf Services Description/7.6 Nnwdaf_MLModelInfo service.md
+  source_words: 147
+  kind: embedded-clause
+- clause: '7.7'
+  title: 7.7 Nnwdaf_RoamingAnalytics Service
+  path: 7 Nnwdaf Services Description/7.7 Nnwdaf_RoamingAnalytics Service.md
+  source_words: 702
+  kind: source-file
+- clause: 7.7.1
+  title: 7.7.1 General
+  path: 7 Nnwdaf Services Description/7.7 Nnwdaf_RoamingAnalytics Service.md
+  source_words: 22
+  kind: embedded-clause
+- clause: 7.7.2
+  title: 7.7.2 Nnwdaf_RoamingAnalytics_Subscribe service operation
+  path: 7 Nnwdaf Services Description/7.7 Nnwdaf_RoamingAnalytics Service.md
+  source_words: 239
+  kind: embedded-clause
+- clause: 7.7.3
+  title: 7.7.3 Nnwdaf_RoamingAnalytics_Unsubscribe service operation
+  path: 7 Nnwdaf Services Description/7.7 Nnwdaf_RoamingAnalytics Service.md
+  source_words: 31
+  kind: embedded-clause
+- clause: 7.7.4
+  title: 7.7.4 Nnwdaf_RoamingAnalytics_Notify service operation
+  path: 7 Nnwdaf Services Description/7.7 Nnwdaf_RoamingAnalytics Service.md
+  source_words: 147
+  kind: embedded-clause
+- clause: 7.7.5
+  title: 7.7.5 Nnwdaf_RoamingAnalytics_Request service operation
+  path: 7 Nnwdaf Services Description/7.7 Nnwdaf_RoamingAnalytics Service.md
+  source_words: 231
+  kind: embedded-clause
+- clause: '7.8'
+  title: 7.8 Nnwdaf_RoamingData Service
+  path: 7 Nnwdaf Services Description/7.8 Nnwdaf_RoamingData Service.md
+  source_words: 486
+  kind: source-file
+- clause: 7.8.1
+  title: 7.8.1 General
+  path: 7 Nnwdaf Services Description/7.8 Nnwdaf_RoamingData Service.md
+  source_words: 21
+  kind: embedded-clause
+- clause: 7.8.2
+  title: 7.8.2 Nnwdaf_RoamingData_Subscribe service operation
+  path: 7 Nnwdaf Services Description/7.8 Nnwdaf_RoamingData Service.md
+  source_words: 247
+  kind: embedded-clause
+- clause: 7.8.3
+  title: 7.8.3 Nnwdaf_RoamingData_Unsubscribe service operation
+  path: 7 Nnwdaf Services Description/7.8 Nnwdaf_RoamingData Service.md
+  source_words: 42
+  kind: embedded-clause
+- clause: 7.8.4
+  title: 7.8.4 Nnwdaf_RoamingData_Notify service operation
+  path: 7 Nnwdaf Services Description/7.8 Nnwdaf_RoamingData Service.md
+  source_words: 150
+  kind: embedded-clause
+- clause: '7.9'
+  title: 7.9 Nnwdaf_MLModelMonitor Service
+  path: 7 Nnwdaf Services Description/7.9 Nnwdaf_MLModelMonitor Service.md
+  source_words: 850
+  kind: source-file
+- clause: 7.9.1
+  title: 7.9.1 General
+  path: 7 Nnwdaf Services Description/7.9 Nnwdaf_MLModelMonitor Service.md
+  source_words: 80
+  kind: embedded-clause
+- clause: 7.9.2
+  title: 7.9.2 Nnwdaf_MLModelMonitor_Subscribe service operation
+  path: 7 Nnwdaf Services Description/7.9 Nnwdaf_MLModelMonitor Service.md
+  source_words: 201
+  kind: embedded-clause
+- clause: 7.9.3
+  title: 7.9.3 Nnwdaf_MLModelMonitor_Unsubscribe service operation
+  path: 7 Nnwdaf Services Description/7.9 Nnwdaf_MLModelMonitor Service.md
+  source_words: 60
+  kind: embedded-clause
+- clause: 7.9.4
+  title: 7.9.4 Nnwdaf_MLModelMonitor_Notify service operation
+  path: 7 Nnwdaf Services Description/7.9 Nnwdaf_MLModelMonitor Service.md
+  source_words: 314
+  kind: embedded-clause
+- clause: 7.9.5
+  title: 7.9.5 Nnwdaf_MLModelMonitor_Register
+  path: 7 Nnwdaf Services Description/7.9 Nnwdaf_MLModelMonitor Service.md
+  source_words: 80
+  kind: embedded-clause
+- clause: 7.9.6
+  title: 7.9.6 Nnwdaf_MLModelMonitor_Deregister
+  path: 7 Nnwdaf Services Description/7.9 Nnwdaf_MLModelMonitor Service.md
+  source_words: 81
+  kind: embedded-clause
+- clause: '7.10'
+  title: 7.10 Nnwdaf_MLModelTraining Service
+  path: 7 Nnwdaf Services Description/7.10 Nnwdaf_MLModelTraining Service.md
+  source_words: 722
+  kind: source-file
+- clause: 7.10.1
+  title: 7.10.1 General
+  path: 7 Nnwdaf Services Description/7.10 Nnwdaf_MLModelTraining Service.md
+  source_words: 165
+  kind: embedded-clause
+- clause: 7.10.2
+  title: 7.10.2 Nnwdaf_MLModelTraining_Subscribe service operation
+  path: 7 Nnwdaf Services Description/7.10 Nnwdaf_MLModelTraining Service.md
+  source_words: 206
+  kind: embedded-clause
+- clause: 7.10.3
+  title: 7.10.3 Nnwdaf_MLModelTraining_Unsubscribe service operation
+  path: 7 Nnwdaf Services Description/7.10 Nnwdaf_MLModelTraining Service.md
+  source_words: 72
+  kind: embedded-clause
+- clause: 7.10.4
+  title: 7.10.4 Nnwdaf_MLModelTraining_Notify service operation
+  path: 7 Nnwdaf Services Description/7.10 Nnwdaf_MLModelTraining Service.md
+  source_words: 253
+  kind: embedded-clause
+- clause: '7.11'
+  title: 7.11 Nnwdaf_MLModelTrainingInfo Service
+  path: 7 Nnwdaf Services Description/7.11 Nnwdaf_MLModelTrainingInfo Service.md
+  source_words: 426
+  kind: source-file
+- clause: 7.11.1
+  title: 7.11.1 General
+  path: 7 Nnwdaf Services Description/7.11 Nnwdaf_MLModelTrainingInfo Service.md
+  source_words: 91
+  kind: embedded-clause
+- clause: 7.11.2
+  title: 7.11.2 Nnwdaf_MLModelTrainingInfo_Request service operation
+  path: 7 Nnwdaf Services Description/7.11 Nnwdaf_MLModelTrainingInfo Service.md
+  source_words: 321
+  kind: embedded-clause
+- clause: '8'
+  title: 8 DCCF Services
+  path: 8 DCCF Services.md
+  source_words: 1657
+  kind: source-file
+- clause: '8.1'
+  title: 8.1 General
+  path: 8 DCCF Services.md
+  source_words: 93
+  kind: embedded-clause
+- clause: '8.2'
+  title: 8.2 Ndccf_DataManagement service
+  path: 8 DCCF Services.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 8.2.1
+  title: 8.2.1 General
+  path: 8 DCCF Services.md
+  source_words: 83
+  kind: embedded-clause
+- clause: 8.2.2
+  title: 8.2.2 Ndccf_DataManagement_Subscribe service operation
+  path: 8 DCCF Services.md
+  source_words: 559
+  kind: embedded-clause
+- clause: 8.2.3
+  title: 8.2.3 Ndccf_DataManagement_Unsubscribe service operation
+  path: 8 DCCF Services.md
+  source_words: 42
+  kind: embedded-clause
+- clause: 8.2.4
+  title: 8.2.4 Ndccf_DataManagement_Notify service operation
+  path: 8 DCCF Services.md
+  source_words: 333
+  kind: embedded-clause
+- clause: 8.2.5
+  title: 8.2.5 Ndccf_DataManagement_Fetch service operation
+  path: 8 DCCF Services.md
+  source_words: 50
+  kind: embedded-clause
+- clause: 8.2.6
+  title: 8.2.6 Ndccf_DataManagement_Transfer service operation
+  path: 8 DCCF Services.md
+  source_words: 68
+  kind: embedded-clause
+- clause: '8.3'
+  title: 8.3 Ndccf_ContextManagement service
+  path: 8 DCCF Services.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 8.3.1
+  title: 8.3.1 General
+  path: 8 DCCF Services.md
+  source_words: 53
+  kind: embedded-clause
+- clause: 8.3.2
+  title: 8.3.2 Ndccf_ContextManagement_Register service operation
+  path: 8 DCCF Services.md
+  source_words: 178
+  kind: embedded-clause
+- clause: 8.3.3
+  title: 8.3.3 Ndccf_ContextManagement_Update service operation
+  path: 8 DCCF Services.md
+  source_words: 83
+  kind: embedded-clause
+- clause: 8.3.4
+  title: 8.3.4 Ndccf_ContextManagement_Deregister service operation
+  path: 8 DCCF Services.md
+  source_words: 45
+  kind: embedded-clause
+- clause: '9'
+  title: 9 MFAF Services
+  path: 9 MFAF Services.md
+  source_words: 1052
+  kind: source-file
+- clause: '9.1'
+  title: 9.1 General
+  path: 9 MFAF Services.md
+  source_words: 69
+  kind: embedded-clause
+- clause: '9.2'
+  title: 9.2 Nmfaf_3daDataManagement service
+  path: 9 MFAF Services.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 9.2.1
+  title: 9.2.1 General
+  path: 9 MFAF Services.md
+  source_words: 104
+  kind: embedded-clause
+- clause: 9.2.2
+  title: 9.2.2 Nmfaf_3daDataManagement_Configure service operation
+  path: 9 MFAF Services.md
+  source_words: 372
+  kind: embedded-clause
+- clause: 9.2.3
+  title: 9.2.3 Nmfaf_3daDataManagement_Deconfigure service operation
+  path: 9 MFAF Services.md
+  source_words: 50
+  kind: embedded-clause
+- clause: '9.3'
+  title: 9.3 Nmfaf_3caDataManagement service
+  path: 9 MFAF Services.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 9.3.1
+  title: 9.3.1 General
+  path: 9 MFAF Services.md
+  source_words: 32
+  kind: embedded-clause
+- clause: 9.3.2
+  title: 9.3.2 Nmfaf_3caDataManagement_Notify service operation
+  path: 9 MFAF Services.md
+  source_words: 152
+  kind: embedded-clause
+- clause: 9.3.3
+  title: 9.3.3 Nmfaf_3caDataManagement_Fetch service operation
+  path: 9 MFAF Services.md
+  source_words: 73
+  kind: embedded-clause
+- clause: '9.4'
+  title: 9.4 Nmfaf_ContextManagement service
+  path: 9 MFAF Services.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 9.4.1
+  title: 9.4.1 General
+  path: 9 MFAF Services.md
+  source_words: 28
+  kind: embedded-clause
+- clause: 9.4.2
+  title: 9.4.2 Nmfaf_ContextManagement_Transfer service operation
+  path: 9 MFAF Services.md
+  source_words: 112
+  kind: embedded-clause
+- clause: '10'
+  title: 10 ADRF Services
+  path: 10 ADRF Services.md
+  source_words: 1967
+  kind: source-file
+- clause: '10.1'
+  title: 10.1 General
+  path: 10 ADRF Services.md
+  source_words: 143
+  kind: embedded-clause
+- clause: '10.2'
+  title: 10.2 Nadrf_DataManagement service
+  path: 10 ADRF Services.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 10.2.1
+  title: 10.2.1 General
+  path: 10 ADRF Services.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 10.2.2
+  title: 10.2.2 Nadrf_DataManagement_StorageRequest service operation
+  path: 10 ADRF Services.md
+  source_words: 174
+  kind: embedded-clause
+- clause: 10.2.3
+  title: 10.2.3 Nadrf_DataManagement_StorageSubscriptionRequest service operation
+  path: 10 ADRF Services.md
+  source_words: 279
+  kind: embedded-clause
+- clause: 10.2.4
+  title: 10.2.4 Nadrf_DataManagement_StorageSubscriptionRemoval service operation
+  path: 10 ADRF Services.md
+  source_words: 57
+  kind: embedded-clause
+- clause: 10.2.5
+  title: 10.2.5 Nadrf_DataManagement_RetrievalRequest service operation
+  path: 10 ADRF Services.md
+  source_words: 117
+  kind: embedded-clause
+- clause: 10.2.6
+  title: 10.2.6 Nadrf_DataManagement_RetrievalSubscribe service operation
+  path: 10 ADRF Services.md
+  source_words: 219
+  kind: embedded-clause
+- clause: 10.2.7
+  title: 10.2.7 Nadrf_DataManagement_RetrievalUnsubscribe service operation
+  path: 10 ADRF Services.md
+  source_words: 44
+  kind: embedded-clause
+- clause: 10.2.8
+  title: 10.2.8 Nadrf_DataManagement_RetrievalNotify service operation
+  path: 10 ADRF Services.md
+  source_words: 277
+  kind: embedded-clause
+- clause: 10.2.9
+  title: 10.2.9 Nadrf_DataManagement_Delete
+  path: 10 ADRF Services.md
+  source_words: 48
+  kind: embedded-clause
+- clause: '10.3'
+  title: 10.3 Nadrf_MLModelManagement service
+  path: 10 ADRF Services.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 10.3.1
+  title: 10.3.1 General
+  path: 10 ADRF Services.md
+  source_words: 25
+  kind: embedded-clause
+- clause: 10.3.2
+  title: 10.3.2 Nadrf_MLModelManagement_StorageRequest service operation
+  path: 10 ADRF Services.md
+  source_words: 267
+  kind: embedded-clause
+- clause: 10.3.3
+  title: 10.3.3 Nadrf_MLModelManagement_Delete service operation
+  path: 10 ADRF Services.md
+  source_words: 120
+  kind: embedded-clause
+- clause: 10.3.4
+  title: 10.3.4 Nadrf_MLModelManagement_RetrievalRequest service operation
+  path: 10 ADRF Services.md
+  source_words: 93
+  kind: embedded-clause
+- clause: Annex A
+  title: 'Annex A (informative): Methods to handle NAT on IPv4 between UE and AF'
+  path: Annex A (informative) Methods to handle NAT on IPv4 between UE and AF.md
+  source_words: 237
+  kind: source-file
+- clause: A.1
+  title: A.1 Methods to handle NAT on IPv4 between UE and AF
+  path: Annex A (informative) Methods to handle NAT on IPv4 between UE and AF.md
+  source_words: 212
+  kind: embedded-clause
+- clause: Annex B
+  title: 'Annex B (informative): Change history'
+  path: Annex B (informative) Change history/README.md
+  source_words: 10905
+  kind: navigation-directory
+- clause: Annex B-2019
+  title: 'Annex B (informative): Change history — 2019'
+  path: Annex B (informative) Change history/2019.md
+  source_words: 852
+  kind: source-file
+- clause: Annex B-2020
+  title: 'Annex B (informative): Change history — 2020'
+  path: Annex B (informative) Change history/2020.md
+  source_words: 958
+  kind: source-file
+- clause: Annex B-2021
+  title: 'Annex B (informative): Change history — 2021'
+  path: Annex B (informative) Change history/2021.md
+  source_words: 3597
+  kind: source-file
+- clause: Annex B-2022
+  title: 'Annex B (informative): Change history — 2022'
+  path: Annex B (informative) Change history/2022.md
+  source_words: 973
+  kind: source-file
+- clause: Annex B-2023
+  title: 'Annex B (informative): Change history — 2023'
+  path: Annex B (informative) Change history/2023.md
+  source_words: 3250
+  kind: source-file
+- clause: Annex B-2024
+  title: 'Annex B (informative): Change history — 2024'
+  path: Annex B (informative) Change history/2024.md
+  source_words: 1043
+  kind: source-file
+- clause: Annex B-2025
+  title: 'Annex B (informative): Change history — 2025'
+  path: Annex B (informative) Change history/2025.md
+  source_words: 197
+  kind: source-file
+- clause: Annex B-2026
+  title: 'Annex B (informative): Change history — 2026'
+  path: Annex B (informative) Change history/2026.md
+  source_words: 18
+  kind: source-file

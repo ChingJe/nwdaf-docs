@@ -1,0 +1,262 @@
+spec: TS 23.502
+version: 18.14.0
+release: '18'
+source_archive: 23502-ie0.zip
+source_document: 23502-ie0.docx
+source_archive_sha256: 0f24045c49ddf710fb91e51ec74d070cfd13d1e9bafc07809d7e87eae6a61ce8
+source_document_sha256: 89536df6095fba3b9c90f1fa06ceaec918dfc6b0fd26a769a06eae7db66bb603
+max_source_words_per_semantic_file_target: 4200
+clauses:
+- clause: '1'
+  title: 1 Scope
+  path: 1 Scope.md
+  source_words: 44
+  kind: source-file
+- clause: '2'
+  title: 2 References
+  path: 2 References.md
+  source_words: 1306
+  kind: source-file
+- clause: '3'
+  title: 3 Definitions, symbols and abbreviations
+  path: 3 Definitions, symbols and abbreviations.md
+  source_words: 202
+  kind: source-file
+- clause: '3.1'
+  title: 3.1 Definitions
+  path: 3 Definitions, symbols and abbreviations.md
+  source_words: 138
+  kind: embedded-clause
+- clause: '3.2'
+  title: 3.2 Abbreviations
+  path: 3 Definitions, symbols and abbreviations.md
+  source_words: 53
+  kind: embedded-clause
+- clause: '4.17'
+  title: 4.17 Network Function Service Framework Procedure
+  path: 4.17 Network Function Service Framework Procedure/README.md
+  source_words: 5778
+  kind: navigation-directory
+- clause: 4.17.1
+  title: 4.17.1 NF service Registration
+  path: 4.17 Network Function Service Framework Procedure/4.17.1 NF service Registration.md
+  source_words: 167
+  kind: source-file
+- clause: 4.17.2
+  title: 4.17.2 NF service update
+  path: 4.17 Network Function Service Framework Procedure/4.17.2 NF service update.md
+  source_words: 149
+  kind: source-file
+- clause: 4.17.3
+  title: 4.17.3 NF service deregistration
+  path: 4.17 Network Function Service Framework Procedure/4.17.3 NF service deregistration.md
+  source_words: 85
+  kind: source-file
+- clause: 4.17.4
+  title: 4.17.4 NF/NF service discovery by NF service consumer in the same PLMN
+  path: 4.17 Network Function Service Framework Procedure/4.17.4 NF and NF service
+    discovery by NF service consumer in the same PLMN.md
+  source_words: 692
+  kind: source-file
+- clause: ''
+  title: 4.17.4a NF/NF service discovery by NF service consumer in the same SNPN
+  path: 4.17 Network Function Service Framework Procedure/4.17.4a NF and NF service
+    discovery by NF service consumer in the same SNPN.md
+  source_words: 180
+  kind: source-file
+- clause: 4.17.5
+  title: 4.17.5 NF/NF service discovery across PLMNs in the case of discovery made
+    by NF service consumer
+  path: 4.17 Network Function Service Framework Procedure/4.17.5 NF and NF service
+    discovery across PLMNs in the case of discovery made by NF service consumer.md
+  source_words: 371
+  kind: source-file
+- clause: ''
+  title: 4.17.5a NF/NF service discovery between SNPN and Credentials Holder hosting
+    AUSF/UDM or between SNPN and DCS hosting AUSF/UDM
+  path: 4.17 Network Function Service Framework Procedure/4.17.5a NF and NF service
+    discovery between SNPN and Credentials Holder hosting AUSF and UDM or between
+    SNPN and DCS hosting.md
+  source_words: 331
+  kind: source-file
+- clause: 4.17.6
+  title: 4.17.6 SMF Provisioning of available UPFs using the NRF
+  path: 4.17 Network Function Service Framework Procedure/4.17.6 SMF Provisioning
+    of available UPFs using the NRF.md
+  source_words: 691
+  kind: source-file
+- clause: 4.17.6.1
+  title: 4.17.6.1 General
+  path: 4.17 Network Function Service Framework Procedure/4.17.6 SMF Provisioning
+    of available UPFs using the NRF.md
+  source_words: 405
+  kind: embedded-clause
+- clause: 4.17.6.2
+  title: 4.17.6.2 SMF provisioning of UPF instances using NRF
+  path: 4.17 Network Function Service Framework Procedure/4.17.6 SMF Provisioning
+    of available UPFs using the NRF.md
+  source_words: 259
+  kind: embedded-clause
+- clause: 4.17.7
+  title: 4.17.7 NF/NF service status subscribe/notify in the same PLMN
+  path: 4.17 Network Function Service Framework Procedure/4.17.7 NF and NF service
+    status subscribe and notify in the same PLMN.md
+  source_words: 190
+  kind: source-file
+- clause: 4.17.8
+  title: 4.17.8 NF/NF service status subscribe/notify across PLMNs
+  path: 4.17 Network Function Service Framework Procedure/4.17.8 NF and NF service
+    status subscribe and notify across PLMNs.md
+  source_words: 340
+  kind: source-file
+- clause: 4.17.9
+  title: 4.17.9 Delegated service discovery when NF service consumer and NF service
+    producer are in same PLMN
+  path: 4.17 Network Function Service Framework Procedure/4.17.9 Delegated service
+    discovery when NF service consumer and NF service producer are in same PLMN.md
+  source_words: 550
+  kind: source-file
+- clause: 4.17.10
+  title: 4.17.10 Delegated service discovery when NF service consumer and NF service
+    producer are in different PLMNs
+  path: 4.17 Network Function Service Framework Procedure/4.17.10 Delegated service
+    discovery when NF service consumer and NF service producer are in different PLMNs.md
+  source_words: 256
+  kind: source-file
+- clause: 4.17.11
+  title: 4.17.11 Indirect Communication without delegated discovery Procedure
+  path: 4.17 Network Function Service Framework Procedure/4.17.11 Indirect Communication
+    without delegated discovery Procedure.md
+  source_words: 302
+  kind: source-file
+- clause: 4.17.12
+  title: 4.17.12 Binding between NF service consumer and NF service producer
+  path: 4.17 Network Function Service Framework Procedure/4.17.12 Binding between
+    NF service consumer and NF service producer.md
+  source_words: 1408
+  kind: source-file
+- clause: 4.17.12.1
+  title: 4.17.12.1 General
+  path: 4.17 Network Function Service Framework Procedure/4.17.12 Binding between
+    NF service consumer and NF service producer.md
+  source_words: 44
+  kind: embedded-clause
+- clause: 4.17.12.2
+  title: 4.17.12.2 Binding created as part of service response
+  path: 4.17 Network Function Service Framework Procedure/4.17.12 Binding between
+    NF service consumer and NF service producer.md
+  source_words: 379
+  kind: embedded-clause
+- clause: 4.17.12.3
+  title: 4.17.12.3 Binding created as part of service request
+  path: 4.17 Network Function Service Framework Procedure/4.17.12 Binding between
+    NF service consumer and NF service producer.md
+  source_words: 312
+  kind: embedded-clause
+- clause: 4.17.12.4
+  title: 4.17.12.4 Binding for subscription requests
+  path: 4.17 Network Function Service Framework Procedure/4.17.12 Binding between
+    NF service consumer and NF service producer.md
+  source_words: 626
+  kind: embedded-clause
+- clause: 4.17.13
+  title: 4.17.13 NRF bootstrapping procedure
+  path: 4.17 Network Function Service Framework Procedure/4.17.13 NRF bootstrapping
+    procedure.md
+  source_words: 59
+  kind: source-file
+- clause: 5.2.7
+  title: 5.2.7 NRF Services
+  path: 5.2.7 NRF Services/README.md
+  source_words: 6348
+  kind: navigation-directory
+- clause: 5.2.7.1
+  title: 5.2.7.1 General
+  path: 5.2.7 NRF Services/5.2.7.1 General.md
+  source_words: 267
+  kind: source-file
+- clause: 5.2.7.2
+  title: 5.2.7.2 Nnrf_NFManagement service
+  path: 5.2.7 NRF Services/5.2.7.2 Nnrf_NFManagement service.md
+  source_words: 2835
+  kind: source-file
+- clause: 5.2.7.2.1
+  title: 5.2.7.2.1 General
+  path: 5.2.7 NRF Services/5.2.7.2 Nnrf_NFManagement service.md
+  source_words: 44
+  kind: embedded-clause
+- clause: 5.2.7.2.2
+  title: 5.2.7.2.2 Nnrf_NFManagement_NFRegister service operation
+  path: 5.2.7 NRF Services/5.2.7.2 Nnrf_NFManagement service.md
+  source_words: 1765
+  kind: embedded-clause
+- clause: 5.2.7.2.3
+  title: 5.2.7.2.3 Nnrf_NFManagement_NFUpdate service operation
+  path: 5.2.7 NRF Services/5.2.7.2 Nnrf_NFManagement service.md
+  source_words: 81
+  kind: embedded-clause
+- clause: 5.2.7.2.4
+  title: 5.2.7.2.4 Nnrf_NFManagement_NFDeregister service operation
+  path: 5.2.7 NRF Services/5.2.7.2 Nnrf_NFManagement service.md
+  source_words: 47
+  kind: embedded-clause
+- clause: 5.2.7.2.5
+  title: 5.2.7.2.5 Nnrf_NFManagement_NFStatusSubscribe service operation
+  path: 5.2.7 NRF Services/5.2.7.2 Nnrf_NFManagement service.md
+  source_words: 689
+  kind: embedded-clause
+- clause: 5.2.7.2.6
+  title: 5.2.7.2.6 Nnrf_NFManagement_NFStatusNotify service operation
+  path: 5.2.7 NRF Services/5.2.7.2 Nnrf_NFManagement service.md
+  source_words: 78
+  kind: embedded-clause
+- clause: 5.2.7.2.7
+  title: 5.2.7.2.7 Nnrf_NFManagement_NFStatusUnsubscribe service operation
+  path: 5.2.7 NRF Services/5.2.7.2 Nnrf_NFManagement service.md
+  source_words: 71
+  kind: embedded-clause
+- clause: 5.2.7.3
+  title: 5.2.7.3 Nnrf_NFDiscovery service
+  path: 5.2.7 NRF Services/5.2.7.3 Nnrf_NFDiscovery service.md
+  source_words: 3079
+  kind: source-file
+- clause: 5.2.7.3.1
+  title: 5.2.7.3.1 General
+  path: 5.2.7 NRF Services/5.2.7.3 Nnrf_NFDiscovery service.md
+  source_words: 103
+  kind: embedded-clause
+- clause: 5.2.7.3.2
+  title: 5.2.7.3.2 Nnrf_NFDiscovery_Request service operation
+  path: 5.2.7 NRF Services/5.2.7.3 Nnrf_NFDiscovery service.md
+  source_words: 2956
+  kind: embedded-clause
+- clause: 5.2.7.4
+  title: 5.2.7.4 Nnrf_AccessToken_service
+  path: 5.2.7 NRF Services/5.2.7.4 Nnrf_AccessToken_service.md
+  source_words: 44
+  kind: source-file
+- clause: 5.2.7.4.1
+  title: 5.2.7.4.1 General
+  path: 5.2.7 NRF Services/5.2.7.4 Nnrf_AccessToken_service.md
+  source_words: 20
+  kind: embedded-clause
+- clause: 5.2.7.4.2
+  title: 5.2.7.4.2 Nnrf_AccessToken_Get Service Operation
+  path: 5.2.7 NRF Services/5.2.7.4 Nnrf_AccessToken_service.md
+  source_words: 5
+  kind: embedded-clause
+- clause: 5.2.7.5
+  title: 5.2.7.5 Nnrf_Bootstrapping service
+  path: 5.2.7 NRF Services/5.2.7.5 Nnrf_Bootstrapping service.md
+  source_words: 118
+  kind: source-file
+- clause: 5.2.7.5.1
+  title: 5.2.7.5.1 General
+  path: 5.2.7 NRF Services/5.2.7.5 Nnrf_Bootstrapping service.md
+  source_words: 54
+  kind: embedded-clause
+- clause: 5.2.7.5.2
+  title: 5.2.7.5.2 Nnrf_Bootstrapping_Get service operation
+  path: 5.2.7 NRF Services/5.2.7.5 Nnrf_Bootstrapping service.md
+  source_words: 44
+  kind: embedded-clause

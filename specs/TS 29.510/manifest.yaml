@@ -1,0 +1,2708 @@
+spec: TS 29.510
+version: 18.11.0
+release: '18'
+source_archive: 29510-ib0.zip
+source_document: 29510-ib0.docx
+source_archive_sha256: 84e5ccfacace52d488cdca8f0ee1cb3b6817d390ee9903dc5e52105d58c6a1e6
+source_document_sha256: 01abf6c9240ec101eef77e3ffc4bab5aca41dfd0d6d02c7515e02364cea887d9
+max_source_words_per_semantic_file_target: 4200
+clauses:
+- clause: document-information
+  title: Document information
+  path: 00 Document information.md
+  source_words: 261
+  kind: source-file
+- clause: contents
+  title: Contents
+  path: 01 Original contents.md
+  source_words: 3891
+  kind: source-file
+- clause: foreword
+  title: Foreword
+  path: 02 Foreword.md
+  source_words: 492
+  kind: source-file
+- clause: '1'
+  title: 1 Scope
+  path: 1 Scope.md
+  source_words: 91
+  kind: source-file
+- clause: '2'
+  title: 2 References
+  path: 2 References.md
+  source_words: 690
+  kind: source-file
+- clause: '3'
+  title: 3 Definitions and abbreviations
+  path: 3 Definitions and abbreviations.md
+  source_words: 252
+  kind: source-file
+- clause: '3.1'
+  title: 3.1 Definitions
+  path: 3 Definitions and abbreviations.md
+  source_words: 107
+  kind: embedded-clause
+- clause: '3.2'
+  title: 3.2 Abbreviations
+  path: 3 Definitions and abbreviations.md
+  source_words: 135
+  kind: embedded-clause
+- clause: '4'
+  title: 4 Overview
+  path: 4 Overview.md
+  source_words: 395
+  kind: source-file
+- clause: '5'
+  title: 5 Services Offered by the NRF
+  path: 5 Services Offered by the NRF/README.md
+  source_words: 20121
+  kind: navigation-directory
+- clause: '5.1'
+  title: 5.1 Introduction
+  path: 5 Services Offered by the NRF/5.1 Introduction.md
+  source_words: 259
+  kind: source-file
+- clause: '5.2'
+  title: 5.2 Nnrf_NFManagement Service
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/README.md
+  source_words: 12583
+  kind: navigation-directory
+- clause: 5.2.1
+  title: 5.2.1 Service Description
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.1 Service
+    Description.md
+  source_words: 397
+  kind: source-file
+- clause: 5.2.2
+  title: 5.2.2 Service Operations
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/README.md
+  source_words: 12182
+  kind: navigation-directory
+- clause: 5.2.2.1
+  title: 5.2.2.1 Introduction
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.1 Introduction.md
+  source_words: 1449
+  kind: source-file
+- clause: 5.2.2.2
+  title: 5.2.2.2 NFRegister
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.2 NFRegister.md
+  source_words: 1506
+  kind: source-file
+- clause: 5.2.2.2.1
+  title: 5.2.2.2.1 General
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.2 NFRegister.md
+  source_words: 98
+  kind: embedded-clause
+- clause: 5.2.2.2.2
+  title: 5.2.2.2.2 NF (other than NRF) registration to NRF
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.2 NFRegister.md
+  source_words: 849
+  kind: embedded-clause
+- clause: 5.2.2.2.3
+  title: 5.2.2.2.3 NRF registration to another NRF
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.2 NFRegister.md
+  source_words: 146
+  kind: embedded-clause
+- clause: 5.2.2.2.4
+  title: 5.2.2.2.4 Shared Data registration to NRF
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.2 NFRegister.md
+  source_words: 370
+  kind: embedded-clause
+- clause: 5.2.2.3
+  title: 5.2.2.3 NFUpdate
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.3 NFUpdate.md
+  source_words: 2245
+  kind: source-file
+- clause: 5.2.2.3.1
+  title: 5.2.2.3.1 General
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.3 NFUpdate.md
+  source_words: 129
+  kind: embedded-clause
+- clause: 5.2.2.3.1A
+  title: 5.2.2.3.1A NF Profile Complete replacement
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.3 NFUpdate.md
+  source_words: 251
+  kind: embedded-clause
+- clause: 5.2.2.3.1B
+  title: 5.2.2.3.1B NF Profile Partial Update
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.3 NFUpdate.md
+  source_words: 461
+  kind: embedded-clause
+- clause: 5.2.2.3.1C
+  title: 5.2.2.3.1C Shared Data Complete replacement
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.3 NFUpdate.md
+  source_words: 343
+  kind: embedded-clause
+- clause: 5.2.2.3.1D
+  title: 5.2.2.3.1D Shared data Partial Update
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.3 NFUpdate.md
+  source_words: 473
+  kind: embedded-clause
+- clause: 5.2.2.3.2
+  title: 5.2.2.3.2 NF Heart-Beat
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.3 NFUpdate.md
+  source_words: 534
+  kind: embedded-clause
+- clause: 5.2.2.4
+  title: 5.2.2.4 NFDeregister
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.4 NFDeregister.md
+  source_words: 431
+  kind: source-file
+- clause: 5.2.2.4.1
+  title: 5.2.2.4.1 General
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.4 NFDeregister.md
+  source_words: 33
+  kind: embedded-clause
+- clause: 5.2.2.4.2
+  title: 5.2.2.4.2 NF Instance Deregistration
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.4 NFDeregister.md
+  source_words: 154
+  kind: embedded-clause
+- clause: 5.2.2.4.3
+  title: 5.2.2.4.3 Shared Data Deregistration
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.4 NFDeregister.md
+  source_words: 217
+  kind: embedded-clause
+- clause: 5.2.2.5
+  title: 5.2.2.5 NFStatusSubscribe
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.5 NFStatusSubscribe.md
+  source_words: 3654
+  kind: source-file
+- clause: 5.2.2.5.1
+  title: 5.2.2.5.1 General
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.5 NFStatusSubscribe.md
+  source_words: 104
+  kind: embedded-clause
+- clause: 5.2.2.5.2
+  title: 5.2.2.5.2 Subscription to NF Instances in the same PLMN
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.5 NFStatusSubscribe.md
+  source_words: 803
+  kind: embedded-clause
+- clause: 5.2.2.5.3
+  title: 5.2.2.5.3 Subscription to NF Instances in a different PLMN
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.5 NFStatusSubscribe.md
+  source_words: 837
+  kind: embedded-clause
+- clause: 5.2.2.5.4
+  title: 5.2.2.5.4 Subscription to NF Instances with intermediate forwarding NRF
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.5 NFStatusSubscribe.md
+  source_words: 458
+  kind: embedded-clause
+- clause: 5.2.2.5.5
+  title: 5.2.2.5.5 Subscription to NF Instances with intermediate redirecting NRF
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.5 NFStatusSubscribe.md
+  source_words: 390
+  kind: embedded-clause
+- clause: 5.2.2.5.6
+  title: 5.2.2.5.6 Update of Subscription to NF Instances
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.5 NFStatusSubscribe.md
+  source_words: 409
+  kind: embedded-clause
+- clause: 5.2.2.5.7
+  title: 5.2.2.5.7 Update of Subscription to NF Instances in a different PLMN
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.5 NFStatusSubscribe.md
+  source_words: 564
+  kind: embedded-clause
+- clause: 5.2.2.6
+  title: 5.2.2.6 NFStatusNotify
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.6 NFStatusNotify.md
+  source_words: 1266
+  kind: source-file
+- clause: 5.2.2.6.1
+  title: 5.2.2.6.1 General
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.6 NFStatusNotify.md
+  source_words: 81
+  kind: embedded-clause
+- clause: 5.2.2.6.2
+  title: 5.2.2.6.2 Notification from NRF in the same PLMN
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.6 NFStatusNotify.md
+  source_words: 992
+  kind: embedded-clause
+- clause: 5.2.2.6.3
+  title: 5.2.2.6.3 Notification from NRF in a different PLMN
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.6 NFStatusNotify.md
+  source_words: 84
+  kind: embedded-clause
+- clause: 5.2.2.6.4
+  title: 5.2.2.6.4 Notification for subscription via intermediate NRF
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.6 NFStatusNotify.md
+  source_words: 63
+  kind: embedded-clause
+- clause: 5.2.2.7
+  title: 5.2.2.7 NFStatusUnSubscribe
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.7 NFStatusUnSubscribe.md
+  source_words: 658
+  kind: source-file
+- clause: 5.2.2.7.1
+  title: 5.2.2.7.1 General
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.7 NFStatusUnSubscribe.md
+  source_words: 35
+  kind: embedded-clause
+- clause: 5.2.2.7.2
+  title: 5.2.2.7.2 Subscription removal in the same PLMN
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.7 NFStatusUnSubscribe.md
+  source_words: 174
+  kind: embedded-clause
+- clause: 5.2.2.7.3
+  title: 5.2.2.7.3 Subscription removal in a different PLMN
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.7 NFStatusUnSubscribe.md
+  source_words: 416
+  kind: embedded-clause
+- clause: 5.2.2.8
+  title: 5.2.2.8 NFListRetrieval
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.8 NFListRetrieval.md
+  source_words: 362
+  kind: source-file
+- clause: 5.2.2.8.1
+  title: 5.2.2.8.1 General
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.8 NFListRetrieval.md
+  source_words: 351
+  kind: embedded-clause
+- clause: 5.2.2.9
+  title: 5.2.2.9 NFProfileRetrieval
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.9 NFProfileRetrieval.md
+  source_words: 175
+  kind: source-file
+- clause: 5.2.2.9.1
+  title: 5.2.2.9.1 General
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.9 NFProfileRetrieval.md
+  source_words: 164
+  kind: embedded-clause
+- clause: 5.2.2.10
+  title: 5.2.2.10 SharedDataRetrieval
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.10 SharedDataRetrieval.md
+  source_words: 192
+  kind: source-file
+- clause: 5.2.2.11
+  title: 5.2.2.11 SharedDataListRetrieval
+  path: 5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service
+    Operations/5.2.2.11 SharedDataListRetrieval.md
+  source_words: 239
+  kind: source-file
+- clause: '5.3'
+  title: 5.3 Nnrf_NFDiscovery Service
+  path: 5 Services Offered by the NRF/5.3 Nnrf_NFDiscovery Service/README.md
+  source_words: 5087
+  kind: navigation-directory
+- clause: 5.3.1
+  title: 5.3.1 Service Description
+  path: 5 Services Offered by the NRF/5.3 Nnrf_NFDiscovery Service/5.3.1 Service Description.md
+  source_words: 117
+  kind: source-file
+- clause: 5.3.2
+  title: 5.3.2 Service Operations
+  path: 5 Services Offered by the NRF/5.3 Nnrf_NFDiscovery Service/5.3.2 Service Operations/README.md
+  source_words: 4966
+  kind: navigation-directory
+- clause: 5.3.2.1
+  title: 5.3.2.1 Introduction
+  path: 5 Services Offered by the NRF/5.3 Nnrf_NFDiscovery Service/5.3.2 Service Operations/5.3.2.1
+    Introduction.md
+  source_words: 872
+  kind: source-file
+- clause: 5.3.2.2
+  title: 5.3.2.2 NFDiscover
+  path: 5 Services Offered by the NRF/5.3 Nnrf_NFDiscovery Service/5.3.2 Service Operations/5.3.2.2
+    NFDiscover.md
+  source_words: 3158
+  kind: source-file
+- clause: 5.3.2.2.1
+  title: 5.3.2.2.1 General
+  path: 5 Services Offered by the NRF/5.3 Nnrf_NFDiscovery Service/5.3.2 Service Operations/5.3.2.2
+    NFDiscover.md
+  source_words: 438
+  kind: embedded-clause
+- clause: 5.3.2.2.2
+  title: 5.3.2.2.2 Service Discovery in the same PLMN
+  path: 5 Services Offered by the NRF/5.3 Nnrf_NFDiscovery Service/5.3.2 Service Operations/5.3.2.2
+    NFDiscover.md
+  source_words: 864
+  kind: embedded-clause
+- clause: 5.3.2.2.3
+  title: 5.3.2.2.3 Service Discovery in a different PLMN
+  path: 5 Services Offered by the NRF/5.3 Nnrf_NFDiscovery Service/5.3.2 Service Operations/5.3.2.2
+    NFDiscover.md
+  source_words: 583
+  kind: embedded-clause
+- clause: 5.3.2.2.4
+  title: 5.3.2.2.4 Service Discovery with intermediate redirecting NRF
+  path: 5 Services Offered by the NRF/5.3 Nnrf_NFDiscovery Service/5.3.2 Service Operations/5.3.2.2
+    NFDiscover.md
+  source_words: 391
+  kind: embedded-clause
+- clause: 5.3.2.2.5
+  title: 5.3.2.2.5 Service Discovery with intermediate forwarding NRF
+  path: 5 Services Offered by the NRF/5.3 Nnrf_NFDiscovery Service/5.3.2 Service Operations/5.3.2.2
+    NFDiscover.md
+  source_words: 461
+  kind: embedded-clause
+- clause: 5.3.2.2.6
+  title: 5.3.2.2.6 Service Discovery with resolution of the target PLMN
+  path: 5 Services Offered by the NRF/5.3 Nnrf_NFDiscovery Service/5.3.2 Service Operations/5.3.2.2
+    NFDiscover.md
+  source_words: 353
+  kind: embedded-clause
+- clause: 5.3.2.3
+  title: 5.3.2.3 SCPDomainRoutingInfoGet
+  path: 5 Services Offered by the NRF/5.3 Nnrf_NFDiscovery Service/5.3.2 Service Operations/5.3.2.3
+    SCPDomainRoutingInfoGet.md
+  source_words: 344
+  kind: source-file
+- clause: 5.3.2.4
+  title: 5.3.2.4 SCPDomainRoutingInfoSubscribe
+  path: 5 Services Offered by the NRF/5.3 Nnrf_NFDiscovery Service/5.3.2 Service Operations/5.3.2.4
+    SCPDomainRoutingInfoSubscribe.md
+  source_words: 258
+  kind: source-file
+- clause: 5.3.2.5
+  title: 5.3.2.5 SCPDomainRoutingInfoNotify
+  path: 5 Services Offered by the NRF/5.3 Nnrf_NFDiscovery Service/5.3.2 Service Operations/5.3.2.5
+    SCPDomainRoutingInfoNotify.md
+  source_words: 185
+  kind: source-file
+- clause: 5.3.2.6
+  title: 5.3.2.6 SCPDomainRoutingInfoUnSubscribe
+  path: 5 Services Offered by the NRF/5.3 Nnrf_NFDiscovery Service/5.3.2 Service Operations/5.3.2.6
+    SCPDomainRoutingInfoUnSubscribe.md
+  source_words: 144
+  kind: source-file
+- clause: '5.4'
+  title: 5.4 Nnrf_AccessToken Service
+  path: 5 Services Offered by the NRF/5.4 Nnrf_AccessToken Service.md
+  source_words: 1759
+  kind: source-file
+- clause: 5.4.1
+  title: 5.4.1 Service Description
+  path: 5 Services Offered by the NRF/5.4 Nnrf_AccessToken Service.md
+  source_words: 47
+  kind: embedded-clause
+- clause: 5.4.2
+  title: 5.4.2 Service Operations
+  path: 5 Services Offered by the NRF/5.4 Nnrf_AccessToken Service.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.4.2.1
+  title: 5.4.2.1 Introduction
+  path: 5 Services Offered by the NRF/5.4 Nnrf_AccessToken Service.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.4.2.2
+  title: 5.4.2.2 Get (Access Token Request)
+  path: 5 Services Offered by the NRF/5.4 Nnrf_AccessToken Service.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.4.2.2.1
+  title: 5.4.2.2.1 General
+  path: 5 Services Offered by the NRF/5.4 Nnrf_AccessToken Service.md
+  source_words: 743
+  kind: embedded-clause
+- clause: 5.4.2.2.2
+  title: 5.4.2.2.2 Access Token request with intermediate forwarding NRF
+  path: 5 Services Offered by the NRF/5.4 Nnrf_AccessToken Service.md
+  source_words: 453
+  kind: embedded-clause
+- clause: 5.4.2.2.3
+  title: 5.4.2.2.3 Access Token request with intermediate redirecting NRF
+  path: 5 Services Offered by the NRF/5.4 Nnrf_AccessToken Service.md
+  source_words: 442
+  kind: embedded-clause
+- clause: '5.5'
+  title: 5.5 Nnrf_Bootstrapping Service
+  path: 5 Services Offered by the NRF/5.5 Nnrf_Bootstrapping Service.md
+  source_words: 427
+  kind: source-file
+- clause: 5.5.1
+  title: 5.5.1 Service Description
+  path: 5 Services Offered by the NRF/5.5 Nnrf_Bootstrapping Service.md
+  source_words: 126
+  kind: embedded-clause
+- clause: 5.5.2
+  title: 5.5.2 Service Operations
+  path: 5 Services Offered by the NRF/5.5 Nnrf_Bootstrapping Service.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.5.2.1
+  title: 5.5.2.1 Introduction
+  path: 5 Services Offered by the NRF/5.5 Nnrf_Bootstrapping Service.md
+  source_words: 12
+  kind: embedded-clause
+- clause: 5.5.2.2
+  title: 5.5.2.2 Get
+  path: 5 Services Offered by the NRF/5.5 Nnrf_Bootstrapping Service.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.5.2.2.1
+  title: 5.5.2.2.1 General
+  path: 5 Services Offered by the NRF/5.5 Nnrf_Bootstrapping Service.md
+  source_words: 259
+  kind: embedded-clause
+- clause: '6'
+  title: 6 API Definitions
+  path: 6 API Definitions/README.md
+  source_words: 95095
+  kind: navigation-directory
+- clause: '6.1'
+  title: 6.1 Nnrf_NFManagement Service API
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/README.md
+  source_words: 58916
+  kind: navigation-directory
+- clause: 6.1.1
+  title: 6.1.1 API URI
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.1 API URI.md
+  source_words: 54
+  kind: source-file
+- clause: 6.1.2
+  title: 6.1.2 Usage of HTTP
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.2 Usage of HTTP.md
+  source_words: 514
+  kind: source-file
+- clause: 6.1.2.1
+  title: 6.1.2.1 General
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.2 Usage of HTTP.md
+  source_words: 59
+  kind: embedded-clause
+- clause: 6.1.2.2
+  title: 6.1.2.2 HTTP standard headers
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.2 Usage of HTTP.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.1.2.2.1
+  title: 6.1.2.2.1 General
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.2 Usage of HTTP.md
+  source_words: 22
+  kind: embedded-clause
+- clause: 6.1.2.2.2
+  title: 6.1.2.2.2 Content type
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.2 Usage of HTTP.md
+  source_words: 136
+  kind: embedded-clause
+- clause: 6.1.2.2.3
+  title: 6.1.2.2.3 Accept-Encoding
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.2 Usage of HTTP.md
+  source_words: 67
+  kind: embedded-clause
+- clause: 6.1.2.2.4
+  title: 6.1.2.2.4 ETag
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.2 Usage of HTTP.md
+  source_words: 73
+  kind: embedded-clause
+- clause: 6.1.2.2.5
+  title: 6.1.2.2.5 If-Match
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.2 Usage of HTTP.md
+  source_words: 57
+  kind: embedded-clause
+- clause: 6.1.2.3
+  title: 6.1.2.3 HTTP custom headers
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.2 Usage of HTTP.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.1.2.3.1
+  title: 6.1.2.3.1 General
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.2 Usage of HTTP.md
+  source_words: 38
+  kind: embedded-clause
+- clause: 6.1.3
+  title: 6.1.3 Resources
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/README.md
+  source_words: 8782
+  kind: navigation-directory
+- clause: 6.1.3.1
+  title: 6.1.3.1 Overview
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.1
+    Overview.md
+  source_words: 310
+  kind: source-file
+- clause: 6.1.3.2
+  title: '6.1.3.2 Resource: nf-instances (Store)'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.2
+    Resource nf-instances (Store).md
+  source_words: 1676
+  kind: source-file
+- clause: 6.1.3.2.1
+  title: 6.1.3.2.1 Description
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.2
+    Resource nf-instances (Store).md
+  source_words: 33
+  kind: embedded-clause
+- clause: 6.1.3.2.2
+  title: 6.1.3.2.2 Resource Definition
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.2
+    Resource nf-instances (Store).md
+  source_words: 45
+  kind: embedded-clause
+- clause: 6.1.3.2.3
+  title: 6.1.3.2.3 Resource Standard Methods
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.2
+    Resource nf-instances (Store).md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.1.3.2.3.1
+  title: 6.1.3.2.3.1 GET
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.2
+    Resource nf-instances (Store).md
+  source_words: 1039
+  kind: embedded-clause
+- clause: 6.1.3.2.3.2
+  title: 6.1.3.2.3.2 OPTIONS
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.2
+    Resource nf-instances (Store).md
+  source_words: 493
+  kind: embedded-clause
+- clause: 6.1.3.2.4
+  title: 6.1.3.2.4 Resource Custom Operations
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.2
+    Resource nf-instances (Store).md
+  source_words: 16
+  kind: embedded-clause
+- clause: 6.1.3.3
+  title: '6.1.3.3 Resource: nf-instance (Document)'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.3
+    Resource nf-instance (Document).md
+  source_words: 2454
+  kind: source-file
+- clause: 6.1.3.3.1
+  title: 6.1.3.3.1 Description
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.3
+    Resource nf-instance (Document).md
+  source_words: 7
+  kind: embedded-clause
+- clause: 6.1.3.3.2
+  title: 6.1.3.3.2 Resource Definition
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.3
+    Resource nf-instance (Document).md
+  source_words: 53
+  kind: embedded-clause
+- clause: 6.1.3.3.3
+  title: 6.1.3.3.3 Resource Standard Methods
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.3
+    Resource nf-instance (Document).md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.1.3.3.3.1
+  title: 6.1.3.3.3.1 GET
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.3
+    Resource nf-instance (Document).md
+  source_words: 523
+  kind: embedded-clause
+- clause: 6.1.3.3.3.2
+  title: 6.1.3.3.3.2 PUT
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.3
+    Resource nf-instance (Document).md
+  source_words: 721
+  kind: embedded-clause
+- clause: 6.1.3.3.3.3
+  title: 6.1.3.3.3.3 PATCH
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.3
+    Resource nf-instance (Document).md
+  source_words: 666
+  kind: embedded-clause
+- clause: 6.1.3.3.3.4
+  title: 6.1.3.3.3.4 DELETE
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.3
+    Resource nf-instance (Document).md
+  source_words: 428
+  kind: embedded-clause
+- clause: 6.1.3.4
+  title: '6.1.3.4 Resource: subscriptions (Collection)'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.4
+    Resource subscriptions (Collection).md
+  source_words: 694
+  kind: source-file
+- clause: 6.1.3.4.1
+  title: 6.1.3.4.1 Description
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.4
+    Resource subscriptions (Collection).md
+  source_words: 15
+  kind: embedded-clause
+- clause: 6.1.3.4.2
+  title: 6.1.3.4.2 Resource Definition
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.4
+    Resource subscriptions (Collection).md
+  source_words: 45
+  kind: embedded-clause
+- clause: 6.1.3.4.3
+  title: 6.1.3.4.3 Resource Standard Methods
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.4
+    Resource subscriptions (Collection).md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.1.3.4.3.1
+  title: 6.1.3.4.3.1 POST
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.4
+    Resource subscriptions (Collection).md
+  source_words: 599
+  kind: embedded-clause
+- clause: 6.1.3.5
+  title: '6.1.3.5 Resource: subscription (Document)'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.5
+    Resource subscription (Document).md
+  source_words: 941
+  kind: source-file
+- clause: 6.1.3.5.1
+  title: 6.1.3.5.1 Description
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.5
+    Resource subscription (Document).md
+  source_words: 16
+  kind: embedded-clause
+- clause: 6.1.3.5.2
+  title: 6.1.3.5.2 Resource Definition
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.5
+    Resource subscription (Document).md
+  source_words: 52
+  kind: embedded-clause
+- clause: 6.1.3.5.3
+  title: 6.1.3.5.3 Resource Standard Methods
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.5
+    Resource subscription (Document).md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.1.3.5.3.1
+  title: 6.1.3.5.3.1 DELETE
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.5
+    Resource subscription (Document).md
+  source_words: 424
+  kind: embedded-clause
+- clause: 6.1.3.5.3.2
+  title: 6.1.3.5.3.2 PATCH
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.5
+    Resource subscription (Document).md
+  source_words: 407
+  kind: embedded-clause
+- clause: 6.1.3.6
+  title: '6.1.3.6 Resource: shared-data (Document)'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.6
+    Resource shared-data (Document).md
+  source_words: 2339
+  kind: source-file
+- clause: 6.1.3.6.1
+  title: 6.1.3.6.1 Description
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.6
+    Resource shared-data (Document).md
+  source_words: 9
+  kind: embedded-clause
+- clause: 6.1.3.6.2
+  title: 6.1.3.6.2 Resource Definition
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.6
+    Resource shared-data (Document).md
+  source_words: 96
+  kind: embedded-clause
+- clause: 6.1.3.6.3
+  title: 6.1.3.6.3 Resource Standard Methods
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.6
+    Resource shared-data (Document).md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.1.3.6.3.1
+  title: 6.1.3.6.3.1 GET
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.6
+    Resource shared-data (Document).md
+  source_words: 479
+  kind: embedded-clause
+- clause: 6.1.3.6.3.2
+  title: 6.1.3.6.3.2 PUT
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.6
+    Resource shared-data (Document).md
+  source_words: 673
+  kind: embedded-clause
+- clause: 6.1.3.6.3.3
+  title: 6.1.3.6.3.3 PATCH
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.6
+    Resource shared-data (Document).md
+  source_words: 621
+  kind: embedded-clause
+- clause: 6.1.3.6.3.4
+  title: 6.1.3.6.3.4 DELETE
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.6
+    Resource shared-data (Document).md
+  source_words: 405
+  kind: embedded-clause
+- clause: 6.1.3.7
+  title: '6.1.3.7 Resource: shared-data-store (Store)'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.7
+    Resource shared-data-store (Store).md
+  source_words: 364
+  kind: source-file
+- clause: 6.1.3.7.1
+  title: 6.1.3.7.1 Description
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.7
+    Resource shared-data-store (Store).md
+  source_words: 33
+  kind: embedded-clause
+- clause: 6.1.3.7.2
+  title: 6.1.3.7.2 Resource Definition
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.7
+    Resource shared-data-store (Store).md
+  source_words: 44
+  kind: embedded-clause
+- clause: 6.1.3.7.3
+  title: 6.1.3.7.3 Resource Standard Methods
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.7
+    Resource shared-data-store (Store).md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.1.3.7.3.1
+  title: 6.1.3.7.3.1 GET
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.7
+    Resource shared-data-store (Store).md
+  source_words: 252
+  kind: embedded-clause
+- clause: 6.1.4
+  title: 6.1.4 Custom Operations without associated resources
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.4 Custom Operations
+    without associated resources.md
+  source_words: 28
+  kind: source-file
+- clause: 6.1.5
+  title: 6.1.5 Notifications
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.5 Notifications.md
+  source_words: 595
+  kind: source-file
+- clause: 6.1.5.1
+  title: 6.1.5.1 General
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.5 Notifications.md
+  source_words: 72
+  kind: embedded-clause
+- clause: 6.1.5.2
+  title: 6.1.5.2 NF Instance Status Notification
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.5 Notifications.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.1.5.2.1
+  title: 6.1.5.2.1 Description
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.5 Notifications.md
+  source_words: 33
+  kind: embedded-clause
+- clause: 6.1.5.2.2
+  title: 6.1.5.2.2 Notification Definition
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.5 Notifications.md
+  source_words: 460
+  kind: embedded-clause
+- clause: 6.1.6
+  title: 6.1.6 Data Model
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/README.md
+  source_words: 48020
+  kind: navigation-directory
+- clause: 6.1.6.1
+  title: 6.1.6.1 General
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.1
+    General.md
+  source_words: 2836
+  kind: source-file
+- clause: 6.1.6.2
+  title: 6.1.6.2 Structured data types
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/README.md
+  source_words: 40471
+  kind: navigation-directory
+- clause: 6.1.6.2.1
+  title: 6.1.6.2.1 Introduction
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.1 Introduction.md
+  source_words: 17
+  kind: source-file
+- clause: 6.1.6.2.2
+  title: '6.1.6.2.2 Type: NFProfile'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.2 Type NFProfile.md
+  source_words: 5854
+  kind: source-file
+- clause: 6.1.6.2.3
+  title: '6.1.6.2.3 Type: NFService'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.3 Type NFService.md
+  source_words: 3910
+  kind: source-file
+- clause: 6.1.6.2.4
+  title: '6.1.6.2.4 Type: DefaultNotificationSubscription'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.4 Type DefaultNotificationSubscription.md
+  source_words: 846
+  kind: source-file
+- clause: 6.1.6.2.5
+  title: '6.1.6.2.5 Type: IpEndPoint'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.5 Type IpEndPoint.md
+  source_words: 604
+  kind: source-file
+- clause: 6.1.6.2.6
+  title: '6.1.6.2.6 Type: UdrInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.6 Type UdrInfo.md
+  source_words: 366
+  kind: source-file
+- clause: 6.1.6.2.7
+  title: '6.1.6.2.7 Type: UdmInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.7 Type UdmInfo.md
+  source_words: 640
+  kind: source-file
+- clause: 6.1.6.2.8
+  title: '6.1.6.2.8 Type: AusfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.8 Type AusfInfo.md
+  source_words: 455
+  kind: source-file
+- clause: 6.1.6.2.9
+  title: '6.1.6.2.9 Type: SupiRange'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.9 Type SupiRange.md
+  source_words: 237
+  kind: source-file
+- clause: 6.1.6.2.10
+  title: '6.1.6.2.10 Type: IdentityRange'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.10 Type IdentityRange.md
+  source_words: 166
+  kind: source-file
+- clause: 6.1.6.2.11
+  title: '6.1.6.2.11 Type: AmfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.11 Type AmfInfo.md
+  source_words: 524
+  kind: source-file
+- clause: 6.1.6.2.12
+  title: '6.1.6.2.12 Type: SmfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.12 Type SmfInfo.md
+  source_words: 742
+  kind: source-file
+- clause: 6.1.6.2.13
+  title: '6.1.6.2.13 Type: UpfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.13 Type UpfInfo.md
+  source_words: 1311
+  kind: source-file
+- clause: 6.1.6.2.14
+  title: '6.1.6.2.14 Type: SnssaiUpfInfoItem'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.14 Type SnssaiUpfInfoItem.md
+  source_words: 248
+  kind: source-file
+- clause: 6.1.6.2.15
+  title: '6.1.6.2.15 Type: DnnUpfInfoItem'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.15 Type DnnUpfInfoItem.md
+  source_words: 634
+  kind: source-file
+- clause: 6.1.6.2.16
+  title: '6.1.6.2.16 Type: SubscriptionData'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.16 Type SubscriptionData.md
+  source_words: 1960
+  kind: source-file
+- clause: 6.1.6.2.17
+  title: '6.1.6.2.17 Type: NotificationData'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.17 Type NotificationData.md
+  source_words: 757
+  kind: source-file
+- clause: 6.1.6.2.18
+  title: 6.1.6.2.18 Void
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.18 Void.md
+  source_words: 6
+  kind: source-file
+- clause: 6.1.6.2.19
+  title: '6.1.6.2.19 Type: NFServiceVersion'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.19 Type NFServiceVersion.md
+  source_words: 102
+  kind: source-file
+- clause: 6.1.6.2.20
+  title: '6.1.6.2.20 Type: PcfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.20 Type PcfInfo.md
+  source_words: 579
+  kind: source-file
+- clause: 6.1.6.2.21
+  title: '6.1.6.2.21 Type: BsfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.21 Type BsfInfo.md
+  source_words: 348
+  kind: source-file
+- clause: 6.1.6.2.22
+  title: '6.1.6.2.22 Type: Ipv4AddressRange'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.22 Type Ipv4AddressRange.md
+  source_words: 52
+  kind: source-file
+- clause: 6.1.6.2.23
+  title: '6.1.6.2.23 Type: Ipv6PrefixRange'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.23 Type Ipv6PrefixRange.md
+  source_words: 151
+  kind: source-file
+- clause: 6.1.6.2.24
+  title: '6.1.6.2.24 Type: InterfaceUpfInfoItem'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.24 Type InterfaceUpfInfoItem.md
+  source_words: 185
+  kind: source-file
+- clause: 6.1.6.2.25
+  title: '6.1.6.2.25 Type: UriList'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.25 Type UriList.md
+  source_words: 150
+  kind: source-file
+- clause: 6.1.6.2.26
+  title: '6.1.6.2.26 Type: N2InterfaceAmfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.26 Type N2InterfaceAmfInfo.md
+  source_words: 95
+  kind: source-file
+- clause: 6.1.6.2.27
+  title: '6.1.6.2.27 Type: TaiRange'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.27 Type TaiRange.md
+  source_words: 58
+  kind: source-file
+- clause: 6.1.6.2.28
+  title: '6.1.6.2.28 Type: TacRange'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.28 Type TacRange.md
+  source_words: 332
+  kind: source-file
+- clause: 6.1.6.2.29
+  title: '6.1.6.2.29 Type: SnssaiSmfInfoItem'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.29 Type SnssaiSmfInfoItem.md
+  source_words: 186
+  kind: source-file
+- clause: 6.1.6.2.30
+  title: '6.1.6.2.30 Type: DnnSmfInfoItem'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.30 Type DnnSmfInfoItem.md
+  source_words: 308
+  kind: source-file
+- clause: 6.1.6.2.31
+  title: '6.1.6.2.31 Type: NrfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.31 Type NrfInfo.md
+  source_words: 1955
+  kind: source-file
+- clause: 6.1.6.2.32
+  title: '6.1.6.2.32 Type: ChfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.32 Type ChfInfo.md
+  source_words: 393
+  kind: source-file
+- clause: 6.1.6.2.33
+  title: 6.1.6.2.33 Void
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.33 Void.md
+  source_words: 6
+  kind: source-file
+- clause: 6.1.6.2.34
+  title: '6.1.6.2.34 Type: PlmnRange'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.34 Type PlmnRange.md
+  source_words: 208
+  kind: source-file
+- clause: 6.1.6.2.35
+  title: '6.1.6.2.35 Type: SubscrCond'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.35 Type SubscrCond.md
+  source_words: 393
+  kind: source-file
+- clause: 6.1.6.2.36
+  title: '6.1.6.2.36 Type: NfInstanceIdCond'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.36 Type NfInstanceIdCond.md
+  source_words: 42
+  kind: source-file
+- clause: 6.1.6.2.37
+  title: '6.1.6.2.37 Type: NfTypeCond'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.37 Type NfTypeCond.md
+  source_words: 62
+  kind: source-file
+- clause: 6.1.6.2.38
+  title: '6.1.6.2.38 Type: ServiceNameCond'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.38 Type ServiceNameCond.md
+  source_words: 42
+  kind: source-file
+- clause: 6.1.6.2.39
+  title: '6.1.6.2.39 Type: AmfCond'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.39 Type AmfCond.md
+  source_words: 147
+  kind: source-file
+- clause: 6.1.6.2.40
+  title: '6.1.6.2.40 Type: GuamiListCond'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.40 Type GuamiListCond.md
+  source_words: 68
+  kind: source-file
+- clause: 6.1.6.2.41
+  title: '6.1.6.2.41 Type: NetworkSliceCond'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.41 Type NetworkSliceCond.md
+  source_words: 62
+  kind: source-file
+- clause: 6.1.6.2.42
+  title: '6.1.6.2.42 Type: NfGroupCond'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.42 Type NfGroupCond.md
+  source_words: 67
+  kind: source-file
+- clause: 6.1.6.2.43
+  title: '6.1.6.2.43 Type: NotifCondition'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.43 Type NotifCondition.md
+  source_words: 215
+  kind: source-file
+- clause: 6.1.6.2.44
+  title: '6.1.6.2.44 Type: PlmnSnssai'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.44 Type PlmnSnssai.md
+  source_words: 72
+  kind: source-file
+- clause: 6.1.6.2.45
+  title: '6.1.6.2.45 Type: NwdafInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.45 Type NwdafInfo.md
+  source_words: 300
+  kind: source-file
+- clause: 6.1.6.2.46
+  title: '6.1.6.2.46 Type: LmfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.46 Type LmfInfo.md
+  source_words: 502
+  kind: source-file
+- clause: 6.1.6.2.47
+  title: '6.1.6.2.47 Type: GmlcInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.47 Type GmlcInfo.md
+  source_words: 161
+  kind: source-file
+- clause: 6.1.6.2.48
+  title: '6.1.6.2.48 Type: NefInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.48 Type NefInfo.md
+  source_words: 433
+  kind: source-file
+- clause: 6.1.6.2.49
+  title: '6.1.6.2.49 Type: PfdData'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.49 Type PfdData.md
+  source_words: 54
+  kind: source-file
+- clause: 6.1.6.2.50
+  title: '6.1.6.2.50 Type: AfEventExposureData'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.50 Type AfEventExposureData.md
+  source_words: 293
+  kind: source-file
+- clause: 6.1.6.2.51
+  title: '6.1.6.2.51 Type: WAgfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.51 Type WAgfInfo.md
+  source_words: 91
+  kind: source-file
+- clause: 6.1.6.2.52
+  title: '6.1.6.2.52 Type: TngfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.52 Type TngfInfo.md
+  source_words: 91
+  kind: source-file
+- clause: 6.1.6.2.53
+  title: '6.1.6.2.53 Type: PcscfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.53 Type PcscfInfo.md
+  source_words: 358
+  kind: source-file
+- clause: 6.1.6.2.54
+  title: '6.1.6.2.54 Type: NfSetCond'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.54 Type NfSetCond.md
+  source_words: 51
+  kind: source-file
+- clause: 6.1.6.2.55
+  title: '6.1.6.2.55 Type: NfServiceSetCond'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.55 Type NfServiceSetCond.md
+  source_words: 101
+  kind: source-file
+- clause: 6.1.6.2.56
+  title: '6.1.6.2.56 Type: NfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.56 Type NfInfo.md
+  source_words: 37
+  kind: source-file
+- clause: 6.1.6.2.57
+  title: '6.1.6.2.57 Type: HssInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.57 Type HssInfo.md
+  source_words: 307
+  kind: source-file
+- clause: 6.1.6.2.58
+  title: '6.1.6.2.58 Type: ImsiRange'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.58 Type ImsiRange.md
+  source_words: 114
+  kind: source-file
+- clause: 6.1.6.2.59
+  title: '6.1.6.2.59 Type: InternalGroupIdRange'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.59 Type InternalGroupIdRange.md
+  source_words: 142
+  kind: source-file
+- clause: 6.1.6.2.60
+  title: '6.1.6.2.60 Type: UpfCond'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.60 Type UpfCond.md
+  source_words: 122
+  kind: source-file
+- clause: 6.1.6.2.61
+  title: '6.1.6.2.61 Type: TwifInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.61 Type TwifInfo.md
+  source_words: 91
+  kind: source-file
+- clause: 6.1.6.2.62
+  title: '6.1.6.2.62 Type: VendorSpecificFeature'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.62 Type VendorSpecificFeature.md
+  source_words: 93
+  kind: source-file
+- clause: 6.1.6.2.63
+  title: '6.1.6.2.63 Type: UdsfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.63 Type UdsfInfo.md
+  source_words: 165
+  kind: source-file
+- clause: 6.1.6.2.64
+  title: '6.1.6.2.64 Type: NfInstanceIdListCond'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.64 Type NfInstanceIdListCond.md
+  source_words: 42
+  kind: source-file
+- clause: 6.1.6.2.65
+  title: '6.1.6.2.65 Type: ScpInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.65 Type ScpInfo.md
+  source_words: 882
+  kind: source-file
+- clause: 6.1.6.2.66
+  title: '6.1.6.2.66 Type: ScpDomainInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.66 Type ScpDomainInfo.md
+  source_words: 300
+  kind: source-file
+- clause: 6.1.6.2.67
+  title: '6.1.6.2.67 Type: ScpDomainCond'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.67 Type ScpDomainCond.md
+  source_words: 117
+  kind: source-file
+- clause: 6.1.6.2.68
+  title: '6.1.6.2.68 Type: OptionsResponse'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.68 Type OptionsResponse.md
+  source_words: 60
+  kind: source-file
+- clause: 6.1.6.2.69
+  title: '6.1.6.2.69 Type: NwdafCond'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.69 Type NwdafCond.md
+  source_words: 230
+  kind: source-file
+- clause: 6.1.6.2.70
+  title: '6.1.6.2.70 Type: NefCond'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.70 Type NefCond.md
+  source_words: 176
+  kind: source-file
+- clause: 6.1.6.2.71
+  title: '6.1.6.2.71 Type: SuciInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.71 Type SuciInfo.md
+  source_words: 99
+  kind: source-file
+- clause: 6.1.6.2.72
+  title: '6.1.6.2.72 Type: SeppInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.72 Type SeppInfo.md
+  source_words: 352
+  kind: source-file
+- clause: 6.1.6.2.73
+  title: '6.1.6.2.73 Type: AanfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.73 Type AanfInfo.md
+  source_words: 53
+  kind: source-file
+- clause: 6.1.6.2.74
+  title: '6.1.6.2.74 Type: 5GDdnmfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.74 Type 5GDdnmfInfo.md
+  source_words: 38
+  kind: source-file
+- clause: 6.1.6.2.75
+  title: '6.1.6.2.75 Type: MfafInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.75 Type MfafInfo.md
+  source_words: 197
+  kind: source-file
+- clause: 6.1.6.2.76
+  title: '6.1.6.2.76 Type: NwdafCapability'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.76 Type NwdafCapability.md
+  source_words: 226
+  kind: source-file
+- clause: 6.1.6.2.77
+  title: '6.1.6.2.77 Type: EasdfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.77 Type EasdfInfo.md
+  source_words: 276
+  kind: source-file
+- clause: 6.1.6.2.78
+  title: '6.1.6.2.78 Type: SnssaiEasdfInfoItem'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.78 Type SnssaiEasdfInfoItem.md
+  source_words: 44
+  kind: source-file
+- clause: 6.1.6.2.79
+  title: '6.1.6.2.79 Type: DnnEasdfInfoItem'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.79 Type DnnEasdfInfoItem.md
+  source_words: 117
+  kind: source-file
+- clause: 6.1.6.2.80
+  title: '6.1.6.2.80 Type: DccfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.80 Type DccfInfo.md
+  source_words: 245
+  kind: source-file
+- clause: 6.1.6.2.81
+  title: '6.1.6.2.81 Type: NsacfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.81 Type NsacfInfo.md
+  source_words: 850
+  kind: source-file
+- clause: 6.1.6.2.82
+  title: '6.1.6.2.82 Type: NsacfCapability'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.82 Type NsacfCapability.md
+  source_words: 155
+  kind: source-file
+- clause: 6.1.6.2.83
+  title: '6.1.6.2.83 Type: DccfCond'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.83 Type DccfCond.md
+  source_words: 156
+  kind: source-file
+- clause: 6.1.6.2.84
+  title: '6.1.6.2.84 Type: MlAnalyticsInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.84 Type MlAnalyticsInfo.md
+  source_words: 430
+  kind: source-file
+- clause: 6.1.6.2.85
+  title: '6.1.6.2.85 Type: MbSmfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.85 Type MbSmfInfo.md
+  source_words: 236
+  kind: source-file
+- clause: 6.1.6.2.86
+  title: '6.1.6.2.86 Type: TmgiRange'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.86 Type TmgiRange.md
+  source_words: 124
+  kind: source-file
+- clause: 6.1.6.2.87
+  title: '6.1.6.2.87 Type: MbsSession'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.87 Type MbsSession.md
+  source_words: 109
+  kind: source-file
+- clause: 6.1.6.2.88
+  title: '6.1.6.2.88 Type: SnssaiMbSmfInfoItem'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.88 Type SnssaiMbSmfInfoItem.md
+  source_words: 45
+  kind: source-file
+- clause: 6.1.6.2.89
+  title: '6.1.6.2.89 Type: DnnMbSmfInfoItem'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.89 Type DnnMbSmfInfoItem.md
+  source_words: 80
+  kind: source-file
+- clause: 6.1.6.2.90
+  title: 6.1.6.2.90 Void
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.90 Void.md
+  source_words: 6
+  kind: source-file
+- clause: 6.1.6.2.91
+  title: '6.1.6.2.91 Type: TsctsfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.91 Type TsctsfInfo.md
+  source_words: 262
+  kind: source-file
+- clause: 6.1.6.2.92
+  title: '6.1.6.2.92 Type: SnssaiTsctsfInfoItem'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.92 Type SnssaiTsctsfInfoItem.md
+  source_words: 49
+  kind: source-file
+- clause: 6.1.6.2.93
+  title: '6.1.6.2.93 Type: DnnTsctsfInfoItem'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.93 Type DnnTsctsfInfoItem.md
+  source_words: 80
+  kind: source-file
+- clause: 6.1.6.2.94
+  title: '6.1.6.2.94 Type: MbUpfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.94 Type MbUpfInfo.md
+  source_words: 398
+  kind: source-file
+- clause: 6.1.6.2.95
+  title: '6.1.6.2.95 Type: UnTrustAfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.95 Type UnTrustAfInfo.md
+  source_words: 101
+  kind: source-file
+- clause: 6.1.6.2.96
+  title: '6.1.6.2.96 Type: TrustAfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.96 Type TrustAfInfo.md
+  source_words: 323
+  kind: source-file
+- clause: 6.1.6.2.97
+  title: '6.1.6.2.97 Type: SnssaiInfoItem'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.97 Type SnssaiInfoItem.md
+  source_words: 45
+  kind: source-file
+- clause: 6.1.6.2.98
+  title: '6.1.6.2.98 Type: DnnInfoItem'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.98 Type DnnInfoItem.md
+  source_words: 80
+  kind: source-file
+- clause: 6.1.6.2.99
+  title: '6.1.6.2.99 Type: CollocatedNfInstance'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.99 Type CollocatedNfInstance.md
+  source_words: 198
+  kind: source-file
+- clause: 6.1.6.2.100
+  title: '6.1.6.2.100 Type: ServiceNameListCond'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.100 Type ServiceNameListCond.md
+  source_words: 78
+  kind: source-file
+- clause: 6.1.6.2.101
+  title: '6.1.6.2.101 Type: NfGroupListCond'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.101 Type NfGroupListCond.md
+  source_words: 103
+  kind: source-file
+- clause: 6.1.6.2.102
+  title: '6.1.6.2.102 Type: PlmnOauth2'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.102 Type PlmnOauth2.md
+  source_words: 91
+  kind: source-file
+- clause: 6.1.6.2.103
+  title: '6.1.6.2.103 Type: V2xCapability'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.103 Type V2xCapability.md
+  source_words: 100
+  kind: source-file
+- clause: 6.1.6.2.104
+  title: '6.1.6.2.104 Type: NssaafInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.104 Type NssaafInfo.md
+  source_words: 78
+  kind: source-file
+- clause: 6.1.6.2.105
+  title: '6.1.6.2.105 Type: ProSeCapability'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.105 Type ProSeCapability.md
+  source_words: 428
+  kind: source-file
+- clause: 6.1.6.2.106
+  title: '6.1.6.2.106 Type: SharedDataIdRange'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.106 Type SharedDataIdRange.md
+  source_words: 94
+  kind: source-file
+- clause: 6.1.6.2.107
+  title: '6.1.6.2.107 Type: SubscriptionContext'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.107 Type SubscriptionContext.md
+  source_words: 73
+  kind: source-file
+- clause: 6.1.6.2.108
+  title: '6.1.6.2.108 Type: IwmscInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.108 Type IwmscInfo.md
+  source_words: 142
+  kind: source-file
+- clause: 6.1.6.2.109
+  title: '6.1.6.2.109 Type: MnpfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.109 Type MnpfInfo.md
+  source_words: 43
+  kind: source-file
+- clause: 6.1.6.2.110
+  title: '6.1.6.2.110 Type: DefSubServiceInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.110 Type DefSubServiceInfo.md
+  source_words: 89
+  kind: source-file
+- clause: 6.1.6.2.111
+  title: '6.1.6.2.111 Type: LocalityDescriptionItem'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.111 Type LocalityDescriptionItem.md
+  source_words: 38
+  kind: source-file
+- clause: 6.1.6.2.112
+  title: '6.1.6.2.112 Type: LocalityDescription'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.112 Type LocalityDescription.md
+  source_words: 121
+  kind: source-file
+- clause: 6.1.6.2.113
+  title: '6.1.6.2.113 Type: SmsfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.113 Type SmsfInfo.md
+  source_words: 152
+  kind: source-file
+- clause: 6.1.6.2.114
+  title: '6.1.6.2.114 Type: DcsfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.114 Type DcsfInfo.md
+  source_words: 164
+  kind: source-file
+- clause: 6.1.6.2.115
+  title: '6.1.6.2.115 Type: MlModelInterInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.115 Type MlModelInterInfo.md
+  source_words: 53
+  kind: source-file
+- clause: 6.1.6.2.116
+  title: '6.1.6.2.116 Type: PruExistenceInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.116 Type PruExistenceInfo.md
+  source_words: 86
+  kind: source-file
+- clause: 6.1.6.2.117
+  title: '6.1.6.2.117 Type: MrfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.117 Type MrfInfo.md
+  source_words: 89
+  kind: source-file
+- clause: 6.1.6.2.118
+  title: '6.1.6.2.118 Type: MrfpInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.118 Type MrfpInfo.md
+  source_words: 89
+  kind: source-file
+- clause: 6.1.6.2.119
+  title: '6.1.6.2.119 Type: MfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.119 Type MfInfo.md
+  source_words: 91
+  kind: source-file
+- clause: 6.1.6.2.120
+  title: '6.1.6.2.120 Type: A2xCapability'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.120 Type A2xCapability.md
+  source_words: 100
+  kind: source-file
+- clause: 6.1.6.2.121
+  title: '6.1.6.2.121 Type: RuleSet'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.121 Type RuleSet.md
+  source_words: 310
+  kind: source-file
+- clause: 6.1.6.2.122
+  title: '6.1.6.2.122 Type: AdrfInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.122 Type AdrfInfo.md
+  source_words: 116
+  kind: source-file
+- clause: 6.1.6.2.123
+  title: '6.1.6.2.123 Type: SelectionConditions'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.123 Type SelectionConditions.md
+  source_words: 87
+  kind: source-file
+- clause: 6.1.6.2.124
+  title: '6.1.6.2.124 Type: ConditionItem'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.124 Type ConditionItem.md
+  source_words: 596
+  kind: source-file
+- clause: 6.1.6.2.125
+  title: '6.1.6.2.125 Type: ConditionGroup'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.125 Type ConditionGroup.md
+  source_words: 96
+  kind: source-file
+- clause: 6.1.6.2.126
+  title: '6.1.6.2.126 Type: EpdgInfo'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.126 Type EpdgInfo.md
+  source_words: 72
+  kind: source-file
+- clause: 6.1.6.2.127
+  title: '6.1.6.2.127 Type: CallbackUriPrefixItem'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.127 Type CallbackUriPrefixItem.md
+  source_words: 149
+  kind: source-file
+- clause: 6.1.6.2.128
+  title: '6.1.6.2.128 Type: SharedData'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.128 Type SharedData.md
+  source_words: 249
+  kind: source-file
+- clause: 6.1.6.2.129
+  title: '6.1.6.2.129 Type: NFProfileRegistrationError'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.129 Type NFProfileRegistrationError.md
+  source_words: 54
+  kind: source-file
+- clause: 6.1.6.2.130
+  title: '6.1.6.2.130 Type: SharedDataIdList'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.130 Type SharedDataIdList.md
+  source_words: 82
+  kind: source-file
+- clause: 6.1.6.2.131
+  title: '6.1.6.2.131 Type: PortRange'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.131 Type PortRange.md
+  source_words: 44
+  kind: source-file
+- clause: 6.1.6.2.132
+  title: '6.1.6.2.132 Type: SharedScope'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2
+    Structured data types/6.1.6.2.132 Type SharedScope.md
+  source_words: 65
+  kind: source-file
+- clause: 6.1.6.3
+  title: 6.1.6.3 Simple data types and enumerations
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.3
+    Simple data types and enumerations/README.md
+  source_words: 4708
+  kind: navigation-directory
+- clause: 6.1.6.3.1
+  title: 6.1.6.3.1 Introduction
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.3
+    Simple data types and enumerations/6.1.6.3.1 Introduction.md
+  source_words: 26
+  kind: source-file
+- clause: 6.1.6.3.2
+  title: 6.1.6.3.2 Simple data types
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.3
+    Simple data types and enumerations/6.1.6.3.2 Simple data types.md
+  source_words: 150
+  kind: source-file
+- clause: 6.1.6.3.3
+  title: '6.1.6.3.3 Enumeration: NFType'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.3
+    Simple data types and enumerations/6.1.6.3.3 Enumeration NFType.md
+  source_words: 301
+  kind: source-file
+- clause: 6.1.6.3.4
+  title: '6.1.6.3.4 Enumeration: NotificationType'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.3
+    Simple data types and enumerations/6.1.6.3.4 Enumeration NotificationType.md
+  source_words: 981
+  kind: source-file
+- clause: 6.1.6.3.5
+  title: '6.1.6.3.5 Enumeration: TransportProtocol'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.3
+    Simple data types and enumerations/6.1.6.3.5 Enumeration TransportProtocol.md
+  source_words: 22
+  kind: source-file
+- clause: 6.1.6.3.6
+  title: '6.1.6.3.6 Enumeration: NotificationEventType'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.3
+    Simple data types and enumerations/6.1.6.3.6 Enumeration NotificationEventType.md
+  source_words: 104
+  kind: source-file
+- clause: 6.1.6.3.7
+  title: '6.1.6.3.7 Enumeration: NFStatus'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.3
+    Simple data types and enumerations/6.1.6.3.7 Enumeration NFStatus.md
+  source_words: 344
+  kind: source-file
+- clause: 6.1.6.3.8
+  title: '6.1.6.3.8 Enumeration: DataSetId'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.3
+    Simple data types and enumerations/6.1.6.3.8 Enumeration DataSetId.md
+  source_words: 368
+  kind: source-file
+- clause: 6.1.6.3.9
+  title: '6.1.6.3.9 Enumeration: UPInterfaceType'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.3
+    Simple data types and enumerations/6.1.6.3.9 Enumeration UPInterfaceType.md
+  source_words: 233
+  kind: source-file
+- clause: 6.1.6.3.10
+  title: 6.1.6.3.10 Relation Types
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.3
+    Simple data types and enumerations/6.1.6.3.10 Relation Types.md
+  source_words: 7
+  kind: source-file
+- clause: 6.1.6.3.10.1
+  title: 6.1.6.3.10.1 General
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.3
+    Simple data types and enumerations/6.1.6.3.10.1 General.md
+  source_words: 52
+  kind: source-file
+- clause: 6.1.6.3.11
+  title: '6.1.6.3.11 Enumeration: ServiceName'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.3
+    Simple data types and enumerations/6.1.6.3.11 Enumeration ServiceName.md
+  source_words: 1326
+  kind: source-file
+- clause: 6.1.6.3.12
+  title: '6.1.6.3.12 Enumeration: NFServiceStatus'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.3
+    Simple data types and enumerations/6.1.6.3.12 Enumeration NFServiceStatus.md
+  source_words: 358
+  kind: source-file
+- clause: 6.1.6.3.13
+  title: '6.1.6.3.13 Enumeration: AnNodeType'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.3
+    Simple data types and enumerations/6.1.6.3.13 Enumeration AnNodeType.md
+  source_words: 22
+  kind: source-file
+- clause: 6.1.6.3.14
+  title: '6.1.6.3.14 Enumeration: ConditionEventType'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.3
+    Simple data types and enumerations/6.1.6.3.14 Enumeration ConditionEventType.md
+  source_words: 60
+  kind: source-file
+- clause: 6.1.6.3.15
+  title: '6.1.6.3.15 Enumeration: IpReachability'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.3
+    Simple data types and enumerations/6.1.6.3.15 Enumeration IpReachability.md
+  source_words: 39
+  kind: source-file
+- clause: 6.1.6.3.16
+  title: '6.1.6.3.16 Enumeration: ScpCapability'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.3
+    Simple data types and enumerations/6.1.6.3.16 Enumeration ScpCapability.md
+  source_words: 25
+  kind: source-file
+- clause: 6.1.6.3.17
+  title: '6.1.6.3.17 Enumeration: CollocatedNfType'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.3
+    Simple data types and enumerations/6.1.6.3.17 Enumeration CollocatedNfType.md
+  source_words: 34
+  kind: source-file
+- clause: 6.1.6.3.18
+  title: '6.1.6.3.18 Enumeration: LocalityType'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.3
+    Simple data types and enumerations/6.1.6.3.18 Enumeration LocalityType.md
+  source_words: 117
+  kind: source-file
+- clause: 6.1.6.3.19
+  title: '6.1.6.3.19 Enumeration: FlCapabilityType'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.3
+    Simple data types and enumerations/6.1.6.3.19 Enumeration FlCapabilityType.md
+  source_words: 44
+  kind: source-file
+- clause: 6.1.6.3.20
+  title: 6.1.6.3.20 Void
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.3
+    Simple data types and enumerations/6.1.6.3.20 Void.md
+  source_words: 6
+  kind: source-file
+- clause: 6.1.6.3.21
+  title: '6.1.6.3.21 Enumeration: RuleSetAction'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.3
+    Simple data types and enumerations/6.1.6.3.21 Enumeration RuleSetAction.md
+  source_words: 39
+  kind: source-file
+- clause: 6.1.6.3.22
+  title: '6.1.6.3.22 Enumeration: DnsSecurityProtocol'
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.3
+    Simple data types and enumerations/6.1.6.3.22 Enumeration DnsSecurityProtocol.md
+  source_words: 41
+  kind: source-file
+- clause: 6.1.7
+  title: 6.1.7 Error Handling
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.7 Error Handling.md
+  source_words: 276
+  kind: source-file
+- clause: 6.1.7.1
+  title: 6.1.7.1 General
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.7 Error Handling.md
+  source_words: 19
+  kind: embedded-clause
+- clause: 6.1.7.2
+  title: 6.1.7.2 Protocol Errors
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.7 Error Handling.md
+  source_words: 19
+  kind: embedded-clause
+- clause: 6.1.7.3
+  title: 6.1.7.3 Application Errors
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.7 Error Handling.md
+  source_words: 216
+  kind: embedded-clause
+- clause: 6.1.8
+  title: 6.1.8 Security
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.8 Security.md
+  source_words: 224
+  kind: source-file
+- clause: 6.1.9
+  title: 6.1.9 Features supported by the NFManagement service
+  path: 6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.9 Features supported
+    by the NFManagement service.md
+  source_words: 418
+  kind: source-file
+- clause: '6.2'
+  title: 6.2 Nnrf_NFDiscovery Service API
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/README.md
+  source_words: 29288
+  kind: navigation-directory
+- clause: 6.2.1
+  title: 6.2.1 API URI
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.1 API URI.md
+  source_words: 102
+  kind: source-file
+- clause: 6.2.2
+  title: 6.2.2 Usage of HTTP
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.2 Usage of HTTP.md
+  source_words: 411
+  kind: source-file
+- clause: 6.2.2.1
+  title: 6.2.2.1 General
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.2 Usage of HTTP.md
+  source_words: 59
+  kind: embedded-clause
+- clause: 6.2.2.2
+  title: 6.2.2.2 HTTP standard headers
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.2 Usage of HTTP.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.2.2.2.1
+  title: 6.2.2.2.1 General
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.2 Usage of HTTP.md
+  source_words: 22
+  kind: embedded-clause
+- clause: 6.2.2.2.2
+  title: 6.2.2.2.2 Content type
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.2 Usage of HTTP.md
+  source_words: 72
+  kind: embedded-clause
+- clause: 6.2.2.2.3
+  title: 6.2.2.2.3 Cache-Control
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.2 Usage of HTTP.md
+  source_words: 61
+  kind: embedded-clause
+- clause: 6.2.2.2.4
+  title: 6.2.2.2.4 ETag
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.2 Usage of HTTP.md
+  source_words: 53
+  kind: embedded-clause
+- clause: 6.2.2.2.5
+  title: 6.2.2.2.5 If-None-Match
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.2 Usage of HTTP.md
+  source_words: 44
+  kind: embedded-clause
+- clause: 6.2.2.3
+  title: 6.2.2.3 HTTP custom headers
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.2 Usage of HTTP.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.2.2.3.1
+  title: 6.2.2.3.1 General
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.2 Usage of HTTP.md
+  source_words: 38
+  kind: embedded-clause
+- clause: 6.2.3
+  title: 6.2.3 Resources
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/README.md
+  source_words: 14736
+  kind: navigation-directory
+- clause: 6.2.3.1
+  title: 6.2.3.1 Overview
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.1
+    Overview.md
+  source_words: 196
+  kind: source-file
+- clause: 6.2.3.2
+  title: '6.2.3.2 Resource: nf-instances (Store)'
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.2
+    Resource nf-instances (Store)/README.md
+  source_words: 12749
+  kind: navigation-directory
+- clause: 6.2.3.2.1
+  title: 6.2.3.2.1 Description
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.2
+    Resource nf-instances (Store)/6.2.3.2.1 Description.md
+  source_words: 39
+  kind: source-file
+- clause: 6.2.3.2.2
+  title: 6.2.3.2.2 Resource Definition
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.2
+    Resource nf-instances (Store)/6.2.3.2.2 Resource Definition.md
+  source_words: 52
+  kind: source-file
+- clause: 6.2.3.2.3
+  title: 6.2.3.2.3 Resource Standard Methods
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.2
+    Resource nf-instances (Store)/6.2.3.2.3 Resource Standard Methods.md
+  source_words: 8
+  kind: source-file
+- clause: 6.2.3.2.3.1
+  title: 6.2.3.2.3.1 GET
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.2
+    Resource nf-instances (Store)/6.2.3.2.3.1 GET.md
+  source_words: 12619
+  kind: source-file
+- clause: 6.2.3.2.4
+  title: 6.2.3.2.4 Resource Custom Operations
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.2
+    Resource nf-instances (Store)/6.2.3.2.4 Resource Custom Operations.md
+  source_words: 24
+  kind: source-file
+- clause: 6.2.3.3
+  title: '6.2.3.3 Resource: Stored Search (Document)'
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.3
+    Resource Stored Search (Document).md
+  source_words: 359
+  kind: source-file
+- clause: 6.2.3.3.1
+  title: 6.2.3.3.1 Description
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.3
+    Resource Stored Search (Document).md
+  source_words: 44
+  kind: embedded-clause
+- clause: 6.2.3.3.2
+  title: 6.2.3.3.2 Resource Definition
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.3
+    Resource Stored Search (Document).md
+  source_words: 78
+  kind: embedded-clause
+- clause: 6.2.3.3.2.1
+  title: 6.2.3.3.2.1 GET
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.3
+    Resource Stored Search (Document).md
+  source_words: 209
+  kind: embedded-clause
+- clause: 6.2.3.4
+  title: '6.2.3.4 Resource: Complete Stored Search (Document)'
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.4
+    Resource Complete Stored Search (Document).md
+  source_words: 408
+  kind: source-file
+- clause: 6.2.3.4.1
+  title: 6.2.3.4.1 Description
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.4
+    Resource Complete Stored Search (Document).md
+  source_words: 68
+  kind: embedded-clause
+- clause: 6.2.3.4.2
+  title: 6.2.3.4.2 Resource Definition
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.4
+    Resource Complete Stored Search (Document).md
+  source_words: 79
+  kind: embedded-clause
+- clause: 6.2.3.4.2.1
+  title: 6.2.3.4.2.1 GET
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.4
+    Resource Complete Stored Search (Document).md
+  source_words: 232
+  kind: embedded-clause
+- clause: 6.2.3.5
+  title: '6.2.3.5 Resource: SCP Domain Routing Information (Document)'
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.5
+    Resource SCP Domain Routing Information (Document).md
+  source_words: 359
+  kind: source-file
+- clause: 6.2.3.5.1
+  title: 6.2.3.5.1 Description
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.5
+    Resource SCP Domain Routing Information (Document).md
+  source_words: 48
+  kind: embedded-clause
+- clause: 6.2.3.5.2
+  title: 6.2.3.5.2 Resource Definition
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.5
+    Resource SCP Domain Routing Information (Document).md
+  source_words: 45
+  kind: embedded-clause
+- clause: 6.2.3.5.2.1
+  title: 6.2.3.5.2.1 GET
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.5
+    Resource SCP Domain Routing Information (Document).md
+  source_words: 236
+  kind: embedded-clause
+- clause: 6.2.3.6
+  title: '6.2.3.6 Resource: SCP Domain Routing Information Subscriptions (Collection)'
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.6
+    Resource SCP Domain Routing Information Subscriptions (Collection).md
+  source_words: 369
+  kind: source-file
+- clause: 6.2.3.6.1
+  title: 6.2.3.6.1 Description
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.6
+    Resource SCP Domain Routing Information Subscriptions (Collection).md
+  source_words: 13
+  kind: embedded-clause
+- clause: 6.2.3.6.2
+  title: 6.2.3.6.2 Resource Definition
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.6
+    Resource SCP Domain Routing Information Subscriptions (Collection).md
+  source_words: 45
+  kind: embedded-clause
+- clause: 6.2.3.6.3
+  title: 6.2.3.6.3 Resource Standard Methods
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.6
+    Resource SCP Domain Routing Information Subscriptions (Collection).md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.2.3.6.3.1
+  title: 6.2.3.6.3.1 POST
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.6
+    Resource SCP Domain Routing Information Subscriptions (Collection).md
+  source_words: 272
+  kind: embedded-clause
+- clause: 6.2.3.7
+  title: '6.2.3.7 Resource: Individual SCP Domain Routing Information Subscription
+    (Document)'
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.7
+    Resource Individual SCP Domain Routing Information Subscription (Document).md
+  source_words: 292
+  kind: source-file
+- clause: 6.2.3.7.1
+  title: 6.2.3.7.1 Description
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.7
+    Resource Individual SCP Domain Routing Information Subscription (Document).md
+  source_words: 12
+  kind: embedded-clause
+- clause: 6.2.3.7.2
+  title: 6.2.3.7.2 Resource Definition
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.7
+    Resource Individual SCP Domain Routing Information Subscription (Document).md
+  source_words: 52
+  kind: embedded-clause
+- clause: 6.2.3.7.3
+  title: 6.2.3.7.3 Resource Standard Methods
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.7
+    Resource Individual SCP Domain Routing Information Subscription (Document).md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.2.3.7.3.1
+  title: 6.2.3.7.3.1 DELETE
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.7
+    Resource Individual SCP Domain Routing Information Subscription (Document).md
+  source_words: 188
+  kind: embedded-clause
+- clause: 6.2.4
+  title: 6.2.4 Custom Operations without associated resources
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.4 Custom Operations
+    without associated resources.md
+  source_words: 28
+  kind: source-file
+- clause: 6.2.5
+  title: 6.2.5 Notifications
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.5 Notifications.md
+  source_words: 362
+  kind: source-file
+- clause: 6.2.5.1
+  title: 6.2.5.1 General
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.5 Notifications.md
+  source_words: 72
+  kind: embedded-clause
+- clause: 6.2.5.2
+  title: 6.2.5.2 SCP Domain Routing Information Change Notification
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.5 Notifications.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.2.5.2.1
+  title: 6.2.5.2.1 Description
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.5 Notifications.md
+  source_words: 36
+  kind: embedded-clause
+- clause: 6.2.5.2.2
+  title: 6.2.5.2.2 Notification Definition
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.5 Notifications.md
+  source_words: 222
+  kind: embedded-clause
+- clause: 6.2.6
+  title: 6.2.6 Data Model
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.6 Data Model/README.md
+  source_words: 11780
+  kind: navigation-directory
+- clause: 6.2.6.1
+  title: 6.2.6.1 General
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.6 Data Model/6.2.6.1
+    General.md
+  source_words: 1269
+  kind: source-file
+- clause: 6.2.6.2
+  title: 6.2.6.2 Structured data types
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.6 Data Model/6.2.6.2
+    Structured data types/README.md
+  source_words: 10208
+  kind: navigation-directory
+- clause: 6.2.6.2.1
+  title: 6.2.6.2.1 Introduction
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.6 Data Model/6.2.6.2
+    Structured data types/6.2.6.2.1 Introduction.md
+  source_words: 17
+  kind: source-file
+- clause: 6.2.6.2.2
+  title: '6.2.6.2.2 Type: SearchResult'
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.6 Data Model/6.2.6.2
+    Structured data types/6.2.6.2.2 Type SearchResult.md
+  source_words: 868
+  kind: source-file
+- clause: 6.2.6.2.3
+  title: '6.2.6.2.3 Type: NFProfile'
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.6 Data Model/6.2.6.2
+    Structured data types/6.2.6.2.3 Type NFProfile.md
+  source_words: 4348
+  kind: source-file
+- clause: 6.2.6.2.4
+  title: '6.2.6.2.4 Type: NFService'
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.6 Data Model/6.2.6.2
+    Structured data types/6.2.6.2.4 Type NFService.md
+  source_words: 2932
+  kind: source-file
+- clause: 6.2.6.2.5
+  title: '6.2.6.2.5 Type: StoredSearchResult'
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.6 Data Model/6.2.6.2
+    Structured data types/6.2.6.2.5 Type StoredSearchResult.md
+  source_words: 161
+  kind: source-file
+- clause: 6.2.6.2.6
+  title: '6.2.6.2.6 Type: PreferredSearch'
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.6 Data Model/6.2.6.2
+    Structured data types/6.2.6.2.6 Type PreferredSearch.md
+  source_words: 573
+  kind: source-file
+- clause: 6.2.6.2.7
+  title: '6.2.6.2.7 Type: NfInstanceInfo'
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.6 Data Model/6.2.6.2
+    Structured data types/6.2.6.2.7 Type NfInstanceInfo.md
+  source_words: 339
+  kind: source-file
+- clause: 6.2.6.2.8
+  title: '6.2.6.2.8 Type: ScpDomainRoutingInformation'
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.6 Data Model/6.2.6.2
+    Structured data types/6.2.6.2.8 Type ScpDomainRoutingInformation.md
+  source_words: 159
+  kind: source-file
+- clause: 6.2.6.2.9
+  title: '6.2.6.2.9 Type: ScpDomainConnectivity'
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.6 Data Model/6.2.6.2
+    Structured data types/6.2.6.2.9 Type ScpDomainConnectivity.md
+  source_words: 51
+  kind: source-file
+- clause: 6.2.6.2.10
+  title: '6.2.6.2.10 Type: ScpDomainRoutingInfoSubscription'
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.6 Data Model/6.2.6.2
+    Structured data types/6.2.6.2.10 Type ScpDomainRoutingInfoSubscription.md
+  source_words: 158
+  kind: source-file
+- clause: 6.2.6.2.11
+  title: '6.2.6.2.11 Type: ScpDomainRoutingInfoNotification'
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.6 Data Model/6.2.6.2
+    Structured data types/6.2.6.2.11 Type ScpDomainRoutingInfoNotification.md
+  source_words: 86
+  kind: source-file
+- clause: 6.2.6.2.12
+  title: '6.2.6.2.12 Type: NfServiceInstance'
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.6 Data Model/6.2.6.2
+    Structured data types/6.2.6.2.12 Type NfServiceInstance.md
+  source_words: 80
+  kind: source-file
+- clause: 6.2.6.2.13
+  title: '6.2.6.2.13 Type: NoProfileMatchInfo'
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.6 Data Model/6.2.6.2
+    Structured data types/6.2.6.2.13 Type NoProfileMatchInfo.md
+  source_words: 80
+  kind: source-file
+- clause: 6.2.6.2.14
+  title: '6.2.6.2.14 Type: QueryParamCombination'
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.6 Data Model/6.2.6.2
+    Structured data types/6.2.6.2.14 Type QueryParamCombination.md
+  source_words: 39
+  kind: source-file
+- clause: 6.2.6.2.15
+  title: '6.2.6.2.15 Type: QueryParameter'
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.6 Data Model/6.2.6.2
+    Structured data types/6.2.6.2.15 Type QueryParameter.md
+  source_words: 42
+  kind: source-file
+- clause: 6.2.6.2.16
+  title: '6.2.6.2.16 Type: AfData'
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.6 Data Model/6.2.6.2
+    Structured data types/6.2.6.2.16 Type AfData.md
+  source_words: 167
+  kind: source-file
+- clause: 6.2.6.2.17
+  title: '6.2.6.2.17 Type: SearchResultInfo'
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.6 Data Model/6.2.6.2
+    Structured data types/6.2.6.2.17 Type SearchResultInfo.md
+  source_words: 101
+  kind: source-file
+- clause: 6.2.6.3
+  title: 6.2.6.3 Simple data types and enumerations
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.6 Data Model/6.2.6.3
+    Simple data types and enumerations.md
+  source_words: 298
+  kind: source-file
+- clause: 6.2.6.3.1
+  title: 6.2.6.3.1 Introduction
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.6 Data Model/6.2.6.3
+    Simple data types and enumerations.md
+  source_words: 20
+  kind: embedded-clause
+- clause: 6.2.6.3.2
+  title: 6.2.6.3.2 Simple data types
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.6 Data Model/6.2.6.3
+    Simple data types and enumerations.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 6.2.6.3.3
+  title: '6.2.6.3.3 Enumeration: NoProfileMatchReason'
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.6 Data Model/6.2.6.3
+    Simple data types and enumerations.md
+  source_words: 219
+  kind: embedded-clause
+- clause: 6.2.7
+  title: 6.2.7 Error Handling
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.7 Error Handling.md
+  source_words: 122
+  kind: source-file
+- clause: 6.2.7.1
+  title: 6.2.7.1 General
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.7 Error Handling.md
+  source_words: 19
+  kind: embedded-clause
+- clause: 6.2.7.2
+  title: 6.2.7.2 Protocol Errors
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.7 Error Handling.md
+  source_words: 19
+  kind: embedded-clause
+- clause: 6.2.7.3
+  title: 6.2.7.3 Application Errors
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.7 Error Handling.md
+  source_words: 62
+  kind: embedded-clause
+- clause: 6.2.8
+  title: 6.2.8 Security
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.8 Security.md
+  source_words: 199
+  kind: source-file
+- clause: 6.2.9
+  title: 6.2.9 Features supported by the NFDiscovery service
+  path: 6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.9 Features supported
+    by the NFDiscovery service.md
+  source_words: 1543
+  kind: source-file
+- clause: '6.3'
+  title: 6.3 Nnrf_AccessToken Service API
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/README.md
+  source_words: 5134
+  kind: navigation-directory
+- clause: 6.3.1
+  title: 6.3.1 General
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.1 General.md
+  source_words: 44
+  kind: source-file
+- clause: 6.3.2
+  title: 6.3.2 API URI
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.2 API URI.md
+  source_words: 37
+  kind: source-file
+- clause: 6.3.3
+  title: 6.3.3 Usage of HTTP
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.3 Usage of HTTP.md
+  source_words: 246
+  kind: source-file
+- clause: 6.3.3.1
+  title: 6.3.3.1 General
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.3 Usage of HTTP.md
+  source_words: 57
+  kind: embedded-clause
+- clause: 6.3.3.2
+  title: 6.3.3.2 HTTP standard headers
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.3 Usage of HTTP.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.3.3.2.1
+  title: 6.3.3.2.1 General
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.3 Usage of HTTP.md
+  source_words: 34
+  kind: embedded-clause
+- clause: 6.3.3.2.2
+  title: 6.3.3.2.2 Content type
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.3 Usage of HTTP.md
+  source_words: 70
+  kind: embedded-clause
+- clause: 6.3.3.3
+  title: 6.3.3.3 HTTP custom headers
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.3 Usage of HTTP.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.3.3.3.1
+  title: 6.3.3.3.1 General
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.3 Usage of HTTP.md
+  source_words: 41
+  kind: embedded-clause
+- clause: 6.3.4
+  title: 6.3.4 Custom Operations without associated resources
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.4 Custom Operations
+    without associated resources.md
+  source_words: 716
+  kind: source-file
+- clause: 6.3.4.1
+  title: 6.3.4.1 Overview
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.4 Custom Operations
+    without associated resources.md
+  source_words: 88
+  kind: embedded-clause
+- clause: 6.3.4.2
+  title: '6.3.4.2 Operation: Get (Access Token Request)'
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.4 Custom Operations
+    without associated resources.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.3.4.2.1
+  title: 6.3.4.2.1 Description
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.4 Custom Operations
+    without associated resources.md
+  source_words: 13
+  kind: embedded-clause
+- clause: 6.3.4.2.2
+  title: 6.3.4.2.2 Operation Definition
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.4 Custom Operations
+    without associated resources.md
+  source_words: 580
+  kind: embedded-clause
+- clause: 6.3.5
+  title: 6.3.5 Data Model
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.5 Data Model.md
+  source_words: 3897
+  kind: source-file
+- clause: 6.3.5.1
+  title: 6.3.5.1 General
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.5 Data Model.md
+  source_words: 365
+  kind: embedded-clause
+- clause: 6.3.5.2
+  title: 6.3.5.2 Structured data types
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.5 Data Model.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.3.5.2.1
+  title: 6.3.5.2.1 Introduction
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.5 Data Model.md
+  source_words: 11
+  kind: embedded-clause
+- clause: 6.3.5.2.2
+  title: '6.3.5.2.2 Type: AccessTokenReq'
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.5 Data Model.md
+  source_words: 1878
+  kind: embedded-clause
+- clause: 6.3.5.2.3
+  title: '6.3.5.2.3 Type: AccessTokenRsp'
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.5 Data Model.md
+  source_words: 261
+  kind: embedded-clause
+- clause: 6.3.5.2.4
+  title: '6.3.5.2.4 Type: AccessTokenClaims'
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.5 Data Model.md
+  source_words: 1029
+  kind: embedded-clause
+- clause: 6.3.5.2.5
+  title: '6.3.5.2.5 Type: AccessTokenErr'
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.5 Data Model.md
+  source_words: 105
+  kind: embedded-clause
+- clause: 6.3.5.2.6
+  title: '6.3.5.2.6 Type: MlModelInterInd'
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.5 Data Model.md
+  source_words: 57
+  kind: embedded-clause
+- clause: 6.3.5.3
+  title: 6.3.5.3 Simple data types and enumerations
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.5 Data Model.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.3.5.3.1
+  title: 6.3.5.3.1 Introduction
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.5 Data Model.md
+  source_words: 20
+  kind: embedded-clause
+- clause: 6.3.5.3.2
+  title: 6.3.5.3.2 Simple data types
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.5 Data Model.md
+  source_words: 28
+  kind: embedded-clause
+- clause: 6.3.5.3.3
+  title: 6.3.5.3.3 Void
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.5 Data Model.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.3.5.4
+  title: 6.3.5.4 Data types describing alternative data types or combinations of data
+    types
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.5 Data Model.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.3.5.4.1
+  title: '6.3.5.4.1 Type: Audience'
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.5 Data Model.md
+  source_words: 34
+  kind: embedded-clause
+- clause: 6.3.6
+  title: 6.3.6 Error Handling
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.6 Error Handling.md
+  source_words: 189
+  kind: source-file
+- clause: 6.3.6.1
+  title: 6.3.6.1 General
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.6 Error Handling.md
+  source_words: 47
+  kind: embedded-clause
+- clause: 6.3.6.2
+  title: 6.3.6.2 Protocol Errors
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.6 Error Handling.md
+  source_words: 19
+  kind: embedded-clause
+- clause: 6.3.6.3
+  title: 6.3.6.3 Application Errors
+  path: 6 API Definitions/6.3 Nnrf_AccessToken Service API/6.3.6 Error Handling.md
+  source_words: 101
+  kind: embedded-clause
+- clause: '6.4'
+  title: 6.4 Nnrf_Bootstrapping Service API
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 1754
+  kind: source-file
+- clause: 6.4.1
+  title: 6.4.1 API URI
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 31
+  kind: embedded-clause
+- clause: 6.4.2
+  title: 6.4.2 Usage of HTTP
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.4.2.1
+  title: 6.4.2.1 General
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 57
+  kind: embedded-clause
+- clause: 6.4.2.2
+  title: 6.4.2.2 HTTP standard headers
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.4.2.2.1
+  title: 6.4.2.2.1 General
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 22
+  kind: embedded-clause
+- clause: 6.4.2.2.2
+  title: 6.4.2.2.2 Content type
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 106
+  kind: embedded-clause
+- clause: 6.4.2.2.3
+  title: 6.4.2.2.3 Cache-Control
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 40
+  kind: embedded-clause
+- clause: 6.4.2.2.4
+  title: 6.4.2.2.4 ETag
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 53
+  kind: embedded-clause
+- clause: 6.4.2.2.5
+  title: 6.4.2.2.5 If-None-Match
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 46
+  kind: embedded-clause
+- clause: 6.4.2.3
+  title: 6.4.2.3 HTTP custom headers
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.4.2.3.1
+  title: 6.4.2.3.1 General
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 39
+  kind: embedded-clause
+- clause: 6.4.3
+  title: 6.4.3 Resources
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.4.3.1
+  title: 6.4.3.1 Overview
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 81
+  kind: embedded-clause
+- clause: 6.4.3.2
+  title: '6.4.3.2 Resource: Bootstrapping (Document)'
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.4.3.2.1
+  title: 6.4.3.2.1 Description
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 33
+  kind: embedded-clause
+- clause: 6.4.3.2.2
+  title: 6.4.3.2.2 Resource Definition
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 40
+  kind: embedded-clause
+- clause: 6.4.3.2.3
+  title: 6.4.3.2.3 Resource Standard Methods
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.4.3.2.3.1
+  title: 6.4.3.2.3.1 GET
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 233
+  kind: embedded-clause
+- clause: 6.4.4
+  title: 6.4.4 Custom Operations without associated resources
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 20
+  kind: embedded-clause
+- clause: 6.4.5
+  title: 6.4.5 Notifications
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 6.4.6
+  title: 6.4.6 Data Model
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.4.6.1
+  title: 6.4.6.1 General
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 176
+  kind: embedded-clause
+- clause: 6.4.6.2
+  title: 6.4.6.2 Structured data types
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.4.6.2.1
+  title: 6.4.6.2.1 Introduction
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 11
+  kind: embedded-clause
+- clause: 6.4.6.2.2
+  title: '6.4.6.2.2 Type: BootstrappingInfo'
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 274
+  kind: embedded-clause
+- clause: 6.4.6.3
+  title: 6.4.6.3 Simple data types and enumerations
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.4.6.3.1
+  title: 6.4.6.3.1 Introduction
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 20
+  kind: embedded-clause
+- clause: 6.4.6.3.2
+  title: '6.4.6.3.2 Enumeration: Status'
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 22
+  kind: embedded-clause
+- clause: 6.4.6.3.3
+  title: 6.4.6.3.3 Relation Types
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.4.6.3.3.1
+  title: 6.4.6.3.3.1 General
+  path: 6 API Definitions/6.4 Nnrf_Bootstrapping Service API.md
+  source_words: 241
+  kind: embedded-clause
+- clause: Annex B
+  title: 'Annex B (normative): NF Profile changes in NFRegister and NFUpdate responses'
+  path: Annex B (normative) NF Profile changes in NFRegister and NFUpdate responses.md
+  source_words: 367
+  kind: source-file
+- clause: B.1
+  title: B.1 General
+  path: Annex B (normative) NF Profile changes in NFRegister and NFUpdate responses.md
+  source_words: 353
+  kind: embedded-clause
+- clause: Annex C
+  title: 'Annex C (normative): Enhanced Authorization Policy using RuleSets in NF
+    (Service) Profile'
+  path: Annex C (normative) Enhanced Authorization Policy using RuleSets in NF (Service)
+    Profile.md
+  source_words: 1057
+  kind: source-file
+- clause: C.1
+  title: C.1 General
+  path: Annex C (normative) Enhanced Authorization Policy using RuleSets in NF (Service)
+    Profile.md
+  source_words: 76
+  kind: embedded-clause
+- clause: C.2
+  title: C.2 Examples of NF-Producer profile only using RuleSets (i.e. without AllowedXXX
+    parameters) in NF (Service) Profile
+  path: Annex C (normative) Enhanced Authorization Policy using RuleSets in NF (Service)
+    Profile.md
+  source_words: 426
+  kind: embedded-clause
+- clause: C.3
+  title: C.3 Example of NF-Producer profile using RuleSets and AllowedXXX parameters
+    in NF (Service) Profile
+  path: Annex C (normative) Enhanced Authorization Policy using RuleSets in NF (Service)
+    Profile.md
+  source_words: 216
+  kind: embedded-clause
+- clause: C.4
+  title: C.4 Backward Compatibility
+  path: Annex C (normative) Enhanced Authorization Policy using RuleSets in NF (Service)
+    Profile.md
+  source_words: 287
+  kind: embedded-clause
+- clause: Annex D
+  title: 'Annex D (normative): Support of "Canary Release" testing in the NRF'
+  path: Annex D (normative) Support of Canary Release testing in the NRF.md
+  source_words: 1535
+  kind: source-file
+- clause: A.2
+  title: A.2 Nnrf_NFManagement API
+  path: ../openapi/TS29510_Nnrf_NFManagement.yaml
+  kind: official-openapi-yaml
+- clause: A.3
+  title: A.3 Nnrf_NFDiscovery API
+  path: ../openapi/TS29510_Nnrf_NFDiscovery.yaml
+  kind: official-openapi-yaml
+- clause: A.4
+  title: A.4 Nnrf_AccessToken API
+  path: ../openapi/TS29510_Nnrf_AccessToken.yaml
+  kind: official-openapi-yaml
+- clause: A.5
+  title: A.5 Nnrf_Bootstrapping API
+  path: ../openapi/TS29510_Nnrf_Bootstrapping.yaml
+  kind: official-openapi-yaml
+- clause: Annex A
+  title: 'Annex A (normative): OpenAPI specification'
+  path: Annex A (normative) OpenAPI specification/README.md
+  source_words: 135
+  kind: navigation-directory
+- clause: A.1
+  title: A.1 General
+  path: Annex A (normative) OpenAPI specification/README.md
+  source_words: 132
+  kind: embedded-clause
+- clause: Annex E
+  title: 'Annex E (informative): Change history'
+  path: Annex E (informative) Change history/README.md
+  source_words: 25536
+  kind: navigation-directory
+- clause: Annex E-2017
+  title: 'Annex E (informative): Change history — 2017'
+  path: Annex E (informative) Change history/2017.md
+  source_words: 106
+  kind: source-file
+- clause: Annex E-2018
+  title: 'Annex E (informative): Change history — 2018'
+  path: Annex E (informative) Change history/2018.md
+  source_words: 3302
+  kind: source-file
+- clause: Annex E-2019
+  title: 'Annex E (informative): Change history — 2019'
+  path: Annex E (informative) Change history/2019.md
+  source_words: 3878
+  kind: source-file
+- clause: Annex E-2020
+  title: 'Annex E (informative): Change history — 2020'
+  path: Annex E (informative) Change history/2020.md
+  source_words: 3892
+  kind: source-file
+- clause: Annex E-2021
+  title: 'Annex E (informative): Change history — 2021'
+  path: Annex E (informative) Change history/2021.md
+  source_words: 4511
+  kind: source-file
+- clause: Annex E-2022
+  title: 'Annex E (informative): Change history — 2022'
+  path: Annex E (informative) Change history/2022.md
+  source_words: 3639
+  kind: source-file
+- clause: Annex E-2023
+  title: 'Annex E (informative): Change history — 2023'
+  path: Annex E (informative) Change history/2023.md
+  source_words: 3643
+  kind: source-file
+- clause: Annex E-2024
+  title: 'Annex E (informative): Change history — 2024'
+  path: Annex E (informative) Change history/2024.md
+  source_words: 2355
+  kind: source-file
+- clause: Annex E-2025
+  title: 'Annex E (informative): Change history — 2025'
+  path: Annex E (informative) Change history/2025.md
+  source_words: 140
+  kind: source-file
+- clause: Annex E-2026
+  title: 'Annex E (informative): Change history — 2026'
+  path: Annex E (informative) Change history/2026.md
+  source_words: 70
+  kind: source-file

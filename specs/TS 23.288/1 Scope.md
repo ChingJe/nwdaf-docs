@@ -1,0 +1,18 @@
+---
+spec: TS 23.288
+version: 18.13.0
+release: '18'
+clause: '1'
+title: 1 Scope
+source_archive: 23288-id0.zip
+source_document: 23288-id0.docx
+source_archive_sha256: 7116a1f4123dcf949818ab56feb6b242eda8819877346ab045654e1d0d8c36aa
+source_document_sha256: 5e4ca6e4e350f62a5d4e4443d36ae93c9df679e1e9aea20ccaa44a4b0eb3e196
+content_origin: 3gpp-source
+conversion: deterministic-pandoc-structure
+---
+
+# 1 Scope
+
+
+The present document defines the Stage 2 architecture enhancements for 5G System (5GS) to support network data analytics services in 5G Core network.

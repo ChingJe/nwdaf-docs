@@ -1,0 +1,28 @@
+{
+  "method": "Risk-based validation combined direct source OOXML block inspection, independent text extraction, and manual review of rendered vector previews. Full-document LibreOffice PDF export was attempted for TS 23.502 and TS 29.510 but did not complete within the execution time limit.",
+  "samples": [
+    {
+      "spec": "TS 23.502",
+      "asset": "assets/rendered/image209.png",
+      "figure": "4.17.1-1 NF Service Registration procedure",
+      "result": "preview readable and correctly adjacent to caption and procedure steps"
+    },
+    {
+      "spec": "TS 29.510",
+      "asset": "assets/rendered/image10.png",
+      "figure": "5.2.2.3.2-1 NF Heart-Beat",
+      "result": "preview readable and correctly adjacent to PATCH procedure text"
+    },
+    {
+      "spec": "TS 29.510",
+      "asset": "assets/rendered/image44.png",
+      "figure": "6.4.3.1-1 Bootstrapping API URI structure",
+      "result": "preview readable and correctly adjacent to resource description"
+    }
+  ],
+  "structural_samples_file": "structural-sampling.json",
+  "limitations": [
+    "No claim of manual page-by-page visual certification is made.",
+    "Large 3GPP DOCX files did not complete headless LibreOffice PDF export within the allotted runtime; source OOXML and independent text checks were used instead."
+  ]
+}

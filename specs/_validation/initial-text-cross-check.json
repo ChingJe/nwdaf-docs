@@ -1,0 +1,65 @@
+{
+  "TS 23.288": {
+    "token_count_a": 152389,
+    "token_count_b": 152392,
+    "shingle_size": 12,
+    "shingles_a": 152378,
+    "shingles_b": 152381,
+    "overlap": 151374,
+    "precision_against_a": 0.9934111223404953,
+    "recall_against_b": 0.9933915645651361,
+    "token_multiset_overlap_ratio_a": 0.9998818812381471,
+    "token_multiset_overlap_ratio_b": 0.999862197490682,
+    "modal_and_marker_counts_pandoc": {
+      "shall": 135,
+      "should": 44,
+      "may": 801,
+      "must": 10,
+      "note": 931,
+      "example": 33,
+      "shall not": 7,
+      "should not": 5,
+      "may not": 13
+    },
+    "modal_and_marker_counts_docx2txt": {
+      "shall": 135,
+      "should": 44,
+      "may": 801,
+      "must": 10,
+      "note": 931,
+      "example": 33,
+      "shall not": 7,
+      "should not": 5,
+      "may not": 13
+    },
+    "modal_and_marker_counts_match": true
+  },
+  "TS 29.520": {
+    "pandoc_main_body_token_count": 113481,
+    "libreoffice_main_body_token_count": 113470,
+    "modal_and_marker_counts_pandoc": {
+      "shall": 1116,
+      "should": 27,
+      "may": 265,
+      "must": 0,
+      "note": 866,
+      "example": 6,
+      "shall not": 25,
+      "should not": 1,
+      "may not": 3
+    },
+    "modal_and_marker_counts_libreoffice": {
+      "shall": 1116,
+      "should": 27,
+      "may": 265,
+      "must": 0,
+      "note": 866,
+      "example": 6,
+      "shall not": 25,
+      "should not": 1,
+      "may not": 3
+    },
+    "modal_and_marker_counts_match": true,
+    "note": "The legacy DOC text path may split words at layout boundaries; modal/marker counts were used as a high-sensitivity normative-text check, with antiword as a third independent extraction path."
+  }
+}

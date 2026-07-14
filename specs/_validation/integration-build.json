@@ -1,0 +1,526 @@
+{
+  "build": {
+    "23502": {
+      "spec": "TS 23.502",
+      "version": "18.14.0",
+      "archive_sha256": "0f24045c49ddf710fb91e51ec74d070cfd13d1e9bafc07809d7e87eae6a61ce8",
+      "document_sha256": "89536df6095fba3b9c90f1fa06ceaec918dfc6b0fd26a769a06eae7db66bb603",
+      "heading_count": 46,
+      "top_level_count": 5,
+      "source_words": 13679,
+      "manifest_entries": 46,
+      "corrections": [
+        {
+          "line": 32594,
+          "type": "promote-annex-heading",
+          "original": "########  Annex A (informative): Drafting rules and conventions for NF services",
+          "replacement": "# Annex A (informative): Drafting rules and conventions for NF services"
+        },
+        {
+          "line": 32596,
+          "type": "demote-annex-subheading",
+          "original": "# A.1 General",
+          "replacement": "## A.1 General"
+        },
+        {
+          "line": 32600,
+          "type": "demote-annex-subheading",
+          "original": "# A.2 Naming",
+          "replacement": "## A.2 Naming"
+        },
+        {
+          "line": 32624,
+          "type": "demote-annex-subheading",
+          "original": "# A.3 Representation in an information flow",
+          "replacement": "## A.3 Representation in an information flow"
+        },
+        {
+          "line": 32642,
+          "type": "demote-annex-subheading",
+          "original": "# A.4 Reference to services and service operations in procedures",
+          "replacement": "## A.4 Reference to services and service operations in procedures"
+        },
+        {
+          "line": 32650,
+          "type": "demote-annex-subheading",
+          "original": "# A.5 Service and service operation description template",
+          "replacement": "## A.5 Service and service operation description template"
+        },
+        {
+          "line": 32680,
+          "type": "demote-annex-subheading",
+          "original": "# A.6 Design Guidelines for NF services",
+          "replacement": "## A.6 Design Guidelines for NF services"
+        },
+        {
+          "line": 32708,
+          "type": "promote-annex-heading",
+          "original": "########  Annex B (informative): Drafting Rules for Information flows",
+          "replacement": "# Annex B (informative): Drafting Rules for Information flows"
+        },
+        {
+          "line": 32720,
+          "type": "promote-annex-heading",
+          "original": "########  Annex C (informative): Generating EPS PDN Connection parameters from 5G PDU Session parameters",
+          "replacement": "# Annex C (informative): Generating EPS PDN Connection parameters from 5G PDU Session parameters"
+        },
+        {
+          "line": 32744,
+          "type": "promote-annex-heading",
+          "original": "########  Annex D (normative): UE Presence in Area of Interest",
+          "replacement": "# Annex D (normative): UE Presence in Area of Interest"
+        },
+        {
+          "line": 32746,
+          "type": "demote-annex-subheading",
+          "original": "# D.1 Determination of UE presence in Area of Interest by AMF",
+          "replacement": "## D.1 Determination of UE presence in Area of Interest by AMF"
+        },
+        {
+          "line": 32798,
+          "type": "demote-annex-subheading",
+          "original": "# D.2 Determination of UE presence in Area of Interest by NG-RAN",
+          "replacement": "## D.2 Determination of UE presence in Area of Interest by NG-RAN"
+        },
+        {
+          "line": 32818,
+          "type": "promote-annex-heading",
+          "original": "########  Annex E (normative): Delegated SMF and PCF discovery in the Home Routed and specific SMF Service Areas scenarios",
+          "replacement": "# Annex E (normative): Delegated SMF and PCF discovery in the Home Routed and specific SMF Service Areas scenarios"
+        },
+        {
+          "line": 32820,
+          "type": "demote-annex-subheading",
+          "original": "# E.0 Overview",
+          "replacement": "## E.0 Overview"
+        },
+        {
+          "line": 32832,
+          "type": "demote-annex-subheading",
+          "original": "# E.1 Delegated SMF discovery in the Home Routed scenario",
+          "replacement": "## E.1 Delegated SMF discovery in the Home Routed scenario"
+        },
+        {
+          "line": 32864,
+          "type": "demote-annex-subheading",
+          "original": "# E.2 Delegated I-SMF discovery",
+          "replacement": "## E.2 Delegated I-SMF discovery"
+        },
+        {
+          "line": 32918,
+          "type": "demote-annex-subheading",
+          "original": "# E.3 Delegated PCF discovery in the Roaming scenario",
+          "replacement": "## E.3 Delegated PCF discovery in the Roaming scenario"
+        },
+        {
+          "line": 32942,
+          "type": "promote-annex-heading",
+          "original": "######## Annex F (informative): Information flows for 5GS integration with TSN or with Deterministic Networking",
+          "replacement": "# Annex F (informative): Information flows for 5GS integration with TSN or with Deterministic Networking"
+        },
+        {
+          "line": 32948,
+          "type": "demote-annex-subheading",
+          "original": "# F.1 5GS Bridge information reporting",
+          "replacement": "## F.1 5GS Bridge information reporting"
+        },
+        {
+          "line": 33000,
+          "type": "demote-annex-subheading",
+          "original": "# F.2 5GS Bridge configuration",
+          "replacement": "## F.2 5GS Bridge configuration"
+        },
+        {
+          "line": 33038,
+          "type": "demote-annex-subheading",
+          "original": "# F.3 BMCA procedure",
+          "replacement": "## F.3 BMCA procedure"
+        },
+        {
+          "line": 33064,
+          "type": "demote-annex-subheading",
+          "original": "# F.4 5GS interworking with TSN deployed in the transport network",
+          "replacement": "## F.4 5GS interworking with TSN deployed in the transport network"
+        },
+        {
+          "line": 33112,
+          "type": "demote-annex-subheading",
+          "original": "# F.5 5GS DetNet node information reporting",
+          "replacement": "## F.5 5GS DetNet node information reporting"
+        },
+        {
+          "line": 33132,
+          "type": "demote-annex-subheading",
+          "original": "# F.6 5GS DetNet node configuration",
+          "replacement": "## F.6 5GS DetNet node configuration"
+        },
+        {
+          "line": 33154,
+          "type": "promote-annex-heading",
+          "original": "########  Annex G (normative): Support of GERAN/UTRAN access by SMF+PGW-C",
+          "replacement": "# Annex G (normative): Support of GERAN/UTRAN access by SMF+PGW-C"
+        },
+        {
+          "line": 33202,
+          "type": "promote-annex-heading",
+          "original": "######## Annex H (normative): Support of EAP-based secondary authentication and authorization by DN-AAA over EPC",
+          "replacement": "# Annex H (normative): Support of EAP-based secondary authentication and authorization by DN-AAA over EPC"
+        },
+        {
+          "line": 33204,
+          "type": "demote-annex-subheading",
+          "original": "# H.1 Introduction",
+          "replacement": "## H.1 Introduction"
+        },
+        {
+          "line": 33222,
+          "type": "demote-annex-subheading",
+          "original": "# H.2 Procedures",
+          "replacement": "## H.2 Procedures"
+        },
+        {
+          "line": 33276,
+          "type": "promote-annex-heading",
+          "original": "######## Annex I (informative): Member UE selection without the NEF assistance at the AF",
+          "replacement": "# Annex I (informative): Member UE selection without the NEF assistance at the AF"
+        },
+        {
+          "line": 33302,
+          "type": "promote-annex-heading",
+          "original": "######## Annex J (informative): Support for Personal IoT Networks",
+          "replacement": "# Annex J (informative): Support for Personal IoT Networks"
+        },
+        {
+          "line": 33304,
+          "type": "demote-annex-subheading",
+          "original": "# J.1 Procedure for PIN service",
+          "replacement": "## J.1 Procedure for PIN service"
+        },
+        {
+          "line": 33346,
+          "type": "promote-annex-heading",
+          "original": "########  Annex K (informative): Change history",
+          "replacement": "# Annex K (informative): Change history"
+        }
+      ],
+      "integrity": {
+        "preprocessed_text_sha256": "cd7abc2f8df4fb21619c07e41ff4f1f05f08ae9e8b908e2036b181ceeba1389c",
+        "tree_reassembled_text_sha256": "cd7abc2f8df4fb21619c07e41ff4f1f05f08ae9e8b908e2036b181ceeba1389c",
+        "matches": true
+      },
+      "selection": [
+        "1",
+        "2",
+        "3",
+        "4.17",
+        "5.2.7"
+      ],
+      "full_source_heading_count": 1347
+    },
+    "29500": {
+      "spec": "TS 29.500",
+      "version": "18.10.0",
+      "archive_sha256": "3e0cbb6bc6ceec4dabb597410fb4b55ba03ae82e9b242972f441cd926971f5f2",
+      "document_sha256": "8cd4994735a1718db905b0aee4ceba4fb479cc7193d82d051a68450f33eba52b",
+      "heading_count": 266,
+      "top_level_count": 14,
+      "source_words": 78112,
+      "manifest_entries": 266,
+      "corrections": [
+        {
+          "line": 6041,
+          "type": "promote-annex-heading",
+          "original": "######## Annex A (informative): Client-side Adaptive Throttling for Overload Control",
+          "replacement": "# Annex A (informative): Client-side Adaptive Throttling for Overload Control"
+        },
+        {
+          "line": 6071,
+          "type": "promote-annex-heading",
+          "original": "######## Annex B (normative): 3gpp-Sbi-Callback Types",
+          "replacement": "# Annex B (normative): 3gpp-Sbi-Callback Types"
+        },
+        {
+          "line": 6117,
+          "type": "promote-annex-heading",
+          "original": "######## Annex C (informative): Internal NF Routing of HTTP Requests",
+          "replacement": "# Annex C (informative): Internal NF Routing of HTTP Requests"
+        },
+        {
+          "line": 6135,
+          "type": "promote-annex-heading",
+          "original": "######## Annex D (Normative): ABNF grammar for 3GPP SBI HTTP custom headers",
+          "replacement": "# Annex D (Normative): ABNF grammar for 3GPP SBI HTTP custom headers"
+        },
+        {
+          "line": 6137,
+          "type": "demote-annex-subheading",
+          "original": "# D.1 General",
+          "replacement": "## D.1 General"
+        },
+        {
+          "line": 6183,
+          "type": "demote-annex-subheading",
+          "original": "# D.2 ABNF definitions (Filename: \"TS29500_CustomHeaders.abnf\")",
+          "replacement": "## D.2 ABNF definitions (Filename: \"TS29500_CustomHeaders.abnf\")"
+        },
+        {
+          "line": 7095,
+          "type": "promote-annex-heading",
+          "original": "######## Annex E (informative): Change history",
+          "replacement": "# Annex E (informative): Change history"
+        }
+      ],
+      "integrity": {
+        "preprocessed_text_sha256": "b82e7c7464e80c463c1c94a10da840bdf26818cdd6b4560b7e837ffdeff90e6b",
+        "tree_reassembled_text_sha256": "b82e7c7464e80c463c1c94a10da840bdf26818cdd6b4560b7e837ffdeff90e6b",
+        "matches": true
+      }
+    },
+    "29571": {
+      "spec": "TS 29.571",
+      "version": "18.12.0",
+      "archive_sha256": "29f6909073a6bb58ca961b25273b5fbf9fd9237751ff9ee223dca3f3cae02227",
+      "document_sha256": "82e4f34e73b4fe09b4adca5a2fa8cfd3e28d341119ab0fbb45093aef4c5dfb88",
+      "heading_count": 379,
+      "top_level_count": 10,
+      "source_words": 76057,
+      "manifest_entries": 389,
+      "corrections": [
+        {
+          "line": 10502,
+          "type": "promote-annex-heading",
+          "original": "######## Annex A (normative): OpenAPI specification",
+          "replacement": "# Annex A (normative): OpenAPI specification"
+        },
+        {
+          "line": 10504,
+          "type": "demote-annex-subheading",
+          "original": "# A.1 General",
+          "replacement": "## A.1 General"
+        },
+        {
+          "line": 10514,
+          "type": "demote-annex-subheading",
+          "original": "# A.2 Data related to Common Data Types",
+          "replacement": "## A.2 Data related to Common Data Types"
+        },
+        {
+          "line": 22827,
+          "type": "promote-annex-heading",
+          "original": "########  Annex B (informative): Change history",
+          "replacement": "# Annex B (informative): Change history"
+        }
+      ],
+      "integrity": {
+        "preprocessed_text_sha256": "d3b35e1c95fecd7ec891f615eb9c94531cd7d9e828c830365dac234d6d73f302",
+        "tree_reassembled_text_sha256": "d3b35e1c95fecd7ec891f615eb9c94531cd7d9e828c830365dac234d6d73f302",
+        "matches": true
+      }
+    },
+    "29510": {
+      "spec": "TS 29.510",
+      "version": "18.11.0",
+      "archive_sha256": "84e5ccfacace52d488cdca8f0ee1cb3b6817d390ee9903dc5e52105d58c6a1e6",
+      "document_sha256": "01abf6c9240ec101eef77e3ffc4bab5aca41dfd0d6d02c7515e02364cea887d9",
+      "heading_count": 466,
+      "top_level_count": 14,
+      "source_words": 159698,
+      "manifest_entries": 466,
+      "corrections": [
+        {
+          "line": 20819,
+          "type": "promote-annex-heading",
+          "original": "######## Annex A (normative): OpenAPI specification",
+          "replacement": "# Annex A (normative): OpenAPI specification"
+        },
+        {
+          "line": 20821,
+          "type": "demote-annex-subheading",
+          "original": "# A.1 General",
+          "replacement": "## A.1 General"
+        },
+        {
+          "line": 20831,
+          "type": "demote-annex-subheading",
+          "original": "# A.2 Nnrf_NFManagement API",
+          "replacement": "## A.2 Nnrf_NFManagement API"
+        },
+        {
+          "line": 32509,
+          "type": "demote-annex-subheading",
+          "original": "# A.3 Nnrf_NFDiscovery API",
+          "replacement": "## A.3 Nnrf_NFDiscovery API"
+        },
+        {
+          "line": 37503,
+          "type": "demote-annex-subheading",
+          "original": "# A.4 Nnrf_AccessToken API (NRF OAuth2 Authorization)",
+          "replacement": "## A.4 Nnrf_AccessToken API (NRF OAuth2 Authorization)"
+        },
+        {
+          "line": 38189,
+          "type": "demote-annex-subheading",
+          "original": "# A.5 Nnrf_Bootstrapping API",
+          "replacement": "## A.5 Nnrf_Bootstrapping API"
+        },
+        {
+          "line": 38443,
+          "type": "promote-annex-heading",
+          "original": "########  Annex B (normative): NF Profile changes in NFRegister and NFUpdate responses",
+          "replacement": "# Annex B (normative): NF Profile changes in NFRegister and NFUpdate responses"
+        },
+        {
+          "line": 38445,
+          "type": "demote-annex-subheading",
+          "original": "# B.1 General",
+          "replacement": "## B.1 General"
+        },
+        {
+          "line": 38479,
+          "type": "promote-annex-heading",
+          "original": "######## Annex C (normative): Enhanced Authorization Policy using RuleSets in NF (Service) Profile",
+          "replacement": "# Annex C (normative): Enhanced Authorization Policy using RuleSets in NF (Service) Profile"
+        },
+        {
+          "line": 38481,
+          "type": "demote-annex-subheading",
+          "original": "# C.1 General",
+          "replacement": "## C.1 General"
+        },
+        {
+          "line": 38487,
+          "type": "demote-annex-subheading",
+          "original": "# C.2 Examples of NF-Producer profile only using RuleSets (i.e. without AllowedXXX parameters) in NF (Service) Profile",
+          "replacement": "## C.2 Examples of NF-Producer profile only using RuleSets (i.e. without AllowedXXX parameters) in NF (Service) Profile"
+        },
+        {
+          "line": 38539,
+          "type": "demote-annex-subheading",
+          "original": "# C.3 Example of NF-Producer profile using RuleSets and AllowedXXX parameters in NF (Service) Profile",
+          "replacement": "## C.3 Example of NF-Producer profile using RuleSets and AllowedXXX parameters in NF (Service) Profile"
+        },
+        {
+          "line": 38567,
+          "type": "demote-annex-subheading",
+          "original": "# C.4 Backward Compatibility",
+          "replacement": "## C.4 Backward Compatibility"
+        },
+        {
+          "line": 38597,
+          "type": "promote-annex-heading",
+          "original": "######## Annex D (normative): Support of \"Canary Release\" testing in the NRF",
+          "replacement": "# Annex D (normative): Support of \"Canary Release\" testing in the NRF"
+        },
+        {
+          "line": 38809,
+          "type": "promote-annex-heading",
+          "original": "########  Annex E (informative): Change history",
+          "replacement": "# Annex E (informative): Change history"
+        }
+      ],
+      "integrity": {
+        "preprocessed_text_sha256": "f6bad53b48a934b8206332bcb20f883b0c539cd19adf3d0d8a41760e617b5bc0",
+        "tree_reassembled_text_sha256": "f6bad53b48a934b8206332bcb20f883b0c539cd19adf3d0d8a41760e617b5bc0",
+        "matches": true
+      }
+    }
+  },
+  "assets": {
+    "TS 23.502": {
+      "source_media_total": 280,
+      "media_selected": 17,
+      "rendered_ok": 17,
+      "rendered_failed": [],
+      "embedded_files": 0,
+      "selection": "referenced-only"
+    },
+    "TS 29.500": {
+      "source_media_total": 5,
+      "media_selected": 5,
+      "rendered_ok": 5,
+      "rendered_failed": [],
+      "embedded_files": 4,
+      "selection": "all"
+    },
+    "TS 29.571": {
+      "source_media_total": 2,
+      "media_selected": 2,
+      "rendered_ok": 2,
+      "rendered_failed": [],
+      "embedded_files": 1,
+      "selection": "all"
+    },
+    "TS 29.510": {
+      "source_media_total": 44,
+      "media_selected": 44,
+      "rendered_ok": 44,
+      "rendered_failed": [],
+      "embedded_files": 44,
+      "selection": "all"
+    }
+  },
+  "exact_attachments": {
+    "files": [
+      {
+        "file": "openapi/TS29510_Nnrf_AccessToken.yaml",
+        "sha256": "47951718c79b77d8cf84bc75e8ff7711447daf13899d8472378d2f0071907f25",
+        "source": "TS29510_Nnrf_AccessToken.yaml"
+      },
+      {
+        "file": "openapi/TS29510_Nnrf_Bootstrapping.yaml",
+        "sha256": "e625b4d9f167921bb994b678cd671c7691085c690ea78b1a3372d06e5714071e",
+        "source": "TS29510_Nnrf_Bootstrapping.yaml"
+      },
+      {
+        "file": "openapi/TS29510_Nnrf_NFDiscovery.yaml",
+        "sha256": "f1c8fe4e64fa4b9d6d6e24344bfb367c57ab3ae28c656df0ad93aad90eec9b8e",
+        "source": "TS29510_Nnrf_NFDiscovery.yaml"
+      },
+      {
+        "file": "openapi/TS29510_Nnrf_NFManagement.yaml",
+        "sha256": "3ec58412ebeec791b12309578258911fb8a41cce7dd5cd02b3a7b7d0d0435dda",
+        "source": "TS29510_Nnrf_NFManagement.yaml"
+      },
+      {
+        "file": "openapi/TS29571_CommonData.yaml",
+        "sha256": "0ddb99782ddf1038bafb50bccd6aaaa074d76cb582dba60bb5ba89bd7f130745",
+        "source": "TS29571_CommonData.yaml"
+      },
+      {
+        "file": "TS 29.500/attachments/TS29500_CustomHeaders.abnf",
+        "sha256": "d120a2e030725b937e6545799936be3ee640a07101c203c5fdd3e6a24dbd67e5",
+        "source": "TS29500_CustomHeaders.abnf"
+      }
+    ]
+  },
+  "openapi": {
+    "files": 13,
+    "missing_external_ref_files": [
+      "TS29122_CommonData.yaml",
+      "TS29122_CpProvisioning.yaml",
+      "TS29122_PfdManagement.yaml",
+      "TS29503_Nudm_SDM.yaml",
+      "TS29503_Nudm_UECM.yaml",
+      "TS29508_Nsmf_EventExposure.yaml",
+      "TS29514_Npcf_PolicyAuthorization.yaml",
+      "TS29517_Naf_EventExposure.yaml",
+      "TS29518_Namf_Communication.yaml",
+      "TS29522_AMPolicyAuthorization.yaml",
+      "TS29523_Npcf_EventExposure.yaml",
+      "TS29531_Nnssf_NSSelection.yaml",
+      "TS29554_Npcf_BDTPolicyControl.yaml",
+      "TS29564_Nupf_EventExposure.yaml",
+      "TS29572_Nlmf_Location.yaml",
+      "TS29573_N32_Handshake.yaml",
+      "TS29574_Ndccf_DataManagement.yaml",
+      "TS29575_Nadrf_DataManagement.yaml",
+      "TS29576_Nmfaf_3caDataManagement.yaml"
+    ]
+  },
+  "tools": {
+    "python": "3.13.5",
+    "pandoc": "pandoc 3.1.11.1",
+    "libreoffice": "LibreOffice 25.2.3.2 520(Build:2)",
+    "inkscape": "Inkscape 1.4 (e7c3feb100, 2024-10-09)"
+  }
+}

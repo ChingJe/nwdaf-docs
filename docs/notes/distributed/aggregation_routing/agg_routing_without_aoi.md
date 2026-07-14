@@ -2,6 +2,10 @@
 
 **規格來源**：TS 23.288 §6.1A、§6.2.2；TS 23.502 §4.15.4.5
 
+> **Corpus 範圍註記**：目前 `nwdaf-docs/specs/` 的 TS 23.502 是 NRF-oriented
+> scoped extract，未收錄 §4.15.4.5。本文保留既有 routing 分析；需要重新驗證
+> 該程序時，應先補入 TS 23.502 Release 18 的相應章節。
+
 ---
 
 ## 背景與動機

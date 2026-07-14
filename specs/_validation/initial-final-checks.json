@@ -1,0 +1,225 @@
+{
+  "file_inventory": {
+    "files": 803,
+    "markdown_files": 375,
+    "bytes": 43576050
+  },
+  "links": {
+    "local_links_checked": 390,
+    "broken_local_links": [],
+    "image_references_checked": 157,
+    "broken_image_references": []
+  },
+  "headings": {
+    "h7_or_deeper": [],
+    "blank_headings": []
+  },
+  "work_paths": {
+    "files_with_absolute_work_paths": []
+  },
+  "manifests": [
+    {
+      "manifest": "TS 23.288/manifest.yaml",
+      "entries": 389,
+      "missing_paths": []
+    },
+    {
+      "manifest": "TS 29.520/manifest.yaml",
+      "entries": 746,
+      "missing_paths": []
+    }
+  ],
+  "openapi_identity": [
+    {
+      "file": "TS29520_Nnwdaf_AnalyticsInfo.yaml",
+      "source_sha256": "1b8d480a45721f7bfef6db7733c189528480dd33a6e31bcab64abcf6ded2f239",
+      "output_sha256": "1b8d480a45721f7bfef6db7733c189528480dd33a6e31bcab64abcf6ded2f239",
+      "byte_identical": true,
+      "yaml_valid": true,
+      "error": null
+    },
+    {
+      "file": "TS29520_Nnwdaf_DataManagement.yaml",
+      "source_sha256": "5922d5d975e71f82b53006f01c285398f8701f02efdb6b53a677d25ff631d499",
+      "output_sha256": "5922d5d975e71f82b53006f01c285398f8701f02efdb6b53a677d25ff631d499",
+      "byte_identical": true,
+      "yaml_valid": true,
+      "error": null
+    },
+    {
+      "file": "TS29520_Nnwdaf_EventsSubscription.yaml",
+      "source_sha256": "6603c6af385accee815a5bbc76152fb52afbed66167ced9f0ac96f1a9ebe7dee",
+      "output_sha256": "6603c6af385accee815a5bbc76152fb52afbed66167ced9f0ac96f1a9ebe7dee",
+      "byte_identical": true,
+      "yaml_valid": true,
+      "error": null
+    },
+    {
+      "file": "TS29520_Nnwdaf_MLModelMonitor.yaml",
+      "source_sha256": "63841486cfe523ac43015516bd1ded54795a81e783cf8954252a69c3679bc47e",
+      "output_sha256": "63841486cfe523ac43015516bd1ded54795a81e783cf8954252a69c3679bc47e",
+      "byte_identical": true,
+      "yaml_valid": true,
+      "error": null
+    },
+    {
+      "file": "TS29520_Nnwdaf_MLModelProvision.yaml",
+      "source_sha256": "49fca42f3b33dc518580f9797d1517cd5fb041d65e8e502d64fcd53ceb4d717b",
+      "output_sha256": "49fca42f3b33dc518580f9797d1517cd5fb041d65e8e502d64fcd53ceb4d717b",
+      "byte_identical": true,
+      "yaml_valid": true,
+      "error": null
+    },
+    {
+      "file": "TS29520_Nnwdaf_MLModelTraining.yaml",
+      "source_sha256": "b6ccbe8729ac145e501f784b08a0c3d1bcdfd15c44118c9e30da7fd05ed99bfb",
+      "output_sha256": "b6ccbe8729ac145e501f784b08a0c3d1bcdfd15c44118c9e30da7fd05ed99bfb",
+      "byte_identical": true,
+      "yaml_valid": true,
+      "error": null
+    },
+    {
+      "file": "TS29520_Nnwdaf_RoamingAnalytics.yaml",
+      "source_sha256": "620e549e96a6cb623d7cc17ddcb451df7d8e2b48954fdace900e37206c51c88b",
+      "output_sha256": "620e549e96a6cb623d7cc17ddcb451df7d8e2b48954fdace900e37206c51c88b",
+      "byte_identical": true,
+      "yaml_valid": true,
+      "error": null
+    },
+    {
+      "file": "TS29520_Nnwdaf_RoamingData.yaml",
+      "source_sha256": "8add0a519f601205334e35a0f1d0d846857b23da23fee7b3a9f8045b04de358d",
+      "output_sha256": "8add0a519f601205334e35a0f1d0d846857b23da23fee7b3a9f8045b04de358d",
+      "byte_identical": true,
+      "yaml_valid": true,
+      "error": null
+    }
+  ],
+  "oversized_files": [
+    {
+      "path": "TS 29.520/Annex B (informative) Change history/2022.md",
+      "approx_markdown_words": 4868
+    },
+    {
+      "path": "TS 29.520/5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md",
+      "approx_markdown_words": 4595
+    },
+    {
+      "path": "TS 29.520/4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.2 Service Operations/4.3.2.2 Nnwdaf_AnalyticsInfo_Request service operation/4.3.2.2.2 Request and get from NWDAF Analytics information.md",
+      "approx_markdown_words": 4653
+    },
+    {
+      "path": "TS 29.520/4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2 Service Operations/4.2.2.2 Nnwdaf_EventsSubscription_Subscribe service operation/4.2.2.2.2 Subscription for event notifications.md",
+      "approx_markdown_words": 5338
+    },
+    {
+      "path": "TS 23.288/Annex B (informative) Change history/2021.md",
+      "approx_markdown_words": 4903
+    },
+    {
+      "path": "TS 23.288/Annex B (informative) Change history/2023.md",
+      "approx_markdown_words": 4410
+    }
+  ],
+  "text_cross_check": {
+    "TS 23.288": {
+      "token_count_a": 152389,
+      "token_count_b": 152392,
+      "shingle_size": 12,
+      "shingles_a": 152378,
+      "shingles_b": 152381,
+      "overlap": 151374,
+      "precision_against_a": 0.9934111223404953,
+      "recall_against_b": 0.9933915645651361,
+      "token_multiset_overlap_ratio_a": 0.9998818812381471,
+      "token_multiset_overlap_ratio_b": 0.999862197490682,
+      "modal_and_marker_counts_pandoc": {
+        "shall": 135,
+        "should": 44,
+        "may": 801,
+        "must": 10,
+        "note": 931,
+        "example": 33,
+        "shall not": 7,
+        "should not": 5,
+        "may not": 13
+      },
+      "modal_and_marker_counts_docx2txt": {
+        "shall": 135,
+        "should": 44,
+        "may": 801,
+        "must": 10,
+        "note": 931,
+        "example": 33,
+        "shall not": 7,
+        "should not": 5,
+        "may not": 13
+      },
+      "modal_and_marker_counts_match": true
+    },
+    "TS 29.520": {
+      "pandoc_main_body_token_count": 113481,
+      "libreoffice_main_body_token_count": 113470,
+      "modal_and_marker_counts_pandoc": {
+        "shall": 1116,
+        "should": 27,
+        "may": 265,
+        "must": 0,
+        "note": 866,
+        "example": 6,
+        "shall not": 25,
+        "should not": 1,
+        "may not": 3
+      },
+      "modal_and_marker_counts_libreoffice": {
+        "shall": 1116,
+        "should": 27,
+        "may": 265,
+        "must": 0,
+        "note": 866,
+        "example": 6,
+        "shall not": 25,
+        "should not": 1,
+        "may not": 3
+      },
+      "modal_and_marker_counts_match": true,
+      "note": "The legacy DOC text path may split words at layout boundaries; modal/marker counts were used as a high-sensitivity normative-text check, with antiword as a third independent extraction path."
+    }
+  },
+  "visual_sampling": {
+    "method": "Selected source page ranges were exported from the original Word documents to PDF, rendered to page images, and compared with generated Markdown and extracted figures.",
+    "samples": [
+      {
+        "spec": "TS 23.288",
+        "source_pages": "30-35",
+        "focus": "clause hierarchy, numbered procedure, sequence diagram",
+        "result": "passed targeted review"
+      },
+      {
+        "spec": "TS 23.288",
+        "source_pages": "200-203",
+        "focus": "complex analytics table including Table 6.8.3-1",
+        "result": "passed targeted review; cells and notes preserved as HTML table"
+      },
+      {
+        "spec": "TS 29.520",
+        "source_pages": "26-35",
+        "focus": "nested lists, NOTE numbering and clause boundaries",
+        "result": "passed targeted review"
+      },
+      {
+        "spec": "TS 29.520",
+        "source_pages": "100-104",
+        "focus": "API resource and data-model tables",
+        "result": "passed targeted review"
+      },
+      {
+        "spec": "TS 29.520",
+        "source_pages": "343-345",
+        "focus": "MLModelMonitor URI figure and supported-method table",
+        "result": "passed targeted review; rendered figure matched source"
+      }
+    ],
+    "scope": "Targeted risk-based sampling, not a manual page-by-page certification."
+  }
+}

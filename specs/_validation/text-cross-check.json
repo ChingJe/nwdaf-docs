@@ -1,0 +1,201 @@
+{
+  "TS 23.502": {
+    "pandoc_tokens": 479896,
+    "docx2txt_tokens": 479896,
+    "token_multiset_overlap_pandoc": 0.999952072949139,
+    "token_multiset_overlap_docx2txt": 0.999952072949139,
+    "12_token_windows_pandoc": 479885,
+    "12_token_windows_docx2txt": 479885,
+    "12_token_window_overlap": 478753,
+    "12_token_window_overlap_pandoc": 0.9976411015139044,
+    "12_token_window_overlap_docx2txt": 0.9976411015139044,
+    "modal_and_marker_counts_pandoc": {
+      "shall": 1004,
+      "should": 159,
+      "may": 1784,
+      "must": 6,
+      "note": 848,
+      "example": 91,
+      "shall not": 130,
+      "should not": 13,
+      "may not": 8
+    },
+    "modal_and_marker_counts_docx2txt": {
+      "shall": 1004,
+      "should": 159,
+      "may": 1784,
+      "must": 6,
+      "note": 848,
+      "example": 91,
+      "shall not": 130,
+      "should not": 13,
+      "may not": 8
+    },
+    "modal_and_marker_counts_match": true
+  },
+  "TS 29.500": {
+    "pandoc_tokens": 78548,
+    "docx2txt_tokens": 78638,
+    "token_multiset_overlap_pandoc": 0.9995162193817793,
+    "token_multiset_overlap_docx2txt": 0.9983722882067194,
+    "12_token_windows_pandoc": 78537,
+    "12_token_windows_docx2txt": 78627,
+    "12_token_window_overlap": 77833,
+    "12_token_window_overlap_pandoc": 0.9910360721698053,
+    "12_token_window_overlap_docx2txt": 0.9899016877154159,
+    "modal_and_marker_counts_pandoc": {
+      "shall": 714,
+      "should": 143,
+      "may": 386,
+      "must": 7,
+      "note": 213,
+      "example": 159,
+      "shall not": 50,
+      "should not": 10,
+      "may not": 5
+    },
+    "modal_and_marker_counts_docx2txt": {
+      "shall": 714,
+      "should": 143,
+      "may": 386,
+      "must": 7,
+      "note": 213,
+      "example": 159,
+      "shall not": 50,
+      "should not": 10,
+      "may not": 5
+    },
+    "modal_and_marker_counts_match": true
+  },
+  "TS 29.571": {
+    "pandoc_tokens": 76366,
+    "docx2txt_tokens": 76495,
+    "token_multiset_overlap_pandoc": 0.9999476206688841,
+    "token_multiset_overlap_docx2txt": 0.9982613242695602,
+    "12_token_windows_pandoc": 76355,
+    "12_token_windows_docx2txt": 76484,
+    "12_token_window_overlap": 76043,
+    "12_token_window_overlap_pandoc": 0.9959138235871914,
+    "12_token_window_overlap_docx2txt": 0.9942340881753047,
+    "modal_and_marker_counts_pandoc": {
+      "shall": 1016,
+      "should": 45,
+      "may": 85,
+      "must": 4,
+      "note": 205,
+      "example": 40,
+      "shall not": 31,
+      "should not": 2,
+      "may not": 2
+    },
+    "modal_and_marker_counts_docx2txt": {
+      "shall": 1016,
+      "should": 45,
+      "may": 85,
+      "must": 4,
+      "note": 205,
+      "example": 40,
+      "shall not": 31,
+      "should not": 2,
+      "may not": 2
+    },
+    "modal_and_marker_counts_match": true
+  },
+  "TS 29.510": {
+    "pandoc_tokens": 161161,
+    "docx2txt_tokens": 161163,
+    "token_multiset_overlap_pandoc": 0.9998945154224658,
+    "token_multiset_overlap_docx2txt": 0.9998821069352146,
+    "12_token_windows_pandoc": 161150,
+    "12_token_windows_docx2txt": 161152,
+    "12_token_window_overlap": 158497,
+    "12_token_window_overlap_pandoc": 0.9835370772572137,
+    "12_token_window_overlap_docx2txt": 0.983524870929309,
+    "modal_and_marker_counts_pandoc": {
+      "shall": 1682,
+      "should": 200,
+      "may": 555,
+      "must": 12,
+      "note": 659,
+      "example": 86,
+      "shall not": 76,
+      "should not": 9,
+      "may not": 9
+    },
+    "modal_and_marker_counts_docx2txt": {
+      "shall": 1682,
+      "should": 200,
+      "may": 555,
+      "must": 12,
+      "note": 659,
+      "example": 86,
+      "shall not": 76,
+      "should not": 9,
+      "may not": 9
+    },
+    "modal_and_marker_counts_match": true
+  },
+  "TS 23.288": {
+    "token_count_a": 152389,
+    "token_count_b": 152392,
+    "shingle_size": 12,
+    "shingles_a": 152378,
+    "shingles_b": 152381,
+    "overlap": 151374,
+    "precision_against_a": 0.9934111223404953,
+    "recall_against_b": 0.9933915645651361,
+    "token_multiset_overlap_ratio_a": 0.9998818812381471,
+    "token_multiset_overlap_ratio_b": 0.999862197490682,
+    "modal_and_marker_counts_pandoc": {
+      "shall": 135,
+      "should": 44,
+      "may": 801,
+      "must": 10,
+      "note": 931,
+      "example": 33,
+      "shall not": 7,
+      "should not": 5,
+      "may not": 13
+    },
+    "modal_and_marker_counts_docx2txt": {
+      "shall": 135,
+      "should": 44,
+      "may": 801,
+      "must": 10,
+      "note": 931,
+      "example": 33,
+      "shall not": 7,
+      "should not": 5,
+      "may not": 13
+    },
+    "modal_and_marker_counts_match": true
+  },
+  "TS 29.520": {
+    "pandoc_main_body_token_count": 113481,
+    "libreoffice_main_body_token_count": 113470,
+    "modal_and_marker_counts_pandoc": {
+      "shall": 1116,
+      "should": 27,
+      "may": 265,
+      "must": 0,
+      "note": 866,
+      "example": 6,
+      "shall not": 25,
+      "should not": 1,
+      "may not": 3
+    },
+    "modal_and_marker_counts_libreoffice": {
+      "shall": 1116,
+      "should": 27,
+      "may": 265,
+      "must": 0,
+      "note": 866,
+      "example": 6,
+      "shall not": 25,
+      "should not": 1,
+      "may not": 3
+    },
+    "modal_and_marker_counts_match": true,
+    "note": "The legacy DOC text path may split words at layout boundaries; modal/marker counts were used as a high-sensitivity normative-text check, with antiword as a third independent extraction path."
+  }
+}

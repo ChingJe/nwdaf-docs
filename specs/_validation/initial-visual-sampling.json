@@ -1,0 +1,36 @@
+{
+  "method": "Selected source page ranges were exported from the original Word documents to PDF, rendered to page images, and compared with generated Markdown and extracted figures.",
+  "samples": [
+    {
+      "spec": "TS 23.288",
+      "source_pages": "30-35",
+      "focus": "clause hierarchy, numbered procedure, sequence diagram",
+      "result": "passed targeted review"
+    },
+    {
+      "spec": "TS 23.288",
+      "source_pages": "200-203",
+      "focus": "complex analytics table including Table 6.8.3-1",
+      "result": "passed targeted review; cells and notes preserved as HTML table"
+    },
+    {
+      "spec": "TS 29.520",
+      "source_pages": "26-35",
+      "focus": "nested lists, NOTE numbering and clause boundaries",
+      "result": "passed targeted review"
+    },
+    {
+      "spec": "TS 29.520",
+      "source_pages": "100-104",
+      "focus": "API resource and data-model tables",
+      "result": "passed targeted review"
+    },
+    {
+      "spec": "TS 29.520",
+      "source_pages": "343-345",
+      "focus": "MLModelMonitor URI figure and supported-method table",
+      "result": "passed targeted review; rendered figure matched source"
+    }
+  ],
+  "scope": "Targeted risk-based sampling, not a manual page-by-page certification."
+}

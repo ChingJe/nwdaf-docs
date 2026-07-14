@@ -1,0 +1,631 @@
+{
+  "file_inventory": {
+    "files": 1575,
+    "markdown_files": 946,
+    "bytes": 57353198
+  },
+  "links": {
+    "local_links_checked": 971,
+    "broken_local_links": [],
+    "image_references_checked": 225,
+    "broken_image_references": []
+  },
+  "headings": {
+    "h7_or_deeper": [],
+    "blank_headings": []
+  },
+  "work_paths": {
+    "files_with_absolute_work_paths": []
+  },
+  "manifests": [
+    {
+      "manifest": "TS 23.288/manifest.yaml",
+      "entries": 389,
+      "missing_paths": []
+    },
+    {
+      "manifest": "TS 23.502/manifest.yaml",
+      "entries": 46,
+      "missing_paths": []
+    },
+    {
+      "manifest": "TS 29.500/manifest.yaml",
+      "entries": 275,
+      "missing_paths": []
+    },
+    {
+      "manifest": "TS 29.510/manifest.yaml",
+      "entries": 476,
+      "missing_paths": []
+    },
+    {
+      "manifest": "TS 29.520/manifest.yaml",
+      "entries": 746,
+      "missing_paths": []
+    },
+    {
+      "manifest": "TS 29.571/manifest.yaml",
+      "entries": 389,
+      "missing_paths": []
+    }
+  ],
+  "exact_attachments": [
+    {
+      "file": "openapi/TS29510_Nnrf_AccessToken.yaml",
+      "source_sha256": "47951718c79b77d8cf84bc75e8ff7711447daf13899d8472378d2f0071907f25",
+      "output_sha256": "47951718c79b77d8cf84bc75e8ff7711447daf13899d8472378d2f0071907f25",
+      "byte_identical": true,
+      "yaml_valid": true,
+      "error": null
+    },
+    {
+      "file": "openapi/TS29510_Nnrf_Bootstrapping.yaml",
+      "source_sha256": "e625b4d9f167921bb994b678cd671c7691085c690ea78b1a3372d06e5714071e",
+      "output_sha256": "e625b4d9f167921bb994b678cd671c7691085c690ea78b1a3372d06e5714071e",
+      "byte_identical": true,
+      "yaml_valid": true,
+      "error": null
+    },
+    {
+      "file": "openapi/TS29510_Nnrf_NFDiscovery.yaml",
+      "source_sha256": "f1c8fe4e64fa4b9d6d6e24344bfb367c57ab3ae28c656df0ad93aad90eec9b8e",
+      "output_sha256": "f1c8fe4e64fa4b9d6d6e24344bfb367c57ab3ae28c656df0ad93aad90eec9b8e",
+      "byte_identical": true,
+      "yaml_valid": true,
+      "error": null
+    },
+    {
+      "file": "openapi/TS29510_Nnrf_NFManagement.yaml",
+      "source_sha256": "3ec58412ebeec791b12309578258911fb8a41cce7dd5cd02b3a7b7d0d0435dda",
+      "output_sha256": "3ec58412ebeec791b12309578258911fb8a41cce7dd5cd02b3a7b7d0d0435dda",
+      "byte_identical": true,
+      "yaml_valid": true,
+      "error": null
+    },
+    {
+      "file": "openapi/TS29520_Nnwdaf_AnalyticsInfo.yaml",
+      "source_sha256": "1b8d480a45721f7bfef6db7733c189528480dd33a6e31bcab64abcf6ded2f239",
+      "output_sha256": "1b8d480a45721f7bfef6db7733c189528480dd33a6e31bcab64abcf6ded2f239",
+      "byte_identical": true,
+      "yaml_valid": true,
+      "error": null
+    },
+    {
+      "file": "openapi/TS29520_Nnwdaf_DataManagement.yaml",
+      "source_sha256": "5922d5d975e71f82b53006f01c285398f8701f02efdb6b53a677d25ff631d499",
+      "output_sha256": "5922d5d975e71f82b53006f01c285398f8701f02efdb6b53a677d25ff631d499",
+      "byte_identical": true,
+      "yaml_valid": true,
+      "error": null
+    },
+    {
+      "file": "openapi/TS29520_Nnwdaf_EventsSubscription.yaml",
+      "source_sha256": "6603c6af385accee815a5bbc76152fb52afbed66167ced9f0ac96f1a9ebe7dee",
+      "output_sha256": "6603c6af385accee815a5bbc76152fb52afbed66167ced9f0ac96f1a9ebe7dee",
+      "byte_identical": true,
+      "yaml_valid": true,
+      "error": null
+    },
+    {
+      "file": "openapi/TS29520_Nnwdaf_MLModelMonitor.yaml",
+      "source_sha256": "63841486cfe523ac43015516bd1ded54795a81e783cf8954252a69c3679bc47e",
+      "output_sha256": "63841486cfe523ac43015516bd1ded54795a81e783cf8954252a69c3679bc47e",
+      "byte_identical": true,
+      "yaml_valid": true,
+      "error": null
+    },
+    {
+      "file": "openapi/TS29520_Nnwdaf_MLModelProvision.yaml",
+      "source_sha256": "49fca42f3b33dc518580f9797d1517cd5fb041d65e8e502d64fcd53ceb4d717b",
+      "output_sha256": "49fca42f3b33dc518580f9797d1517cd5fb041d65e8e502d64fcd53ceb4d717b",
+      "byte_identical": true,
+      "yaml_valid": true,
+      "error": null
+    },
+    {
+      "file": "openapi/TS29520_Nnwdaf_MLModelTraining.yaml",
+      "source_sha256": "b6ccbe8729ac145e501f784b08a0c3d1bcdfd15c44118c9e30da7fd05ed99bfb",
+      "output_sha256": "b6ccbe8729ac145e501f784b08a0c3d1bcdfd15c44118c9e30da7fd05ed99bfb",
+      "byte_identical": true,
+      "yaml_valid": true,
+      "error": null
+    },
+    {
+      "file": "openapi/TS29520_Nnwdaf_RoamingAnalytics.yaml",
+      "source_sha256": "620e549e96a6cb623d7cc17ddcb451df7d8e2b48954fdace900e37206c51c88b",
+      "output_sha256": "620e549e96a6cb623d7cc17ddcb451df7d8e2b48954fdace900e37206c51c88b",
+      "byte_identical": true,
+      "yaml_valid": true,
+      "error": null
+    },
+    {
+      "file": "openapi/TS29520_Nnwdaf_RoamingData.yaml",
+      "source_sha256": "8add0a519f601205334e35a0f1d0d846857b23da23fee7b3a9f8045b04de358d",
+      "output_sha256": "8add0a519f601205334e35a0f1d0d846857b23da23fee7b3a9f8045b04de358d",
+      "byte_identical": true,
+      "yaml_valid": true,
+      "error": null
+    },
+    {
+      "file": "openapi/TS29571_CommonData.yaml",
+      "source_sha256": "0ddb99782ddf1038bafb50bccd6aaaa074d76cb582dba60bb5ba89bd7f130745",
+      "output_sha256": "0ddb99782ddf1038bafb50bccd6aaaa074d76cb582dba60bb5ba89bd7f130745",
+      "byte_identical": true,
+      "yaml_valid": true,
+      "error": null
+    },
+    {
+      "file": "TS 29.500/attachments/TS29500_CustomHeaders.abnf",
+      "source_sha256": "d120a2e030725b937e6545799936be3ee640a07101c203c5fdd3e6a24dbd67e5",
+      "output_sha256": "d120a2e030725b937e6545799936be3ee640a07101c203c5fdd3e6a24dbd67e5",
+      "byte_identical": true,
+      "yaml_valid": null,
+      "error": null
+    }
+  ],
+  "text_cross_check": {
+    "TS 23.502": {
+      "pandoc_tokens": 479896,
+      "docx2txt_tokens": 479896,
+      "token_multiset_overlap_pandoc": 0.999952072949139,
+      "token_multiset_overlap_docx2txt": 0.999952072949139,
+      "12_token_windows_pandoc": 479885,
+      "12_token_windows_docx2txt": 479885,
+      "12_token_window_overlap": 478753,
+      "12_token_window_overlap_pandoc": 0.9976411015139044,
+      "12_token_window_overlap_docx2txt": 0.9976411015139044,
+      "modal_and_marker_counts_pandoc": {
+        "shall": 1004,
+        "should": 159,
+        "may": 1784,
+        "must": 6,
+        "note": 848,
+        "example": 91,
+        "shall not": 130,
+        "should not": 13,
+        "may not": 8
+      },
+      "modal_and_marker_counts_docx2txt": {
+        "shall": 1004,
+        "should": 159,
+        "may": 1784,
+        "must": 6,
+        "note": 848,
+        "example": 91,
+        "shall not": 130,
+        "should not": 13,
+        "may not": 8
+      },
+      "modal_and_marker_counts_match": true
+    },
+    "TS 29.500": {
+      "pandoc_tokens": 78548,
+      "docx2txt_tokens": 78638,
+      "token_multiset_overlap_pandoc": 0.9995162193817793,
+      "token_multiset_overlap_docx2txt": 0.9983722882067194,
+      "12_token_windows_pandoc": 78537,
+      "12_token_windows_docx2txt": 78627,
+      "12_token_window_overlap": 77833,
+      "12_token_window_overlap_pandoc": 0.9910360721698053,
+      "12_token_window_overlap_docx2txt": 0.9899016877154159,
+      "modal_and_marker_counts_pandoc": {
+        "shall": 714,
+        "should": 143,
+        "may": 386,
+        "must": 7,
+        "note": 213,
+        "example": 159,
+        "shall not": 50,
+        "should not": 10,
+        "may not": 5
+      },
+      "modal_and_marker_counts_docx2txt": {
+        "shall": 714,
+        "should": 143,
+        "may": 386,
+        "must": 7,
+        "note": 213,
+        "example": 159,
+        "shall not": 50,
+        "should not": 10,
+        "may not": 5
+      },
+      "modal_and_marker_counts_match": true
+    },
+    "TS 29.571": {
+      "pandoc_tokens": 76366,
+      "docx2txt_tokens": 76495,
+      "token_multiset_overlap_pandoc": 0.9999476206688841,
+      "token_multiset_overlap_docx2txt": 0.9982613242695602,
+      "12_token_windows_pandoc": 76355,
+      "12_token_windows_docx2txt": 76484,
+      "12_token_window_overlap": 76043,
+      "12_token_window_overlap_pandoc": 0.9959138235871914,
+      "12_token_window_overlap_docx2txt": 0.9942340881753047,
+      "modal_and_marker_counts_pandoc": {
+        "shall": 1016,
+        "should": 45,
+        "may": 85,
+        "must": 4,
+        "note": 205,
+        "example": 40,
+        "shall not": 31,
+        "should not": 2,
+        "may not": 2
+      },
+      "modal_and_marker_counts_docx2txt": {
+        "shall": 1016,
+        "should": 45,
+        "may": 85,
+        "must": 4,
+        "note": 205,
+        "example": 40,
+        "shall not": 31,
+        "should not": 2,
+        "may not": 2
+      },
+      "modal_and_marker_counts_match": true
+    },
+    "TS 29.510": {
+      "pandoc_tokens": 161161,
+      "docx2txt_tokens": 161163,
+      "token_multiset_overlap_pandoc": 0.9998945154224658,
+      "token_multiset_overlap_docx2txt": 0.9998821069352146,
+      "12_token_windows_pandoc": 161150,
+      "12_token_windows_docx2txt": 161152,
+      "12_token_window_overlap": 158497,
+      "12_token_window_overlap_pandoc": 0.9835370772572137,
+      "12_token_window_overlap_docx2txt": 0.983524870929309,
+      "modal_and_marker_counts_pandoc": {
+        "shall": 1682,
+        "should": 200,
+        "may": 555,
+        "must": 12,
+        "note": 659,
+        "example": 86,
+        "shall not": 76,
+        "should not": 9,
+        "may not": 9
+      },
+      "modal_and_marker_counts_docx2txt": {
+        "shall": 1682,
+        "should": 200,
+        "may": 555,
+        "must": 12,
+        "note": 659,
+        "example": 86,
+        "shall not": 76,
+        "should not": 9,
+        "may not": 9
+      },
+      "modal_and_marker_counts_match": true
+    },
+    "TS 23.288": {
+      "token_count_a": 152389,
+      "token_count_b": 152392,
+      "shingle_size": 12,
+      "shingles_a": 152378,
+      "shingles_b": 152381,
+      "overlap": 151374,
+      "precision_against_a": 0.9934111223404953,
+      "recall_against_b": 0.9933915645651361,
+      "token_multiset_overlap_ratio_a": 0.9998818812381471,
+      "token_multiset_overlap_ratio_b": 0.999862197490682,
+      "modal_and_marker_counts_pandoc": {
+        "shall": 135,
+        "should": 44,
+        "may": 801,
+        "must": 10,
+        "note": 931,
+        "example": 33,
+        "shall not": 7,
+        "should not": 5,
+        "may not": 13
+      },
+      "modal_and_marker_counts_docx2txt": {
+        "shall": 135,
+        "should": 44,
+        "may": 801,
+        "must": 10,
+        "note": 931,
+        "example": 33,
+        "shall not": 7,
+        "should not": 5,
+        "may not": 13
+      },
+      "modal_and_marker_counts_match": true
+    },
+    "TS 29.520": {
+      "pandoc_main_body_token_count": 113481,
+      "libreoffice_main_body_token_count": 113470,
+      "modal_and_marker_counts_pandoc": {
+        "shall": 1116,
+        "should": 27,
+        "may": 265,
+        "must": 0,
+        "note": 866,
+        "example": 6,
+        "shall not": 25,
+        "should not": 1,
+        "may not": 3
+      },
+      "modal_and_marker_counts_libreoffice": {
+        "shall": 1116,
+        "should": 27,
+        "may": 265,
+        "must": 0,
+        "note": 866,
+        "example": 6,
+        "shall not": 25,
+        "should not": 1,
+        "may not": 3
+      },
+      "modal_and_marker_counts_match": true,
+      "note": "The legacy DOC text path may split words at layout boundaries; modal/marker counts were used as a high-sensitivity normative-text check, with antiword as a third independent extraction path."
+    }
+  },
+  "structural_sampling": [
+    {
+      "spec": "TS 23.502",
+      "clause": "4.17.1",
+      "source_title": "4.17.1 NF service Registration",
+      "output_path": "TS 23.502/4.17 Network Function Service Framework Procedure/4.17.1 NF service Registration.md",
+      "source_blocks": 9,
+      "source_paragraphs": 9,
+      "source_tables": 0,
+      "source_drawings": 1,
+      "output_html_tables": 0,
+      "output_images": 1,
+      "source_tokens": 170,
+      "output_tokens": 171,
+      "token_multiset_overlap_source": 0.9941176470588236,
+      "token_multiset_overlap_output": 0.9883040935672515
+    },
+    {
+      "spec": "TS 23.502",
+      "clause": "4.17.4",
+      "source_title": "4.17.4 NF/NF service discovery by NF service consumer in the same PLMN",
+      "output_path": "TS 23.502/4.17 Network Function Service Framework Procedure/4.17.4 NF and NF service discovery by NF service consumer in the same PLMN.md",
+      "source_blocks": 12,
+      "source_paragraphs": 12,
+      "source_tables": 0,
+      "source_drawings": 1,
+      "output_html_tables": 0,
+      "output_images": 1,
+      "source_tokens": 701,
+      "output_tokens": 702,
+      "token_multiset_overlap_source": 0.9985734664764622,
+      "token_multiset_overlap_output": 0.9971509971509972
+    },
+    {
+      "spec": "TS 23.502",
+      "clause": "5.2.7.2.2",
+      "source_title": "5.2.7.2.2 Nnrf_NFManagement_NFRegister service operation",
+      "output_path": "TS 23.502/5.2.7 NRF Services/5.2.7.2 Nnrf_NFManagement service.md",
+      "source_blocks": 73,
+      "source_paragraphs": 73,
+      "source_tables": 0,
+      "source_drawings": 0,
+      "output_html_tables": 0,
+      "output_images": 0,
+      "source_tokens": 1777,
+      "output_tokens": 1778,
+      "token_multiset_overlap_source": 0.9994372537985369,
+      "token_multiset_overlap_output": 0.9988751406074241
+    },
+    {
+      "spec": "TS 23.502",
+      "clause": "5.2.7.3.2",
+      "source_title": "5.2.7.3.2 Nnrf_NFDiscovery_Request service operation",
+      "output_path": "TS 23.502/5.2.7 NRF Services/5.2.7.3 Nnrf_NFDiscovery service.md",
+      "source_blocks": 127,
+      "source_paragraphs": 127,
+      "source_tables": 0,
+      "source_drawings": 0,
+      "output_html_tables": 0,
+      "output_images": 0,
+      "source_tokens": 2971,
+      "output_tokens": 2972,
+      "token_multiset_overlap_source": 0.9996634129922585,
+      "token_multiset_overlap_output": 0.9993270524899058
+    },
+    {
+      "spec": "TS 29.510",
+      "clause": "5.2.2.2.2",
+      "source_title": "5.2.2.2.2 NF (other than NRF) registration to NRF",
+      "output_path": "TS 29.510/5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service Operations/5.2.2.2 NFRegister.md",
+      "source_blocks": 19,
+      "source_paragraphs": 19,
+      "source_tables": 0,
+      "source_drawings": 1,
+      "output_html_tables": 0,
+      "output_images": 1,
+      "source_tokens": 865,
+      "output_tokens": 866,
+      "token_multiset_overlap_source": 0.9988439306358381,
+      "token_multiset_overlap_output": 0.9976905311778291
+    },
+    {
+      "spec": "TS 29.510",
+      "clause": "5.2.2.3.2",
+      "source_title": "5.2.2.3.2 NF Heart-Beat",
+      "output_path": "TS 29.510/5 Services Offered by the NRF/5.2 Nnrf_NFManagement Service/5.2.2 Service Operations/5.2.2.3 NFUpdate.md",
+      "source_blocks": 28,
+      "source_paragraphs": 28,
+      "source_tables": 0,
+      "source_drawings": 1,
+      "output_html_tables": 0,
+      "output_images": 1,
+      "source_tokens": 540,
+      "output_tokens": 541,
+      "token_multiset_overlap_source": 0.9981481481481481,
+      "token_multiset_overlap_output": 0.9963031423290203
+    },
+    {
+      "spec": "TS 29.510",
+      "clause": "6.1.3.3.3.2",
+      "source_title": "6.1.3.3.3.2 PUT",
+      "output_path": "TS 29.510/6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.3 Resources/6.1.3.3 Resource nf-instance (Document).md",
+      "source_blocks": 28,
+      "source_paragraphs": 20,
+      "source_tables": 8,
+      "source_drawings": 0,
+      "output_html_tables": 1,
+      "output_images": 0,
+      "source_tokens": 734,
+      "output_tokens": 731,
+      "token_multiset_overlap_source": 0.9904632152588556,
+      "token_multiset_overlap_output": 0.9945280437756497
+    },
+    {
+      "spec": "TS 29.510",
+      "clause": "6.1.6.2.2",
+      "source_title": "6.1.6.2.2 Type: NFProfile",
+      "output_path": "TS 29.510/6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.2 Type NFProfile.md",
+      "source_blocks": 4,
+      "source_paragraphs": 3,
+      "source_tables": 1,
+      "source_drawings": 0,
+      "output_html_tables": 1,
+      "output_images": 0,
+      "source_tokens": 5963,
+      "output_tokens": 5864,
+      "token_multiset_overlap_source": 0.9691430488009392,
+      "token_multiset_overlap_output": 0.9855047748976807
+    },
+    {
+      "spec": "TS 29.510",
+      "clause": "6.1.6.2.45",
+      "source_title": "6.1.6.2.45 Type: NwdafInfo",
+      "output_path": "TS 29.510/6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.45 Type NwdafInfo.md",
+      "source_blocks": 4,
+      "source_paragraphs": 3,
+      "source_tables": 1,
+      "source_drawings": 0,
+      "output_html_tables": 1,
+      "output_images": 0,
+      "source_tokens": 311,
+      "output_tokens": 303,
+      "token_multiset_overlap_source": 0.9485530546623794,
+      "token_multiset_overlap_output": 0.9735973597359736
+    },
+    {
+      "spec": "TS 29.571",
+      "clause": "5.2.4.1",
+      "source_title": "5.2.4.1 Type: ProblemDetails",
+      "output_path": "TS 29.571/5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md",
+      "source_blocks": 4,
+      "source_paragraphs": 3,
+      "source_tables": 1,
+      "source_drawings": 0,
+      "output_html_tables": 1,
+      "output_images": 0,
+      "source_tokens": 518,
+      "output_tokens": 519,
+      "token_multiset_overlap_source": 0.9980694980694981,
+      "token_multiset_overlap_output": 0.9961464354527938
+    },
+    {
+      "spec": "TS 29.571",
+      "clause": "5.2.4.3",
+      "source_title": "5.2.4.3 Type PatchItem",
+      "output_path": "TS 29.571/5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md",
+      "source_blocks": 4,
+      "source_paragraphs": 3,
+      "source_tables": 1,
+      "source_drawings": 0,
+      "output_html_tables": 1,
+      "output_images": 0,
+      "source_tokens": 185,
+      "output_tokens": 185,
+      "token_multiset_overlap_source": 0.9837837837837838,
+      "token_multiset_overlap_output": 0.9837837837837838
+    },
+    {
+      "spec": "TS 29.500",
+      "clause": "5.2.4",
+      "source_title": "5.2.4 HTTP error handling",
+      "output_path": "TS 29.500/5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.4 HTTP error handling.md",
+      "source_blocks": 3,
+      "source_paragraphs": 3,
+      "source_tables": 0,
+      "source_drawings": 0,
+      "output_html_tables": 0,
+      "output_images": 0,
+      "source_tokens": 61,
+      "output_tokens": 62,
+      "token_multiset_overlap_source": 0.9836065573770492,
+      "token_multiset_overlap_output": 0.967741935483871
+    },
+    {
+      "spec": "TS 29.500",
+      "clause": "5.2.7.1",
+      "source_title": "5.2.7.1 General",
+      "output_path": "TS 29.500/5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.7 HTTP status codes/5.2.7.1 General.md",
+      "source_blocks": 10,
+      "source_paragraphs": 9,
+      "source_tables": 1,
+      "source_drawings": 0,
+      "output_html_tables": 1,
+      "output_images": 0,
+      "source_tokens": 659,
+      "output_tokens": 659,
+      "token_multiset_overlap_source": 0.9954476479514416,
+      "token_multiset_overlap_output": 0.9954476479514416
+    }
+  ],
+  "visual_sampling": {
+    "method": "Risk-based validation combined direct source OOXML block inspection, independent text extraction, and manual review of rendered vector previews. Full-document LibreOffice PDF export was attempted for TS 23.502 and TS 29.510 but did not complete within the execution time limit.",
+    "samples": [
+      {
+        "spec": "TS 23.502",
+        "asset": "assets/rendered/image209.png",
+        "figure": "4.17.1-1 NF Service Registration procedure",
+        "result": "preview readable and correctly adjacent to caption and procedure steps"
+      },
+      {
+        "spec": "TS 29.510",
+        "asset": "assets/rendered/image10.png",
+        "figure": "5.2.2.3.2-1 NF Heart-Beat",
+        "result": "preview readable and correctly adjacent to PATCH procedure text"
+      },
+      {
+        "spec": "TS 29.510",
+        "asset": "assets/rendered/image44.png",
+        "figure": "6.4.3.1-1 Bootstrapping API URI structure",
+        "result": "preview readable and correctly adjacent to resource description"
+      }
+    ],
+    "structural_samples_file": "structural-sampling.json",
+    "limitations": [
+      "No claim of manual page-by-page visual certification is made.",
+      "Large 3GPP DOCX files did not complete headless LibreOffice PDF export within the allotted runtime; source OOXML and independent text checks were used instead."
+    ]
+  },
+  "oversized_files": [
+    {
+      "path": "TS 29.520/01 Original contents.md",
+      "approx_words": 5416
+    },
+    {
+      "path": "TS 29.510/6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.3 Type NFProfile.md",
+      "approx_words": 4386
+    },
+    {
+      "path": "TS 29.510/6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.3 Resources/6.2.3.2 Resource nf-instances (Store)/6.2.3.2.3.1 GET.md",
+      "approx_words": 12658
+    },
+    {
+      "path": "TS 29.510/6 API Definitions/6.1 Nnrf_NFManagement Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.2 Type NFProfile.md",
+      "approx_words": 5892
+    },
+    {
+      "path": "TS 29.520/4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.2 Service Operations/4.3.2.2 Nnwdaf_AnalyticsInfo_Request service operation/4.3.2.2.2 Request and get from NWDAF Analytics information.md",
+      "approx_words": 4783
+    },
+    {
+      "path": "TS 29.520/4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2 Service Operations/4.2.2.2 Nnwdaf_EventsSubscription_Subscribe service operation/4.2.2.2.2 Subscription for event notifications.md",
+      "approx_words": 5480
+    }
+  ]
+}

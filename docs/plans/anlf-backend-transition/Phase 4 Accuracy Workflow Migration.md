@@ -116,12 +116,12 @@ information 語意。
 15. `PyAnLF/src/py_anlf/core/observation_store.py`
 16. `PyAnLF/src/py_anlf/core/reporting.py`
 17. `PyAnLF/src/py_anlf/core/model_manager.py`
-18. `nwdaf-docs/specs/TS 23.288/5C Analytics_ML Model Accuracy Monitoring Functional Description.md`
-19. `nwdaf-docs/specs/TS 23.288/6.2A Procedure for ML Model Provisioning.md`
-20. `nwdaf-docs/specs/TS 23.288/6.2E MTLF-based ML Model Accuracy Monitoring.md`
-21. `nwdaf-docs/specs/TS 29.520/4.5 Nnwdaf_MLModelProvision Service.md`
-22. `nwdaf-docs/specs/yaml/TS29520_Nnwdaf_MLModelProvision.yaml`
-23. `nwdaf-docs/specs/yaml/TS29520_Nnwdaf_MLModelMonitor.yaml`
+18. `nwdaf-docs/specs/TS 23.288/5C Analytics and ML Model Accuracy Monitoring Functional Description.md`
+19. `nwdaf-docs/specs/TS 23.288/6 Procedures to Support Network Data Analytics/6.2A Procedure for ML Model Provisioning.md`
+20. `nwdaf-docs/specs/TS 23.288/6 Procedures to Support Network Data Analytics/6.2E MTLF-based ML Model Accuracy Monitoring.md`
+21. `nwdaf-docs/specs/TS 29.520/4 Services offered by the NWDAF/4.5 Nnwdaf_MLModelProvision Service.md`
+22. `nwdaf-docs/specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml`
+23. `nwdaf-docs/specs/openapi/TS29520_Nnwdaf_MLModelMonitor.yaml`
 24. `nwdaf-docs/docs/development_policy.md`
 25. `free5gc-dev-skill/SKILL.md` 與其 SBI、OpenAPI、lifecycle、concurrency、testing guidance
 

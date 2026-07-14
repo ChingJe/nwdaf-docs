@@ -1,0 +1,95 @@
+{
+  "corpus": "NWDAF and NRF implementation-related 3GPP Release 18 specifications",
+  "summary": {
+    "files": 1575,
+    "markdown_files": 946,
+    "bytes": 57352755,
+    "local_links_checked": 971,
+    "broken_local_links": 0,
+    "image_references_checked": 225,
+    "broken_image_references": 0,
+    "manifest_entries": 2321,
+    "manifest_missing_paths": 0,
+    "h7_or_deeper": 0,
+    "blank_headings": 0,
+    "files_with_absolute_work_paths": 0,
+    "exact_attachments_byte_identical": 14,
+    "exact_attachments_total": 14,
+    "yaml_valid": 13,
+    "yaml_total": 13,
+    "new_spec_modal_counts_all_match": true,
+    "structural_samples": 13,
+    "structural_samples_min_source_token_overlap": 0.9485530546623794,
+    "oversized_files": 6
+  },
+  "included_specs": [
+    {
+      "spec": "TS 23.288",
+      "version": "18.13.0",
+      "scope": "full",
+      "path": "TS 23.288/README.md",
+      "manifest": "TS 23.288/manifest.yaml"
+    },
+    {
+      "spec": "TS 29.520",
+      "version": "18.14.0",
+      "scope": "full",
+      "path": "TS 29.520/README.md",
+      "manifest": "TS 29.520/manifest.yaml"
+    },
+    {
+      "spec": "TS 23.502",
+      "version": "18.14.0",
+      "scope": "selected NRF-related clauses",
+      "path": "TS 23.502/README.md",
+      "manifest": "TS 23.502/manifest.yaml"
+    },
+    {
+      "spec": "TS 29.510",
+      "version": "18.11.0",
+      "scope": "full",
+      "path": "TS 29.510/README.md",
+      "manifest": "TS 29.510/manifest.yaml"
+    },
+    {
+      "spec": "TS 29.571",
+      "version": "18.12.0",
+      "scope": "full",
+      "path": "TS 29.571/README.md",
+      "manifest": "TS 29.571/manifest.yaml"
+    },
+    {
+      "spec": "TS 29.500",
+      "version": "18.10.0",
+      "scope": "full",
+      "path": "TS 29.500/README.md",
+      "manifest": "TS 29.500/manifest.yaml"
+    }
+  ],
+  "openapi_missing_dependencies": [
+    "TS29122_CommonData.yaml",
+    "TS29122_CpProvisioning.yaml",
+    "TS29122_PfdManagement.yaml",
+    "TS29503_Nudm_SDM.yaml",
+    "TS29503_Nudm_UECM.yaml",
+    "TS29508_Nsmf_EventExposure.yaml",
+    "TS29514_Npcf_PolicyAuthorization.yaml",
+    "TS29517_Naf_EventExposure.yaml",
+    "TS29518_Namf_Communication.yaml",
+    "TS29522_AMPolicyAuthorization.yaml",
+    "TS29523_Npcf_EventExposure.yaml",
+    "TS29531_Nnssf_NSSelection.yaml",
+    "TS29554_Npcf_BDTPolicyControl.yaml",
+    "TS29564_Nupf_EventExposure.yaml",
+    "TS29572_Nlmf_Location.yaml",
+    "TS29573_N32_Handshake.yaml",
+    "TS29574_Ndccf_DataManagement.yaml",
+    "TS29575_Nadrf_DataManagement.yaml",
+    "TS29576_Nmfaf_3caDataManagement.yaml"
+  ],
+  "notes": [
+    "TS 23.502 is a scoped extract containing clauses 1, 2, 3, 4.17 and 5.2.7.",
+    "TS 29.510, TS 29.571 and TS 29.500 are full progressively disclosed conversions.",
+    "Exact package YAML and ABNF attachments are retained byte-for-byte."
+  ]
+}

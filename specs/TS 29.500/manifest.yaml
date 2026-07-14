@@ -1,0 +1,1598 @@
+spec: TS 29.500
+version: 18.10.0
+release: '18'
+source_archive: 29500-ia0.zip
+source_document: 29500-ia0.docx
+source_archive_sha256: 3e0cbb6bc6ceec4dabb597410fb4b55ba03ae82e9b242972f441cd926971f5f2
+source_document_sha256: 8cd4994735a1718db905b0aee4ceba4fb479cc7193d82d051a68450f33eba52b
+max_source_words_per_semantic_file_target: 4200
+clauses:
+- clause: document-information
+  title: Document information
+  path: 00 Document information.md
+  source_words: 263
+  kind: source-file
+- clause: contents
+  title: Contents
+  path: 01 Original contents.md
+  source_words: 2332
+  kind: source-file
+- clause: foreword
+  title: Foreword
+  path: 02 Foreword.md
+  source_words: 492
+  kind: source-file
+- clause: '1'
+  title: 1 Scope
+  path: 1 Scope.md
+  source_words: 87
+  kind: source-file
+- clause: '2'
+  title: 2 References
+  path: 2 References.md
+  source_words: 575
+  kind: source-file
+- clause: '3'
+  title: 3 Definitions and abbreviations
+  path: 3 Definitions and abbreviations.md
+  source_words: 1137
+  kind: source-file
+- clause: '3.1'
+  title: 3.1 Definitions
+  path: 3 Definitions and abbreviations.md
+  source_words: 713
+  kind: embedded-clause
+- clause: '3.2'
+  title: 3.2 Abbreviations
+  path: 3 Definitions and abbreviations.md
+  source_words: 91
+  kind: embedded-clause
+- clause: '3.3'
+  title: 3.3 Special characters, operators and delimiters
+  path: 3 Definitions and abbreviations.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 3.3.1
+  title: 3.3.1 General
+  path: 3 Definitions and abbreviations.md
+  source_words: 49
+  kind: embedded-clause
+- clause: 3.3.2
+  title: 3.3.2 ABNF operators
+  path: 3 Definitions and abbreviations.md
+  source_words: 197
+  kind: embedded-clause
+- clause: 3.3.3
+  title: 3.3.3 URI – reserved and special characters
+  path: 3 Definitions and abbreviations.md
+  source_words: 34
+  kind: embedded-clause
+- clause: 3.3.4
+  title: 3.3.4 SBI specific usage of delimiters
+  path: 3 Definitions and abbreviations.md
+  source_words: 11
+  kind: embedded-clause
+- clause: '4'
+  title: 4 Service Based Architecture Overview
+  path: 4 Service Based Architecture Overview.md
+  source_words: 611
+  kind: source-file
+- clause: '4.1'
+  title: 4.1 NF Services
+  path: 4 Service Based Architecture Overview.md
+  source_words: 152
+  kind: embedded-clause
+- clause: '4.2'
+  title: 4.2 Service Based Interfaces
+  path: 4 Service Based Architecture Overview.md
+  source_words: 48
+  kind: embedded-clause
+- clause: '4.3'
+  title: 4.3 NF Service Framework
+  path: 4 Service Based Architecture Overview.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 4.3.1
+  title: 4.3.1 General
+  path: 4 Service Based Architecture Overview.md
+  source_words: 198
+  kind: embedded-clause
+- clause: 4.3.2
+  title: 4.3.2 NF Service Advertisement URI
+  path: 4 Service Based Architecture Overview.md
+  source_words: 183
+  kind: embedded-clause
+- clause: '5'
+  title: 5 Protocols Over Service Based Interfaces
+  path: 5 Protocols Over Service Based Interfaces/README.md
+  source_words: 24230
+  kind: navigation-directory
+- clause: '5.1'
+  title: 5.1 Protocol Stack Overview
+  path: 5 Protocols Over Service Based Interfaces/5.1 Protocol Stack Overview.md
+  source_words: 86
+  kind: source-file
+- clause: '5.2'
+  title: 5.2 HTTP/2 Protocol
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/README.md
+  source_words: 23941
+  kind: navigation-directory
+- clause: 5.2.1
+  title: 5.2.1 General
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.1 General.md
+  source_words: 20
+  kind: source-file
+- clause: 5.2.2
+  title: 5.2.2 HTTP standard headers
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.2 HTTP
+    standard headers.md
+  source_words: 1325
+  kind: source-file
+- clause: 5.2.2.1
+  title: 5.2.2.1 General
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.2 HTTP
+    standard headers.md
+  source_words: 26
+  kind: embedded-clause
+- clause: 5.2.2.2
+  title: 5.2.2.2 Mandatory to support HTTP standard headers
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.2 HTTP
+    standard headers.md
+  source_words: 1278
+  kind: embedded-clause
+- clause: 5.2.3
+  title: 5.2.3 HTTP custom headers
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/README.md
+  source_words: 15945
+  kind: navigation-directory
+- clause: 5.2.3.1
+  title: 5.2.3.1 General
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.1 General.md
+  source_words: 293
+  kind: source-file
+- clause: 5.2.3.2
+  title: 5.2.3.2 Mandatory to support custom headers
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.2 Mandatory to support custom headers/README.md
+  source_words: 10456
+  kind: navigation-directory
+- clause: 5.2.3.2.1
+  title: 5.2.3.2.1 General
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.2 Mandatory to support custom headers/5.2.3.2.1 General.md
+  source_words: 1908
+  kind: source-file
+- clause: 5.2.3.2.2
+  title: 5.2.3.2.2 3gpp-Sbi-Message-Priority
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.2 Mandatory to support custom headers/5.2.3.2.2 3gpp-Sbi-Message-Priority.md
+  source_words: 62
+  kind: source-file
+- clause: 5.2.3.2.3
+  title: 5.2.3.2.3 3gpp-Sbi-Callback
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.2 Mandatory to support custom headers/5.2.3.2.3 3gpp-Sbi-Callback.md
+  source_words: 169
+  kind: source-file
+- clause: 5.2.3.2.4
+  title: 5.2.3.2.4 3gpp-Sbi-Target-apiRoot
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.2 Mandatory to support custom headers/5.2.3.2.4 3gpp-Sbi-Target-apiRoot.md
+  source_words: 180
+  kind: source-file
+- clause: 5.2.3.2.5
+  title: 5.2.3.2.5 3gpp-Sbi-Routing-Binding
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.2 Mandatory to support custom headers/5.2.3.2.5 3gpp-Sbi-Routing-Binding.md
+  source_words: 715
+  kind: source-file
+- clause: 5.2.3.2.6
+  title: 5.2.3.2.6 3gpp-Sbi-Binding
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.2 Mandatory to support custom headers/5.2.3.2.6 3gpp-Sbi-Binding.md
+  source_words: 2107
+  kind: source-file
+- clause: 5.2.3.2.7
+  title: 5.2.3.2.7 3gpp-Sbi-Discovery
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.2 Mandatory to support custom headers/5.2.3.2.7 3gpp-Sbi-Discovery.md
+  source_words: 653
+  kind: source-file
+- clause: 5.2.3.2.8
+  title: 5.2.3.2.8 3gpp-Sbi-Producer-Id
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.2 Mandatory to support custom headers/5.2.3.2.8 3gpp-Sbi-Producer-Id.md
+  source_words: 172
+  kind: source-file
+- clause: 5.2.3.2.9
+  title: 5.2.3.2.9 3gpp-Sbi-Oci
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.2 Mandatory to support custom headers/5.2.3.2.9 3gpp-Sbi-Oci.md
+  source_words: 1035
+  kind: source-file
+- clause: 5.2.3.2.10
+  title: 5.2.3.2.10 3gpp-Sbi-Lci
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.2 Mandatory to support custom headers/5.2.3.2.10 3gpp-Sbi-Lci.md
+  source_words: 883
+  kind: source-file
+- clause: 5.2.3.2.11
+  title: 5.2.3.2.11 3gpp-Sbi-Client-Credentials
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.2 Mandatory to support custom headers/5.2.3.2.11 3gpp-Sbi-Client-Credentials.md
+  source_words: 459
+  kind: source-file
+- clause: 5.2.3.2.12
+  title: 5.2.3.2.12 3gpp-Sbi-Nrf-Uri
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.2 Mandatory to support custom headers/5.2.3.2.12 3gpp-Sbi-Nrf-Uri.md
+  source_words: 286
+  kind: source-file
+- clause: 5.2.3.2.13
+  title: 5.2.3.2.13 3gpp-Sbi-Target-Nf-Id
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.2 Mandatory to support custom headers/5.2.3.2.13 3gpp-Sbi-Target-Nf-Id.md
+  source_words: 117
+  kind: source-file
+- clause: 5.2.3.2.14
+  title: 5.2.3.2.14 3gpp-Sbi-Max-Forward-Hops
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.2 Mandatory to support custom headers/5.2.3.2.14 3gpp-Sbi-Max-Forward-Hops.md
+  source_words: 72
+  kind: source-file
+- clause: 5.2.3.2.15
+  title: 5.2.3.2.15 3gpp-Sbi-Originating-Network-Id
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.2 Mandatory to support custom headers/5.2.3.2.15 3gpp-Sbi-Originating-Network-Id.md
+  source_words: 207
+  kind: source-file
+- clause: 5.2.3.2.16
+  title: 5.2.3.2.16 3gpp-Sbi-Access-Scope
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.2 Mandatory to support custom headers/5.2.3.2.16 3gpp-Sbi-Access-Scope.md
+  source_words: 298
+  kind: source-file
+- clause: 5.2.3.2.17
+  title: 5.2.3.2.17 3gpp-Sbi-Access-Token
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.2 Mandatory to support custom headers/5.2.3.2.17 3gpp-Sbi-Access-Token.md
+  source_words: 74
+  kind: source-file
+- clause: 5.2.3.2.18
+  title: 5.2.3.2.18 Void
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.2 Mandatory to support custom headers/5.2.3.2.18 Void.md
+  source_words: 6
+  kind: source-file
+- clause: 5.2.3.2.19
+  title: 5.2.3.2.19 3gpp-Sbi-Target-Nf-Group-Id
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.2 Mandatory to support custom headers/5.2.3.2.19 3gpp-Sbi-Target-Nf-Group-Id.md
+  source_words: 79
+  kind: source-file
+- clause: 5.2.3.2.20
+  title: 5.2.3.2.20 3gpp-Sbi-Nrf-Uri-Callback
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.2 Mandatory to support custom headers/5.2.3.2.20 3gpp-Sbi-Nrf-Uri-Callback.md
+  source_words: 130
+  kind: source-file
+- clause: 5.2.3.2.21
+  title: 5.2.3.2.21 3gpp-Sbi-NF-Peer-Info
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.2 Mandatory to support custom headers/5.2.3.2.21 3gpp-Sbi-NF-Peer-Info.md
+  source_words: 519
+  kind: source-file
+- clause: 5.2.3.2.22
+  title: 5.2.3.2.22 3gpp-Sbi-Source-NF-Client-Credentials
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.2 Mandatory to support custom headers/5.2.3.2.22 3gpp-Sbi-Source-NF-Client-Credentials.md
+  source_words: 316
+  kind: source-file
+- clause: 5.2.3.3
+  title: 5.2.3.3 Optional to support custom headers
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.3 Optional to support custom headers/README.md
+  source_words: 5190
+  kind: navigation-directory
+- clause: 5.2.3.3.1
+  title: 5.2.3.3.1 General
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.3 Optional to support custom headers/5.2.3.3.1 General.md
+  source_words: 904
+  kind: source-file
+- clause: 5.2.3.3.2
+  title: 5.2.3.3.2 3gpp-Sbi-Sender-Timestamp
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.3 Optional to support custom headers/5.2.3.3.2 3gpp-Sbi-Sender-Timestamp.md
+  source_words: 140
+  kind: source-file
+- clause: 5.2.3.3.3
+  title: 5.2.3.3.3 3gpp-Sbi-Max-Rsp-Time
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.3 Optional to support custom headers/5.2.3.3.3 3gpp-Sbi-Max-Rsp-Time.md
+  source_words: 57
+  kind: source-file
+- clause: 5.2.3.3.4
+  title: 5.2.3.3.4 3gpp-Sbi-Correlation-Info
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.3 Optional to support custom headers/5.2.3.3.4 3gpp-Sbi-Correlation-Info.md
+  source_words: 624
+  kind: source-file
+- clause: 5.2.3.3.5
+  title: 5.2.3.3.5 3gpp-Sbi-Alternate-Chf-Id
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.3 Optional to support custom headers/5.2.3.3.5 3gpp-Sbi-Alternate-Chf-Id.md
+  source_words: 119
+  kind: source-file
+- clause: 5.2.3.3.6
+  title: 5.2.3.3.6 3gpp-Sbi-Notif-Accepted-Encoding
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.3 Optional to support custom headers/5.2.3.3.6 3gpp-Sbi-Notif-Accepted-Encoding.md
+  source_words: 62
+  kind: source-file
+- clause: 5.2.3.3.7
+  title: 5.2.3.3.7 3gpp-Sbi-Consumer-Info
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.3 Optional to support custom headers/5.2.3.3.7 3gpp-Sbi-Consumer-Info.md
+  source_words: 705
+  kind: source-file
+- clause: 5.2.3.3.8
+  title: 5.2.3.3.8 3gpp-Sbi-Response-Info
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.3 Optional to support custom headers/5.2.3.3.8 3gpp-Sbi-Response-Info.md
+  source_words: 400
+  kind: source-file
+- clause: 5.2.3.3.9
+  title: 5.2.3.3.9 Void
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.3 Optional to support custom headers/5.2.3.3.9 Void.md
+  source_words: 6
+  kind: source-file
+- clause: 5.2.3.3.10
+  title: 5.2.3.3.10 3gpp-Sbi-Selection-Info
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.3 Optional to support custom headers/5.2.3.3.10 3gpp-Sbi-Selection-Info.md
+  source_words: 731
+  kind: source-file
+- clause: 5.2.3.3.11
+  title: 5.2.3.3.11 3gpp-Sbi-Interplmn-Purpose
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.3 Optional to support custom headers/5.2.3.3.11 3gpp-Sbi-Interplmn-Purpose.md
+  source_words: 90
+  kind: source-file
+- clause: 5.2.3.3.12
+  title: 5.2.3.3.12 3gpp-Sbi-Request-Info
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.3 Optional to support custom headers/5.2.3.3.12 3gpp-Sbi-Request-Info.md
+  source_words: 865
+  kind: source-file
+- clause: 5.2.3.3.13
+  title: 5.2.3.3.13 3gpp-Sbi-Retry-Info
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.3 Optional to support custom headers/5.2.3.3.13 3gpp-Sbi-Retry-Info.md
+  source_words: 164
+  kind: source-file
+- clause: 5.2.3.3.14
+  title: 5.2.3.3.14 3gpp-Sbi-Other-Access-Scopes
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.3 HTTP
+    custom headers/5.2.3.3 Optional to support custom headers/5.2.3.3.14 3gpp-Sbi-Other-Access-Scopes.md
+  source_words: 314
+  kind: source-file
+- clause: 5.2.4
+  title: 5.2.4 HTTP error handling
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.4 HTTP
+    error handling.md
+  source_words: 62
+  kind: source-file
+- clause: 5.2.5
+  title: 5.2.5 HTTP/2 server push
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.5 HTTP
+    and 2 server push.md
+  source_words: 82
+  kind: source-file
+- clause: 5.2.6
+  title: 5.2.6 HTTP/2 connection management
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.6 HTTP
+    and 2 connection management.md
+  source_words: 404
+  kind: source-file
+- clause: 5.2.7
+  title: 5.2.7 HTTP status codes
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.7 HTTP
+    status codes/README.md
+  source_words: 4827
+  kind: navigation-directory
+- clause: 5.2.7.1
+  title: 5.2.7.1 General
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.7 HTTP
+    status codes/5.2.7.1 General.md
+  source_words: 659
+  kind: source-file
+- clause: 5.2.7.2
+  title: 5.2.7.2 NF as HTTP Server
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.7 HTTP
+    status codes/5.2.7.2 NF as HTTP Server.md
+  source_words: 2330
+  kind: source-file
+- clause: 5.2.7.3
+  title: 5.2.7.3 NF as HTTP Client
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.7 HTTP
+    status codes/5.2.7.3 NF as HTTP Client.md
+  source_words: 434
+  kind: source-file
+- clause: 5.2.7.4
+  title: 5.2.7.4 SCP/SEPP
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.7 HTTP
+    status codes/5.2.7.4 SCP and SEPP.md
+  source_words: 1398
+  kind: source-file
+- clause: 5.2.8
+  title: 5.2.8 HTTP/2 request retries
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.8 HTTP
+    and 2 request retries.md
+  source_words: 539
+  kind: source-file
+- clause: 5.2.9
+  title: 5.2.9 Handling of unsupported query parameters
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.9 Handling
+    of unsupported query parameters.md
+  source_words: 155
+  kind: source-file
+- clause: 5.2.10
+  title: 5.2.10 URL Encoding of data
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.10 URL
+    Encoding of data.md
+  source_words: 577
+  kind: source-file
+- clause: 5.2.10.1
+  title: 5.2.10.1 General
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.10 URL
+    Encoding of data.md
+  source_words: 100
+  kind: embedded-clause
+- clause: 5.2.10.2
+  title: 5.2.10.2 URL Encoding of URI components
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.10 URL
+    Encoding of data.md
+  source_words: 292
+  kind: embedded-clause
+- clause: 5.2.10.3
+  title: 5.2.10.3 URL Encoding of HTTP/2 request bodies
+  path: 5 Protocols Over Service Based Interfaces/5.2 HTTP and 2 Protocol/5.2.10 URL
+    Encoding of data.md
+  source_words: 153
+  kind: embedded-clause
+- clause: '5.3'
+  title: 5.3 Transport Protocol
+  path: 5 Protocols Over Service Based Interfaces/5.3 Transport Protocol.md
+  source_words: 96
+  kind: source-file
+- clause: '5.4'
+  title: 5.4 Serialization Protocol
+  path: 5 Protocols Over Service Based Interfaces/5.4 Serialization Protocol.md
+  source_words: 83
+  kind: source-file
+- clause: '5.5'
+  title: 5.5 Interface Definition Language
+  path: 5 Protocols Over Service Based Interfaces/5.5 Interface Definition Language.md
+  source_words: 18
+  kind: source-file
+- clause: '6'
+  title: 6 General Functionalities in Service Based Architecture
+  path: 6 General Functionalities in Service Based Architecture/README.md
+  source_words: 40869
+  kind: navigation-directory
+- clause: '6.1'
+  title: 6.1 Routing Mechanisms
+  path: 6 General Functionalities in Service Based Architecture/6.1 Routing Mechanisms.md
+  source_words: 2001
+  kind: source-file
+- clause: 6.1.1
+  title: 6.1.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.1 Routing Mechanisms.md
+  source_words: 95
+  kind: embedded-clause
+- clause: 6.1.2
+  title: 6.1.2 Identifying a target resource
+  path: 6 General Functionalities in Service Based Architecture/6.1 Routing Mechanisms.md
+  source_words: 34
+  kind: embedded-clause
+- clause: 6.1.3
+  title: 6.1.3 Connecting inbound
+  path: 6 General Functionalities in Service Based Architecture/6.1 Routing Mechanisms.md
+  source_words: 106
+  kind: embedded-clause
+- clause: 6.1.4
+  title: 6.1.4 Pseudo-header setting
+  path: 6 General Functionalities in Service Based Architecture/6.1 Routing Mechanisms.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.1.4.1
+  title: 6.1.4.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.1 Routing Mechanisms.md
+  source_words: 145
+  kind: embedded-clause
+- clause: 6.1.4.2
+  title: 6.1.4.2 Routing within a PLMN
+  path: 6 General Functionalities in Service Based Architecture/6.1 Routing Mechanisms.md
+  source_words: 94
+  kind: embedded-clause
+- clause: 6.1.4.3
+  title: 6.1.4.3 Routing across PLMN
+  path: 6 General Functionalities in Service Based Architecture/6.1 Routing Mechanisms.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.1.4.3.1
+  title: 6.1.4.3.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.1 Routing Mechanisms.md
+  source_words: 412
+  kind: embedded-clause
+- clause: 6.1.4.3.2
+  title: 6.1.4.3.2 Use of telescopic FQDN between NFs and SEPP within a PLMN
+  path: 6 General Functionalities in Service Based Architecture/6.1 Routing Mechanisms.md
+  source_words: 180
+  kind: embedded-clause
+- clause: 6.1.4.3.3
+  title: 6.1.4.3.3 Use of 3gpp-Sbi-Target-apiRoot between NFs and SEPP within a PLMN
+  path: 6 General Functionalities in Service Based Architecture/6.1 Routing Mechanisms.md
+  source_words: 335
+  kind: embedded-clause
+- clause: 6.1.4.3.4
+  title: 6.1.4.3.4 Routing between SEPPs
+  path: 6 General Functionalities in Service Based Architecture/6.1 Routing Mechanisms.md
+  source_words: 420
+  kind: embedded-clause
+- clause: 6.1.5
+  title: 6.1.5 Host header
+  path: 6 General Functionalities in Service Based Architecture/6.1 Routing Mechanisms.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 6.1.6
+  title: 6.1.6 Message forwarding
+  path: 6 General Functionalities in Service Based Architecture/6.1 Routing Mechanisms.md
+  source_words: 62
+  kind: embedded-clause
+- clause: '6.2'
+  title: 6.2 Server-Initiated Communication
+  path: 6 General Functionalities in Service Based Architecture/6.2 Server-Initiated
+    Communication.md
+  source_words: 980
+  kind: source-file
+- clause: 6.2.1
+  title: 6.2.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.2 Server-Initiated
+    Communication.md
+  source_words: 299
+  kind: embedded-clause
+- clause: 6.2.2
+  title: 6.2.2 Subscription on behalf of NF Service Consumer
+  path: 6 General Functionalities in Service Based Architecture/6.2 Server-Initiated
+    Communication.md
+  source_words: 547
+  kind: embedded-clause
+- clause: 6.2.3
+  title: 6.2.3 Notification error handling
+  path: 6 General Functionalities in Service Based Architecture/6.2 Server-Initiated
+    Communication.md
+  source_words: 110
+  kind: embedded-clause
+- clause: '6.3'
+  title: 6.3 Load Control
+  path: 6 General Functionalities in Service Based Architecture/6.3 Load Control.md
+  source_words: 3189
+  kind: source-file
+- clause: 6.3.1
+  title: 6.3.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.3 Load Control.md
+  source_words: 141
+  kind: embedded-clause
+- clause: 6.3.2
+  title: 6.3.2 Load Control based on load signalled via the NRF
+  path: 6 General Functionalities in Service Based Architecture/6.3 Load Control.md
+  source_words: 149
+  kind: embedded-clause
+- clause: 6.3.3
+  title: 6.3.3 Load Control based on LCI Header
+  path: 6 General Functionalities in Service Based Architecture/6.3 Load Control.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.3.3.1
+  title: 6.3.3.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.3 Load Control.md
+  source_words: 541
+  kind: embedded-clause
+- clause: 6.3.3.2
+  title: 6.3.3.2 Conveyance of Load Control Information
+  path: 6 General Functionalities in Service Based Architecture/6.3 Load Control.md
+  source_words: 111
+  kind: embedded-clause
+- clause: 6.3.3.3
+  title: 6.3.3.3 Frequency of Conveyance
+  path: 6 General Functionalities in Service Based Architecture/6.3 Load Control.md
+  source_words: 129
+  kind: embedded-clause
+- clause: 6.3.3.4
+  title: 6.3.3.4 Load Control Information
+  path: 6 General Functionalities in Service Based Architecture/6.3 Load Control.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.3.3.4.1
+  title: 6.3.3.4.1 General Description
+  path: 6 General Functionalities in Service Based Architecture/6.3 Load Control.md
+  source_words: 383
+  kind: embedded-clause
+- clause: 6.3.3.4.2
+  title: 6.3.3.4.2 Load Control Timestamp
+  path: 6 General Functionalities in Service Based Architecture/6.3 Load Control.md
+  source_words: 256
+  kind: embedded-clause
+- clause: 6.3.3.4.3
+  title: 6.3.3.4.3 Load Metric
+  path: 6 General Functionalities in Service Based Architecture/6.3 Load Control.md
+  source_words: 75
+  kind: embedded-clause
+- clause: 6.3.3.4.4
+  title: 6.3.3.4.4 Scope of LCI
+  path: 6 General Functionalities in Service Based Architecture/6.3 Load Control.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.3.3.4.4.1
+  title: 6.3.3.4.4.1 Introduction
+  path: 6 General Functionalities in Service Based Architecture/6.3 Load Control.md
+  source_words: 44
+  kind: embedded-clause
+- clause: 6.3.3.4.4.2
+  title: 6.3.3.4.4.2 Scope of LCI signalled by an NF Service Producer
+  path: 6 General Functionalities in Service Based Architecture/6.3 Load Control.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.3.3.4.4.2.1
+  title: 6.3.3.4.4.2.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.3 Load Control.md
+  source_words: 228
+  kind: embedded-clause
+- clause: 6.3.3.4.4.2.2
+  title: 6.3.3.4.4.2.2 Additional scope parameters for S-NSSAI/DNN based load control
+    by SMF
+  path: 6 General Functionalities in Service Based Architecture/6.3 Load Control.md
+  source_words: 578
+  kind: embedded-clause
+- clause: 6.3.3.4.4.3
+  title: 6.3.3.4.4.3 Scope of LCI signalled by an SCP
+  path: 6 General Functionalities in Service Based Architecture/6.3 Load Control.md
+  source_words: 59
+  kind: embedded-clause
+- clause: 6.3.3.4.4.4
+  title: 6.3.3.4.4.4 Scope of LCI signalled by an SEPP
+  path: 6 General Functionalities in Service Based Architecture/6.3 Load Control.md
+  source_words: 59
+  kind: embedded-clause
+- clause: 6.3.3.4.5
+  title: 6.3.3.4.5 S-NSSAI/DNN Relative Capacity
+  path: 6 General Functionalities in Service Based Architecture/6.3 Load Control.md
+  source_words: 105
+  kind: embedded-clause
+- clause: 6.3.3.5
+  title: 6.3.3.5 LC-H feature support
+  path: 6 General Functionalities in Service Based Architecture/6.3 Load Control.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.3.3.5.1
+  title: 6.3.3.5.1 Indicating supports for the LC-H feature
+  path: 6 General Functionalities in Service Based Architecture/6.3 Load Control.md
+  source_words: 84
+  kind: embedded-clause
+- clause: 6.3.3.5.2
+  title: 6.3.3.5.2 Utilizing the LC-H feature support indication
+  path: 6 General Functionalities in Service Based Architecture/6.3 Load Control.md
+  source_words: 48
+  kind: embedded-clause
+- clause: '6.4'
+  title: 6.4 Overload Control
+  path: 6 General Functionalities in Service Based Architecture/6.4 Overload Control/README.md
+  source_words: 5942
+  kind: navigation-directory
+- clause: 6.4.1
+  title: 6.4.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.4 Overload Control/6.4.1
+    General.md
+  source_words: 414
+  kind: source-file
+- clause: 6.4.2
+  title: 6.4.2 Overload Control based on HTTP status codes
+  path: 6 General Functionalities in Service Based Architecture/6.4 Overload Control/6.4.2
+    Overload Control based on HTTP status codes.md
+  source_words: 948
+  kind: source-file
+- clause: 6.4.2.1
+  title: 6.4.2.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.4 Overload Control/6.4.2
+    Overload Control based on HTTP status codes.md
+  source_words: 404
+  kind: embedded-clause
+- clause: 6.4.2.2
+  title: 6.4.2.2 HTTP Status Code "503 Service Unavailable"
+  path: 6 General Functionalities in Service Based Architecture/6.4 Overload Control/6.4.2
+    Overload Control based on HTTP status codes.md
+  source_words: 219
+  kind: embedded-clause
+- clause: 6.4.2.3
+  title: 6.4.2.3 HTTP Status Code "429 Too Many Requests"
+  path: 6 General Functionalities in Service Based Architecture/6.4 Overload Control/6.4.2
+    Overload Control based on HTTP status codes.md
+  source_words: 99
+  kind: embedded-clause
+- clause: 6.4.2.4
+  title: 6.4.2.4 HTTP Status Code "307 Temporary Redirect"
+  path: 6 General Functionalities in Service Based Architecture/6.4 Overload Control/6.4.2
+    Overload Control based on HTTP status codes.md
+  source_words: 180
+  kind: embedded-clause
+- clause: 6.4.3
+  title: 6.4.3 Overload Control based on OCI Header
+  path: 6 General Functionalities in Service Based Architecture/6.4 Overload Control/6.4.3
+    Overload Control based on OCI Header/README.md
+  source_words: 4576
+  kind: navigation-directory
+- clause: 6.4.3.1
+  title: 6.4.3.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.4 Overload Control/6.4.3
+    Overload Control based on OCI Header/6.4.3.1 General.md
+  source_words: 538
+  kind: source-file
+- clause: 6.4.3.2
+  title: 6.4.3.2 Conveyance of Overload Control Information
+  path: 6 General Functionalities in Service Based Architecture/6.4 Overload Control/6.4.3
+    Overload Control based on OCI Header/6.4.3.2 Conveyance of Overload Control Information.md
+  source_words: 115
+  kind: source-file
+- clause: 6.4.3.3
+  title: 6.4.3.3 Frequency of Conveyance
+  path: 6 General Functionalities in Service Based Architecture/6.4 Overload Control/6.4.3
+    Overload Control based on OCI Header/6.4.3.3 Frequency of Conveyance.md
+  source_words: 131
+  kind: source-file
+- clause: 6.4.3.4
+  title: 6.4.3.4 Overload Control Information
+  path: 6 General Functionalities in Service Based Architecture/6.4 Overload Control/6.4.3
+    Overload Control based on OCI Header/6.4.3.4 Overload Control Information.md
+  source_words: 3212
+  kind: source-file
+- clause: 6.4.3.4.1
+  title: 6.4.3.4.1 General Description
+  path: 6 General Functionalities in Service Based Architecture/6.4 Overload Control/6.4.3
+    Overload Control based on OCI Header/6.4.3.4 Overload Control Information.md
+  source_words: 748
+  kind: embedded-clause
+- clause: 6.4.3.4.2
+  title: 6.4.3.4.2 Overload Control Timestamp
+  path: 6 General Functionalities in Service Based Architecture/6.4 Overload Control/6.4.3
+    Overload Control based on OCI Header/6.4.3.4 Overload Control Information.md
+  source_words: 302
+  kind: embedded-clause
+- clause: 6.4.3.4.3
+  title: 6.4.3.4.3 Overload Reduction Metric
+  path: 6 General Functionalities in Service Based Architecture/6.4 Overload Control/6.4.3
+    Overload Control based on OCI Header/6.4.3.4 Overload Control Information.md
+  source_words: 193
+  kind: embedded-clause
+- clause: 6.4.3.4.4
+  title: 6.4.3.4.4 Overload Control Period of Validity
+  path: 6 General Functionalities in Service Based Architecture/6.4 Overload Control/6.4.3
+    Overload Control based on OCI Header/6.4.3.4 Overload Control Information.md
+  source_words: 291
+  kind: embedded-clause
+- clause: 6.4.3.4.5
+  title: 6.4.3.4.5 Scope of OCI
+  path: 6 General Functionalities in Service Based Architecture/6.4 Overload Control/6.4.3
+    Overload Control based on OCI Header/6.4.3.4 Overload Control Information.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.4.3.4.5.1
+  title: 6.4.3.4.5.1 Introduction
+  path: 6 General Functionalities in Service Based Architecture/6.4 Overload Control/6.4.3
+    Overload Control based on OCI Header/6.4.3.4 Overload Control Information.md
+  source_words: 54
+  kind: embedded-clause
+- clause: 6.4.3.4.5.2
+  title: 6.4.3.4.5.2 Scope of OCI signalled by an NF Service Producer
+  path: 6 General Functionalities in Service Based Architecture/6.4 Overload Control/6.4.3
+    Overload Control based on OCI Header/6.4.3.4 Overload Control Information.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.4.3.4.5.2.1
+  title: 6.4.3.4.5.2.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.4 Overload Control/6.4.3
+    Overload Control based on OCI Header/6.4.3.4 Overload Control Information.md
+  source_words: 164
+  kind: embedded-clause
+- clause: 6.4.3.4.5.2.2
+  title: 6.4.3.4.5.2.2 Additional scope parameters for S-NSSAI/DNN based overload
+    control by SMF
+  path: 6 General Functionalities in Service Based Architecture/6.4 Overload Control/6.4.3
+    Overload Control based on OCI Header/6.4.3.4 Overload Control Information.md
+  source_words: 569
+  kind: embedded-clause
+- clause: 6.4.3.4.5.3
+  title: 6.4.3.4.5.3 Scope of OCI signalled by an NF Service Consumer
+  path: 6 General Functionalities in Service Based Architecture/6.4 Overload Control/6.4.3
+    Overload Control based on OCI Header/6.4.3.4 Overload Control Information.md
+  source_words: 625
+  kind: embedded-clause
+- clause: 6.4.3.4.5.4
+  title: 6.4.3.4.5.4 Scope of OCI signalled by an SCP
+  path: 6 General Functionalities in Service Based Architecture/6.4 Overload Control/6.4.3
+    Overload Control based on OCI Header/6.4.3.4 Overload Control Information.md
+  source_words: 66
+  kind: embedded-clause
+- clause: 6.4.3.4.5.5
+  title: 6.4.3.4.5.5 Scope of OCI signalled by an SEPP
+  path: 6 General Functionalities in Service Based Architecture/6.4 Overload Control/6.4.3
+    Overload Control based on OCI Header/6.4.3.4 Overload Control Information.md
+  source_words: 63
+  kind: embedded-clause
+- clause: 6.4.3.5
+  title: 6.4.3.5 Overload Control Enforcement
+  path: 6 General Functionalities in Service Based Architecture/6.4 Overload Control/6.4.3
+    Overload Control based on OCI Header/6.4.3.5 Overload Control Enforcement.md
+  source_words: 469
+  kind: source-file
+- clause: 6.4.3.5.1
+  title: 6.4.3.5.1 Message Throttling
+  path: 6 General Functionalities in Service Based Architecture/6.4 Overload Control/6.4.3
+    Overload Control based on OCI Header/6.4.3.5 Overload Control Enforcement.md
+  source_words: 268
+  kind: embedded-clause
+- clause: 6.4.3.5.2
+  title: 6.4.3.5.2 Loss Algorithm
+  path: 6 General Functionalities in Service Based Architecture/6.4 Overload Control/6.4.3
+    Overload Control based on OCI Header/6.4.3.5 Overload Control Enforcement.md
+  source_words: 180
+  kind: embedded-clause
+- clause: 6.4.3.6
+  title: 6.4.3.6 OLC-H feature support
+  path: 6 General Functionalities in Service Based Architecture/6.4 Overload Control/6.4.3
+    Overload Control based on OCI Header/6.4.3.6 OLC-H feature support.md
+  source_words: 102
+  kind: source-file
+- clause: 6.4.3.6.1
+  title: 6.4.3.6.1 Indicating supports for the OLC-H feature
+  path: 6 General Functionalities in Service Based Architecture/6.4 Overload Control/6.4.3
+    Overload Control based on OCI Header/6.4.3.6 OLC-H feature support.md
+  source_words: 84
+  kind: embedded-clause
+- clause: '6.5'
+  title: 6.5 Support of Stateless NFs
+  path: 6 General Functionalities in Service Based Architecture/6.5 Support of Stateless
+    NFs.md
+  source_words: 3164
+  kind: source-file
+- clause: 6.5.1
+  title: 6.5.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.5 Support of Stateless
+    NFs.md
+  source_words: 25
+  kind: embedded-clause
+- clause: 6.5.2
+  title: 6.5.2 Stateless AMFs
+  path: 6 General Functionalities in Service Based Architecture/6.5 Support of Stateless
+    NFs.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.5.2.1
+  title: 6.5.2.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.5 Support of Stateless
+    NFs.md
+  source_words: 41
+  kind: embedded-clause
+- clause: 6.5.2.2
+  title: 6.5.2.2 AMF as service consumer
+  path: 6 General Functionalities in Service Based Architecture/6.5 Support of Stateless
+    NFs.md
+  source_words: 738
+  kind: embedded-clause
+- clause: 6.5.2.3
+  title: 6.5.2.3 AMF as service producer
+  path: 6 General Functionalities in Service Based Architecture/6.5 Support of Stateless
+    NFs.md
+  source_words: 453
+  kind: embedded-clause
+- clause: 6.5.3
+  title: 6.5.3 Stateless NFs (for any 5GC NF type)
+  path: 6 General Functionalities in Service Based Architecture/6.5 Support of Stateless
+    NFs.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.5.3.1
+  title: 6.5.3.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.5 Support of Stateless
+    NFs.md
+  source_words: 115
+  kind: embedded-clause
+- clause: 6.5.3.2
+  title: 6.5.3.2 Stateless NF as service consumer
+  path: 6 General Functionalities in Service Based Architecture/6.5 Support of Stateless
+    NFs.md
+  source_words: 963
+  kind: embedded-clause
+- clause: 6.5.3.3
+  title: 6.5.3.3 Stateless NF as service producer
+  path: 6 General Functionalities in Service Based Architecture/6.5 Support of Stateless
+    NFs.md
+  source_words: 760
+  kind: embedded-clause
+- clause: '6.6'
+  title: 6.6 Extensibility Mechanisms
+  path: 6 General Functionalities in Service Based Architecture/6.6 Extensibility
+    Mechanisms.md
+  source_words: 2242
+  kind: source-file
+- clause: 6.6.1
+  title: 6.6.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.6 Extensibility
+    Mechanisms.md
+  source_words: 21
+  kind: embedded-clause
+- clause: 6.6.2
+  title: 6.6.2 Feature negotiation
+  path: 6 General Functionalities in Service Based Architecture/6.6 Extensibility
+    Mechanisms.md
+  source_words: 1350
+  kind: embedded-clause
+- clause: 6.6.3
+  title: 6.6.3 Vendor-specific extensions
+  path: 6 General Functionalities in Service Based Architecture/6.6 Extensibility
+    Mechanisms.md
+  source_words: 293
+  kind: embedded-clause
+- clause: 6.6.4
+  title: 6.6.4 Extensibility for Query parameters
+  path: 6 General Functionalities in Service Based Architecture/6.6 Extensibility
+    Mechanisms.md
+  source_words: 553
+  kind: embedded-clause
+- clause: '6.7'
+  title: 6.7 Security Mechanisms
+  path: 6 General Functionalities in Service Based Architecture/6.7 Security Mechanisms.md
+  source_words: 2184
+  kind: source-file
+- clause: 6.7.1
+  title: 6.7.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.7 Security Mechanisms.md
+  source_words: 76
+  kind: embedded-clause
+- clause: 6.7.2
+  title: 6.7.2 Transport layer security protection of messages
+  path: 6 General Functionalities in Service Based Architecture/6.7 Security Mechanisms.md
+  source_words: 40
+  kind: embedded-clause
+- clause: 6.7.3
+  title: 6.7.3 Authorization of NF service access
+  path: 6 General Functionalities in Service Based Architecture/6.7 Security Mechanisms.md
+  source_words: 923
+  kind: embedded-clause
+- clause: 6.7.4
+  title: 6.7.4 Application layer security across PLMN
+  path: 6 General Functionalities in Service Based Architecture/6.7 Security Mechanisms.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.7.4.1
+  title: 6.7.4.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.7 Security Mechanisms.md
+  source_words: 28
+  kind: embedded-clause
+- clause: 6.7.4.2
+  title: 6.7.4.2 N32 Procedures
+  path: 6 General Functionalities in Service Based Architecture/6.7 Security Mechanisms.md
+  source_words: 144
+  kind: embedded-clause
+- clause: 6.7.5
+  title: 6.7.5 Client credentials assertion and authentication
+  path: 6 General Functionalities in Service Based Architecture/6.7 Security Mechanisms.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.7.5.1
+  title: 6.7.5.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.7 Security Mechanisms.md
+  source_words: 177
+  kind: embedded-clause
+- clause: 6.7.5.2
+  title: 6.7.5.2 Authorization of NF Service Consumers for data access via DCCF
+  path: 6 General Functionalities in Service Based Architecture/6.7 Security Mechanisms.md
+  source_words: 515
+  kind: embedded-clause
+- clause: 6.7.5.3
+  title: 6.7.5.3 Authorization of requesting ML models on behalf of another ML model
+    consumer
+  path: 6 General Functionalities in Service Based Architecture/6.7 Security Mechanisms.md
+  source_words: 194
+  kind: embedded-clause
+- clause: '6.8'
+  title: 6.8 SBI Message Priority Mechanism
+  path: 6 General Functionalities in Service Based Architecture/6.8 SBI Message Priority
+    Mechanism.md
+  source_words: 1670
+  kind: source-file
+- clause: 6.8.1
+  title: 6.8.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.8 SBI Message Priority
+    Mechanism.md
+  source_words: 159
+  kind: embedded-clause
+- clause: 6.8.2
+  title: 6.8.2 Message level priority
+  path: 6 General Functionalities in Service Based Architecture/6.8 SBI Message Priority
+    Mechanism.md
+  source_words: 123
+  kind: embedded-clause
+- clause: 6.8.3
+  title: 6.8.3 Stream priority
+  path: 6 General Functionalities in Service Based Architecture/6.8 SBI Message Priority
+    Mechanism.md
+  source_words: 163
+  kind: embedded-clause
+- clause: 6.8.4
+  title: 6.8.4 Recommendations when defining SBI Message Priorities
+  path: 6 General Functionalities in Service Based Architecture/6.8 SBI Message Priority
+    Mechanism.md
+  source_words: 708
+  kind: embedded-clause
+- clause: 6.8.5
+  title: 6.8.5 HTTP/2 client behaviour
+  path: 6 General Functionalities in Service Based Architecture/6.8 SBI Message Priority
+    Mechanism.md
+  source_words: 134
+  kind: embedded-clause
+- clause: 6.8.6
+  title: 6.8.6 HTTP/2 server behaviour
+  path: 6 General Functionalities in Service Based Architecture/6.8 SBI Message Priority
+    Mechanism.md
+  source_words: 132
+  kind: embedded-clause
+- clause: 6.8.7
+  title: 6.8.7 HTTP/2 proxy behaviour
+  path: 6 General Functionalities in Service Based Architecture/6.8 SBI Message Priority
+    Mechanism.md
+  source_words: 113
+  kind: embedded-clause
+- clause: 6.8.8
+  title: 6.8.8 DSCP marking of messages
+  path: 6 General Functionalities in Service Based Architecture/6.8 SBI Message Priority
+    Mechanism.md
+  source_words: 80
+  kind: embedded-clause
+- clause: '6.9'
+  title: 6.9 Discovering the supported communication options
+  path: 6 General Functionalities in Service Based Architecture/6.9 Discovering the
+    supported communication options.md
+  source_words: 635
+  kind: source-file
+- clause: 6.9.1
+  title: 6.9.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.9 Discovering the
+    supported communication options.md
+  source_words: 106
+  kind: embedded-clause
+- clause: 6.9.2
+  title: 6.9.2 Discoverable communication options
+  path: 6 General Functionalities in Service Based Architecture/6.9 Discovering the
+    supported communication options.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.9.2.1
+  title: 6.9.2.1 Content-encodings supported in HTTP requests
+  path: 6 General Functionalities in Service Based Architecture/6.9 Discovering the
+    supported communication options.md
+  source_words: 333
+  kind: embedded-clause
+- clause: 6.9.2.2
+  title: 6.9.2.2 Content-encodings supported in HTTP responses
+  path: 6 General Functionalities in Service Based Architecture/6.9 Discovering the
+    supported communication options.md
+  source_words: 161
+  kind: embedded-clause
+- clause: '6.10'
+  title: 6.10 Support of Indirect Communication
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/README.md
+  source_words: 12204
+  kind: navigation-directory
+- clause: 6.10.1
+  title: 6.10.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.1 General.md
+  source_words: 373
+  kind: source-file
+- clause: 6.10.2
+  title: 6.10.2 Routing Mechanisms with SCP Known to the NF
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.2 Routing Mechanisms with SCP Known to the NF.md
+  source_words: 2011
+  kind: source-file
+- clause: 6.10.2.1
+  title: 6.10.2.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.2 Routing Mechanisms with SCP Known to the NF.md
+  source_words: 65
+  kind: embedded-clause
+- clause: 6.10.2.2
+  title: 6.10.2.2 HTTP/2 connection management
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.2 Routing Mechanisms with SCP Known to the NF.md
+  source_words: 73
+  kind: embedded-clause
+- clause: 6.10.2.3
+  title: 6.10.2.3 Connecting inbound
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.2 Routing Mechanisms with SCP Known to the NF.md
+  source_words: 121
+  kind: embedded-clause
+- clause: 6.10.2.4
+  title: 6.10.2.4 Pseudo-header setting
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.2 Routing Mechanisms with SCP Known to the NF.md
+  source_words: 1138
+  kind: embedded-clause
+- clause: 6.10.2.5
+  title: 6.10.2.5 3gpp-Sbi-Target-apiRoot header setting
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.2 Routing Mechanisms with SCP Known to the NF.md
+  source_words: 407
+  kind: embedded-clause
+- clause: 6.10.2.6
+  title: 6.10.2.6 Cache key (ck) query parameter
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.2 Routing Mechanisms with SCP Known to the NF.md
+  source_words: 155
+  kind: embedded-clause
+- clause: 6.10.2A
+  title: 6.10.2A Routing Mechanism with SCP Unknown to the NF
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.2A Routing Mechanism with SCP Unknown to the NF.md
+  source_words: 319
+  kind: source-file
+- clause: 6.10.2A.1
+  title: 6.10.2A.1 Connecting inbound
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.2A Routing Mechanism with SCP Unknown to the NF.md
+  source_words: 88
+  kind: embedded-clause
+- clause: 6.10.2A.2
+  title: 6.10.2A.2 HTTP/2 connection management
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.2A Routing Mechanism with SCP Unknown to the NF.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 6.10.2A.3
+  title: 6.10.2A.3 Pseudo-header setting
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.2A Routing Mechanism with SCP Unknown to the NF.md
+  source_words: 185
+  kind: embedded-clause
+- clause: 6.10.3
+  title: 6.10.3 NF Discovery and Selection for indirect communication with Delegated
+    Discovery
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.3 NF Discovery and Selection for indirect communication with
+    Delegated Discovery.md
+  source_words: 2407
+  kind: source-file
+- clause: 6.10.3.1
+  title: 6.10.3.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.3 NF Discovery and Selection for indirect communication with
+    Delegated Discovery.md
+  source_words: 42
+  kind: embedded-clause
+- clause: 6.10.3.2
+  title: 6.10.3.2 Conveyance of NF Discovery Factors
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.3 NF Discovery and Selection for indirect communication with
+    Delegated Discovery.md
+  source_words: 1040
+  kind: embedded-clause
+- clause: 6.10.3.3
+  title: 6.10.3.3 Notifications corresponding to default notification subscriptions
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.3 NF Discovery and Selection for indirect communication with
+    Delegated Discovery.md
+  source_words: 270
+  kind: embedded-clause
+- clause: 6.10.3.4
+  title: 6.10.3.4 Returning the Producer's NF Instance ID and NF Group ID to the NF
+    Service Consumer
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.3 NF Discovery and Selection for indirect communication with
+    Delegated Discovery.md
+  source_words: 679
+  kind: embedded-clause
+- clause: 6.10.3.5
+  title: 6.10.3.5 Returning an Alternate CHF instance ID to the NF Service Consumer
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.3 NF Discovery and Selection for indirect communication with
+    Delegated Discovery.md
+  source_words: 305
+  kind: embedded-clause
+- clause: 6.10.4
+  title: 6.10.4 Authority and/or deployment-specific string in apiRoot of resource
+    URI
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.4 Authority and and or deployment-specific string in apiRoot
+    of resource URI.md
+  source_words: 429
+  kind: source-file
+- clause: 6.10.5
+  title: 6.10.5 NF / NF service instance selection for Indirect Communication without
+    Delegated Discovery
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.5 NF and NF service instance selection for Indirect Communication
+    without Delegated Discovery.md
+  source_words: 1388
+  kind: source-file
+- clause: 6.10.5.1
+  title: 6.10.5.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.5 NF and NF service instance selection for Indirect Communication
+    without Delegated Discovery.md
+  source_words: 823
+  kind: embedded-clause
+- clause: 6.10.5.2
+  title: 6.10.5.2 Notifications corresponding to default notification subscriptions
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.5 NF and NF service instance selection for Indirect Communication
+    without Delegated Discovery.md
+  source_words: 536
+  kind: embedded-clause
+- clause: 6.10.6
+  title: 6.10.6 Feature negotiation for Indirect Communication with Delegated Discovery
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.6 Feature negotiation for Indirect Communication with Delegated
+    Discovery.md
+  source_words: 166
+  kind: source-file
+- clause: 6.10.7
+  title: 6.10.7 Notification and callback requests sent with Indirect Communication
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.7 Notification and callback requests sent with Indirect Communication.md
+  source_words: 200
+  kind: source-file
+- clause: 6.10.8
+  title: 6.10.8 Error Handling
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.8 Error Handling.md
+  source_words: 1492
+  kind: source-file
+- clause: 6.10.8.1
+  title: 6.10.8.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.8 Error Handling.md
+  source_words: 587
+  kind: embedded-clause
+- clause: 6.10.8.2
+  title: 6.10.8.2 Requirements for the originator of an HTTP error response
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.8 Error Handling.md
+  source_words: 551
+  kind: embedded-clause
+- clause: 6.10.8.3
+  title: 6.10.8.3 Requirements for an SCP or SEPP relaying an HTTP error response
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.8 Error Handling.md
+  source_words: 316
+  kind: embedded-clause
+- clause: 6.10.9
+  title: 6.10.9 HTTP redirection
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.9 HTTP redirection.md
+  source_words: 954
+  kind: source-file
+- clause: 6.10.9.1
+  title: 6.10.9.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.9 HTTP redirection.md
+  source_words: 944
+  kind: embedded-clause
+- clause: 6.10.10
+  title: 6.10.10 Detection and handling of loop path when relaying message with indirect
+    communication
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.10 Detection and handling of loop path when relaying message
+    with indirect communication.md
+  source_words: 338
+  kind: source-file
+- clause: 6.10.10.1
+  title: 6.10.10.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.10 Detection and handling of loop path when relaying message
+    with indirect communication.md
+  source_words: 61
+  kind: embedded-clause
+- clause: 6.10.10.2
+  title: 6.10.10.2 Message Forwarding Depth Control
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.10 Detection and handling of loop path when relaying message
+    with indirect communication.md
+  source_words: 140
+  kind: embedded-clause
+- clause: 6.10.10.3
+  title: 6.10.10.3 Loop Detection with Via header
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.10 Detection and handling of loop path when relaying message
+    with indirect communication.md
+  source_words: 100
+  kind: embedded-clause
+- clause: 6.10.11
+  title: 6.10.11 Authorization of NF service access
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.11 Authorization of NF service access.md
+  source_words: 2121
+  kind: source-file
+- clause: 6.10.11.1
+  title: 6.10.11.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.11 Authorization of NF service access.md
+  source_words: 23
+  kind: embedded-clause
+- clause: 6.10.11.2
+  title: 6.10.11.2 Authorization for indirect communication with delegated discovery
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.11 Authorization of NF service access.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.10.11.2.1
+  title: 6.10.11.2.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.11 Authorization of NF service access.md
+  source_words: 1089
+  kind: embedded-clause
+- clause: 6.10.11.2.2
+  title: 6.10.11.2.2 Error handling when the SCP fails to obtain an access token
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.11 Authorization of NF service access.md
+  source_words: 222
+  kind: embedded-clause
+- clause: 6.10.11.2.2A
+  title: 6.10.11.2.2A Error handling when the SCP obtains an access token without
+    all the scopes required for access authorization of the incoming service request
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.11 Authorization of NF service access.md
+  source_words: 317
+  kind: embedded-clause
+- clause: 6.10.11.2.3
+  title: 6.10.11.2.3 Error handling when SCP receives a "401 Unauthorized" response
+    or a "403 Forbidden" response with a "WWW-Authenticate" header
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.11 Authorization of NF service access.md
+  source_words: 241
+  kind: embedded-clause
+- clause: 6.10.11.3
+  title: 6.10.11.3 Authorization for indirect communication without delegated discovery
+  path: 6 General Functionalities in Service Based Architecture/6.10 Support of Indirect
+    Communication/6.10.11 Authorization of NF service access.md
+  source_words: 122
+  kind: embedded-clause
+- clause: '6.11'
+  title: 6.11 Detection and handling of late arriving requests
+  path: 6 General Functionalities in Service Based Architecture/6.11 Detection and
+    handling of late arriving requests.md
+  source_words: 403
+  kind: source-file
+- clause: 6.11.1
+  title: 6.11.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.11 Detection and
+    handling of late arriving requests.md
+  source_words: 46
+  kind: embedded-clause
+- clause: 6.11.2
+  title: 6.11.2 Detection and handling of requests which have timed out at the HTTP
+    client
+  path: 6 General Functionalities in Service Based Architecture/6.11 Detection and
+    handling of late arriving requests.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.11.2.1
+  title: 6.11.2.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.11 Detection and
+    handling of late arriving requests.md
+  source_words: 77
+  kind: embedded-clause
+- clause: 6.11.2.2
+  title: 6.11.2.2 Principles
+  path: 6 General Functionalities in Service Based Architecture/6.11 Detection and
+    handling of late arriving requests.md
+  source_words: 241
+  kind: embedded-clause
+- clause: '6.12'
+  title: 6.12 Binding between an NF Service Consumer and an NF Service Resource
+  path: 6 General Functionalities in Service Based Architecture/6.12 Binding between
+    an NF Service Consumer and an NF Service Resource/README.md
+  source_words: 4532
+  kind: navigation-directory
+- clause: 6.12.1
+  title: 6.12.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.12 Binding between
+    an NF Service Consumer and an NF Service Resource/6.12.1 General.md
+  source_words: 2015
+  kind: source-file
+- clause: 6.12.2
+  title: 6.12.2 Binding created as part of a service response
+  path: 6 General Functionalities in Service Based Architecture/6.12 Binding between
+    an NF Service Consumer and an NF Service Resource/6.12.2 Binding created as part
+    of a service response.md
+  source_words: 244
+  kind: source-file
+- clause: 6.12.3
+  title: 6.12.3 Binding created as part of a service request
+  path: 6 General Functionalities in Service Based Architecture/6.12 Binding between
+    an NF Service Consumer and an NF Service Resource/6.12.3 Binding created as part
+    of a service request.md
+  source_words: 489
+  kind: source-file
+- clause: 6.12.4
+  title: 6.12.4 Binding for explicit or implicit subscription requests
+  path: 6 General Functionalities in Service Based Architecture/6.12 Binding between
+    an NF Service Consumer and an NF Service Resource/6.12.4 Binding for explicit
+    or implicit subscription requests.md
+  source_words: 1603
+  kind: source-file
+- clause: 6.12.5
+  title: 6.12.5 Binding for service requests creating a callback resource
+  path: 6 General Functionalities in Service Based Architecture/6.12 Binding between
+    an NF Service Consumer and an NF Service Resource/6.12.5 Binding for service requests
+    creating a callback resource.md
+  source_words: 168
+  kind: source-file
+- clause: '6.13'
+  title: 6.13 SBI messages correlation for network troubleshooting
+  path: 6 General Functionalities in Service Based Architecture/6.13 SBI messages
+    correlation for network troubleshooting.md
+  source_words: 1042
+  kind: source-file
+- clause: 6.13.1
+  title: 6.13.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.13 SBI messages
+    correlation for network troubleshooting.md
+  source_words: 59
+  kind: embedded-clause
+- clause: 6.13.2
+  title: 6.13.2 SBI messages correlation using UE identifier
+  path: 6 General Functionalities in Service Based Architecture/6.13 SBI messages
+    correlation for network troubleshooting.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.13.2.1
+  title: 6.13.2.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.13 SBI messages
+    correlation for network troubleshooting.md
+  source_words: 146
+  kind: embedded-clause
+- clause: 6.13.2.2
+  title: 6.13.2.2 Principles
+  path: 6 General Functionalities in Service Based Architecture/6.13 SBI messages
+    correlation for network troubleshooting.md
+  source_words: 335
+  kind: embedded-clause
+- clause: 6.13.3
+  title: 6.13.3 SBI messages correlation using NF Peer Information
+  path: 6 General Functionalities in Service Based Architecture/6.13 SBI messages
+    correlation for network troubleshooting.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.13.3.1
+  title: 6.13.3.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.13 SBI messages
+    correlation for network troubleshooting.md
+  source_words: 98
+  kind: embedded-clause
+- clause: 6.13.3.2
+  title: 6.13.3.2 Principles
+  path: 6 General Functionalities in Service Based Architecture/6.13 SBI messages
+    correlation for network troubleshooting.md
+  source_words: 353
+  kind: embedded-clause
+- clause: '6.14'
+  title: 6.14 Indicating the purpose of Inter-PLMN signaling
+  path: 6 General Functionalities in Service Based Architecture/6.14 Indicating the
+    purpose of Inter-PLMN signaling.md
+  source_words: 674
+  kind: source-file
+- clause: 6.14.1
+  title: 6.14.1 General
+  path: 6 General Functionalities in Service Based Architecture/6.14 Indicating the
+    purpose of Inter-PLMN signaling.md
+  source_words: 67
+  kind: embedded-clause
+- clause: 6.14.2
+  title: 6.14.2 Inclusion of the intended purpose
+  path: 6 General Functionalities in Service Based Architecture/6.14 Indicating the
+    purpose of Inter-PLMN signaling.md
+  source_words: 78
+  kind: embedded-clause
+- clause: 6.14.3
+  title: 6.14.3 Evaluating the intended purpose
+  path: 6 General Functionalities in Service Based Architecture/6.14 Indicating the
+    purpose of Inter-PLMN signaling.md
+  source_words: 502
+  kind: embedded-clause
+- clause: Annex A
+  title: 'Annex A (informative): Client-side Adaptive Throttling for Overload Control'
+  path: Annex A (informative) Client-side Adaptive Throttling for Overload Control.md
+  source_words: 351
+  kind: source-file
+- clause: Annex B
+  title: 'Annex B (normative): 3gpp-Sbi-Callback Types'
+  path: Annex B (normative) 3gpp-Sbi-Callback Types.md
+  source_words: 363
+  kind: source-file
+- clause: Annex C
+  title: 'Annex C (informative): Internal NF Routing of HTTP Requests'
+  path: Annex C (informative) Internal NF Routing of HTTP Requests.md
+  source_words: 286
+  kind: source-file
+- clause: Annex D
+  title: 'Annex D (Normative): ABNF grammar for 3GPP SBI HTTP custom headers'
+  path: Annex D (Normative) ABNF grammar for 3GPP SBI HTTP custom headers.md
+  source_words: 1763
+  kind: source-file
+- clause: D.1
+  title: D.1 General
+  path: Annex D (Normative) ABNF grammar for 3GPP SBI HTTP custom headers.md
+  source_words: 392
+  kind: embedded-clause
+- clause: D.2
+  title: 'D.2 ABNF definitions (Filename: "TS29500_CustomHeaders.abnf")'
+  path: Annex D (Normative) ABNF grammar for 3GPP SBI HTTP custom headers.md
+  source_words: 1350
+  kind: embedded-clause
+- clause: Annex E
+  title: 'Annex E (informative): Change history'
+  path: Annex E (informative) Change history/README.md
+  source_words: 4752
+  kind: navigation-directory
+- clause: Annex E-2017
+  title: 'Annex E (informative): Change history — 2017'
+  path: Annex E (informative) Change history/2017.md
+  source_words: 37
+  kind: source-file
+- clause: Annex E-2018
+  title: 'Annex E (informative): Change history — 2018'
+  path: Annex E (informative) Change history/2018.md
+  source_words: 379
+  kind: source-file
+- clause: Annex E-2019
+  title: 'Annex E (informative): Change history — 2019'
+  path: Annex E (informative) Change history/2019.md
+  source_words: 620
+  kind: source-file
+- clause: Annex E-2020
+  title: 'Annex E (informative): Change history — 2020'
+  path: Annex E (informative) Change history/2020.md
+  source_words: 1164
+  kind: source-file
+- clause: Annex E-2021
+  title: 'Annex E (informative): Change history — 2021'
+  path: Annex E (informative) Change history/2021.md
+  source_words: 996
+  kind: source-file
+- clause: Annex E-2022
+  title: 'Annex E (informative): Change history — 2022'
+  path: Annex E (informative) Change history/2022.md
+  source_words: 742
+  kind: source-file
+- clause: Annex E-2023
+  title: 'Annex E (informative): Change history — 2023'
+  path: Annex E (informative) Change history/2023.md
+  source_words: 438
+  kind: source-file
+- clause: Annex E-2024
+  title: 'Annex E (informative): Change history — 2024'
+  path: Annex E (informative) Change history/2024.md
+  source_words: 317
+  kind: source-file
+- clause: Annex E-2025
+  title: 'Annex E (informative): Change history — 2025'
+  path: Annex E (informative) Change history/2025.md
+  source_words: 42
+  kind: source-file

@@ -1,0 +1,902 @@
+corrections:
+- spec: TS 23.288
+  line: 13865
+  type: promote-annex-heading
+  original: '######## Annex A (informative): Methods to handle NAT on IPv4 between
+    UE and AF'
+  replacement: '# Annex A (informative): Methods to handle NAT on IPv4 between UE
+    and AF'
+- spec: TS 23.288
+  line: 13867
+  type: demote-annex-subheading
+  original: '# A.1 Methods to handle NAT on IPv4 between UE and AF'
+  replacement: '## A.1 Methods to handle NAT on IPv4 between UE and AF'
+- spec: TS 23.288
+  line: 13885
+  type: promote-annex-heading
+  original: '########  Annex B (informative): Change history'
+  replacement: '# Annex B (informative): Change history'
+- spec: TS 29.520
+  line: 40
+  type: remove-empty-heading
+  original: '#  '
+- spec: TS 29.520
+  line: 26205
+  type: promote-annex-heading
+  original: '######## Annex A (normative): OpenAPI specification'
+  replacement: '# Annex A (normative): OpenAPI specification'
+- spec: TS 29.520
+  line: 26207
+  type: demote-annex-subheading
+  original: '# A.1 General'
+  replacement: '## A.1 General'
+- spec: TS 29.520
+  line: 26217
+  type: demote-annex-subheading
+  original: '# A.2 Nnwdaf_EventsSubscription API'
+  replacement: '## A.2 Nnwdaf_EventsSubscription API'
+- spec: TS 29.520
+  line: 34089
+  type: demote-annex-subheading
+  original: '# A.3 Nnwdaf_AnalyticsInfo API'
+  replacement: '## A.3 Nnwdaf_AnalyticsInfo API'
+- spec: TS 29.520
+  line: 35989
+  type: demote-annex-subheading
+  original: '# A.4 Nnwdaf_DataManagement API'
+  replacement: '## A.4 Nnwdaf_DataManagement API'
+- spec: TS 29.520
+  line: 36785
+  type: demote-annex-subheading
+  original: '# A.5 Nnwdaf_MLModelProvision API'
+  replacement: '## A.5 Nnwdaf_MLModelProvision API'
+- spec: TS 29.520
+  line: 37905
+  type: demote-annex-subheading
+  original: '# A.6 Nnwdaf_MLModelTraining API'
+  replacement: '## A.6 Nnwdaf_MLModelTraining API'
+- spec: TS 29.520
+  line: 39055
+  type: demote-annex-subheading
+  original: '# A.7 Nnwdaf_MLModelMonitor API'
+  replacement: '## A.7 Nnwdaf_MLModelMonitor API'
+- spec: TS 29.520
+  line: 39989
+  type: demote-annex-subheading
+  original: '# A.8 Nnwdaf_RoamingData API'
+  replacement: '## A.8 Nnwdaf_RoamingData API'
+- spec: TS 29.520
+  line: 40525
+  type: restore-heading
+  original: A.9 Nnwdaf_RoamingAnalytics API
+  replacement: '## A.9 Nnwdaf_RoamingAnalytics API'
+- spec: TS 29.520
+  line: 41097
+  type: promote-annex-heading
+  original: '######## Annex B (informative): Change history'
+  replacement: '# Annex B (informative): Change history'
+- spec: TS 23.502
+  line: 32594
+  type: promote-annex-heading
+  original: '########  Annex A (informative): Drafting rules and conventions for NF
+    services'
+  replacement: '# Annex A (informative): Drafting rules and conventions for NF services'
+- spec: TS 23.502
+  line: 32596
+  type: demote-annex-subheading
+  original: '# A.1 General'
+  replacement: '## A.1 General'
+- spec: TS 23.502
+  line: 32600
+  type: demote-annex-subheading
+  original: '# A.2 Naming'
+  replacement: '## A.2 Naming'
+- spec: TS 23.502
+  line: 32624
+  type: demote-annex-subheading
+  original: '# A.3 Representation in an information flow'
+  replacement: '## A.3 Representation in an information flow'
+- spec: TS 23.502
+  line: 32642
+  type: demote-annex-subheading
+  original: '# A.4 Reference to services and service operations in procedures'
+  replacement: '## A.4 Reference to services and service operations in procedures'
+- spec: TS 23.502
+  line: 32650
+  type: demote-annex-subheading
+  original: '# A.5 Service and service operation description template'
+  replacement: '## A.5 Service and service operation description template'
+- spec: TS 23.502
+  line: 32680
+  type: demote-annex-subheading
+  original: '# A.6 Design Guidelines for NF services'
+  replacement: '## A.6 Design Guidelines for NF services'
+- spec: TS 23.502
+  line: 32708
+  type: promote-annex-heading
+  original: '########  Annex B (informative): Drafting Rules for Information flows'
+  replacement: '# Annex B (informative): Drafting Rules for Information flows'
+- spec: TS 23.502
+  line: 32720
+  type: promote-annex-heading
+  original: '########  Annex C (informative): Generating EPS PDN Connection parameters
+    from 5G PDU Session parameters'
+  replacement: '# Annex C (informative): Generating EPS PDN Connection parameters
+    from 5G PDU Session parameters'
+- spec: TS 23.502
+  line: 32744
+  type: promote-annex-heading
+  original: '########  Annex D (normative): UE Presence in Area of Interest'
+  replacement: '# Annex D (normative): UE Presence in Area of Interest'
+- spec: TS 23.502
+  line: 32818
+  type: promote-annex-heading
+  original: '########  Annex E (normative): Delegated SMF and PCF discovery in the
+    Home Routed and specific SMF Service Areas scenarios'
+  replacement: '# Annex E (normative): Delegated SMF and PCF discovery in the Home
+    Routed and specific SMF Service Areas scenarios'
+- spec: TS 23.502
+  line: 32942
+  type: promote-annex-heading
+  original: '######## Annex F (informative): Information flows for 5GS integration
+    with TSN or with Deterministic Networking'
+  replacement: '# Annex F (informative): Information flows for 5GS integration with
+    TSN or with Deterministic Networking'
+- spec: TS 23.502
+  line: 33154
+  type: promote-annex-heading
+  original: '########  Annex G (normative): Support of GERAN/UTRAN access by SMF+PGW-C'
+  replacement: '# Annex G (normative): Support of GERAN/UTRAN access by SMF+PGW-C'
+- spec: TS 23.502
+  line: 33202
+  type: promote-annex-heading
+  original: '######## Annex H (normative): Support of EAP-based secondary authentication
+    and authorization by DN-AAA over EPC'
+  replacement: '# Annex H (normative): Support of EAP-based secondary authentication
+    and authorization by DN-AAA over EPC'
+- spec: TS 23.502
+  line: 33276
+  type: promote-annex-heading
+  original: '######## Annex I (informative): Member UE selection without the NEF assistance
+    at the AF'
+  replacement: '# Annex I (informative): Member UE selection without the NEF assistance
+    at the AF'
+- spec: TS 23.502
+  line: 33302
+  type: promote-annex-heading
+  original: '######## Annex J (informative): Support for Personal IoT Networks'
+  replacement: '# Annex J (informative): Support for Personal IoT Networks'
+- spec: TS 23.502
+  line: 33346
+  type: promote-annex-heading
+  original: '########  Annex K (informative): Change history'
+  replacement: '# Annex K (informative): Change history'
+- spec: TS 29.500
+  line: 6041
+  type: promote-annex-heading
+  original: '######## Annex A (informative): Client-side Adaptive Throttling for Overload
+    Control'
+  replacement: '# Annex A (informative): Client-side Adaptive Throttling for Overload
+    Control'
+- spec: TS 29.500
+  line: 6071
+  type: promote-annex-heading
+  original: '######## Annex B (normative): 3gpp-Sbi-Callback Types'
+  replacement: '# Annex B (normative): 3gpp-Sbi-Callback Types'
+- spec: TS 29.500
+  line: 6117
+  type: promote-annex-heading
+  original: '######## Annex C (informative): Internal NF Routing of HTTP Requests'
+  replacement: '# Annex C (informative): Internal NF Routing of HTTP Requests'
+- spec: TS 29.500
+  line: 6135
+  type: promote-annex-heading
+  original: '######## Annex D (Normative): ABNF grammar for 3GPP SBI HTTP custom headers'
+  replacement: '# Annex D (Normative): ABNF grammar for 3GPP SBI HTTP custom headers'
+- spec: TS 29.500
+  line: 7095
+  type: promote-annex-heading
+  original: '######## Annex E (informative): Change history'
+  replacement: '# Annex E (informative): Change history'
+- spec: TS 29.571
+  line: 10502
+  type: promote-annex-heading
+  original: '######## Annex A (normative): OpenAPI specification'
+  replacement: '# Annex A (normative): OpenAPI specification'
+- spec: TS 29.571
+  line: 10504
+  type: demote-annex-subheading
+  original: '# A.1 General'
+  replacement: '## A.1 General'
+- spec: TS 29.571
+  line: 10514
+  type: demote-annex-subheading
+  original: '# A.2 Data related to Common Data Types'
+  replacement: '## A.2 Data related to Common Data Types'
+- spec: TS 29.571
+  line: 22827
+  type: promote-annex-heading
+  original: '########  Annex B (informative): Change history'
+  replacement: '# Annex B (informative): Change history'
+- spec: TS 29.510
+  line: 20819
+  type: promote-annex-heading
+  original: '######## Annex A (normative): OpenAPI specification'
+  replacement: '# Annex A (normative): OpenAPI specification'
+- spec: TS 29.510
+  line: 20821
+  type: demote-annex-subheading
+  original: '# A.1 General'
+  replacement: '## A.1 General'
+- spec: TS 29.510
+  line: 20831
+  type: demote-annex-subheading
+  original: '# A.2 Nnrf_NFManagement API'
+  replacement: '## A.2 Nnrf_NFManagement API'
+- spec: TS 29.510
+  line: 32509
+  type: demote-annex-subheading
+  original: '# A.3 Nnrf_NFDiscovery API'
+  replacement: '## A.3 Nnrf_NFDiscovery API'
+- spec: TS 29.510
+  line: 37503
+  type: demote-annex-subheading
+  original: '# A.4 Nnrf_AccessToken API (NRF OAuth2 Authorization)'
+  replacement: '## A.4 Nnrf_AccessToken API (NRF OAuth2 Authorization)'
+- spec: TS 29.510
+  line: 38189
+  type: demote-annex-subheading
+  original: '# A.5 Nnrf_Bootstrapping API'
+  replacement: '## A.5 Nnrf_Bootstrapping API'
+- spec: TS 29.510
+  line: 38443
+  type: promote-annex-heading
+  original: '########  Annex B (normative): NF Profile changes in NFRegister and NFUpdate
+    responses'
+  replacement: '# Annex B (normative): NF Profile changes in NFRegister and NFUpdate
+    responses'
+- spec: TS 29.510
+  line: 38479
+  type: promote-annex-heading
+  original: '######## Annex C (normative): Enhanced Authorization Policy using RuleSets
+    in NF (Service) Profile'
+  replacement: '# Annex C (normative): Enhanced Authorization Policy using RuleSets
+    in NF (Service) Profile'
+- spec: TS 29.510
+  line: 38597
+  type: promote-annex-heading
+  original: '######## Annex D (normative): Support of "Canary Release" testing in
+    the NRF'
+  replacement: '# Annex D (normative): Support of "Canary Release" testing in the
+    NRF'
+- spec: TS 29.510
+  line: 38809
+  type: promote-annex-heading
+  original: '########  Annex E (informative): Change history'
+  replacement: '# Annex E (informative): Change history'
+- spec: TS 23.502
+  line: 32594
+  type: promote-annex-heading
+  original: '########  Annex A (informative): Drafting rules and conventions for NF
+    services'
+  replacement: '# Annex A (informative): Drafting rules and conventions for NF services'
+- spec: TS 23.502
+  line: 32596
+  type: demote-annex-subheading
+  original: '# A.1 General'
+  replacement: '## A.1 General'
+- spec: TS 23.502
+  line: 32600
+  type: demote-annex-subheading
+  original: '# A.2 Naming'
+  replacement: '## A.2 Naming'
+- spec: TS 23.502
+  line: 32624
+  type: demote-annex-subheading
+  original: '# A.3 Representation in an information flow'
+  replacement: '## A.3 Representation in an information flow'
+- spec: TS 23.502
+  line: 32642
+  type: demote-annex-subheading
+  original: '# A.4 Reference to services and service operations in procedures'
+  replacement: '## A.4 Reference to services and service operations in procedures'
+- spec: TS 23.502
+  line: 32650
+  type: demote-annex-subheading
+  original: '# A.5 Service and service operation description template'
+  replacement: '## A.5 Service and service operation description template'
+- spec: TS 23.502
+  line: 32680
+  type: demote-annex-subheading
+  original: '# A.6 Design Guidelines for NF services'
+  replacement: '## A.6 Design Guidelines for NF services'
+- spec: TS 23.502
+  line: 32708
+  type: promote-annex-heading
+  original: '########  Annex B (informative): Drafting Rules for Information flows'
+  replacement: '# Annex B (informative): Drafting Rules for Information flows'
+- spec: TS 23.502
+  line: 32720
+  type: promote-annex-heading
+  original: '########  Annex C (informative): Generating EPS PDN Connection parameters
+    from 5G PDU Session parameters'
+  replacement: '# Annex C (informative): Generating EPS PDN Connection parameters
+    from 5G PDU Session parameters'
+- spec: TS 23.502
+  line: 32744
+  type: promote-annex-heading
+  original: '########  Annex D (normative): UE Presence in Area of Interest'
+  replacement: '# Annex D (normative): UE Presence in Area of Interest'
+- spec: TS 23.502
+  line: 32746
+  type: demote-annex-subheading
+  original: '# D.1 Determination of UE presence in Area of Interest by AMF'
+  replacement: '## D.1 Determination of UE presence in Area of Interest by AMF'
+- spec: TS 23.502
+  line: 32798
+  type: demote-annex-subheading
+  original: '# D.2 Determination of UE presence in Area of Interest by NG-RAN'
+  replacement: '## D.2 Determination of UE presence in Area of Interest by NG-RAN'
+- spec: TS 23.502
+  line: 32818
+  type: promote-annex-heading
+  original: '########  Annex E (normative): Delegated SMF and PCF discovery in the
+    Home Routed and specific SMF Service Areas scenarios'
+  replacement: '# Annex E (normative): Delegated SMF and PCF discovery in the Home
+    Routed and specific SMF Service Areas scenarios'
+- spec: TS 23.502
+  line: 32820
+  type: demote-annex-subheading
+  original: '# E.0 Overview'
+  replacement: '## E.0 Overview'
+- spec: TS 23.502
+  line: 32832
+  type: demote-annex-subheading
+  original: '# E.1 Delegated SMF discovery in the Home Routed scenario'
+  replacement: '## E.1 Delegated SMF discovery in the Home Routed scenario'
+- spec: TS 23.502
+  line: 32864
+  type: demote-annex-subheading
+  original: '# E.2 Delegated I-SMF discovery'
+  replacement: '## E.2 Delegated I-SMF discovery'
+- spec: TS 23.502
+  line: 32918
+  type: demote-annex-subheading
+  original: '# E.3 Delegated PCF discovery in the Roaming scenario'
+  replacement: '## E.3 Delegated PCF discovery in the Roaming scenario'
+- spec: TS 23.502
+  line: 32942
+  type: promote-annex-heading
+  original: '######## Annex F (informative): Information flows for 5GS integration
+    with TSN or with Deterministic Networking'
+  replacement: '# Annex F (informative): Information flows for 5GS integration with
+    TSN or with Deterministic Networking'
+- spec: TS 23.502
+  line: 32948
+  type: demote-annex-subheading
+  original: '# F.1 5GS Bridge information reporting'
+  replacement: '## F.1 5GS Bridge information reporting'
+- spec: TS 23.502
+  line: 33000
+  type: demote-annex-subheading
+  original: '# F.2 5GS Bridge configuration'
+  replacement: '## F.2 5GS Bridge configuration'
+- spec: TS 23.502
+  line: 33038
+  type: demote-annex-subheading
+  original: '# F.3 BMCA procedure'
+  replacement: '## F.3 BMCA procedure'
+- spec: TS 23.502
+  line: 33064
+  type: demote-annex-subheading
+  original: '# F.4 5GS interworking with TSN deployed in the transport network'
+  replacement: '## F.4 5GS interworking with TSN deployed in the transport network'
+- spec: TS 23.502
+  line: 33112
+  type: demote-annex-subheading
+  original: '# F.5 5GS DetNet node information reporting'
+  replacement: '## F.5 5GS DetNet node information reporting'
+- spec: TS 23.502
+  line: 33132
+  type: demote-annex-subheading
+  original: '# F.6 5GS DetNet node configuration'
+  replacement: '## F.6 5GS DetNet node configuration'
+- spec: TS 23.502
+  line: 33154
+  type: promote-annex-heading
+  original: '########  Annex G (normative): Support of GERAN/UTRAN access by SMF+PGW-C'
+  replacement: '# Annex G (normative): Support of GERAN/UTRAN access by SMF+PGW-C'
+- spec: TS 23.502
+  line: 33202
+  type: promote-annex-heading
+  original: '######## Annex H (normative): Support of EAP-based secondary authentication
+    and authorization by DN-AAA over EPC'
+  replacement: '# Annex H (normative): Support of EAP-based secondary authentication
+    and authorization by DN-AAA over EPC'
+- spec: TS 23.502
+  line: 33204
+  type: demote-annex-subheading
+  original: '# H.1 Introduction'
+  replacement: '## H.1 Introduction'
+- spec: TS 23.502
+  line: 33222
+  type: demote-annex-subheading
+  original: '# H.2 Procedures'
+  replacement: '## H.2 Procedures'
+- spec: TS 23.502
+  line: 33276
+  type: promote-annex-heading
+  original: '######## Annex I (informative): Member UE selection without the NEF assistance
+    at the AF'
+  replacement: '# Annex I (informative): Member UE selection without the NEF assistance
+    at the AF'
+- spec: TS 23.502
+  line: 33302
+  type: promote-annex-heading
+  original: '######## Annex J (informative): Support for Personal IoT Networks'
+  replacement: '# Annex J (informative): Support for Personal IoT Networks'
+- spec: TS 23.502
+  line: 33304
+  type: demote-annex-subheading
+  original: '# J.1 Procedure for PIN service'
+  replacement: '## J.1 Procedure for PIN service'
+- spec: TS 23.502
+  line: 33346
+  type: promote-annex-heading
+  original: '########  Annex K (informative): Change history'
+  replacement: '# Annex K (informative): Change history'
+- spec: TS 29.500
+  line: 6041
+  type: promote-annex-heading
+  original: '######## Annex A (informative): Client-side Adaptive Throttling for Overload
+    Control'
+  replacement: '# Annex A (informative): Client-side Adaptive Throttling for Overload
+    Control'
+- spec: TS 29.500
+  line: 6071
+  type: promote-annex-heading
+  original: '######## Annex B (normative): 3gpp-Sbi-Callback Types'
+  replacement: '# Annex B (normative): 3gpp-Sbi-Callback Types'
+- spec: TS 29.500
+  line: 6117
+  type: promote-annex-heading
+  original: '######## Annex C (informative): Internal NF Routing of HTTP Requests'
+  replacement: '# Annex C (informative): Internal NF Routing of HTTP Requests'
+- spec: TS 29.500
+  line: 6135
+  type: promote-annex-heading
+  original: '######## Annex D (Normative): ABNF grammar for 3GPP SBI HTTP custom headers'
+  replacement: '# Annex D (Normative): ABNF grammar for 3GPP SBI HTTP custom headers'
+- spec: TS 29.500
+  line: 6137
+  type: demote-annex-subheading
+  original: '# D.1 General'
+  replacement: '## D.1 General'
+- spec: TS 29.500
+  line: 6183
+  type: demote-annex-subheading
+  original: '# D.2 ABNF definitions (Filename: "TS29500_CustomHeaders.abnf")'
+  replacement: '## D.2 ABNF definitions (Filename: "TS29500_CustomHeaders.abnf")'
+- spec: TS 29.500
+  line: 7095
+  type: promote-annex-heading
+  original: '######## Annex E (informative): Change history'
+  replacement: '# Annex E (informative): Change history'
+- spec: TS 29.571
+  line: 10502
+  type: promote-annex-heading
+  original: '######## Annex A (normative): OpenAPI specification'
+  replacement: '# Annex A (normative): OpenAPI specification'
+- spec: TS 29.571
+  line: 10504
+  type: demote-annex-subheading
+  original: '# A.1 General'
+  replacement: '## A.1 General'
+- spec: TS 29.571
+  line: 10514
+  type: demote-annex-subheading
+  original: '# A.2 Data related to Common Data Types'
+  replacement: '## A.2 Data related to Common Data Types'
+- spec: TS 29.571
+  line: 22827
+  type: promote-annex-heading
+  original: '########  Annex B (informative): Change history'
+  replacement: '# Annex B (informative): Change history'
+- spec: TS 29.510
+  line: 20819
+  type: promote-annex-heading
+  original: '######## Annex A (normative): OpenAPI specification'
+  replacement: '# Annex A (normative): OpenAPI specification'
+- spec: TS 29.510
+  line: 20821
+  type: demote-annex-subheading
+  original: '# A.1 General'
+  replacement: '## A.1 General'
+- spec: TS 29.510
+  line: 20831
+  type: demote-annex-subheading
+  original: '# A.2 Nnrf_NFManagement API'
+  replacement: '## A.2 Nnrf_NFManagement API'
+- spec: TS 29.510
+  line: 32509
+  type: demote-annex-subheading
+  original: '# A.3 Nnrf_NFDiscovery API'
+  replacement: '## A.3 Nnrf_NFDiscovery API'
+- spec: TS 29.510
+  line: 37503
+  type: demote-annex-subheading
+  original: '# A.4 Nnrf_AccessToken API (NRF OAuth2 Authorization)'
+  replacement: '## A.4 Nnrf_AccessToken API (NRF OAuth2 Authorization)'
+- spec: TS 29.510
+  line: 38189
+  type: demote-annex-subheading
+  original: '# A.5 Nnrf_Bootstrapping API'
+  replacement: '## A.5 Nnrf_Bootstrapping API'
+- spec: TS 29.510
+  line: 38443
+  type: promote-annex-heading
+  original: '########  Annex B (normative): NF Profile changes in NFRegister and NFUpdate
+    responses'
+  replacement: '# Annex B (normative): NF Profile changes in NFRegister and NFUpdate
+    responses'
+- spec: TS 29.510
+  line: 38445
+  type: demote-annex-subheading
+  original: '# B.1 General'
+  replacement: '## B.1 General'
+- spec: TS 29.510
+  line: 38479
+  type: promote-annex-heading
+  original: '######## Annex C (normative): Enhanced Authorization Policy using RuleSets
+    in NF (Service) Profile'
+  replacement: '# Annex C (normative): Enhanced Authorization Policy using RuleSets
+    in NF (Service) Profile'
+- spec: TS 29.510
+  line: 38481
+  type: demote-annex-subheading
+  original: '# C.1 General'
+  replacement: '## C.1 General'
+- spec: TS 29.510
+  line: 38487
+  type: demote-annex-subheading
+  original: '# C.2 Examples of NF-Producer profile only using RuleSets (i.e. without
+    AllowedXXX parameters) in NF (Service) Profile'
+  replacement: '## C.2 Examples of NF-Producer profile only using RuleSets (i.e. without
+    AllowedXXX parameters) in NF (Service) Profile'
+- spec: TS 29.510
+  line: 38539
+  type: demote-annex-subheading
+  original: '# C.3 Example of NF-Producer profile using RuleSets and AllowedXXX parameters
+    in NF (Service) Profile'
+  replacement: '## C.3 Example of NF-Producer profile using RuleSets and AllowedXXX
+    parameters in NF (Service) Profile'
+- spec: TS 29.510
+  line: 38567
+  type: demote-annex-subheading
+  original: '# C.4 Backward Compatibility'
+  replacement: '## C.4 Backward Compatibility'
+- spec: TS 29.510
+  line: 38597
+  type: promote-annex-heading
+  original: '######## Annex D (normative): Support of "Canary Release" testing in
+    the NRF'
+  replacement: '# Annex D (normative): Support of "Canary Release" testing in the
+    NRF'
+- spec: TS 29.510
+  line: 38809
+  type: promote-annex-heading
+  original: '########  Annex E (informative): Change history'
+  replacement: '# Annex E (informative): Change history'
+- spec: TS 23.502
+  line: 32594
+  type: promote-annex-heading
+  original: '########  Annex A (informative): Drafting rules and conventions for NF
+    services'
+  replacement: '# Annex A (informative): Drafting rules and conventions for NF services'
+- spec: TS 23.502
+  line: 32596
+  type: demote-annex-subheading
+  original: '# A.1 General'
+  replacement: '## A.1 General'
+- spec: TS 23.502
+  line: 32600
+  type: demote-annex-subheading
+  original: '# A.2 Naming'
+  replacement: '## A.2 Naming'
+- spec: TS 23.502
+  line: 32624
+  type: demote-annex-subheading
+  original: '# A.3 Representation in an information flow'
+  replacement: '## A.3 Representation in an information flow'
+- spec: TS 23.502
+  line: 32642
+  type: demote-annex-subheading
+  original: '# A.4 Reference to services and service operations in procedures'
+  replacement: '## A.4 Reference to services and service operations in procedures'
+- spec: TS 23.502
+  line: 32650
+  type: demote-annex-subheading
+  original: '# A.5 Service and service operation description template'
+  replacement: '## A.5 Service and service operation description template'
+- spec: TS 23.502
+  line: 32680
+  type: demote-annex-subheading
+  original: '# A.6 Design Guidelines for NF services'
+  replacement: '## A.6 Design Guidelines for NF services'
+- spec: TS 23.502
+  line: 32708
+  type: promote-annex-heading
+  original: '########  Annex B (informative): Drafting Rules for Information flows'
+  replacement: '# Annex B (informative): Drafting Rules for Information flows'
+- spec: TS 23.502
+  line: 32720
+  type: promote-annex-heading
+  original: '########  Annex C (informative): Generating EPS PDN Connection parameters
+    from 5G PDU Session parameters'
+  replacement: '# Annex C (informative): Generating EPS PDN Connection parameters
+    from 5G PDU Session parameters'
+- spec: TS 23.502
+  line: 32744
+  type: promote-annex-heading
+  original: '########  Annex D (normative): UE Presence in Area of Interest'
+  replacement: '# Annex D (normative): UE Presence in Area of Interest'
+- spec: TS 23.502
+  line: 32746
+  type: demote-annex-subheading
+  original: '# D.1 Determination of UE presence in Area of Interest by AMF'
+  replacement: '## D.1 Determination of UE presence in Area of Interest by AMF'
+- spec: TS 23.502
+  line: 32798
+  type: demote-annex-subheading
+  original: '# D.2 Determination of UE presence in Area of Interest by NG-RAN'
+  replacement: '## D.2 Determination of UE presence in Area of Interest by NG-RAN'
+- spec: TS 23.502
+  line: 32818
+  type: promote-annex-heading
+  original: '########  Annex E (normative): Delegated SMF and PCF discovery in the
+    Home Routed and specific SMF Service Areas scenarios'
+  replacement: '# Annex E (normative): Delegated SMF and PCF discovery in the Home
+    Routed and specific SMF Service Areas scenarios'
+- spec: TS 23.502
+  line: 32820
+  type: demote-annex-subheading
+  original: '# E.0 Overview'
+  replacement: '## E.0 Overview'
+- spec: TS 23.502
+  line: 32832
+  type: demote-annex-subheading
+  original: '# E.1 Delegated SMF discovery in the Home Routed scenario'
+  replacement: '## E.1 Delegated SMF discovery in the Home Routed scenario'
+- spec: TS 23.502
+  line: 32864
+  type: demote-annex-subheading
+  original: '# E.2 Delegated I-SMF discovery'
+  replacement: '## E.2 Delegated I-SMF discovery'
+- spec: TS 23.502
+  line: 32918
+  type: demote-annex-subheading
+  original: '# E.3 Delegated PCF discovery in the Roaming scenario'
+  replacement: '## E.3 Delegated PCF discovery in the Roaming scenario'
+- spec: TS 23.502
+  line: 32942
+  type: promote-annex-heading
+  original: '######## Annex F (informative): Information flows for 5GS integration
+    with TSN or with Deterministic Networking'
+  replacement: '# Annex F (informative): Information flows for 5GS integration with
+    TSN or with Deterministic Networking'
+- spec: TS 23.502
+  line: 32948
+  type: demote-annex-subheading
+  original: '# F.1 5GS Bridge information reporting'
+  replacement: '## F.1 5GS Bridge information reporting'
+- spec: TS 23.502
+  line: 33000
+  type: demote-annex-subheading
+  original: '# F.2 5GS Bridge configuration'
+  replacement: '## F.2 5GS Bridge configuration'
+- spec: TS 23.502
+  line: 33038
+  type: demote-annex-subheading
+  original: '# F.3 BMCA procedure'
+  replacement: '## F.3 BMCA procedure'
+- spec: TS 23.502
+  line: 33064
+  type: demote-annex-subheading
+  original: '# F.4 5GS interworking with TSN deployed in the transport network'
+  replacement: '## F.4 5GS interworking with TSN deployed in the transport network'
+- spec: TS 23.502
+  line: 33112
+  type: demote-annex-subheading
+  original: '# F.5 5GS DetNet node information reporting'
+  replacement: '## F.5 5GS DetNet node information reporting'
+- spec: TS 23.502
+  line: 33132
+  type: demote-annex-subheading
+  original: '# F.6 5GS DetNet node configuration'
+  replacement: '## F.6 5GS DetNet node configuration'
+- spec: TS 23.502
+  line: 33154
+  type: promote-annex-heading
+  original: '########  Annex G (normative): Support of GERAN/UTRAN access by SMF+PGW-C'
+  replacement: '# Annex G (normative): Support of GERAN/UTRAN access by SMF+PGW-C'
+- spec: TS 23.502
+  line: 33202
+  type: promote-annex-heading
+  original: '######## Annex H (normative): Support of EAP-based secondary authentication
+    and authorization by DN-AAA over EPC'
+  replacement: '# Annex H (normative): Support of EAP-based secondary authentication
+    and authorization by DN-AAA over EPC'
+- spec: TS 23.502
+  line: 33204
+  type: demote-annex-subheading
+  original: '# H.1 Introduction'
+  replacement: '## H.1 Introduction'
+- spec: TS 23.502
+  line: 33222
+  type: demote-annex-subheading
+  original: '# H.2 Procedures'
+  replacement: '## H.2 Procedures'
+- spec: TS 23.502
+  line: 33276
+  type: promote-annex-heading
+  original: '######## Annex I (informative): Member UE selection without the NEF assistance
+    at the AF'
+  replacement: '# Annex I (informative): Member UE selection without the NEF assistance
+    at the AF'
+- spec: TS 23.502
+  line: 33302
+  type: promote-annex-heading
+  original: '######## Annex J (informative): Support for Personal IoT Networks'
+  replacement: '# Annex J (informative): Support for Personal IoT Networks'
+- spec: TS 23.502
+  line: 33304
+  type: demote-annex-subheading
+  original: '# J.1 Procedure for PIN service'
+  replacement: '## J.1 Procedure for PIN service'
+- spec: TS 23.502
+  line: 33346
+  type: promote-annex-heading
+  original: '########  Annex K (informative): Change history'
+  replacement: '# Annex K (informative): Change history'
+- spec: TS 29.500
+  line: 6041
+  type: promote-annex-heading
+  original: '######## Annex A (informative): Client-side Adaptive Throttling for Overload
+    Control'
+  replacement: '# Annex A (informative): Client-side Adaptive Throttling for Overload
+    Control'
+- spec: TS 29.500
+  line: 6071
+  type: promote-annex-heading
+  original: '######## Annex B (normative): 3gpp-Sbi-Callback Types'
+  replacement: '# Annex B (normative): 3gpp-Sbi-Callback Types'
+- spec: TS 29.500
+  line: 6117
+  type: promote-annex-heading
+  original: '######## Annex C (informative): Internal NF Routing of HTTP Requests'
+  replacement: '# Annex C (informative): Internal NF Routing of HTTP Requests'
+- spec: TS 29.500
+  line: 6135
+  type: promote-annex-heading
+  original: '######## Annex D (Normative): ABNF grammar for 3GPP SBI HTTP custom headers'
+  replacement: '# Annex D (Normative): ABNF grammar for 3GPP SBI HTTP custom headers'
+- spec: TS 29.500
+  line: 6137
+  type: demote-annex-subheading
+  original: '# D.1 General'
+  replacement: '## D.1 General'
+- spec: TS 29.500
+  line: 6183
+  type: demote-annex-subheading
+  original: '# D.2 ABNF definitions (Filename: "TS29500_CustomHeaders.abnf")'
+  replacement: '## D.2 ABNF definitions (Filename: "TS29500_CustomHeaders.abnf")'
+- spec: TS 29.500
+  line: 7095
+  type: promote-annex-heading
+  original: '######## Annex E (informative): Change history'
+  replacement: '# Annex E (informative): Change history'
+- spec: TS 29.571
+  line: 10502
+  type: promote-annex-heading
+  original: '######## Annex A (normative): OpenAPI specification'
+  replacement: '# Annex A (normative): OpenAPI specification'
+- spec: TS 29.571
+  line: 10504
+  type: demote-annex-subheading
+  original: '# A.1 General'
+  replacement: '## A.1 General'
+- spec: TS 29.571
+  line: 10514
+  type: demote-annex-subheading
+  original: '# A.2 Data related to Common Data Types'
+  replacement: '## A.2 Data related to Common Data Types'
+- spec: TS 29.571
+  line: 22827
+  type: promote-annex-heading
+  original: '########  Annex B (informative): Change history'
+  replacement: '# Annex B (informative): Change history'
+- spec: TS 29.510
+  line: 20819
+  type: promote-annex-heading
+  original: '######## Annex A (normative): OpenAPI specification'
+  replacement: '# Annex A (normative): OpenAPI specification'
+- spec: TS 29.510
+  line: 20821
+  type: demote-annex-subheading
+  original: '# A.1 General'
+  replacement: '## A.1 General'
+- spec: TS 29.510
+  line: 20831
+  type: demote-annex-subheading
+  original: '# A.2 Nnrf_NFManagement API'
+  replacement: '## A.2 Nnrf_NFManagement API'
+- spec: TS 29.510
+  line: 32509
+  type: demote-annex-subheading
+  original: '# A.3 Nnrf_NFDiscovery API'
+  replacement: '## A.3 Nnrf_NFDiscovery API'
+- spec: TS 29.510
+  line: 37503
+  type: demote-annex-subheading
+  original: '# A.4 Nnrf_AccessToken API (NRF OAuth2 Authorization)'
+  replacement: '## A.4 Nnrf_AccessToken API (NRF OAuth2 Authorization)'
+- spec: TS 29.510
+  line: 38189
+  type: demote-annex-subheading
+  original: '# A.5 Nnrf_Bootstrapping API'
+  replacement: '## A.5 Nnrf_Bootstrapping API'
+- spec: TS 29.510
+  line: 38443
+  type: promote-annex-heading
+  original: '########  Annex B (normative): NF Profile changes in NFRegister and NFUpdate
+    responses'
+  replacement: '# Annex B (normative): NF Profile changes in NFRegister and NFUpdate
+    responses'
+- spec: TS 29.510
+  line: 38445
+  type: demote-annex-subheading
+  original: '# B.1 General'
+  replacement: '## B.1 General'
+- spec: TS 29.510
+  line: 38479
+  type: promote-annex-heading
+  original: '######## Annex C (normative): Enhanced Authorization Policy using RuleSets
+    in NF (Service) Profile'
+  replacement: '# Annex C (normative): Enhanced Authorization Policy using RuleSets
+    in NF (Service) Profile'
+- spec: TS 29.510
+  line: 38481
+  type: demote-annex-subheading
+  original: '# C.1 General'
+  replacement: '## C.1 General'
+- spec: TS 29.510
+  line: 38487
+  type: demote-annex-subheading
+  original: '# C.2 Examples of NF-Producer profile only using RuleSets (i.e. without
+    AllowedXXX parameters) in NF (Service) Profile'
+  replacement: '## C.2 Examples of NF-Producer profile only using RuleSets (i.e. without
+    AllowedXXX parameters) in NF (Service) Profile'
+- spec: TS 29.510
+  line: 38539
+  type: demote-annex-subheading
+  original: '# C.3 Example of NF-Producer profile using RuleSets and AllowedXXX parameters
+    in NF (Service) Profile'
+  replacement: '## C.3 Example of NF-Producer profile using RuleSets and AllowedXXX
+    parameters in NF (Service) Profile'
+- spec: TS 29.510
+  line: 38567
+  type: demote-annex-subheading
+  original: '# C.4 Backward Compatibility'
+  replacement: '## C.4 Backward Compatibility'
+- spec: TS 29.510
+  line: 38597
+  type: promote-annex-heading
+  original: '######## Annex D (normative): Support of "Canary Release" testing in
+    the NRF'
+  replacement: '# Annex D (normative): Support of "Canary Release" testing in the
+    NRF'
+- spec: TS 29.510
+  line: 38809
+  type: promote-annex-heading
+  original: '########  Annex E (informative): Change history'
+  replacement: '# Annex E (informative): Change history'

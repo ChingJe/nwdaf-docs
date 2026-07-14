@@ -3,6 +3,11 @@
 **日期**: 2026-01-13  
 **目的**: 分析 NWDAF 如何透過 SMF/UPF Event Exposure 蒐集 UE Communication 所需資料
 
+> **Corpus 範圍註記**：目前 `nwdaf-docs/specs/` 的 Release 18 corpus 未收錄
+> TS 23.502 §4.15.4.5、`TS29508_Nsmf_EventExposure.yaml` 與
+> `TS29564_Nupf_EventExposure.yaml`。本文保留既有分析；需要重新驗證這些程序
+> 或 schema 時，應先補入相同 Release 的來源。
+
 ---
 
 ## 1. TS 23.288 Table 6.7.3.2-1 必要輸入資料

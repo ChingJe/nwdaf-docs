@@ -1,0 +1,556 @@
+{
+  "build": [
+    {
+      "spec": "TS 23.288",
+      "version": "18.13.0",
+      "archive_sha256": "7116a1f4123dcf949818ab56feb6b242eda8819877346ab045654e1d0d8c36aa",
+      "document_sha256": "5e4ca6e4e350f62a5d4e4443d36ae93c9df679e1e9aea20ccaa44a4b0eb3e196",
+      "heading_count": 381,
+      "top_level_count": 18,
+      "source_words": 151655,
+      "manifest_entries": 389,
+      "corrections": [
+        {
+          "line": 13865,
+          "type": "promote-annex-heading",
+          "original": "######## Annex A (informative): Methods to handle NAT on IPv4 between UE and AF",
+          "replacement": "# Annex A (informative): Methods to handle NAT on IPv4 between UE and AF"
+        },
+        {
+          "line": 13867,
+          "type": "demote-annex-subheading",
+          "original": "# A.1 Methods to handle NAT on IPv4 between UE and AF",
+          "replacement": "## A.1 Methods to handle NAT on IPv4 between UE and AF"
+        },
+        {
+          "line": 13885,
+          "type": "promote-annex-heading",
+          "original": "########  Annex B (informative): Change history",
+          "replacement": "# Annex B (informative): Change history"
+        }
+      ],
+      "integrity": {
+        "preprocessed_text_sha256": "8696203d18345428df7a7932eaf13d9eb27df7f248f6c51dd75a93abf6562bbb",
+        "tree_reassembled_text_sha256": "8696203d18345428df7a7932eaf13d9eb27df7f248f6c51dd75a93abf6562bbb",
+        "matches": true
+      }
+    },
+    {
+      "spec": "TS 29.520",
+      "version": "18.14.0",
+      "archive_sha256": "4937d4ffcdc8760cac3dd990b10d5c0beb722f9eab26d94ce4b1f296287057c1",
+      "document_sha256": "9c9beb10bbac50abf869d1cc575a55184a8a97008a072a839b3da2ebe4aaeb69",
+      "heading_count": 736,
+      "top_level_count": 10,
+      "source_words": 154100,
+      "manifest_entries": 746,
+      "corrections": [
+        {
+          "line": 40,
+          "type": "remove-empty-heading",
+          "original": "#  "
+        },
+        {
+          "line": 26205,
+          "type": "promote-annex-heading",
+          "original": "######## Annex A (normative): OpenAPI specification",
+          "replacement": "# Annex A (normative): OpenAPI specification"
+        },
+        {
+          "line": 26207,
+          "type": "demote-annex-subheading",
+          "original": "# A.1 General",
+          "replacement": "## A.1 General"
+        },
+        {
+          "line": 26217,
+          "type": "demote-annex-subheading",
+          "original": "# A.2 Nnwdaf_EventsSubscription API",
+          "replacement": "## A.2 Nnwdaf_EventsSubscription API"
+        },
+        {
+          "line": 34089,
+          "type": "demote-annex-subheading",
+          "original": "# A.3 Nnwdaf_AnalyticsInfo API",
+          "replacement": "## A.3 Nnwdaf_AnalyticsInfo API"
+        },
+        {
+          "line": 35989,
+          "type": "demote-annex-subheading",
+          "original": "# A.4 Nnwdaf_DataManagement API",
+          "replacement": "## A.4 Nnwdaf_DataManagement API"
+        },
+        {
+          "line": 36785,
+          "type": "demote-annex-subheading",
+          "original": "# A.5 Nnwdaf_MLModelProvision API",
+          "replacement": "## A.5 Nnwdaf_MLModelProvision API"
+        },
+        {
+          "line": 37905,
+          "type": "demote-annex-subheading",
+          "original": "# A.6 Nnwdaf_MLModelTraining API",
+          "replacement": "## A.6 Nnwdaf_MLModelTraining API"
+        },
+        {
+          "line": 39055,
+          "type": "demote-annex-subheading",
+          "original": "# A.7 Nnwdaf_MLModelMonitor API",
+          "replacement": "## A.7 Nnwdaf_MLModelMonitor API"
+        },
+        {
+          "line": 39989,
+          "type": "demote-annex-subheading",
+          "original": "# A.8 Nnwdaf_RoamingData API",
+          "replacement": "## A.8 Nnwdaf_RoamingData API"
+        },
+        {
+          "line": 40525,
+          "type": "restore-heading",
+          "original": "A.9 Nnwdaf_RoamingAnalytics API",
+          "replacement": "## A.9 Nnwdaf_RoamingAnalytics API"
+        },
+        {
+          "line": 41097,
+          "type": "promote-annex-heading",
+          "original": "######## Annex B (informative): Change history",
+          "replacement": "# Annex B (informative): Change history"
+        }
+      ],
+      "integrity": {
+        "preprocessed_text_sha256": "14b1df44493c68667ec36cddc9798b04997824fde786debbb93fb132c760dd53",
+        "tree_reassembled_text_sha256": "14b1df44493c68667ec36cddc9798b04997824fde786debbb93fb132c760dd53",
+        "matches": true
+      }
+    }
+  ],
+  "assets": {
+    "TS 23.288": {
+      "media_files": 94,
+      "rendered_ok": 94,
+      "rendered_failed": [],
+      "render_methods": {
+        "existing": 94
+      },
+      "embedded_files": 94,
+      "embedded_names": [
+        "Microsoft_Visio_Drawing40.vsdx",
+        "oleObject1.bin",
+        "oleObject2.bin",
+        "Microsoft_Visio_2003-2010_Drawing.vsd",
+        "oleObject3.bin",
+        "Microsoft_Visio_2003-2010_Drawing1.vsd",
+        "oleObject4.bin",
+        "Microsoft_Visio_2003-2010_Drawing2.vsd",
+        "oleObject5.bin",
+        "Microsoft_Visio_2003-2010_Drawing3.vsd",
+        "oleObject6.bin",
+        "oleObject7.bin",
+        "oleObject8.bin",
+        "Microsoft_Visio_2003-2010_Drawing4.vsd",
+        "oleObject9.bin",
+        "Microsoft_Visio_2003-2010_Drawing5.vsd",
+        "Microsoft_Visio_Drawing1.vsdx",
+        "Microsoft_Visio_Drawing2.vsdx",
+        "Microsoft_Visio_2003-2010_Drawing6.vsd",
+        "Microsoft_Visio_Drawing3.vsdx",
+        "Microsoft_Visio_2003-2010_Drawing11.vsd",
+        "Microsoft_Visio_2003-2010_Drawing32.vsd",
+        "Microsoft_Visio_Drawing4.vsdx",
+        "Microsoft_Visio_2003-2010_Drawing9.vsd",
+        "Microsoft_Visio_2003-2010_Drawing10.vsd",
+        "Microsoft_Visio_Drawing5.vsdx",
+        "oleObject10.bin",
+        "oleObject11.bin",
+        "Microsoft_Visio_2003-2010_Drawing113.vsd",
+        "Microsoft_Visio_2003-2010_Drawing12.vsd",
+        "oleObject12.bin",
+        "Microsoft_Visio_Drawing7.vsdx",
+        "Microsoft_Visio_Drawing8.vsdx",
+        "Microsoft_Visio_Drawing9.vsdx",
+        "oleObject13.bin",
+        "Microsoft_Visio_Drawing10.vsdx",
+        "Microsoft_Visio_2003-2010_Drawing13.vsd",
+        "Microsoft_Visio_2003-2010_Drawing14.vsd",
+        "Microsoft_Visio_2003-2010_Drawing15.vsd",
+        "Microsoft_Visio_2003-2010_Drawing16.vsd",
+        "Microsoft_Visio_Drawing11.vsdx",
+        "Microsoft_Visio_Drawing6.vsdx",
+        "oleObject14.bin",
+        "Microsoft_Visio_2003-2010_Drawing17.vsd",
+        "Microsoft_Visio_2003-2010_Drawing18.vsd",
+        "Microsoft_Visio_2003-2010_Drawing19.vsd",
+        "Microsoft_Visio_2003-2010_Drawing20.vsd",
+        "Microsoft_Visio_Drawing17.vsdx",
+        "Microsoft_Visio_Drawing38.vsdx",
+        "Microsoft_Visio_Drawing14.vsdx",
+        "oleObject15.bin",
+        "Microsoft_Word_Document.docx",
+        "Microsoft_Visio_Drawing15.vsdx",
+        "oleObject16.bin",
+        "Microsoft_Visio_2003-2010_Drawing24.vsd",
+        "oleObject17.bin",
+        "Microsoft_Visio_2003-2010_Drawing23.vsd",
+        "oleObject18.bin",
+        "oleObject19.bin",
+        "Microsoft_Word_97_-_2003_Document.doc",
+        "oleObject20.bin",
+        "Microsoft_Visio_Drawing16.vsdx",
+        "Microsoft_Visio_Drawing179.vsdx",
+        "Microsoft_Word_Document1.docx",
+        "Microsoft_Word_Document2.docx",
+        "Microsoft_Visio_Drawing20.vsdx",
+        "oleObject21.bin",
+        "Microsoft_Visio_Drawing21.vsdx",
+        "Microsoft_Visio_Drawing22.vsdx",
+        "oleObject22.bin",
+        "Microsoft_Visio_Drawing23.vsdx",
+        "Microsoft_Visio_Drawing24.vsdx",
+        "Microsoft_Visio_Drawing25.vsdx",
+        "oleObject23.bin",
+        "Microsoft_Visio_Drawing26.vsdx",
+        "oleObject24.bin",
+        "Microsoft_Visio_Drawing27.vsdx",
+        "Microsoft_Visio_Drawing28.vsdx",
+        "Microsoft_Visio_2003-2010_Drawing2411.vsd",
+        "Microsoft_Visio_Drawing29.vsdx",
+        "Microsoft_Visio_Drawing30.vsdx",
+        "Microsoft_Visio_Drawing31.vsdx",
+        "Microsoft_Visio_2003-2010_Drawing25.vsd",
+        "Microsoft_Visio_2003-2010_Drawing26.vsd",
+        "Microsoft_Visio_Drawing32.vsdx",
+        "Microsoft_Visio_2003-2010_Drawing27.vsd",
+        "Microsoft_Visio_2003-2010_Drawing28.vsd",
+        "oleObject25.bin",
+        "Microsoft_Visio_Drawing33.vsdx",
+        "Microsoft_Visio_Drawing34.vsdx",
+        "Microsoft_Visio_Drawing35.vsdx",
+        "Microsoft_Visio_Drawing37.vsdx",
+        "Microsoft_Visio_Drawing3812.vsdx",
+        "Microsoft_Visio_Drawing39.vsdx"
+      ]
+    },
+    "TS 29.520": {
+      "media_files": 54,
+      "rendered_ok": 54,
+      "rendered_failed": [],
+      "render_methods": {
+        "existing": 54
+      },
+      "embedded_files": 20,
+      "embedded_names": [
+        "oleObject13.bin",
+        "oleObject12.bin",
+        "oleObject11.bin",
+        "oleObject10.bin",
+        "oleObject9.bin",
+        "oleObject8.bin",
+        "oleObject7.bin",
+        "oleObject19.bin",
+        "oleObject6.bin",
+        "oleObject20.bin",
+        "oleObject18.bin",
+        "oleObject5.bin",
+        "oleObject17.bin",
+        "oleObject4.bin",
+        "oleObject3.bin",
+        "oleObject15.bin",
+        "oleObject2.bin",
+        "oleObject14.bin",
+        "oleObject1.bin",
+        "oleObject16.bin"
+      ]
+    }
+  },
+  "openapi": {
+    "package_spec": "TS 29.520",
+    "package_version": "18.14.0",
+    "source_archive": "29520-ie0.zip",
+    "source_archive_sha256": "4937d4ffcdc8760cac3dd990b10d5c0beb722f9eab26d94ce4b1f296287057c1",
+    "files": [
+      {
+        "file": "TS29520_Nnwdaf_AnalyticsInfo.yaml",
+        "sha256": "1b8d480a45721f7bfef6db7733c189528480dd33a6e31bcab64abcf6ded2f239",
+        "yaml_valid": true,
+        "parse_error": null,
+        "api_version": "1.3.5",
+        "external_docs_description": "3GPP TS 29.520 V18.13.0; 5G System; Network Data Analytics Services.",
+        "external_ref_files": [
+          "TS29122_CommonData.yaml",
+          "TS29503_Nudm_SDM.yaml",
+          "TS29508_Nsmf_EventExposure.yaml",
+          "TS29510_Nnrf_NFManagement.yaml",
+          "TS29517_Naf_EventExposure.yaml",
+          "TS29520_Nnwdaf_EventsSubscription.yaml",
+          "TS29520_Nnwdaf_MLModelMonitor.yaml",
+          "TS29522_AMPolicyAuthorization.yaml",
+          "TS29554_Npcf_BDTPolicyControl.yaml",
+          "TS29571_CommonData.yaml",
+          "TS29575_Nadrf_DataManagement.yaml"
+        ],
+        "missing_external_ref_files": [
+          "TS29122_CommonData.yaml",
+          "TS29503_Nudm_SDM.yaml",
+          "TS29508_Nsmf_EventExposure.yaml",
+          "TS29510_Nnrf_NFManagement.yaml",
+          "TS29517_Naf_EventExposure.yaml",
+          "TS29522_AMPolicyAuthorization.yaml",
+          "TS29554_Npcf_BDTPolicyControl.yaml",
+          "TS29571_CommonData.yaml",
+          "TS29575_Nadrf_DataManagement.yaml"
+        ]
+      },
+      {
+        "file": "TS29520_Nnwdaf_DataManagement.yaml",
+        "sha256": "5922d5d975e71f82b53006f01c285398f8701f02efdb6b53a677d25ff631d499",
+        "yaml_valid": true,
+        "parse_error": null,
+        "api_version": "1.1.5",
+        "external_docs_description": "3GPP TS 29.520 V18.13.0; 5G System; Network Data Analytics Services.",
+        "external_ref_files": [
+          "TS29122_CommonData.yaml",
+          "TS29520_Nnwdaf_EventsSubscription.yaml",
+          "TS29571_CommonData.yaml",
+          "TS29574_Ndccf_DataManagement.yaml",
+          "TS29575_Nadrf_DataManagement.yaml",
+          "TS29576_Nmfaf_3caDataManagement.yaml"
+        ],
+        "missing_external_ref_files": [
+          "TS29122_CommonData.yaml",
+          "TS29571_CommonData.yaml",
+          "TS29574_Ndccf_DataManagement.yaml",
+          "TS29575_Nadrf_DataManagement.yaml",
+          "TS29576_Nmfaf_3caDataManagement.yaml"
+        ]
+      },
+      {
+        "file": "TS29520_Nnwdaf_EventsSubscription.yaml",
+        "sha256": "6603c6af385accee815a5bbc76152fb52afbed66167ced9f0ac96f1a9ebe7dee",
+        "yaml_valid": true,
+        "parse_error": null,
+        "api_version": "1.3.3",
+        "external_docs_description": "3GPP TS 29.520 V18.13.0; 5G System; Network Data Analytics Services.",
+        "external_ref_files": [
+          "TS29122_CommonData.yaml",
+          "TS29122_CpProvisioning.yaml",
+          "TS29122_PfdManagement.yaml",
+          "TS29503_Nudm_SDM.yaml",
+          "TS29508_Nsmf_EventExposure.yaml",
+          "TS29510_Nnrf_NFManagement.yaml",
+          "TS29514_Npcf_PolicyAuthorization.yaml",
+          "TS29517_Naf_EventExposure.yaml",
+          "TS29520_Nnwdaf_AnalyticsInfo.yaml",
+          "TS29520_Nnwdaf_MLModelProvision.yaml",
+          "TS29522_AMPolicyAuthorization.yaml",
+          "TS29523_Npcf_EventExposure.yaml",
+          "TS29531_Nnssf_NSSelection.yaml",
+          "TS29554_Npcf_BDTPolicyControl.yaml",
+          "TS29571_CommonData.yaml",
+          "TS29572_Nlmf_Location.yaml"
+        ],
+        "missing_external_ref_files": [
+          "TS29122_CommonData.yaml",
+          "TS29122_CpProvisioning.yaml",
+          "TS29122_PfdManagement.yaml",
+          "TS29503_Nudm_SDM.yaml",
+          "TS29508_Nsmf_EventExposure.yaml",
+          "TS29510_Nnrf_NFManagement.yaml",
+          "TS29514_Npcf_PolicyAuthorization.yaml",
+          "TS29517_Naf_EventExposure.yaml",
+          "TS29522_AMPolicyAuthorization.yaml",
+          "TS29523_Npcf_EventExposure.yaml",
+          "TS29531_Nnssf_NSSelection.yaml",
+          "TS29554_Npcf_BDTPolicyControl.yaml",
+          "TS29571_CommonData.yaml",
+          "TS29572_Nlmf_Location.yaml"
+        ]
+      },
+      {
+        "file": "TS29520_Nnwdaf_MLModelMonitor.yaml",
+        "sha256": "63841486cfe523ac43015516bd1ded54795a81e783cf8954252a69c3679bc47e",
+        "yaml_valid": true,
+        "parse_error": null,
+        "api_version": "1.0.2",
+        "external_docs_description": "3GPP TS 29.520 V18.13.0; 5G System; Network Data Analytics Services.",
+        "external_ref_files": [
+          "TS29122_CommonData.yaml",
+          "TS29520_Nnwdaf_AnalyticsInfo.yaml",
+          "TS29520_Nnwdaf_EventsSubscription.yaml",
+          "TS29520_Nnwdaf_MLModelProvision.yaml",
+          "TS29523_Npcf_EventExposure.yaml",
+          "TS29571_CommonData.yaml",
+          "TS29575_Nadrf_DataManagement.yaml"
+        ],
+        "missing_external_ref_files": [
+          "TS29122_CommonData.yaml",
+          "TS29523_Npcf_EventExposure.yaml",
+          "TS29571_CommonData.yaml",
+          "TS29575_Nadrf_DataManagement.yaml"
+        ]
+      },
+      {
+        "file": "TS29520_Nnwdaf_MLModelProvision.yaml",
+        "sha256": "49fca42f3b33dc518580f9797d1517cd5fb041d65e8e502d64fcd53ceb4d717b",
+        "yaml_valid": true,
+        "parse_error": null,
+        "api_version": "1.1.4",
+        "external_docs_description": "3GPP TS 29.520 V18.13.0; 5G System; Network Data Analytics Services.",
+        "external_ref_files": [
+          "TS29122_CommonData.yaml",
+          "TS29510_Nnrf_NFManagement.yaml",
+          "TS29520_Nnwdaf_AnalyticsInfo.yaml",
+          "TS29520_Nnwdaf_EventsSubscription.yaml",
+          "TS29523_Npcf_EventExposure.yaml",
+          "TS29554_Npcf_BDTPolicyControl.yaml",
+          "TS29571_CommonData.yaml",
+          "TS29574_Ndccf_DataManagement.yaml",
+          "TS29575_Nadrf_DataManagement.yaml"
+        ],
+        "missing_external_ref_files": [
+          "TS29122_CommonData.yaml",
+          "TS29510_Nnrf_NFManagement.yaml",
+          "TS29523_Npcf_EventExposure.yaml",
+          "TS29554_Npcf_BDTPolicyControl.yaml",
+          "TS29571_CommonData.yaml",
+          "TS29574_Ndccf_DataManagement.yaml",
+          "TS29575_Nadrf_DataManagement.yaml"
+        ]
+      },
+      {
+        "file": "TS29520_Nnwdaf_MLModelTraining.yaml",
+        "sha256": "b6ccbe8729ac145e501f784b08a0c3d1bcdfd15c44118c9e30da7fd05ed99bfb",
+        "yaml_valid": true,
+        "parse_error": null,
+        "api_version": "1.0.5",
+        "external_docs_description": "3GPP TS 29.520 V18.14.0; 5G System; Network Data Analytics Services.",
+        "external_ref_files": [
+          "TS29122_CommonData.yaml",
+          "TS29520_Nnwdaf_EventsSubscription.yaml",
+          "TS29520_Nnwdaf_MLModelProvision.yaml",
+          "TS29523_Npcf_EventExposure.yaml",
+          "TS29554_Npcf_BDTPolicyControl.yaml",
+          "TS29571_CommonData.yaml",
+          "TS29574_Ndccf_DataManagement.yaml"
+        ],
+        "missing_external_ref_files": [
+          "TS29122_CommonData.yaml",
+          "TS29523_Npcf_EventExposure.yaml",
+          "TS29554_Npcf_BDTPolicyControl.yaml",
+          "TS29571_CommonData.yaml",
+          "TS29574_Ndccf_DataManagement.yaml"
+        ]
+      },
+      {
+        "file": "TS29520_Nnwdaf_RoamingAnalytics.yaml",
+        "sha256": "620e549e96a6cb623d7cc17ddcb451df7d8e2b48954fdace900e37206c51c88b",
+        "yaml_valid": true,
+        "parse_error": null,
+        "api_version": "1.0.2",
+        "external_docs_description": "3GPP TS 29.520 V18.13.0; 5G System; Network Data Analytics Services.",
+        "external_ref_files": [
+          "TS29520_Nnwdaf_EventsSubscription.yaml",
+          "TS29523_Npcf_EventExposure.yaml",
+          "TS29571_CommonData.yaml"
+        ],
+        "missing_external_ref_files": [
+          "TS29523_Npcf_EventExposure.yaml",
+          "TS29571_CommonData.yaml"
+        ]
+      },
+      {
+        "file": "TS29520_Nnwdaf_RoamingData.yaml",
+        "sha256": "8add0a519f601205334e35a0f1d0d846857b23da23fee7b3a9f8045b04de358d",
+        "yaml_valid": true,
+        "parse_error": null,
+        "api_version": "1.0.4",
+        "external_docs_description": "3GPP TS 29.520 V18.13.0; 5G System; Network Data Analytics Services.",
+        "external_ref_files": [
+          "TS29122_CommonData.yaml",
+          "TS29520_Nnwdaf_DataManagement.yaml",
+          "TS29520_Nnwdaf_EventsSubscription.yaml",
+          "TS29571_CommonData.yaml",
+          "TS29574_Ndccf_DataManagement.yaml",
+          "TS29575_Nadrf_DataManagement.yaml"
+        ],
+        "missing_external_ref_files": [
+          "TS29122_CommonData.yaml",
+          "TS29571_CommonData.yaml",
+          "TS29574_Ndccf_DataManagement.yaml",
+          "TS29575_Nadrf_DataManagement.yaml"
+        ]
+      }
+    ],
+    "all_external_ref_files": [
+      "TS29122_CommonData.yaml",
+      "TS29122_CpProvisioning.yaml",
+      "TS29122_PfdManagement.yaml",
+      "TS29503_Nudm_SDM.yaml",
+      "TS29508_Nsmf_EventExposure.yaml",
+      "TS29510_Nnrf_NFManagement.yaml",
+      "TS29514_Npcf_PolicyAuthorization.yaml",
+      "TS29517_Naf_EventExposure.yaml",
+      "TS29520_Nnwdaf_AnalyticsInfo.yaml",
+      "TS29520_Nnwdaf_DataManagement.yaml",
+      "TS29520_Nnwdaf_EventsSubscription.yaml",
+      "TS29520_Nnwdaf_MLModelMonitor.yaml",
+      "TS29520_Nnwdaf_MLModelProvision.yaml",
+      "TS29522_AMPolicyAuthorization.yaml",
+      "TS29523_Npcf_EventExposure.yaml",
+      "TS29531_Nnssf_NSSelection.yaml",
+      "TS29554_Npcf_BDTPolicyControl.yaml",
+      "TS29571_CommonData.yaml",
+      "TS29572_Nlmf_Location.yaml",
+      "TS29574_Ndccf_DataManagement.yaml",
+      "TS29575_Nadrf_DataManagement.yaml",
+      "TS29576_Nmfaf_3caDataManagement.yaml"
+    ],
+    "missing_external_ref_files": [
+      "TS29122_CommonData.yaml",
+      "TS29122_CpProvisioning.yaml",
+      "TS29122_PfdManagement.yaml",
+      "TS29503_Nudm_SDM.yaml",
+      "TS29508_Nsmf_EventExposure.yaml",
+      "TS29510_Nnrf_NFManagement.yaml",
+      "TS29514_Npcf_PolicyAuthorization.yaml",
+      "TS29517_Naf_EventExposure.yaml",
+      "TS29522_AMPolicyAuthorization.yaml",
+      "TS29523_Npcf_EventExposure.yaml",
+      "TS29531_Nnssf_NSSelection.yaml",
+      "TS29554_Npcf_BDTPolicyControl.yaml",
+      "TS29571_CommonData.yaml",
+      "TS29572_Nlmf_Location.yaml",
+      "TS29574_Ndccf_DataManagement.yaml",
+      "TS29575_Nadrf_DataManagement.yaml",
+      "TS29576_Nmfaf_3caDataManagement.yaml"
+    ]
+  },
+  "output_links": {
+    "image_references": 157,
+    "broken_image_references": [],
+    "files_with_absolute_work_paths": []
+  },
+  "tools": {
+    "pandoc": "pandoc 3.1.11.1",
+    "libreoffice": "LibreOffice 25.2.3.2 520(Build:2)",
+    "inkscape": "Inkscape 1.4 (e7c3feb100, 2024-10-09)"
+  },
+  "final_checks": {
+    "files": 803,
+    "markdown_files": 375,
+    "local_links_checked": 390,
+    "broken_local_links": 0,
+    "image_references_checked": 157,
+    "broken_image_references": 0,
+    "h7_or_deeper": 0,
+    "blank_headings": 0,
+    "files_with_absolute_work_paths": 0,
+    "manifest_missing_paths": 0,
+    "openapi_files_byte_identical": 8,
+    "openapi_files_total": 8,
+    "openapi_yaml_valid": 8,
+    "oversized_files_over_4200_approx_words": 6,
+    "ts23288_independent_modal_counts_match": true,
+    "ts29520_main_body_modal_counts_match": true,
+    "visual_samples_passed": 5
+  }
+}

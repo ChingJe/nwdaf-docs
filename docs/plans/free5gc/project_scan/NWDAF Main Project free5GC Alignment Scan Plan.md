@@ -87,7 +87,7 @@ The scan should use references in this order when evaluating a question:
 3. `free5gc-dev-skill/SKILL.md`
 4. Relevant files under `free5gc-dev-skill/references/`
 5. `resources/references/free5gc-main/NFs/`
-6. `nwdaf-docs/specs/yaml/`
+6. `nwdaf-docs/specs/openapi/`
 7. Relevant TS text under `nwdaf-docs/specs/`
 
 Important interpretation rule:
@@ -491,7 +491,7 @@ free5GC comparisons:
 
 - control-plane NF processors and consumers across `nrf`, `udm`, `udr`, `pcf`
 - local `github.com/free5gc/openapi` dependency usage in `NWDAF/go.mod`
-- local OpenAPI YAML in `nwdaf-docs/specs/yaml/`
+- local Release 18 OpenAPI YAML in `nwdaf-docs/specs/openapi/`
 
 Questions:
 

@@ -620,7 +620,7 @@ if err != nil {
 
 | 檔案 | 說明 |
 |------|------|
-| `.agent/specs/TS 29.520/4.2 Nnwdaf_EventsSubscription Service.md` | 服務操作定義 |
-| `.agent/specs/TS 29.520/5.1 Nnwdaf_EventsSubscription Service API.md` | API 規範 |
-| `.agent/specs/yaml/TS29520_Nnwdaf_EventsSubscription.yaml` | OpenAPI 規範 |
+| `nwdaf-docs/specs/TS 29.520/4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/README.md` | 服務操作定義與章節導覽 |
+| `nwdaf-docs/specs/TS 29.520/5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/README.md` | API 規範與章節導覽 |
+| `nwdaf-docs/specs/openapi/TS29520_Nnwdaf_EventsSubscription.yaml` | OpenAPI 規範 |
 | `.agent/compliance/phase2b_compliance_report.md` | Phase 2B 合規報告 |

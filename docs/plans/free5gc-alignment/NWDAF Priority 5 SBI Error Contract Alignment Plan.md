@@ -81,7 +81,7 @@ limited to the HTTP error-contract boundary of the current SBI server.
 
 The purpose of this round is to align NWDAF more carefully with:
 
-1. local 3GPP OpenAPI YAML under `nwdaf-docs/specs/yaml/`
+1. local Release 18 3GPP OpenAPI YAML under `nwdaf-docs/specs/openapi/`
 2. actual free5GC reference NF implementations under
    `resources/references/free5gc-main/NFs/`
 3. the current `github.com/free5gc/openapi v1.2.3` dependency used by
@@ -112,12 +112,14 @@ It is not about:
 
 This plan is based on the following local sources:
 
-- `nwdaf-docs/specs/yaml/TS29520_Nnwdaf_EventsSubscription.yaml`
-- `nwdaf-docs/specs/yaml/TS29520_Nnwdaf_DataManagement.yaml`
-- `nwdaf-docs/specs/yaml/TS29520_Nnwdaf_MLModelProvision.yaml`
-- `nwdaf-docs/specs/yaml/TS29520_Nnwdaf_MLModelTraining.yaml`
-- `nwdaf-docs/specs/yaml/TS29575_Nadrf_DataManagement.yaml`
-- `nwdaf-docs/specs/yaml/TS29571_CommonData.yaml`
+- `nwdaf-docs/specs/openapi/TS29520_Nnwdaf_EventsSubscription.yaml`
+- `nwdaf-docs/specs/openapi/TS29520_Nnwdaf_DataManagement.yaml`
+- `nwdaf-docs/specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml`
+- `nwdaf-docs/specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml`
+- `nwdaf-docs/specs/openapi/TS29571_CommonData.yaml`
+- `nwdaf-docs/specs/openapi/README.md`, which records
+  `TS29575_Nadrf_DataManagement.yaml` as an external dependency not currently
+  included in the local Release 18 corpus
 - `free5gc-dev-skill/SKILL.md`
 - `free5gc-dev-skill/references/sbi-development.md`
 - `free5gc-dev-skill/references/openapi-contract.md`

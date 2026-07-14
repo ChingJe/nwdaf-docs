@@ -178,7 +178,7 @@ When NWDAF implementation details are unclear, use the following references in
 this order:
 
 1. Existing code in `NWDAF/`
-2. Local OpenAPI YAML under `nwdaf-docs/specs/yaml/`
+2. Local Release 18 OpenAPI YAML under `nwdaf-docs/specs/openapi/`
 3. Relevant 3GPP TS material under `nwdaf-docs/specs/`
 4. `free5gc-dev-skill/` guidance
 5. `resources/openapi/openapi/`
@@ -189,6 +189,8 @@ this order:
 - Use existing `NWDAF/` code for local conventions, ownership boundaries, and
   integration constraints.
 - Use local OpenAPI YAML for schema, field, request, and response definitions.
+  Check `nwdaf-docs/specs/openapi/README.md` before assuming all external
+  `$ref` dependencies are present in the corpus.
 - Use 3GPP TS material for procedure intent, role boundaries, and service
   semantics.
 - Use `free5gc-dev-skill/` for free5GC-style development and review workflow.

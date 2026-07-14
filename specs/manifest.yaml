@@ -1,0 +1,35 @@
+corpus: NWDAF and NRF implementation-related 3GPP Release 18 specifications
+specifications:
+- spec: TS 23.288
+  version: 18.13.0
+  scope: full
+  path: TS 23.288/README.md
+  manifest: TS 23.288/manifest.yaml
+- spec: TS 29.520
+  version: 18.14.0
+  scope: full
+  path: TS 29.520/README.md
+  manifest: TS 29.520/manifest.yaml
+- spec: TS 23.502
+  version: 18.14.0
+  scope: selected NRF-related clauses
+  path: TS 23.502/README.md
+  manifest: TS 23.502/manifest.yaml
+- spec: TS 29.510
+  version: 18.11.0
+  scope: full
+  path: TS 29.510/README.md
+  manifest: TS 29.510/manifest.yaml
+- spec: TS 29.571
+  version: 18.12.0
+  scope: full
+  path: TS 29.571/README.md
+  manifest: TS 29.571/manifest.yaml
+- spec: TS 29.500
+  version: 18.10.0
+  scope: full
+  path: TS 29.500/README.md
+  manifest: TS 29.500/manifest.yaml
+openapi:
+  path: openapi/README.md
+  manifest: openapi/manifest.yaml

@@ -646,15 +646,15 @@ Evidence:
 - The analytics subscription procedure in local TS 23.288 separates receiving
   the consumer subscription from the later decision to trigger new data
   collection:
-  - `nwdaf-docs/specs/TS 23.288/6.1 Procedures for analytics exposure.md:16-26`
+  - `nwdaf-docs/specs/TS 23.288/6 Procedures to Support Network Data Analytics/6.1 Procedures for analytics exposure/6.1.1 Analytics Subscribe and Unsubscribe.md:27-31`
 - The NF-side data collection setup is a later procedure in which NWDAF
   subscribes to source NFs and then receives notifications:
-  - `nwdaf-docs/specs/TS 23.288/6.2.2 Data Collection from NFs.md:130-140`
+  - `nwdaf-docs/specs/TS 23.288/6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.2 Data Collection from NFs/6.2.2.2 Procedure for Data Collection from NFs.md:18-32`
 - TS 29.520 provides failure-signaling structures at both the subscription
   resource and notification layers:
-  - `failEventReports`: `nwdaf-docs/specs/TS 29.520/5.1 Nnwdaf_EventsSubscription Service API.md:731-742`
+  - `failEventReports`: `nwdaf-docs/specs/TS 29.520/5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.2 Type NnwdafEventsSubscription.md:82-86`
   - `failNotifyCode` and `rvWaitTime`:
-    `nwdaf-docs/specs/yaml/TS29520_Nnwdaf_EventsSubscription.yaml:780-789`
+    `nwdaf-docs/specs/openapi/TS29520_Nnwdaf_EventsSubscription.yaml:763-766`
 - Current create processing stores the subscription and returns success while
   downstream data collection is started in a background goroutine:
   - `internal/sbi/processor/eventssubscription.go:67-125`
