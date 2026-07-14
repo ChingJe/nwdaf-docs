@@ -332,6 +332,40 @@ Impact:
 
 Type: structural alignment gap
 
+Current reassessment on 2026-07-14, last updated 2026-07-15:
+
+- the original evidence below is retained as historical scan evidence
+- Priority 14 has since moved the main SBI edge to the shared HTTP/2 server
+  helper, attached the existing inbound metrics middleware, and completed
+  HTTP/HTTPS selection with SBI TLS configuration
+- NRF registration/deregistration, OAuth/certificate handling, and NRF-backed
+  discovery remain open under Priority 11
+- the integration direction is now decided: NWDAF will align upward as an
+  NRF-managed NF through staged implementation
+- NRF registration/deregistration is the first implementation phase, followed
+  by OAuth/certificate support and discovery, because that path enables later
+  standardized peer-facing interfaces
+- Phase 0 behavior is now fixed: `nrfUri` is required; retryable registration
+  failure keeps NWDAF alive with owned listeners unstarted until success or
+  cancellation; `nfServices`, registration-before-listener startup, same-PLMN
+  NRF-default handling, the free5GC API-prefix shape, and
+  deregistration-before-SBI shutdown are used;
+  redirect and OAuth-required operation are explicit Phase 0 terminal cases
+- cross-NF comparison confirmed that the inbound middleware is normally paired
+  with initialized SBI collectors, outbound generated-client hooks, and a
+  separately owned metrics server exposing `/metrics`; completing that pattern
+  is therefore restored to Priority 11 scope
+- the common free5GC factory implementation keeps metrics optional and disabled
+  by default, while still providing full configuration and lifecycle support
+- metrics runtime completion remains required but is tracked as a non-blocking
+  supporting workstream rather than a prerequisite for NRF integration
+- TS 29.510 NFUpdate heartbeat is an explicit non-blocking deferred standards
+  gap: the updated free5GC `main`/NRF v1.4.5 reference accepts NF profile PATCH,
+  but the surveyed NF consumers do not send periodic heartbeat and NRF does not
+  yet show a complete timer/expiry/suspension lifecycle
+- the current implementation plan is:
+  `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 11 NRF OAuth Discovery And Metrics Alignment Plan.md`
+
 Evidence in NWDAF:
 
 - Service startup only initializes context, consumer, processor, MongoDB, and
@@ -798,7 +832,9 @@ already-known open work rather than new problems created by the completed
 rounds:
 
 - runtime config mixed with lab/workflow config
-- standalone SBI service versus fuller free5GC NF integration level
+- full free5GC lifecycle direction, which was still open at reassessment time
+  and was later resolved on 2026-07-14 in favor of staged NRF-managed NF
+  alignment plus a required but non-blocking common metrics workstream
 - OpenAPI/model governance
 - logging boundary and payload hygiene
 
@@ -942,8 +978,9 @@ The most important open problems after the later implemented follow-up rounds ar
    remains
 2. post-subscription activation and late-failure signaling are still
    underspecified as a design/operability issue
-3. OpenAPI/model governance, runtime config scope, integration-level decisions,
-   and broader repository/package boundaries remain outstanding
+3. OpenAPI/model governance and runtime config scope remain outstanding; the
+   free5GC integration direction is decided, while the prioritized NRF, OAuth,
+   and discovery phases and the independent metrics workstream remain open
 
 The repository now passes `make build`, `go test ./...`, and `make lint` after
 the implemented rounds recorded above. That verifies the current repository at

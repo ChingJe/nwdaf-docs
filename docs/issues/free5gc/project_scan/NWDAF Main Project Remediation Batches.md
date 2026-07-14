@@ -1,7 +1,8 @@
 # NWDAF Main Project Remediation Batches
 
 Date: 2026-06-18
-Last reassessed against current `NWDAF/` code: 2026-06-24
+Last focused reassessment against current `NWDAF/` code: 2026-07-15
+(`Priority 11`; other work items retain their recorded status dates)
 
 This document reorganizes the scan findings into a stricter execution order.
 The new ordering is based on three criteria:
@@ -64,7 +65,7 @@ classification map.
 | 2 | remaining package-global config reads after Priority 4 | residual in completed line | Priority 4 residual follow-up | closed on 2026-06-24 by `NWDAF/` commit `a912581` |
 | 3 | non-3GPP external clients bypass shared consumer/app ownership | newly formalized work item | Priority 4 follow-up in this file | not started |
 | 4 | runtime config mixed with lab/workflow config | existing open work | Priority 9 | not started |
-| 5 | standalone SBI service vs fuller free5GC NF lifecycle level | existing open work | Priority 11 | not started |
+| 5 | standalone SBI service vs fuller free5GC NF lifecycle level | direction resolved; implementation work remains | Priority 11 | make NRF registration, OAuth, and discovery the implementation mainline; retain metrics as required non-blocking alignment work; implementation not started as of 2026-07-14 |
 | 6 | OpenAPI/model governance still incomplete | existing open work | Priority 10 | not started |
 | 7 | logging boundary and payload hygiene | existing open work | Priority 7 | completed for current intended scope on 2026-06-29 by `NWDAF/` commit `2ff07af`; local verification passed and Priority 6 late-failure semantics remain separate by design |
 | 8 | test ownership was still more package-local than surveyed free5GC baseline | newly formalized same-lineage follow-up | Priority 3 strict ownership follow-up | closed on 2026-06-24 by `NWDAF/` commit `0768839` |
@@ -87,7 +88,7 @@ state in this document set.
 | 8 | B | Clarify Post-Subscription Activation And Late-Failure Signaling | Not started | Design completeness and observability work, not an immediate correctness bug |
 | 9 | B | Tighten Logging Boundaries | Completed for current intended scope | 2026-06-29 workspace implementation closed the planned boundary, payload-hygiene, message-shape, and hot-path verbosity cleanup in `NWDAF/` commit `2ff07af`; later Priority 6 signaling semantics remain intentionally separate |
 | 10 | C | Establish OpenAPI / Model Governance | Not started | Generated/reference models already exist for some locally redefined payloads; governance should follow handler/config cleanup |
-| 11 | C | Decide The Intended free5GC Integration Level | Not started | Architectural scope decision |
+| 11 | C | Implement free5GC NRF, OAuth, Discovery, And Metrics Alignment | Planned; Phase 0 behavior decisions confirmed, implementation not started | Direction and Phase 0 behavior confirmed on 2026-07-15: require NRF config, use `nfServices`, retry temporary unavailability until cancellation, register before starting listeners, roll back post-registration listener failures with bounded deregistration, defer redirect/heartbeat, rely on NRF default PLMN, follow free5GC API-prefix convention, and deregister before SBI shutdown |
 | 12 | C | Separate Runtime Config From Lab / Workflow Config | Not started | Structural config-scope cleanup after factory hardening and boundary decisions |
 | 13 | C | Clean Repo And Package Ownership Boundaries | Completed for the current intended scope | Phase 1 landed in `NWDAF/` baseline `9b343ef` on 2026-07-01; Phase 2 then landed the separate `sbi` / `anlf` / `mtlf` server-topology split in `NWDAF/` commits `0ddbf3c` and `b547727`, including owned auxiliary listeners, callback-URI ownership cleanup, and focused lifecycle/config regression coverage |
 | 14 | B | Align HTTP Edge Shape And Flow Ownership | Completed for the current active tranche and current-stage auxiliary follow-up | Phase 1 landed in `NWDAF/` on 2026-07-06 as commit `e8e249a`; Phase 1.5 then landed in `NWDAF/` on 2026-07-06 across commits `8762b35` and `a0fff93`, completing the main-`SBI` HTTPS uplift and collector callback-ownership correction; the currently selected Phase 2 auxiliary structural-alignment scope then landed in `NWDAF/` on 2026-07-06 as commit `1b06411`, while deeper processor/business-logic consolidation remains future work |
@@ -194,9 +195,9 @@ Status update:
      Priority 6 even where they touch the same async subscription paths
   3. callback contract/model redesign remains Priority 5 or Priority 10
   4. logging hygiene remains Priority 7
-  5. fuller free5GC integration-level uplift such as NRF registration,
-     metrics-server wiring, and broader NF-lifecycle alignment remains Priority
-     11
+  5. fuller free5GC integration-level uplift such as completing the metrics
+     collector/server lifecycle, NRF registration, OAuth/certificate support,
+     discovery, and broader NF-lifecycle alignment remains Priority 11
   6. Daisy / MTLF callback relocation and broader package-boundary cleanup
      remain Priority 12
 - The completed notifier-lifecycle portion, the later covered residual
@@ -547,27 +548,70 @@ Why here:
 - This becomes much easier once handler contracts and tests are already in
   place.
 
-### Priority 11 — Decide The Intended free5GC Integration Level
+### Priority 11 — Implement free5GC NRF, OAuth, Discovery, And Metrics Alignment
 
 Scope:
 
-- missing NRF registration/deregistration
-- missing metrics server wiring
-- lightweight SBI server path versus reference NF baselines
+- the architectural direction is now decided: NWDAF should align upward as an
+  NRF-managed free5GC-style NF
+- NRF registration/deregistration, OAuth/certificate handling, and NRF-backed
+  NF discovery are not yet wired
+- the existing main SBI HTTP/HTTPS and `metrics.InboundMetrics()` support from
+  Priority 14 should be preserved and completed with collector initialization,
+  outbound client hooks, a separately owned `/metrics` listener, configuration,
+  and lifecycle management
 
 Sub-items:
 
-1. Decide whether NWDAF remains a standalone SBI service or aligns upward as a
-   normal free5GC-style NF.
-2. If aligning upward, wire `nrfUri`, register/deregister flow, metrics server,
-   and closer HTTP/TLS/auth patterns.
-3. If staying standalone, document the divergence explicitly and stop treating
-   the gap as accidental.
+1. Implement an NRF NFManagement baseline:
+   - build the NWDAF NF profile from validated runtime config and context
+   - register at startup and deregister during bounded shutdown
+   - advertise only implemented standardized services and analytics events
+   - require `nrfUri` but keep retryable NRF unavailability alive with owned
+     listeners unstarted, retrying with cancellation-aware backoff until
+     success or cancellation
+   - use `nfServices`, omit request `plmnList` for the same-PLMN baseline, rely
+     on NRF `defaultPlmnId`, and follow the current free5GC `apiPrefix` shape
+   - register before starting listeners, roll back post-registration listener
+     failures with bounded deregistration, reject Phase 0 redirects and
+     OAuth-required operation explicitly, and deregister before stopping SBI
+2. Add OAuth and NRF-certificate support:
+   - consume the registration response's OAuth indication
+   - obtain tokens for protected outbound NRF operations
+   - protect the appropriate inbound standardized producer routes
+   - keep OAuth-disabled operation covered explicitly
+3. Add NRF discovery as a separately gated phase, beginning with SMF lookup,
+   and decide how discovery interacts with currently configured peer endpoints.
+4. Complete the common free5GC metrics runtime as an independent workstream:
+   - add optional `configuration.metrics` with the usual enable, scheme,
+     binding, port, namespace, and TLS fields
+   - initialize inbound/outbound SBI collectors and attach outbound generated
+     client hooks
+   - start and stop the separate metrics server under app lifecycle ownership
+   - do not make this default-disabled runtime a prerequisite for the NRF,
+     OAuth, or discovery phase gates
+5. Keep registration, OAuth, discovery, and metrics as separate commits and
+   verification gates even if some are developed in one round.
+6. Keep TS 29.510 NFUpdate heartbeat as an explicit, non-blocking deferred
+   standards gap. Current free5GC `main`/NRF v1.4.5 has partial NRF PATCH
+   support but no surveyed NF heartbeat sender or complete NRF
+   timer/expiry/suspension lifecycle; revisit it through a separate plan after
+   upstream coordination.
 
 Why here:
 
-- This is a deliberate architectural scope decision and should not be hidden
-  inside lower-level cleanups.
+- The direction is no longer an open architecture vote, but the implementation
+  changes startup, shutdown, trust, authorization, and peer-selection behavior
+  and therefore needs its own staged completion gates.
+- NRF is the main implementation objective because registration and discovery
+  establish the runtime basis for adding later standardized interfaces;
+  metrics remains required alignment work but is not an NRF dependency.
+
+Detailed implementation plan:
+
+- `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 11 NRF OAuth Discovery And Metrics Alignment Plan.md`
+- `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 11 Phase 0 NRF NFManagement Detailed Plan.md`
+- `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 11 Metrics Runtime Supporting Workstream Plan.md`
 
 ### Priority 12 — Clean Repo And Package Ownership Boundaries
 
