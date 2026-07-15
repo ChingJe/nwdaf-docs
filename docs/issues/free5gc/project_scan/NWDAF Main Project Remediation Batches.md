@@ -65,7 +65,7 @@ classification map.
 | 2 | remaining package-global config reads after Priority 4 | residual in completed line | Priority 4 residual follow-up | closed on 2026-06-24 by `NWDAF/` commit `a912581` |
 | 3 | non-3GPP external clients bypass shared consumer/app ownership | newly formalized work item | Priority 4 follow-up in this file | not started |
 | 4 | runtime config mixed with lab/workflow config | existing open work | Priority 9 | not started |
-| 5 | standalone SBI service vs fuller free5GC NF lifecycle level | Phase 0 and Phase 1 complete; later phases remain | Priority 11 | NRF lifecycle plus OAuth/certificate support are committed and verified in `NWDAF` commits `2d34594`, `3c545d0`, and `74b608b` and `nwdaf-resources` commit `d70c4e1`; OAuth-disabled and OAuth-enabled HTTP/H2C live gates and the detailed automated-test matrix passed; current NRF v1.4.5 dropping registered `nwdafInfo` remains an accepted NRF-side limitation; discovery and metrics remain later work |
+| 5 | standalone SBI service vs fuller free5GC NF lifecycle level | Phase 0 through Phase 2 complete; supporting work remains | Priority 11 | NRF lifecycle and OAuth/certificate support are committed and verified in `NWDAF` commits `2d34594`, `3c545d0`, and `74b608b` and `nwdaf-resources` commit `d70c4e1`; Phase 2 SMF discovery is implemented and verified in the current `NWDAF` working tree with repository and layered OAuth-disabled/OAuth-enabled live gates passing, while its commit is pending; current NRF v1.4.5 dropping registered `nwdafInfo` and current SMF route-prefix/CRUD gaps remain accepted upstream limitations; metrics and heartbeat remain later work |
 | 6 | OpenAPI/model governance still incomplete | existing open work | Priority 10 | not started |
 | 7 | logging boundary and payload hygiene | existing open work | Priority 7 | completed for current intended scope on 2026-06-29 by `NWDAF/` commit `2ff07af`; local verification passed and Priority 6 late-failure semantics remain separate by design |
 | 8 | test ownership was still more package-local than surveyed free5GC baseline | newly formalized same-lineage follow-up | Priority 3 strict ownership follow-up | closed on 2026-06-24 by `NWDAF/` commit `0768839` |
@@ -88,7 +88,7 @@ state in this document set.
 | 8 | B | Clarify Post-Subscription Activation And Late-Failure Signaling | Not started | Design completeness and observability work, not an immediate correctness bug |
 | 9 | B | Tighten Logging Boundaries | Completed for current intended scope | 2026-06-29 workspace implementation closed the planned boundary, payload-hygiene, message-shape, and hot-path verbosity cleanup in `NWDAF/` commit `2ff07af`; later Priority 6 signaling semantics remain intentionally separate |
 | 10 | C | Establish OpenAPI / Model Governance | Not started | Generated/reference models already exist for some locally redefined payloads; governance should follow handler/config cleanup |
-| 11 | C | Implement free5GC NRF, OAuth, Discovery, And Metrics Alignment | In progress; Phase 0 and Phase 1 complete | Phase 0 provides the NRF registration lifecycle in `2d34594`; Phase 1 adds registration-driven OAuth state, separate `nrfCertPem`, generated Access Token client ownership, token-protected deregistration, Events Subscription scope authorization, certificate workflow, focused/race/full repository checks, and OAuth-disabled/OAuth-enabled HTTP/H2C live proof in `NWDAF` commits `3c545d0` and `74b608b` and `nwdaf-resources` commit `d70c4e1`; NRF v1.4.5 `nwdafInfo` persistence remains an accepted NRF-side limitation; discovery, heartbeat, and metrics remain later work |
+| 11 | C | Implement free5GC NRF, OAuth, Discovery, And Metrics Alignment | In progress; Phase 0 through Phase 2 complete | Phase 0 provides the committed NRF registration lifecycle; Phase 1 provides committed OAuth/certificate support and live proof; Phase 2 adds explicit `nrf\|configured` SMF endpoint sourcing, generated NRF discovery, validity-based caching, multi-SMF reconciliation, outbound SMF OAuth, and bounded app-owned committed cleanup in the current `NWDAF` working tree, with focused/race/repeated/full/build/lint, post-review regression hardening, and layered OAuth-disabled/OAuth-enabled live gates passing and its commit pending; NRF `nwdafInfo` persistence and SMF Event Exposure route-prefix/CRUD gaps remain accepted upstream limitations; heartbeat and metrics remain later work |
 | 12 | C | Separate Runtime Config From Lab / Workflow Config | Not started | Structural config-scope cleanup after factory hardening and boundary decisions |
 | 13 | C | Clean Repo And Package Ownership Boundaries | Completed for the current intended scope | Phase 1 landed in `NWDAF/` baseline `9b343ef` on 2026-07-01; Phase 2 then landed the separate `sbi` / `anlf` / `mtlf` server-topology split in `NWDAF/` commits `0ddbf3c` and `b547727`, including owned auxiliary listeners, callback-URI ownership cleanup, and focused lifecycle/config regression coverage |
 | 14 | B | Align HTTP Edge Shape And Flow Ownership | Completed for the current active tranche and current-stage auxiliary follow-up | Phase 1 landed in `NWDAF/` on 2026-07-06 as commit `e8e249a`; Phase 1.5 then landed in `NWDAF/` on 2026-07-06 across commits `8762b35` and `a0fff93`, completing the main-`SBI` HTTPS uplift and collector callback-ownership correction; the currently selected Phase 2 auxiliary structural-alignment scope then landed in `NWDAF/` on 2026-07-06 as commit `1b06411`, while deeper processor/business-logic consolidation remains future work |
@@ -555,7 +555,9 @@ Scope:
 - the architectural direction is now decided: NWDAF should align upward as an
   NRF-managed free5GC-style NF
 - Phase 0 NRF registration/deregistration and Phase 1 OAuth/certificate
-  support are complete and committed; NRF-backed NF discovery is not yet wired
+  support are complete and committed; Phase 2 NRF-backed SMF discovery is
+  implemented and verified in the current `NWDAF` working tree, with its
+  implementation commit pending
 - live verification against free5GC `main` commit `f64135d`/NRF v1.4.5 proves
   create/delete lifecycle and default PLMN handling, but the NRF data-model
   copy path drops registered `nwdafInfo`; this is accepted as a Phase 0
@@ -594,7 +596,24 @@ Sub-items:
      `nwdaf-resources` commit `d70c4e1`, including the focused automated
      regression matrix and OAuth-disabled/OAuth-enabled live gates
 3. Add NRF discovery as a separately gated phase, beginning with SMF lookup,
-   and decide how discovery interacts with currently configured peer endpoints.
+   and decide how discovery interacts with currently configured peer endpoints:
+   - completed in the current `NWDAF` working tree on 2026-07-15
+   - uses explicit `endpointSource: nrf|configured`, generated NFDiscovery,
+     exact-query positive caching, all-root fan-out, and no merge or fallback
+   - adds `nnrf-disc` and `nsmf-event-exposure` authorization under the
+     registration-driven OAuth mode
+   - keeps discovery and SMF creation caller- and shutdown-cancelable, while
+     committed stale-resource, rollback, and explicit-delete cleanup uses a
+     bounded app-owned context so caller disconnection cannot strand remote
+     state
+   - passed focused, race, repeated, full-repository, build, lint, diff, and
+     layered OAuth-disabled/OAuth-enabled live gates; post-review cache,
+     discovery-error, cleanup-context, partial-fan-out cancellation, and OAuth
+     regressions also pass
+   - records that the current SMF advertises the standard service but routes
+     under `/nsmf_event-exposure/v1`, where its CRUD handlers remain `501`;
+     successful standard-path POST/DELETE was therefore proven with a temporary
+     protected producer registered in the same real NRF
 4. Complete the common free5GC metrics runtime as an independent workstream:
    - add optional `configuration.metrics` with the usual enable, scheme,
      binding, port, namespace, and TLS fields
@@ -625,6 +644,7 @@ Detailed implementation plan:
 - `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 11 NRF OAuth Discovery And Metrics Alignment Plan.md`
 - `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 11 Phase 0 NRF NFManagement Detailed Plan.md`
 - `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 11 Phase 1 OAuth And NRF Certificate Detailed Plan.md`
+- `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 11 Phase 2 NRF SMF Discovery Detailed Plan.md`
 - `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 11 Metrics Runtime Supporting Workstream Plan.md`
 
 ### Priority 12 — Clean Repo And Package Ownership Boundaries

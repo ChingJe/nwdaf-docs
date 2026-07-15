@@ -2,8 +2,12 @@
 
 Date: 2026-07-15
 
-Status: Approved implementation plan; D1 through D5 and the D2 compatibility
-choice are resolved in Section 15; implementation has not started
+Status: Implemented and verified in the current `NWDAF` working tree; D1
+through D5 and the D2 compatibility choice are resolved in Section 15;
+focused, race, repeated, full-repository, build, lint, diff, and layered local
+integration gates pass; post-review context ownership, cache, discovery-error,
+and OAuth regression hardening also passes; implementation and documentation
+commits are pending
 
 Parent plan:
 
@@ -48,8 +52,11 @@ The intended bounded outcome is:
    shutdown
 7. empty, malformed, multi-instance, unavailable-NRF, expired-result, and
    migration-mode outcomes are explicit
-8. a live local NRF and SMF gate proves that the service advertised by SMF is
-   the service endpoint consumed by NWDAF
+8. a layered live local gate proves that the service advertised by a real
+   free5GC SMF is discovered and contacted by NWDAF, while a temporary Event
+   Exposure producer registered in the same real NRF proves successful
+   subscription and cleanup semantics that the current free5GC SMF stub cannot
+   provide
 
 Phase 2 must not claim more than it implements. In particular, direct discovery
 of every SMF offering `Nsmf_EventExposure` is not the same procedure as finding
@@ -517,9 +524,15 @@ cancel the operation. The implementation should use one context whose
 cancellation covers both conditions, following the existing NWDAF lifecycle
 boundary without adding an unowned goroutine.
 
-Rollback-triggered reconciliation may use the bounded application context
-because no original HTTP caller remains after the rollback starts. It still
-must not outlive application shutdown.
+That combined caller/application context owns discovery, access-token requests,
+and SMF subscription creation while the requested state is still being
+established. Once an update has synchronized its replacement observation
+bindings, stale-resource cleanup is committed server-side work. Explicit
+subscription deletion and rollback cleanup have the same property. Those
+cleanup calls use a ten-second child of the app-owned cancellation context, not
+the inbound request context, so a disconnected caller cannot strand a remote
+SMF subscription after NWDAF has already removed its local state. The bounded
+cleanup still stops on application shutdown and cannot outlive the NF.
 
 ### 7.5 Response Validation And URI Extraction
 
@@ -629,6 +642,8 @@ to NRF-discovered endpoints:
    observation binding synchronization succeeds
 5. if discovery fails, the update follows the existing rollback path and must
    not eagerly delete the previous working resources
+6. stale, rollback, and explicit-delete cleanup uses the bounded app-owned
+   context rather than inheriting caller cancellation
 
 Changing endpoint-source configuration requires restart; live config reload is
 outside this phase.
@@ -652,7 +667,9 @@ Phase 2 includes the narrow outbound SMF token path:
 3. at the existing raw SMF request boundary, read the
    `oauth2.TokenSource` from `openapi.ContextOAuth2`, obtain its token, and use
    `SetAuthHeader(...)` for the POST and DELETE requests
-4. preserve the caller context and current request timeout
+4. preserve the supplied parent context and current request timeout; normal
+   subscription creation receives the caller/application context, while
+   committed cleanup receives the bounded app-owned context
 5. never log the token
 6. keep the documented raw-client exception; do not force an unsafe generated
    request-model migration into this phase
@@ -747,12 +764,17 @@ This document completes that planning package.
 
 ### P2.7 — Runtime Proof And Documentation
 
-1. run OAuth-disabled discovery against local NRF and SMF
-2. prove NWDAF consumes the discovered SMF Event Exposure API root
-3. run OAuth-enabled `nnrf-disc` discovery
-4. prove OAuth-enabled SMF subscription and cleanup
-5. record the accepted NRF and generated-contract limitations
-6. update the parent plan and remediation records only after the gates pass
+1. run OAuth-disabled discovery against a real local NRF and SMF
+2. prove NWDAF consumes the Event Exposure API root advertised by the real SMF
+   and record the current SMF stub's expected `501 Not Implemented` response
+3. register a temporary Event Exposure producer in the same real NRF and prove
+   successful subscription and cleanup without changing either production
+   repository
+4. repeat discovery and both producer paths with OAuth enabled
+5. prove `nnrf-disc` and `nsmf-event-exposure` authorization, including safe
+   rejection of a wrong or missing producer scope
+6. record the accepted NRF, SMF, and generated-contract limitations
+7. update the parent plan and remediation records only after the gates pass
 
 ---
 
@@ -869,7 +891,9 @@ Cover:
 11. complete SMF subscription failure is not reported as success
 12. partial fan-out success follows the approved D3 policy
 13. cleanup uses the original discovered endpoint
-14. request and shutdown cancellation stop discovery and downstream calls
+14. request and shutdown cancellation stop discovery and subscription creation
+15. committed stale/delete cleanup is bounded by the app-owned context and is
+    not canceled merely because the inbound request disconnects
 
 ### 9.8 SMF OAuth Tests
 
@@ -879,12 +903,25 @@ Cover:
 3. POST subscription carries the bearer token
 4. DELETE subscription carries the bearer token
 5. token failure prevents the SMF call
-6. caller cancellation is preserved across token and SMF requests
+6. cancellation from the supplied parent is preserved across token and SMF
+   requests, including pre-dispatch cancellation
 7. no token appears in logs or returned errors
 
 ### 9.9 Local Integration Gate
 
-OAuth-disabled gate:
+The current local free5GC SMF advertises `nsmf-event-exposure` with the standard
+API prefix, but `pkg/factory/config.go` wires the producer router under the
+non-standard `/nsmf_event-exposure/v1` prefix. A request to the advertised
+standard path therefore returns `404`. Directly probing the underscore-prefixed
+route reaches `internal/sbi/api_eventexposure.go`, whose POST, DELETE, GET, and
+PUT handlers all return `501 Not Implemented`. Requiring a route-prefix repair
+and successful CRUD would expand this NWDAF phase into a separate SMF feature
+or upstream contribution. The accepted gate therefore separates real-SMF
+discovery and route evidence from successful producer semantics. This is not a
+mocked NRF gate: both producers register in and are discovered through the same
+running free5GC NRF.
+
+OAuth-disabled real-NF gate:
 
 1. start the current local NRF
 2. start a free5GC SMF advertising `nsmf-event-exposure`
@@ -892,21 +929,111 @@ OAuth-disabled gate:
 4. issue the NWDAF flow that triggers UE communication data collection
 5. capture the NRF discovery query
 6. confirm the returned profile contains the expected registered SMF service
-7. confirm NWDAF sends the Event Exposure subscription to the discovered API
-   root rather than a configured fake endpoint
-8. delete or update the NWDAF subscription and confirm cleanup uses the same
-   endpoint
+7. confirm NWDAF sends the Event Exposure subscription to the real discovered
+   API root rather than a configured endpoint
+8. confirm the standard discovered path reaches the real SMF and returns the
+   expected `404` caused by the upstream route-prefix mismatch
+9. directly probe the real SMF's underscore-prefixed route and confirm its
+   handler-level `501 Not Implemented`, without treating that private typo as
+   an NWDAF compatibility contract
+
+OAuth-disabled successful-producer gate:
+
+1. register a temporary SMF Event Exposure producer in the running real NRF
+2. confirm the producer is returned by the same generated discovery path
+3. confirm NWDAF successfully creates a subscription at its discovered root
+4. delete or update the NWDAF subscription and confirm cleanup uses the same
+   root and subscription resource identifier
+5. keep the producer and all generated configuration, binaries, data, and logs
+   under `/tmp`; do not modify the free5GC reference tree or NWDAF production
+   code
 
 OAuth-enabled gate:
 
 1. start NRF with OAuth enabled under the accepted HTTP/H2C deployment mode
 2. confirm NWDAF obtains `nnrf-disc` authorization
 3. confirm protected discovery succeeds
-4. confirm NWDAF obtains `nsmf-event-exposure` authorization and the protected
-   SMF accepts subscription and deletion
-5. confirm wrong or missing scope fails safely
+4. confirm the protected standard path returns the same upstream-prefix `404`
+5. use an `nsmf-event-exposure` bearer for a direct diagnostic probe of the
+   real SMF's underscore-prefixed route and confirm authorization reaches its
+   handler-level `501 Not Implemented`
+6. confirm NWDAF obtains `nsmf-event-exposure` authorization and the temporary
+   protected producer accepts subscription and deletion
+7. confirm wrong or missing producer scope fails safely
 
-A mocked discovery response alone is not sufficient runtime proof.
+A mocked discovery response or a standalone fake NRF is not sufficient runtime
+proof. The temporary producer does not prove free5GC SMF CRUD support; it proves
+NWDAF's success and cleanup behavior after real NRF registration and discovery.
+
+### 9.10 Completed Verification Record
+
+Repository verification passed before the live gate:
+
+```text
+go test -count=1 ./pkg/factory ./internal/sbi/consumer ./internal/sbi/processor ./internal/sbi
+go test -count=1 ./...
+go test -race -count=1 ./internal/sbi/consumer ./internal/sbi/processor
+go test -count=10 ./internal/sbi/consumer ./internal/sbi/processor -run 'Discovery|SmfEndpoint|Cache|TriggerDataCollection'
+make build
+make lint
+git diff --check
+```
+
+The layered gate then used local MongoDB, free5GC NRF v1.4.5, free5GC SMF
+v1.4.4-27, the current NWDAF binary, and a temporary producer and AnLF runtime
+responder built and run entirely under `/tmp`. No production source or
+free5GC reference file was changed by the runtime setup.
+
+OAuth-disabled results:
+
+1. the exact SMF discovery query returned `200` and two matching profiles
+2. the response contained both the real SMF root `http://127.0.0.2:8000` and
+   temporary producer root `http://127.0.0.22:8000`
+3. NWDAF logged two profiles and two endpoints and returned `201` for the
+   Events Subscription request after one producer succeeded
+4. the standard path on the real SMF returned `404`; the diagnostic
+   underscore-prefixed path returned the expected stub `501`
+5. NWDAF cleanup returned `204`, the temporary producer recorded one create
+   and one delete, and graceful NRF deregistration completed
+
+OAuth-enabled results:
+
+1. registration reported `oauth2Required=true`
+2. protected `nnrf-disc` returned `200` for the exact generated query
+3. the real SMF again returned `404` on the standard path; a valid
+   `nsmf-event-exposure` bearer reached the underscore-prefixed handler and
+   returned `501`
+4. the temporary producer accepted bearer-protected POST and DELETE, while a
+   missing bearer and a valid token with the wrong scope each returned `401`
+5. NWDAF returned `201` for create and `204` for delete, then obtained protected
+   deregistration and stopped cleanly
+6. log scans found no bearer header, access-token field, or JWT-shaped value in
+   the retained live logs
+
+These results prove NWDAF's discovery, multi-endpoint partial-success, OAuth,
+successful producer, cleanup, and lifecycle behavior without claiming that the
+current upstream SMF implements the standard Event Exposure resource.
+
+Post-review hardening then reran the repository gates after adding focused
+coverage for:
+
+1. app-owned, ten-second cleanup contexts for explicit deletion and stale
+   discovered-resource migration
+2. reuse of unchanged discovered resources and preservation of their original
+   discovered API roots
+3. discovery errors across `400`, `401`, `403`, `404`, `500`, `307`, `308`,
+   transport failure, malformed responses, missing NRF URI, cache-key
+   separation, and owner cancellation
+4. OAuth-disabled raw SMF requests, token-failure dispatch prevention, and
+   caller cancellation before dispatch
+5. caller and application cancellation after one SMF fan-out target succeeds,
+   including immediate stop before the next target and inspectable context
+   errors for the existing create/update rollback boundary
+
+Focused, full-repository, race, ten-repeat, build, lint, and diff gates passed
+again. The live gate was not repeated because this hardening did not change the
+discovery query, transport contract, endpoint extraction, or bearer protocol;
+the live evidence above remains the runtime gate for those unchanged paths.
 
 ---
 
@@ -969,7 +1096,7 @@ Run focused new discovery, cache, and migration tests repeatedly where timing
 or concurrency is involved:
 
 ```bash
-go test -count=10 ./internal/sbi/consumer ./internal/sbi/processor -run 'Discovery|SmfEndpoint|Cache'
+go test -count=10 ./internal/sbi/consumer ./internal/sbi/processor -run 'Discovery|SmfEndpoint|Cache|TriggerDataCollection|Cleanup|Cancellation'
 ```
 
 Also run:
@@ -1037,6 +1164,8 @@ Phase 2 does not include:
 14. OAuth-enabled HTTPS mutual TLS
 15. a general access-token cache
 16. callback authorization changes
+17. correction or implementation of the current free5GC SMF Event Exposure
+    route and subscription CRUD
 
 These gaps must remain visible in the completion record.
 
@@ -1059,17 +1188,21 @@ Phase 2 is complete only when:
 8. discovery failure reaches the existing create/update rollback boundary
 9. the approved cache policy and validity behavior are tested, including race
    coverage if shared state is added
-10. OAuth-disabled and OAuth-enabled NRF discovery pass
-11. the accepted SMF producer OAuth scope and raw-request bearer binding are
+10. committed stale/delete cleanup uses a bounded app-owned context and has
+    focused cancellation regression coverage
+11. OAuth-disabled and OAuth-enabled NRF discovery pass
+12. the accepted SMF producer OAuth scope and raw-request bearer binding are
     verified
-12. a live NRF/SMF gate proves consumption of the discovered Event Exposure
-    endpoint
-13. focused tests, full tests, race tests, build, lint, and diff checks pass
-14. README, sample config, parent plan, and remediation records match the
+13. the layered live gate proves that NWDAF discovers and contacts the real
+    free5GC SMF Event Exposure route, records the upstream `501` limitation,
+    and completes successful POST/DELETE cleanup against a temporary protected
+    producer registered in the same real NRF
+14. focused tests, full tests, race tests, build, lint, and diff checks pass
+15. README, sample config, parent plan, and remediation records match the
     landed behavior
-15. direct NRF service-catalog discovery is not misrepresented as UDM-backed
+16. direct NRF service-catalog discovery is not misrepresented as UDM-backed
     serving-SMF resolution
-16. metrics and heartbeat remain separate workstreams
+17. metrics and heartbeat remain separate workstreams
 
 ---
 

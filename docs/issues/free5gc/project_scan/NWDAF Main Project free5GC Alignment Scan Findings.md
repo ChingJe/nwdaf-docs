@@ -332,8 +332,8 @@ Impact:
 
 Type: structural alignment gap
 
-Current reassessment on 2026-07-14, last updated 2026-07-15 after Phase 1
-implementation:
+Current reassessment on 2026-07-14, last updated 2026-07-15 after Phase 2
+implementation and live verification:
 
 - the original evidence below is retained as historical scan evidence
 - Priority 14 has since moved the main SBI edge to the shared HTTP/2 server
@@ -341,13 +341,13 @@ implementation:
   HTTP/HTTPS selection with SBI TLS configuration
 - NRF registration/deregistration and OAuth/certificate support are complete
   in `NWDAF` commits `2d34594`, `3c545d0`, and `74b608b` and
-  `nwdaf-resources` commit `d70c4e1`; NRF-backed discovery remains open under
-  Priority 11
+  `nwdaf-resources` commit `d70c4e1`; NRF-backed SMF discovery is implemented
+  and verified in the current `NWDAF` working tree, with its commit pending
 - the integration direction is now decided: NWDAF will align upward as an
   NRF-managed NF through staged implementation
-- NRF registration/deregistration and OAuth/certificate support are the first
-  two implemented phases; discovery follows because that path enables later
-  standardized peer-facing interfaces
+- NRF registration/deregistration, OAuth/certificate support, and SMF discovery
+  are the first three implemented phases; this discovery path establishes the
+  pattern for later standardized peer-facing interfaces
 - Phase 0 behavior is now fixed: `nrfUri` is required; retryable registration
   failure keeps NWDAF alive with owned listeners unstarted until success or
   cancellation; `nfServices`, registration-before-listener startup, same-PLMN
@@ -387,6 +387,23 @@ implementation:
   OAuth-enabled listener rollback through token-protected deregistration, and
   production `NewServer(...)` route wiring; the complete focused, repeated,
   race, full-module, build, lint, and diff gates passed
+- Phase 2 adds generated NRF SMF discovery, explicit
+  `endpointSource: nrf|configured`, positive-validity caching, all-root fan-out,
+  one endpoint set per reconciliation, rollback-preserving discovery failure,
+  outbound `nsmf-event-exposure` bearer binding, and bounded app-owned cleanup
+  for committed stale/delete work; focused, race, repeated, full-module, build,
+  lint, and diff gates passed, including post-review cache, discovery-error,
+  context-ownership, partial-fan-out cancellation, and OAuth regressions
+- layered OAuth-disabled and OAuth-enabled live gates used the real free5GC NRF
+  and SMF plus a temporary protected producer registered in the same NRF;
+  discovery returned both endpoints, NWDAF create/delete returned `201`/`204`,
+  missing and wrong-scope producer tokens returned `401`, and graceful protected
+  deregistration completed
+- the live gate also confirmed that the current SMF advertises
+  `nsmf-event-exposure` at a standard API root but routes it internally as
+  `/nsmf_event-exposure/v1`; the standard request therefore returns `404`, and
+  its private underscore-prefixed CRUD handlers return `501`. This remains an
+  explicit SMF-side limitation rather than an NWDAF compatibility typo.
 - the current implementation plan is:
   `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 11 NRF OAuth Discovery And Metrics Alignment Plan.md`
 
@@ -395,12 +412,15 @@ Current evidence in NWDAF:
 - `pkg/factory` requires and normalizes the NRF URI
 - `internal/context` owns the generated NF profile and registration state
 - `internal/sbi/consumer/nrf_service.go` owns generated NFManagement clients,
-  generated Access Token clients, retry, response validation, protected
-  deregistration, and caller-context propagation
+  generated NFDiscovery and Access Token clients, retry, response validation,
+  discovery caching, protected deregistration, and caller-context propagation
 - `internal/context` delegates producer authorization to
   `oauth.VerifyOAuth(...)` using context-owned OAuth state and `nrfCertPem`
 - `internal/sbi` attaches service-specific authorization to the Events
   Subscription route group while leaving collector callbacks separate
+- `internal/sbi/processor` resolves one SMF endpoint set per reconciliation and
+  preserves configured/discovered source separation, fan-out resource identity,
+  rollback, and cleanup behavior
 - `pkg/service/init.go` registers before starting listeners and deregisters
   before stopping SBI
 - exact-profile, HTTP-contract, retry/cancellation, and lifecycle tests cover

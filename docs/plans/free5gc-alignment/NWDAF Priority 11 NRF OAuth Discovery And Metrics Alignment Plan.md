@@ -7,9 +7,12 @@ Status: Phase 0 implemented and committed in `NWDAF` commit `2d34594` on
 commits `3c545d0` and `74b608b` and `nwdaf-resources` commit `d70c4e1`; live
 OAuth-disabled and OAuth-enabled HTTP/H2C gates and the complete focused
 automated-test matrix passed; current NRF v1.4.5 dropping registered
-`nwdafInfo` remains an accepted NRF-side limitation; the Phase 2 SMF discovery
-detailed plan is approved with its scope, migration, multi-SMF, cache, and OAuth
-decisions resolved, but implementation has not started; metrics runtime and
+`nwdafInfo` remains an accepted NRF-side limitation; Phase 2 SMF discovery is
+implemented and verified in the current `NWDAF` working tree, including
+OAuth-disabled and OAuth-enabled layered live gates plus post-review cleanup,
+cache, discovery-error, and OAuth regression hardening, with its implementation
+commit pending; the current SMF's route-prefix mismatch and unimplemented Event
+Exposure CRUD remain explicit upstream limitations; metrics runtime and
 heartbeat remain later work
 
 Historical remediation item:
@@ -695,16 +698,20 @@ Detailed planning document:
 
 - `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 11 Phase 2 NRF SMF Discovery Detailed Plan.md`
 
-Current planning status on 2026-07-15: the detailed plan is approved based on
-the Release 18 NFDiscovery contract, TS 23.288 data-collection procedures, the
-pinned OpenAPI module, and AMF/UDM/NEF free5GC exemplars. Its five decision
-gates and endpoint-source compatibility choice are resolved. Implementation
-has not started.
+Completion status on 2026-07-15: the detailed plan was implemented in the
+current `NWDAF` working tree based on the Release 18 NFDiscovery contract, TS
+23.288 data-collection procedures, the pinned OpenAPI module, and AMF/UDM/NEF
+free5GC exemplars. Its five decision gates and endpoint-source compatibility
+choice are resolved. Focused, race, repeated, full-repository, build, lint,
+diff, and layered OAuth-disabled/OAuth-enabled live gates pass; the
+implementation commit is pending. Post-review hardening also proves that
+committed stale-resource and explicit-delete cleanup uses a bounded app-owned
+context, while establishment remains caller- and shutdown-cancelable.
 
 The first target should be SMF discovery because the current NWDAF data
 collection flow already depends on SMF endpoints.
 
-Phase 2 will:
+Phase 2 now:
 
 1. add generated NFDiscovery client ownership to the NRF consumer service
 2. query using the correct requester NF type, target NF type, and service name
@@ -721,7 +728,9 @@ Phase 2 will:
    outbound SMF scope `nsmf-event-exposure`
 8. bind the SMF token to raw Event Exposure POST and DELETE requests using the
    free5GC NEF `TokenSource`/`SetAuthHeader(...)` pattern
-9. preserve caller deadlines and application cancellation
+9. preserve caller deadlines and application cancellation during discovery and
+   subscription creation; use bounded app-owned context for committed
+   stale/delete cleanup so caller disconnection cannot strand remote state
 
 Additional NF types should be added only after the SMF path has a complete
 query, selection, caching, and failure policy.
@@ -738,9 +747,24 @@ Phase 2 is complete for SMF only when:
 4. cache validity, concurrent miss coalescing, expiry, and no-stale behavior are
    tested
 5. OAuth-enabled and OAuth-disabled discovery both pass
-6. OAuth-enabled raw SMF Event Exposure subscription and deletion pass
-7. a local NRF/SMF integration test demonstrates discovery and consumption of
-   the advertised service
+6. OAuth-enabled raw SMF Event Exposure subscription and deletion pass against
+   a temporary protected producer registered in the real NRF
+7. the layered local gate proves that NWDAF discovers and contacts the real
+   SMF's advertised standard root, while recording that the current free5GC SMF
+   router uses `/nsmf_event-exposure/v1` and its reached CRUD handlers return
+   `501 Not Implemented`
+8. focused regression tests prove app-owned bounded cleanup, unchanged-resource
+   reuse, cache-key separation, owner-cancellation release, the full planned
+   NRF error matrix, OAuth-disabled SMF calls, pre-dispatch cancellation, and
+   caller/application cancellation propagation after partial fan-out success
+
+All eight gates pass in the current working tree. The live run used the real
+free5GC NRF and SMF for registration, discovery, OAuth, and route evidence, and
+a temporary producer in the same NRF for successful standard-path POST,
+DELETE, and cleanup. This does not represent the current free5GC SMF as having
+working Event Exposure CRUD. The post-review hardening did not alter the live
+discovery or bearer protocol, so the existing layered live evidence remains
+valid and the automated gates were rerun instead of repeating that environment.
 
 ---
 
@@ -795,7 +819,8 @@ Runtime integration evidence should include:
 5. inspection of the registered NWDAF profile
 6. graceful deregistration evidence
 7. positive and negative inbound token cases
-8. SMF discovery evidence in Phase 2
+8. SMF discovery evidence in Phase 2, including the real-SMF standard-path
+   mismatch and successful protected temporary-producer cleanup
 
 An OAuth-disabled unit test alone is not sufficient proof for Phase 1, and a
 mocked discovery response alone is not sufficient proof for the Phase 2 runtime
