@@ -339,9 +339,9 @@ implementation:
 - Priority 14 has since moved the main SBI edge to the shared HTTP/2 server
   helper, attached the existing inbound metrics middleware, and completed
   HTTP/HTTPS selection with SBI TLS configuration
-- NRF registration/deregistration is complete and OAuth/certificate support is
-  implemented and functionally verified in the current working trees; focused
-  Phase 1 automated-test completion and NRF-backed discovery remain open under
+- NRF registration/deregistration and OAuth/certificate support are complete
+  in `NWDAF` commits `2d34594`, `3c545d0`, and `74b608b` and
+  `nwdaf-resources` commit `d70c4e1`; NRF-backed discovery remains open under
   Priority 11
 - the integration direction is now decided: NWDAF will align upward as an
   NRF-managed NF through staged implementation
@@ -382,10 +382,11 @@ implementation:
   HTTP/H2C registration, signature/scope enforcement on the Events Subscription
   producer group, separate collector routing, token-protected deregistration,
   and post-shutdown NRF profile removal
-- the remaining Phase 1 gap is focused automated regression coverage for
+- focused Phase 1 regression completion in `NWDAF` commit `74b608b` covers
   Access Token transport/pre-dispatch cancellation, invalid PEM content,
-  OAuth-enabled listener rollback, and production route wiring; these are not
-  confirmed runtime defects
+  OAuth-enabled listener rollback through token-protected deregistration, and
+  production `NewServer(...)` route wiring; the complete focused, repeated,
+  race, full-module, build, lint, and diff gates passed
 - the current implementation plan is:
   `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 11 NRF OAuth Discovery And Metrics Alignment Plan.md`
 

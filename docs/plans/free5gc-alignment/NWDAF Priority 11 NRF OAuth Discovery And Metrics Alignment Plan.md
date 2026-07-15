@@ -3,12 +3,12 @@
 Date: 2026-07-15
 
 Status: Phase 0 implemented and committed in `NWDAF` commit `2d34594` on
-2026-07-15; Phase 1 OAuth and NRF-certificate support is implemented and
-functionally verified in the current `NWDAF` and `nwdaf-resources` working
-trees and is pending focused automated-test completion and commit; live
-OAuth-disabled and OAuth-enabled HTTP/H2C gates passed; current NRF v1.4.5
-dropping registered `nwdafInfo` remains an accepted NRF-side limitation;
-discovery, metrics runtime, and heartbeat remain later work
+2026-07-15; Phase 1 OAuth and NRF-certificate support is complete in `NWDAF`
+commits `3c545d0` and `74b608b` and `nwdaf-resources` commit `d70c4e1`; live
+OAuth-disabled and OAuth-enabled HTTP/H2C gates and the complete focused
+automated-test matrix passed; current NRF v1.4.5 dropping registered
+`nwdafInfo` remains an accepted NRF-side limitation; discovery, metrics
+runtime, and heartbeat remain later work
 
 Historical remediation item:
 
@@ -673,11 +673,14 @@ Phase 1 is complete only when:
 9. expiry, issuer, subject, audience, and OAuth+HTTPS/mTLS limitations remain
    documented and are not represented as full standards closure
 
-Current result on 2026-07-15: the functional and live Phase 1 gates above
-passed in the working tree. The detailed plan records the remaining automated
-regression cases for Access Token transport/pre-dispatch cancellation, invalid
-PEM content, OAuth-enabled listener rollback, and production route wiring.
-The changes remain pending that focused test completion and commit.
+Current result on 2026-07-15: Phase 1 is complete. Functional implementation
+landed in `NWDAF` commit `3c545d0`, focused regression completion landed in
+`74b608b`, and development certificate assets landed in `nwdaf-resources`
+commit `d70c4e1`. The completed matrix covers Access Token
+transport/pre-dispatch cancellation, invalid PEM content, OAuth-enabled
+listener rollback through token-protected deregistration, and production
+`NewServer(...)` route wiring in addition to the OAuth-disabled and
+OAuth-enabled live NRF gates.
 
 ---
 

@@ -2,10 +2,11 @@
 
 Date: 2026-07-15
 
-Status: Implemented and functionally verified in the current `NWDAF` and
-`nwdaf-resources` working trees; pending commit and completion of the remaining
-detailed automated-test follow-up; Phase 0 is implemented in `NWDAF` commit
-`2d34594`; the known free5GC helper and OAuth+HTTPS/mTLS gaps remain documented
+Status: Complete; Phase 0 is implemented in `NWDAF` commit `2d34594`; Phase 1
+functional implementation is committed as `3c545d0`, focused regression
+completion as `74b608b`, and development certificate assets as
+`nwdaf-resources` commit `d70c4e1`; the known free5GC helper and
+OAuth+HTTPS/mTLS gaps remain documented
 
 Parent plan:
 
@@ -846,7 +847,8 @@ architecture, scope, or verification environment.
 
 ## 15. Implementation And Verification Record
 
-Implemented on 2026-07-15 in the current working trees:
+Implemented and committed on 2026-07-15 across `NWDAF` commits `3c545d0` and
+`74b608b` and `nwdaf-resources` commit `d70c4e1`:
 
 1. `configuration.nrfCertPem` normalization, getter, sample configuration, and
    runtime-context ownership
@@ -874,9 +876,9 @@ Implemented on 2026-07-15 in the current working trees:
 Repository verification passed:
 
 ```text
-go test ./pkg/factory ./internal/context ./internal/sbi/consumer ./internal/sbi ./pkg/service
-go test -race ./internal/context ./internal/sbi/consumer ./internal/sbi ./pkg/service
-go test ./...
+go test -count=1 ./pkg/factory ./internal/context ./internal/sbi/consumer ./internal/sbi ./pkg/service
+go test -race -count=1 ./internal/context ./internal/sbi/consumer ./internal/sbi ./pkg/service
+go test -count=1 ./...
 make build
 make lint
 git diff --check
@@ -913,9 +915,8 @@ the resulting `SUBSCRIPTION_NOT_FOUND` response proves that authorization
 passed and the producer handler ran without requiring unrelated AnLF/SMF
 integration to be added to this security gate.
 
-The functional implementation and both live gates are complete, but the
-detailed automated-test matrix in Section 9 is not yet fully closed. The
-remaining focused follow-up is:
+The focused automated-test completion in `NWDAF` commit `74b608b` closed the
+remaining Section 9 matrix with:
 
 1. an Access Token transport-failure case
 2. an Access Token request whose caller context is canceled before dispatch
@@ -925,11 +926,12 @@ remaining focused follow-up is:
 5. a route-wiring test that constructs the production `NewServer(...)` path
    instead of reproducing the route groups in a test-only router
 
-Existing component tests and the live OAuth-disabled/OAuth-enabled gates cover
-the corresponding runtime behavior, so these are automated regression-coverage
-gaps rather than confirmed runtime defects. Phase 1 remains pending this
-focused test completion or an explicit revision of the Section 9 completion
-expectation.
+The new cases were repeated ten times without failure, and the final focused,
+race, full-module, build, lint, and diff gates passed after review cleanup. The
+production `NewServer(...)` route test retains the existing `MockApp` seam
+instead of shadowing its cancel-context behavior. Together with the already
+completed OAuth-disabled and OAuth-enabled live NRF gates, the Section 13
+completion criteria are satisfied and Phase 1 is complete.
 
 Phase 1 does not close the documented expiry, issuer, subject, audience,
 OAuth+HTTPS/mTLS, discovery, metrics-server, or heartbeat gaps. Those remain
