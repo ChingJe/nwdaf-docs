@@ -2,8 +2,12 @@
 
 Date: 2026-07-15
 
-Status: Planned; integration direction, staged scope, and Phase 0 behavior
-decisions confirmed, implementation not started
+Status: Phase 0 implemented and repository-verified in the `NWDAF/` working
+tree on 2026-07-15; baseline create/delete plus existing-resource replacement,
+unavailable-NRF recovery, and forced listener-rollback scenarios passed against
+the local OAuth-disabled NRF; current NRF v1.4.5 dropping registered
+`nwdafInfo` is an accepted Phase 0 deployment limitation and future NRF-side
+fix; later phases remain planned
 
 Historical remediation item:
 
@@ -483,7 +487,16 @@ Registration must:
     Phase 1, leave local listeners unstarted, and report that the already-created
     remote profile may require NRF-side cleanup until authorized deregistration
     is implemented
-12. avoid logging complete token, certificate, or sensitive payload data
+12. treat response statuses outside the generated `200`/`201` success contract,
+    including other `2xx` values, as terminal contract incompatibilities
+13. avoid logging complete token, certificate, or sensitive payload data
+
+The pinned generated registration response does not expose the underlying HTTP
+status. It therefore cannot distinguish a valid `200` response without
+`Location` from a non-conforming `201` response that omitted the required
+header. Phase 0 records this validation boundary and relies on the local
+free5GC NRF live gate, which returned a conforming `201` with `Location`, rather
+than adding a custom status-capturing transport.
 
 Retryable failure keeps the process alive with owned listeners unstarted. It
 does not fall back to standalone operation. Terminal contract or deployment
@@ -519,15 +532,17 @@ Phase 0 is complete only when:
 2. profile construction tests prove the advertised service/event truth,
    `nfServices` representation, full `apiPrefix`, and PLMN omission
 3. consumer tests cover registration creation, replacement, retryable failure,
-   indefinite cancellation-aware retry, terminal failure, unsupported redirect,
-   OAuth-required failure, cancellation, and deregistration
+   indefinite cancellation-aware retry, terminal failure, unexpected `2xx`,
+   unsupported redirect, OAuth-required failure, cancellation, and
+   deregistration
 4. service lifecycle tests prove registration-before-listener ordering,
    post-registration listener-failure rollback, startup-completion gating,
    recovery after temporary NRF unavailability, and deregistration-before-SBI
    shutdown order
 5. a local NRF smoke test passes with OAuth disabled
-6. the NRF-stored profile contains only the intended NWDAF service/event and
-   the NRF-applied default PLMN
+6. the generated request contains only the intended NWDAF service/event and
+   the NRF-applied default PLMN is verified; NRF v1.4.5 dropping stored
+   `nwdafInfo` is accepted for Phase 0 and remains a future NRF-side correction
 7. existing HTTP and HTTPS SBI tests remain green
 
 ### 7.6 Deferred Workstream H — NFUpdate Heartbeat

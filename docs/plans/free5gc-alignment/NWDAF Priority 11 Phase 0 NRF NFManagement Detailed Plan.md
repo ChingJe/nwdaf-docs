@@ -2,8 +2,11 @@
 
 Date: 2026-07-15
 
-Status: Phase 0 behavior decisions confirmed; heartbeat deliberately deferred,
-implementation not started
+Status: Phase 0 implemented and repository-verified in the `NWDAF/` working
+tree on 2026-07-15; baseline and extended P0.4 live scenarios passed against
+the local OAuth-disabled NRF; the confirmed NRF v1.4.5 `nwdafInfo` persistence
+gap is an accepted deployment limitation for this phase and remains future NRF
+work
 
 Parent plan:
 
@@ -12,6 +15,73 @@ Parent plan:
 Implementation target:
 
 - `NWDAF/`
+
+---
+
+## Implementation Update
+
+The Phase 0 implementation now provides:
+
+1. required and normalized `nrfUri` configuration
+2. a context-owned generated NWDAF NF profile containing only
+   `nnwdaf-eventssubscription/v1` and `UE_COMMUNICATION`
+3. generated NFManagement registration and deregistration clients with
+   free5GC-style HTTP/2/H2C transport, the outbound SBI metrics hook,
+   cancellation-aware retry, terminal error classification, redirect rejection,
+   and OAuth-required detection; HTTPS retains certificate verification
+4. registration-before-listener startup, post-registration rollback, bounded
+   deregistration, and deregistration-before-SBI shutdown
+5. cleanup of malformed non-OAuth `200`/`201` responses that may already have
+   created a remote profile, while preserving the explicit OAuth-required
+   cleanup limit
+6. process exit semantics that distinguish terminal startup failure from a
+   graceful signal during registration retry
+7. focused factory, advertised-address, profile, generated-consumer, H2C,
+   HTTPS certificate-verification, app retry/recovery lifecycle, exit-code, and
+   race-detector tests
+
+Focused tests, the affected-package race detector, `go test ./...`, `make
+build`, and `make lint` pass. A terminal startup failure was verified to exit
+with status 1, while SIGTERM during NRF retry exits with status 0. A live run
+against local free5GC `main` commit `f64135d`/NRF v1.4.5 proved registration,
+listener reachability, default-PLMN insertion, deregistration before listener
+shutdown, and removal of the NF resource.
+
+The extended P0.4 live run then proved the remaining scenarios:
+
+1. while NRF was unavailable, four failed registration attempts left SBI,
+   AnLF, and MTLF ports unbound; the same NWDAF process recovered on attempt 5
+   after 30.043 seconds and only then opened all three listeners
+2. a second H2C PUT of the same generated-contract-equivalent profile to the
+   existing NF instance resource returned `200 OK`
+3. forcing the AnLF port to be occupied allowed NRF registration and SBI
+   startup, then produced a terminal listener error; NWDAF completed NRF DELETE
+   in approximately 0.56 seconds, stopped the partial SBI listener, exited with
+   status 1, and the resource subsequently returned `404`
+4. normal SIGINT still produced NRF DELETE before the three listener shutdowns,
+   exited with status 0, and left the resource at `404`
+
+These are live cross-NF observations, separate from the generated-consumer and
+app-lifecycle unit coverage.
+
+That live run also found a reference-NRF limitation that prevents the strict
+stored-profile assertion from passing. NWDAF sends `nwdafInfo.nwdafEvents` containing
+`UE_COMMUNICATION`, and the generated-client request tests prove that exact
+body. However, NRF's `internal/context.NnrfNFManagementDataModel` does not copy
+`NwdafInfo` into the profile it writes to MongoDB or returns from registration.
+The stored profile therefore retains `nfServices` but loses the analytics-event
+constraint. TS 29.510 permits `nwdafInfo` in the registered NF profile, so this
+is an NRF implementation gap rather than a reason for NWDAF to omit the field.
+
+The project selected the third disposition: accept the current NRF limitation
+as a documented deployment restriction for Phase 0, continue sending the
+correct generated `nwdafInfo`, and pursue an NRF-side correction later. NWDAF
+does not add a compatibility PATCH or weaken its outgoing profile. The local
+NRF stored-profile check therefore remains a known reference-NRF limitation,
+not a blocker on the completed NWDAF Phase 0 implementation.
+
+The read-only free5GC reference tree was not modified, and Phase 0 does not
+silently add the non-standard compatibility PATCH.
 
 ---
 
@@ -141,6 +211,17 @@ No confirmed Phase 0 contract gap currently requires a handwritten
 standardized model. If implementation reveals a real generated-client mismatch,
 it must be recorded under Priority 10 instead of being hidden behind duplicate
 request structs.
+
+The pinned `RegisterNFInstanceResponse` exposes the returned profile and
+headers, but not the underlying HTTP status. Phase 0 therefore accepts a
+missing `Location` as the generated client's valid replacement shape and cannot
+separately prove whether an otherwise valid response originated from `200` or
+from a non-conforming `201` that omitted its required `Location`. This is an
+explicit generated-contract validation limit, not a relaxation of the Release
+18 requirement. The local free5GC NRF live gate confirmed that its `201`
+creation response supplies the required `Location`; adding a custom
+status-capturing transport solely for this defensive distinction was rejected
+as disproportionate Phase 0 complexity.
 
 ---
 
@@ -370,11 +451,17 @@ context API. At minimum it includes:
 - whether the instance is currently considered registered
 - any returned resource URI needed for diagnostics or validation
 - the free5GC OAuth-required indication, if present
+- any returned `heartBeatTimer` retained for the explicitly deferred heartbeat
+  workstream without starting a heartbeat owner in Phase 0
 
 The NF instance ID must not be silently replaced merely because a `Location`
 header is returned. If the response location encodes a different instance ID,
-the client rejects the response as a malformed registration success. A missing
-`Location` remains valid for the `200 OK` replacement response.
+the client rejects the response as a malformed registration success. At the
+Release 18 contract level, a missing `Location` is valid only for the `200 OK`
+replacement response. The pinned generated response does not expose status, so
+Phase 0 cannot distinguish that valid case from a non-conforming `201` without
+adding a separate status-capturing transport; the live free5GC NRF gate proves
+the expected conforming `201` behavior instead.
 
 ---
 
@@ -441,9 +528,13 @@ Tasks:
     explicitly requires Phase 1; record that the already-created remote
     profile may require NRF-side cleanup because Phase 0 cannot authenticate
     the protected DELETE
-11. classify malformed success, terminal 4xx, and cancellation distinctly
-12. implement Stage 3 DELETE deregistration with no invented reason body
-13. avoid logs containing full profiles, certificate material, or future
+11. classify malformed `200`/`201` responses, unexpected success statuses,
+    terminal 4xx, and cancellation distinctly
+12. if a non-OAuth `200`/`201` response is malformed, distinguish remote HTTP
+    success from validated local success and attempt bounded DELETE cleanup;
+    treat other `2xx` statuses as terminal generated-contract incompatibilities
+13. implement Stage 3 DELETE deregistration with no invented reason body
+14. avoid logs containing full profiles, certificate material, or future
     bearer tokens
 
 Completion gate:
@@ -508,7 +599,7 @@ Tasks:
    removes the NF instance resource
 8. document active `nrfUri`, startup dependency, the Phase 0 OAuth limitation,
    and the explicitly deferred heartbeat gap
-8. document unsupported Phase 0 redirect behavior and the same-PLMN scope
+9. document unsupported Phase 0 redirect behavior and the same-PLMN scope
 
 Completion gate:
 
@@ -536,7 +627,11 @@ Cover at least:
 ### 8.2 Consumer Contract Tests
 
 Use the repository's existing generated-client test pattern, including `gock`
-and `InterceptH2CClient` where applicable. Cover at least:
+and `InterceptH2CClient` where applicable. Because Phase 0 injects a
+scheme-aware HTTP/2 client to preserve the confirmed no-redirect policy, its
+generated-client test intercepts that exact injected client with `gock`; a
+separate real H2C test proves that the production HTTP transport uses HTTP/2.
+Cover at least:
 
 - register `201` with profile and `Location`
 - register `200` for replacement, including absence of `Location`
@@ -545,12 +640,14 @@ and `InterceptH2CClient` where applicable. Cover at least:
 - indefinite retry for transport/5xx responses with the two-to-thirty-second
   cancellation-aware backoff
 - terminal 4xx response handling
+- terminal generated-contract incompatibility for unexpected `2xx` responses
 - explicit unsupported errors for `307` and `308`
 - cancellation during registration request and retry wait
 - deregister `204`, unknown-resource `404`, timeout, and cancellation behavior
 - terminal Phase 0 failure for an OAuth-required registration response
 - explicit reporting of the possible remote-profile cleanup requirement after
   an OAuth-required registration response
+- cleanup of malformed non-OAuth `200`/`201` responses
 
 ### 8.3 Lifecycle Tests
 
@@ -577,8 +674,11 @@ to prove:
 Run with OAuth disabled and verify:
 
 1. the NF resource exists at the expected NFManagement URI
-2. the stored ID and profile equal the NWDAF runtime truth
-3. only `nnwdaf-eventssubscription/v1` and `UE_COMMUNICATION` are advertised
+2. the stored ID and service profile equal the NWDAF runtime truth, subject to
+   the accepted NRF v1.4.5 `nwdafInfo` copy limitation
+3. the outgoing request advertises only `nnwdaf-eventssubscription/v1` and
+   `UE_COMMUNICATION`; current NRF v1.4.5 storage of the latter remains future
+   NRF work
 4. `nfServices` is accepted by the current NRF and `nfServiceList` is absent
 5. the request omits `plmnList` and the stored profile uses the NRF default PLMN
 6. the registered endpoint and advertised `apiPrefix` are reachable

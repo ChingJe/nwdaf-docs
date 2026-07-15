@@ -332,14 +332,16 @@ Impact:
 
 Type: structural alignment gap
 
-Current reassessment on 2026-07-14, last updated 2026-07-15:
+Current reassessment on 2026-07-14, last updated 2026-07-15 after Phase 0
+implementation:
 
 - the original evidence below is retained as historical scan evidence
 - Priority 14 has since moved the main SBI edge to the shared HTTP/2 server
   helper, attached the existing inbound metrics middleware, and completed
   HTTP/HTTPS selection with SBI TLS configuration
-- NRF registration/deregistration, OAuth/certificate handling, and NRF-backed
-  discovery remain open under Priority 11
+- NRF registration/deregistration is implemented in the `NWDAF/` working tree;
+  OAuth/certificate handling and NRF-backed discovery remain open under
+  Priority 11
 - the integration direction is now decided: NWDAF will align upward as an
   NRF-managed NF through staged implementation
 - NRF registration/deregistration is the first implementation phase, followed
@@ -363,23 +365,31 @@ Current reassessment on 2026-07-14, last updated 2026-07-15:
   gap: the updated free5GC `main`/NRF v1.4.5 reference accepts NF profile PATCH,
   but the surveyed NF consumers do not send periodic heartbeat and NRF does not
   yet show a complete timer/expiry/suspension lifecycle
+- live Phase 0 verification proved registration, reachable listeners, NRF
+  default-PLMN insertion, deregistration before SBI shutdown, and resource
+  removal; it also confirmed that NRF v1.4.5's
+  `NnrfNFManagementDataModel` does not copy the request's `NwdafInfo`, so the
+  stored profile loses the `UE_COMMUNICATION` constraint even though NWDAF
+  sends it; this NRF-side persistence gap is accepted as a Phase 0 deployment
+  limitation and remains future NRF-side correction work rather than an NWDAF
+  compatibility PATCH
+- extended live P0.4 verification also proved `200` existing-resource
+  replacement, listener gating through unavailable-NRF retry and same-process
+  recovery, and bounded deregistration plus partial-listener cleanup after a
+  forced post-registration AnLF bind failure
 - the current implementation plan is:
   `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 11 NRF OAuth Discovery And Metrics Alignment Plan.md`
 
-Evidence in NWDAF:
+Current evidence in NWDAF:
 
-- Service startup only initializes context, consumer, processor, MongoDB, and
-  the SBI server:
-  - `pkg/service/init.go:37-80`
-  - `pkg/service/init.go:127-181`
-- Shutdown only stops the SBI server:
-  - `pkg/service/init.go:200-205`
-- `nrfUri` exists in config shape but is not wired into any registration flow:
-  - `pkg/factory/config.go:38`
-  - sample config leaves it commented out: `config/nwdafcfg.yaml:15`
-- The server uses plain `gin.New()` and does not integrate the inbound metrics
-  middleware or HTTP/2/TLS server helper used by reference NFs:
-  - `internal/sbi/server.go:59-105`
+- `pkg/factory` requires and normalizes the NRF URI
+- `internal/context` owns the generated NF profile and registration state
+- `internal/sbi/consumer/nrf_service.go` owns generated NFManagement clients,
+  retry, response validation, and deregistration
+- `pkg/service/init.go` registers before starting listeners and deregisters
+  before stopping SBI
+- exact-profile, HTTP-contract, retry/cancellation, and lifecycle tests cover
+  the Phase 0 behavior
 
 Reference free5GC baselines:
 
