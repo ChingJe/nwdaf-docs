@@ -332,20 +332,21 @@ Impact:
 
 Type: structural alignment gap
 
-Current reassessment on 2026-07-14, last updated 2026-07-15 after Phase 0
+Current reassessment on 2026-07-14, last updated 2026-07-15 after Phase 1
 implementation:
 
 - the original evidence below is retained as historical scan evidence
 - Priority 14 has since moved the main SBI edge to the shared HTTP/2 server
   helper, attached the existing inbound metrics middleware, and completed
   HTTP/HTTPS selection with SBI TLS configuration
-- NRF registration/deregistration is implemented in the `NWDAF/` working tree;
-  OAuth/certificate handling and NRF-backed discovery remain open under
+- NRF registration/deregistration is complete and OAuth/certificate support is
+  implemented and functionally verified in the current working trees; focused
+  Phase 1 automated-test completion and NRF-backed discovery remain open under
   Priority 11
 - the integration direction is now decided: NWDAF will align upward as an
   NRF-managed NF through staged implementation
-- NRF registration/deregistration is the first implementation phase, followed
-  by OAuth/certificate support and discovery, because that path enables later
+- NRF registration/deregistration and OAuth/certificate support are the first
+  two implemented phases; discovery follows because that path enables later
   standardized peer-facing interfaces
 - Phase 0 behavior is now fixed: `nrfUri` is required; retryable registration
   failure keeps NWDAF alive with owned listeners unstarted until success or
@@ -377,6 +378,14 @@ implementation:
   replacement, listener gating through unavailable-NRF retry and same-process
   recovery, and bounded deregistration plus partial-listener cleanup after a
   forced post-registration AnLF bind failure
+- live Phase 1 verification proved both OAuth-disabled and OAuth-enabled
+  HTTP/H2C registration, signature/scope enforcement on the Events Subscription
+  producer group, separate collector routing, token-protected deregistration,
+  and post-shutdown NRF profile removal
+- the remaining Phase 1 gap is focused automated regression coverage for
+  Access Token transport/pre-dispatch cancellation, invalid PEM content,
+  OAuth-enabled listener rollback, and production route wiring; these are not
+  confirmed runtime defects
 - the current implementation plan is:
   `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 11 NRF OAuth Discovery And Metrics Alignment Plan.md`
 
@@ -385,7 +394,12 @@ Current evidence in NWDAF:
 - `pkg/factory` requires and normalizes the NRF URI
 - `internal/context` owns the generated NF profile and registration state
 - `internal/sbi/consumer/nrf_service.go` owns generated NFManagement clients,
-  retry, response validation, and deregistration
+  generated Access Token clients, retry, response validation, protected
+  deregistration, and caller-context propagation
+- `internal/context` delegates producer authorization to
+  `oauth.VerifyOAuth(...)` using context-owned OAuth state and `nrfCertPem`
+- `internal/sbi` attaches service-specific authorization to the Events
+  Subscription route group while leaving collector callbacks separate
 - `pkg/service/init.go` registers before starting listeners and deregisters
   before stopping SBI
 - exact-profile, HTTP-contract, retry/cancellation, and lifecycle tests cover
@@ -989,8 +1003,9 @@ The most important open problems after the later implemented follow-up rounds ar
 2. post-subscription activation and late-failure signaling are still
    underspecified as a design/operability issue
 3. OpenAPI/model governance and runtime config scope remain outstanding; the
-   free5GC integration direction is decided, while the prioritized NRF, OAuth,
-   and discovery phases and the independent metrics workstream remain open
+   free5GC integration direction is decided, NRF and OAuth phases are
+   implemented, while discovery and the independent metrics workstream remain
+   open
 
 The repository now passes `make build`, `go test ./...`, and `make lint` after
 the implemented rounds recorded above. That verifies the current repository at

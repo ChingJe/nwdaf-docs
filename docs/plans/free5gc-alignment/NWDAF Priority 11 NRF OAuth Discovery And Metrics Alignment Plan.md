@@ -2,12 +2,13 @@
 
 Date: 2026-07-15
 
-Status: Phase 0 implemented and repository-verified in the `NWDAF/` working
-tree on 2026-07-15; baseline create/delete plus existing-resource replacement,
-unavailable-NRF recovery, and forced listener-rollback scenarios passed against
-the local OAuth-disabled NRF; current NRF v1.4.5 dropping registered
-`nwdafInfo` is an accepted Phase 0 deployment limitation and future NRF-side
-fix; later phases remain planned
+Status: Phase 0 implemented and committed in `NWDAF` commit `2d34594` on
+2026-07-15; Phase 1 OAuth and NRF-certificate support is implemented and
+functionally verified in the current `NWDAF` and `nwdaf-resources` working
+trees and is pending focused automated-test completion and commit; live
+OAuth-disabled and OAuth-enabled HTTP/H2C gates passed; current NRF v1.4.5
+dropping registered `nwdafInfo` remains an accepted NRF-side limitation;
+discovery, metrics runtime, and heartbeat remain later work
 
 Historical remediation item:
 
@@ -187,29 +188,34 @@ not conclusions drawn from only one exemplar:
 | NF profile | Profiles use generated models, NF type/status, advertised rather than binding address, registered service entries, API version, scheme, API prefix, IP endpoint, and NF-specific info. | `ServiceInstanceId` generation and the amount of optional PLMN/slice/locality data are NF-specific. |
 | NRF clients | `internal/sbi/consumer` owns generated NFManagement and NFDiscovery clients, commonly cached by NRF base URI behind a mutex. Generated client configurations install the outbound SBI metrics hook. | Some older/lightweight NFs use package-level clients or weaker context handling; those are not the preferred target. |
 | Registration | Registration is an app-start lifecycle operation, uses a context-owned NF ID/profile, handles created versus updated results, and usually retries until success or cancellation. | The call is placed in `pkg/service` in some NFs and `sbi.Server.Run` in others. Retry timing and startup failure policy are not uniform. |
-| OAuth bootstrap | Successful NRF registration reads `customInfo["oauth2"]` into `OAuth2Required`; contexts expose `GetTokenCtx(...)` and `AuthorizationCheck(...)`; deregistration and discovery request `nnrf-nfm` or `nnrf-disc` token context when required. | Several surveyed NFs only log a missing `nrfCertPem`; NWDAF will use a stricter explicit failure because continuing cannot provide valid authorization. |
-| Inbound authorization | Standardized producer route groups commonly attach a service-name-specific `RouterAuthorizationCheck`. Callback groups are often kept separate from producer-service authorization. | Coverage is not perfectly uniform across every NF and route. NWDAF must apply the rule to its implemented producer service and decide callback treatment from contract evidence. |
+| OAuth bootstrap | Successful NRF registration reads `customInfo["oauth2"]` into `OAuth2Required`; contexts expose `GetTokenCtx(...)` and `AuthorizationCheck(...)`; deregistration and discovery request `nnrf-nfm` or `nnrf-disc` token context when required. | Surveyed NFs log a missing `nrfCertPem` and continue; NWDAF follows that behavior with a strong log rather than introducing a stricter startup policy. |
+| Inbound authorization | Standardized producer route groups commonly attach a service-name-specific `RouterAuthorizationCheck`. Callback groups are often kept separate from producer-service authorization. | Coverage is not perfectly uniform across every NF and route. NWDAF applies the rule to its implemented producer service; the Phase 1 detailed plan resolves current collector callbacks separately from TS 29.500 notify-operation evidence. |
 | Discovery | Consumers create a generated NFDiscovery request with requester/target NF types, add service or domain filters, obtain `nnrf-disc` token context, and select a `REGISTERED` service URI from returned profiles. | Cache policy, multi-instance selection, and configured-endpoint fallback are procedure-specific rather than a single free5GC-wide rule. |
 | Tests | Consumer tests use generated models with `gock`/H2C interception where applicable; authorization helpers have focused valid/invalid tests; config changes use table-driven validation. | Surveyed lifecycle and metrics integration coverage is uneven, so NWDAF should add stronger focused lifecycle and `/metrics` proof rather than copy the gap. |
 
-### 3.2 Conventions That Must Not Be Copied Blindly
+### 3.2 Narrow NWDAF Compatibility Adjustments
 
-Alignment means adopting the stable shape, not preserving every weakness in a
-reference implementation. NWDAF should improve the following where the local
-snapshot is inconsistent or unsafe:
+The default is to preserve the recurring free5GC shape and behavior, including
+known limitations that remain functional. NWDAF makes only the following
+bounded adjustments where an already approved local lifecycle or response
+boundary requires them:
 
 1. replace raw retry `time.Sleep(...)` loops with cancellation-aware timers
 2. propagate caller context instead of introducing `context.TODO()` in new
    consumer paths
-3. treat OAuth-required-without-certificate as a real startup/runtime error,
-   not only a log message
+3. log OAuth-required operation without `nrfCertPem` strongly and continue,
+   matching other NFs
 4. avoid logging bearer tokens, complete profiles, or certificate material
-5. return the existing NWDAF/3GPP-aligned error shape instead of copying a
+5. retain the existing NWDAF `ProblemDetails` error boundary instead of a
    generic Gin `{"error": ...}` authorization response
 6. inspect `customInfo.oauth2` for every successful registration response shape
    supported by the pinned client, not only one branch by accident
 7. keep unknown-route metric labels bounded; use Gin route templates when
    available and review the raw-path fallback before exposing it operationally
+
+Phase 1 does not add stricter expiry, issuer, subject, or audience validation
+than `oauth.VerifyOAuth(...)`. Those Release 18 differences are documented as
+known gaps rather than used to justify an NWDAF-private JWT implementation.
 
 ---
 
@@ -565,6 +571,10 @@ Phase 1 may follow immediately after Phase 0 or be implemented in the same
 development round. It remains a separate completion gate because an
 OAuth-disabled registration success does not prove secured operation.
 
+Detailed Phase 1 plan:
+
+- `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 11 Phase 1 OAuth And NRF Certificate Detailed Plan.md`
+
 ### 8.1 Registration-Driven OAuth State
 
 The registration response must be inspected for the free5GC OAuth indication,
@@ -590,14 +600,15 @@ Rules:
 
 1. do not reuse the NWDAF SBI server certificate as an implicit NRF trust
    certificate
-2. validate file presence/readability at the appropriate startup boundary
-3. require the NRF certificate when OAuth is enabled
-4. fail explicitly if NRF reports OAuth required but the verification material
-   is unavailable
-5. never commit production private keys or generate trust material silently as
-   part of application startup
-6. keep development certificate assets outside the main implementation repo
-   when consistent with the existing workspace asset policy
+2. keep `nrfCertPem` optional in config, like the surveyed free5GC NFs
+3. if NRF reports OAuth required while the certificate is missing or unusable,
+   emit a strong log and continue startup
+4. allow protected inbound authorization to fail normally until deployment
+   supplies usable verification material
+5. place development certificate/key assets and preparation workflow in
+   `nwdaf-resources`, while NWDAF config uses conventional runtime-relative
+   paths such as `cert/nrf.pem`
+6. keep production certificate/private-key replacement deployment owned
 
 ### 8.3 Outbound Token Acquisition
 
@@ -613,10 +624,12 @@ It must:
 5. use a valid token for protected deregistration
 6. later support protected NF discovery without duplicating token logic
 
-Token caching or refresh should follow the selected free5GC helper behavior.
-If the helper does not provide safe expiry handling for this dependency
-version, that gap must be made explicit rather than hidden in a permanent
-one-token cache.
+Preserve the free5GC `GetTokenCtx(...)` and generated-client boundary. Because
+the pinned shared helper discards caller deadlines, the NWDAF NRF consumer will
+make the same generated Access Token request with the caller context and return
+an authorization context for the immediately following operation. Phase 1 adds
+no token cache; repeated discovery can revisit cache/refresh behavior in its
+own phase.
 
 ### 8.4 Inbound Authorization
 
@@ -624,22 +637,19 @@ OAuth-enabled inbound authorization should be attached to the implemented
 standardized producer route group, beginning with
 `nnwdaf-eventssubscription`.
 
-The middleware and handler boundary must distinguish:
+Follow the recurring free5GC boundary: context-owned
+`AuthorizationCheck(...)` delegates to `oauth.VerifyOAuth(...)`, and a
+service-name-specific router check protects the producer group. Keep NWDAF's
+existing `ProblemDetails` response shape and never log bearer-token content.
 
-1. token signature/cryptographic verification
-2. expiry and time-based validity
-3. issuer, subject, and audience expectations supported by the free5GC token
-   profile
-4. service/operation scope authorization
+The pinned helper verifies RSA/RS512 signature and service scope but does not
+fully enforce Release 18 expiry, issuer, subject, or audience semantics. Phase
+1 accepts this free5GC compatibility behavior and records the standards gap; it
+does not introduce an NWDAF-private strict claims validator.
 
-The implementation must not describe itself as fully authorized if it checks
-only token presence or signature.
-
-The main `collector` callback routes need a separate evidence-based decision.
-They must not be placed behind producer-service scope checks merely because
-they share the SBI listener. Their callback security should be compared with
-free5GC callback patterns and the applicable 3GPP contract before changing
-route middleware.
+The main `collector` callback routes remain unchanged and outside the
+producer-service scope check in Phase 1. Their future authorization mechanism
+is not planned in this phase.
 
 The `AnLF` and `MTLF` auxiliary servers remain outside this NRF producer-service
 authorization phase.
@@ -653,11 +663,21 @@ Phase 1 is complete only when:
 2. OAuth-enabled registration updates runtime OAuth state
 3. protected outbound deregistration succeeds with a valid access token
 4. the producer accepts a valid token with the correct service/operation scope
-5. missing, malformed, expired, incorrectly signed, and wrong-scope tokens are
-   rejected with the expected SBI error shape
-6. missing NRF trust material fails clearly when OAuth is required
+5. missing, malformed, incorrectly signed, and wrong-scope tokens are rejected
+   through `oauth.VerifyOAuth(...)` with NWDAF's expected SBI error shape
+6. missing NRF trust material produces a strong log without forcing startup
+   failure, and protected authorization fails safely
 7. logs and errors do not expose bearer tokens or certificate contents
-8. a local NRF smoke test passes in both OAuth-disabled and OAuth-enabled modes
+8. a local NRF smoke test passes in both OAuth-disabled and OAuth-enabled
+   HTTP/H2C modes
+9. expiry, issuer, subject, audience, and OAuth+HTTPS/mTLS limitations remain
+   documented and are not represented as full standards closure
+
+Current result on 2026-07-15: the functional and live Phase 1 gates above
+passed in the working tree. The detailed plan records the remaining automated
+regression cases for Access Token transport/pre-dispatch cancellation, invalid
+PEM content, OAuth-enabled listener rollback, and production route wiring.
+The changes remain pending that focused test completion and commit.
 
 ---
 
@@ -767,21 +787,28 @@ gate.
 
 ---
 
-## 12. Remaining Decision Gates
+## 12. Resolved Phase 1 And Future Decision Gates
 
-Phase 0 behavior decisions are resolved in its detailed plan. The remaining
-cross-phase decisions are:
+Phase 0 decisions are resolved in its detailed plan. Phase 1 decisions are
+also resolved in the Phase 1 detailed plan:
+
+1. preserve the free5GC token-context boundary but use caller context for the
+   generated Access Token request
+2. use `oauth.VerifyOAuth(...)` inbound acceptance semantics
+3. strongly log missing `nrfCertPem` and continue startup
+4. validate against the common OAuth-enabled HTTP/H2C NRF deployment and defer
+   OAuth+HTTPS mutual TLS
+5. keep development certificate/key assets in `nwdaf-resources` while runtime
+   config uses conventional `cert/...` paths
+6. leave collector callback authorization unchanged and unplanned in Phase 1
+
+No additional Phase 1 decision is required before implementation. Remaining
+future decisions are:
 
 1. the Priority 10 disposition for existing standardized raw HTTP SMF and ADRF
    consumers that cannot use `SbiMetricHook` directly
-2. NRF certificate provisioning path for local development and deployment
-3. authorization treatment of collector callback routes
-4. Phase 2 fixed-endpoint replacement, override, or fallback behavior
-5. initial discovery filters and endpoint selection policy for multiple SMFs
-
-These are not reasons to reopen the decision to support NRF. They are bounded
-behavior choices that should be answered with local free5GC evidence, the
-included Release 18 contract, and focused tests.
+2. Phase 2 fixed-endpoint replacement, override, or fallback behavior
+3. initial discovery filters and endpoint selection policy for multiple SMFs
 
 ---
 
@@ -800,10 +827,13 @@ The following are outside Priority 11 unless a later plan adds them explicitly:
 8. broad OpenAPI regeneration or handwritten contract replacement owned by
    Priority 10
 9. automatic generation or repository storage of production certificates or
-   private keys
+   private keys; development assets may be tracked in `nwdaf-resources`
 10. immediate discovery integration for every peer NF in one change
 11. refactoring auxiliary-server authentication without applicable contract
     evidence
+12. strict NWDAF-private JWT claim validation beyond the selected free5GC
+    helper semantics
+13. OAuth-enabled HTTPS mutual TLS in Phase 1
 
 ---
 
@@ -817,8 +847,9 @@ Priority 11 is complete only when:
 4. protected outbound NRF calls obtain and use tokens correctly
 5. implemented standardized producer routes enforce the intended token and
    scope checks when OAuth is enabled
-6. the NRF trust certificate is configured and validated separately from SBI
-   TLS server identity
+6. the NRF trust certificate is configured separately from SBI TLS server
+   identity, and a missing certificate is reported strongly without changing
+   the selected free5GC startup behavior
 7. SMF discovery has an explicit endpoint migration/fallback policy and passes
    its separate integration gate
 8. the NF profile does not advertise unsupported services, events, or
@@ -832,6 +863,9 @@ Priority 11 is complete only when:
     behavior
 13. the deferred NFUpdate heartbeat gap remains explicitly documented and is
     not represented as completed standards conformance
+14. the selected free5GC OAuth helper limitations and deferred OAuth+HTTPS/mTLS
+    support remain explicit and are not represented as full Release 18
+    security conformance
 
 Until these conditions are met, the direction may be considered decided, but
 Priority 11 implementation must remain open.
