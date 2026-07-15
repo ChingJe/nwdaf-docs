@@ -2,12 +2,11 @@
 
 Date: 2026-07-15
 
-Status: Implemented and verified in the current `NWDAF` working tree; D1
+Status: Implemented, committed, and verified in `NWDAF` commit `58a69a0`; D1
 through D5 and the D2 compatibility choice are resolved in Section 15;
 focused, race, repeated, full-repository, build, lint, diff, and layered local
 integration gates pass; post-review context ownership, cache, discovery-error,
-and OAuth regression hardening also passes; implementation and documentation
-commits are pending
+and OAuth regression hardening also passes
 
 Parent plan:
 

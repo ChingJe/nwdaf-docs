@@ -8,12 +8,11 @@ commits `3c545d0` and `74b608b` and `nwdaf-resources` commit `d70c4e1`; live
 OAuth-disabled and OAuth-enabled HTTP/H2C gates and the complete focused
 automated-test matrix passed; current NRF v1.4.5 dropping registered
 `nwdafInfo` remains an accepted NRF-side limitation; Phase 2 SMF discovery is
-implemented and verified in the current `NWDAF` working tree, including
+implemented, committed, and verified in `NWDAF` commit `58a69a0`, including
 OAuth-disabled and OAuth-enabled layered live gates plus post-review cleanup,
-cache, discovery-error, and OAuth regression hardening, with its implementation
-commit pending; the current SMF's route-prefix mismatch and unimplemented Event
-Exposure CRUD remain explicit upstream limitations; metrics runtime and
-heartbeat remain later work
+cache, discovery-error, and OAuth regression hardening; the current SMF's
+route-prefix mismatch and unimplemented Event Exposure CRUD remain explicit
+upstream limitations; metrics runtime and heartbeat remain later work
 
 Historical remediation item:
 
@@ -698,13 +697,13 @@ Detailed planning document:
 
 - `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 11 Phase 2 NRF SMF Discovery Detailed Plan.md`
 
-Completion status on 2026-07-15: the detailed plan was implemented in the
-current `NWDAF` working tree based on the Release 18 NFDiscovery contract, TS
-23.288 data-collection procedures, the pinned OpenAPI module, and AMF/UDM/NEF
-free5GC exemplars. Its five decision gates and endpoint-source compatibility
-choice are resolved. Focused, race, repeated, full-repository, build, lint,
-diff, and layered OAuth-disabled/OAuth-enabled live gates pass; the
-implementation commit is pending. Post-review hardening also proves that
+Completion status on 2026-07-15: the detailed plan was implemented and
+committed in `NWDAF` commit `58a69a0` based on the Release 18 NFDiscovery
+contract, TS 23.288 data-collection procedures, the pinned OpenAPI module, and
+AMF/UDM/NEF free5GC exemplars. Its five decision gates and endpoint-source
+compatibility choice are resolved. Focused, race, repeated, full-repository,
+build, lint, diff, and layered OAuth-disabled/OAuth-enabled live gates pass.
+Post-review hardening also proves that
 committed stale-resource and explicit-delete cleanup uses a bounded app-owned
 context, while establishment remains caller- and shutdown-cancelable.
 
@@ -758,7 +757,7 @@ Phase 2 is complete for SMF only when:
    NRF error matrix, OAuth-disabled SMF calls, pre-dispatch cancellation, and
    caller/application cancellation propagation after partial fan-out success
 
-All eight gates pass in the current working tree. The live run used the real
+All eight gates pass for `NWDAF` commit `58a69a0`. The live run used the real
 free5GC NRF and SMF for registration, discovery, OAuth, and route evidence, and
 a temporary producer in the same NRF for successful standard-path POST,
 DELETE, and cleanup. This does not represent the current free5GC SMF as having
