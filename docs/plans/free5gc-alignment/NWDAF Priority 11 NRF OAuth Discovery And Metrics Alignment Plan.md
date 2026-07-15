@@ -7,8 +7,10 @@ Status: Phase 0 implemented and committed in `NWDAF` commit `2d34594` on
 commits `3c545d0` and `74b608b` and `nwdaf-resources` commit `d70c4e1`; live
 OAuth-disabled and OAuth-enabled HTTP/H2C gates and the complete focused
 automated-test matrix passed; current NRF v1.4.5 dropping registered
-`nwdafInfo` remains an accepted NRF-side limitation; discovery, metrics
-runtime, and heartbeat remain later work
+`nwdafInfo` remains an accepted NRF-side limitation; the Phase 2 SMF discovery
+detailed plan is approved with its scope, migration, multi-SMF, cache, and OAuth
+decisions resolved, but implementation has not started; metrics runtime and
+heartbeat remain later work
 
 Historical remediation item:
 
@@ -689,30 +691,37 @@ OAuth-enabled live NRF gates.
 Discovery should be implemented only after registration and OAuth operation are
 stable.
 
+Detailed planning document:
+
+- `nwdaf-docs/docs/plans/free5gc-alignment/NWDAF Priority 11 Phase 2 NRF SMF Discovery Detailed Plan.md`
+
+Current planning status on 2026-07-15: the detailed plan is approved based on
+the Release 18 NFDiscovery contract, TS 23.288 data-collection procedures, the
+pinned OpenAPI module, and AMF/UDM/NEF free5GC exemplars. Its five decision
+gates and endpoint-source compatibility choice are resolved. Implementation
+has not started.
+
 The first target should be SMF discovery because the current NWDAF data
 collection flow already depends on SMF endpoints.
 
-Phase 2 should:
+Phase 2 will:
 
 1. add generated NFDiscovery client ownership to the NRF consumer service
 2. query using the correct requester NF type, target NF type, and service name
-3. include available PLMN, slice, UE, or service filters only when supported by
-   current runtime input and the applicable discovery contract
-4. select endpoints deterministically from the discovery response
-5. define caching, refresh, empty-result, and stale-result behavior
-6. reuse OAuth token acquisition when NRF requires it
-7. preserve caller deadlines and application cancellation
-
-Before implementation, decide how discovery interacts with fixed peer
-configuration:
-
-1. discovery replaces configured SMF endpoints
-2. configuration overrides discovery
-3. discovery is primary with an explicit configured fallback
-4. a transition mode selects behavior explicitly
-
-The choice must be visible in configuration and tests. Silent fallback can hide
-NRF or profile errors and should not be introduced accidentally.
+3. initially query target `SMF`, requester `NWDAF`, and service
+   `nsmf-event-exposure` without adding unvalidated PLMN, slice, UE, DNN, or
+   locality filters
+4. return all usable registered service roots, de-duplicate them, preserve NRF
+   response order, and retain the current fan-out behavior
+5. cache validated exact-query results for positive `validityPeriod`, coalesce
+   identical concurrent misses, refresh lazily, and never serve stale fallback
+6. use explicit `endpointSource: nrf|configured`; never silently merge or fall
+   back, and reject omission when SMF data collection is enabled
+7. reuse OAuth token acquisition for protected `nnrf-disc` discovery and for
+   outbound SMF scope `nsmf-event-exposure`
+8. bind the SMF token to raw Event Exposure POST and DELETE requests using the
+   free5GC NEF `TokenSource`/`SetAuthHeader(...)` pattern
+9. preserve caller deadlines and application cancellation
 
 Additional NF types should be added only after the SMF path has a complete
 query, selection, caching, and failure policy.
@@ -724,10 +733,14 @@ Phase 2 is complete for SMF only when:
 1. focused tests cover query construction and endpoint selection
 2. empty, malformed, multi-instance, unavailable-NRF, and cancellation cases
    have explicit outcomes
-3. the configured endpoint migration/fallback rule is tested
-4. OAuth-enabled and OAuth-disabled discovery both pass
-5. a local NRF/SMF integration test demonstrates discovery of the service
-   actually consumed by NWDAF
+3. explicit endpoint-source behavior, omitted-source rejection, and absence of
+   silent fallback are tested
+4. cache validity, concurrent miss coalescing, expiry, and no-stale behavior are
+   tested
+5. OAuth-enabled and OAuth-disabled discovery both pass
+6. OAuth-enabled raw SMF Event Exposure subscription and deletion pass
+7. a local NRF/SMF integration test demonstrates discovery and consumption of
+   the advertised service
 
 ---
 
@@ -790,7 +803,7 @@ gate.
 
 ---
 
-## 12. Resolved Phase 1 And Future Decision Gates
+## 12. Resolved Phase 1 And Phase 2 Decision Gates
 
 Phase 0 decisions are resolved in its detailed plan. Phase 1 decisions are
 also resolved in the Phase 1 detailed plan:
@@ -805,13 +818,29 @@ also resolved in the Phase 1 detailed plan:
    config uses conventional `cert/...` paths
 6. leave collector callback authorization unchanged and unplanned in Phase 1
 
-No additional Phase 1 decision is required before implementation. Remaining
-future decisions are:
+No additional Phase 1 decision is required. Phase 2 decisions are also fixed:
 
-1. the Priority 10 disposition for existing standardized raw HTTP SMF and ADRF
-   consumers that cannot use `SbiMetricHook` directly
-2. Phase 2 fixed-endpoint replacement, override, or fallback behavior
-3. initial discovery filters and endpoint selection policy for multiple SMFs
+1. use bounded NRF SMF service-catalog discovery; defer UDM serving-SMF
+   resolution
+2. use explicit `nrf` or `configured` endpoint source with no fallback, and
+   reject an omitted source while SMF data collection is enabled
+3. consume all usable registered SMF Event Exposure roots, de-duplicated in NRF
+   response order
+4. use an exact-query validity cache with concurrent miss coalescing, lazy
+   refresh, and no stale fallback
+5. support outbound SMF OAuth for POST and DELETE using the free5GC NEF raw
+   HTTP token-binding pattern
+
+No additional Phase 2 implementation-direction decision is required. Separate
+later planning may decide:
+
+1. the Priority 10 disposition for standardized raw HTTP consumers whose
+   generated request models remain incompatible
+2. UDM-backed serving-SMF resolution for a specific SUPI
+3. discovery filters backed by validated PLMN, S-NSSAI, DNN, locality, area, or
+   other runtime inputs
+4. `targetNfInstanceId` use only if concrete live-environment evidence requires
+   it
 
 ---
 
