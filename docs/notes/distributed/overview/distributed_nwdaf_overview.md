@@ -1,9 +1,5 @@
 # 分散式 NWDAF 部署：概覽摘要
 
-> **Corpus 範圍註記**：下列詳細分析引用的 TS 23.502 §4.15.4.5 未收錄於
-> 目前 NRF-oriented Release 18 scoped extract。需要重新驗證 SMF/UPF routing
-> 程序時，應先補入相同 Release 的相應章節。
-
 > 詳細規格分析：
 > - 無 AoI 方案（AGG 自行推導 NF serving area）：[agg_routing_without_aoi.md](agg_routing_without_aoi.md)
 > - 有 AoI 方案（Consumer 帶 TAI，AGG 直接查 NRF）：[agg_routing_with_aoi.md](agg_routing_with_aoi.md)

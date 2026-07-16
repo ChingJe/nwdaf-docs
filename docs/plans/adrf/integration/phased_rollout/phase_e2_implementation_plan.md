@@ -3,10 +3,6 @@
 **狀態**：✅ 完成（commit `5dbbb13`）
 **日期**：2026-03-25
 
-> **Corpus 範圍註記**：目前 `nwdaf-docs/specs/` 的 Release 18 corpus 未收錄
-> TS 29.575 與 `TS29575_Nadrf_DataManagement.yaml`。本報告記錄既有實作結果；
-> 後續若修改 ADRF contract，應先補入相同 Release 的來源並重新驗證。
-
 ---
 
 ## 概述

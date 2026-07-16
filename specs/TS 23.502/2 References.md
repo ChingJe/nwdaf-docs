@@ -14,7 +14,6 @@ conversion: deterministic-pandoc-structure
 
 # 2 References
 
-
 The following documents contain provisions which, through reference in this text, constitute provisions of the present document.
 
 \- References are either specific (identified by date of publication, edition number, version number, etc.) or non‑specific.

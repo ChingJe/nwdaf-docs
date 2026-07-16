@@ -117,9 +117,7 @@ This plan is based on the following local sources:
 - `nwdaf-docs/specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml`
 - `nwdaf-docs/specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml`
 - `nwdaf-docs/specs/openapi/TS29571_CommonData.yaml`
-- `nwdaf-docs/specs/openapi/README.md`, which records
-  `TS29575_Nadrf_DataManagement.yaml` as an external dependency not currently
-  included in the local Release 18 corpus
+- `nwdaf-docs/specs/openapi/TS29575_Nadrf_DataManagement.yaml`
 - `free5gc-dev-skill/SKILL.md`
 - `free5gc-dev-skill/references/sbi-development.md`
 - `free5gc-dev-skill/references/openapi-contract.md`

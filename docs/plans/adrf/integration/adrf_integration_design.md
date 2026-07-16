@@ -1,9 +1,5 @@
 # NWDAF × ADRF × Daisy 整合設計
 
-> **Corpus 範圍註記**：目前 `nwdaf-docs/specs/` 的 Release 18 corpus 未收錄
-> TS 29.575 與 `TS29575_Nadrf_DataManagement.yaml`。本文保留實作期間採用的
-> 規格結論；後續若修改 ADRF contract，應先補入相同 Release 的來源並重新驗證。
-
 ---
 
 ## 0. 修訂紀錄

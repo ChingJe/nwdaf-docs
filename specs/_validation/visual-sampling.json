@@ -1,28 +1,44 @@
 {
-  "method": "Risk-based validation combined direct source OOXML block inspection, independent text extraction, and manual review of rendered vector previews. Full-document LibreOffice PDF export was attempted for TS 23.502 and TS 29.510 but did not complete within the execution time limit.",
+  "method": "Risk-based inspection of rendered vector previews; not full page-by-page Word certification.",
   "samples": [
     {
+      "spec": "TS 23.501",
+      "asset": "assets/rendered/image14.png",
+      "topic": "5GS data-storage architecture sample",
+      "result": "pass",
+      "observations": "Labels and connector lines are legible; no clipping observed."
+    },
+    {
       "spec": "TS 23.502",
-      "asset": "assets/rendered/image209.png",
-      "figure": "4.17.1-1 NF Service Registration procedure",
-      "result": "preview readable and correctly adjacent to caption and procedure steps"
+      "asset": "assets/rendered/image145.png",
+      "topic": "UPF event exposure for UPF data collection",
+      "result": "pass",
+      "observations": "Sequence participants, arrows and service-operation labels are legible."
     },
     {
-      "spec": "TS 29.510",
-      "asset": "assets/rendered/image10.png",
-      "figure": "5.2.2.3.2-1 NF Heart-Beat",
-      "result": "preview readable and correctly adjacent to PATCH procedure text"
+      "spec": "TS 29.508",
+      "asset": "assets/rendered/image6.png",
+      "topic": "Nsmf_EventExposure subscription creation",
+      "result": "pass",
+      "observations": "POST and 201 Created flow is legible and correctly oriented."
     },
     {
-      "spec": "TS 29.510",
-      "asset": "assets/rendered/image44.png",
-      "figure": "6.4.3.1-1 Bootstrapping API URI structure",
-      "result": "preview readable and correctly adjacent to resource description"
+      "spec": "TS 29.564",
+      "asset": "assets/rendered/image4.png",
+      "topic": "Nupf_EventExposure subscription creation",
+      "result": "pass",
+      "observations": "Request, success, error and redirect paths are legible."
+    },
+    {
+      "spec": "TS 29.575",
+      "asset": "assets/rendered/image5.png",
+      "topic": "Nadrf_DataManagement storage request",
+      "result": "pass",
+      "observations": "POST data-store-records and 201 Created flow is legible."
     }
   ],
-  "structural_samples_file": "structural-sampling.json",
   "limitations": [
-    "No claim of manual page-by-page visual certification is made.",
-    "Large 3GPP DOCX files did not complete headless LibreOffice PDF export within the allotted runtime; source OOXML and independent text checks were used instead."
+    "TS 23.502 contains 280 source vector images; 153 have PNG previews and 127 remain available in original EMF/WMF form plus embedded payloads.",
+    "The conversion does not claim full page-by-page visual certification of the source Word documents."
   ]
 }

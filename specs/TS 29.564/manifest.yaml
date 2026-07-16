@@ -1,0 +1,729 @@
+spec: TS 29.564
+version: 18.7.0
+release: '18'
+source_archive: 29564-i70.zip
+source_document: 29564-i70.docx
+source_archive_sha256: dda2ab5dd327b415a1a334941e36923100eca4db73cc43a799ed5ccc529323f6
+source_document_sha256: 9827ed4ca93c41f8771827e800e3be40fccfd30f2572ac9452c364163a144715
+max_source_words_per_semantic_file_target: 4200
+clauses:
+- clause: document-information
+  title: Document information
+  path: 00 Document information.md
+  source_words: 259
+  kind: source-file
+- clause: contents
+  title: Contents
+  path: 01 Original contents.md
+  source_words: 966
+  kind: source-file
+- clause: foreword
+  title: Foreword
+  path: 02 Foreword.md
+  source_words: 492
+  kind: source-file
+- clause: '1'
+  title: 1 Scope
+  path: 1 Scope.md
+  source_words: 96
+  kind: source-file
+- clause: '2'
+  title: 2 References
+  path: 2 References.md
+  source_words: 343
+  kind: source-file
+- clause: '3'
+  title: 3 Definitions, symbols and abbreviations
+  path: 3 Definitions, symbols and abbreviations.md
+  source_words: 164
+  kind: source-file
+- clause: '3.1'
+  title: 3.1 Definitions
+  path: 3 Definitions, symbols and abbreviations.md
+  source_words: 49
+  kind: embedded-clause
+- clause: '3.2'
+  title: 3.2 Symbols
+  path: 3 Definitions, symbols and abbreviations.md
+  source_words: 7
+  kind: embedded-clause
+- clause: '3.3'
+  title: 3.3 Abbreviations
+  path: 3 Definitions, symbols and abbreviations.md
+  source_words: 103
+  kind: embedded-clause
+- clause: '4'
+  title: 4 Overview
+  path: 4 Overview.md
+  source_words: 135
+  kind: source-file
+- clause: '4.1'
+  title: 4.1 Introduction
+  path: 4 Overview.md
+  source_words: 133
+  kind: embedded-clause
+- clause: '5'
+  title: 5 Services offered by the UPF
+  path: 5 Services offered by the UPF/README.md
+  source_words: 4582
+  kind: navigation-directory
+- clause: '5.1'
+  title: 5.1 Introduction
+  path: 5 Services offered by the UPF/5.1 Introduction.md
+  source_words: 147
+  kind: source-file
+- clause: '5.2'
+  title: 5.2 Nupf_EventExposure Service
+  path: 5 Services offered by the UPF/5.2 Nupf_EventExposure Service.md
+  source_words: 3941
+  kind: source-file
+- clause: 5.2.1
+  title: 5.2.1 Service Description
+  path: 5 Services offered by the UPF/5.2 Nupf_EventExposure Service.md
+  source_words: 1174
+  kind: embedded-clause
+- clause: 5.2.1.1
+  title: 5.2.1.1 Service operations
+  path: 5 Services offered by the UPF/5.2 Nupf_EventExposure Service.md
+  source_words: 103
+  kind: embedded-clause
+- clause: 5.2.1.2
+  title: 5.2.1.2 Subscription to UPF events
+  path: 5 Services offered by the UPF/5.2 Nupf_EventExposure Service.md
+  source_words: 248
+  kind: embedded-clause
+- clause: 5.2.1.3
+  title: 5.2.1.3 UPF events supported by the Nupf_EventExposure service
+  path: 5 Services offered by the UPF/5.2 Nupf_EventExposure Service.md
+  source_words: 818
+  kind: embedded-clause
+- clause: 5.2.1.3.1
+  title: 5.2.1.3.1 General
+  path: 5 Services offered by the UPF/5.2 Nupf_EventExposure Service.md
+  source_words: 37
+  kind: embedded-clause
+- clause: 5.2.1.3.2
+  title: 5.2.1.3.2 QoS Monitoring
+  path: 5 Services offered by the UPF/5.2 Nupf_EventExposure Service.md
+  source_words: 180
+  kind: embedded-clause
+- clause: 5.2.1.3.3
+  title: 5.2.1.3.3 User Data Usage Measures
+  path: 5 Services offered by the UPF/5.2 Nupf_EventExposure Service.md
+  source_words: 299
+  kind: embedded-clause
+- clause: 5.2.1.3.4
+  title: 5.2.1.3.4 User Data Usage Trends
+  path: 5 Services offered by the UPF/5.2 Nupf_EventExposure Service.md
+  source_words: 213
+  kind: embedded-clause
+- clause: 5.2.1.3.5
+  title: 5.2.1.3.5 TSC Management Information
+  path: 5 Services offered by the UPF/5.2 Nupf_EventExposure Service.md
+  source_words: 77
+  kind: embedded-clause
+- clause: 5.2.2
+  title: 5.2.2 Service Operations
+  path: 5 Services offered by the UPF/5.2 Nupf_EventExposure Service.md
+  source_words: 2762
+  kind: embedded-clause
+- clause: 5.2.2.1
+  title: 5.2.2.1 Introduction
+  path: 5 Services offered by the UPF/5.2 Nupf_EventExposure Service.md
+  source_words: 92
+  kind: embedded-clause
+- clause: 5.2.2.2
+  title: 5.2.2.2 Subscribe
+  path: 5 Services offered by the UPF/5.2 Nupf_EventExposure Service.md
+  source_words: 1669
+  kind: embedded-clause
+- clause: 5.2.2.2.1
+  title: 5.2.2.2.1 General
+  path: 5 Services offered by the UPF/5.2 Nupf_EventExposure Service.md
+  source_words: 58
+  kind: embedded-clause
+- clause: 5.2.2.2.2
+  title: 5.2.2.2.2 Creation of a subscription
+  path: 5 Services offered by the UPF/5.2 Nupf_EventExposure Service.md
+  source_words: 1365
+  kind: embedded-clause
+- clause: 5.2.2.2.3
+  title: 5.2.2.2.3 Modification of a subscription
+  path: 5 Services offered by the UPF/5.2 Nupf_EventExposure Service.md
+  source_words: 241
+  kind: embedded-clause
+- clause: 5.2.2.2A
+  title: 5.2.2.2A Unsubscribe
+  path: 5 Services offered by the UPF/5.2 Nupf_EventExposure Service.md
+  source_words: 202
+  kind: embedded-clause
+- clause: 5.2.2.2A.1
+  title: 5.2.2.2A.1 General
+  path: 5 Services offered by the UPF/5.2 Nupf_EventExposure Service.md
+  source_words: 197
+  kind: embedded-clause
+- clause: 5.2.2.3
+  title: 5.2.2.3 Notify
+  path: 5 Services offered by the UPF/5.2 Nupf_EventExposure Service.md
+  source_words: 794
+  kind: embedded-clause
+- clause: 5.2.2.3.1
+  title: 5.2.2.3.1 General
+  path: 5 Services offered by the UPF/5.2 Nupf_EventExposure Service.md
+  source_words: 618
+  kind: embedded-clause
+- clause: 5.2.2.3.2
+  title: 5.2.2.3.2 UPF sends notification on subscribed events
+  path: 5 Services offered by the UPF/5.2 Nupf_EventExposure Service.md
+  source_words: 171
+  kind: embedded-clause
+- clause: '5.3'
+  title: 5.3 Nupf_GetUEPrivateIPaddrAndIdentifiers Service
+  path: 5 Services offered by the UPF/5.3 Nupf_GetUEPrivateIPaddrAndIdentifiers Service.md
+  source_words: 488
+  kind: source-file
+- clause: 5.3.1
+  title: 5.3.1 Service Description
+  path: 5 Services offered by the UPF/5.3 Nupf_GetUEPrivateIPaddrAndIdentifiers Service.md
+  source_words: 135
+  kind: embedded-clause
+- clause: 5.3.2
+  title: 5.3.2 Service Operations
+  path: 5 Services offered by the UPF/5.3 Nupf_GetUEPrivateIPaddrAndIdentifiers Service.md
+  source_words: 348
+  kind: embedded-clause
+- clause: 5.3.2.1
+  title: 5.3.2.1 Introduction
+  path: 5 Services offered by the UPF/5.3 Nupf_GetUEPrivateIPaddrAndIdentifiers Service.md
+  source_words: 23
+  kind: embedded-clause
+- clause: 5.3.2.2
+  title: 5.3.2.2 Get
+  path: 5 Services offered by the UPF/5.3 Nupf_GetUEPrivateIPaddrAndIdentifiers Service.md
+  source_words: 320
+  kind: embedded-clause
+- clause: 5.3.2.2.1
+  title: 5.3.2.2.1 General
+  path: 5 Services offered by the UPF/5.3 Nupf_GetUEPrivateIPaddrAndIdentifiers Service.md
+  source_words: 315
+  kind: embedded-clause
+- clause: '6'
+  title: 6 API Definitions
+  path: 6 API Definitions/README.md
+  source_words: 10298
+  kind: navigation-directory
+- clause: '6.1'
+  title: 6.1 Nupf_EventExposure Service API
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/README.md
+  source_words: 8108
+  kind: navigation-directory
+- clause: 6.1.1
+  title: 6.1.1 API URI
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.1 API URI.md
+  source_words: 99
+  kind: source-file
+- clause: 6.1.2
+  title: 6.1.2 Usage of HTTP
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.2 Usage of HTTP.md
+  source_words: 259
+  kind: source-file
+- clause: 6.1.2.1
+  title: 6.1.2.1 General
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.2 Usage of HTTP.md
+  source_words: 62
+  kind: embedded-clause
+- clause: 6.1.2.2
+  title: 6.1.2.2 HTTP standard headers
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.2 Usage of HTTP.md
+  source_words: 122
+  kind: embedded-clause
+- clause: 6.1.2.2.1
+  title: 6.1.2.2.1 General
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.2 Usage of HTTP.md
+  source_words: 24
+  kind: embedded-clause
+- clause: 6.1.2.2.2
+  title: 6.1.2.2.2 Content type
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.2 Usage of HTTP.md
+  source_words: 91
+  kind: embedded-clause
+- clause: 6.1.2.3
+  title: 6.1.2.3 HTTP custom headers
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.2 Usage of HTTP.md
+  source_words: 69
+  kind: embedded-clause
+- clause: 6.1.3
+  title: 6.1.3 Resources
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.3 Resources.md
+  source_words: 1920
+  kind: source-file
+- clause: 6.1.3.1
+  title: 6.1.3.1 Overview
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.3 Resources.md
+  source_words: 94
+  kind: embedded-clause
+- clause: 6.1.3.2
+  title: '6.1.3.2 Resource: EventExposureSubscriptions'
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.3 Resources.md
+  source_words: 660
+  kind: embedded-clause
+- clause: 6.1.3.2.1
+  title: 6.1.3.2.1 Description
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.3 Resources.md
+  source_words: 41
+  kind: embedded-clause
+- clause: 6.1.3.2.2
+  title: 6.1.3.2.2 Resource Definition
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.3 Resources.md
+  source_words: 58
+  kind: embedded-clause
+- clause: 6.1.3.2.3
+  title: 6.1.3.2.3 Resource Standard Methods
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.3 Resources.md
+  source_words: 546
+  kind: embedded-clause
+- clause: 6.1.3.2.3.1
+  title: 6.1.3.2.3.1 POST
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.3 Resources.md
+  source_words: 538
+  kind: embedded-clause
+- clause: 6.1.3.2.4
+  title: 6.1.3.2.4 Resource Custom Operations
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.3 Resources.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 6.1.3.3
+  title: '6.1.3.3 Resource: Individual subscription'
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.3 Resources.md
+  source_words: 1162
+  kind: embedded-clause
+- clause: 6.1.3.3.1
+  title: 6.1.3.3.1 Description
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.3 Resources.md
+  source_words: 41
+  kind: embedded-clause
+- clause: 6.1.3.3.2
+  title: 6.1.3.3.2 Resource Definition
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.3 Resources.md
+  source_words: 72
+  kind: embedded-clause
+- clause: 6.1.3.3.3
+  title: 6.1.3.3.3 Resource Standard Methods
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.3 Resources.md
+  source_words: 1033
+  kind: embedded-clause
+- clause: 6.1.3.3.3.1
+  title: 6.1.3.3.3.1 DELETE
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.3 Resources.md
+  source_words: 439
+  kind: embedded-clause
+- clause: 6.1.3.3.3.2
+  title: 6.1.3.3.3.2 PATCH
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.3 Resources.md
+  source_words: 586
+  kind: embedded-clause
+- clause: 6.1.3.3.4
+  title: 6.1.3.3.4 Resource Custom Operations
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.3 Resources.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 6.1.4
+  title: 6.1.4 void
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.4 void.md
+  source_words: 4
+  kind: source-file
+- clause: 6.1.5
+  title: 6.1.5 Notifications
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.5 Notifications.md
+  source_words: 643
+  kind: source-file
+- clause: 6.1.5.1
+  title: 6.1.5.1 General
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.5 Notifications.md
+  source_words: 95
+  kind: embedded-clause
+- clause: 6.1.5.2
+  title: 6.1.5.2 Event Notification
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.5 Notifications.md
+  source_words: 544
+  kind: embedded-clause
+- clause: 6.1.5.2.1
+  title: 6.1.5.2.1 Description
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.5 Notifications.md
+  source_words: 32
+  kind: embedded-clause
+- clause: 6.1.5.2.2
+  title: 6.1.5.2.2 Target URI
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.5 Notifications.md
+  source_words: 506
+  kind: embedded-clause
+- clause: 6.1.6
+  title: 6.1.6 Data Model
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/README.md
+  source_words: 4398
+  kind: navigation-directory
+- clause: 6.1.6.1
+  title: 6.1.6.1 General
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/6.1.6.1 General.md
+  source_words: 584
+  kind: source-file
+- clause: 6.1.6.2
+  title: 6.1.6.2 Structured data types
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/6.1.6.2 Structured data types.md
+  source_words: 3320
+  kind: source-file
+- clause: 6.1.6.2.1
+  title: 6.1.6.2.1 Introduction
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/6.1.6.2 Structured data types.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 6.1.6.2.2
+  title: '6.1.6.2.2 Type: NotificationData'
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/6.1.6.2 Structured data types.md
+  source_words: 150
+  kind: embedded-clause
+- clause: 6.1.6.2.3
+  title: '6.1.6.2.3 Type: NotificationItem'
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/6.1.6.2 Structured data types.md
+  source_words: 319
+  kind: embedded-clause
+- clause: 6.1.6.2.4
+  title: '6.1.6.2.4 Type: QosMonitoringMeasurement'
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/6.1.6.2 Structured data types.md
+  source_words: 457
+  kind: embedded-clause
+- clause: 6.1.6.2.5
+  title: '6.1.6.2.5 Type: UserDataUsageMeasurements'
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/6.1.6.2 Structured data types.md
+  source_words: 280
+  kind: embedded-clause
+- clause: 6.1.6.2.6
+  title: '6.1.6.2.6 Type: VolumeMeasurement'
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/6.1.6.2 Structured data types.md
+  source_words: 160
+  kind: embedded-clause
+- clause: 6.1.6.2.7
+  title: '6.1.6.2.7 Type: ThroughputMeasurement'
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/6.1.6.2 Structured data types.md
+  source_words: 100
+  kind: embedded-clause
+- clause: 6.1.6.2.8
+  title: '6.1.6.2.8 Type: ApplicationRelatedInformation'
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/6.1.6.2 Structured data types.md
+  source_words: 105
+  kind: embedded-clause
+- clause: 6.1.6.2.9
+  title: '6.1.6.2.9 Type: ThroughputStatisticsMeasurement'
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/6.1.6.2 Structured data types.md
+  source_words: 180
+  kind: embedded-clause
+- clause: 6.1.6.2.10
+  title: '6.1.6.2.10 Type: DomainInformation'
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/6.1.6.2 Structured data types.md
+  source_words: 51
+  kind: embedded-clause
+- clause: 6.1.6.2.11
+  title: '6.1.6.2.11 Type: UpfEventSubscription'
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/6.1.6.2 Structured data types.md
+  source_words: 360
+  kind: embedded-clause
+- clause: 6.1.6.2.12
+  title: '6.1.6.2.12 Type: UpfEventMode'
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/6.1.6.2 Structured data types.md
+  source_words: 557
+  kind: embedded-clause
+- clause: 6.1.6.2.13
+  title: '6.1.6.2.13 Type: UpfEvent'
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/6.1.6.2 Structured data types.md
+  source_words: 246
+  kind: embedded-clause
+- clause: 6.1.6.2.14
+  title: '6.1.6.2.14 Type: CreateEventSubscription'
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/6.1.6.2 Structured data types.md
+  source_words: 61
+  kind: embedded-clause
+- clause: 6.1.6.2.15
+  title: '6.1.6.2.15 Type: CreatedEventSubscription'
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/6.1.6.2 Structured data types.md
+  source_words: 131
+  kind: embedded-clause
+- clause: 6.1.6.2.16
+  title: '6.1.6.2.16 Type: ReportingSuggestionInformation'
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/6.1.6.2 Structured data types.md
+  source_words: 73
+  kind: embedded-clause
+- clause: 6.1.6.2.17
+  title: '6.1.6.2.17 Type: TscManagementInfo'
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/6.1.6.2 Structured data types.md
+  source_words: 66
+  kind: embedded-clause
+- clause: 6.1.6.3
+  title: 6.1.6.3 Simple data types and enumerations
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 489
+  kind: source-file
+- clause: 6.1.6.3.1
+  title: 6.1.6.3.1 Introduction
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 26
+  kind: embedded-clause
+- clause: 6.1.6.3.2
+  title: 6.1.6.3.2 Simple data types
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 6.1.6.3.3
+  title: '6.1.6.3.3 Enumeration: EventType'
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 105
+  kind: embedded-clause
+- clause: 6.1.6.3.4
+  title: '6.1.6.3.4 Enumeration: UpfEventTrigger'
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 78
+  kind: embedded-clause
+- clause: 6.1.6.3.5
+  title: '6.1.6.3.5 Enumeration: MeasurementType'
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 95
+  kind: embedded-clause
+- clause: 6.1.6.3.6
+  title: '6.1.6.3.6 Enumeration: GranularityOfMeasurement'
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 58
+  kind: embedded-clause
+- clause: 6.1.6.3.7
+  title: '6.1.6.3.7 Enumeration: DnProtocol'
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 64
+  kind: embedded-clause
+- clause: 6.1.6.3.8
+  title: '6.1.6.3.8 Enumeration: ReportingUrgency'
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 36
+  kind: embedded-clause
+- clause: 6.1.7
+  title: 6.1.7 Error Handling
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.7 Error Handling.md
+  source_words: 379
+  kind: source-file
+- clause: 6.1.7.1
+  title: 6.1.7.1 General
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.7 Error Handling.md
+  source_words: 94
+  kind: embedded-clause
+- clause: 6.1.7.2
+  title: 6.1.7.2 Protocol Errors
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.7 Error Handling.md
+  source_words: 19
+  kind: embedded-clause
+- clause: 6.1.7.3
+  title: 6.1.7.3 Application Errors
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.7 Error Handling.md
+  source_words: 261
+  kind: embedded-clause
+- clause: 6.1.8
+  title: 6.1.8 Feature negotiation
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.8 Feature negotiation.md
+  source_words: 88
+  kind: source-file
+- clause: 6.1.9
+  title: 6.1.9 Security
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.9 Security.md
+  source_words: 178
+  kind: source-file
+- clause: 6.1.10
+  title: 6.1.10 HTTP redirection
+  path: 6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.10 HTTP redirection.md
+  source_words: 134
+  kind: source-file
+- clause: '6.2'
+  title: 6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 2187
+  kind: source-file
+- clause: 6.2.1
+  title: 6.2.1 Introduction
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 100
+  kind: embedded-clause
+- clause: 6.2.2
+  title: 6.2.2 Usage of HTTP
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 242
+  kind: embedded-clause
+- clause: 6.2.2.1
+  title: 6.2.2.1 General
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 62
+  kind: embedded-clause
+- clause: 6.2.2.2
+  title: 6.2.2.2 HTTP standard headers
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 122
+  kind: embedded-clause
+- clause: 6.2.2.2.1
+  title: 6.2.2.2.1 General
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 24
+  kind: embedded-clause
+- clause: 6.2.2.2.2
+  title: 6.2.2.2.2 Content type
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 91
+  kind: embedded-clause
+- clause: 6.2.2.3
+  title: 6.2.2.3 HTTP custom headers
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 52
+  kind: embedded-clause
+- clause: 6.2.3
+  title: 6.2.3 Resources
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 776
+  kind: embedded-clause
+- clause: 6.2.3.1
+  title: 6.2.3.1 Overview
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 75
+  kind: embedded-clause
+- clause: 6.2.3.2
+  title: '6.2.3.2 Resource: UE IP Address Info'
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 697
+  kind: embedded-clause
+- clause: 6.2.3.2.1
+  title: 6.2.3.2.1 Description
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 41
+  kind: embedded-clause
+- clause: 6.2.3.2.2
+  title: 6.2.3.2.2 Resource Definition
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 54
+  kind: embedded-clause
+- clause: 6.2.3.2.3
+  title: 6.2.3.2.3 Resource Standard Methods
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 584
+  kind: embedded-clause
+- clause: 6.2.3.2.3.1
+  title: 6.2.3.2.3.1 GET
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 576
+  kind: embedded-clause
+- clause: 6.2.3.2.4
+  title: 6.2.3.2.4 Resource Custom Operations
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 6.2.4
+  title: 6.2.4 Custom Operations without associated resources
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 6.2.5
+  title: 6.2.5 Notifications
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 10
+  kind: embedded-clause
+- clause: 6.2.5.1
+  title: 6.2.5.1 General
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 6
+  kind: embedded-clause
+- clause: 6.2.6
+  title: 6.2.6 Data Model
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 523
+  kind: embedded-clause
+- clause: 6.2.6.1
+  title: 6.2.6.1 General
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 165
+  kind: embedded-clause
+- clause: 6.2.6.2
+  title: 6.2.6.2 Structured data types
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 318
+  kind: embedded-clause
+- clause: 6.2.6.2.1
+  title: 6.2.6.2.1 Introduction
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 6.2.6.2.2
+  title: '6.2.6.2.2 Type: UeIpInfo'
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 294
+  kind: embedded-clause
+- clause: 6.2.6.3
+  title: 6.2.6.3 Simple data types and enumerations
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 35
+  kind: embedded-clause
+- clause: 6.2.6.3.1
+  title: 6.2.6.3.1 Introduction
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 26
+  kind: embedded-clause
+- clause: 6.2.7
+  title: 6.2.7 Error Handling
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 169
+  kind: embedded-clause
+- clause: 6.2.7.1
+  title: 6.2.7.1 General
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 94
+  kind: embedded-clause
+- clause: 6.2.7.2
+  title: 6.2.7.2 Protocol Errors
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 16
+  kind: embedded-clause
+- clause: 6.2.7.3
+  title: 6.2.7.3 Application Errors
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 54
+  kind: embedded-clause
+- clause: 6.2.8
+  title: 6.2.8 Feature negotiation
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 50
+  kind: embedded-clause
+- clause: 6.2.9
+  title: 6.2.9 Security
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 168
+  kind: embedded-clause
+- clause: 6.2.10
+  title: 6.2.10 HTTP redirection
+  path: 6 API Definitions/6.2 Nupf_GetUEPrivateIPaddrAndIdentifiers Service API.md
+  source_words: 134
+  kind: embedded-clause
+- clause: Annex A
+  title: 'Annex A (normative): OpenAPI specification'
+  path: Annex A (normative) OpenAPI specification/README.md
+  source_words: 2489
+  kind: navigation-directory
+- clause: A.1
+  title: A.1 General
+  path: Annex A (normative) OpenAPI specification/README.md
+  source_words: 136
+  kind: source-file
+- clause: A.2
+  title: A.2 Nupf_EventExposure API
+  path: ../openapi/TS29564_Nupf_EventExposure.yaml
+  source_words: 1829
+  kind: exact-attachment
+- clause: A.3
+  title: A.3 Nupf_GetUEPrivateIPaddrAndIdentifiers API
+  path: ../openapi/TS29564_Nupf_GetUEPrivateIPaddrAndIdentifiers.yaml
+  source_words: 519
+  kind: exact-attachment
+- clause: Annex B
+  title: 'Annex B (informative): Change history'
+  path: Annex B (informative) Change history/README.md
+  source_words: 1451
+  kind: navigation-directory

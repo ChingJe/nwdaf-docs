@@ -1,0 +1,162 @@
+{
+  "TS 23.501": {
+    "pandoc_tokens": 429388,
+    "independent_tokens": 429410,
+    "token_multiset_overlap_against_shorter": 0.999769,
+    "12_token_shingle_overlap_against_smaller_unique_set": 0.998236,
+    "pandoc_markers": {
+      "shall": 1411,
+      "should": 258,
+      "may": 2028,
+      "must": 13,
+      "note": 1432,
+      "example": 124,
+      "shall not": 157,
+      "should not": 17,
+      "may not": 14,
+      "must not": 1
+    },
+    "independent_markers": {
+      "shall": 1411,
+      "should": 258,
+      "may": 2028,
+      "must": 13,
+      "note": 1432,
+      "example": 124,
+      "shall not": 157,
+      "should not": 17,
+      "may not": 14,
+      "must not": 1
+    },
+    "marker_counts_equal": true,
+    "independent_extractor": "docx2txt"
+  },
+  "TS 23.502": {
+    "pandoc_tokens": 479766,
+    "independent_tokens": 479896,
+    "token_multiset_overlap_against_shorter": 0.999952,
+    "12_token_shingle_overlap_against_smaller_unique_set": 0.999005,
+    "pandoc_markers": {
+      "shall": 1004,
+      "should": 159,
+      "may": 1784,
+      "must": 6,
+      "note": 848,
+      "example": 91,
+      "shall not": 130,
+      "should not": 13,
+      "may not": 8,
+      "must not": 0
+    },
+    "independent_markers": {
+      "shall": 1004,
+      "should": 159,
+      "may": 1784,
+      "must": 6,
+      "note": 848,
+      "example": 91,
+      "shall not": 130,
+      "should not": 13,
+      "may not": 8,
+      "must not": 0
+    },
+    "marker_counts_equal": true,
+    "independent_extractor": "docx2txt"
+  },
+  "TS 29.508": {
+    "pandoc_tokens": 27268,
+    "independent_tokens": 27267,
+    "token_multiset_overlap_against_shorter": 0.974475,
+    "12_token_shingle_overlap_against_smaller_unique_set": 0.802878,
+    "pandoc_markers": {
+      "shall": 172,
+      "should": 9,
+      "may": 85,
+      "must": 0,
+      "note": 155,
+      "example": 1,
+      "shall not": 4,
+      "should not": 0,
+      "may not": 0,
+      "must not": 0
+    },
+    "independent_markers": {
+      "shall": 169,
+      "should": 9,
+      "may": 85,
+      "must": 0,
+      "note": 152,
+      "example": 1,
+      "shall not": 4,
+      "should not": 0,
+      "may not": 0,
+      "must not": 0
+    },
+    "marker_counts_equal": false,
+    "independent_extractor": "antiword"
+  },
+  "TS 29.564": {
+    "pandoc_tokens": 21122,
+    "independent_tokens": 21162,
+    "token_multiset_overlap_against_shorter": 0.999905,
+    "12_token_shingle_overlap_against_smaller_unique_set": 0.992339,
+    "pandoc_markers": {
+      "shall": 221,
+      "should": 12,
+      "may": 56,
+      "must": 2,
+      "note": 70,
+      "example": 7,
+      "shall not": 9,
+      "should not": 1,
+      "may not": 1,
+      "must not": 1
+    },
+    "independent_markers": {
+      "shall": 221,
+      "should": 12,
+      "may": 56,
+      "must": 2,
+      "note": 70,
+      "example": 7,
+      "shall not": 9,
+      "should not": 1,
+      "may not": 1,
+      "must not": 1
+    },
+    "marker_counts_equal": true,
+    "independent_extractor": "docx2txt"
+  },
+  "TS 29.575": {
+    "pandoc_tokens": 29968,
+    "independent_tokens": 30055,
+    "token_multiset_overlap_against_shorter": 0.999933,
+    "12_token_shingle_overlap_against_smaller_unique_set": 0.976264,
+    "pandoc_markers": {
+      "shall": 238,
+      "should": 33,
+      "may": 36,
+      "must": 2,
+      "note": 163,
+      "example": 5,
+      "shall not": 5,
+      "should not": 1,
+      "may not": 1,
+      "must not": 1
+    },
+    "independent_markers": {
+      "shall": 238,
+      "should": 33,
+      "may": 36,
+      "must": 2,
+      "note": 163,
+      "example": 5,
+      "shall not": 5,
+      "should not": 1,
+      "may not": 1,
+      "must not": 1
+    },
+    "marker_counts_equal": true,
+    "independent_extractor": "docx2txt"
+  }
+}

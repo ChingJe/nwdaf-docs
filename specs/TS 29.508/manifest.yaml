@@ -1,0 +1,527 @@
+spec: TS 29.508
+version: 18.11.0
+release: '18'
+source_archive: 29508-ib0.zip
+source_document: 29508-ib0.doc
+source_archive_sha256: daf27642c0ec0e9c9253524bf6c70b78a6b540ce49abd07b28f730c3b6f0a667
+source_document_sha256: 8e4c066907e4b69f9c3747664365b2d145ba149649f162eb8dd40601f5ad332e
+max_source_words_per_semantic_file_target: 4200
+clauses:
+- clause: document-information
+  title: Document information
+  path: 00 Document information.md
+  source_words: 275
+  kind: source-file
+- clause: contents
+  title: Contents
+  path: 01 Original contents.md
+  source_words: 660
+  kind: source-file
+- clause: foreword
+  title: Foreword
+  path: 02 Foreword.md
+  source_words: 133
+  kind: source-file
+- clause: '1'
+  title: 1 Scope
+  path: 1 Scope.md
+  source_words: 141
+  kind: source-file
+- clause: '2'
+  title: 2 References
+  path: 2 References.md
+  source_words: 450
+  kind: source-file
+- clause: '3'
+  title: 3 Definitions and abbreviations
+  path: 3 Definitions and abbreviations.md
+  source_words: 251
+  kind: source-file
+- clause: '3.1'
+  title: 3.1 Definitions
+  path: 3 Definitions and abbreviations.md
+  source_words: 49
+  kind: embedded-clause
+- clause: '3.2'
+  title: 3.2 Abbreviations
+  path: 3 Definitions and abbreviations.md
+  source_words: 198
+  kind: embedded-clause
+- clause: '4'
+  title: 4 Session Management Event Exposure Service
+  path: 4 Session Management Event Exposure Service/README.md
+  source_words: 7376
+  kind: navigation-directory
+- clause: '4.1'
+  title: 4.1 Service Description
+  path: 4 Session Management Event Exposure Service/4.1 Service Description.md
+  source_words: 639
+  kind: source-file
+- clause: 4.1.1
+  title: 4.1.1 Overview
+  path: 4 Session Management Event Exposure Service/4.1 Service Description.md
+  source_words: 191
+  kind: embedded-clause
+- clause: 4.1.2
+  title: 4.1.2 Service Architecture
+  path: 4 Session Management Event Exposure Service/4.1 Service Description.md
+  source_words: 221
+  kind: embedded-clause
+- clause: 4.1.3
+  title: 4.1.3 Network Functions
+  path: 4 Session Management Event Exposure Service/4.1 Service Description.md
+  source_words: 223
+  kind: embedded-clause
+- clause: 4.1.3.1
+  title: 4.1.3.1 Session Management Function (SMF)
+  path: 4 Session Management Event Exposure Service/4.1 Service Description.md
+  source_words: 49
+  kind: embedded-clause
+- clause: 4.1.3.2
+  title: 4.1.3.2 NF Service Consumers
+  path: 4 Session Management Event Exposure Service/4.1 Service Description.md
+  source_words: 169
+  kind: embedded-clause
+- clause: '4.2'
+  title: 4.2 Service Operations
+  path: 4 Session Management Event Exposure Service/4.2 Service Operations/README.md
+  source_words: 6731
+  kind: navigation-directory
+- clause: 4.2.1
+  title: 4.2.1 Introduction
+  path: 4 Session Management Event Exposure Service/4.2 Service Operations/4.2.1 Introduction.md
+  source_words: 200
+  kind: source-file
+- clause: 4.2.2
+  title: 4.2.2 Nsmf_EventExposure_Notify Service Operation
+  path: 4 Session Management Event Exposure Service/4.2 Service Operations/4.2.2 Nsmf_EventExposure_Notify Service Operation.md
+  source_words: 3011
+  kind: source-file
+- clause: 4.2.2.1
+  title: 4.2.2.1 General
+  path: 4 Session Management Event Exposure Service/4.2 Service Operations/4.2.2 Nsmf_EventExposure_Notify Service Operation.md
+  source_words: 64
+  kind: embedded-clause
+- clause: 4.2.2.2
+  title: 4.2.2.2 Notification about subscribed events
+  path: 4 Session Management Event Exposure Service/4.2 Service Operations/4.2.2 Nsmf_EventExposure_Notify Service Operation.md
+  source_words: 2939
+  kind: embedded-clause
+- clause: 4.2.3
+  title: 4.2.3 Nsmf_EventExposure_Subscribe Service Operation
+  path: 4 Session Management Event Exposure Service/4.2 Service Operations/4.2.3 Nsmf_EventExposure_Subscribe Service Operation.md
+  source_words: 2832
+  kind: source-file
+- clause: 4.2.3.1
+  title: 4.2.3.1 General
+  path: 4 Session Management Event Exposure Service/4.2 Service Operations/4.2.3 Nsmf_EventExposure_Subscribe Service Operation.md
+  source_words: 66
+  kind: embedded-clause
+- clause: 4.2.3.2
+  title: 4.2.3.2 Creating a new subscription
+  path: 4 Session Management Event Exposure Service/4.2 Service Operations/4.2.3 Nsmf_EventExposure_Subscribe Service Operation.md
+  source_words: 1908
+  kind: embedded-clause
+- clause: 4.2.3.3
+  title: 4.2.3.3 Modifying an existing subscription
+  path: 4 Session Management Event Exposure Service/4.2 Service Operations/4.2.3 Nsmf_EventExposure_Subscribe Service Operation.md
+  source_words: 850
+  kind: embedded-clause
+- clause: 4.2.4
+  title: 4.2.4 Nsmf_EventExposure_UnSubscribe Service Operation
+  path: 4 Session Management Event Exposure Service/4.2 Service Operations/4.2.4 Nsmf_EventExposure_UnSubscribe Service Operation.md
+  source_words: 230
+  kind: source-file
+- clause: 4.2.4.1
+  title: 4.2.4.1 General
+  path: 4 Session Management Event Exposure Service/4.2 Service Operations/4.2.4 Nsmf_EventExposure_UnSubscribe Service Operation.md
+  source_words: 36
+  kind: embedded-clause
+- clause: 4.2.4.2
+  title: 4.2.4.2 Unsubscription from event notifications
+  path: 4 Session Management Event Exposure Service/4.2 Service Operations/4.2.4 Nsmf_EventExposure_UnSubscribe Service Operation.md
+  source_words: 186
+  kind: embedded-clause
+- clause: 4.2.5
+  title: 4.2.5 Nsmf_EventExposure_AppRelocationInfo Service Operation
+  path: 4 Session Management Event Exposure Service/4.2 Service Operations/4.2.5 Nsmf_EventExposure_AppRelocationInfo Service
+    Operation.md
+  source_words: 454
+  kind: source-file
+- clause: 4.2.5.1
+  title: 4.2.5.1 General
+  path: 4 Session Management Event Exposure Service/4.2 Service Operations/4.2.5 Nsmf_EventExposure_AppRelocationInfo Service
+    Operation.md
+  source_words: 49
+  kind: embedded-clause
+- clause: 4.2.5.2
+  title: 4.2.5.2 Acknowledgement of Notification about subscribed events
+  path: 4 Session Management Event Exposure Service/4.2 Service Operations/4.2.5 Nsmf_EventExposure_AppRelocationInfo Service
+    Operation.md
+  source_words: 397
+  kind: embedded-clause
+- clause: '5'
+  title: 5 Nsmf_EventExposure API
+  path: 5 Nsmf_EventExposure API/README.md
+  source_words: 10980
+  kind: navigation-directory
+- clause: '5.1'
+  title: 5.1 Introduction
+  path: 5 Nsmf_EventExposure API/5.1 Introduction.md
+  source_words: 97
+  kind: source-file
+- clause: '5.2'
+  title: 5.2 Usage of HTTP
+  path: 5 Nsmf_EventExposure API/5.2 Usage of HTTP.md
+  source_words: 250
+  kind: source-file
+- clause: 5.2.1
+  title: 5.2.1 General
+  path: 5 Nsmf_EventExposure API/5.2 Usage of HTTP.md
+  source_words: 60
+  kind: embedded-clause
+- clause: 5.2.2
+  title: 5.2.2 HTTP standard headers
+  path: 5 Nsmf_EventExposure API/5.2 Usage of HTTP.md
+  source_words: 119
+  kind: embedded-clause
+- clause: 5.2.2.1
+  title: 5.2.2.1 General
+  path: 5 Nsmf_EventExposure API/5.2 Usage of HTTP.md
+  source_words: 23
+  kind: embedded-clause
+- clause: 5.2.2.2
+  title: 5.2.2.2 Content type
+  path: 5 Nsmf_EventExposure API/5.2 Usage of HTTP.md
+  source_words: 90
+  kind: embedded-clause
+- clause: 5.2.3
+  title: 5.2.3 HTTP custom headers
+  path: 5 Nsmf_EventExposure API/5.2 Usage of HTTP.md
+  source_words: 66
+  kind: embedded-clause
+- clause: '5.3'
+  title: 5.3 Resources
+  path: 5 Nsmf_EventExposure API/5.3 Resources.md
+  source_words: 1957
+  kind: source-file
+- clause: 5.3.1
+  title: 5.3.1 Resource Structure
+  path: 5 Nsmf_EventExposure API/5.3 Resources.md
+  source_words: 143
+  kind: embedded-clause
+- clause: 5.3.2
+  title: '5.3.2 Resource: SMF Notification Subscriptions'
+  path: 5 Nsmf_EventExposure API/5.3 Resources.md
+  source_words: 343
+  kind: embedded-clause
+- clause: 5.3.2.1
+  title: 5.3.2.1 Description
+  path: 5 Nsmf_EventExposure API/5.3 Resources.md
+  source_words: 25
+  kind: embedded-clause
+- clause: 5.3.2.2
+  title: 5.3.2.2 Resource definition
+  path: 5 Nsmf_EventExposure API/5.3 Resources.md
+  source_words: 48
+  kind: embedded-clause
+- clause: 5.3.2.3
+  title: 5.3.2.3 Resource Standard Methods
+  path: 5 Nsmf_EventExposure API/5.3 Resources.md
+  source_words: 255
+  kind: embedded-clause
+- clause: 5.3.2.3.1
+  title: 5.3.2.3.1 POST
+  path: 5 Nsmf_EventExposure API/5.3 Resources.md
+  source_words: 248
+  kind: embedded-clause
+- clause: 5.3.2.4
+  title: 5.3.2.4 Resource Custom Operations
+  path: 5 Nsmf_EventExposure API/5.3 Resources.md
+  source_words: 8
+  kind: embedded-clause
+- clause: 5.3.3
+  title: '5.3.3 Resource: Individual SMF Notification Subscription'
+  path: 5 Nsmf_EventExposure API/5.3 Resources.md
+  source_words: 1468
+  kind: embedded-clause
+- clause: 5.3.3.1
+  title: 5.3.3.1 Description
+  path: 5 Nsmf_EventExposure API/5.3 Resources.md
+  source_words: 20
+  kind: embedded-clause
+- clause: 5.3.3.2
+  title: 5.3.3.2 Resource definition
+  path: 5 Nsmf_EventExposure API/5.3 Resources.md
+  source_words: 73
+  kind: embedded-clause
+- clause: 5.3.3.3
+  title: 5.3.3.3 Resource Standard Methods
+  path: 5 Nsmf_EventExposure API/5.3 Resources.md
+  source_words: 1359
+  kind: embedded-clause
+- clause: 5.3.3.3.1
+  title: 5.3.3.3.1 GET
+  path: 5 Nsmf_EventExposure API/5.3 Resources.md
+  source_words: 430
+  kind: embedded-clause
+- clause: 5.3.3.3.2
+  title: 5.3.3.3.2 PUT
+  path: 5 Nsmf_EventExposure API/5.3 Resources.md
+  source_words: 491
+  kind: embedded-clause
+- clause: 5.3.3.3.3
+  title: 5.3.3.3.3 DELETE
+  path: 5 Nsmf_EventExposure API/5.3 Resources.md
+  source_words: 431
+  kind: embedded-clause
+- clause: 5.3.3.4
+  title: 5.3.3.4 Resource Custom Operations
+  path: 5 Nsmf_EventExposure API/5.3 Resources.md
+  source_words: 8
+  kind: embedded-clause
+- clause: '5.4'
+  title: 5.4 Custom Operations without associated resources
+  path: 5 Nsmf_EventExposure API/5.4 Custom Operations without associated resources.md
+  source_words: 8
+  kind: source-file
+- clause: '5.5'
+  title: 5.5 Notifications
+  path: 5 Nsmf_EventExposure API/5.5 Notifications.md
+  source_words: 1308
+  kind: source-file
+- clause: 5.5.1
+  title: 5.5.1 General
+  path: 5 Nsmf_EventExposure API/5.5 Notifications.md
+  source_words: 66
+  kind: embedded-clause
+- clause: 5.5.2
+  title: 5.5.2 Event Notification
+  path: 5 Nsmf_EventExposure API/5.5 Notifications.md
+  source_words: 698
+  kind: embedded-clause
+- clause: 5.5.2.1
+  title: 5.5.2.1 Description
+  path: 5 Nsmf_EventExposure API/5.5 Notifications.md
+  source_words: 110
+  kind: embedded-clause
+- clause: 5.5.2.2
+  title: 5.5.2.2 Target URI
+  path: 5 Nsmf_EventExposure API/5.5 Notifications.md
+  source_words: 111
+  kind: embedded-clause
+- clause: 5.5.2.3
+  title: 5.5.2.3 Standard Methods
+  path: 5 Nsmf_EventExposure API/5.5 Notifications.md
+  source_words: 472
+  kind: embedded-clause
+- clause: 5.5.2.3.1
+  title: 5.5.2.3.1 POST
+  path: 5 Nsmf_EventExposure API/5.5 Notifications.md
+  source_words: 466
+  kind: embedded-clause
+- clause: 5.5.3
+  title: 5.5.3 Acknowledgement of event notification
+  path: 5 Nsmf_EventExposure API/5.5 Notifications.md
+  source_words: 541
+  kind: embedded-clause
+- clause: 5.5.3.1
+  title: 5.5.3.1 Description
+  path: 5 Nsmf_EventExposure API/5.5 Notifications.md
+  source_words: 33
+  kind: embedded-clause
+- clause: 5.5.3.2
+  title: 5.5.3.2 Target URI
+  path: 5 Nsmf_EventExposure API/5.5 Notifications.md
+  source_words: 64
+  kind: embedded-clause
+- clause: 5.5.3.3
+  title: 5.5.3.3 Standard Methods
+  path: 5 Nsmf_EventExposure API/5.5 Notifications.md
+  source_words: 437
+  kind: embedded-clause
+- clause: 5.5.3.3.1
+  title: 5.5.3.3.1 POST
+  path: 5 Nsmf_EventExposure API/5.5 Notifications.md
+  source_words: 431
+  kind: embedded-clause
+- clause: '5.6'
+  title: 5.6 Data Model
+  path: 5 Nsmf_EventExposure API/5.6 Data Model/README.md
+  source_words: 6104
+  kind: navigation-directory
+- clause: 5.6.1
+  title: 5.6.1 General
+  path: 5 Nsmf_EventExposure API/5.6 Data Model/5.6.1 General.md
+  source_words: 841
+  kind: source-file
+- clause: 5.6.2
+  title: 5.6.2 Structured data types
+  path: 5 Nsmf_EventExposure API/5.6 Data Model/5.6.2 Structured data types/README.md
+  source_words: 4732
+  kind: navigation-directory
+- clause: 5.6.2.1
+  title: 5.6.2.1 Introduction
+  path: 5 Nsmf_EventExposure API/5.6 Data Model/5.6.2 Structured data types/5.6.2.1 Introduction.md
+  source_words: 16
+  kind: source-file
+- clause: 5.6.2.2
+  title: 5.6.2.2 Type NsmfEventExposure
+  path: 5 Nsmf_EventExposure API/5.6 Data Model/5.6.2 Structured data types/5.6.2.2 Type NsmfEventExposure.md
+  source_words: 1260
+  kind: source-file
+- clause: 5.6.2.3
+  title: 5.6.2.3 Type NsmfEventExposureNotification
+  path: 5 Nsmf_EventExposure API/5.6 Data Model/5.6.2 Structured data types/5.6.2.3 Type NsmfEventExposureNotification.md
+  source_words: 169
+  kind: source-file
+- clause: 5.6.2.4
+  title: 5.6.2.4 Type EventSubscription
+  path: 5 Nsmf_EventExposure API/5.6 Data Model/5.6.2 Structured data types/5.6.2.4 Type EventSubscription.md
+  source_words: 319
+  kind: source-file
+- clause: 5.6.2.5
+  title: 5.6.2.5 Type EventNotification
+  path: 5 Nsmf_EventExposure API/5.6 Data Model/5.6.2 Structured data types/5.6.2.5 Type EventNotification.md
+  source_words: 2298
+  kind: source-file
+- clause: 5.6.2.6
+  title: 5.6.2.6 void.
+  path: 5 Nsmf_EventExposure API/5.6 Data Model/5.6.2 Structured data types/5.6.2.6 void.md
+  source_words: 5
+  kind: source-file
+- clause: 5.6.2.7
+  title: 5.6.2.7 Type AckOfNotify
+  path: 5 Nsmf_EventExposure API/5.6 Data Model/5.6.2 Structured data types/5.6.2.7 Type AckOfNotify.md
+  source_words: 66
+  kind: source-file
+- clause: 5.6.2.8
+  title: 5.6.2.8 Type SmNasFromUe
+  path: 5 Nsmf_EventExposure API/5.6 Data Model/5.6.2 Structured data types/5.6.2.8 Type SmNasFromUe.md
+  source_words: 63
+  kind: source-file
+- clause: 5.6.2.9
+  title: 5.6.2.9 Type SmNasFromSmf
+  path: 5 Nsmf_EventExposure API/5.6 Data Model/5.6.2 Structured data types/5.6.2.9 Type SmNasFromSmf.md
+  source_words: 112
+  kind: source-file
+- clause: 5.6.2.10
+  title: 5.6.2.10 Type TransactionInfo
+  path: 5 Nsmf_EventExposure API/5.6 Data Model/5.6.2 Structured data types/5.6.2.10 Type TransactionInfo.md
+  source_words: 59
+  kind: source-file
+- clause: 5.6.2.11
+  title: 5.6.2.11 Type PduSessionInformation
+  path: 5 Nsmf_EventExposure API/5.6 Data Model/5.6.2 Structured data types/5.6.2.11 Type PduSessionInformation.md
+  source_words: 52
+  kind: source-file
+- clause: 5.6.2.12
+  title: 5.6.2.12 Type PduSessionInfo
+  path: 5 Nsmf_EventExposure API/5.6 Data Model/5.6.2 Structured data types/5.6.2.12 Type PduSessionInfo.md
+  source_words: 72
+  kind: source-file
+- clause: 5.6.2.13
+  title: 5.6.2.13 Type UpfInformation
+  path: 5 Nsmf_EventExposure API/5.6 Data Model/5.6.2 Structured data types/5.6.2.13 Type UpfInformation.md
+  source_words: 88
+  kind: source-file
+- clause: 5.6.2.14
+  title: '5.6.2.14 Type: TrafficCorrelationNotification'
+  path: 5 Nsmf_EventExposure API/5.6 Data Model/5.6.2 Structured data types/5.6.2.14 Type TrafficCorrelationNotification.md
+  source_words: 147
+  kind: source-file
+- clause: 5.6.3
+  title: 5.6.3 Simple data types and enumerations
+  path: 5 Nsmf_EventExposure API/5.6 Data Model/5.6.3 Simple data types and enumerations.md
+  source_words: 527
+  kind: source-file
+- clause: 5.6.3.1
+  title: 5.6.3.1 Introduction
+  path: 5 Nsmf_EventExposure API/5.6 Data Model/5.6.3 Simple data types and enumerations.md
+  source_words: 25
+  kind: embedded-clause
+- clause: 5.6.3.2
+  title: 5.6.3.2 Simple data types
+  path: 5 Nsmf_EventExposure API/5.6 Data Model/5.6.3 Simple data types and enumerations.md
+  source_words: 87
+  kind: embedded-clause
+- clause: 5.6.3.3
+  title: '5.6.3.3 Enumeration: SmfEvent'
+  path: 5 Nsmf_EventExposure API/5.6 Data Model/5.6.3 Simple data types and enumerations.md
+  source_words: 226
+  kind: embedded-clause
+- clause: 5.6.3.4
+  title: '5.6.3.4 Enumeration: NotificationMethod'
+  path: 5 Nsmf_EventExposure API/5.6 Data Model/5.6.3 Simple data types and enumerations.md
+  source_words: 69
+  kind: embedded-clause
+- clause: 5.6.3.5
+  title: 5.6.3.5 void.
+  path: 5 Nsmf_EventExposure API/5.6 Data Model/5.6.3 Simple data types and enumerations.md
+  source_words: 5
+  kind: embedded-clause
+- clause: 5.6.3.6
+  title: '5.6.3.6 Enumeration: AppliedSmccType'
+  path: 5 Nsmf_EventExposure API/5.6 Data Model/5.6.3 Simple data types and enumerations.md
+  source_words: 33
+  kind: embedded-clause
+- clause: 5.6.3.7
+  title: '5.6.3.7 Enumeration: TransactionMetric'
+  path: 5 Nsmf_EventExposure API/5.6 Data Model/5.6.3 Simple data types and enumerations.md
+  source_words: 41
+  kind: embedded-clause
+- clause: 5.6.3.8
+  title: '5.6.3.8 Enumeration: PduSessionStatus'
+  path: 5 Nsmf_EventExposure API/5.6 Data Model/5.6.3 Simple data types and enumerations.md
+  source_words: 33
+  kind: embedded-clause
+- clause: '5.7'
+  title: 5.7 Error handling
+  path: 5 Nsmf_EventExposure API/5.7 Error handling.md
+  source_words: 188
+  kind: source-file
+- clause: 5.7.1
+  title: 5.7.1 General
+  path: 5 Nsmf_EventExposure API/5.7 Error handling.md
+  source_words: 93
+  kind: embedded-clause
+- clause: 5.7.2
+  title: 5.7.2 Protocol Errors
+  path: 5 Nsmf_EventExposure API/5.7 Error handling.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 5.7.3
+  title: 5.7.3 Application Errors
+  path: 5 Nsmf_EventExposure API/5.7 Error handling.md
+  source_words: 76
+  kind: embedded-clause
+- clause: '5.8'
+  title: 5.8 Feature negotiation
+  path: 5 Nsmf_EventExposure API/5.8 Feature negotiation.md
+  source_words: 897
+  kind: source-file
+- clause: '5.9'
+  title: 5.9 Security
+  path: 5 Nsmf_EventExposure API/5.9 Security.md
+  source_words: 167
+  kind: source-file
+- clause: Annex A
+  title: 'Annex A (normative): OpenAPI specification'
+  path: Annex A (normative) OpenAPI specification/README.md
+  source_words: 3572
+  kind: navigation-directory
+- clause: A.1
+  title: A.1 General
+  path: Annex A (normative) OpenAPI specification/README.md
+  source_words: 139
+  kind: source-file
+- clause: A.2
+  title: A.2 Nsmf_EventExposure API
+  path: ../openapi/TS29508_Nsmf_EventExposure.yaml
+  source_words: 3428
+  kind: exact-attachment
+- clause: Annex B
+  title: 'Annex B (informative): Change history'
+  path: Annex B (informative) Change history/README.md
+  source_words: 3536
+  kind: navigation-directory

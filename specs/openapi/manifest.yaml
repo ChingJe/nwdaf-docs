@@ -1,35 +1,37 @@
-purpose: Exact OpenAPI attachments supplied with the included 3GPP Release 18 packages
 files:
+- file: TS29508_Nsmf_EventExposure.yaml
+  sha256: a57c417f14c025ec081bb4befeb25e591d179713b1c43193cd23c56cc614d638
+  title: Nsmf_EventExposure
+  external_docs_description: 3GPP TS 29.508 V18.9.0; 5G System; Session Management Event Exposure Service.
+  external_refs:
+  - TS29122_CommonData.yaml
+  - TS29510_Nnrf_NFManagement.yaml
+  - TS29514_Npcf_PolicyAuthorization.yaml
+  - TS29517_Naf_EventExposure.yaml
+  - TS29518_Namf_EventExposure.yaml
+  - TS29522_TrafficInfluence.yaml
+  - TS29554_Npcf_BDTPolicyControl.yaml
+  - TS29564_Nupf_EventExposure.yaml
+  - TS29571_CommonData.yaml
 - file: TS29510_Nnrf_AccessToken.yaml
   sha256: 47951718c79b77d8cf84bc75e8ff7711447daf13899d8472378d2f0071907f25
-  yaml_valid: true
-  parse_error: null
-  api_version: 1.3.1
-  external_docs_description: 3GPP TS 29.510 V18.8.0; 5G System; Network Function Repository
-    Services; Stage 3
-  external_ref_files:
+  title: NRF OAuth2
+  external_docs_description: 3GPP TS 29.510 V18.8.0; 5G System; Network Function Repository Services; Stage 3
+  external_refs:
   - TS29510_Nnrf_NFManagement.yaml
   - TS29520_Nnwdaf_EventsSubscription.yaml
   - TS29571_CommonData.yaml
-  missing_external_ref_files: []
 - file: TS29510_Nnrf_Bootstrapping.yaml
   sha256: e625b4d9f167921bb994b678cd671c7691085c690ea78b1a3372d06e5714071e
-  yaml_valid: true
-  parse_error: null
-  api_version: 1.2.0
-  external_docs_description: 3GPP TS 29.510 V18.7.0; 5G System; Network Function Repository
-    Services; Stage 3
-  external_ref_files:
+  title: NRF Bootstrapping
+  external_docs_description: 3GPP TS 29.510 V18.7.0; 5G System; Network Function Repository Services; Stage 3
+  external_refs:
   - TS29571_CommonData.yaml
-  missing_external_ref_files: []
 - file: TS29510_Nnrf_NFDiscovery.yaml
   sha256: f1c8fe4e64fa4b9d6d6e24344bfb367c57ab3ae28c656df0ad93aad90eec9b8e
-  yaml_valid: true
-  parse_error: null
-  api_version: 1.3.4
-  external_docs_description: 3GPP TS 29.510 V18.11.0; 5G System; Network Function
-    Repository Services; Stage 3
-  external_ref_files:
+  title: NRF NFDiscovery Service
+  external_docs_description: 3GPP TS 29.510 V18.11.0; 5G System; Network Function Repository Services; Stage 3
+  external_refs:
   - TS29503_Nudm_SDM.yaml
   - TS29510_Nnrf_NFManagement.yaml
   - TS29517_Naf_EventExposure.yaml
@@ -38,23 +40,13 @@ files:
   - TS29520_Nnwdaf_EventsSubscription.yaml
   - TS29564_Nupf_EventExposure.yaml
   - TS29571_CommonData.yaml
-  - TS29572_Nlmf_Location.yaml
-  - TS29573_N32_Handshake.yaml
-  missing_external_ref_files:
-  - TS29503_Nudm_SDM.yaml
-  - TS29517_Naf_EventExposure.yaml
-  - TS29518_Namf_Communication.yaml
-  - TS29564_Nupf_EventExposure.yaml
   - TS29572_Nlmf_Location.yaml
   - TS29573_N32_Handshake.yaml
 - file: TS29510_Nnrf_NFManagement.yaml
   sha256: 3ec58412ebeec791b12309578258911fb8a41cce7dd5cd02b3a7b7d0d0435dda
-  yaml_valid: true
-  parse_error: null
-  api_version: 1.3.4
-  external_docs_description: 3GPP TS 29.510 V18.11.0; 5G System; Network Function
-    Repository Services; Stage 3
-  external_ref_files:
+  title: NRF NFManagement Service
+  external_docs_description: 3GPP TS 29.510 V18.11.0; 5G System; Network Function Repository Services; Stage 3
+  external_refs:
   - TS29122_CommonData.yaml
   - TS29503_Nudm_SDM.yaml
   - TS29503_Nudm_UECM.yaml
@@ -66,23 +58,11 @@ files:
   - TS29571_CommonData.yaml
   - TS29572_Nlmf_Location.yaml
   - TS29573_N32_Handshake.yaml
-  missing_external_ref_files:
-  - TS29122_CommonData.yaml
-  - TS29503_Nudm_SDM.yaml
-  - TS29503_Nudm_UECM.yaml
-  - TS29517_Naf_EventExposure.yaml
-  - TS29518_Namf_Communication.yaml
-  - TS29564_Nupf_EventExposure.yaml
-  - TS29572_Nlmf_Location.yaml
-  - TS29573_N32_Handshake.yaml
 - file: TS29520_Nnwdaf_AnalyticsInfo.yaml
   sha256: 1b8d480a45721f7bfef6db7733c189528480dd33a6e31bcab64abcf6ded2f239
-  yaml_valid: true
-  parse_error: null
-  api_version: 1.3.5
-  external_docs_description: 3GPP TS 29.520 V18.13.0; 5G System; Network Data Analytics
-    Services.
-  external_ref_files:
+  title: Nnwdaf_AnalyticsInfo
+  external_docs_description: 3GPP TS 29.520 V18.13.0; 5G System; Network Data Analytics Services.
+  external_refs:
   - TS29122_CommonData.yaml
   - TS29503_Nudm_SDM.yaml
   - TS29508_Nsmf_EventExposure.yaml
@@ -94,41 +74,22 @@ files:
   - TS29554_Npcf_BDTPolicyControl.yaml
   - TS29571_CommonData.yaml
   - TS29575_Nadrf_DataManagement.yaml
-  missing_external_ref_files:
-  - TS29122_CommonData.yaml
-  - TS29503_Nudm_SDM.yaml
-  - TS29508_Nsmf_EventExposure.yaml
-  - TS29517_Naf_EventExposure.yaml
-  - TS29522_AMPolicyAuthorization.yaml
-  - TS29554_Npcf_BDTPolicyControl.yaml
-  - TS29575_Nadrf_DataManagement.yaml
 - file: TS29520_Nnwdaf_DataManagement.yaml
   sha256: 5922d5d975e71f82b53006f01c285398f8701f02efdb6b53a677d25ff631d499
-  yaml_valid: true
-  parse_error: null
-  api_version: 1.1.5
-  external_docs_description: 3GPP TS 29.520 V18.13.0; 5G System; Network Data Analytics
-    Services.
-  external_ref_files:
+  title: Nnwdaf_DataManagement
+  external_docs_description: 3GPP TS 29.520 V18.13.0; 5G System; Network Data Analytics Services.
+  external_refs:
   - TS29122_CommonData.yaml
   - TS29520_Nnwdaf_EventsSubscription.yaml
   - TS29571_CommonData.yaml
-  - TS29574_Ndccf_DataManagement.yaml
-  - TS29575_Nadrf_DataManagement.yaml
-  - TS29576_Nmfaf_3caDataManagement.yaml
-  missing_external_ref_files:
-  - TS29122_CommonData.yaml
   - TS29574_Ndccf_DataManagement.yaml
   - TS29575_Nadrf_DataManagement.yaml
   - TS29576_Nmfaf_3caDataManagement.yaml
 - file: TS29520_Nnwdaf_EventsSubscription.yaml
   sha256: 6603c6af385accee815a5bbc76152fb52afbed66167ced9f0ac96f1a9ebe7dee
-  yaml_valid: true
-  parse_error: null
-  api_version: 1.3.3
-  external_docs_description: 3GPP TS 29.520 V18.13.0; 5G System; Network Data Analytics
-    Services.
-  external_ref_files:
+  title: Nnwdaf_EventsSubscription
+  external_docs_description: 3GPP TS 29.520 V18.13.0; 5G System; Network Data Analytics Services.
+  external_refs:
   - TS29122_CommonData.yaml
   - TS29122_CpProvisioning.yaml
   - TS29122_PfdManagement.yaml
@@ -144,28 +105,12 @@ files:
   - TS29531_Nnssf_NSSelection.yaml
   - TS29554_Npcf_BDTPolicyControl.yaml
   - TS29571_CommonData.yaml
-  - TS29572_Nlmf_Location.yaml
-  missing_external_ref_files:
-  - TS29122_CommonData.yaml
-  - TS29122_CpProvisioning.yaml
-  - TS29122_PfdManagement.yaml
-  - TS29503_Nudm_SDM.yaml
-  - TS29508_Nsmf_EventExposure.yaml
-  - TS29514_Npcf_PolicyAuthorization.yaml
-  - TS29517_Naf_EventExposure.yaml
-  - TS29522_AMPolicyAuthorization.yaml
-  - TS29523_Npcf_EventExposure.yaml
-  - TS29531_Nnssf_NSSelection.yaml
-  - TS29554_Npcf_BDTPolicyControl.yaml
   - TS29572_Nlmf_Location.yaml
 - file: TS29520_Nnwdaf_MLModelMonitor.yaml
   sha256: 63841486cfe523ac43015516bd1ded54795a81e783cf8954252a69c3679bc47e
-  yaml_valid: true
-  parse_error: null
-  api_version: 1.0.2
-  external_docs_description: 3GPP TS 29.520 V18.13.0; 5G System; Network Data Analytics
-    Services.
-  external_ref_files:
+  title: Nnwdaf_MLModelMonitor
+  external_docs_description: 3GPP TS 29.520 V18.13.0; 5G System; Network Data Analytics Services.
+  external_refs:
   - TS29122_CommonData.yaml
   - TS29520_Nnwdaf_AnalyticsInfo.yaml
   - TS29520_Nnwdaf_EventsSubscription.yaml
@@ -173,18 +118,11 @@ files:
   - TS29523_Npcf_EventExposure.yaml
   - TS29571_CommonData.yaml
   - TS29575_Nadrf_DataManagement.yaml
-  missing_external_ref_files:
-  - TS29122_CommonData.yaml
-  - TS29523_Npcf_EventExposure.yaml
-  - TS29575_Nadrf_DataManagement.yaml
 - file: TS29520_Nnwdaf_MLModelProvision.yaml
   sha256: 49fca42f3b33dc518580f9797d1517cd5fb041d65e8e502d64fcd53ceb4d717b
-  yaml_valid: true
-  parse_error: null
-  api_version: 1.1.4
-  external_docs_description: 3GPP TS 29.520 V18.13.0; 5G System; Network Data Analytics
-    Services.
-  external_ref_files:
+  title: Nnwdaf_MLModelProvision
+  external_docs_description: 3GPP TS 29.520 V18.13.0; 5G System; Network Data Analytics Services.
+  external_refs:
   - TS29122_CommonData.yaml
   - TS29510_Nnrf_NFManagement.yaml
   - TS29520_Nnwdaf_AnalyticsInfo.yaml
@@ -192,22 +130,13 @@ files:
   - TS29523_Npcf_EventExposure.yaml
   - TS29554_Npcf_BDTPolicyControl.yaml
   - TS29571_CommonData.yaml
-  - TS29574_Ndccf_DataManagement.yaml
-  - TS29575_Nadrf_DataManagement.yaml
-  missing_external_ref_files:
-  - TS29122_CommonData.yaml
-  - TS29523_Npcf_EventExposure.yaml
-  - TS29554_Npcf_BDTPolicyControl.yaml
   - TS29574_Ndccf_DataManagement.yaml
   - TS29575_Nadrf_DataManagement.yaml
 - file: TS29520_Nnwdaf_MLModelTraining.yaml
   sha256: b6ccbe8729ac145e501f784b08a0c3d1bcdfd15c44118c9e30da7fd05ed99bfb
-  yaml_valid: true
-  parse_error: null
-  api_version: 1.0.5
-  external_docs_description: 3GPP TS 29.520 V18.14.0; 5G System; Network Data Analytics
-    Services.
-  external_ref_files:
+  title: Nnwdaf_MLModelTraining
+  external_docs_description: 3GPP TS 29.520 V18.14.0; 5G System; Network Data Analytics Services.
+  external_refs:
   - TS29122_CommonData.yaml
   - TS29520_Nnwdaf_EventsSubscription.yaml
   - TS29520_Nnwdaf_MLModelProvision.yaml
@@ -215,104 +144,120 @@ files:
   - TS29554_Npcf_BDTPolicyControl.yaml
   - TS29571_CommonData.yaml
   - TS29574_Ndccf_DataManagement.yaml
-  missing_external_ref_files:
-  - TS29122_CommonData.yaml
-  - TS29523_Npcf_EventExposure.yaml
-  - TS29554_Npcf_BDTPolicyControl.yaml
-  - TS29574_Ndccf_DataManagement.yaml
 - file: TS29520_Nnwdaf_RoamingAnalytics.yaml
   sha256: 620e549e96a6cb623d7cc17ddcb451df7d8e2b48954fdace900e37206c51c88b
-  yaml_valid: true
-  parse_error: null
-  api_version: 1.0.2
-  external_docs_description: 3GPP TS 29.520 V18.13.0; 5G System; Network Data Analytics
-    Services.
-  external_ref_files:
+  title: Nnwdaf_RoamingAnalytics
+  external_docs_description: 3GPP TS 29.520 V18.13.0; 5G System; Network Data Analytics Services.
+  external_refs:
   - TS29520_Nnwdaf_EventsSubscription.yaml
   - TS29523_Npcf_EventExposure.yaml
   - TS29571_CommonData.yaml
-  missing_external_ref_files:
-  - TS29523_Npcf_EventExposure.yaml
 - file: TS29520_Nnwdaf_RoamingData.yaml
   sha256: 8add0a519f601205334e35a0f1d0d846857b23da23fee7b3a9f8045b04de358d
-  yaml_valid: true
-  parse_error: null
-  api_version: 1.0.4
-  external_docs_description: 3GPP TS 29.520 V18.13.0; 5G System; Network Data Analytics
-    Services.
-  external_ref_files:
+  title: Nnwdaf_RoamingData
+  external_docs_description: 3GPP TS 29.520 V18.13.0; 5G System; Network Data Analytics Services.
+  external_refs:
   - TS29122_CommonData.yaml
   - TS29520_Nnwdaf_DataManagement.yaml
   - TS29520_Nnwdaf_EventsSubscription.yaml
   - TS29571_CommonData.yaml
   - TS29574_Ndccf_DataManagement.yaml
   - TS29575_Nadrf_DataManagement.yaml
-  missing_external_ref_files:
-  - TS29122_CommonData.yaml
-  - TS29574_Ndccf_DataManagement.yaml
-  - TS29575_Nadrf_DataManagement.yaml
+- file: TS29564_Nupf_EventExposure.yaml
+  sha256: 489c2e3b3618147569b1ca0c0a1c8acaa5227565285217b1b3867434de3d44af
+  title: UPF Event Exposure Service
+  external_docs_description: 3GPP TS 29.564 V18.6.0; 5G System; User Plane Function Services; Stage 3.
+  external_refs:
+  - TS29512_Npcf_SMPolicyControl.yaml
+  - TS29571_CommonData.yaml
+- file: TS29564_Nupf_GetUEPrivateIPaddrAndIdentifiers.yaml
+  sha256: e22abb5b3c6ef7bfc3c3b9263a16e8a635e788fcd8efb497641b8bb7ab7f898c
+  title: UPF GET UE Private IP address and Identifiers Service
+  external_docs_description: 3GPP TS 29.564 V18.5.0; 5G System; 5G System; User Plane Function Services; Stage 3
+  external_refs:
+  - TS29571_CommonData.yaml
 - file: TS29571_CommonData.yaml
   sha256: 0ddb99782ddf1038bafb50bccd6aaaa074d76cb582dba60bb5ba89bd7f130745
-  yaml_valid: true
-  parse_error: null
-  api_version: 1.5.5
-  external_docs_description: 3GPP TS 29.571 Common Data Types for Service Based Interfaces,
-    version 18.12.0
-  external_ref_files:
+  title: Common Data Types
+  external_docs_description: 3GPP TS 29.571 Common Data Types for Service Based Interfaces, version 18.12.0
+  external_refs:
   - TS29510_Nnrf_AccessToken.yaml
   - TS29510_Nnrf_NFDiscovery.yaml
   - TS29514_Npcf_PolicyAuthorization.yaml
   - TS29571_CommonData.yaml
   - TS29572_Nlmf_Location.yaml
-  missing_external_ref_files:
-  - TS29514_Npcf_PolicyAuthorization.yaml
-  - TS29572_Nlmf_Location.yaml
-all_external_ref_files:
-- TS29122_CommonData.yaml
-- TS29122_CpProvisioning.yaml
-- TS29122_PfdManagement.yaml
-- TS29503_Nudm_SDM.yaml
-- TS29503_Nudm_UECM.yaml
+- file: TS29575_Nadrf_DataManagement.yaml
+  sha256: 1f86235326f0417356a11374bb86cf628af97cb4954f03c9c48af609e764f8d7
+  title: Nadrf_DataManagement
+  external_docs_description: 3GPP TS 29.575 V18.11.0; 5G System; Analytics Data Repository Services; Stage 3.
+  external_refs:
+  - TS29122_CommonData.yaml
+  - TS29503_Nudm_EE.yaml
+  - TS29508_Nsmf_EventExposure.yaml
+  - TS29510_Nnrf_NFManagement.yaml
+  - TS29515_Ngmlc_Location.yaml
+  - TS29517_Naf_EventExposure.yaml
+  - TS29518_Namf_EventExposure.yaml
+  - TS29520_Nnwdaf_EventsSubscription.yaml
+  - TS29536_Nnsacf_SliceEventExposure.yaml
+  - TS29564_Nupf_EventExposure.yaml
+  - TS29571_CommonData.yaml
+  - TS29574_Ndccf_DataManagement.yaml
+  - TS29576_Nmfaf_3caDataManagement.yaml
+  - TS29591_Nnef_EventExposure.yaml
+- file: TS29575_Nadrf_MLModelManagement.yaml
+  sha256: 3d5b794a6801d7adfcdd3c14efdce37fea128c87fe2c2ad5fddec9e68d9ebd10
+  title: Nadrf_MLModelManagement
+  external_docs_description: 3GPP TS 29.575 V18.7.0; 5G System; Analytics Data Repository Services; Stage 3.
+  external_refs:
+  - TS29520_Nnwdaf_MLModelProvision.yaml
+  - TS29571_CommonData.yaml
+- file: manifest.yaml
+  sha256: 1192c6bce0305bd11be68b402f02e63c2ddfdd39164ca75f09ba358dafe8d320
+  title: ''
+  external_docs_description: ''
+  external_refs: []
+present_files:
 - TS29508_Nsmf_EventExposure.yaml
 - TS29510_Nnrf_AccessToken.yaml
+- TS29510_Nnrf_Bootstrapping.yaml
 - TS29510_Nnrf_NFDiscovery.yaml
 - TS29510_Nnrf_NFManagement.yaml
-- TS29514_Npcf_PolicyAuthorization.yaml
-- TS29517_Naf_EventExposure.yaml
-- TS29518_Namf_Communication.yaml
 - TS29520_Nnwdaf_AnalyticsInfo.yaml
 - TS29520_Nnwdaf_DataManagement.yaml
 - TS29520_Nnwdaf_EventsSubscription.yaml
 - TS29520_Nnwdaf_MLModelMonitor.yaml
 - TS29520_Nnwdaf_MLModelProvision.yaml
-- TS29522_AMPolicyAuthorization.yaml
-- TS29523_Npcf_EventExposure.yaml
-- TS29531_Nnssf_NSSelection.yaml
-- TS29554_Npcf_BDTPolicyControl.yaml
+- TS29520_Nnwdaf_MLModelTraining.yaml
+- TS29520_Nnwdaf_RoamingAnalytics.yaml
+- TS29520_Nnwdaf_RoamingData.yaml
 - TS29564_Nupf_EventExposure.yaml
+- TS29564_Nupf_GetUEPrivateIPaddrAndIdentifiers.yaml
 - TS29571_CommonData.yaml
-- TS29572_Nlmf_Location.yaml
-- TS29573_N32_Handshake.yaml
-- TS29574_Ndccf_DataManagement.yaml
 - TS29575_Nadrf_DataManagement.yaml
-- TS29576_Nmfaf_3caDataManagement.yaml
-missing_external_ref_files:
+- TS29575_Nadrf_MLModelManagement.yaml
+- manifest.yaml
+unresolved_external_files:
 - TS29122_CommonData.yaml
 - TS29122_CpProvisioning.yaml
 - TS29122_PfdManagement.yaml
+- TS29503_Nudm_EE.yaml
 - TS29503_Nudm_SDM.yaml
 - TS29503_Nudm_UECM.yaml
-- TS29508_Nsmf_EventExposure.yaml
+- TS29512_Npcf_SMPolicyControl.yaml
 - TS29514_Npcf_PolicyAuthorization.yaml
+- TS29515_Ngmlc_Location.yaml
 - TS29517_Naf_EventExposure.yaml
 - TS29518_Namf_Communication.yaml
+- TS29518_Namf_EventExposure.yaml
 - TS29522_AMPolicyAuthorization.yaml
+- TS29522_TrafficInfluence.yaml
 - TS29523_Npcf_EventExposure.yaml
 - TS29531_Nnssf_NSSelection.yaml
+- TS29536_Nnsacf_SliceEventExposure.yaml
 - TS29554_Npcf_BDTPolicyControl.yaml
-- TS29564_Nupf_EventExposure.yaml
 - TS29572_Nlmf_Location.yaml
 - TS29573_N32_Handshake.yaml
 - TS29574_Ndccf_DataManagement.yaml
-- TS29575_Nadrf_DataManagement.yaml
 - TS29576_Nmfaf_3caDataManagement.yaml
+- TS29591_Nnef_EventExposure.yaml

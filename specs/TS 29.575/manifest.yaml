@@ -1,0 +1,1055 @@
+spec: TS 29.575
+version: 18.11.0
+release: '18'
+source_archive: 29575-ib0(1).zip
+source_document: 29575-ib0.docx
+source_archive_sha256: 8dd2c6efa5761d0f11035b07a1b3001be1a46d8a776e8999bcb8577be5a4ab08
+source_document_sha256: dfbffaac1d4691129031cf34a08ba815f46f2cbb5b646d9694cf88b3383a714a
+max_source_words_per_semantic_file_target: 4200
+clauses:
+- clause: document-information
+  title: Document information
+  path: 00 Document information.md
+  source_words: 259
+  kind: source-file
+- clause: contents
+  title: Contents
+  path: 01 Original contents.md
+  source_words: 1530
+  kind: source-file
+- clause: foreword
+  title: Foreword
+  path: 02 Foreword.md
+  source_words: 492
+  kind: source-file
+- clause: introduction
+  title: Introduction
+  path: Introduction.md
+  source_words: 15
+  kind: source-file
+- clause: '1'
+  title: 1 Scope
+  path: 1 Scope.md
+  source_words: 120
+  kind: source-file
+- clause: '2'
+  title: 2 References
+  path: 2 References.md
+  source_words: 436
+  kind: source-file
+- clause: '3'
+  title: 3 Definitions, symbols and abbreviations
+  path: 3 Definitions, symbols and abbreviations.md
+  source_words: 180
+  kind: source-file
+- clause: '3.1'
+  title: 3.1 Definitions
+  path: 3 Definitions, symbols and abbreviations.md
+  source_words: 50
+  kind: embedded-clause
+- clause: '3.2'
+  title: 3.2 Symbols
+  path: 3 Definitions, symbols and abbreviations.md
+  source_words: 15
+  kind: embedded-clause
+- clause: '3.3'
+  title: 3.3 Abbreviations
+  path: 3 Definitions, symbols and abbreviations.md
+  source_words: 110
+  kind: embedded-clause
+- clause: '4'
+  title: 4 Services offered by the ADRF
+  path: 4 Services offered by the ADRF/README.md
+  source_words: 8149
+  kind: navigation-directory
+- clause: '4.1'
+  title: 4.1 Introduction
+  path: 4 Services offered by the ADRF/4.1 Introduction.md
+  source_words: 265
+  kind: source-file
+- clause: '4.2'
+  title: 4.2 Nadrf_DataManagement Service
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/README.md
+  source_words: 5200
+  kind: navigation-directory
+- clause: 4.2.1
+  title: 4.2.1 Service Description
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.1 Service Description.md
+  source_words: 368
+  kind: source-file
+- clause: 4.2.1.1
+  title: 4.2.1.1 Overview
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.1 Service Description.md
+  source_words: 79
+  kind: embedded-clause
+- clause: 4.2.1.2
+  title: 4.2.1.2 Service Architecture
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.1 Service Description.md
+  source_words: 168
+  kind: embedded-clause
+- clause: 4.2.1.3
+  title: 4.2.1.3 Network Functions
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.1 Service Description.md
+  source_words: 116
+  kind: embedded-clause
+- clause: 4.2.1.3.1
+  title: 4.2.1.3.1 Analytics Data Repository Function (ADRF)
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.1 Service Description.md
+  source_words: 49
+  kind: embedded-clause
+- clause: 4.2.1.3.2
+  title: 4.2.1.3.2 NF Service Consumers
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.1 Service Description.md
+  source_words: 61
+  kind: embedded-clause
+- clause: 4.2.2
+  title: 4.2.2 Service Operations
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/README.md
+  source_words: 4827
+  kind: navigation-directory
+- clause: 4.2.2.1
+  title: 4.2.2.1 Introduction
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/4.2.2.1 Introduction.md
+  source_words: 313
+  kind: source-file
+- clause: 4.2.2.2
+  title: 4.2.2.2 Nadrf_DataManagement_StorageRequest service operation
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/4.2.2.2 Nadrf_DataManagement_StorageRequest
+    service operation.md
+  source_words: 635
+  kind: source-file
+- clause: 4.2.2.2.1
+  title: 4.2.2.2.1 General
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/4.2.2.2 Nadrf_DataManagement_StorageRequest
+    service operation.md
+  source_words: 24
+  kind: embedded-clause
+- clause: 4.2.2.2.2
+  title: 4.2.2.2.2 Request Storage of data or analytics
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/4.2.2.2 Nadrf_DataManagement_StorageRequest
+    service operation.md
+  source_words: 602
+  kind: embedded-clause
+- clause: 4.2.2.3
+  title: 4.2.2.3 Nadrf_DataManagement_StorageSubscriptionRequest service operation
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/4.2.2.3 Nadrf_DataManagement_StorageSubscriptionRequest
+    service operation.md
+  source_words: 729
+  kind: source-file
+- clause: 4.2.2.3.1
+  title: 4.2.2.3.1 General
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/4.2.2.3 Nadrf_DataManagement_StorageSubscriptionRequest
+    service operation.md
+  source_words: 41
+  kind: embedded-clause
+- clause: 4.2.2.3.2
+  title: 4.2.2.3.2 Requesting subscription and storage of data or analytics
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/4.2.2.3 Nadrf_DataManagement_StorageSubscriptionRequest
+    service operation.md
+  source_words: 679
+  kind: embedded-clause
+- clause: 4.2.2.4
+  title: 4.2.2.4 Nadrf_DataManagement_StorageSubscriptionRemoval service operation
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/4.2.2.4 Nadrf_DataManagement_StorageSubscriptionRemoval
+    service operation.md
+  source_words: 335
+  kind: source-file
+- clause: 4.2.2.4.1
+  title: 4.2.2.4.1 General
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/4.2.2.4 Nadrf_DataManagement_StorageSubscriptionRemoval
+    service operation.md
+  source_words: 31
+  kind: embedded-clause
+- clause: 4.2.2.4.2
+  title: 4.2.2.4.2 Requesting removal of subscription of data or analytics
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/4.2.2.4 Nadrf_DataManagement_StorageSubscriptionRemoval
+    service operation.md
+  source_words: 295
+  kind: embedded-clause
+- clause: 4.2.2.5
+  title: 4.2.2.5 Nadrf_DataManagement_RetrievalRequest service operation
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/4.2.2.5 Nadrf_DataManagement_RetrievalRequest
+    service operation.md
+  source_words: 483
+  kind: source-file
+- clause: 4.2.2.5.1
+  title: 4.2.2.5.1 General
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/4.2.2.5 Nadrf_DataManagement_RetrievalRequest
+    service operation.md
+  source_words: 75
+  kind: embedded-clause
+- clause: 4.2.2.5.2
+  title: 4.2.2.5.2 Request and get stored data or analytics from ADRF Data Store
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/4.2.2.5 Nadrf_DataManagement_RetrievalRequest
+    service operation.md
+  source_words: 399
+  kind: embedded-clause
+- clause: 4.2.2.6
+  title: 4.2.2.6 Nadrf_DataManagement_RetrievalSubscribe service operation
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/4.2.2.6 Nadrf_DataManagement_RetrievalSubscribe
+    service operation.md
+  source_words: 464
+  kind: source-file
+- clause: 4.2.2.6.1
+  title: 4.2.2.6.1 General
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/4.2.2.6 Nadrf_DataManagement_RetrievalSubscribe
+    service operation.md
+  source_words: 103
+  kind: embedded-clause
+- clause: 4.2.2.6.2
+  title: 4.2.2.6.2 Requesting retrieval and subscription of data or analytics
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/4.2.2.6 Nadrf_DataManagement_RetrievalSubscribe
+    service operation.md
+  source_words: 352
+  kind: embedded-clause
+- clause: 4.2.2.7
+  title: 4.2.2.7 Nadrf_DataManagement_RetrievalUnsubscribe service operation
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/4.2.2.7 Nadrf_DataManagement_RetrievalUnsubscribe
+    service operation.md
+  source_words: 285
+  kind: source-file
+- clause: 4.2.2.7.1
+  title: 4.2.2.7.1 General
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/4.2.2.7 Nadrf_DataManagement_RetrievalUnsubscribe
+    service operation.md
+  source_words: 28
+  kind: embedded-clause
+- clause: 4.2.2.7.2
+  title: 4.2.2.7.2 Requesting removal of retrieval subscription for data or analytics
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/4.2.2.7 Nadrf_DataManagement_RetrievalUnsubscribe
+    service operation.md
+  source_words: 248
+  kind: embedded-clause
+- clause: 4.2.2.8
+  title: 4.2.2.8 Nadrf_DataManagement_RetrievalNotify service operation
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/4.2.2.8 Nadrf_DataManagement_RetrievalNotify
+    service operation.md
+  source_words: 1018
+  kind: source-file
+- clause: 4.2.2.8.1
+  title: 4.2.2.8.1 General
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/4.2.2.8 Nadrf_DataManagement_RetrievalNotify
+    service operation.md
+  source_words: 40
+  kind: embedded-clause
+- clause: 4.2.2.8.2
+  title: 4.2.2.8.2 Notification about subscribed data or analytics
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/4.2.2.8 Nadrf_DataManagement_RetrievalNotify
+    service operation.md
+  source_words: 548
+  kind: embedded-clause
+- clause: 4.2.2.8.3
+  title: 4.2.2.8.3 Notification about data or analytics that are about to be deleted
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/4.2.2.8 Nadrf_DataManagement_RetrievalNotify
+    service operation.md
+  source_words: 421
+  kind: embedded-clause
+- clause: 4.2.2.9
+  title: 4.2.2.9 Nadrf_DataManagement_Delete service operation
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/4.2.2.9 Nadrf_DataManagement_Delete
+    service operation.md
+  source_words: 560
+  kind: source-file
+- clause: 4.2.2.9.1
+  title: 4.2.2.9.1 General
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/4.2.2.9 Nadrf_DataManagement_Delete
+    service operation.md
+  source_words: 25
+  kind: embedded-clause
+- clause: 4.2.2.9.2
+  title: 4.2.2.9.2 Requesting removal of stored data or analytics
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/4.2.2.9 Nadrf_DataManagement_Delete
+    service operation.md
+  source_words: 239
+  kind: embedded-clause
+- clause: 4.2.2.9.3
+  title: 4.2.2.9.3 Requesting removal of stored data or analytics using data or analytics specification
+  path: 4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/4.2.2.9 Nadrf_DataManagement_Delete
+    service operation.md
+  source_words: 287
+  kind: embedded-clause
+- clause: '4.3'
+  title: 4.3 Nadrf\_ MLModelManagement Service
+  path: 4 Services offered by the ADRF/4.3 Nadrf _ MLModelManagement Service.md
+  source_words: 2678
+  kind: source-file
+- clause: 4.3.1
+  title: 4.3.1 Service Description
+  path: 4 Services offered by the ADRF/4.3 Nadrf _ MLModelManagement Service.md
+  source_words: 358
+  kind: embedded-clause
+- clause: 4.3.1.1
+  title: 4.3.1.1 Overview
+  path: 4 Services offered by the ADRF/4.3 Nadrf _ MLModelManagement Service.md
+  source_words: 116
+  kind: embedded-clause
+- clause: 4.3.1.2
+  title: 4.3.1.2 Service Architecture
+  path: 4 Services offered by the ADRF/4.3 Nadrf _ MLModelManagement Service.md
+  source_words: 158
+  kind: embedded-clause
+- clause: 4.3.1.3
+  title: 4.3.1.3 Network Functions
+  path: 4 Services offered by the ADRF/4.3 Nadrf _ MLModelManagement Service.md
+  source_words: 79
+  kind: embedded-clause
+- clause: 4.3.1.3.1
+  title: 4.3.1.3.1 Analytics Data Repository Function (ADRF)
+  path: 4 Services offered by the ADRF/4.3 Nadrf _ MLModelManagement Service.md
+  source_words: 35
+  kind: embedded-clause
+- clause: 4.3.1.3.2
+  title: 4.3.1.3.2 NF Service Consumers
+  path: 4 Services offered by the ADRF/4.3 Nadrf _ MLModelManagement Service.md
+  source_words: 38
+  kind: embedded-clause
+- clause: 4.3.2
+  title: 4.3.2 Service Operations
+  path: 4 Services offered by the ADRF/4.3 Nadrf _ MLModelManagement Service.md
+  source_words: 2315
+  kind: embedded-clause
+- clause: 4.3.2.1
+  title: 4.3.2.1 Introduction
+  path: 4 Services offered by the ADRF/4.3 Nadrf _ MLModelManagement Service.md
+  source_words: 96
+  kind: embedded-clause
+- clause: 4.3.2.2
+  title: 4.3.2.2 Nadrf\_MLModelManagement_StorageRequest service operation
+  path: 4 Services offered by the ADRF/4.3 Nadrf _ MLModelManagement Service.md
+  source_words: 979
+  kind: embedded-clause
+- clause: 4.3.2.2.1
+  title: 4.3.2.2.1 General
+  path: 4 Services offered by the ADRF/4.3 Nadrf _ MLModelManagement Service.md
+  source_words: 24
+  kind: embedded-clause
+- clause: 4.3.2.2.2
+  title: 4.3.2.2.2 Request Storage of ML model(s)
+  path: 4 Services offered by the ADRF/4.3 Nadrf _ MLModelManagement Service.md
+  source_words: 642
+  kind: embedded-clause
+- clause: 4.3.2.2.3
+  title: 4.3.2.2.3 Update Storage of ML model(s)
+  path: 4 Services offered by the ADRF/4.3 Nadrf _ MLModelManagement Service.md
+  source_words: 304
+  kind: embedded-clause
+- clause: 4.3.2.3
+  title: 4.3.2.3 Nadrf_MLModelManagement_RetrievalRequest service operation
+  path: 4 Services offered by the ADRF/4.3 Nadrf _ MLModelManagement Service.md
+  source_words: 383
+  kind: embedded-clause
+- clause: 4.3.2.3.1
+  title: 4.3.2.3.1 General
+  path: 4 Services offered by the ADRF/4.3 Nadrf _ MLModelManagement Service.md
+  source_words: 25
+  kind: embedded-clause
+- clause: 4.3.2.3.2
+  title: 4.3.2.3.2 Request and get stored ML model(s) from ADRF ML Model Store
+  path: 4 Services offered by the ADRF/4.3 Nadrf _ MLModelManagement Service.md
+  source_words: 349
+  kind: embedded-clause
+- clause: 4.3.2.4
+  title: 4.3.2.4 Nadrf_MLModelManagement_Delete service operation
+  path: 4 Services offered by the ADRF/4.3 Nadrf _ MLModelManagement Service.md
+  source_words: 852
+  kind: embedded-clause
+- clause: 4.3.2.4.1
+  title: 4.3.2.4.1 General
+  path: 4 Services offered by the ADRF/4.3 Nadrf _ MLModelManagement Service.md
+  source_words: 25
+  kind: embedded-clause
+- clause: 4.3.2.4.2
+  title: 4.3.2.4.2 Requesting removal of stored ML model(s)
+  path: 4 Services offered by the ADRF/4.3 Nadrf _ MLModelManagement Service.md
+  source_words: 429
+  kind: embedded-clause
+- clause: 4.3.2.4.3
+  title: 4.3.2.4.3 Requesting removal of stored ML model(s) using unique ML model identifier
+  path: 4 Services offered by the ADRF/4.3 Nadrf _ MLModelManagement Service.md
+  source_words: 389
+  kind: embedded-clause
+- clause: '5'
+  title: 5 API Definitions
+  path: 5 API Definitions/README.md
+  source_words: 12912
+  kind: navigation-directory
+- clause: '5.1'
+  title: 5.1 Nadrf_DataManagement Service API
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/README.md
+  source_words: 8529
+  kind: navigation-directory
+- clause: 5.1.1
+  title: 5.1.1 Introduction
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.1 Introduction.md
+  source_words: 99
+  kind: source-file
+- clause: 5.1.2
+  title: 5.1.2 Usage of HTTP
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.2 Usage of HTTP.md
+  source_words: 242
+  kind: source-file
+- clause: 5.1.2.1
+  title: 5.1.2.1 General
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.2 Usage of HTTP.md
+  source_words: 62
+  kind: embedded-clause
+- clause: 5.1.2.2
+  title: 5.1.2.2 HTTP standard headers
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.2 Usage of HTTP.md
+  source_words: 122
+  kind: embedded-clause
+- clause: 5.1.2.2.1
+  title: 5.1.2.2.1 General
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.2 Usage of HTTP.md
+  source_words: 24
+  kind: embedded-clause
+- clause: 5.1.2.2.2
+  title: 5.1.2.2.2 Content type
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.2 Usage of HTTP.md
+  source_words: 91
+  kind: embedded-clause
+- clause: 5.1.2.3
+  title: 5.1.2.3 HTTP custom headers
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.2 Usage of HTTP.md
+  source_words: 52
+  kind: embedded-clause
+- clause: 5.1.3
+  title: 5.1.3 Resources
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.3 Resources.md
+  source_words: 2578
+  kind: source-file
+- clause: 5.1.3.1
+  title: 5.1.3.1 Overview
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.3 Resources.md
+  source_words: 168
+  kind: embedded-clause
+- clause: 5.1.3.2
+  title: '5.1.3.2 Resource: ADRF Data Store Records'
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.3 Resources.md
+  source_words: 907
+  kind: embedded-clause
+- clause: 5.1.3.2.1
+  title: 5.1.3.2.1 Description
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.3 Resources.md
+  source_words: 56
+  kind: embedded-clause
+- clause: 5.1.3.2.2
+  title: 5.1.3.2.2 Resource Definition
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.3 Resources.md
+  source_words: 62
+  kind: embedded-clause
+- clause: 5.1.3.2.3
+  title: 5.1.3.2.3 Resource Standard Methods
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.3 Resources.md
+  source_words: 771
+  kind: embedded-clause
+- clause: 5.1.3.2.3.1
+  title: 5.1.3.2.3.1 POST
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.3 Resources.md
+  source_words: 242
+  kind: embedded-clause
+- clause: 5.1.3.2.3.2
+  title: 5.1.3.2.3.2 GET
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.3 Resources.md
+  source_words: 521
+  kind: embedded-clause
+- clause: 5.1.3.2.4
+  title: 5.1.3.2.4 Resource Custom Operations
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.3 Resources.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.1.3.3
+  title: '5.1.3.3 Resource: Individual ADRF Data Store Record'
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.3 Resources.md
+  source_words: 556
+  kind: embedded-clause
+- clause: 5.1.3.3.1
+  title: 5.1.3.3.1 Description
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.3 Resources.md
+  source_words: 25
+  kind: embedded-clause
+- clause: 5.1.3.3.2
+  title: 5.1.3.3.2 Resource Definition
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.3 Resources.md
+  source_words: 71
+  kind: embedded-clause
+- clause: 5.1.3.3.3
+  title: 5.1.3.3.3 Resource Standard Methods
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.3 Resources.md
+  source_words: 435
+  kind: embedded-clause
+- clause: 5.1.3.3.3.1
+  title: 5.1.3.3.3.1 DELETE
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.3 Resources.md
+  source_words: 427
+  kind: embedded-clause
+- clause: 5.1.3.3.4
+  title: 5.1.3.3.4 Resource Custom Operations
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.3 Resources.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 5.1.3.4
+  title: '5.1.3.4 Resource: ADRF Data Retrieval Subscriptions'
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.3 Resources.md
+  source_words: 378
+  kind: embedded-clause
+- clause: 5.1.3.4.1
+  title: 5.1.3.4.1 Description
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.3 Resources.md
+  source_words: 43
+  kind: embedded-clause
+- clause: 5.1.3.4.2
+  title: 5.1.3.4.2 Resource Definition
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.3 Resources.md
+  source_words: 62
+  kind: embedded-clause
+- clause: 5.1.3.4.3
+  title: 5.1.3.4.3 Resource Standard Methods
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.3 Resources.md
+  source_words: 249
+  kind: embedded-clause
+- clause: 5.1.3.4.3.1
+  title: 5.1.3.4.3.1 POST
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.3 Resources.md
+  source_words: 241
+  kind: embedded-clause
+- clause: 5.1.3.4.4
+  title: 5.1.3.4.4 Resource Custom Operations
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.3 Resources.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 5.1.3.5
+  title: '5.1.3.5 Resource: Individual ADRF Data Retrieval Subscription'
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.3 Resources.md
+  source_words: 565
+  kind: embedded-clause
+- clause: 5.1.3.5.1
+  title: 5.1.3.5.1 Description
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.3 Resources.md
+  source_words: 43
+  kind: embedded-clause
+- clause: 5.1.3.5.2
+  title: 5.1.3.5.2 Resource Definition
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.3 Resources.md
+  source_words: 62
+  kind: embedded-clause
+- clause: 5.1.3.5.3
+  title: 5.1.3.5.3 Resource Standard Methods
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.3 Resources.md
+  source_words: 435
+  kind: embedded-clause
+- clause: 5.1.3.5.3.1
+  title: 5.1.3.5.3.1 DELETE
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.3 Resources.md
+  source_words: 427
+  kind: embedded-clause
+- clause: 5.1.3.5.4
+  title: 5.1.3.5.4 Resource Custom Operations
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.3 Resources.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 5.1.4
+  title: 5.1.4 Custom Operations without associated resources
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.4 Custom Operations without associated resources.md
+  source_words: 1441
+  kind: source-file
+- clause: 5.1.4.1
+  title: 5.1.4.1 Overview
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.4 Custom Operations without associated resources.md
+  source_words: 140
+  kind: embedded-clause
+- clause: 5.1.4.2
+  title: '5.1.4.2 Operation: request-storage-sub'
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.4 Custom Operations without associated resources.md
+  source_words: 434
+  kind: embedded-clause
+- clause: 5.1.4.2.1
+  title: 5.1.4.2.1 Description
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.4 Custom Operations without associated resources.md
+  source_words: 38
+  kind: embedded-clause
+- clause: 5.1.4.2.2
+  title: 5.1.4.2.2 Operation Definition
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.4 Custom Operations without associated resources.md
+  source_words: 390
+  kind: embedded-clause
+- clause: 5.1.4.3
+  title: '5.1.4.3 Operation: request-storage-sub-removal'
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.4 Custom Operations without associated resources.md
+  source_words: 433
+  kind: embedded-clause
+- clause: 5.1.4.3.1
+  title: 5.1.4.3.1 Description
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.4 Custom Operations without associated resources.md
+  source_words: 40
+  kind: embedded-clause
+- clause: 5.1.4.3.2
+  title: 5.1.4.3.2 Operation Definition
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.4 Custom Operations without associated resources.md
+  source_words: 387
+  kind: embedded-clause
+- clause: 5.1.4.4
+  title: '5.1.4.4 Operation: remove-stored-data-analytics'
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.4 Custom Operations without associated resources.md
+  source_words: 426
+  kind: embedded-clause
+- clause: 5.1.4.4.1
+  title: 5.1.4.4.1 Description
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.4 Custom Operations without associated resources.md
+  source_words: 32
+  kind: embedded-clause
+- clause: 5.1.4.4.2
+  title: 5.1.4.4.2 Operation Definition
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.4 Custom Operations without associated resources.md
+  source_words: 388
+  kind: embedded-clause
+- clause: 5.1.5
+  title: 5.1.5 Notifications
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.5 Notifications.md
+  source_words: 1047
+  kind: source-file
+- clause: 5.1.5.1
+  title: 5.1.5.1 General
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.5 Notifications.md
+  source_words: 74
+  kind: embedded-clause
+- clause: 5.1.5.2
+  title: 5.1.5.2 Retrieval Notification
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.5 Notifications.md
+  source_words: 479
+  kind: embedded-clause
+- clause: 5.1.5.2.1
+  title: 5.1.5.2.1 Description
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.5 Notifications.md
+  source_words: 35
+  kind: embedded-clause
+- clause: 5.1.5.2.2
+  title: 5.1.5.2.2 Target URI
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.5 Notifications.md
+  source_words: 47
+  kind: embedded-clause
+- clause: 5.1.5.2.3
+  title: 5.1.5.2.3 Standard Methods
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.5 Notifications.md
+  source_words: 391
+  kind: embedded-clause
+- clause: 5.1.5.2.3.1
+  title: 5.1.5.2.3.1 POST
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.5 Notifications.md
+  source_words: 384
+  kind: embedded-clause
+- clause: 5.1.5.3
+  title: 5.1.5.3 ADRF Alert Notification
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.5 Notifications.md
+  source_words: 490
+  kind: embedded-clause
+- clause: 5.1.5.3.1
+  title: 5.1.5.3.1 Description
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.5 Notifications.md
+  source_words: 33
+  kind: embedded-clause
+- clause: 5.1.5.3.2
+  title: 5.1.5.3.2 Target URI
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.5 Notifications.md
+  source_words: 47
+  kind: embedded-clause
+- clause: 5.1.5.3.3
+  title: 5.1.5.3.3 Standard Methods
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.5 Notifications.md
+  source_words: 403
+  kind: embedded-clause
+- clause: 5.1.5.3.3.1
+  title: 5.1.5.3.3.1 POST
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.5 Notifications.md
+  source_words: 396
+  kind: embedded-clause
+- clause: 5.1.6
+  title: 5.1.6 Data Model
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.6 Data Model.md
+  source_words: 2602
+  kind: source-file
+- clause: 5.1.6.1
+  title: 5.1.6.1 General
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.6 Data Model.md
+  source_words: 677
+  kind: embedded-clause
+- clause: 5.1.6.2
+  title: 5.1.6.2 Structured data types
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.6 Data Model.md
+  source_words: 1894
+  kind: embedded-clause
+- clause: 5.1.6.2.1
+  title: 5.1.6.2.1 Introduction
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.6 Data Model.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.1.6.2.2
+  title: '5.1.6.2.2 Type: NadrfDataStoreRecord'
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.6 Data Model.md
+  source_words: 287
+  kind: embedded-clause
+- clause: 5.1.6.2.3
+  title: '5.1.6.2.3 Type: NadrfDataStoreSubscription'
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.6 Data Model.md
+  source_words: 255
+  kind: embedded-clause
+- clause: 5.1.6.2.4
+  title: '5.1.6.2.4 Type: NadrfDataRetrievalSubscription'
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.6 Data Model.md
+  source_words: 233
+  kind: embedded-clause
+- clause: 5.1.6.2.5
+  title: '5.1.6.2.5 Type: NadrfDataRetrievalNotification'
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.6 Data Model.md
+  source_words: 204
+  kind: embedded-clause
+- clause: 5.1.6.2.6
+  title: '5.1.6.2.6 Type: NadrfDataStoreSubscriptionRef'
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.6 Data Model.md
+  source_words: 101
+  kind: embedded-clause
+- clause: 5.1.6.2.7
+  title: '5.1.6.2.7 Type: NadrfStoredDataSpec'
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.6 Data Model.md
+  source_words: 94
+  kind: embedded-clause
+- clause: 5.1.6.2.8
+  title: '5.1.6.2.8 Type: DataSubscription'
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.6 Data Model.md
+  source_words: 135
+  kind: embedded-clause
+- clause: 5.1.6.2.9
+  title: '5.1.6.2.9 Type: DataNotification'
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.6 Data Model.md
+  source_words: 293
+  kind: embedded-clause
+- clause: 5.1.6.2.10
+  title: '5.1.6.2.10 Type: StorageHandlingInfo'
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.6 Data Model.md
+  source_words: 90
+  kind: embedded-clause
+- clause: 5.1.6.2.11
+  title: '5.1.6.2.11 Type: NadrfAlertNotification'
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.6 Data Model.md
+  source_words: 58
+  kind: embedded-clause
+- clause: 5.1.6.2.12
+  title: '5.1.6.2.12 Type: NadrfAlertNotificationResponse'
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.6 Data Model.md
+  source_words: 69
+  kind: embedded-clause
+- clause: 5.1.6.2.13
+  title: '5.1.6.2.13 Type: DataSetTag'
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.6 Data Model.md
+  source_words: 51
+  kind: embedded-clause
+- clause: 5.1.6.3
+  title: 5.1.6.3 Simple data types and enumerations
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.6 Data Model.md
+  source_words: 10
+  kind: embedded-clause
+- clause: 5.1.6.4
+  title: 5.1.6.4 Data types describing alternative data types or combinations of data types
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.6 Data Model.md
+  source_words: 16
+  kind: embedded-clause
+- clause: 5.1.7
+  title: 5.1.7 Error Handling
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.7 Error Handling.md
+  source_words: 151
+  kind: source-file
+- clause: 5.1.7.1
+  title: 5.1.7.1 General
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.7 Error Handling.md
+  source_words: 94
+  kind: embedded-clause
+- clause: 5.1.7.2
+  title: 5.1.7.2 Protocol Errors
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.7 Error Handling.md
+  source_words: 16
+  kind: embedded-clause
+- clause: 5.1.7.3
+  title: 5.1.7.3 Application Errors
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.7 Error Handling.md
+  source_words: 36
+  kind: embedded-clause
+- clause: 5.1.8
+  title: 5.1.8 Feature negotiation
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.8 Feature negotiation.md
+  source_words: 87
+  kind: source-file
+- clause: 5.1.9
+  title: 5.1.9 Security
+  path: 5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.9 Security.md
+  source_words: 276
+  kind: source-file
+- clause: '5.2'
+  title: 5.2 Nadrf_MLModelManagement Service API
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/README.md
+  source_words: 4380
+  kind: navigation-directory
+- clause: 5.2.1
+  title: 5.2.1 Introduction
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.1 Introduction.md
+  source_words: 99
+  kind: source-file
+- clause: 5.2.2
+  title: 5.2.2 Usage of HTTP
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.2 Usage of HTTP.md
+  source_words: 242
+  kind: source-file
+- clause: 5.2.2.1
+  title: 5.2.2.1 General
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.2 Usage of HTTP.md
+  source_words: 62
+  kind: embedded-clause
+- clause: 5.2.2.2
+  title: 5.2.2.2 HTTP standard headers
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.2 Usage of HTTP.md
+  source_words: 122
+  kind: embedded-clause
+- clause: 5.2.2.2.1
+  title: 5.2.2.2.1 General
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.2 Usage of HTTP.md
+  source_words: 24
+  kind: embedded-clause
+- clause: 5.2.2.2.2
+  title: 5.2.2.2.2 Content type
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.2 Usage of HTTP.md
+  source_words: 91
+  kind: embedded-clause
+- clause: 5.2.2.3
+  title: 5.2.2.3 HTTP custom headers
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.2 Usage of HTTP.md
+  source_words: 52
+  kind: embedded-clause
+- clause: 5.2.3
+  title: 5.2.3 Resources
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.3 Resources.md
+  source_words: 2011
+  kind: source-file
+- clause: 5.2.3.1
+  title: 5.2.3.1 Overview
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.3 Resources.md
+  source_words: 153
+  kind: embedded-clause
+- clause: 5.2.3.2
+  title: '5.2.3.2 Resource: ADRF ML Model Store Records'
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.3 Resources.md
+  source_words: 927
+  kind: embedded-clause
+- clause: 5.2.3.2.1
+  title: 5.2.3.2.1 Description
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.3 Resources.md
+  source_words: 60
+  kind: embedded-clause
+- clause: 5.2.3.2.2
+  title: 5.2.3.2.2 Resource Definition
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.3 Resources.md
+  source_words: 62
+  kind: embedded-clause
+- clause: 5.2.3.2.3
+  title: 5.2.3.2.3 Resource Standard Methods
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.3 Resources.md
+  source_words: 786
+  kind: embedded-clause
+- clause: 5.2.3.2.3.1
+  title: 5.2.3.2.3.1 POST
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.3 Resources.md
+  source_words: 272
+  kind: embedded-clause
+- clause: 5.2.3.2.3.2
+  title: 5.2.3.2.3.2 GET
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.3 Resources.md
+  source_words: 506
+  kind: embedded-clause
+- clause: 5.2.3.2.4
+  title: 5.2.3.2.4 Resource Custom Operations
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.3 Resources.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.2.3.3
+  title: '5.2.3.3 Resource: Individual ADRF ML Model Store Record'
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.3 Resources.md
+  source_words: 927
+  kind: embedded-clause
+- clause: 5.2.3.3.1
+  title: 5.2.3.3.1 Description
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.3 Resources.md
+  source_words: 26
+  kind: embedded-clause
+- clause: 5.2.3.3.2
+  title: 5.2.3.3.2 Resource Definition
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.3 Resources.md
+  source_words: 71
+  kind: embedded-clause
+- clause: 5.2.3.3.3
+  title: 5.2.3.3.3 Resource Standard Methods
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.3 Resources.md
+  source_words: 804
+  kind: embedded-clause
+- clause: 5.2.3.3.3.1
+  title: 5.2.3.3.3.1 DELETE
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.3 Resources.md
+  source_words: 491
+  kind: embedded-clause
+- clause: 5.2.3.3.3.2
+  title: 5.2.3.3.3.2 PUT
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.3 Resources.md
+  source_words: 305
+  kind: embedded-clause
+- clause: 5.2.3.3.4
+  title: 5.2.3.3.4 Resource Custom Operations
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.3 Resources.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 5.2.4
+  title: 5.2.4 Custom Operations without associated resources
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.4 Custom Operations without associated resources.md
+  source_words: 595
+  kind: source-file
+- clause: 5.2.4.1
+  title: 5.2.4.1 Overview
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.4 Custom Operations without associated resources.md
+  source_words: 98
+  kind: embedded-clause
+- clause: 5.2.4.4
+  title: '5.2.4.4 Operation: remove-stored-mlmodel'
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.4 Custom Operations without associated resources.md
+  source_words: 489
+  kind: embedded-clause
+- clause: 5.2.4.4.1
+  title: 5.2.4.4.1 Description
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.4 Custom Operations without associated resources.md
+  source_words: 32
+  kind: embedded-clause
+- clause: 5.2.4.4.2
+  title: 5.2.4.4.2 Operation Definition
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.4 Custom Operations without associated resources.md
+  source_words: 451
+  kind: embedded-clause
+- clause: 5.2.5
+  title: 5.2.5 Notifications
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.5 Notifications.md
+  source_words: 11
+  kind: source-file
+- clause: 5.2.6
+  title: 5.2.6 Data Model
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.6 Data Model.md
+  source_words: 924
+  kind: source-file
+- clause: 5.2.6.1
+  title: 5.2.6.1 General
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.6 Data Model.md
+  source_words: 299
+  kind: embedded-clause
+- clause: 5.2.6.2
+  title: 5.2.6.2 Structured data types
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.6 Data Model.md
+  source_words: 466
+  kind: embedded-clause
+- clause: 5.2.6.2.1
+  title: 5.2.6.2.1 Introduction
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.6 Data Model.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.2.6.2.2
+  title: '5.2.6.2.2 Type: NadrfMLModelStoreRecord'
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.6 Data Model.md
+  source_words: 173
+  kind: embedded-clause
+- clause: 5.2.6.2.3
+  title: '5.2.6.2.3 Type: MLModelInfo'
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.6 Data Model.md
+  source_words: 80
+  kind: embedded-clause
+- clause: 5.2.6.2.4
+  title: '5.2.6.2.4 Type: MLModel'
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.6 Data Model.md
+  source_words: 47
+  kind: embedded-clause
+- clause: 5.2.6.2.5
+  title: '5.2.6.2.5 Type: MLModelDelResult'
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.6 Data Model.md
+  source_words: 44
+  kind: embedded-clause
+- clause: 5.2.6.2.6
+  title: '5.2.6.2.6 Type: AllowedConsumer'
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.6 Data Model.md
+  source_words: 54
+  kind: embedded-clause
+- clause: 5.2.6.2.7
+  title: '5.2.6.2.7 Type: ModelStoreResult'
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.6 Data Model.md
+  source_words: 44
+  kind: embedded-clause
+- clause: 5.2.6.3
+  title: 5.2.6.3 Simple data types and enumerations
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.6 Data Model.md
+  source_words: 138
+  kind: embedded-clause
+- clause: 5.2.6.3.2
+  title: '5.2.6.3.2 Enumeration: StoreResult'
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.6 Data Model.md
+  source_words: 66
+  kind: embedded-clause
+- clause: 5.2.6.4
+  title: 5.2.6.4 Data types describing alternative data types or combinations of data types
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.6 Data Model.md
+  source_words: 16
+  kind: embedded-clause
+- clause: 5.2.7
+  title: 5.2.7 Error Handling
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.7 Error Handling.md
+  source_words: 274
+  kind: source-file
+- clause: 5.2.7.1
+  title: 5.2.7.1 General
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.7 Error Handling.md
+  source_words: 94
+  kind: embedded-clause
+- clause: 5.2.7.2
+  title: 5.2.7.2 Protocol Errors
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.7 Error Handling.md
+  source_words: 16
+  kind: embedded-clause
+- clause: 5.2.7.3
+  title: 5.2.7.3 Application Errors
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.7 Error Handling.md
+  source_words: 159
+  kind: embedded-clause
+- clause: 5.2.8
+  title: 5.2.8 Feature negotiation
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.8 Feature negotiation.md
+  source_words: 50
+  kind: source-file
+- clause: 5.2.9
+  title: 5.2.9 Security
+  path: 5 API Definitions/5.2 Nadrf_MLModelManagement Service API/5.2.9 Security.md
+  source_words: 168
+  kind: source-file
+- clause: Annex A
+  title: 'Annex A (normative): OpenAPI specification'
+  path: Annex A (normative) OpenAPI specification/README.md
+  source_words: 4740
+  kind: navigation-directory
+- clause: A.1
+  title: A.1 General
+  path: Annex A (normative) OpenAPI specification/README.md
+  source_words: 139
+  kind: source-file
+- clause: A.2
+  title: A.2 Nadrf_DataManagement API
+  path: ../openapi/TS29575_Nadrf_DataManagement.yaml
+  source_words: 3036
+  kind: exact-attachment
+- clause: A.3
+  title: A.3 Nadrf_MLModelManagement API
+  path: ../openapi/TS29575_Nadrf_MLModelManagement.yaml
+  source_words: 1560
+  kind: exact-attachment
+- clause: Annex B
+  title: 'Annex B (informative): Change history'
+  path: Annex B (informative) Change history/README.md
+  source_words: 1436
+  kind: navigation-directory

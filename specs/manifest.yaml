@@ -1,35 +1,95 @@
-corpus: NWDAF and NRF implementation-related 3GPP Release 18 specifications
+release: '18'
 specifications:
-- spec: TS 23.288
+- id: TS-23.288
+  spec: TS 23.288
   version: 18.13.0
   scope: full
-  path: TS 23.288/README.md
+  purpose: NWDAF architecture, analytics, ML and data-repository procedures
+  index: TS 23.288/README.md
   manifest: TS 23.288/manifest.yaml
-- spec: TS 29.520
-  version: 18.14.0
-  scope: full
-  path: TS 29.520/README.md
-  manifest: TS 29.520/manifest.yaml
-- spec: TS 23.502
-  version: 18.14.0
-  scope: selected NRF-related clauses
-  path: TS 23.502/README.md
-  manifest: TS 23.502/manifest.yaml
-- spec: TS 29.510
-  version: 18.11.0
-  scope: full
-  path: TS 29.510/README.md
-  manifest: TS 29.510/manifest.yaml
-- spec: TS 29.571
+  source_archive: 23288-id0.zip
+  source_archive_sha256: 7116a1f4123dcf949818ab56feb6b242eda8819877346ab045654e1d0d8c36aa
+- id: TS-23.501
+  spec: TS 23.501
   version: 18.12.0
   scope: full
-  path: TS 29.571/README.md
-  manifest: TS 29.571/manifest.yaml
-- spec: TS 29.500
+  purpose: 5GS architecture, NF roles, selection and storage architecture
+  index: TS 23.501/README.md
+  manifest: TS 23.501/manifest.yaml
+  source_archive: 23501-ic0.zip
+  source_archive_sha256: 800fb58a2a3a8c3eeac7084497de566fc730808923d8eea61b84d2555360debe
+- id: TS-23.502
+  spec: TS 23.502
+  version: 18.14.0
+  scope: full
+  purpose: 5GS Stage 2 procedures, including full registration, session, exposure and policy flows
+  index: TS 23.502/README.md
+  manifest: TS 23.502/manifest.yaml
+  source_archive: 23502-ie0.zip
+  source_archive_sha256: 0f24045c49ddf710fb91e51ec74d070cfd13d1e9bafc07809d7e87eae6a61ce8
+- id: TS-29.500
+  spec: TS 29.500
   version: 18.10.0
   scope: full
-  path: TS 29.500/README.md
+  purpose: Common SBA HTTP behaviour, headers, errors and routing
+  index: TS 29.500/README.md
   manifest: TS 29.500/manifest.yaml
+  source_archive: 29500-ia0.zip
+  source_archive_sha256: 3e0cbb6bc6ceec4dabb597410fb4b55ba03ae82e9b242972f441cd926971f5f2
+- id: TS-29.508
+  spec: TS 29.508
+  version: 18.11.0
+  scope: full
+  purpose: SMF Session Management Event Exposure API
+  index: TS 29.508/README.md
+  manifest: TS 29.508/manifest.yaml
+  source_archive: 29508-ib0.zip
+  source_archive_sha256: daf27642c0ec0e9c9253524bf6c70b78a6b540ce49abd07b28f730c3b6f0a667
+- id: TS-29.510
+  spec: TS 29.510
+  version: 18.11.0
+  scope: full
+  purpose: NRF management, discovery, access token and bootstrapping APIs
+  index: TS 29.510/README.md
+  manifest: TS 29.510/manifest.yaml
+  source_archive: 29510-ib0.zip
+  source_archive_sha256: 84e5ccfacace52d488cdca8f0ee1cb3b6817d390ee9903dc5e52105d58c6a1e6
+- id: TS-29.520
+  spec: TS 29.520
+  version: 18.14.0
+  scope: full
+  purpose: NWDAF Stage 3 APIs and data models
+  index: TS 29.520/README.md
+  manifest: TS 29.520/manifest.yaml
+  source_archive: 29520-ie0.zip
+  source_archive_sha256: 4937d4ffcdc8760cac3dd990b10d5c0beb722f9eab26d94ce4b1f296287057c1
+- id: TS-29.564
+  spec: TS 29.564
+  version: 18.7.0
+  scope: full
+  purpose: UPF Event Exposure and UE private IP/identifier APIs
+  index: TS 29.564/README.md
+  manifest: TS 29.564/manifest.yaml
+  source_archive: 29564-i70.zip
+  source_archive_sha256: dda2ab5dd327b415a1a334941e36923100eca4db73cc43a799ed5ccc529323f6
+- id: TS-29.571
+  spec: TS 29.571
+  version: 18.12.0
+  scope: full
+  purpose: Common SBI data types and ProblemDetails
+  index: TS 29.571/README.md
+  manifest: TS 29.571/manifest.yaml
+  source_archive: 29571-ic0.zip
+  source_archive_sha256: 29f6909073a6bb58ca961b25273b5fbf9fd9237751ff9ee223dca3f3cae02227
+- id: TS-29.575
+  spec: TS 29.575
+  version: 18.11.0
+  scope: full
+  purpose: ADRF data/analytics and ML model management APIs
+  index: TS 29.575/README.md
+  manifest: TS 29.575/manifest.yaml
+  source_archive: 29575-ib0(1).zip
+  source_archive_sha256: 8dd2c6efa5761d0f11035b07a1b3001be1a46d8a776e8999bcb8577be5a4ab08
 openapi:
-  path: openapi/README.md
+  index: openapi/README.md
   manifest: openapi/manifest.yaml

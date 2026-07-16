@@ -1,0 +1,100 @@
+{
+  "TS 23.501": {
+    "version": "18.12.0",
+    "normalized_sha256": "9e10f194b706af31aa74bb7741013c91d6d7b8e5f1fe73e4d8ff91d9dc01adcd",
+    "reassembled_sha256": "9e10f194b706af31aa74bb7741013c91d6d7b8e5f1fe73e4d8ff91d9dc01adcd",
+    "headings": 1082,
+    "generated_files": 505,
+    "source_words": 431685,
+    "corrections": 94,
+    "assets": {
+      "source_media": 150,
+      "embedded": 150,
+      "render_methods": {
+        "original-fallback": 150
+      },
+      "rendered_png": 0,
+      "actual_rendered_png_after_bounded_pass": 150,
+      "unrendered_original_vectors": 0
+    }
+  },
+  "TS 23.502": {
+    "version": "18.14.0",
+    "normalized_sha256": "4cdd3fb7cd73bda0e30f75a0aae41dd51376b490be4cc0a0fb062a960cda7d1f",
+    "reassembled_sha256": "4cdd3fb7cd73bda0e30f75a0aae41dd51376b490be4cc0a0fb062a960cda7d1f",
+    "headings": 1346,
+    "generated_files": 543,
+    "source_words": 483503,
+    "corrections": 58,
+    "assets": {
+      "source_media": 280,
+      "embedded": 280,
+      "render_methods": {
+        "original-fallback": 280
+      },
+      "rendered_png": 0,
+      "actual_rendered_png_after_bounded_pass": 153,
+      "unrendered_original_vectors": 127
+    }
+  },
+  "TS 29.508": {
+    "version": "18.11.0",
+    "normalized_sha256": "3bf5aa40eefa6e55a0eb1c0d7acde5a4c06af732f323ee424adacbc352ee0da5",
+    "reassembled_sha256": "3bf5aa40eefa6e55a0eb1c0d7acde5a4c06af732f323ee424adacbc352ee0da5",
+    "headings": 102,
+    "generated_files": 55,
+    "source_words": 27374,
+    "corrections": 5,
+    "assets": {
+      "source_media": 10,
+      "embedded": 9,
+      "render_methods": {
+        "original-fallback": 8,
+        "copy": 2
+      },
+      "rendered_png": 2,
+      "actual_rendered_png_after_bounded_pass": 10,
+      "unrendered_original_vectors": 0
+    }
+  },
+  "TS 29.564": {
+    "version": "18.7.0",
+    "normalized_sha256": "afedde8fe79feb326982755eb677843242ba83b2ecfc3cf4c8cf75473454323f",
+    "reassembled_sha256": "afedde8fe79feb326982755eb677843242ba83b2ecfc3cf4c8cf75473454323f",
+    "headings": 143,
+    "generated_files": 35,
+    "source_words": 21275,
+    "corrections": 10,
+    "assets": {
+      "source_media": 10,
+      "embedded": 9,
+      "render_methods": {
+        "original-fallback": 9,
+        "copy": 1
+      },
+      "rendered_png": 1,
+      "actual_rendered_png_after_bounded_pass": 10,
+      "unrendered_original_vectors": 0
+    }
+  },
+  "TS 29.575": {
+    "version": "18.11.0",
+    "normalized_sha256": "123833b9d81b0fb87d54792c996f3f0dac494c66bc44ec26a9722bd1576da3e5",
+    "reassembled_sha256": "123833b9d81b0fb87d54792c996f3f0dac494c66bc44ec26a9722bd1576da3e5",
+    "headings": 203,
+    "generated_files": 53,
+    "source_words": 30269,
+    "corrections": 21,
+    "assets": {
+      "source_media": 25,
+      "embedded": 24,
+      "render_methods": {
+        "original-fallback": 24,
+        "copy": 1
+      },
+      "rendered_png": 1,
+      "actual_rendered_png_after_bounded_pass": 25,
+      "unrendered_original_vectors": 0
+    }
+  }
+}

@@ -1,0 +1,97 @@
+[
+  {
+    "zip": "29520-ie0.zip",
+    "file": "TS29520_Nnwdaf_AnalyticsInfo.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29520-ie0.zip",
+    "file": "TS29520_Nnwdaf_DataManagement.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29520-ie0.zip",
+    "file": "TS29520_Nnwdaf_EventsSubscription.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29520-ie0.zip",
+    "file": "TS29520_Nnwdaf_MLModelMonitor.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29520-ie0.zip",
+    "file": "TS29520_Nnwdaf_MLModelProvision.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29520-ie0.zip",
+    "file": "TS29520_Nnwdaf_MLModelTraining.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29520-ie0.zip",
+    "file": "TS29520_Nnwdaf_RoamingAnalytics.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29520-ie0.zip",
+    "file": "TS29520_Nnwdaf_RoamingData.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29510-ib0.zip",
+    "file": "TS29510_Nnrf_AccessToken.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29510-ib0.zip",
+    "file": "TS29510_Nnrf_Bootstrapping.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29510-ib0.zip",
+    "file": "TS29510_Nnrf_NFDiscovery.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29510-ib0.zip",
+    "file": "TS29510_Nnrf_NFManagement.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29571-ic0.zip",
+    "file": "TS29571_CommonData.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29508-ib0.zip",
+    "file": "TS29508_Nsmf_EventExposure.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29564-i70.zip",
+    "file": "TS29564_Nupf_EventExposure.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29564-i70.zip",
+    "file": "TS29564_Nupf_GetUEPrivateIPaddrAndIdentifiers.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29575-ib0(1).zip",
+    "file": "TS29575_Nadrf_DataManagement.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29575-ib0(1).zip",
+    "file": "TS29575_Nadrf_MLModelManagement.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29500-ia0.zip",
+    "file": "TS29500_CustomHeaders.abnf",
+    "byte_identical": true
+  }
+]

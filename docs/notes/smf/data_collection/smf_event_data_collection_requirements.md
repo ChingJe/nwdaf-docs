@@ -3,11 +3,6 @@
 **日期**: 2026-01-13  
 **目的**: 分析 NWDAF 如何透過 SMF/UPF Event Exposure 蒐集 UE Communication 所需資料
 
-> **Corpus 範圍註記**：目前 `nwdaf-docs/specs/` 的 Release 18 corpus 未收錄
-> TS 23.502 §4.15.4.5、`TS29508_Nsmf_EventExposure.yaml` 與
-> `TS29564_Nupf_EventExposure.yaml`。本文保留既有分析；需要重新驗證這些程序
-> 或 schema 時，應先補入相同 Release 的來源。
-
 ---
 
 ## 1. TS 23.288 Table 6.7.3.2-1 必要輸入資料
@@ -313,7 +308,7 @@ for _, item := range notification.NotificationItems {
 }
 ```
 
-### 7.3 OpenAPI Models 需求
+### 7.3 free5GC-generated OpenAPI Models 需求
 
 目前 `internal/openapi/models` 可能缺少:
 - `UpfEvent` struct
@@ -321,7 +316,9 @@ for _, item := range notification.NotificationItems {
 - `VolumeMeasurement` struct
 - `NotificationItem` struct (Nupf)
 
-可能需要從 TS 29.564 YAML 生成或手動實作。
+應優先使用本地 corpus 已收錄的
+`specs/openapi/TS29564_Nupf_EventExposure.yaml` 生成；若目前 generator 無法處理，
+再評估手動實作。
 
 ---
 
@@ -335,11 +332,11 @@ EventSubscription:
   properties:
     event:
       $ref: '#/components/schemas/SmfEvent'
-    upfEvents:                      # ⚠️ OpenAPI 缺少此欄位
+    upfEvents:                      # ⚠️ 目前 generated model 缺少此欄位
       type: array
       items:
         $ref: 'TS29564_Nupf_EventExposure.yaml#/components/schemas/UpfEvent'
-    bundledEventNotifyUri:          # ⚠️ OpenAPI 缺少此欄位
+    bundledEventNotifyUri:          # ⚠️ 目前 generated model 缺少此欄位
       $ref: 'TS29571_CommonData.yaml#/components/schemas/Uri'
     bundlingAllowed:
       type: boolean
@@ -347,9 +344,12 @@ EventSubscription:
     - event
 ```
 
-### 8.2 OpenAPI Gap 分析
+### 8.2 Generated Model Gap 分析
 
-| YAML 欄位 | 說明 | OpenAPI 狀態 |
+下表描述的是目前 `internal/openapi/models` 與正式 YAML 的差距，不是本地規格
+corpus 的缺件狀態。
+
+| YAML 欄位 | 說明 | Generated model 狀態 |
 |-----------|------|-------------|
 | `EventSubscription.upfEvents` | UPF 事件列表 | ❌ **缺少** |
 | `EventSubscription.bundledEventNotifyUri` | UPF 直接回報 URI | ❌ **缺少** |
