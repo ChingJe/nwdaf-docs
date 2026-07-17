@@ -4,9 +4,10 @@ Date: 2026-07-17
 
 Status: Replanned after team architecture review; implementation phases pending
 
-Related record:
+Related records:
 
 - `nwdaf-docs/docs/plans/mtlf-backend-transition/Phase 1 PyMTLF Foundation And Backend Boundary.md`
+- `nwdaf-docs/docs/plans/mtlf-backend-transition/Phase 2 Backend Connectivity And Standard Contract Foundation.md`
 
 ---
 
@@ -90,6 +91,9 @@ generation CAS 與跨程序 durable reconciliation 不再是 target architecture
 4. handshake前只有一個 source可用時先寫該 source；兩者都可用時暫時 dual-write
 5. backend重新 ready或任一 process restart後重新執行 handshake
 6. transient ADRF failure不自動切換 MongoDB；需要 runtime fallback的 deployment必須使用 `dual`
+7. PyMTLF第一版sample/default mode為`mongodb`；`adrf`或`dual`由deployment明確設定
+8. 每次MTLF handshake前以bounded live ping重新判定Mongo availability，使Mongo可在不重啟Go下恢復
+9. ADRF沒有額外non-standard health probe；valid config與已建立standard client代表available capability
 
 ### 3.5 Mongo Storage Shape
 
@@ -322,7 +326,9 @@ UNKNOWN -> POLLING -> READY_CHECK_PASSED -> HANDSHAKING -> USABLE
 6. state transition留下結構化 log；第一版不要求額外 distributed health store
 7. request path讀取 cached readiness state，不在每次 consumer request同步做 health network call
 
-MTLF handshake套用 storage mode時，Go必須先完成目前 write sink的安全切換，再標示 backend usable。
+Phase 2只協商並快取MTLF storage mode；尚未有data-dependent MTLF feature，因此不切換既有UPF writer。
+Phase 5接入raw-notification writer後，Go必須先完成write sink安全切換，再讓data-dependent operation使用
+新的mode。
 
 ---
 
@@ -391,8 +397,9 @@ credential寫進 PyMTLF config。啟用 production OAuth前需建立短期 token
 保留 content-addressed artifact storage與 PyAnLF安全下載限制。artifact digest可存在 URL identity、ETag或
 bundle manifest，不要求另建非標準 provision欄位。
 
-existing SQLite journal與 reconciliation primitives不是 production contract。後續 feature phase應決定保留
-為 PyMTLF內部 implementation、縮減或移除；不得讓既有 foundation反向決定新的 wire architecture。
+existing SQLite generation journal與reconciliation primitives只服務已取消的generation/apply protocol，
+且沒有新的production consumer。已決定在Phase 2連同專用models、config與tests移除。未來若local training
+需要job persistence，必須依實際job semantics建立新的小型內部儲存，不復用舊state machine。
 
 ---
 
@@ -426,13 +433,15 @@ Feature goal：Go可靠連接兩個 backend，建立 polling、MTLF storage hand
 包含：
 
 - AnLF/MTLF backend polling、cached state、backoff與 shutdown
-- MTLF available-source handshake與 bootstrap storage mode
+- MTLF available-source handshake、source inventory與 negotiated storage mode cache
+- 移除PyMTLF舊SQLite generation journal、reconciliation與專用code/tests/config
 - configured/disabled/unavailable service behavior與 `503 ProblemDetails`
 - Release 18 OpenAPI type gap audit與 scoped generation/compatibility strategy
-- standard body不經 parallel DTO translation的 transport tests
+- standard body不經parallel DTO translation的transport policy與後續feature test requirements
 - Go naming boundary與 backend-independent client package ownership
 
-完成條件：backend restart後 Go可恢復 polling、重新 handshake並正確 gate feature operations。
+完成條件：backend restart後 Go可恢復 polling、重新 handshake並正確 gate已接入backend的operation；
+raw storage sink切換仍由Phase 5完成。
 
 ### Phase 3: Analytics Subscription Routing
 
@@ -507,7 +516,6 @@ Feature goal：移除 transition後不再使用的 Go MTLF、Daisy與 custom bac
 - 移除 Daisy client、callback、config、tests與 dependency
 - 移除 Go accuracy policy、training scheduler、dataset provider與 model apply coordinator
 - 移除被 standard-shaped routes取代的 PyAnLF/PyMTLF private APIs
-- 決定未使用的 SQLite journal/reconciliation code保留、縮減或刪除
 - NRF service/capability advertisement audit
 - full cross-repository、restart、failure與 no-legacy-name audit
 
@@ -602,8 +610,9 @@ Feature goal：移除 transition後不再使用的 Go MTLF、Daisy與 custom bac
 8. backend unavailable時 Go polling並對需要的 operation回正確錯誤
 9. 沒有並行的 Go/Python owner、dead custom API或 speculative contract
 10. NWDAF、PyAnLF與 PyMTLF沒有 Daisy runtime字樣或相依性
-11. 三個 implementation repositories各自通過 tests/lint/build與 cross-process verification
-12. deferred OAuth/TLS/NRF或環境級驗證限制有明確紀錄
+11. PyMTLF沒有舊generation journal、reconciliation engine或其專用state models
+12. 三個 implementation repositories各自通過 tests/lint/build與 cross-process verification
+13. deferred OAuth/TLS/NRF或環境級驗證限制有明確紀錄
 
 ---
 

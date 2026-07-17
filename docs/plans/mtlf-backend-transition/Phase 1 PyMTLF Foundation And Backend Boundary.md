@@ -2,7 +2,7 @@
 
 Date: 2026-07-17
 
-Status: Verified foundation baseline committed; architecture superseded in part by feature-oriented replan
+Status: Verified foundation baseline committed; superseded journal/reconciliation scheduled for Phase 2 removal
 
 Parent plan:
 
@@ -113,15 +113,17 @@ team review已取消以下舊方向：
 
 ## 6. Reclassified Existing Code
 
-SQLite generation journal與 reconciliation primitives已實作且通過測試，但在新計畫中：
+SQLite generation journal與reconciliation primitives已實作且通過Phase 1測試，但team後續確認它們只服務
+已取消的generation/apply protocol，沒有新的production consumer。現在的決策為：
 
 - 不再是 Go/PyMTLF wire contract
 - 不再是第一版 model provision的必要 state machine
-- 不得阻擋 standard-shaped feature implementation
-- 可在後續 local-training/model-provision phase決定保留為 PyMTLF內部 state、縮減或刪除
+- 在Phase 2移除journal、reconciliation、專用models、config與tests
+- 不保留為readiness diagnostic或future training placeholder
+- 未來若local training需要job persistence，依實際job lifecycle重新設計小型internal store
 
-本次 plan revision不立即修改或刪除已提交 code。是否保留應依實際 consumer與簡化後流程在對應
-feature phase做 plan-to-code決策，避免在 docs revision混入 implementation cleanup。
+Phase 1 baseline commit與historical verification evidence仍保持不變；Phase 2會以新的PyMTLF commit執行刪除。
+後續不得從Phase 1 git history恢復這套state machine作為新wire或job contract。
 
 ---
 
@@ -189,6 +191,7 @@ final Phase 1 baseline verification包含：
 3. 固定最小 available-source handshake
 4. 盤點 Release 18 OpenAPI type與 current free5GC dependency gap
 5. 明確列出該 feature同時需要的 NWDAF、PyAnLF與 PyMTLF變更
-6. 避免建立尚無實際 consumer的 broad interface、future route或 duplicated JSON contract fixture
+6. 移除PyMTLF SQLite generation journal、reconciliation與只為舊state machine存在的code/tests/config
+7. 避免建立尚無實際 consumer的 broad interface、future route或 duplicated JSON contract fixture
 
 Phase 1不再新增功能。後續變更應進入新的 feature phase與獨立 commit。
