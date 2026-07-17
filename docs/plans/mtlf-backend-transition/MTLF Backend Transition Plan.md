@@ -2,7 +2,7 @@
 
 Date: 2026-07-17
 
-Status: High-level architecture and Phase 1 detailed plan confirmed; later phase plans pending
+Status: Phase 1 verified implementation baseline committed; plan revision pending after team review
 
 Related plans:
 
@@ -522,12 +522,16 @@ architecture document 可以使用 `PyMTLF` 指稱實際 Python repository/proce
 
 Go-side naming 應使用：
 
-1. interface/type：`MtlfBackendAPI`、`MtlfBackendClient` 或同等 `MtlfBackend` 語意
+1. concrete transport type：`BackendClient` under `internal/mtlf/client`，或在 import位置以
+   `MtlfBackendClient`語意辨識
 2. config：`mtlfBackend`
 3. field/constructor parameter：`mtlfBackend`
 4. logs/errors：`MTLF backend`
 5. internal HTTP route/service metadata：`mtlf-backend` 或 domain-oriented operation name
 6. tests/mocks：`MtlfBackend` naming
+
+Interface遵循 AnLF已確立的 consumer-owned rule：只有真正 consumer出現時，才在 consumer package
+定義當下需要的 narrow interface；不得因 naming boundary而預建 root-level `MtlfBackendAPI`。
 
 Go-side naming 不得使用：
 
@@ -1096,19 +1100,21 @@ refactor 仍不屬於本工作線。
 
 Detailed plan：`Phase 1 PyMTLF Foundation And Backend Boundary.md`
 
-Planning status：implementation decisions confirmed；ready for implementation
+Implementation status：first draft rejected after package/fixture review；revised implementation已完成
+local verification並建立 separated baseline commits；team review後的 plan revision pending
 
 目標：
 
 1. 建立獨立 `PyMTLF/` repository 與 Python `src/` package layout
-2. 定義 PyMTLF app、config、domain、API、trainer 與 test 基礎結構
-3. 在 Go 建立 neutral `MtlfBackend` contract/client seam
-4. 將 Go config、interface、client、field、logs、routes 與 tests 全部固定在
-   `MtlfBackend`/`mtlfBackend` 語意，禁止 Python implementation naming 穿透
-5. 定義 accuracy report、dataset request/attempt/chunk/completion、ModelReady、
-   ModelProvisionEvent 與 ModelApplyResult contracts
+2. 定義 PyMTLF app、config、artifact、durable state、reconciliation與 test基礎結構；Phase 1不建立 trainer
+3. 在 Go既有 `internal/mtlf/client/`建立 readiness-only neutral backend client seam
+4. 將 Go config、client、field、logs、routes與 tests固定在 `MtlfBackend`/`mtlfBackend`語意，
+   interface待實際 consumer出現時於 consumer package定義
+5. 在文件定義 accuracy report、dataset request/attempt/chunk/completion、ModelReady、
+   ModelProvisionEvent與 ModelApplyResult semantics；runtime DTO/client methods由各 activation phase建立
 6. 定義 Go-push chunk acknowledgement、attempt abort 與 backpressure contract
-7. 在 owner migration 前由現有 Go MTLF behavior 建立 compatibility oracle/golden fixtures
+7. 在 owner migration前於 PyMTLF保存 canonical compatibility oracle；NWDAF只以既有原生 Go tests
+   提供 baseline/provenance，不複製 JSON fixture
 8. 以 current PyAnLF loader 為 consumer oracle，定義 URL-based model bundle v1
 9. 定義 PyMTLF persistent artifact repository、private immutable download endpoint、URL
    allowlist 與 retention boundary
@@ -1123,6 +1129,9 @@ Planning status：implementation decisions confirmed；ready for implementation
 2. 讓 PyMTLF 直接接 ADRF/Mongo
 3. 把現有 Daisy payload 當作 backend contract
 4. 在 Go 新增任何 `PyMTLF`/`pyMtlf` implementation-specific identifier
+5. 新增 `internal/mtlf/backend/`平行 transport package或無 consumer的 root-level broad interface
+6. 在 `NWDAF/internal/mtlf/**/testdata/`保存 contract/policy JSON snapshots
+7. 預先實作 Phase 2/3尚未啟用的 HTTP methods或 service dependency
 
 ### 12.2 Phase 2: Training Data Service And Local Store Formalization
 
