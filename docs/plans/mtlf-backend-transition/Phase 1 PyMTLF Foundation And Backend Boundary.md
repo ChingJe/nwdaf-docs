@@ -1,8 +1,8 @@
 # Phase 1 PyMTLF Foundation And Backend Boundary
 
-Date: 2026-07-17
+Date: 2026-07-21
 
-Status: Verified foundation baseline committed; superseded journal/reconciliation scheduled for Phase 2 removal
+Status: Verified historical foundation; later architecture boundaries are superseded by the canonical parent plan
 
 Parent plan:
 
@@ -127,18 +127,21 @@ Phase 1 baseline commit與historical verification evidence仍保持不變；Phas
 
 ---
 
-## 7. New Boundary After Replan
+## 7. Current Canonical Boundary
 
-Phase 1 foundation後的 target boundary為：
+2026-07-21 review後，Phase 1 foundation適用的current target boundary為：
 
 ```text
 Go
   - polls AnLF/MTLF backend readiness
-  - performs MTLF available-source handshake
-  - owns standard SBI, callbacks, routing and external resource URIs
+  - performs standard NRF/SMF/UPF/ADRF control communication requested by backends
+  - owns standard SBI, routing and external resource URIs
+  - syncs both backends after readiness
 
 PyAnLF
-  - owns analytics runtime and standard AnLF feature behavior
+  - owns analytics runtime, data-collection intent and SMF candidate selection
+  - receives SMF/UPF notifications directly
+  - writes raw Mongo records and prepares standard ADRF storage requests
 
 PyMTLF
   - owns accuracy policy, source selection, direct ADRF/Mongo retrieval,
@@ -147,6 +150,8 @@ PyMTLF
 
 PyMTLF收到 `FetchInstruction`後直接向 ADRF fetch；Mongo mode則使用 read-only credential直接 query。
 Go只建立/清理 ADRF retrieval subscription與 forwarding callback instruction，不代理 dataset bytes。
+
+本文件不固定sync、collection或storage contract；exact behavior以parent plan及最新Phase 2/Phase 3文件為準。
 
 ---
 
@@ -182,16 +187,15 @@ final Phase 1 baseline verification包含：
 
 ---
 
-## 9. Next Phase Entry Conditions
+## 9. Historical Handoff
 
-下一個 detailed phase應以 parent plan的 `Backend Connectivity And Standard Contract Foundation`為準，並先：
+Phase 1後續工作已進入Phase 2與Phase 3。原始entry conditions的結果為：
 
-1. 記錄四個 repository的 current baseline與 worktree狀態
-2. 確認 AnLF/MTLF backend polling與 app lifecycle ownership
-3. 固定最小 available-source handshake
-4. 盤點 Release 18 OpenAPI type與 current free5GC dependency gap
-5. 明確列出該 feature同時需要的 NWDAF、PyAnLF與 PyMTLF變更
-6. 移除PyMTLF SQLite generation journal、reconciliation與只為舊state machine存在的code/tests/config
-7. 避免建立尚無實際 consumer的 broad interface、future route或 duplicated JSON contract fixture
+1. backend polling與app lifecycle已在Phase 2完成。
+2. PyMTLF SQLite generation journal/reconciliation已在Phase 2移除。
+3. 原始MTLF-only available-source handshake後續被unified backend sync取代。
+4. Release 18 OpenAPI gap由每個feature phase繼續audit。
+5. Phase 3依新架構同時調整NWDAF、PyAnLF及小範圍PyMTLF sync。
+6. 不建立沒有production consumer的broad interface或duplicated JSON contract fixture。
 
 Phase 1不再新增功能。後續變更應進入新的 feature phase與獨立 commit。

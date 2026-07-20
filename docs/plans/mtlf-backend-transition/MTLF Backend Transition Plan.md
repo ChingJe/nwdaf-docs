@@ -1,13 +1,16 @@
 # MTLF Backend Transition Plan
 
-Date: 2026-07-17
+Date: 2026-07-21
 
-Status: Replanned after team architecture review; implementation phases pending
+Status: Replanned after data-collection and backend-boundary review; Phase 2 foundation implemented but sync/storage corrections pending; Phase 3 detailed contracts confirmed
 
 Related records:
 
 - `nwdaf-docs/docs/plans/mtlf-backend-transition/Phase 1 PyMTLF Foundation And Backend Boundary.md`
 - `nwdaf-docs/docs/plans/mtlf-backend-transition/Phase 2 Backend Connectivity And Standard Contract Foundation.md`
+- `nwdaf-docs/docs/plans/mtlf-backend-transition/Phase 3 Analytics Subscription Routing.md`
+- `nwdaf-docs/docs/plans/anlf-backend-transition/AnLF Backend Transition Plan.md`
+- `nwdaf-docs/docs/plans/daisy/general_improvement/nwdaf-daisy-improvement-plan.md`
 
 ---
 
@@ -15,616 +18,613 @@ Related records:
 
 這份文件是 MTLF backend transition 的 canonical 主計畫。
 
-工作目標是讓 Go NWDAF 收斂成標準 SBI 與 routing layer，並依 feature 將 AnLF、MTLF domain
-behavior 分別交給 AnLF backend 與 MTLF backend。這不是只修改 `NWDAF/internal/mtlf/` 的工作；
-同一個標準 feature 涉及 Go、PyAnLF 與 PyMTLF 時，必須在同一 phase 內完成端到端調整。
+transition 的目標不是把現有 Go MTLF package逐檔翻譯成Python，而是重新固定同一個NWDAF內的
+Go SBI layer、AnLF backend與MTLF backend責任：
 
-主要成果為：
+1. Go NWDAF是唯一向NRF註冊及對外呈現的標準NF。
+2. Go主要負責標準SBI、OpenAPI wire validation、NRF與其他NF的標準通訊、外部resource routing、
+   最小correlation state及規格定義的HTTP response。
+3. AnLF backend擁有analytics subscription policy/runtime、資料蒐集需求與SMF選擇、analytics inference、
+   notification shaping及收到資料後的本地/ADRF storage policy execution。
+4. MTLF backend擁有accuracy/retrain policy、dataset selection、ADRF/Mongo retrieval、local training、
+   model identity及model artifact publication。
+5. 有標準OpenAPI contract的feature在Go/backend boundary沿用相同method語意、field name、required/optional
+   semantics、response shape與`ProblemDetails`；不得建立平行business DTO。
+6. `NWDAF/`、`PyAnLF/`與`PyMTLF/`最終不保留Daisy-specific runtime、API、config或命名。
+7. backend transition只改變責任歸屬時，既有且有意義的business algorithm、state transition、config default
+   與edge-case behavior必須等價移植；transition本身不是重新設計演算法的授權。
 
-1. Go 處理標準 SBI、OpenAPI validation、NRF/OAuth、callback、resource routing 與錯誤回應
-2. PyAnLF 擁有 analytics runtime、prediction、accuracy measurement 與 AnLF-side standard behavior
-3. PyMTLF 擁有 accuracy policy、dataset selection、ADRF/Mongo retrieval、local training 與 model production
-4. 標準功能在 Go 與 backend 間沿用 Release 18 OpenAPI payload shape，不建立平行 domain contract
-5. PyMTLF 收到 `FetchInstruction` 後直接向 ADRF fetch，或直接以 read-only access 查詢 MongoDB
-6. MTLF backend 以標準 ML model provision shape，經 Go 將模型 URL 提供給 AnLF backend
-7. `NWDAF/`、`PyAnLF/` 與 `PyMTLF/` 最終不保留 Daisy-specific runtime、API、config 或命名
-
-舊計畫中的 Go-owned dataset provider、normalized chunk push、provider attempt state machine、custom
-generation CAS 與跨程序 durable reconciliation 不再是 target architecture。
+Phase依feature組織。同一feature需要Go、PyAnLF與PyMTLF共同調整時，必須在同一phase完成vertical slice；
+不得因repository邊界把同一標準procedure拆成互不相容的暫時contract。
 
 ---
 
-## 2. Planning Rule: Organize By Feature
+## 2. Evidence And Contract Policy
 
-後續 phase 以 feature 為單位，不以 repository 或 logical function 為單位。
+### 2.1 Source Order
 
-例如 `Nnwdaf_MLModelMonitor` phase 必須同時處理：
+標準behavior與wire contract依下列順序核對：
 
-- Go standard SBI route、validation、resource URI 與 backend routing
-- PyAnLF monitoring subscription、measurement 與 notification behavior
-- PyMTLF monitoring registration、subscription request與 accuracy policy input
-- 三個 repository 間的 contract、failure 與 integration tests
+1. `NWDAF/`目前實際dependency與generated models
+2. `nwdaf-docs/specs/openapi/`中的Release 18 OpenAPI attachment
+3. `nwdaf-docs/specs/TS 29.510`、`TS 29.520`、`TS 29.508`、`TS 29.564`、`TS 29.575`
+4. `nwdaf-docs/specs/TS 23.288`
+5. local free5GC reference implementation
 
-不得先建立一套 MTLF-only custom API，再於後續 phase 另做 AnLF translation。若 feature 的標準流程
-同時涉及兩個 backend，該 phase 應一次完成可驗證的端到端 vertical slice。
+每份detailed plan只要描述標準method、path、request/response、callback或業務status code，就必須在相鄰段落
+引用exact OpenAPI file及TS clause。free5GC source只能作為handler/processor/consumer、lifecycle及persistence
+結構證據，不能取代3GPP規格。
+
+### 2.2 Core Standard Evidence
+
+| Behavior | Evidence | Consequence |
+|---|---|---|
+| NRF NF discovery | TS 29.510 clause 5.3.2.2.2；`TS29510_Nnrf_NFDiscovery.yaml` `/nf-instances` | 使用GET query；成功回200 `SearchResult`；不得縮成custom endpoint list |
+| NWDAF event subscription CRUD | TS 29.520 clauses 4.2.2.2、4.2.2.3；`TS29520_Nnwdaf_EventsSubscription.yaml` | create POST/201+Location、update PUT/200或204、delete DELETE/204 |
+| SMF event subscription | TS 29.508 clause 4.2.3；`TS29508_Nsmf_EventExposure.yaml` | create POST/201+Location、replace PUT、delete DELETE |
+| SMF notification | TS 29.508 clause 4.2.2.2；same OpenAPI callback | SMF POST `NsmfEventExposureNotification`到`notifUri`；成功處理回204 |
+| UPF direct notification | TS 29.564 clauses 5.2.1.2與6.1.5.2；`TS29564_Nupf_EventExposure.yaml` | 經SMF建立subscription後，UPF可直接通知NF consumer提供的URI；成功回204 |
+| ADRF storage | TS 29.575 clause 4.2.2.2；`TS29575_Nadrf_DataManagement.yaml` | POST `NadrfDataStoreRecord`到`/data-store-records`；成功201+Location |
+| ADRF retrieval subscription | TS 29.575 clause 4.2.2.6；same OpenAPI | POST `NadrfDataRetrievalSubscription`；成功201+Location |
+| ADRF fetch instruction | TS 29.575 clause 4.2.2.8 | callback body可含`fetchInstruct`；consumer成功存下notification後回204 |
+| ADRF direct retrieval | TS 29.575 clause 4.2.2.5；same OpenAPI GET operation | `GET /data-store-records`使用`fetch-correlation-ids`；200有資料、204無資料 |
+| ML model monitoring | TS 29.520 clause 4.7；`TS29520_Nnwdaf_MLModelMonitor.yaml` | registration/subscription/notification沿用standard resource及`MLModelMonitorNotify`，不建立custom accuracy envelope |
+| ML model provision | TS 29.520 clause 4.5；`TS29520_Nnwdaf_MLModelProvision.yaml` | standard notification使用`NwdafMLModelProvNotif`；`MLModelAddr.mLModelUrl`可提供model file URL |
+
+### 2.3 Generated Type Gaps
+
+current `github.com/free5gc/openapi` dependency與local Release 18 YAML不完全一致。feature phase開始前必須先
+確認generated type是否足夠：
+
+1. type存在時直接使用generated model。
+2. type不存在時優先從local YAML做scoped reproducible generation。
+3. 若external `$ref`缺失阻擋generation，才建立isolated compatibility wire package並記錄exact schema來源。
+4. 不使用`map[string]interface{}`或散落的手寫struct取代標準schema。
+5. 不以`testdata/*.json` fixture建立另一套跨語言contract慣例；contract由typed model與request/response tests驗證。
+
+### 2.4 Existing Behavior Preservation
+
+3GPP規格與OpenAPI決定standard procedure及wire behavior；對規格沒有指定的內部business algorithm，現有
+production implementation、config default及tests是移植的behavioral source of truth。ownership從Go移到
+Python時必須遵守：
+
+1. detailed plan先建立behavior inventory，將每個既有行為分類為`preserve`、`explicitly replace`或
+   `remove as obsolete`。沒有列入後兩類的行為一律視為`preserve`。
+2. `preserve`不只代表最後結果大致相同，也包括formula、evaluation ordering、state partition key、buffer/window
+   semantics、warm-up gate、threshold/default、skip condition、retry/reset/GC及concurrency guard等可觀察語意。
+3. Python可以使用idiomatic language structure，但不得因library default、資料型別、rounding、iteration order或
+   簡化實作而改變上述語意。
+4. 移除舊Go production path前，必須先保留並執行原Go characterization tests，再把相同scenario與edge case
+   移植到Python；相同輸入的decision、state transition與side-effect trigger必須等價。
+5. 測試不得只證明happy path。既有Go test覆蓋的skip、boundary、multi-scope、in-flight、reset與failure case都
+   必須在Python parity suite有對應案例。
+6. 若發現既有行為與規格衝突、確認為bug或確實需要改善，必須先記錄old/new behavior、影響與測試，並經使用者
+   明確決策；不得把behavior change混入port或cleanup。
+
+這項約束不要求保留已明確supersede的ownership、Daisy integration、custom DTO或Go proxy flow；它保護的是
+被保留下來之feature的business semantics。
+
+accuracy path是本計畫的明確基準案例：
+
+- AnLF accuracy metric/alignment behavior以`PyAnLF/src/py_anlf/core/accuracy/metrics.py`、
+  `monitor.py`及其現有tests為準。
+- MTLF degradation/retrain decision以`NWDAF/internal/mtlf/trigger.go`、`state_store.go`、
+  `NWDAF/pkg/factory/config.go`中的accuracy defaults，以及`trigger_test.go`、`state_store_test.go`為準。
+- 移到PyMTLF時必須保留primary metric lookup、per-model/per-scope isolation、baseline warm-up、fixed floor與
+  traffic eligibility、z-score/min-std、degradation reference不被異常樣本污染、chronic與low-traffic path、
+  N-in-M hit window、retrain-in-flight suppression、trigger後reset及scope GC等現有機制。
+- 不得用單一threshold、strict consecutive counter、第三方anomaly detector或不同統計公式，取代上述已實作
+  的組合；這類替換是新的policy design，不是port。
 
 ---
 
 ## 3. Confirmed Architecture Decisions
 
-以下決策已確認，實作不得無聲改回舊方向。
+### 3.1 Logical NF And Naming Boundary
 
-### 3.1 Logical Function Boundary
+1. PyAnLF與PyMTLF是同一個NWDAF的internal backend，不是獨立標準NF。
+2. backend不向NRF註冊，也不以自己的身分advertise 3GPP service。
+3. Go擁有唯一NWDAF `nfInstanceId`、NF profile及external SBI identity。
+4. Go source、config、logs、tests與route naming只使用`anlfBackend`、`mtlfBackend`或backend-neutral名稱，
+   不使用Python implementation name。
+5. Python repository/package可以保留`PyAnLF`、`PyMTLF`、`py_anlf`與`py_mtlf`名稱。
 
-1. PyAnLF 與 PyMTLF 都是同一個 NWDAF 的 internal backend，不是獨立標準 NF
-2. backend 不註冊 NRF，也不以自己的身分 advertise 3GPP service
-3. Go-side naming 只使用 `anlfBackend`、`mtlfBackend` 與對應 Go-style identifiers
-4. Go code、config、logs、tests 與 route naming 不使用 `PyAnLF` 或 `PyMTLF` implementation name
-5. Python repository/package name可以使用 `PyAnLF`、`PyMTLF`、`py_anlf` 與 `py_mtlf`
+### 3.2 Go Responsibility
 
-### 3.2 Standard And Private Contracts
+Go保留：
 
-1. 有標準 OpenAPI schema 的 feature，backend API body沿用相同 JSON field、required/optional與 enum semantics
-2. Go 不為 accuracy monitor、model provision、events subscription 或 ADRF retrieval 建立平行 business DTO
-3. backend route仍是 private deployment boundary，不宣稱 backend 自身是標準 NF
-4. routing correlation、readiness、storage handshake 等規格沒有描述的資訊可以使用小型 private contract
-5. private metadata不得擴充或污染標準 body
-6. current `github.com/free5gc/openapi v1.2.3`與 local Release 18 YAML 的差異必須在 feature phase明確處理
+- external standard path、method、content type及status response
+- OpenAPI/wire-level parsing與required-field validation
+- external Location與最小resource routing/correlation record
+- process-local Events Subscription與SMF peer Location routing table，供backend reconnect sync使用
+- NRF registration與NF discovery consumer
+- NRF、SMF、ADRF及external consumer的standard client
+- backend availability polling與sync lifecycle
+- standard payload routing及必要的identity/URI injection
 
-### 3.3 Training Data Boundary
+Go不再擁有：
 
-1. PyMTLF決定需要的資料、時間範圍、來源與 query/fetch時機
-2. ADRF retrieval subscription由 PyMTLF準備標準-shaped request，再由 Go呼叫 ADRF
-3. `notificationURI`由 Go注入或重寫成 Go-owned callback；`notifCorrId`由 Go驗證 ownership與唯一性
-4. ADRF callback先到 Go，Go驗證後將完整 `NadrfDataRetrievalNotification`與 `FetchInstruction`交給 PyMTLF
-5. PyMTLF直接使用 `fetchUri`與 `fetchCorrIds`向 ADRF執行 `RetrievalRequest`
-6. Go不代理 dataset bytes，不做 normalization、chunking、backpressure或 dataset completion coordination
-7. retrieval subscription unsubscribe仍由 PyMTLF要求 Go執行，保持 Go-owned subscription lifecycle完整
-8. ADRF不存在時，Go保存原始 UPF notification到 MongoDB，PyMTLF使用 read-only credential直接查詢
-9. MongoDB不是 ADRF，也不對外 advertise standard service
+- analytics supported-event policy
+- SMF candidate selection或fan-out policy
+- SMF configured endpoint、collection profile sharing或reference counting
+- analytics scheduling/inference/output shaping
+- raw notification preprocessing或training feature shaping
+- accuracy/retrain policy
+- dataset selection
+- training job、model generation或artifact production
 
-### 3.4 Storage Mode And Bootstrap
+### 3.3 Standard-shaped Private Boundary
 
-1. supported storage modes為 `adrf`、`mongodb`與 `dual`
-2. Go連上 MTLF backend後做一次簡單 requirements handshake，由 backend依 Go可用 sources選擇 mode
-3. backend要求的 source不可用時，handshake失敗；Go不得靜默換成其他 source
-4. handshake前只有一個 source可用時先寫該 source；兩者都可用時暫時 dual-write
-5. backend重新 ready或任一 process restart後重新執行 handshake
-6. transient ADRF failure不自動切換 MongoDB；需要 runtime fallback的 deployment必須使用 `dual`
-7. PyMTLF第一版sample/default mode為`mongodb`；`adrf`或`dual`由deployment明確設定
-8. 每次MTLF handshake前以bounded live ping重新判定Mongo availability，使Mongo可在不重啟Go下恢復
-9. ADRF沒有額外non-standard health probe；valid config與已建立standard client代表available capability
+backend path是private deployment path，但只要對應標準operation：
 
-### 3.5 Mongo Storage Shape
+1. request與response使用相同OpenAPI JSON shape。
+2. create維持POST語意，不為restart replay刻意改成private PUT upsert。
+3. update維持PUT或該標準operation指定的方法；delete維持DELETE。
+4. standard `ProblemDetails`可直接跨boundary傳遞，Go只移除不應外露的private detail。
+5. private metadata不得加入standard body；真正必要的routing information優先使用path、query或小型header。
+6. 第一版不建立general RPC framework、distributed transaction、custom idempotency system或business wrapper。
 
-1. MongoDB保存原始 UPF notification item，不轉成 training feature record
-2. 每個 notification item獨立一筆 document，保留原始 JSON內容
-3. 外層只保存 query/index所需的最小 metadata，例如 correlation ID、received time與 measurement time
-4. 第一版不加入 schema version欄位
-5. PyMTLF負責 parsing、deduplication、dataset shaping與 preprocessing
-6. Go擁有 collection建立、write path與 indexes；PyMTLF只取得 read-only access
+允許的非標準contract限於：
 
-### 3.6 Model Training And Provision
+- `GET /health/live`
+- `GET /health/ready`
+- readiness後的backend sync/snapshot
+- 無法由standard identifier表達的最小routing correlation
 
-1. PyMTLF使用簡單 local Python trainer；multiple-NWDAF FL不屬於本 transition
-2. PyMTLF擁有 model production與 `modelUniqueId`配置
-3. model artifact以 MTLF-backend-owned private URL提供
-4. provision flow使用標準 `NwdafMLModelProvNotif`、`MLEventNotif`與 `mLFileAddr.mLModelUrl` semantics
-5. PyAnLF下載、驗證並成功載入後同步回成功；失敗使用 HTTP error/`ProblemDetails`
-6. 第一版不建立 custom `ModelReady`、base/target generation CAS或多狀態 apply-result protocol
-7. training job identity與 retry state留在 PyMTLF內部，不穿透 Go boundary
+### 3.4 Plain HTTP Scope
 
-### 3.7 Backend Availability
+目前所有新路徑先使用普通HTTP：
 
-1. Go不因 backend尚未啟動而停止整個 NWDAF
-2. Go對 AnLF backend與 MTLF backend分別 polling `/health/ready`
-3. readiness成功後仍須完成必要 handshake，才將 backend標為 usable
-4. backend configured但 unavailable時，需要該 backend的新 operation回標準 `503 ProblemDetails`
-5. backend disabled時，不 advertise依賴該 backend的 service/capability
-6. MTLF backend unavailable不應中止已由 AnLF backend和現有模型提供的 analytics
+- Go ↔ AnLF backend
+- Go ↔ MTLF backend
+- SMF/UPF → AnLF backend callback
+- MTLF backend → ADRF direct retrieval
+
+TLS、mTLS、OAuth token delegation、certificate/key distribution及Python backend security integration只記為未來
+可能補強事項，不列入目前phase、acceptance criteria或blocker。backend仍不註冊NRF。
 
 ---
 
-## 4. Standards And Local Sources
+## 4. Target Architecture
 
-contract與 procedure的優先來源為：
+### 4.1 Control And Data Paths
 
-1. current `NWDAF/` implementation與實際 dependency version
-2. `nwdaf-docs/specs/openapi/TS29520_Nnwdaf_EventsSubscription.yaml`
-3. `nwdaf-docs/specs/openapi/TS29520_Nnwdaf_MLModelMonitor.yaml`
-4. `nwdaf-docs/specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml`
-5. `nwdaf-docs/specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml`
-6. `nwdaf-docs/specs/openapi/TS29575_Nadrf_DataManagement.yaml`
-7. local TS 29.520、TS 29.575與 TS 29.500 text
-8. current `PyAnLF/`與 `PyMTLF/` implementation
-9. local free5GC reference tree
+```text
+External consumer
+      |
+      | Nnwdaf standard SBI
+      v
+NWDAF Go ----------------------------------------------+
+  - NF identity / NRF registration                     |
+  - OpenAPI validation                                 |
+  - standard NF consumers                              |
+  - routing and minimal snapshot                       |
+      |                                                |
+      +--> AnLF backend: analytics policy/runtime      |
+      `--> MTLF backend: accuracy/training/model       |
+                                                       |
+PyAnLF -- standard-shaped request --> Go --> NRF/SMF/ADRF
+   ^                                                   |
+   |                                                   |
+   +--------------- SMF/UPF notification -------------+
 
-local OpenAPI corpus仍缺部分 external `$ref`，包括 TS 29.576的 exact `FetchInstruction` attachment。
-feature phase開始前必須確認 required generated types是否已存在。若 current free5GC OpenAPI module缺少
-Release 18 type，應優先採可重現的 scoped generation；若 generation被缺失依賴阻擋，必須記錄 exact
-schema來源與 isolated compatibility type，不能散落手寫 struct或改用 untyped map。
+PyMTLF -- standard-shaped retrieval request --> Go --> ADRF subscription
+PyMTLF <------------ FetchInstruction ---------- Go <-- ADRF callback
+PyMTLF ---------------- direct GET -------------------> ADRF
+PyMTLF ---------------- direct read ------------------> MongoDB
+```
 
-free5GC exemplar使用原則：
+Python processes不成為external NF，但可以是同一NWDAF內承接資料的endpoint或發出direct data fetch的component。
+標準control operation仍由Go執行；大量資料不經Go多一次轉送。
 
-- NRF/UDM：Go app、service、consumer、lifecycle與 injected client shape
-- PCF/UDR：callback、subscription與 persistence-coupled notification shape
-- UDR：Mongo ownership、indexes與 document persistence boundary
+### 4.2 Operation Routing Matrix
 
-free5GC沒有 Python backend或 PyMTLF direct ADRF/Mongo data-path exemplar；這些部分是本專案明確
-architecture decision，不宣稱為 upstream precedent。
+| Operation | Decision owner | Standard communication owner | Data endpoint |
+|---|---|---|---|
+| `Nnwdaf_EventsSubscription` | AnLF backend | Go | Go external SBI |
+| NRF SMF discovery criteria | AnLF backend | Go calls NRF | Go returns standard `SearchResult` |
+| SMF candidate filtering/fan-out | AnLF backend | Go subscribes selected SMFs | n/a |
+| SMF event subscription and UPF callback setup | AnLF backend prepares request | Go calls SMF；SMF依procedure設定UPF | SMF或UPF notification直接到AnLF backend |
+| SMF event subscription cleanup | AnLF backend維護refcount並決定last-reference delete | Go依AnLF backend指定的resource呼叫SMF DELETE | Go保留Location直到SMF回204或已確認resource不存在 |
+| Raw Mongo storage | AnLF backend | n/a | AnLF backend writes Mongo |
+| ADRF storage | AnLF backend prepares record | Go calls ADRF | Go receives ADRF response |
+| `Nnwdaf_MLModelMonitor` registration/accuracy policy | MTLF backend | Go | Go callbacks/routes |
+| ADRF retrieval subscribe/unsubscribe | MTLF backend prepares request | Go calls ADRF | ADRF callback first reaches Go |
+| ADRF data fetch | MTLF backend | MTLF backend direct HTTP | MTLF backend |
+| Mongo training query | MTLF backend | n/a | MTLF backend read-only |
+| local training/artifact | MTLF backend | n/a | MTLF backend |
+| ML model provision | MTLF backend | Go routes standard payload | AnLF backend downloads model URL |
 
 ---
 
-## 5. Target Architecture
+## 5. Analytics And Data Collection Flow
 
-### 5.1 Standard SBI Routing
-
-```text
-External NF / ADRF
-        |
-        | standard SBI
-        v
-NWDAF Go
-  - parse and validate OpenAPI payload
-  - authentication, NRF, OAuth and TLS
-  - resource/callback correlation
-  - route operation to logical backend
-  - rewrite external Location/callback URI
-        |
-        +------> AnLF backend
-        `------> MTLF backend
-```
-
-Go不是完全 stateless reverse proxy。它仍擁有 NF identity、external resource URI、callback ingress、
-standard client與最小 routing state；但不再執行 AnLF/MTLF policy、training或 analytics business logic。
-
-### 5.2 Operation Routing Matrix
-
-| Standard operation | Domain owner / routing target |
-|---|---|
-| `Nnwdaf_EventsSubscription` analytics behavior | AnLF backend |
-| `Nnwdaf_MLModelMonitor /registrations` | MTLF backend |
-| `Nnwdaf_MLModelMonitor /subscriptions` | AnLF backend |
-| `Nnwdaf_MLModelMonitor_Notify` | MTLF backend |
-| `Nnwdaf_MLModelProvision /subscriptions` | MTLF backend |
-| ML model provision notification callback | AnLF backend |
-| `Nnwdaf_MLModelTraining` | MTLF backend |
-| ADRF retrieval subscribe/unsubscribe | Go standard client, requested by MTLF backend |
-| ADRF retrieval notification | Go callback ingress, forwarded to MTLF backend |
-| ADRF data-store-record fetch | MTLF backend direct to ADRF |
-
-`Nnwdaf_MLModelMonitor`同一 service的 operation會依 AnLF/MTLF role routing到不同 backend；不得以
-service name直接假設單一 owner。
-
-### 5.3 ADRF Direct Fetch Flow
+### 5.1 Events Subscription
 
 ```text
-PyMTLF -- NadrfDataRetrievalSubscription --> Go -- POST subscription --> ADRF
-
-ADRF -- NadrfDataRetrievalNotification/FetchInstruction --> Go --> PyMTLF
-
-PyMTLF -- GET fetchUri?fetch-correlation-ids=... ---------------------> ADRF
-PyMTLF <--------------------------- NadrfDataStoreRecord ------------- ADRF
-
-PyMTLF -- retrieval complete --> Go -- DELETE subscription ----------> ADRF
+NF consumer -> Go POST NnwdafEventsSubscription
+Go -> validate standard wire contract
+Go -> AnLF backend POST standard-shaped resource
+AnLF backend -> decide accepted events/features and create runtime
+Go <- standard representation
+Go -> 201 + Location + representation
 ```
 
-PyMTLF在 wire上是 containing NWDAF的 internal component，不是另一個 NF。若 deployment啟用 OAuth，
-direct fetch必須使用代表同一 NWDAF的短期 access token；第一版 local deployment可使用 OpenAPI允許的
-unauthenticated mode，但必須標記 deployment limitation。
+AnLF backend擁有accepted subscription、reporting precedence、runtime、model association及完整standard
+notification shaping。Go只保存external resource routing與backend reconnect所需的最小process-local snapshot。
 
-### 5.4 Mongo Direct Read Flow
+### 5.2 NRF Discovery And SMF Selection
+
+AnLF backend與Go之間的discovery interaction模仿`Nnrf_NFDiscovery`：
 
 ```text
-UPF notification --> Go --> MongoDB raw notification collection
-                                  ^
-                                  |
-                          direct read-only query
-                                  |
-                               PyMTLF
-```
+PyAnLF -> GET private discovery route
+          target-nf-type=SMF
+          requester-nf-type=NWDAF
+          service-names=nsmf-event-exposure
 
-Go不提供 Mongo query API，PyMTLF也不寫入或管理 collection。Mongo schema是兩個 repository間的
-storage contract，但第一版不增加 schema version或 migration framework。
-
-### 5.5 Accuracy And Model Flow
-
-```text
-PyAnLF -- MLModelMonitorNotify --> Go --> PyMTLF accuracy policy
-
-PyMTLF -- direct ADRF/Mongo data --> local training --> publish model URL
-
-PyMTLF -- NwdafMLModelProvNotif --> Go --> PyAnLF
-PyAnLF -- download and load --> HTTP success/problem --> Go --> PyMTLF
-```
-
-第一版以標準 body與同步 HTTP結果完成流程，不建立額外 distributed transaction protocol。
-
----
-
-## 6. Minimal Backend Contracts
-
-### 6.1 Standard-shaped Feature Contracts
-
-下列 payload應直接對應 local Release 18 OpenAPI：
-
-- `NnwdafEventsSubscription`
-- `MLModelMonitorReg`
-- `MLModelMonitorSub`
-- `MLModelMonitorNotify`
-- `MLModelAccuracyInfo`
-- `NwdafMLModelProvSubsc`
-- `NwdafMLModelProvNotif`
-- `MLEventNotif`
-- `NadrfDataRetrievalSubscription`
-- `NadrfDataRetrievalNotification`
-- `FetchInstruction`
-- `NadrfDataStoreRecord`
-- `ProblemDetails`
-
-private backend path可加 internal prefix，但 request/response body不得重新命名標準欄位。
-
-### 6.2 Required Private Contracts
-
-第一版只保留：
-
-1. liveness/readiness endpoint
-2. backend connection/storage requirements handshake
-3. transport-level routing correlation，僅在無法由 standard resource ID表達時使用
-
-建議 handshake語意：
-
-```json
-{
-  "availableDataSources": ["adrf", "mongodb"]
-}
-```
-
-```json
-{
-  "storageMode": "mongodb"
-}
-```
-
-exact path與 error shape由對應 feature detailed plan固定；不預先建立通用 RPC framework。
-
-### 6.3 Removed Contract Families
-
-下列舊設計不再實作：
-
-- custom accuracy report envelope與 parallel model identity
-- dataset request/chunk/completion API
-- provider attempt ID與 fallback chunk protocol
-- Go-owned normalized training observation
-- custom `ModelReady`
-- base/target generation CAS
-- `APPLIED`、`FAILED`、`STALE`、`NO_MATCH`、`CONFLICT` apply result
-- Go/PyMTLF active-generation reconciliation API
-
-若後續實測證明標準 contract無法表達必要 behavior，必須帶具體 blocker重新決策，不能先保留這些
-複雜 contract作為預防性 abstraction。
-
----
-
-## 7. Backend Polling And Handshake
-
-每個 backend獨立維護：
-
-```text
-UNKNOWN -> POLLING -> READY_CHECK_PASSED -> HANDSHAKING -> USABLE
-                    ^                                  |
-                    `----------- UNAVAILABLE <---------'
-```
-
-要求：
-
-1. Go啟動後立即 probe一次
-2. failure採 bounded exponential backoff，例如 1、2、5、10、30 seconds並加入 jitter
-3. readiness成功不等於 usable；MTLF backend還要完成 storage handshake
-4. live operation transport failure立即將對應 backend標為 unavailable
-5. polling與 shutdown使用 app-owned context，不留下 detached goroutine
-6. state transition留下結構化 log；第一版不要求額外 distributed health store
-7. request path讀取 cached readiness state，不在每次 consumer request同步做 health network call
-
-Phase 2只協商並快取MTLF storage mode；尚未有data-dependent MTLF feature，因此不切換既有UPF writer。
-Phase 5接入raw-notification writer後，Go必須先完成write sink安全切換，再讓data-dependent operation使用
-新的mode。
-
----
-
-## 8. Mongo Raw Notification Contract
-
-第一版 document以一個原始 notification item為單位，概念形狀如下：
-
-```json
-{
-  "correlationId": "...",
-  "receivedAt": "...",
-  "measurementTime": "...",
-  "notificationItem": {}
-}
+Go -> GET {nrfApiRoot}/nnrf-disc/v1/nf-instances with standard query
+Go <- 200 SearchResult
+PyAnLF <- same standard SearchResult
 ```
 
 規則：
 
-1. `notificationItem`保存收到的原始 standard-oriented JSON
-2. `measurementTime`優先使用 notification item的 measurement/start time，fallback必須明列
-3. indexed metadata不得演變成第二份 normalized feature record
-4. Mongo write failure記錄並暴露 health/metric，不阻止 Go完成已獨立成功的其他 sink write
-5. PyMTLF query使用 bounded batch/cursor，不一次無限制 materialize整個 collection
-6. retention由 deployment/config設定；第一版不建立 automatic schema migration
-7. Go read-write與 PyMTLF read-only credential分離
+1. internal path可使用private prefix，但method、query parameter name、encoding、response及error shape對齊
+   `TS29510_Nnrf_NFDiscovery.yaml`。
+2. Go固定或驗證`requester-nf-type=NWDAF`及containing NWDAF identity。
+3. Go不得將`SearchResult`預先縮減成`[]string` endpoint。
+4. AnLF backend從`nfInstances`/`nfServices`選擇SMF。
+5. 第一版沿用現況：選擇全部符合條件且提供`nsmf-event-exposure`的候選SMF。
+6. 未來AoI-based filtering屬AnLF selection policy；目前只記錄為後續目標，不實作。
+7. `configured`模式的endpoint選擇也由AnLF backend決定，不留在Go processor。
+8. `nrf`與`configured`模式都由AnLF backend將已選定的apiRoot放入private
+   `Target-Api-Root` header交給Go；Go不再根據自己的SMF config重新選擇target。
 
-minimum indexes應依實際 query plan在 detailed phase確認，至少評估：
+TS 29.510 clause 5.3.2.2.2要求成功response為200並帶可cache的validity period及匹配NF profiles；
+400表示query input錯誤、403表示不允許discover、500表示NRF internal error。Go/backend不得以private
+error code取代這些standard semantics。
 
-- `measurementTime`
-- `correlationId`
-- `notificationItem.supi`
-- `notificationItem.dnn`
+### 5.3 SMF/UPF Subscription And Direct Callback
+
+```text
+AnLF backend -> Go: POST standard NsmfEventExposure
+Go -> selected SMF: POST /nsmf-event-exposure/v1/subscriptions
+Go <- 201 + Location + NsmfEventExposure
+AnLF backend <- same standard response
+
+SMF/UPF ---------------- POST standard notification ----------------> AnLF backend
+```
+
+AnLF backend在subscription的`notifUri`或UPF event notification URI填入自己維護的callback endpoint。
+TS 29.508 clause 4.2.3.2說明`UPF_EVENT`/`QOS_MON`明確subscription會造成UPF direct notification；
+TS 29.564 clause 5.2.1.2也列出經SMF建立subscription後由UPF直接通知NF service consumer的流程。
+
+因此target architecture不再包含：
+
+- Go-owned `/collector/notify`作為SMF/UPF資料必經入口
+- collection requirements GET
+- observation binding API
+- Go將notification轉成custom observation再POST給AnLF backend
+- Go-owned analytics data scheduler
+
+AnLF backend收到SMF `NsmfEventExposureNotification`或UPF `NotificationData`後，在schema與
+correlation驗證成功且最新notification已進入bounded ingestion buffer後回204。buffer滿載時採
+drop-oldest，不因capacity回503；這是明確接受的best-effort新資料優先政策，必須以drop metric與
+structured warning暴露資料遺失。格式、correlation或request-size錯誤仍依對應OpenAPI回應。
+
+### 5.4 Consumer Delete Versus Collection Cleanup
+
+consumer取消Events Subscription與取消底層SMF collection resource是兩個分離的lifecycle：
+
+1. Go先將external DELETE路由到AnLF backend。
+2. AnLF backend停runtime、移除consumer subscription、更新自己維護的collection refcount，
+   並記錄cleanup intent後回204。
+3. Go收到backend 204後移除external route並向consumer回204；不等待所有SMF DELETE。
+4. PyAnLF-owned cleanup worker只在最後一個reference消失時，向Go發送標準形狀的
+   `DELETE /internal/v1/smf-event-exposure/subscriptions/{subId}` private proxy request。
+5. Go依create回應時已保存的SMF Location呼叫標準DELETE，不重新discovery或selection。
+6. SMF cleanup失敗時保留Location與cleanup intent並bounded-backoff retry；404可由AnLF backend解讀為
+   resource已不存在的terminal cleanup result，但Go/backend wire仍保留standard 404。
+
+SMF collection profile sharing、refcount key、stop-before-cleanup及last-reference delete從現有Go實作等價
+移植到PyAnLF；現有失敗後只記log且遺失tracking的best-effort cleanup則明確取代為
+可retry/reconcile的新行為。
+
+### 5.5 Subscription Admission Versus Collection
+
+TS 29.520 clause 4.2.2.2.2把EventsSubscription create與後續資料蒐集視為不同procedure，並允許partial
+acceptance；只有「要求過去statistics但必要資料不存在」明確要求500 `UNAVAILABLE_DATA`。因此target direction：
+
+1. AnLF backend可接受需要未來資料的analytics subscription，不以同步完成SMF subscription及後續
+   SMF/UPF delivery setup作為201的必要條件。
+2. historical request若已知必要資料不存在，依規格回500及`UNAVAILABLE_DATA`。
+3. unsupported event或feature依標準`failEventReports`/error semantics處理。
+4. runtime data source暫時失敗時保留subscription並由AnLF backend重試蒐集；若未來要通知consumer
+   failure/termination，必須先確認已negotiated feature與標準`failNotifyCode`/`termCause`適用條件，
+   不自行發明callback。
 
 ---
 
-## 9. Direct ADRF Fetch Controls
+## 6. Storage And Retrieval
 
-PyMTLF direct fetch至少必須：
+### 6.1 Raw Notification Storage Ownership
 
-1. 驗證 `fetchUri`為允許的 HTTP(S) URI；production預設 HTTPS
-2. 驗證 origin符合 Go傳入或 deployment設定的 ADRF allowlist
-3. 拒絕導向非信任 origin的 redirect
-4. 檢查 `FetchInstruction.expiry`
-5. 只使用 instruction提供的 `fetchCorrIds`
-6. 使用 bounded response size、request timeout與 retry
-7. 正確處理 `200 NadrfDataStoreRecord`、`204`與 standard `ProblemDetails`
-8. 不將 fetch URI或 credential寫入一般 log
+AnLF backend直接收到SMF/UPF notification後，依目前source agreement寫入可用storage：
 
-OAuth token delegation不是第一版 local completion條件，但 client boundary不得把 long-lived NWDAF private
-credential寫進 PyMTLF config。啟用 production OAuth前需建立短期 token取得方式與 integration test。
+- MongoDB：AnLF backend直接寫。
+- ADRF：AnLF backend建立標準`NadrfDataStoreRecord`，交由Go呼叫ADRF。
+
+Mongo contract第一版：
+
+1. 保存原始standard notification JSON，不轉成training feature record。
+2. 不加入schema version或migration framework。
+3. 只增加query/index所需的最小metadata，例如received time、measurement time、source、
+   notification/subscription correlation。
+4. MTLF backend使用read-only credential直接查詢。
+5. Go不寫Mongo、不提供Mongo query API，也不取得dataset bytes。
+
+ADRF storage依TS 29.575 clause 4.2.2.2使用：
+
+```http
+POST /nadrf-datamanagement/v1/data-store-records
+Content-Type: application/json
+
+NadrfDataStoreRecord
+```
+
+成功必須處理201、Location及response representation；error使用該API的`ProblemDetails`。
+
+### 6.2 Backend Sync And Source Agreement
+
+Phase 2的MTLF-only strict storage handshake被本節取代。兩個backend都採：
+
+```text
+POLLING -> READY -> SYNCING -> USABLE
+```
+
+sync目的不是交換security key，而是讓三個process對目前runtime state有共同認知：
+
+- Go目前可執行的standard peer capabilities
+- AnLF backend觀察到的Mongo/ADRF write availability
+- MTLF backend可直接使用的Mongo/ADRF read capability
+- active resource/routing snapshot
+- MTLF backend選擇的source preference/effective source
+
+Go是central sync coordinator，AnLF與MTLF backend不建立直接sync channel。兩個backend每次process
+啟動都產生新的`processInstanceId` UUID並由health回應回報；Go假如在兩次成功probe之間
+看到UUID變更，仍必須將該backend視為內存已重置的新process並完整resync。
+
+Go可將AnLF backend回報的Mongo availability更新到central snapshot後sync給MTLF backend；
+MTLF backend回報的effective source也可經Go更新給AnLF backend。每個backend只收到自己有
+production consumer的typed section，不做Python-to-Python direct sync或盲目廣播相同payload。
+initial/reconnect sync在成功前會擋住USABLE；USABLE後的periodic refresh不在每次request期間
+反覆將state切成SYNCING，但refresh失敗會轉UNAVAILABLE。Go-owned snapshot或backend回報的typed
+observation改變時可立即喚醒受影響backend的refresh；只有語意值真正改變才轉發，避免
+AnLF與MTLF更新形成無限循環。
+
+bootstrap規則：
+
+1. MTLF尚未選擇時，AnLF backend向所有當下可用storage寫入；兩者可用即dual-write。
+2. selection完成後，MTLF backend依config preference與live availability選擇source。
+3. preferred source失效時可fallback到另一個可用source；不得沿用舊設計把temporary source loss永久視為
+   handshake conflict。
+4. backend restart或reconnect後重新sync。
+5. sync contract保持小型，exact fields由Phase 3/Phase 5按真正consumer固定，不預先建立通用協議。
+6. Go的routing/snapshot table只存於memory；Go process停止或重啟時所有訂閱與routing state
+   視為遺失，實驗重跑並由consumer重新訂閱，目前不做持久化或雙向authority recovery。
+
+### 6.3 ADRF Retrieval
+
+1. MTLF backend決定資料、時間範圍、來源及query時機。
+2. MTLF backend建立標準`NadrfDataRetrievalSubscription`並交由Go。
+3. Go呼叫ADRF POST；成功處理201、Location與standard representation。
+4. ADRF向Go-owned callback POST `NadrfDataRetrievalNotification`。
+5. Go成功驗證並保存/交付notification後回204，再將完整notification與`fetchInstruct`轉給MTLF backend。
+6. MTLF backend使用`fetchUri`及`fetchCorrIds`直接GET ADRF。
+7. ADRF回200時解析`NadrfDataStoreRecord`；204表示沒有matching data。
+8. MTLF backend完成或不再需要資料時，要求Go執行standard retrieval unsubscribe。
+
+Go不代理dataset bytes，不做chunking、normalization、backpressure或dataset completion state machine。
 
 ---
 
-## 10. Simplified Model Lifecycle
+## 7. Availability And Failure Boundary
 
-第一版只要求：
+1. Go啟動不要求backend process已存在。
+2. Go對AnLF與MTLF backend分別polling `/health/ready`。
+3. readiness成功後必須sync才usable；兩個backend使用相同lifecycle概念。
+4. backend configured但unavailable時，需要該backend的new operation回該standard API允許的
+   `503 ProblemDetails`。
+5. backend disabled時，不advertise依賴它且已實作的capability。
+6. advertisement依configuration與implemented capability，不因瞬時readiness反覆更新NRF profile。
+7. live backend transport failure將該backend標記unavailable並立即喚醒polling。
+8. MTLF unavailable不應中止AnLF使用既有模型提供analytics；AnLF unavailable也不應阻止獨立的MTLF工作。
+9. backend斷線期間直接送往該backend的SMF/UPF notification可能遺失，第一版接受此限制；backend恢復後
+   依Go snapshot重建未來的data collection。
+10. polling在USABLE後仍持續；process UUID變更、health/probe failure或live transport failure都會導致
+    UNAVAILABLE→READY→SYNCING→USABLE完整循環，不只處理startup ordering。
 
-1. PyMTLF完成 local training並產生 PyAnLF-compatible bundle
-2. artifact原子發布到 MTLF backend private artifact endpoint
-3. PyMTLF配置 `modelUniqueId`
-4. PyMTLF建立標準 `MLEventNotif`，以 `mLFileAddr.mLModelUrl`指向 artifact
-5. Go驗證並 routing notification到 AnLF backend
-6. PyAnLF同步下載、檢查 bundle限制、完整載入後才切換 runtime model
-7. PyAnLF成功回 HTTP success，失敗回 `ProblemDetails`
-
-保留 content-addressed artifact storage與 PyAnLF安全下載限制。artifact digest可存在 URL identity、ETag或
-bundle manifest，不要求另建非標準 provision欄位。
-
-existing SQLite generation journal與reconciliation primitives只服務已取消的generation/apply protocol，
-且沒有新的production consumer。已決定在Phase 2連同專用models、config與tests移除。未來若local training
-需要job persistence，必須依實際job semantics建立新的小型內部儲存，不復用舊state machine。
+external HTTP status不得依local convenience決定。每個feature detailed plan要先列OpenAPI response matrix，
+再定義backend unavailable、peer NF error與domain rejection如何映射。
 
 ---
 
-## 11. Feature-oriented Migration Phases
+## 8. Accuracy, Training And Model Provision
 
-每個 phase開始前建立 detailed plan，列出 exact routes、OpenAPI types、repository changes、cutover與 tests。
+1. Accuracy policy、threshold、retrain trigger與training job都由MTLF backend擁有。
+2. MTLF backend使用簡單local Python trainer；multiple-NWDAF FL不屬於本transition。
+3. MTLF backend擁有model identity及artifact publication。
+4. model artifact由MTLF-backend-owned HTTP URL提供。
+5. model provision body沿用`NwdafMLModelProvNotif`、`MLEventNotif`與
+   `mLFileAddr.mLModelUrl` standard semantics。
+6. Go只驗證並route標準payload到AnLF backend。
+7. AnLF backend下載、檢查package、完整載入後才切換runtime model。
+8. model package可沿用`nwdaf-daisy-improvement-plan.md`中已驗證的bundle概念，但production命名與依賴
+   不保留Daisy。
+9. 不建立custom `ModelReady`、base/target generation CAS、多狀態apply-result或active-generation
+   reconciliation API。
 
-### Phase 1: Foundation Baseline And Replan Record
+---
 
-狀態：已建立並驗證 baseline；新架構下只選擇性保留。
+## 9. Feature-oriented Migration Phases
+
+### Phase 1: Foundation Baseline
+
+狀態：完成。
+
+- PyMTLF service/package/config/test基礎
+- MTLF backend naming與artifact boundary
+- Python lint/test baseline
+- legacy plan re-evaluation
+
+### Phase 2: Backend Connectivity Foundation
+
+狀態：原始版本已實作；architecture correction待Phase 3/5完成。
 
 保留：
 
-- PyMTLF repository、Python package、config、logging、health與 lifecycle
-- MTLF backend artifact repository與 PyAnLF bundle consumer hardening
-- Go `mtlfBackend` config與 readiness client基礎
-- PyAnLF/PyMTLF Ruff與 tests
+- AnLF/MTLF independent polling
+- cached availability
+- backoff、wake-up與shutdown ownership
+- liveness/readiness routes
+- disabled/configured/unavailable區分
 
-不再作為 target requirement：
+需修正：
 
-- durable generation/apply state machine
-- startup reconciliation protocol
-- 舊 future custom contract inventory
+- MTLF-only handshake改成兩個backend都使用的readiness後sync
+- strict `adrf|mongodb|dual` requirement failure改成preference+availability agreement
+- 移除Go作為future Mongo writer的assumption
 
-詳細紀錄見 Phase 1文件。
+### Phase 3: Analytics Subscription, Collection And Raw Storage
 
-### Phase 2: Backend Connectivity And Standard Contract Foundation
+詳細計畫：`Phase 3 Analytics Subscription Routing.md`
 
-Feature goal：Go可靠連接兩個 backend，建立 polling、MTLF storage handshake與 Release 18 contract basis。
-
-包含：
-
-- AnLF/MTLF backend polling、cached state、backoff與 shutdown
-- MTLF available-source handshake、source inventory與 negotiated storage mode cache
-- 移除PyMTLF舊SQLite generation journal、reconciliation與專用code/tests/config
-- configured/disabled/unavailable service behavior與 `503 ProblemDetails`
-- Release 18 OpenAPI type gap audit與 scoped generation/compatibility strategy
-- standard body不經parallel DTO translation的transport policy與後續feature test requirements
-- Go naming boundary與 backend-independent client package ownership
-
-完成條件：backend restart後 Go可恢復 polling、重新 handshake並正確 gate已接入backend的operation；
-raw storage sink切換仍由Phase 5完成。
-
-### Phase 3: Analytics Subscription Routing
-
-Feature goal：將 AnLF相關 analytics subscription behavior從 Go domain logic收斂到 AnLF backend。
-
-包含：
-
-- `Nnwdaf_EventsSubscription` create/update/delete的 standard-shaped backend route
-- Go保留 external URI、validation、data collection consumer與標準 response
-- PyAnLF擁有 runtime creation、report scheduling、analytics shaping與 subscription state
-- backend unavailable的 create/update rollback與 `503`
-- existing AnLF custom runtime API與 contract依 cutover結果縮減或移除
-
-完成條件：同一份 standard subscription可經 Go routing由 PyAnLF建立、更新、通知與刪除，且無雙重 owner。
+- `Nnwdaf_EventsSubscription` standard-shaped routing到AnLF backend
+- private create仍使用POST，update PUT，delete DELETE
+- PyAnLF-owned analytics resource/runtime
+- standard `Nnrf_NFDiscovery`-shaped Go/backend interaction
+- SMF candidate filtering與fan-out policy移到PyAnLF
+- SMF mode/configured endpoints、collection sharing與refcount移到PyAnLF
+- Go對PyAnLF以`Target-Api-Root`指定的SMF執行standard subscription，並由該procedure建立SMF/UPF delivery
+- PyAnLF在last reference消失後透過Go執行standard SMF DELETE
+- SMF/UPF callback直接到PyAnLF
+- PyAnLF direct Mongo raw write
+- PyAnLF standard-shaped ADRF storage request經Go送ADRF
+- drop-oldest bounded ingestion/analytics/ADRF buffers與startup validation
+- unified AnLF/MTLF continuous reconnect/sync foundation與process incarnation UUID
 
 ### Phase 4: ML Model Monitoring And Accuracy Policy
 
-Feature goal：以 `Nnwdaf_MLModelMonitor` standard shape完成 AnLF accuracy measurement到 MTLF policy。
+- standard `Nnwdaf_MLModelMonitor` routes
+- AnLF backend沿用既有metric calculation、ground-truth alignment與reporting gate產生accuracy measurement
+- MTLF backend擁有monitor registration與accuracy/retrain policy
+- 將Go `trigger.go`、`state_store.go`與accuracy config defaults等價移植到PyMTLF，不重新設計判斷機制
+- 先以既有Go tests建立behavior matrix，再以Python parity tests證明相同decision/state transition
+- Go只做standard validation、resource/callback routing與error mapping
+- 移除custom accuracy envelope及Go accuracy policy
 
-包含：
+### Phase 5: Dataset Selection And Direct Retrieval
 
-- `/registrations` routing到 MTLF backend
-- `/subscriptions` routing到 AnLF backend
-- PyAnLF產生 `MLModelMonitorNotify`
-- Go callback/notification routing
-- PyMTLF接收 `MLModelAccuracyInfo`並執行簡單 accuracy/retrain policy
-- 移除 custom model-accuracy-report contract與 Go accuracy policy
+- MTLF source preference與fallback
+- standard ADRF retrieval subscribe/callback/unsubscribe經Go
+- 完整`FetchInstruction`交付MTLF backend
+- MTLF direct ADRF fetch
+- MTLF read-only Mongo query
+- 真實ADRF/Mongo process-level retrieval tests
 
-完成條件：accuracy資訊從 PyAnLF到 PyMTLF全程使用標準欄位，Go不執行 policy。
+### Phase 6: Local Training And Model Provision
 
-### Phase 5: Training Data Storage And Direct Retrieval
-
-Feature goal：完成 PyMTLF direct ADRF/Mongo data path。
-
-包含：
-
-- Go raw UPF notification Mongo write與 indexes
-- storage mode bootstrap、handshake apply與 dual-write
-- PyMTLF read-only Mongo query
-- PyMTLF建立 `NadrfDataRetrievalSubscription` request
-- Go ADRF subscribe/callback/unsubscribe lifecycle
-- 完整 `FetchInstruction` forwarding
-- PyMTLF direct ADRF fetch、security limits與 response parsing
-- source selection與 retry留在 PyMTLF
-- 移除 Go retrain retrieval job、dataset upload與 provider/chunk design
-
-完成條件：ADRF與 Mongo mode各自完成真實 process-level retrieval test；Go不接收 dataset bytes。
-
-### Phase 6: Local Training And ML Model Provision
-
-Feature goal：由 PyMTLF完成 local training並以標準 model provision flow交付 PyAnLF。
-
-包含：
-
-- 簡單 Python trainer與 preprocessing seam
-- candidate evaluation最低必要條件
-- artifact publish與 `modelUniqueId`
-- `NwdafMLModelProvSubsc` resource behavior routing到 MTLF backend
-- `NwdafMLModelProvNotif`/`MLEventNotif`經 Go routing到 AnLF backend
-- PyAnLF同步 download/load與 HTTP success/`ProblemDetails`
-- URL allowlist、size、timeout、safe extraction與 cache integrity
-- 移除 custom ModelReady/generation/apply protocol assumptions
-
-完成條件：PyMTLF以 ADRF或 Mongo資料訓練後，PyAnLF可載入模型並用於既有 analytics runtime。
+- local trainer與job lifecycle
+- artifact package與MTLF-owned URL
+- standard ML model provision routing
+- AnLF download/load
+- 移除custom generation/apply assumptions
 
 ### Phase 7: Legacy Removal And Closure
 
-Feature goal：移除 transition後不再使用的 Go MTLF、Daisy與 custom backend paths。
-
-包含：
-
-- 移除 Daisy client、callback、config、tests與 dependency
-- 移除 Go accuracy policy、training scheduler、dataset provider與 model apply coordinator
-- 移除被 standard-shaped routes取代的 PyAnLF/PyMTLF private APIs
-- NRF service/capability advertisement audit
-- full cross-repository、restart、failure與 no-legacy-name audit
-
-完成條件：production dependency graph、config與 source不再包含 Daisy，且每個 feature只有一個 owner。
+- 移除Go legacy MTLF scheduler、dataset provider及model coordinator
+- 移除Daisy client/callback/config/test/dependency
+- 移除被standard-shaped routes與direct data paths取代的custom APIs
+- final NRF advertisement、config、naming與dead-code audit
 
 ---
 
-## 12. Verification Strategy
+## 10. Verification Strategy
 
-### 12.1 Contract Verification
+每個feature phase至少驗證：
 
-- request/response JSON對照 local Release 18 OpenAPI required/optional fields
-- standard enum、oneOf/anyOf與 `ProblemDetails` tests
-- Go/backend round-trip不得重命名或丟失標準欄位
-- current free5GC generated model與 scoped compatibility type差異有明確 tests
+1. standard method/path/status matrix
+2. Go與Python對相同OpenAPI payload的round-trip
+3. unsupported Release 18 field不被silent drop
+4. backend unavailable/reconnect/sync
+5. standard peer error與`ProblemDetails` mapping
+6. process-level callback與direct data path
+7. 每個移植feature的`preserve`／`explicitly replace`／`remove as obsolete` behavior inventory
+8. old Go characterization tests與new Python parity tests對相同scenario的decision/state-transition equivalence
 
-### 12.2 Go Verification
+關鍵integration matrix：
 
-- focused processor/consumer/client tests
-- polling、backoff、reconnect、handshake與 shutdown race tests
-- callback correlation、Location rewrite與 backend routing tests
-- Mongo raw persistence/index query tests
-- `make test`、`make build`與 `make lint`
+- consumer POST/PUT/DELETE → Go → AnLF backend
+- PyAnLF discovery request → Go → NRF `SearchResult` → PyAnLF selection
+- PyAnLF standard SMF request → Go → all selected SMFs
+- SMF/UPF → PyAnLF direct notification → Mongo/ADRF storage
+- ADRF retrieval callback → Go → MTLF → direct ADRF fetch
+- Mongo raw record → MTLF direct query
+- accuracy notify → retrain → model provision → AnLF download/load
 
-### 12.3 Python Verification
-
-- PyAnLF/PyMTLF unit、API與 Ruff
-- direct ADRF fetch URI/expiry/redirect/timeout/size tests
-- Mongo read-only query/batching tests
-- local trainer deterministic smoke
-- artifact publish、download與load tests
-
-### 12.4 Cross-process Verification
-
-至少覆蓋：
-
-1. Go先啟動、backend後啟動與 polling recovery
-2. backend restart後重新 handshake
-3. AnLF-only analytics在 MTLF unavailable時繼續服務
-4. ADRF subscribe -> callback -> PyMTLF direct fetch -> unsubscribe
-5. Mongo raw write -> PyMTLF direct query
-6. accuracy notify -> retrain -> model provision -> PyAnLF load
-7. disabled、unavailable、timeout與 malformed standard payload failures
-
-完整 OAuth、NRF discovery與 production TLS若未在本地執行，必須明確列為未驗證，不得以 unit test代替。
+Go verification依`NWDAF/Makefile`執行`make test`、`make lint`、`make build`；Python repositories執行各自
+formatter/linter/test。需要Mongo、NRF、SMF、UPF或ADRF的check必須分開標示unit、process-level及environment
+integration，不得以mock test宣稱完整驗證。
 
 ---
 
-## 13. Explicitly Deferred
+## 11. Explicitly Deferred
 
-本 transition第一版不包含：
-
-- PyAnLF或 PyMTLF成為獨立 NF
 - multiple-NWDAF federated learning
-- centralized FL/Daisy compatibility
-- automatic ADRF-to-Mongo failover without dual-write
-- Mongo schema migration/version framework
-- distributed training job transaction與跨程序 exactly-once guarantee
-- custom generation CAS與 multi-status apply reconciliation
-- artifact signing或 untrusted third-party model execution
-- production OAuth token delegation implementation，除非對應 phase另行納入
+- AoI-based SMF candidate filtering
+- ADRF NRF discovery
+- durable cross-Go-restart subscription recovery
+- message broker或distributed transaction
+- Mongo schema version/migration framework
+- production TLS、mTLS、OAuth delegation及certificate management
+- Python backend獨立NF registration
+- artifact signing或untrusted third-party model execution
+
+deferred項目不得被加入目前acceptance criteria，也不得成為目前plain-HTTP implementation的blocker。
 
 ---
 
-## 14. Decision And Replan Gates
+## 12. Future Decision Gates
 
-以下情況必須停止並重新確認：
+以下不是已確認架構的翻案點，而是留到有對應feature consumer時才鎖定：
 
-1. local OpenAPI缺失使標準 payload無法可靠實作
-2. ADRF要求的 authentication無法安全委派給 PyMTLF direct fetch
-3. raw Mongo notification無法支援已確認的 MTLF query scope或 index
-4. 標準 model provision同步 HTTP結果不足以保證 PyAnLF安全切換
-5. backend polling/handshake與 NRF advertisement產生規格衝突
-6. feature cutover需要同時保留兩個 production owner
-7. 移除 legacy path會破壞尚未遷移的 analytics feature
+1. Phase 5 storage preference/fallback的exact config shape及是否保留explicit dual preference。
+2. runtime data collection持續失敗時，何時使用已negotiated standard failure notification或termination；
+   不支援對應feature時只能維持local retry/observability，不能發明callback。
 
-遇到上述情況不得以恢復舊的 generic chunk/provider/generation framework作為默認 workaround。
+遇到OpenAPI、TS、current generated type或實作假設衝突時，必須先更新計畫並請求決策，不得無聲改回
+Go-owned collection、dataset proxy、strict handshake或custom generation framework。
 
----
-
-## 15. Completion Criteria
-
-整體 transition完成時：
-
-1. Go主要執行 standard SBI、routing、callback、NF identity與必要 storage write
-2. AnLF/MTLF feature behavior分別由 PyAnLF/PyMTLF擁有
-3. 標準 feature的 backend payload與 Release 18 OpenAPI shape一致
-4. PyMTLF可直接從 ADRF或 MongoDB取得 training data
-5. Go不代理 dataset bytes或執行 training policy
-6. PyMTLF完成 local training並以標準 model provision shape提供模型
-7. PyAnLF成功載入模型並繼續提供 analytics
-8. backend unavailable時 Go polling並對需要的 operation回正確錯誤
-9. 沒有並行的 Go/Python owner、dead custom API或 speculative contract
-10. NWDAF、PyAnLF與 PyMTLF沒有 Daisy runtime字樣或相依性
-11. PyMTLF沒有舊generation journal、reconciliation engine或其專用state models
-12. 三個 implementation repositories各自通過 tests/lint/build與 cross-process verification
-13. deferred OAuth/TLS/NRF或環境級驗證限制有明確紀錄
+同樣地，移植過程若要改變既有business algorithm、config default、threshold、state/window semantics或edge-case
+處理，屬於新的behavior decision gate；即使修改者認為新作法較簡單或較合理，也不得直接隨port實作。
 
 ---
 
-## 16. Relationship To Prior Plans
+## 13. Superseded Designs
 
-AnLF backend transition已完成的 ownership經驗仍可作為 migration與 test參考，但其現有 private contract
-不是永久限制。本計畫允許在對應 standard feature phase修改：
+下列舊方向不再是target architecture：
 
-- `PyAnLF/`
-- `NWDAF/internal/anlf/`
-- `NWDAF/internal/sbi/`
-- shared Go wiring、config與 tests
+- Go-owned normalized dataset provider/chunk/completion API
+- Go-owned SMF/UPF notification ingress及observation forwarding
+- collection-requirements GET與observation-binding control plane
+- Go-owned raw Mongo writer或Mongo query proxy
+- MTLF-only strict storage handshake及no-fallback mode
+- private PUT create/upsert取代standard POST
+- custom callback token/idempotency cache作為第一版必要條件
+- custom accuracy report envelope
+- custom `ModelReady`與generation CAS
+- Go/PyMTLF active-generation reconciliation
 
-舊 MTLF backend plan中與 Go-owned data provider、chunk delivery、custom generation/apply state machine有關的
-內容由本文件取代。Phase 1文件只保留已提交 foundation的歷史與可重用部分，不再作為 future contract規格。
+historical detailed plans仍可說明已實作過什麼，但新的implementation與review一律以本文件及最新feature
+detailed plan為準。
