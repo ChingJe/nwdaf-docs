@@ -2,7 +2,7 @@
 
 Date: 2026-07-23
 
-Status: Implementation baseline recorded；code-review remediation and required three-process integration pending
+Status: Initial model provision and monitoring slice implemented, verified, and committed
 
 Parent plan:
 
@@ -1565,10 +1565,10 @@ decision gate，依本計畫與development policy直接完成。
 - Unreachable historical Go MTLF/Daisy與custom handler implementation留待legacy cleanup；本次已以route、
   startup wiring及sample config確保其不再擁有production behavior。
 
-### 22.4 Current Review Gate
+### 22.4 Review Gate Closure
 
-上述紀錄保存initial implementation及當時local verification的事實，不代表本phase已通過final acceptance。
-2026-07-23完整slice review確認六項current-slice defect及一項required integration evidence gap，統一由
+上述紀錄保存initial implementation及當時local verification的事實。2026-07-23完整slice review確認六項
+current-slice defect及一項required integration evidence gap，統一由
 `code-reviews/Initial Model Provision And Monitoring Review Ledger.md`追蹤：
 
 - unified sync不得接受partial state；
@@ -1579,4 +1579,21 @@ decision gate，依本計畫與development policy直接完成。
 - Go error/redirect forwarding必須使用operation-specific OpenAPI contract；
 - actual Go、PyAnLF及PyMTLF process-level round-trip必須通過。
 
-以上ledger gate全部關閉前，本節狀態維持implementation baseline，不標示為fully complete。
+2026-07-24以上ledger gate已全部關閉。Final local evidence為：
+
+- NWDAF full test、lint、build及selected race tests通過。
+- PyAnLF 232 passed、1 skipped，ruff通過。
+- PyMTLF 55 passed，ruff通過。
+- actual Go、PyAnLF與PyMTLF三程序harness連續兩次通過，包含PyMTLF unavailable→polling/sync recovery、
+  artifact首次失敗後原子重試、WAPE round-trip，以及registration delete/downstream cleanup間restart後的
+  orphan cleanup。
+- 跨repository harness已移至`nwdaf-resources/tests/mtlf_model_monitor/`；搬移並修正fake SMF resource
+  identity後，從獨立Go module連續執行三次完整scenario通過，三個runtime repositories只保留各自
+  unit／contract tests。
+
+整合過程另修正兩個cross-process才會顯現的契約問題：Go空association list不得序列化為`null`，以及
+PyAnLF動態載入`model.py`不得在verified artifact cache產生`__pycache__`而破壞restart integrity。
+
+本phase只宣告local initial-model/monitor slice完成；real NRF/SMF/UPF/ADRF/Mongo E2E、Phase 5 dataset及
+Phase 6 training/new generation仍不在本completion claim內。Implementation已依repository boundary提交；
+exact commit記錄於current review ledger。

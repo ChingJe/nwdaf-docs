@@ -2,7 +2,7 @@
 
 Date: 2026-07-23
 
-Status: Phase 1 through Phase 3 implemented and verified; Phase 4 implementation baseline and local repository verification recorded, with code-review remediation and the required three-process integration gate still open
+Status: Phase 1 through Phase 4 implemented and locally verified; Phase 5 dataset retrieval is next
 
 Related records:
 
@@ -577,9 +577,10 @@ selection仍由Phase 5完成。
 
 詳細計畫：`Phase 4 ML Model Monitoring And Accuracy Policy.md`
 
-狀態：implementation baseline與local lint/test/build/race驗證已記錄。Initial provision、standard monitoring、
-WAPE measurement與degradation-only policy已切換至backend owner；目前仍須關閉code-review ledger中的current
-slice defects及required三process integration gate，完成前不視為fully complete。
+狀態：initial provision、standard monitoring、WAPE measurement與degradation-only policy已切換至backend
+owner；code-review ledger中的current-slice defects及required三process integration gate已於2026-07-24
+關閉。跨repository process harness位於
+`nwdaf-resources/tests/mtlf_model_monitor/`，不納入任何單一NF runtime repository。
 
 - standard `Nnwdaf_MLModelProvision` subscription/notification routes for configured seed model
 - PyAnLF non-blocking model demand、compatible-model reuse、direct artifact download/load及runtime binding
