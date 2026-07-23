@@ -794,7 +794,8 @@ future-phase缺口，記到相應future plan，不重新打開本slice。
 - Go使用operation-specific status allowlist驗證backend response；未宣告status及private redirect不會外洩，
   允許的external standard redirect只由Go follow。
 - PyAnLF載入artifact中的`model.py`時不再於content-addressed cache產生`__pycache__`；同一已驗證cache可在
-  process restart後重新驗證及載入。runtime cache已由`.gitignore`排除，既有`artifacts/initial` fixture保留。
+  process restart後重新驗證及載入。runtime cache已由`.gitignore`排除。後續ownership correction已將
+  version-controlled initial fixture移至PyMTLF `seed_models/initial`，PyAnLF不再保存initial model source。
 
 ### 15.2 Three-Process Evidence
 

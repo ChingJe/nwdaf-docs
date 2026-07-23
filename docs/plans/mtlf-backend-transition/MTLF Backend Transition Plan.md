@@ -451,9 +451,13 @@ bootstrap規則：
 3. Go呼叫ADRF POST；成功處理201、Location與standard representation。
 4. ADRF向Go-owned callback POST `NadrfDataRetrievalNotification`。
 5. Go成功驗證並保存/交付notification後回204，再將完整notification與`fetchInstruct`轉給MTLF backend。
-6. MTLF backend使用`fetchUri`及`fetchCorrIds`直接GET ADRF。
-7. ADRF回200時解析`NadrfDataStoreRecord`；204表示沒有matching data。
-8. MTLF backend完成或不再需要資料時，要求Go執行standard retrieval unsubscribe。
+6. Retrieval request設`consTrigNotif = true`，依TS 29.575選擇只接收`fetchInstruct`的consumer-triggered
+   profile；其他standard callback alternative仍完整保存，但視為本次profile mismatch。
+7. Go sync configured ADRF Data Management apiRoot；MTLF backend使用`fetchCorrIds`直接執行standard
+   RetrievalRequest GET。`fetchUri`完整保留，但依TS 29.575可能是任意值，只有與configured ADRF standard
+   endpoint一致時才採用；不誤用TS 29.576的MFAF Fetch POST。
+8. ADRF回200時解析`NadrfDataStoreRecord`；204表示沒有matching data。
+9. MTLF backend完成或不再需要資料時，要求Go執行standard retrieval unsubscribe。
 
 Go不代理dataset bytes，不做chunking、normalization、backpressure或dataset completion state machine。
 
@@ -488,25 +492,27 @@ external HTTP status不得依local convenience決定。每個feature detailed pl
 4. model artifact由MTLF-backend-owned HTTP URL提供。
 5. Initial Model Provision納入Phase 4：AnLF backend收到analytics subscription後先尋找compatible loaded
    model；沒有時透過Go建立standard Model Provision subscription，MTLF backend提供configured seed model。
-6. model provision body沿用`NwdafMLModelProvSubsc`、`NwdafMLModelProvNotif`、`MLEventNotif`與
+6. Version-controlled initial seed bundle及其import/package流程由MTLF backend repository擁有；AnLF backend
+   不保存initial model source，只保存下載後的runtime cache。
+7. model provision body沿用`NwdafMLModelProvSubsc`、`NwdafMLModelProvNotif`、`MLEventNotif`與
    `mLFileAddr.mLModelUrl` standard semantics。
-7. Go只驗證、mirror並route標準payload；artifact binary由AnLF backend直接向MTLF backend URL下載。
-8. AnLF backend下載、檢查package、完整載入並atomically bind後才register monitoring capability。
-9. compatible analytics subscriptions共用provision resource與loaded model；必要時以standard PUT更新同一resource
+8. Go只驗證、mirror並route標準payload；artifact binary由AnLF backend直接向MTLF backend URL下載。
+9. AnLF backend下載、檢查package、完整載入並atomically bind後才register monitoring capability。
+10. compatible analytics subscriptions共用provision resource與loaded model；必要時以standard PUT更新同一resource
    的active-demand union，不建立第二次POST/download。不同group/filter/target仍建立獨立monitoring scope，任一
    scope可依MTLF policy觸發一次model-level retrain。
-10. model package沿用`nwdaf-daisy-improvement-plan.md`及current PyMTLF/PyAnLF已驗證的bundle、immutable
+11. model package沿用`nwdaf-daisy-improvement-plan.md`及current PyMTLF/PyAnLF已驗證的bundle、immutable
     repository、safe download/cache/load概念，但production命名與依賴
    不保留Daisy。
-11. Phase 6只接local training、new artifact publication與updated/re-trained model reprovision，不重建Phase 4
+12. Phase 6只接local training、new artifact publication與updated/re-trained model reprovision，不重建Phase 4
     resource/download path。
-12. 不建立custom `ModelReady`、base/target generation CAS、多狀態apply-result或active-generation
+13. 不建立custom `ModelReady`、base/target generation CAS、多狀態apply-result或active-generation
    reconciliation API。
-13. Future multiple-AnLF以standard `consumerId`、event/filter/target隔離monitor scope；目前不實作AGG、AoI
+14. Future multiple-AnLF以standard `consumerId`、event/filter/target隔離monitor scope；目前不實作AGG、AoI
     routing或FL，但不得以single AnLF/single scope作model policy identity。
-14. Accuracy notification以standard `MLModelAccuracyInfo.deviation`承載WAPE ratio；不填percentage
+15. Accuracy notification以standard `MLModelAccuracyInfo.deviation`承載WAPE ratio；不填percentage
     `mlModelAcc`。Data sufficient的period才提供`deviation`，不足時仍送合法periodic notify但不更新PyMTLF policy。
-15. Phase 4 accuracy policy只保留degradation path；Phase 5 dataset retrieval只服務retraining/training，不再補足
+16. Phase 4 accuracy policy只保留degradation path；Phase 5 dataset retrieval只服務retraining/training，不再補足
     monitoring policy input。
 
 ---
@@ -598,9 +604,13 @@ owner；code-review ledger中的current-slice defects及required三process integ
 
 ### Phase 5: Dataset Selection And Direct Retrieval
 
+Detailed plan:
+
+- `Phase 5 Dataset Selection And Direct Retrieval.md`
+
 - MTLF source preference與fallback
-- consume Phase 4 retrain intent中的triggering scope與active scope inventory；exact dataset composition留給Phase 5
-  detailed decision
+- consume Phase 4 retrain intent中的triggering scope與active scope inventory；任一scope觸發後收集同一model
+  所有active scopes的資料，全部納入training dataset候選集合；trigger只作cause metadata
 - standard ADRF retrieval subscribe/callback/unsubscribe經Go
 - 完整`FetchInstruction`交付MTLF backend
 - MTLF direct ADRF fetch
@@ -613,8 +623,8 @@ owner；code-review ledger中的current-slice defects及required三process integ
 - local trainer與job lifecycle
 - 產生new artifact package並publish到既有MTLF-owned URL repository
 - model generation/update completion
-- retrained candidate至少對triggering scope與仍使用該model的healthy scopes執行planned validation，避免只修正
-  degraded group卻讓其他group regression
+- 從所有active scopes的dataset決定training/held-out split；所有scope資料都可參與training，candidate仍須
+  分scope驗證，避免整體平均正常但其中一條group regression
 - 透過Phase 4既有standard Model Provision subscription通知updated/re-trained model
 - AnLF candidate download/load、failure保留old model與atomic runtime swap
 - successful swap後重設相關monitor policy generation/windows

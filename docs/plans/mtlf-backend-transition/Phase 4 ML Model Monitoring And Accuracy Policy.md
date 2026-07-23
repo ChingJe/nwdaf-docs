@@ -854,11 +854,12 @@ PyMTLF啟動時從config載入至少一個用於planned `UE_COMMUNICATION` exper
 保存stable model identity、artifact key、public URL與standard applicability metadata；artifact本體必須已由
 existing `ArtifactRepository`驗證及publish。本phase不新增另一套artifact store或讓Go讀取artifact directory。
 
-Current first seed來源是PyAnLF `artifacts/initial`的既有four-file bundle；implementation以現有bundle bytes/config
-作characterization，將它package/import到PyMTLF `ArtifactRepository`，保持model identity與inference metadata。
-Cutover後PyAnLF sample config不再以`default_model_reference`直接擁有production initial model。PyMTLF runtime
-`data/`繼續gitignore；reproducible local seed import/setup寫入README或repository-native helper，不commit mutable
-artifact repository state。
+Current first seed的version-controlled source由PyMTLF
+`seed_models/initial`擁有。Implementation以既有four-file bundle bytes/config作characterization，並由PyMTLF
+repository-native helper將它package/import到PyMTLF `ArtifactRepository`，保持model identity與inference
+metadata。PyAnLF sample config不以`default_model_reference`直接擁有production initial model，也不保存tracked
+initial bundle；它只透過Model Provision取得URL並保存下載後的runtime cache。PyMTLF runtime `data/`繼續
+gitignore，不commit mutable artifact repository state。
 
 Config validation至少檢查：
 
