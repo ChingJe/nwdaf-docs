@@ -1,8 +1,8 @@
 # Phase 4 Initial Model Provision, ML Model Monitoring And Accuracy Policy
 
-Date: 2026-07-22
+Date: 2026-07-23
 
-Status: Draft；standard resource lifecycle、initial provision、WAPE measurement與degradation-only policy範圍已確定；D1已解決
+Status: Implementation baseline recorded；code-review remediation and required three-process integration pending
 
 Parent plan:
 
@@ -11,6 +11,10 @@ Parent plan:
 Previous phase:
 
 - `Phase 3 Analytics Subscription Routing.md`
+
+Current review ledger:
+
+- `code-reviews/Initial Model Provision And Monitoring Review Ledger.md`
 
 Historical behavior references:
 
@@ -1171,8 +1175,13 @@ selection/correlation business logic。
 
 ## 16. Implementation Sequence
 
-依development policy拆成可獨立review的vertical slices；每個slice完成focused tests及commit-ready checkpoint後
-才進下一個，不一次累積整個multi-repo phase。
+依development policy拆成可獨立驗證的vertical slices。依本次執行決策，各slice完成後只執行其focused
+tests並確認工作樹仍可繼續，不在slice邊界commit、停下或要求review；Slice A至G全部完成後，才統一執行
+cross-repository code review、完整測試、lint、build、文件對照與修正。所有修正完成後，再依repository邊界
+分別commit。
+
+這項執行決策只改變checkpoint與review時機，不放寬任何slice的contract、acceptance criteria或focused
+verification。若中途遇到development policy定義的真正decision gate，仍須先停下取得決策。
 
 ### Slice A: Provision And Monitor Contract/Go Edge
 
@@ -1265,8 +1274,9 @@ selection/correlation business logic。
 ### 17.3 Notification
 
 - Go只在destination backend/external consumer接受Model Provision或Monitor notification後回204。
-- PyAnLF provision callback在完成typed validation並atomically commit desired activation/revision後回204；HTTP
-  response不等待最長300秒artifact download。Download/load由bounded owned worker執行，失敗進retry state。
+- PyAnLF provision callback在完成整批typed/correlation validation並atomically enqueue notification intent後
+  回204；HTTP response不等待最長300秒artifact download。Download/load與runtime activation由bounded owned
+  worker執行，失敗進retry state。
 - Provision notification retry/replay不得對相同initial model增加generation或重複attach；delete/replace後的
   stale revision在download完成前再次檢查，不得commit已取消model。
 - PyAnLF對transport、timeout、502/503等5xx有限retry；well-formed 4xx不重試。
@@ -1507,3 +1517,66 @@ Degradation-only baseline可能把從第一個window起就很差的seed model視
 
 普通package placement、class naming、lock implementation及test seam若不改變上述contract與ownership，不是
 decision gate，依本計畫與development policy直接完成。
+
+---
+
+## 22. Implementation Baseline Record
+
+### 22.1 Implemented Ownership
+
+- Go新增Release 18 Model Provision/Monitor public SBI與backend gateway，保存external/backend representation、
+  callback correlation及resource ID，並將三種ML model resource納入continuous reconnect sync。
+- PyMTLF以configured seed catalog及immutable artifact repository提供initial model，擁有provision subscription、
+  monitor registration、monitor-subscription intent及WAPE degradation state。
+- PyAnLF以analytics demand建立／共用provision resource，沿用既有artifact驗證與atomic runtime activation，
+  以PUT收斂未被目前model涵蓋的active-demand union，只在READY後register model use，並擁有monitor
+  subscription與accuracy measurement。Provision callback完成整批validation/enqueue後即回204，artifact
+  download/load由owned worker執行。
+- Backend restart時保留sync恢復的monitor registration，待model runtime恢復後再authoritatively reconcile；
+  monitor subscription binding也會在runtime READY後重算。相同canonical scope只選一個穩定代表runtime產生
+  measurement，避免duplicate consumer subscription污染WAPE samples。
+- Production accuracy path使用30秒ground-truth poll、90秒window與minimum two matched pairs；sufficient window
+  以`deviation`回報WAPE，insufficient window省略`deviation`與`modelMetric`。
+- `monitorInterval`依TS 29.520引用的`TimeWindow`使用`startTime`與`stopTime`。
+- Go sample config不再啟動legacy MTLF policy/training owner；custom provision binding/event、
+  `/mlmodel-notify`及`/model-accuracy-reports`不再註冊production route。
+
+### 22.2 Verification Evidence
+
+2026-07-23 local verification：
+
+- NWDAF：`go test ./...`通過；`make lint`為0 issues；`make build`通過。
+- NWDAF planned race set：`internal/backend`、`internal/context`、`internal/anlf/...`、
+  `internal/mtlf/...`、`internal/sbi/...`及`pkg/service`全部通過。
+- PyAnLF：223 passed、1 skipped；`uv run ruff check .`通過。
+- PyMTLF：48 passed；`uv run ruff check .`通過。另有FastAPI TestClient對`httpx2`的upstream deprecation
+  warning，不影響測試結果。
+- Contract tests覆蓋standard method/status/Location、raw Release 18 field preservation、callback URI separation、
+  backend unavailable mapping、initial model reuse/union expansion、non-blocking callback enqueue、
+  monitor notification routing、restart registration/binding convergence、same-scope coalescing、WAPE windows、
+  insufficient liveness report、multi-scope degradation及single in-flight intent。
+
+### 22.3 Remaining Boundaries
+
+- 未執行real NRF/SMF/UPF/ADRF/Mongo及三個實際process共同啟動的5GC integration；不得把上述local
+  contract/unit/process-fixture tests宣稱為live 5GC E2E。
+- Dataset source selection與ADRF fetch/Mongo direct retrieval由後續dataset工作完成。
+- Local training、new generation artifact publication及updated/re-trained model reprovision由後續training工作完成。
+- Unreachable historical Go MTLF/Daisy與custom handler implementation留待legacy cleanup；本次已以route、
+  startup wiring及sample config確保其不再擁有production behavior。
+
+### 22.4 Current Review Gate
+
+上述紀錄保存initial implementation及當時local verification的事實，不代表本phase已通過final acceptance。
+2026-07-23完整slice review確認六項current-slice defect及一項required integration evidence gap，統一由
+`code-reviews/Initial Model Provision And Monitoring Review Ledger.md`追蹤：
+
+- unified sync不得接受partial state；
+- restart後的orphan monitor resource必須被隔離並清理；
+- compatible-model reuse必須使用active catalog，而不是單一latest pointer；
+- monitor resource必須落實per-resource cadence、multiple model、optional context及cached immediate report；
+- provider-generated response field不得由consumer request注入；
+- Go error/redirect forwarding必須使用operation-specific OpenAPI contract；
+- actual Go、PyAnLF及PyMTLF process-level round-trip必須通過。
+
+以上ledger gate全部關閉前，本節狀態維持implementation baseline，不標示為fully complete。

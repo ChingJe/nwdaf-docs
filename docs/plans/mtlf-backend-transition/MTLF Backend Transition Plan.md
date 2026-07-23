@@ -1,8 +1,8 @@
 # MTLF Backend Transition Plan
 
-Date: 2026-07-22
+Date: 2026-07-23
 
-Status: Phase 1 and Phase 2 foundations implemented; Phase 3 analytics subscription, collection, and raw-storage cutover implemented and verified; Phase 4 detailed planning includes initial model provision plus WAPE-only monitoring, with D1 resolved
+Status: Phase 1 through Phase 3 implemented and verified; Phase 4 implementation baseline and local repository verification recorded, with code-review remediation and the required three-process integration gate still open
 
 Related records:
 
@@ -10,6 +10,7 @@ Related records:
 - `nwdaf-docs/docs/plans/mtlf-backend-transition/Phase 2 Backend Connectivity And Standard Contract Foundation.md`
 - `nwdaf-docs/docs/plans/mtlf-backend-transition/Phase 3 Analytics Subscription Routing.md`
 - `nwdaf-docs/docs/plans/mtlf-backend-transition/Phase 4 ML Model Monitoring And Accuracy Policy.md`
+- `nwdaf-docs/docs/plans/mtlf-backend-transition/code-reviews/Initial Model Provision And Monitoring Review Ledger.md`
 - `nwdaf-docs/docs/plans/anlf-backend-transition/AnLF Backend Transition Plan.md`
 - `nwdaf-docs/docs/plans/daisy/general_improvement/nwdaf-daisy-improvement-plan.md`
 
@@ -576,8 +577,9 @@ selection仍由Phase 5完成。
 
 詳細計畫：`Phase 4 ML Model Monitoring And Accuracy Policy.md`
 
-狀態：draft；initial provision、standard monitoring、WAPE measurement與degradation-only policy decisions已完成，
-沒有未解的D1 blocker。
+狀態：implementation baseline與local lint/test/build/race驗證已記錄。Initial provision、standard monitoring、
+WAPE measurement與degradation-only policy已切換至backend owner；目前仍須關閉code-review ledger中的current
+slice defects及required三process integration gate，完成前不視為fully complete。
 
 - standard `Nnwdaf_MLModelProvision` subscription/notification routes for configured seed model
 - PyAnLF non-blocking model demand、compatible-model reuse、direct artifact download/load及runtime binding

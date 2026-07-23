@@ -1,7 +1,7 @@
 # NWDAF EventSubscription 實作進度報告
 
-**最後更新**: 2026-03-30
-**目前階段**: Phase 11 ✅ + 後續修正與強化完成 + AnLF/MTLF 拆分完成 + Daisy 非同步化 + ADRF E2/E3 整合完成
+**最後更新**: 2026-07-23
+**目前階段**: AnLF backend analytics/data collection cutover完成；MTLF backend initial model provision、standard monitoring與WAPE policy baseline已實作，review remediation進行中
 
 ---
 
@@ -12,6 +12,32 @@
 - **TCN Model Integration** (Time Convolutional Network) for Traffic Prediction
 - **Federated Learning** (Daisy FL Framework) for MTLF Training
 - **ADRF Integration** (TS 29.575 Storage + Retrieval) for retrain dataset pipeline
+
+### 1.1 Current Backend Transition Update
+
+目前production ownership已進一步調整：
+
+- Go NWDAF保留唯一標準NF identity、public SBI、NRF/SMF/ADRF通訊、backend routing及process-local sync mirror。
+- PyAnLF擁有analytics subscription、SMF discovery/collection intent、direct SMF/UPF ingestion、storage、
+  inference、initial model demand/load、Monitor subscription及windowed WAPE measurement。
+- PyMTLF擁有immutable artifact/seed catalog、Model Provision resource、Monitor registration、
+  monitor-subscription intent及degradation-only WAPE policy。
+- Initial flow為Events Subscription → standard-shaped Model Provision → artifact download/load →
+  Monitor registration → Monitor subscription → `MLModelMonitorNotify`。
+- Compatible model可直接供後續demand共用；未被目前model涵蓋的demand以PUT擴充既有provision resource，
+  不建立第二個resource。Provision callback只做整批validation/enqueue，長時間artifact preparation由worker
+  完成。
+- Backend restart後，sync恢復的monitor registration與subscription binding會等待model runtime READY後再
+  收斂；相同canonical scope只由一個代表runtime產生WAPE sample。
+- 舊custom model provision binding/event與`/model-accuracy-reports`已退出production route；舊Go
+  accuracy/Daisy code目前只作unreachable historical oracle，後續legacy cleanup再移除。
+- Dataset retrieval仍由後續工作接續；local training、new generation artifact publication及reprovision尚未啟用。
+
+Local verification已通過Go full test/lint/build及planned race packages、PyAnLF full pytest/ruff、PyMTLF full
+pytest/ruff。後續完整slice review仍確認sync atomicity、monitor ownership、model reuse、monitor resource
+semantics、response ownership及Go standard boundary需要修正；統一記錄於
+`docs/plans/mtlf-backend-transition/code-reviews/Initial Model Provision And Monitoring Review Ledger.md`。Real
+NRF/SMF/UPF/ADRF/Mongo與required三process E2E尚未執行，不以unit/contract tests宣稱完成。
 
 ---
 
