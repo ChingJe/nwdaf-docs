@@ -1,0 +1,57 @@
+{
+  "FetchInstruction": [
+    "README.md",
+    "TS 29.576/README.md",
+    "TS 29.576/4 Services offered by the MFAF.md",
+    "TS 29.576/01 Original contents.md",
+    "TS 29.576/5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md",
+    "TS 29.575/5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.6 Data Model.md",
+    "TS 29.520/4 Services offered by the NWDAF/4.4 Nnwdaf_DataManagement Service.md",
+    "TS 29.520/5 API Definitions/5.3 Nnwdaf_DataManagement Service API/5.3.5 Notifications.md",
+    "TS 29.520/5 API Definitions/5.3 Nnwdaf_DataManagement Service API/5.3.6 Data Model.md"
+  ],
+  "ScheduledCommunicationTime": [
+    "TS 29.571/01 Original contents.md",
+    "TS 29.122/README.md",
+    "TS 29.122/01 Original contents.md",
+    "TS 29.122/5 T8 APIs/5.10 CpProvisioning API/5.10.2 Data model.md",
+    "TS 29.571/5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/README.md",
+    "TS 29.571/5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.42 Type ScheduledCommunicationTimeRm.md",
+    "TS 29.571/5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.41 Type ScheduledCommunicationTime.md",
+    "TS 29.520/5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.1 General.md",
+    "TS 29.520/5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.10 Type UeMobility.md",
+    "TS 29.520/5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.13 Type UeCommunication.md"
+  ],
+  "DomainNameProtocol": [
+    "TS 29.122/README.md",
+    "TS 29.122/01 Original contents.md",
+    "TS 29.122/5 T8 APIs/5.11 PfdManagement API/5.11.2 Data model.md",
+    "TS 29.122/5 T8 APIs/5.11 PfdManagement API/5.11.4 Used Features.md",
+    "TS 29.564/6 API Definitions/6.1 Nupf_EventExposure Service API/6.1.6 Data Model/6.1.6.2 Structured data types.md",
+    "TS 29.520/5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.1 General.md",
+    "TS 29.520/5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.107 Type SuggestedPfdInfo.md"
+  ],
+  "Nmfaf_3caDataManagement_Fetch": [
+    "TS 23.288/9 MFAF Services.md",
+    "TS 23.288/01 Original contents.md",
+    "TS 29.576/4 Services offered by the MFAF.md",
+    "TS 29.576/01 Original contents.md",
+    "TS 29.576/Annex B (informative) Change history/2024.md",
+    "TS 23.288/6 Procedures to Support Network Data Analytics/6.1 Procedures for analytics exposure/6.1.4 Analytics Exposure using DCCF.md",
+    "TS 23.288/6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.6 Enhanced Procedures for Data Collection/6.2.6.3 Data Collection using DCCF/6.2.6.3.5 Historical Data Collection via Messaging Framework.md",
+    "TS 23.288/6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.6 Enhanced Procedures for Data Collection/6.2.6.3 Data Collection using DCCF/6.2.6.3.4 Data Collection via Messaging Framework.md"
+  ],
+  "Nmfaf_3daDataManagement_Configure": [
+    "TS 23.288/9 MFAF Services.md",
+    "TS 23.288/4 Reference Architecture for Data Analytics.md",
+    "TS 23.288/01 Original contents.md",
+    "TS 29.576/4 Services offered by the MFAF.md",
+    "TS 29.576/01 Original contents.md",
+    "TS 29.576/Annex B (informative) Change history/2022.md",
+    "TS 23.288/Annex B (informative) Change history/2021.md",
+    "TS 23.288/6 Procedures to Support Network Data Analytics/6.1 Procedures for analytics exposure/6.1.4 Analytics Exposure using DCCF.md",
+    "TS 23.288/6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.6 Enhanced Procedures for Data Collection/6.2.6.3 Data Collection using DCCF/6.2.6.3.5 Historical Data Collection via Messaging Framework.md",
+    "TS 23.288/6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.6 Enhanced Procedures for Data Collection/6.2.6.3 Data Collection using DCCF/6.2.6.3.8 DCCF and MFAF relocation initiated by DCCF.md",
+    "TS 23.288/6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.6 Enhanced Procedures for Data Collection/6.2.6.3 Data Collection using DCCF/6.2.6.3.4 Data Collection via Messaging Framework.md"
+  ]
+}

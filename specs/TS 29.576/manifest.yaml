@@ -1,0 +1,669 @@
+spec: TS 29.576
+version: 18.8.0
+release: '18'
+source_archive: 29576-i80.zip
+source_document: 29576-i80.docx
+source_archive_sha256: 4b70ed06646c84f7f9c47958cd2d64fe6c6ff89448ac6db4679c4b1de6a598c6
+source_document_sha256: 38b6e8bd8f4ff1104b4b2ec5d475a7edb65e4330ee6cad4536abd2a24e7943b1
+max_source_words_per_semantic_file_target: 4200
+clauses:
+- clause: document-information
+  title: Document information
+  path: 00 Document information.md
+  source_words: 259
+  kind: source-file
+- clause: contents
+  title: Contents
+  path: 01 Original contents.md
+  source_words: 913
+  kind: source-file
+- clause: foreword
+  title: Foreword
+  path: 02 Foreword.md
+  source_words: 491
+  kind: source-file
+- clause: introduction
+  title: Introduction
+  path: Introduction.md
+  source_words: 0
+  kind: source-file
+- clause: '1'
+  title: 1 Scope
+  path: 1 Scope.md
+  source_words: 113
+  kind: source-file
+- clause: '2'
+  title: 2 References
+  path: 2 References.md
+  source_words: 312
+  kind: source-file
+- clause: '3'
+  title: 3 Definitions, symbols and abbreviations
+  path: 3 Definitions, symbols and abbreviations.md
+  source_words: 158
+  kind: source-file
+- clause: '3.1'
+  title: 3.1 Definitions
+  path: 3 Definitions, symbols and abbreviations.md
+  source_words: 46
+  kind: embedded-clause
+- clause: '3.2'
+  title: 3.2 Symbols
+  path: 3 Definitions, symbols and abbreviations.md
+  source_words: 11
+  kind: embedded-clause
+- clause: '3.3'
+  title: 3.3 Abbreviations
+  path: 3 Definitions, symbols and abbreviations.md
+  source_words: 101
+  kind: embedded-clause
+- clause: '4'
+  title: 4 Services offered by the MFAF
+  path: 4 Services offered by the MFAF.md
+  source_words: 2820
+  kind: source-file
+- clause: '4.1'
+  title: 4.1 Introduction
+  path: 4 Services offered by the MFAF.md
+  source_words: 224
+  kind: embedded-clause
+- clause: '4.2'
+  title: 4.2 Nmfaf_3daDataManagement Service
+  path: 4 Services offered by the MFAF.md
+  source_words: 1439
+  kind: embedded-clause
+- clause: 4.2.1
+  title: 4.2.1 Service Description
+  path: 4 Services offered by the MFAF.md
+  source_words: 254
+  kind: embedded-clause
+- clause: 4.2.1.1
+  title: 4.2.1.1 Overview
+  path: 4 Services offered by the MFAF.md
+  source_words: 67
+  kind: embedded-clause
+- clause: 4.2.1.2
+  title: 4.2.1.2 Service Architecture
+  path: 4 Services offered by the MFAF.md
+  source_words: 107
+  kind: embedded-clause
+- clause: 4.2.1.3
+  title: 4.2.1.3 Network Functions
+  path: 4 Services offered by the MFAF.md
+  source_words: 80
+  kind: embedded-clause
+- clause: 4.2.1.3.1
+  title: 4.2.1.3.1 Messaging Framework Adaptor Function (MFAF)
+  path: 4 Services offered by the MFAF.md
+  source_words: 32
+  kind: embedded-clause
+- clause: 4.2.1.3.2
+  title: 4.2.1.3.2 NF Service Consumers
+  path: 4 Services offered by the MFAF.md
+  source_words: 48
+  kind: embedded-clause
+- clause: 4.2.2
+  title: 4.2.2 Service Operations
+  path: 4 Services offered by the MFAF.md
+  source_words: 1185
+  kind: embedded-clause
+- clause: 4.2.2.1
+  title: 4.2.2.1 Introduction
+  path: 4 Services offered by the MFAF.md
+  source_words: 95
+  kind: embedded-clause
+- clause: 4.2.2.2
+  title: 4.2.2.2 Nmfaf_3daDataManagement_Configure service operation
+  path: 4 Services offered by the MFAF.md
+  source_words: 812
+  kind: embedded-clause
+- clause: 4.2.2.2.1
+  title: 4.2.2.2.1 General
+  path: 4 Services offered by the MFAF.md
+  source_words: 44
+  kind: embedded-clause
+- clause: 4.2.2.2.2
+  title: 4.2.2.2.2 Initial configuration for mapping data or analytics
+  path: 4 Services offered by the MFAF.md
+  source_words: 431
+  kind: embedded-clause
+- clause: 4.2.2.2.3
+  title: 4.2.2.2.3 Update the configuration of existing individual mapping data or analytics
+  path: 4 Services offered by the MFAF.md
+  source_words: 337
+  kind: embedded-clause
+- clause: 4.2.2.3
+  title: 4.2.2.3 Nmfaf_3daDataManagement_Deconfigure service operation
+  path: 4 Services offered by the MFAF.md
+  source_words: 278
+  kind: embedded-clause
+- clause: 4.2.2.3.1
+  title: 4.2.2.3.1 General
+  path: 4 Services offered by the MFAF.md
+  source_words: 30
+  kind: embedded-clause
+- clause: 4.2.2.3.2
+  title: 4.2.2.3.2 Stop mapping data or analytics
+  path: 4 Services offered by the MFAF.md
+  source_words: 248
+  kind: embedded-clause
+- clause: '4.3'
+  title: 4.3 Nmfaf_3caDataManagement Service
+  path: 4 Services offered by the MFAF.md
+  source_words: 1157
+  kind: embedded-clause
+- clause: 4.3.1
+  title: 4.3.1 Service Description
+  path: 4 Services offered by the MFAF.md
+  source_words: 229
+  kind: embedded-clause
+- clause: 4.3.1.1
+  title: 4.3.1.1 Overview
+  path: 4 Services offered by the MFAF.md
+  source_words: 35
+  kind: embedded-clause
+- clause: 4.3.1.2
+  title: 4.3.1.2 Service Architecture
+  path: 4 Services offered by the MFAF.md
+  source_words: 138
+  kind: embedded-clause
+- clause: 4.3.1.3
+  title: 4.3.1.3 Network Functions
+  path: 4 Services offered by the MFAF.md
+  source_words: 56
+  kind: embedded-clause
+- clause: 4.3.1.3.1
+  title: 4.3.1.3.1 Messaging Framework Adaptor Function (MFAF)
+  path: 4 Services offered by the MFAF.md
+  source_words: 38
+  kind: embedded-clause
+- clause: 4.3.1.3.2
+  title: 4.3.1.3.2 NF Service Consumers
+  path: 4 Services offered by the MFAF.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 4.3.2
+  title: 4.3.2 Service Operations
+  path: 4 Services offered by the MFAF.md
+  source_words: 928
+  kind: embedded-clause
+- clause: 4.3.2.1
+  title: 4.3.2.1 Introduction
+  path: 4 Services offered by the MFAF.md
+  source_words: 157
+  kind: embedded-clause
+- clause: 4.3.2.2
+  title: 4.3.2.2 Nmfaf_3caDataManagement_Fetch service operation
+  path: 4 Services offered by the MFAF.md
+  source_words: 328
+  kind: embedded-clause
+- clause: 4.3.2.2.1
+  title: 4.3.2.2.1 General
+  path: 4 Services offered by the MFAF.md
+  source_words: 24
+  kind: embedded-clause
+- clause: 4.3.2.2.2
+  title: 4.3.2.2.2 Retrieve data or analytics from the MFAF
+  path: 4 Services offered by the MFAF.md
+  source_words: 304
+  kind: embedded-clause
+- clause: 4.3.2.2A
+  title: 4.3.2.2A Nmfaf_3caDataManagement_Subscribe service operation
+  path: 4 Services offered by the MFAF.md
+  source_words: 27
+  kind: embedded-clause
+- clause: 4.3.2.3
+  title: 4.3.2.3 Nmfaf_3caDataManagement_Notify service operation
+  path: 4 Services offered by the MFAF.md
+  source_words: 416
+  kind: embedded-clause
+- clause: 4.3.2.3.1
+  title: 4.3.2.3.1 General
+  path: 4 Services offered by the MFAF.md
+  source_words: 21
+  kind: embedded-clause
+- clause: 4.3.2.3.2
+  title: 4.3.2.3.2 Notification about the subscribed data or analytics
+  path: 4 Services offered by the MFAF.md
+  source_words: 395
+  kind: embedded-clause
+- clause: '5'
+  title: 5 API Definitions
+  path: 5 API Definitions/README.md
+  source_words: 5021
+  kind: navigation-directory
+- clause: '5.1'
+  title: 5.1 Nmfaf_3daDataManagement Service API
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 2670
+  kind: source-file
+- clause: 5.1.1
+  title: 5.1.1 Introduction
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 95
+  kind: embedded-clause
+- clause: 5.1.2
+  title: 5.1.2 Usage of HTTP
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 181
+  kind: embedded-clause
+- clause: 5.1.2.1
+  title: 5.1.2.1 General
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 57
+  kind: embedded-clause
+- clause: 5.1.2.2
+  title: 5.1.2.2 HTTP standard headers
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 102
+  kind: embedded-clause
+- clause: 5.1.2.2.1
+  title: 5.1.2.2.1 General
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 5.1.2.2.2
+  title: 5.1.2.2.2 Content type
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 84
+  kind: embedded-clause
+- clause: 5.1.2.3
+  title: 5.1.2.3 HTTP custom headers
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 22
+  kind: embedded-clause
+- clause: 5.1.3
+  title: 5.1.3 Resources
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 1378
+  kind: embedded-clause
+- clause: 5.1.3.1
+  title: 5.1.3.1 Overview
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 123
+  kind: embedded-clause
+- clause: 5.1.3.2
+  title: '5.1.3.2 Resource: MFAF Configurations'
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 321
+  kind: embedded-clause
+- clause: 5.1.3.2.1
+  title: 5.1.3.2.1 Description
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 31
+  kind: embedded-clause
+- clause: 5.1.3.2.2
+  title: 5.1.3.2.2 Resource Definition
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 55
+  kind: embedded-clause
+- clause: 5.1.3.2.3
+  title: 5.1.3.2.3 Resource Standard Methods
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.1.3.2.3.1
+  title: 5.1.3.2.3.1 POST
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 228
+  kind: embedded-clause
+- clause: 5.1.3.2.4
+  title: 5.1.3.2.4 Resource Custom Operations
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 7
+  kind: embedded-clause
+- clause: 5.1.3.3
+  title: '5.1.3.3 Resource: Individual MFAF Configuration'
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 934
+  kind: embedded-clause
+- clause: 5.1.3.2.1
+  title: 5.1.3.2.1 Description
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 19
+  kind: embedded-clause
+- clause: 5.1.3.3.2
+  title: 5.1.3.3.2 Resource Definition
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 66
+  kind: embedded-clause
+- clause: 5.1.3.3.3
+  title: 5.1.3.3.3 Resource Standard Methods
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.1.3.3.3.1
+  title: 5.1.3.3.3.1 PUT
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 437
+  kind: embedded-clause
+- clause: 5.1.3.3.3.2
+  title: 5.1.3.3.3.2 DELETE
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 412
+  kind: embedded-clause
+- clause: 5.1.4
+  title: 5.1.4 Custom Operations without associated resources
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 7
+  kind: embedded-clause
+- clause: 5.1.5
+  title: 5.1.5 Notifications
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 7
+  kind: embedded-clause
+- clause: 5.1.6
+  title: 5.1.6 Data Model
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 641
+  kind: embedded-clause
+- clause: 5.1.6.1
+  title: 5.1.6.1 General
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 199
+  kind: embedded-clause
+- clause: 5.1.6.2
+  title: 5.1.6.2 Structured data types
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 384
+  kind: embedded-clause
+- clause: 5.1.6.2.1
+  title: 5.1.6.2.1 Introduction
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 11
+  kind: embedded-clause
+- clause: 5.1.6.2.2
+  title: '5.1.6.2.2 Type: MfafConfiguration'
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 34
+  kind: embedded-clause
+- clause: 5.1.6.2.3
+  title: '5.1.6.2.3 Type: MessageConfiguration'
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 300
+  kind: embedded-clause
+- clause: 5.1.6.2.4
+  title: '5.1.6.2.4 Type: MfafNotiInfo'
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 39
+  kind: embedded-clause
+- clause: 5.1.6.3
+  title: 5.1.6.3 Simple data types and enumerations
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 50
+  kind: embedded-clause
+- clause: 5.1.6.3.1
+  title: 5.1.6.3.1 Introduction
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 20
+  kind: embedded-clause
+- clause: 5.1.6.3.2
+  title: 5.1.6.3.2 Simple data types
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 30
+  kind: embedded-clause
+- clause: 5.1.6.4
+  title: 5.1.6.4 Data types describing alternative data types or combinations of data types
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 4
+  kind: embedded-clause
+- clause: 5.1.6.5
+  title: 5.1.6.5 Binary data
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 4
+  kind: embedded-clause
+- clause: 5.1.7
+  title: 5.1.7 Error Handling
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 129
+  kind: embedded-clause
+- clause: 5.1.7.1
+  title: 5.1.7.1 General
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 89
+  kind: embedded-clause
+- clause: 5.1.7.2
+  title: 5.1.7.2 Protocol Errors
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 10
+  kind: embedded-clause
+- clause: 5.1.7.3
+  title: 5.1.7.3 Application Errors
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 30
+  kind: embedded-clause
+- clause: 5.1.8
+  title: 5.1.8 Feature negotiation
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 68
+  kind: embedded-clause
+- clause: 5.1.9
+  title: 5.1.9 Security
+  path: 5 API Definitions/5.1 Nmfaf_3daDataManagement Service API.md
+  source_words: 164
+  kind: embedded-clause
+- clause: '5.2'
+  title: 5.2 Nmfaf_3caDataManagement Service API
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 2351
+  kind: source-file
+- clause: 5.2.1
+  title: 5.2.1 Introduction
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 95
+  kind: embedded-clause
+- clause: 5.2.2
+  title: 5.2.2 Usage of HTTP
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 181
+  kind: embedded-clause
+- clause: 5.2.2.1
+  title: 5.2.2.1 General
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 57
+  kind: embedded-clause
+- clause: 5.2.2.2
+  title: 5.2.2.2 HTTP standard headers
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 102
+  kind: embedded-clause
+- clause: 5.2.2.2.1
+  title: 5.2.2.2.1 General
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 5.2.2.2.2
+  title: 5.2.2.2.2 Content type
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 84
+  kind: embedded-clause
+- clause: 5.2.2.3
+  title: 5.2.2.3 HTTP custom headers
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 22
+  kind: embedded-clause
+- clause: 5.2.3
+  title: 5.2.3 Resources
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 14
+  kind: embedded-clause
+- clause: 5.2.4
+  title: 5.2.4 Custom Operations without associated resources
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 5.2.5
+  title: 5.2.5 Notifications
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 1098
+  kind: embedded-clause
+- clause: 5.2.5.1
+  title: 5.2.5.1 General
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 97
+  kind: embedded-clause
+- clause: 5.2.5.2
+  title: 5.2.5.2 MFAF Notification
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 486
+  kind: embedded-clause
+- clause: 5.2.5.2.1
+  title: 5.2.5.2.1 Description
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 24
+  kind: embedded-clause
+- clause: 5.2.5.2.2
+  title: 5.2.5.2.2 Target URI
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 80
+  kind: embedded-clause
+- clause: 5.2.5.2.3
+  title: 5.2.5.2.3 Standard Methods
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.2.5.2.3.1
+  title: 5.2.5.2.3.1 POST
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 382
+  kind: embedded-clause
+- clause: 5.2.5.3
+  title: 5.2.5.3 Fetch Notification
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 515
+  kind: embedded-clause
+- clause: 5.2.5.3.1
+  title: 5.2.5.3.1 Description
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 5.2.5.3.2
+  title: 5.2.5.3.2 Target URI
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 62
+  kind: embedded-clause
+- clause: 5.2.5.3.3
+  title: 5.2.5.3.3 Standard Methods
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.2.5.3.3.1
+  title: 5.2.5.3.3.1 POST
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 435
+  kind: embedded-clause
+- clause: 5.2.6
+  title: 5.2.6 Data Model
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 607
+  kind: embedded-clause
+- clause: 5.2.6.1
+  title: 5.2.6.1 General
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 203
+  kind: embedded-clause
+- clause: 5.2.6.2
+  title: 5.2.6.2 Structured data types
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 363
+  kind: embedded-clause
+- clause: 5.2.6.2.1
+  title: 5.2.6.2.1 Introduction
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 11
+  kind: embedded-clause
+- clause: 5.2.6.2.2
+  title: '5.2.6.2.2 Type: NmfafDataRetrievalNotification'
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 170
+  kind: embedded-clause
+- clause: 5.2.6.2.3
+  title: '5.2.6.2.3 Type: FetchInstruction'
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 72
+  kind: embedded-clause
+- clause: 5.2.6.2.4
+  title: '5.2.6.2.4 Type: NmfafDataAnaNotification'
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 110
+  kind: embedded-clause
+- clause: 5.2.6.3
+  title: 5.2.6.3 Simple data types and enumerations
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 27
+  kind: embedded-clause
+- clause: 5.2.6.3.1
+  title: 5.2.6.3.1 Introduction
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 20
+  kind: embedded-clause
+- clause: 5.2.6.3.2
+  title: 5.2.6.3.2 Simple data types
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 7
+  kind: embedded-clause
+- clause: 5.2.6.4
+  title: 5.2.6.4 Data types describing alternative data types or combinations of data types
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 7
+  kind: embedded-clause
+- clause: 5.2.6.5
+  title: 5.2.6.5 Binary data
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 7
+  kind: embedded-clause
+- clause: 5.2.7
+  title: 5.2.7 Error Handling
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 129
+  kind: embedded-clause
+- clause: 5.2.7.1
+  title: 5.2.7.1 General
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 89
+  kind: embedded-clause
+- clause: 5.2.7.2
+  title: 5.2.7.2 Protocol Errors
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 10
+  kind: embedded-clause
+- clause: 5.2.7.3
+  title: 5.2.7.3 Application Errors
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 30
+  kind: embedded-clause
+- clause: 5.2.8
+  title: 5.2.8 Feature negotiation
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 45
+  kind: embedded-clause
+- clause: 5.2.9
+  title: 5.2.9 Security
+  path: 5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md
+  source_words: 164
+  kind: embedded-clause
+- clause: Annex A
+  title: 'Annex A (normative): OpenAPI specification'
+  path: Annex A (normative) OpenAPI specification/README.md
+  source_words: 1624
+  kind: navigation-directory
+- clause: A.1
+  title: A.1 General
+  path: Annex A (normative) OpenAPI specification/README.md
+  source_words: 136
+  kind: source-file
+- clause: A.2
+  title: A.2 Nmfaf_3daDataManagement API
+  path: ../openapi/TS29576_Nmfaf_3daDataManagement.yaml
+  source_words: 832
+  kind: exact-attachment
+- clause: A.3
+  title: A.3 Nmfaf_3caDataManagement API
+  path: ../openapi/TS29576_Nmfaf_3caDataManagement.yaml
+  source_words: 656
+  kind: exact-attachment
+- clause: Annex B
+  title: 'Annex B (informative): Change history'
+  path: Annex B (informative) Change history/README.md
+  source_words: 926
+  kind: navigation-directory

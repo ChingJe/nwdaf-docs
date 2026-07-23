@@ -1,0 +1,223 @@
+{
+  "added_specifications": [
+    {
+      "spec": "TS 29.122",
+      "version": "18.10.0",
+      "raw_words": 195085,
+      "headings": 991,
+      "manifest_entries": 991,
+      "tree_reassembly_source_sha256": "b9fec591cdf2cd3ccf5117189832ab6d6150e59c5adfcc3f822635c80d7d4c63",
+      "tree_reassembly_output_sha256": "b9fec591cdf2cd3ccf5117189832ab6d6150e59c5adfcc3f822635c80d7d4c63",
+      "image_inventory": {
+        "original": 3,
+        "rendered_png": 3,
+        "embedded": 3,
+        "unrendered_original": 0,
+        "render_results": [
+          {
+            "file": "image1.wmf",
+            "success": true,
+            "method": "inkscape"
+          },
+          {
+            "file": "image2.png",
+            "success": true,
+            "method": "copy"
+          },
+          {
+            "file": "image3.wmf",
+            "success": true,
+            "method": "inkscape"
+          }
+        ]
+      }
+    },
+    {
+      "spec": "TS 29.576",
+      "version": "18.8.0",
+      "raw_words": 13461,
+      "headings": 131,
+      "manifest_entries": 132,
+      "tree_reassembly_source_sha256": "50dabde854c2e1cf4efa0074a1b0b92b32d1d83690cebf46e4b938260257cfbc",
+      "tree_reassembly_output_sha256": "50dabde854c2e1cf4efa0074a1b0b92b32d1d83690cebf46e4b938260257cfbc",
+      "image_inventory": {
+        "original": 12,
+        "rendered_png": 12,
+        "embedded": 11,
+        "unrendered_original": 0,
+        "render_results": [
+          {
+            "file": "image1.emf",
+            "success": true,
+            "method": "inkscape"
+          },
+          {
+            "file": "image10.emf",
+            "success": true,
+            "method": "inkscape"
+          },
+          {
+            "file": "image11.emf",
+            "success": true,
+            "method": "inkscape"
+          },
+          {
+            "file": "image12.emf",
+            "success": true,
+            "method": "inkscape"
+          },
+          {
+            "file": "image2.png",
+            "success": true,
+            "method": "copy"
+          },
+          {
+            "file": "image3.emf",
+            "success": true,
+            "method": "inkscape"
+          },
+          {
+            "file": "image4.emf",
+            "success": true,
+            "method": "inkscape"
+          },
+          {
+            "file": "image5.emf",
+            "success": true,
+            "method": "inkscape"
+          },
+          {
+            "file": "image6.emf",
+            "success": true,
+            "method": "inkscape"
+          },
+          {
+            "file": "image7.emf",
+            "success": true,
+            "method": "inkscape"
+          },
+          {
+            "file": "image8.emf",
+            "success": true,
+            "method": "inkscape"
+          },
+          {
+            "file": "image9.emf",
+            "success": true,
+            "method": "inkscape"
+          }
+        ]
+      }
+    }
+  ],
+  "new_openapi_exact_checks": [
+    {
+      "file": "TS29122_GMDviaMBMSbyxMB.yaml",
+      "source_sha256": "115951284089957a01748042b3cd09dc9b0583167e10bb56628a70191ad259cc",
+      "output_sha256": "115951284089957a01748042b3cd09dc9b0583167e10bb56628a70191ad259cc",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29122_ECRControl.yaml",
+      "source_sha256": "a524d39456b77fef8d77e5ff742dd751ad310f05245fbf5cf168c68e34709cd2",
+      "output_sha256": "a524d39456b77fef8d77e5ff742dd751ad310f05245fbf5cf168c68e34709cd2",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29122_NpConfiguration.yaml",
+      "source_sha256": "e5a34e62c5b625e66da3e3655e3debb6643f512438b3ea331682a8f38e0f1f14",
+      "output_sha256": "e5a34e62c5b625e66da3e3655e3debb6643f512438b3ea331682a8f38e0f1f14",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29122_CpProvisioning.yaml",
+      "source_sha256": "d029b8abc6908c92478aa0cac9b0f4eb316797ae3ff012e9d3ee43d05501d4c7",
+      "output_sha256": "d029b8abc6908c92478aa0cac9b0f4eb316797ae3ff012e9d3ee43d05501d4c7",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29122_MonitoringEvent.yaml",
+      "source_sha256": "b4b72ba0712cb307fcec06247e1afa72d010b06598992ba091d04cecd68a251f",
+      "output_sha256": "b4b72ba0712cb307fcec06247e1afa72d010b06598992ba091d04cecd68a251f",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29122_ResourceManagementOfBdt.yaml",
+      "source_sha256": "2db5c22c477fda4c83fc310ec0d6b0c99df1281e8b822f2da4717d0b19c66f21",
+      "output_sha256": "2db5c22c477fda4c83fc310ec0d6b0c99df1281e8b822f2da4717d0b19c66f21",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29122_CommonData.yaml",
+      "source_sha256": "79e5727ff35dbb41852c2c7a80b96bb6e1d5bc84390986f0e39a25843de0398a",
+      "output_sha256": "79e5727ff35dbb41852c2c7a80b96bb6e1d5bc84390986f0e39a25843de0398a",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29122_NIDD.yaml",
+      "source_sha256": "3d5bdb254285119baf6c6002006337a9946d1b4d129aeb65be6a1bec592619ad",
+      "output_sha256": "3d5bdb254285119baf6c6002006337a9946d1b4d129aeb65be6a1bec592619ad",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29122_MsisdnLessMoSms.yaml",
+      "source_sha256": "a5e2993a865f0aa2ab8f52cbde21ddb7ed9f1ef37b851a596e4194ffa06b77bd",
+      "output_sha256": "a5e2993a865f0aa2ab8f52cbde21ddb7ed9f1ef37b851a596e4194ffa06b77bd",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29122_ReportingNetworkStatus.yaml",
+      "source_sha256": "8401e81765bbf36b9ba9a360ed377646cc0bddc64e9f2d82f9550730aab88671",
+      "output_sha256": "8401e81765bbf36b9ba9a360ed377646cc0bddc64e9f2d82f9550730aab88671",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29122_PfdManagement.yaml",
+      "source_sha256": "b60b383115f1f7617b5fecc59bfdb861d4bf386fffd50c4c2eb3de8ae993b2ef",
+      "output_sha256": "b60b383115f1f7617b5fecc59bfdb861d4bf386fffd50c4c2eb3de8ae993b2ef",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29122_ChargeableParty.yaml",
+      "source_sha256": "d7555817d38363cdcc8ca6ca30b89233f31b91d3180c11d899d8185aa4e9b468",
+      "output_sha256": "d7555817d38363cdcc8ca6ca30b89233f31b91d3180c11d899d8185aa4e9b468",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29122_GMDviaMBMSbyMB2.yaml",
+      "source_sha256": "46a3879f268a20fdad3db0bb0b28c71eec6d1784c7381cca807630d89cd8b070",
+      "output_sha256": "46a3879f268a20fdad3db0bb0b28c71eec6d1784c7381cca807630d89cd8b070",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29122_RacsParameterProvisioning.yaml",
+      "source_sha256": "7cded49276685b0d02963951c88246dec1bbe90086a74a2b1a38e782f67856dc",
+      "output_sha256": "7cded49276685b0d02963951c88246dec1bbe90086a74a2b1a38e782f67856dc",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29122_AsSessionWithQoS.yaml",
+      "source_sha256": "1edaa8d729aeacacecef865611d20e49a7a9dc57988569144be973902ce5b022",
+      "output_sha256": "1edaa8d729aeacacecef865611d20e49a7a9dc57988569144be973902ce5b022",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29122_DeviceTriggering.yaml",
+      "source_sha256": "61e57390590e05dbd9fd50e20c4b02488313ef143d3cca282caba4181f046255",
+      "output_sha256": "61e57390590e05dbd9fd50e20c4b02488313ef143d3cca282caba4181f046255",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29576_Nmfaf_3daDataManagement.yaml",
+      "source_sha256": "63ca4a0fe4385ecf2cdc1a3d99c60916075cbd806027f9717348cfde25be2614",
+      "output_sha256": "63ca4a0fe4385ecf2cdc1a3d99c60916075cbd806027f9717348cfde25be2614",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29576_Nmfaf_3caDataManagement.yaml",
+      "source_sha256": "238b5727726eb9ff625beac5498c29f06311f939b406fbb262a3d92365cdb04b",
+      "output_sha256": "238b5727726eb9ff625beac5498c29f06311f939b406fbb262a3d92365cdb04b",
+      "byte_identical": true
+    }
+  ]
+}

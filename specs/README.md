@@ -1,6 +1,6 @@
 # NWDAF implementation-related 3GPP Release 18 specifications
 
-This corpus is organized for progressive loading by development agents. All listed specifications are now included in full.
+This corpus is organized for progressive loading by development agents. All listed specifications are included in full.
 
 ## Specification map
 
@@ -9,6 +9,7 @@ This corpus is organized for progressive loading by development agents. All list
 | [TS 23.288](TS%2023.288/README.md) | 18.13.0 | Full | NWDAF architecture, analytics, ML and data-repository procedures |
 | [TS 23.501](TS%2023.501/README.md) | 18.12.0 | Full | 5GS architecture, NF roles, selection and storage architecture |
 | [TS 23.502](TS%2023.502/README.md) | 18.14.0 | Full | 5GS Stage 2 procedures, including full registration, session, exposure and policy flows |
+| [TS 29.122](TS%2029.122/README.md) | 18.10.0 | Full | T8 northbound APIs and shared schemas reused by NWDAF, NRF, SMF and ADRF OpenAPI definitions |
 | [TS 29.500](TS%2029.500/README.md) | 18.10.0 | Full | Common SBA HTTP behaviour, headers, errors and routing |
 | [TS 29.508](TS%2029.508/README.md) | 18.11.0 | Full | SMF Session Management Event Exposure API |
 | [TS 29.510](TS%2029.510/README.md) | 18.11.0 | Full | NRF management, discovery, access token and bootstrapping APIs |
@@ -16,6 +17,7 @@ This corpus is organized for progressive loading by development agents. All list
 | [TS 29.564](TS%2029.564/README.md) | 18.7.0 | Full | UPF Event Exposure and UE private IP/identifier APIs |
 | [TS 29.571](TS%2029.571/README.md) | 18.12.0 | Full | Common SBI data types and ProblemDetails |
 | [TS 29.575](TS%2029.575/README.md) | 18.11.0 | Full | ADRF data/analytics and ML model management APIs |
+| [TS 29.576](TS%2029.576/README.md) | 18.8.0 | Full | MFAF configuration, fetch and notification services for messaging-framework-based data delivery |
 | [Official OpenAPI YAML](openapi/README.md) | Package-specific | Exact attachments | Machine-readable API paths and schemas |
 
 ## Common workflow: NWDAF registration and NF discovery
@@ -24,7 +26,7 @@ This corpus is organized for progressive loading by development agents. All list
 2. Read TS 23.501 for the architecture and NF selection principles.
 3. Read TS 23.502 clauses 4.17 and 5.2.7 for the Stage 2 lifecycle and discovery flow.
 4. Read TS 29.510 and its exact OpenAPI YAML for registration, heartbeat, update, deregistration and discovery.
-5. Resolve shared data types through TS 29.571 and TS29571_CommonData.yaml.
+5. Resolve shared data types through TS 29.571, TS 29.122 and their exact CommonData YAML attachments.
 6. Consult TS 29.500 for common SBI HTTP behaviour.
 
 ## Common workflow: SMF/UPF data collection
@@ -35,13 +37,15 @@ This corpus is organized for progressive loading by development agents. All list
 4. Use TS 29.564 and its two YAML attachments for direct UPF service exposure.
 5. Use TS 23.501 to understand SMF/UPF selection, serving scope and user-plane architecture.
 
-## Common workflow: ADRF integration
+## Common workflow: ADRF and messaging-framework integration
 
 1. Use TS 23.288 clauses describing ADRF storage, retrieval, DataSetTag and ML-model procedures.
 2. Use TS 23.501 for ADRF architecture, discovery and selection.
 3. Use TS 29.510 to discover the ADRF and select its service endpoint.
 4. Use TS 29.575 and its exact YAML attachments for Nadrf_DataManagement and Nadrf_MLModelManagement.
-5. Use TS 29.571 and TS 29.500 for common schemas and HTTP behaviour.
+5. Use TS 29.576 for MFAF configuration, FetchInstruction, fetch and notification paths when messaging-framework delivery is involved.
+6. Use TS 29.122 for shared northbound data types reused by the NWDAF/NRF/SMF/ADRF OpenAPI corpus.
+7. Use TS 29.571 and TS 29.500 for common schemas and HTTP behaviour.
 
 ## Fidelity boundary
 

@@ -1,4 +1,131 @@
 files:
+- file: TS29122_AsSessionWithQoS.yaml
+  sha256: 1edaa8d729aeacacecef865611d20e49a7a9dc57988569144be973902ce5b022
+  title: 3gpp-as-session-with-qos
+  external_docs_description: 3GPP TS 29.122 V18.9.0 T8 reference point for Northbound APIs
+  external_refs:
+  - TS29122_CommonData.yaml
+  - TS29512_Npcf_SMPolicyControl.yaml
+  - TS29514_Npcf_PolicyAuthorization.yaml
+  - TS29565_Ntsctsf_QoSandTSCAssistance.yaml
+  - TS29571_CommonData.yaml
+- file: TS29122_ChargeableParty.yaml
+  sha256: d7555817d38363cdcc8ca6ca30b89233f31b91d3180c11d899d8185aa4e9b468
+  title: 3gpp-chargeable-party
+  external_docs_description: 3GPP TS 29.122 V18.6.0 T8 reference point for Northbound APIs
+  external_refs:
+  - TS29122_CommonData.yaml
+  - TS29514_Npcf_PolicyAuthorization.yaml
+  - TS29571_CommonData.yaml
+- file: TS29122_CommonData.yaml
+  sha256: 79e5727ff35dbb41852c2c7a80b96bb6e1d5bc84390986f0e39a25843de0398a
+  title: TS 29.122 Common Data Types
+  external_docs_description: 3GPP TS 29.122 V18.6.0 T8 reference point for Northbound APIs
+  external_refs:
+  - TS29514_Npcf_PolicyAuthorization.yaml
+  - TS29554_Npcf_BDTPolicyControl.yaml
+  - TS29571_CommonData.yaml
+  - TS29572_Nlmf_Location.yaml
+- file: TS29122_CpProvisioning.yaml
+  sha256: d029b8abc6908c92478aa0cac9b0f4eb316797ae3ff012e9d3ee43d05501d4c7
+  title: 3gpp-cp-parameter-provisioning
+  external_docs_description: 3GPP TS 29.122 V18.6.0 T8 reference point for Northbound APIs
+  external_refs:
+  - TS29122_CommonData.yaml
+  - TS29571_CommonData.yaml
+- file: TS29122_DeviceTriggering.yaml
+  sha256: 61e57390590e05dbd9fd50e20c4b02488313ef143d3cca282caba4181f046255
+  title: 3gpp-device-triggering
+  external_docs_description: 3GPP TS 29.122 V18.6.0 T8 reference point for Northbound APIs
+  external_refs:
+  - TS29122_CommonData.yaml
+  - TS29571_CommonData.yaml
+- file: TS29122_ECRControl.yaml
+  sha256: a524d39456b77fef8d77e5ff742dd751ad310f05245fbf5cf168c68e34709cd2
+  title: 3gpp-ecr-control
+  external_docs_description: 3GPP TS 29.122 V17.6.0 T8 reference point for Northbound APIs
+  external_refs:
+  - TS29122_CommonData.yaml
+  - TS29503_Nudm_SDM.yaml
+  - TS29571_CommonData.yaml
+- file: TS29122_GMDviaMBMSbyMB2.yaml
+  sha256: 46a3879f268a20fdad3db0bb0b28c71eec6d1784c7381cca807630d89cd8b070
+  title: GMDviaMBMSbyMB2
+  external_docs_description: 3GPP TS 29.122 V18.6.0 T8 reference point for Northbound APIs
+  external_refs:
+  - TS29122_CommonData.yaml
+  - TS29571_CommonData.yaml
+  - TS29572_Nlmf_Location.yaml
+- file: TS29122_GMDviaMBMSbyxMB.yaml
+  sha256: 115951284089957a01748042b3cd09dc9b0583167e10bb56628a70191ad259cc
+  title: GMDviaMBMSbyxMB
+  external_docs_description: 3GPP TS 29.122 V18.6.0 T8 reference point for Northbound APIs
+  external_refs:
+  - TS29122_CommonData.yaml
+  - TS29571_CommonData.yaml
+  - TS29572_Nlmf_Location.yaml
+- file: TS29122_MonitoringEvent.yaml
+  sha256: b4b72ba0712cb307fcec06247e1afa72d010b06598992ba091d04cecd68a251f
+  title: 3gpp-monitoring-event
+  external_docs_description: 3GPP TS 29.122 V18.6.0 T8 reference point for Northbound APIs
+  external_refs:
+  - TS29122_CommonData.yaml
+  - TS29503_Nudm_SDM.yaml
+  - TS29515_Ngmlc_Location.yaml
+  - TS29520_Nnwdaf_EventsSubscription.yaml
+  - TS29523_Npcf_EventExposure.yaml
+  - TS29571_CommonData.yaml
+  - TS29572_Nlmf_Location.yaml
+- file: TS29122_MsisdnLessMoSms.yaml
+  sha256: a5e2993a865f0aa2ab8f52cbde21ddb7ed9f1ef37b851a596e4194ffa06b77bd
+  title: 3gpp-msisdn-less-mo-sms
+  external_docs_description: 3GPP TS 29.122 V17.6.0 T8 reference point for Northbound APIs
+  external_refs:
+  - TS29122_CommonData.yaml
+  - TS29571_CommonData.yaml
+- file: TS29122_NIDD.yaml
+  sha256: 3d5bdb254285119baf6c6002006337a9946d1b4d129aeb65be6a1bec592619ad
+  title: 3gpp-nidd
+  external_docs_description: 3GPP TS 29.122 V18.6.0 T8 reference point for Northbound APIs
+  external_refs:
+  - TS29122_CommonData.yaml
+  - TS29571_CommonData.yaml
+- file: TS29122_NpConfiguration.yaml
+  sha256: e5a34e62c5b625e66da3e3655e3debb6643f512438b3ea331682a8f38e0f1f14
+  title: 3gpp-network-parameter-configuration
+  external_docs_description: 3GPP TS 29.122 V18.6.0 T8 reference point for Northbound APIs
+  external_refs:
+  - TS29122_CommonData.yaml
+  - TS29122_MonitoringEvent.yaml
+  - TS29571_CommonData.yaml
+- file: TS29122_PfdManagement.yaml
+  sha256: b60b383115f1f7617b5fecc59bfdb861d4bf386fffd50c4c2eb3de8ae993b2ef
+  title: 3gpp-pfd-management
+  external_docs_description: 3GPP TS 29.122 V18.6.0 T8 reference point for Northbound APIs
+  external_refs:
+  - TS29122_CommonData.yaml
+  - TS29571_CommonData.yaml
+- file: TS29122_RacsParameterProvisioning.yaml
+  sha256: 7cded49276685b0d02963951c88246dec1bbe90086a74a2b1a38e782f67856dc
+  title: 3gpp-racs-parameter-provisioning
+  external_docs_description: 3GPP TS 29.122 V18.6.0 T8 reference point for Northbound APIs
+  external_refs:
+  - TS29122_CommonData.yaml
+  - TS29571_CommonData.yaml
+- file: TS29122_ReportingNetworkStatus.yaml
+  sha256: 8401e81765bbf36b9ba9a360ed377646cc0bddc64e9f2d82f9550730aab88671
+  title: 3gpp-network-status-reporting
+  external_docs_description: 3GPP TS 29.122 V18.6.0 T8 reference point for Northbound APIs
+  external_refs:
+  - TS29122_CommonData.yaml
+  - TS29571_CommonData.yaml
+- file: TS29122_ResourceManagementOfBdt.yaml
+  sha256: 2db5c22c477fda4c83fc310ec0d6b0c99df1281e8b822f2da4717d0b19c66f21
+  title: 3gpp-bdt
+  external_docs_description: 3GPP TS 29.122 V18.6.0 T8 reference point for Northbound APIs
+  external_refs:
+  - TS29122_CommonData.yaml
+  - TS29571_CommonData.yaml
 - file: TS29508_Nsmf_EventExposure.yaml
   sha256: a57c417f14c025ec081bb4befeb25e591d179713b1c43193cd23c56cc614d638
   title: Nsmf_EventExposure
@@ -212,35 +339,23 @@ files:
   external_refs:
   - TS29520_Nnwdaf_MLModelProvision.yaml
   - TS29571_CommonData.yaml
-- file: manifest.yaml
-  sha256: 1192c6bce0305bd11be68b402f02e63c2ddfdd39164ca75f09ba358dafe8d320
-  title: ''
-  external_docs_description: ''
-  external_refs: []
-present_files:
-- TS29508_Nsmf_EventExposure.yaml
-- TS29510_Nnrf_AccessToken.yaml
-- TS29510_Nnrf_Bootstrapping.yaml
-- TS29510_Nnrf_NFDiscovery.yaml
-- TS29510_Nnrf_NFManagement.yaml
-- TS29520_Nnwdaf_AnalyticsInfo.yaml
-- TS29520_Nnwdaf_DataManagement.yaml
-- TS29520_Nnwdaf_EventsSubscription.yaml
-- TS29520_Nnwdaf_MLModelMonitor.yaml
-- TS29520_Nnwdaf_MLModelProvision.yaml
-- TS29520_Nnwdaf_MLModelTraining.yaml
-- TS29520_Nnwdaf_RoamingAnalytics.yaml
-- TS29520_Nnwdaf_RoamingData.yaml
-- TS29564_Nupf_EventExposure.yaml
-- TS29564_Nupf_GetUEPrivateIPaddrAndIdentifiers.yaml
-- TS29571_CommonData.yaml
-- TS29575_Nadrf_DataManagement.yaml
-- TS29575_Nadrf_MLModelManagement.yaml
-- manifest.yaml
-unresolved_external_files:
-- TS29122_CommonData.yaml
-- TS29122_CpProvisioning.yaml
-- TS29122_PfdManagement.yaml
+- file: TS29576_Nmfaf_3caDataManagement.yaml
+  sha256: 238b5727726eb9ff625beac5498c29f06311f939b406fbb262a3d92365cdb04b
+  title: Nmfaf_3caDataManagement
+  external_docs_description: 3GPP TS 29.576 V18.7.0; 5G System; Messaging Framework Adaptor Services; Stage 3.
+  external_refs:
+  - TS29520_Nnwdaf_EventsSubscription.yaml
+  - TS29571_CommonData.yaml
+  - TS29575_Nadrf_DataManagement.yaml
+- file: TS29576_Nmfaf_3daDataManagement.yaml
+  sha256: 63ca4a0fe4385ecf2cdc1a3d99c60916075cbd806027f9717348cfde25be2614
+  title: Nmfaf_3daDataManagement
+  external_docs_description: 3GPP TS 29.576 V18.4.0; 5G System; Messaging Framework Adaptor Services; Stage 3.
+  external_refs:
+  - TS29571_CommonData.yaml
+  - TS29574_Ndccf_DataManagement.yaml
+included_count: 36
+unresolved_external_refs:
 - TS29503_Nudm_EE.yaml
 - TS29503_Nudm_SDM.yaml
 - TS29503_Nudm_UECM.yaml
@@ -256,8 +371,8 @@ unresolved_external_files:
 - TS29531_Nnssf_NSSelection.yaml
 - TS29536_Nnsacf_SliceEventExposure.yaml
 - TS29554_Npcf_BDTPolicyControl.yaml
+- TS29565_Ntsctsf_QoSandTSCAssistance.yaml
 - TS29572_Nlmf_Location.yaml
 - TS29573_N32_Handshake.yaml
 - TS29574_Ndccf_DataManagement.yaml
-- TS29576_Nmfaf_3caDataManagement.yaml
 - TS29591_Nnef_EventExposure.yaml

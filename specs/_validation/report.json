@@ -1,102 +1,17 @@
 {
-  "release": "18",
-  "specifications": {
-    "TS 23.288": "18.13.0",
-    "TS 23.501": "18.12.0",
-    "TS 23.502": "18.14.0",
-    "TS 29.500": "18.10.0",
-    "TS 29.508": "18.11.0",
-    "TS 29.510": "18.11.0",
-    "TS 29.520": "18.14.0",
-    "TS 29.564": "18.7.0",
-    "TS 29.571": "18.12.0",
-    "TS 29.575": "18.11.0"
-  },
-  "scope": "All listed specifications are included in full.",
-  "automated_checks": {
-    "file_count": 4009,
-    "markdown_files": 2106,
-    "local_links_checked": 2142,
-    "image_references_checked": 683,
-    "manifest_entries": 5156,
-    "yaml_files": 19,
-    "yaml_valid": 19,
-    "exact_attachments_checked": 19,
-    "exact_attachments_byte_identical": 19,
-    "passed": true
-  },
-  "image_inventory": {
-    "TS 23.501": {
-      "original": 150,
-      "rendered_png": 150,
-      "embedded": 150,
-      "unrendered_original": 0
-    },
-    "TS 23.502": {
-      "original": 280,
-      "rendered_png": 153,
-      "embedded": 280,
-      "unrendered_original": 127
-    },
-    "TS 29.508": {
-      "original": 10,
-      "rendered_png": 10,
-      "embedded": 9,
-      "unrendered_original": 0
-    },
-    "TS 29.564": {
-      "original": 10,
-      "rendered_png": 10,
-      "embedded": 9,
-      "unrendered_original": 0
-    },
-    "TS 29.575": {
-      "original": 25,
-      "rendered_png": 25,
-      "embedded": 24,
-      "unrendered_original": 0
-    }
-  },
-  "retrieval_tests": {
-    "NWDAF NRF registration": [
-      "TS 29.510/01 Original contents.md",
-      "TS 23.502/01 Original contents.md",
-      "TS 23.502/Annex K (informative) Change history/2020.md",
-      "TS 23.502/Annex K (informative) Change history/2021.md",
-      "TS 23.502/5 Network Function Service procedures/5.2 Network Function services/5.2.7 NRF Services/5.2.7.1 General.md",
-      "TS 23.502/5 Network Function Service procedures/5.2 Network Function services/5.2.7 NRF Services/5.2.7.2 Nnrf_NFManagement service.md",
-      "TS 23.502/5 Network Function Service procedures/5.2 Network Function services/5.2.7 NRF Services/5.2.7.3 Nnrf_NFDiscovery service.md",
-      "TS 23.502/4 System procedures/4.17 Network Function Service Framework Procedure/4.17.1 NF service Registration.md"
-    ],
-    "SMF event subscription": [
-      "TS 29.508/01 Original contents.md",
-      "TS 29.508/4 Session Management Event Exposure Service/4.2 Service Operations/4.2.3 Nsmf_EventExposure_Subscribe Service Operation.md"
-    ],
-    "UPF event exposure": [
-      "TS 29.564/01 Original contents.md",
-      "TS 29.564/5 Services offered by the UPF/5.2 Nupf_EventExposure Service.md",
-      "TS 29.564/Annex B (informative) Change history/2023.md",
-      "TS 23.502/5 Network Function Service procedures/5.2 Network Function services/5.2.26 UPF Services.md",
-      "TS 23.502/4 System procedures/4.15 Network Exposure/4.15.4 Core Network Internal Event Exposure/4.15.4.5 Exposure of Events from UPF for UPF Data Collection.md"
-    ],
-    "ADRF storage": [
-      "TS 29.575/01 Original contents.md",
-      "TS 29.575/4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/4.2.2.2 Nadrf_DataManagement_StorageRequest service operation.md"
-    ],
-    "ADRF discovery": [
-      "TS 23.501/6 Network Functions/6.3 Principles for Network Function and Network Function Service discovery and selection/6.3.20 ADRF discovery and selection.md"
-    ],
-    "UPF event exposure Stage 2": [
-      "TS 23.502/01 Original contents.md",
-      "TS 23.502/4 System procedures/4.15 Network Exposure/4.15.4 Core Network Internal Event Exposure/4.15.4.5 Exposure of Events from UPF for UPF Data Collection.md",
-      "TS 23.502/4 System procedures/4.15 Network Exposure/4.15.4 Core Network Internal Event Exposure/README.md"
-    ]
-  },
-  "known_limitations": [
-    "TS 29.508 originated as legacy binary DOC and was converted through an intermediate DOCX for structural parsing; the original DOC was independently checked with antiword.",
-    "Antiword omits or reorders portions of complex tables in TS 29.508. Token and sequence comparisons therefore show lower overlap than the DOCX specifications; differences were localized to table serialization rather than evidence of rewritten normative prose.",
-    "TS 23.502 has 127 vector images without PNG previews after bounded conversion attempts. Original EMF/WMF and embedded OLE/Visio payloads remain present and all image references resolve.",
-    "No full page-by-page visual certification is claimed.",
-    "OpenAPI YAML files still reference external schemas from NF specifications not supplied in this corpus; unresolved filenames are listed in openapi/manifest.yaml."
-  ]
+  "corpus": "NWDAF implementation-related 3GPP Release 18 specifications",
+  "specification_count": 12,
+  "added": [
+    "TS 29.122 V18.10.0",
+    "TS 29.576 V18.8.0"
+  ],
+  "file_count": 4266,
+  "markdown_files": 2297,
+  "manifest_entries": 6279,
+  "local_links_checked": 2368,
+  "image_references_checked": 698,
+  "openapi_yaml_files": 36,
+  "unresolved_openapi_dependencies": 20,
+  "passed": true,
+  "issues": []
 }

@@ -27,6 +27,15 @@ specifications:
   manifest: TS 23.502/manifest.yaml
   source_archive: 23502-ie0.zip
   source_archive_sha256: 0f24045c49ddf710fb91e51ec74d070cfd13d1e9bafc07809d7e87eae6a61ce8
+- id: TS-29.122
+  spec: TS 29.122
+  version: 18.10.0
+  scope: full
+  purpose: T8 northbound APIs and shared schemas reused by NWDAF, NRF, SMF and ADRF OpenAPI definitions
+  index: TS 29.122/README.md
+  manifest: TS 29.122/manifest.yaml
+  source_archive: 29122-ia0.zip
+  source_archive_sha256: bea81e48dfe77bc42deb87684c82fd69b8ac18a0eb1c9f9632f61f094ba95ecf
 - id: TS-29.500
   spec: TS 29.500
   version: 18.10.0
@@ -90,6 +99,15 @@ specifications:
   manifest: TS 29.575/manifest.yaml
   source_archive: 29575-ib0(1).zip
   source_archive_sha256: 8dd2c6efa5761d0f11035b07a1b3001be1a46d8a776e8999bcb8577be5a4ab08
+- id: TS-29.576
+  spec: TS 29.576
+  version: 18.8.0
+  scope: full
+  purpose: MFAF configuration, fetch and notification services for messaging-framework-based data delivery
+  index: TS 29.576/README.md
+  manifest: TS 29.576/manifest.yaml
+  source_archive: 29576-i80.zip
+  source_archive_sha256: 4b70ed06646c84f7f9c47958cd2d64fe6c6ff89448ac6db4679c4b1de6a598c6
 openapi:
   index: openapi/README.md
   manifest: openapi/manifest.yaml

@@ -1,0 +1,4964 @@
+spec: TS 29.122
+version: 18.10.0
+release: '18'
+source_archive: 29122-ia0.zip
+source_document: 29122-ia0.doc
+source_archive_sha256: bea81e48dfe77bc42deb87684c82fd69b8ac18a0eb1c9f9632f61f094ba95ecf
+source_document_sha256: 6bd67a5c13b682bafa1d4b5bb9e860f8d1635bd8829e8a2fc200656ba7a61635
+max_source_words_per_semantic_file_target: 4200
+clauses:
+- clause: document-information
+  title: Document information
+  path: 00 Document information.md
+  source_words: 273
+  kind: source-file
+- clause: contents
+  title: Contents
+  path: 01 Original contents.md
+  source_words: 5391
+  kind: source-file
+- clause: foreword
+  title: Foreword
+  path: 02 Foreword.md
+  source_words: 132
+  kind: source-file
+- clause: '1'
+  title: 1 Scope
+  path: 1 Scope.md
+  source_words: 37
+  kind: source-file
+- clause: '2'
+  title: 2 References
+  path: 2 References.md
+  source_words: 981
+  kind: source-file
+- clause: '3'
+  title: 3 Definitions and abbreviations
+  path: 3 Definitions and abbreviations.md
+  source_words: 282
+  kind: source-file
+- clause: '3.1'
+  title: 3.1 Definitions
+  path: 3 Definitions and abbreviations.md
+  source_words: 46
+  kind: embedded-clause
+- clause: '3.2'
+  title: 3.2 Abbreviations
+  path: 3 Definitions and abbreviations.md
+  source_words: 236
+  kind: embedded-clause
+- clause: '4'
+  title: 4 T8 reference point
+  path: 4 T8 reference point/README.md
+  source_words: 22017
+  kind: navigation-directory
+- clause: '4.1'
+  title: 4.1 Overview
+  path: 4 T8 reference point/4.1 Overview.md
+  source_words: 170
+  kind: source-file
+- clause: '4.2'
+  title: 4.2 Reference model
+  path: 4 T8 reference point/4.2 Reference model.md
+  source_words: 63
+  kind: source-file
+- clause: '4.3'
+  title: 4.3 Functional elements
+  path: 4 T8 reference point/4.3 Functional elements.md
+  source_words: 232
+  kind: source-file
+- clause: 4.3.1
+  title: 4.3.1 SCEF
+  path: 4 T8 reference point/4.3 Functional elements.md
+  source_words: 124
+  kind: embedded-clause
+- clause: 4.3.2
+  title: 4.3.2 SCS/AS
+  path: 4 T8 reference point/4.3 Functional elements.md
+  source_words: 108
+  kind: embedded-clause
+- clause: '4.4'
+  title: 4.4 Procedures over T8 reference point
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/README.md
+  source_words: 21552
+  kind: navigation-directory
+- clause: 4.4.1
+  title: 4.4.1 Introduction
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.1 Introduction.md
+  source_words: 23
+  kind: source-file
+- clause: 4.4.2
+  title: 4.4.2 Monitoring Procedures
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.2 Monitoring Procedures.md
+  source_words: 3888
+  kind: source-file
+- clause: 4.4.2.1
+  title: 4.4.2.1 General
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.2 Monitoring Procedures.md
+  source_words: 69
+  kind: embedded-clause
+- clause: 4.4.2.2
+  title: 4.4.2.2 Monitoring Events Configuration
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.2 Monitoring Procedures.md
+  source_words: 2968
+  kind: embedded-clause
+- clause: 4.4.2.2.1
+  title: 4.4.2.2.1 General
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.2 Monitoring Procedures.md
+  source_words: 1075
+  kind: embedded-clause
+- clause: 4.4.2.2.2
+  title: 4.4.2.2.2 Monitoring Events Configuration via HSS
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.2 Monitoring Procedures.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 4.4.2.2.2.1
+  title: 4.4.2.2.2.1 General
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.2 Monitoring Procedures.md
+  source_words: 86
+  kind: embedded-clause
+- clause: 4.4.2.2.2.2
+  title: 4.4.2.2.2.2 Configuration Request for an individual UE
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.2 Monitoring Procedures.md
+  source_words: 373
+  kind: embedded-clause
+- clause: 4.4.2.2.2.3
+  title: 4.4.2.2.2.3 Configuration Request for a group of UEs
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.2 Monitoring Procedures.md
+  source_words: 720
+  kind: embedded-clause
+- clause: 4.4.2.2.3
+  title: 4.4.2.2.3 Monitoring Events Configuration directly via MME/SGSN
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.2 Monitoring Procedures.md
+  source_words: 291
+  kind: embedded-clause
+- clause: 4.4.2.2.4
+  title: 4.4.2.2.4 Monitoring Events Configuration via PCRF
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.2 Monitoring Procedures.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 4.4.2.2.4.1
+  title: 4.4.2.2.4.1 General
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.2 Monitoring Procedures.md
+  source_words: 120
+  kind: embedded-clause
+- clause: 4.4.2.2.4.2
+  title: 4.4.2.2.4.2 Configuration Request for an individual UE
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.2 Monitoring Procedures.md
+  source_words: 188
+  kind: embedded-clause
+- clause: 4.4.2.2.4.3
+  title: 4.4.2.2.4.3 Configuration Request for a group of UEs
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.2 Monitoring Procedures.md
+  source_words: 115
+  kind: embedded-clause
+- clause: 4.4.2.3
+  title: 4.4.2.3 Reporting of Monitoring Event Procedure
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.2 Monitoring Procedures.md
+  source_words: 539
+  kind: embedded-clause
+- clause: 4.4.2.4
+  title: 4.4.2.4 Network-initiated Explicit Monitoring Event Deletion Procedure
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.2 Monitoring Procedures.md
+  source_words: 264
+  kind: embedded-clause
+- clause: 4.4.2.5
+  title: 4.4.2.5 Network initiated notification of applied parameter configuration
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.2 Monitoring Procedures.md
+  source_words: 48
+  kind: embedded-clause
+- clause: 4.4.3
+  title: 4.4.3 Procedures for resource management of Background Data Transfer
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.3 Procedures for resource management of Background Data Transfer.md
+  source_words: 730
+  kind: source-file
+- clause: 4.4.4
+  title: 4.4.4 Procedures for changing the chargeable party at session set up or during the session
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.4 Procedures for changing the chargeable party at session set up or during the session.md
+  source_words: 966
+  kind: source-file
+- clause: 4.4.5
+  title: 4.4.5 Procedures for Non-IP Data Delivery
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.5 Procedures for Non-IP Data Delivery/README.md
+  source_words: 4997
+  kind: navigation-directory
+- clause: 4.4.5.1
+  title: 4.4.5.1 General
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.5 Procedures for Non-IP Data Delivery/4.4.5.1 General.md
+  source_words: 91
+  kind: source-file
+- clause: 4.4.5.2
+  title: 4.4.5.2 NIDD Configuration
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.5 Procedures for Non-IP Data Delivery/4.4.5.2 NIDD Configuration.md
+  source_words: 941
+  kind: source-file
+- clause: 4.4.5.2.1
+  title: 4.4.5.2.1 NIDD Configuration for a single UE
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.5 Procedures for Non-IP Data Delivery/4.4.5.2 NIDD Configuration.md
+  source_words: 849
+  kind: embedded-clause
+- clause: 4.4.5.2.2
+  title: 4.4.5.2.2 NIDD Configuration for a group of UEs
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.5 Procedures for Non-IP Data Delivery/4.4.5.2 NIDD Configuration.md
+  source_words: 92
+  kind: embedded-clause
+- clause: 4.4.5.3
+  title: 4.4.5.3 Mobile Terminated NIDD procedure
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.5 Procedures for Non-IP Data Delivery/4.4.5.3 Mobile Terminated NIDD procedure.md
+  source_words: 2303
+  kind: source-file
+- clause: 4.4.5.3.1
+  title: 4.4.5.3.1 Mobile Terminated NIDD for a single UE
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.5 Procedures for Non-IP Data Delivery/4.4.5.3 Mobile Terminated NIDD procedure.md
+  source_words: 1778
+  kind: embedded-clause
+- clause: 4.4.5.3.2
+  title: 4.4.5.3.2 Mobile Terminated NIDD for a group of UEs
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.5 Procedures for Non-IP Data Delivery/4.4.5.3 Mobile Terminated NIDD procedure.md
+  source_words: 525
+  kind: embedded-clause
+- clause: 4.4.5.4
+  title: 4.4.5.4 Mobile Originated NIDD procedure
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.5 Procedures for Non-IP Data Delivery/4.4.5.4 Mobile Originated NIDD procedure.md
+  source_words: 170
+  kind: source-file
+- clause: 4.4.5.5
+  title: 4.4.5.5 NIDD Authorisation Update procedure
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.5 Procedures for Non-IP Data Delivery/4.4.5.5 NIDD Authorisation Update procedure.md
+  source_words: 357
+  kind: source-file
+- clause: 4.4.5.6
+  title: 4.4.5.6 Port Management Configuration
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.5 Procedures for Non-IP Data Delivery/4.4.5.6 Port Management Configuration.md
+  source_words: 1135
+  kind: source-file
+- clause: 4.4.5.6.1
+  title: 4.4.5.6.1 Port Reservation and Release
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.5 Procedures for Non-IP Data Delivery/4.4.5.6 Port Management Configuration.md
+  source_words: 1024
+  kind: embedded-clause
+- clause: 4.4.5.6.2
+  title: 4.4.5.6.2 Port Notification
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.5 Procedures for Non-IP Data Delivery/4.4.5.6 Port Management Configuration.md
+  source_words: 111
+  kind: embedded-clause
+- clause: 4.4.6
+  title: 4.4.6 Procedures for Device Triggering
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.6 Procedures for Device Triggering.md
+  source_words: 855
+  kind: source-file
+- clause: 4.4.7
+  title: 4.4.7 Procedures for Group Message Delivery
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.7 Procedures for Group Message Delivery.md
+  source_words: 3189
+  kind: source-file
+- clause: 4.4.7.1
+  title: 4.4.7.1 General
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.7 Procedures for Group Message Delivery.md
+  source_words: 170
+  kind: embedded-clause
+- clause: 4.4.7.2
+  title: 4.4.7.2 Group Message Delivery via MBMS
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.7 Procedures for Group Message Delivery.md
+  source_words: 3019
+  kind: embedded-clause
+- clause: 4.4.7.2.1
+  title: 4.4.7.2.1 General
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.7 Procedures for Group Message Delivery.md
+  source_words: 101
+  kind: embedded-clause
+- clause: 4.4.7.2.2
+  title: 4.4.7.2.2 Group Message Delivery via MBMS by MB2
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.7 Procedures for Group Message Delivery.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 4.4.7.2.2.1
+  title: 4.4.7.2.2.1 TMGI Allocation
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.7 Procedures for Group Message Delivery.md
+  source_words: 397
+  kind: embedded-clause
+- clause: 4.4.7.2.2.2
+  title: 4.4.7.2.2.2 TMGI Deallocation
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.7 Procedures for Group Message Delivery.md
+  source_words: 103
+  kind: embedded-clause
+- clause: 4.4.7.2.2.3
+  title: 4.4.7.2.2.3 Creation of group message delivery
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.7 Procedures for Group Message Delivery.md
+  source_words: 604
+  kind: embedded-clause
+- clause: 4.4.7.2.2.4
+  title: 4.4.7.2.2.4 Modification of previous submitted group message delivery
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.7 Procedures for Group Message Delivery.md
+  source_words: 345
+  kind: embedded-clause
+- clause: 4.4.7.2.2.5
+  title: 4.4.7.2.2.5 Cancellation of previous submitted group message delivery
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.7 Procedures for Group Message Delivery.md
+  source_words: 134
+  kind: embedded-clause
+- clause: 4.4.7.2.3
+  title: 4.4.7.2.3 Group message Delivery via MBMS by xMB
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.7 Procedures for Group Message Delivery.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 4.4.7.2.3.1
+  title: 4.4.7.2.3.1 Service Creation
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.7 Procedures for Group Message Delivery.md
+  source_words: 206
+  kind: embedded-clause
+- clause: 4.4.7.2.3.2
+  title: 4.4.7.2.3.2 Service Deletion
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.7 Procedures for Group Message Delivery.md
+  source_words: 105
+  kind: embedded-clause
+- clause: 4.4.7.2.3.3
+  title: 4.4.7.2.3.3 Creation of group message delivery
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.7 Procedures for Group Message Delivery.md
+  source_words: 525
+  kind: embedded-clause
+- clause: 4.4.7.2.3.4
+  title: 4.4.7.2.3.4 Modification of previous submitted group message delivery
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.7 Procedures for Group Message Delivery.md
+  source_words: 365
+  kind: embedded-clause
+- clause: 4.4.7.2.3.5
+  title: 4.4.7.2.3.5 Cancellation of previous submitted group message delivery
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.7 Procedures for Group Message Delivery.md
+  source_words: 134
+  kind: embedded-clause
+- clause: 4.4.8
+  title: 4.4.8 Procedures for Reporting of Network Status
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.8 Procedures for Reporting of Network Status.md
+  source_words: 848
+  kind: source-file
+- clause: 4.4.8.1
+  title: 4.4.8.1 General
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.8 Procedures for Reporting of Network Status.md
+  source_words: 63
+  kind: embedded-clause
+- clause: 4.4.8.2
+  title: 4.4.8.2 Network Status Reporting Subscription
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.8 Procedures for Reporting of Network Status.md
+  source_words: 728
+  kind: embedded-clause
+- clause: 4.4.8.3
+  title: 4.4.8.3 Network Status Reporting Notification
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.8 Procedures for Reporting of Network Status.md
+  source_words: 57
+  kind: embedded-clause
+- clause: 4.4.9
+  title: 4.4.9 Procedures for Communication Pattern Parameters Provisioning
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.9 Procedures for Communication Pattern Parameters Provisioning.md
+  source_words: 1119
+  kind: source-file
+- clause: 4.4.10
+  title: 4.4.10 Procedures for PFD Management
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.10 Procedures for PFD Management.md
+  source_words: 1510
+  kind: source-file
+- clause: 4.4.11
+  title: 4.4.11 Procedures for Enhanced Coverage Restriction Control
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.11 Procedures for Enhanced Coverage Restriction Control.md
+  source_words: 405
+  kind: source-file
+- clause: 4.4.12
+  title: 4.4.12 Procedures for Network Parameter Configuration
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.12 Procedures for Network Parameter Configuration.md
+  source_words: 1052
+  kind: source-file
+- clause: 4.4.12.1
+  title: 4.4.12.1 General
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.12 Procedures for Network Parameter Configuration.md
+  source_words: 509
+  kind: embedded-clause
+- clause: 4.4.12.2
+  title: 4.4.12.2 Configuration Request for an individual UE
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.12 Procedures for Network Parameter Configuration.md
+  source_words: 212
+  kind: embedded-clause
+- clause: 4.4.12.3
+  title: 4.4.12.3 Configuration Request for a group of UEs
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.12 Procedures for Network Parameter Configuration.md
+  source_words: 292
+  kind: embedded-clause
+- clause: 4.4.12.4
+  title: 4.4.12.4 Notification of applied parameter configuration
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.12 Procedures for Network Parameter Configuration.md
+  source_words: 39
+  kind: embedded-clause
+- clause: 4.4.13
+  title: 4.4.13 Procedures for setting up an AS session with required QoS
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.13 Procedures for setting up an AS session with required QoS.md
+  source_words: 1312
+  kind: source-file
+- clause: 4.4.14
+  title: 4.4.14 Procedures for MSISDN-less Mobile Originated SMS
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.14 Procedures for MSISDN-less Mobile Originated SMS.md
+  source_words: 182
+  kind: source-file
+- clause: 4.4.14.1
+  title: 4.4.14.1 General
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.14 Procedures for MSISDN-less Mobile Originated SMS.md
+  source_words: 19
+  kind: embedded-clause
+- clause: 4.4.14.2
+  title: 4.4.14.2 Delivery of MSISDN-less MO SMS
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.14 Procedures for MSISDN-less Mobile Originated SMS.md
+  source_words: 163
+  kind: embedded-clause
+- clause: 4.4.15
+  title: 4.4.15 Procedures for RACS Parameter Provisioning
+  path: 4 T8 reference point/4.4 Procedures over T8 reference point/4.4.15 Procedures for RACS Parameter Provisioning.md
+  source_words: 476
+  kind: source-file
+- clause: '5'
+  title: 5 T8 APIs
+  path: 5 T8 APIs/README.md
+  source_words: 107894
+  kind: navigation-directory
+- clause: '5.1'
+  title: 5.1 Introduction
+  path: 5 T8 APIs/5.1 Introduction.md
+  source_words: 269
+  kind: source-file
+- clause: '5.2'
+  title: 5.2 Information applicable to several APIs
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/README.md
+  source_words: 12000
+  kind: navigation-directory
+- clause: 5.2.1
+  title: 5.2.1 Data Types
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.1 Data Types.md
+  source_words: 4182
+  kind: source-file
+- clause: 5.2.1.1
+  title: 5.2.1.1 Introduction
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.1 Data Types.md
+  source_words: 909
+  kind: embedded-clause
+- clause: 5.2.1.2
+  title: 5.2.1.2 Referenced structured data types
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.1 Data Types.md
+  source_words: 1845
+  kind: embedded-clause
+- clause: 5.2.1.2.1
+  title: '5.2.1.2.1 Type: SponsorInformation'
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.1 Data Types.md
+  source_words: 54
+  kind: embedded-clause
+- clause: 5.2.1.2.2
+  title: '5.2.1.2.2 Type: UsageThreshold'
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.1 Data Types.md
+  source_words: 103
+  kind: embedded-clause
+- clause: 5.2.1.2.3
+  title: '5.2.1.2.3 Type: TimeWindow'
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.1 Data Types.md
+  source_words: 70
+  kind: embedded-clause
+- clause: 5.2.1.2.4
+  title: '5.2.1.2.4 Type: Acknowledgement'
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.1 Data Types.md
+  source_words: 38
+  kind: embedded-clause
+- clause: 5.2.1.2.5
+  title: '5.2.1.2.5 Type: NotificationData'
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.1 Data Types.md
+  source_words: 61
+  kind: embedded-clause
+- clause: 5.2.1.2.6
+  title: '5.2.1.2.6 Type: EventReport'
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.1 Data Types.md
+  source_words: 75
+  kind: embedded-clause
+- clause: 5.2.1.2.7
+  title: '5.2.1.2.7 Type: AccumulatedUsage'
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.1 Data Types.md
+  source_words: 75
+  kind: embedded-clause
+- clause: 5.2.1.2.8
+  title: '5.2.1.2.8 Type: FlowInfo'
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.1 Data Types.md
+  source_words: 214
+  kind: embedded-clause
+- clause: 5.2.1.2.9
+  title: '5.2.1.2.9 Type: TestNotification'
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.1 Data Types.md
+  source_words: 68
+  kind: embedded-clause
+- clause: 5.2.1.2.10
+  title: '5.2.1.2.10 Type: WebsockNotifConfig'
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.1 Data Types.md
+  source_words: 235
+  kind: embedded-clause
+- clause: 5.2.1.2.11
+  title: '5.2.1.2.11 Type: LocationArea'
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.1 Data Types.md
+  source_words: 155
+  kind: embedded-clause
+- clause: 5.2.1.2.12
+  title: '5.2.1.2.12 Type: ProblemDetails'
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.1 Data Types.md
+  source_words: 211
+  kind: embedded-clause
+- clause: 5.2.1.2.13
+  title: '5.2.1.2.13 Type: InvalidParam'
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.1 Data Types.md
+  source_words: 45
+  kind: embedded-clause
+- clause: 5.2.1.2.14
+  title: '5.2.1.2.14 Type: PlmnId'
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.1 Data Types.md
+  source_words: 30
+  kind: embedded-clause
+- clause: 5.2.1.2.15
+  title: '5.2.1.2.15 Type: ConfigResult'
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.1 Data Types.md
+  source_words: 87
+  kind: embedded-clause
+- clause: 5.2.1.2.16
+  title: '5.2.1.2.16 Type: UsageThresholdRm'
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.1 Data Types.md
+  source_words: 145
+  kind: embedded-clause
+- clause: 5.2.1.2.17
+  title: '5.2.1.2.17 Type: LocationArea5G'
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.1 Data Types.md
+  source_words: 92
+  kind: embedded-clause
+- clause: 5.2.1.2.18
+  title: '5.2.1.2.18 Type: EthFlowInfo'
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.1 Data Types.md
+  source_words: 87
+  kind: embedded-clause
+- clause: 5.2.1.3
+  title: 5.2.1.3 Referenced Simple data types and enumerations
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.1 Data Types.md
+  source_words: 918
+  kind: embedded-clause
+- clause: 5.2.1.3.1
+  title: 5.2.1.3.1 Introduction
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.1 Data Types.md
+  source_words: 14
+  kind: embedded-clause
+- clause: 5.2.1.3.2
+  title: 5.2.1.3.2 Simple data types
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.1 Data Types.md
+  source_words: 728
+  kind: embedded-clause
+- clause: 5.2.1.3.3
+  title: '5.2.1.3.3 Enumeration: Event'
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.1 Data Types.md
+  source_words: 131
+  kind: embedded-clause
+- clause: 5.2.1.3.4
+  title: '5.2.1.3.4 Enumeration: ResultReason'
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.1 Data Types.md
+  source_words: 45
+  kind: embedded-clause
+- clause: 5.2.1.4
+  title: 5.2.1.4 Conventions for documenting structured data types
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.1 Data Types.md
+  source_words: 510
+  kind: embedded-clause
+- clause: 5.2.2
+  title: 5.2.2 Usage of HTTP
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.2 Usage of HTTP.md
+  source_words: 205
+  kind: source-file
+- clause: 5.2.2.1
+  title: 5.2.2.1 General
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.2 Usage of HTTP.md
+  source_words: 79
+  kind: embedded-clause
+- clause: 5.2.2.2
+  title: 5.2.2.2 Usage of the HTTP PATCH method
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.2 Usage of HTTP.md
+  source_words: 126
+  kind: embedded-clause
+- clause: 5.2.3
+  title: 5.2.3 Content type
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.3 Content type.md
+  source_words: 145
+  kind: source-file
+- clause: 5.2.4
+  title: 5.2.4 URI structure
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.4 URI structure.md
+  source_words: 408
+  kind: source-file
+- clause: 5.2.4.1
+  title: 5.2.4.1 Resource URI structure
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.4 URI structure.md
+  source_words: 190
+  kind: embedded-clause
+- clause: 5.2.4.2
+  title: 5.2.4.2 Custom operations URI structure
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.4 URI structure.md
+  source_words: 92
+  kind: embedded-clause
+- clause: 5.2.4.3
+  title: 5.2.4.3 Callback URI structure
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.4 URI structure.md
+  source_words: 126
+  kind: embedded-clause
+- clause: 5.2.5
+  title: 5.2.5 Notifications
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.5 Notifications.md
+  source_words: 1369
+  kind: source-file
+- clause: 5.2.5.1
+  title: 5.2.5.1 General
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.5 Notifications.md
+  source_words: 76
+  kind: embedded-clause
+- clause: 5.2.5.2
+  title: 5.2.5.2 Notification Delivery using a separate HTTP connection
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.5 Notifications.md
+  source_words: 163
+  kind: embedded-clause
+- clause: 5.2.5.3
+  title: 5.2.5.3 Notification Test Event
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.5 Notifications.md
+  source_words: 149
+  kind: embedded-clause
+- clause: 5.2.5.4
+  title: 5.2.5.4 Notification Delivery using Websocket
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.5 Notifications.md
+  source_words: 981
+  kind: embedded-clause
+- clause: 5.2.6
+  title: 5.2.6 Error handling
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.6 Error handling.md
+  source_words: 601
+  kind: source-file
+- clause: 5.2.7
+  title: 5.2.7 Feature negotiation
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.7 Feature negotiation.md
+  source_words: 72
+  kind: source-file
+- clause: 5.2.8
+  title: 5.2.8 HTTP custom headers
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.8 HTTP custom headers.md
+  source_words: 675
+  kind: source-file
+- clause: 5.2.8.1
+  title: 5.2.8.1 General
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.8 HTTP custom headers.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 5.2.8.2
+  title: 5.2.8.2 Reused HTTP custom headers
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.8 HTTP custom headers.md
+  source_words: 657
+  kind: embedded-clause
+- clause: 5.2.8.3.1
+  title: 5.2.8.3.1 General
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.8 HTTP custom headers.md
+  source_words: 637
+  kind: embedded-clause
+- clause: 5.2.9
+  title: 5.2.9 Conventions for Open API specification files
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.9 Conventions for Open API specification files.md
+  source_words: 2752
+  kind: source-file
+- clause: 5.2.9.1
+  title: 5.2.9.1 General
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.9 Conventions for Open API specification files.md
+  source_words: 104
+  kind: embedded-clause
+- clause: 5.2.9.2
+  title: 5.2.9.2 Formatting of OpenAPI files
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.9 Conventions for Open API specification files.md
+  source_words: 142
+  kind: embedded-clause
+- clause: 5.2.9.3
+  title: 5.2.9.3 Structured data types
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.9 Conventions for Open API specification files.md
+  source_words: 739
+  kind: embedded-clause
+- clause: 5.2.9.4
+  title: 5.2.9.4 Info
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.9 Conventions for Open API specification files.md
+  source_words: 30
+  kind: embedded-clause
+- clause: 5.2.9.5
+  title: 5.2.9.5 Servers
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.9 Conventions for Open API specification files.md
+  source_words: 60
+  kind: embedded-clause
+- clause: 5.2.9.6
+  title: 5.2.9.6 References to other 3GPP-defined Open API specification files
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.9 Conventions for Open API specification files.md
+  source_words: 175
+  kind: embedded-clause
+- clause: 5.2.9.7
+  title: 5.2.9.7 Server-initiated communication
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.9 Conventions for Open API specification files.md
+  source_words: 89
+  kind: embedded-clause
+- clause: 5.2.9.8
+  title: 5.2.9.8 Describing the body of HTTP PATCH requests
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.9 Conventions for Open API specification files.md
+  source_words: 585
+  kind: embedded-clause
+- clause: 5.2.9.8.1
+  title: 5.2.9.8.1 General
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.9 Conventions for Open API specification files.md
+  source_words: 58
+  kind: embedded-clause
+- clause: 5.2.9.8.2
+  title: 5.2.9.8.2 JSON Merge Patch
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.9 Conventions for Open API specification files.md
+  source_words: 306
+  kind: embedded-clause
+- clause: 5.2.9.8.3
+  title: 5.2.9.8.3 JSON PATCH
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.9 Conventions for Open API specification files.md
+  source_words: 221
+  kind: embedded-clause
+- clause: 5.2.9.9
+  title: 5.2.9.9 Error Responses
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.9 Conventions for Open API specification files.md
+  source_words: 187
+  kind: embedded-clause
+- clause: 5.2.9.10
+  title: 5.2.9.10 Enumerations
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.9 Conventions for Open API specification files.md
+  source_words: 310
+  kind: embedded-clause
+- clause: 5.2.9.11
+  title: 5.2.9.11 Read only attribute
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.9 Conventions for Open API specification files.md
+  source_words: 130
+  kind: embedded-clause
+- clause: 5.2.9.12
+  title: 5.2.9.12 externalDocs
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.9 Conventions for Open API specification files.md
+  source_words: 49
+  kind: embedded-clause
+- clause: 5.2.9.13
+  title: 5.2.9.13 Operation identifiers
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.9 Conventions for Open API specification files.md
+  source_words: 38
+  kind: embedded-clause
+- clause: 5.2.9.14
+  title: 5.2.9.14 Usage of the "tags" field
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.9 Conventions for Open API specification files.md
+  source_words: 114
+  kind: embedded-clause
+- clause: 5.2.10
+  title: 5.2.10 Redirection handling
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.10 Redirection handling.md
+  source_words: 149
+  kind: source-file
+- clause: 5.2.11
+  title: 5.2.11 Support of Load and Overload Control
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.11 Support of Load and Overload Control.md
+  source_words: 432
+  kind: source-file
+- clause: 5.2.12
+  title: 5.2.12 Query parameters
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.12 Query parameters.md
+  source_words: 307
+  kind: source-file
+- clause: 5.2.13
+  title: 5.2.13 Vendor-specific extensions
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.13 Vendor-specific extensions.md
+  source_words: 703
+  kind: source-file
+- clause: 5.2.13.1
+  title: 5.2.13.1 General
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.13 Vendor-specific extensions.md
+  source_words: 36
+  kind: embedded-clause
+- clause: 5.2.13.2
+  title: 5.2.13.2 Vendor-specific extensions to the data model
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.13 Vendor-specific extensions.md
+  source_words: 215
+  kind: embedded-clause
+- clause: 5.2.13.3
+  title: 5.2.13.3 Vendor-specific query parameters
+  path: 5 T8 APIs/5.2 Information applicable to several APIs/5.2.13 Vendor-specific extensions.md
+  source_words: 452
+  kind: embedded-clause
+- clause: '5.3'
+  title: 5.3 MonitoringEvent API
+  path: 5 T8 APIs/5.3 MonitoringEvent API/README.md
+  source_words: 15598
+  kind: navigation-directory
+- clause: 5.3.1
+  title: 5.3.1 Overview
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.1 Overview.md
+  source_words: 110
+  kind: source-file
+- clause: 5.3.2
+  title: 5.3.2 Data model
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/README.md
+  source_words: 10539
+  kind: navigation-directory
+- clause: 5.3.2.1
+  title: 5.3.2.1 Resource data types
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.1 Resource data types/README.md
+  source_words: 5160
+  kind: navigation-directory
+- clause: 5.3.2.1.1
+  title: 5.3.2.1.1 Introduction
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.1 Resource data types/5.3.2.1.1 Introduction.md
+  source_words: 1127
+  kind: source-file
+- clause: 5.3.2.1.2
+  title: '5.3.2.1.2 Type: MonitoringEventSubscription'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.1 Resource data types/5.3.2.1.2 Type MonitoringEventSubscription.md
+  source_words: 4033
+  kind: source-file
+- clause: 5.3.2.1.3
+  title: 5.3.2.1.3 Void
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.1 Resource data types/5.3.2.1.3 Void.md
+  source_words: 0
+  kind: source-file
+- clause: 5.3.2.2
+  title: 5.3.2.2 Notification data types
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.2 Notification data types.md
+  source_words: 291
+  kind: source-file
+- clause: 5.3.2.2.1
+  title: 5.3.2.2.1 Introduction
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.2 Notification data types.md
+  source_words: 10
+  kind: embedded-clause
+- clause: 5.3.2.2.2
+  title: '5.3.2.2.2 Type: MonitoringNotification'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.2 Notification data types.md
+  source_words: 281
+  kind: embedded-clause
+- clause: 5.3.2.3
+  title: 5.3.2.3 Referenced structured data types
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.3 Referenced structured data types.md
+  source_words: 3391
+  kind: source-file
+- clause: 5.3.2.3.1
+  title: 5.3.2.3.1 Introduction
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.3 Referenced structured data types.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.3.2.3.2
+  title: '5.3.2.3.2 Type: MonitoringEventReport'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.3 Referenced structured data types.md
+  source_words: 1205
+  kind: embedded-clause
+- clause: 5.3.2.3.3
+  title: '5.3.2.3.3 Type: IdleStatusInfo'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.3 Referenced structured data types.md
+  source_words: 222
+  kind: embedded-clause
+- clause: 5.3.2.3.4
+  title: '5.3.2.3.4 Type: UePerLocationReport'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.3 Referenced structured data types.md
+  source_words: 104
+  kind: embedded-clause
+- clause: 5.3.2.3.5
+  title: '5.3.2.3.5 Type: LocationInfo'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.3 Referenced structured data types.md
+  source_words: 707
+  kind: embedded-clause
+- clause: 5.3.2.3.6
+  title: '5.3.2.3.6 Type: FailureCause'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.3 Referenced structured data types.md
+  source_words: 206
+  kind: embedded-clause
+- clause: 5.3.2.3.7
+  title: '5.3.2.3.7 Type: PdnConnectionInformation'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.3 Referenced structured data types.md
+  source_words: 181
+  kind: embedded-clause
+- clause: 5.3.2.3.8
+  title: '5.3.2.3.8 Type: AppliedParameterConfiguration'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.3 Referenced structured data types.md
+  source_words: 178
+  kind: embedded-clause
+- clause: 5.3.2.3.9
+  title: '5.3.2.3.9 Type: ApiCapabilityInfo'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.3 Referenced structured data types.md
+  source_words: 93
+  kind: embedded-clause
+- clause: 5.3.2.3.10
+  title: '5.3.2.3.10 Type: MonitoringEventReports'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.3 Referenced structured data types.md
+  source_words: 66
+  kind: embedded-clause
+- clause: 5.3.2.3.11
+  title: '5.3.2.3.11 Type: UavPolicy'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.3 Referenced structured data types.md
+  source_words: 105
+  kind: embedded-clause
+- clause: 5.3.2.3.11
+  title: '5.3.2.3.11 Type: ConsentRevocNotif'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.3 Referenced structured data types.md
+  source_words: 42
+  kind: embedded-clause
+- clause: 5.3.2.3.12
+  title: '5.3.2.3.12 Type: ConsentRevoked'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.3 Referenced structured data types.md
+  source_words: 72
+  kind: embedded-clause
+- clause: 5.3.2.3.13
+  title: '5.3.2.3.13 Type: GroupMembListChanges'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.3 Referenced structured data types.md
+  source_words: 58
+  kind: embedded-clause
+- clause: 5.3.2.3.14
+  title: 5.3.2.3.14 Void
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.3 Referenced structured data types.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.3.2.3.15
+  title: 5.3.2.3.15 Void
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.3 Referenced structured data types.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.3.2.3.16
+  title: 5.3.2.3.16 Void
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.3 Referenced structured data types.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.3.2.3.17
+  title: '5.3.2.3.17 Type: UpLocRepAddrAfRm'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.3 Referenced structured data types.md
+  source_words: 95
+  kind: embedded-clause
+- clause: 5.3.2.3.18
+  title: '5.3.2.3.18 Type: UpCumEvtRep'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.3 Referenced structured data types.md
+  source_words: 40
+  kind: embedded-clause
+- clause: 5.3.2.4
+  title: 5.3.2.4 Referenced simple data types and enumerations
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.4 Referenced simple data types and enumerations.md
+  source_words: 1697
+  kind: source-file
+- clause: 5.3.2.4.1
+  title: 5.3.2.4.1 Introduction
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.4 Referenced simple data types and enumerations.md
+  source_words: 34
+  kind: embedded-clause
+- clause: 5.3.2.4.2
+  title: 5.3.2.4.2 Simple data types
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.4 Referenced simple data types and enumerations.md
+  source_words: 27
+  kind: embedded-clause
+- clause: 5.3.2.4.3
+  title: '5.3.2.4.3 Enumeration: MonitoringType'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.4 Referenced simple data types and enumerations.md
+  source_words: 576
+  kind: embedded-clause
+- clause: 5.3.2.4.4
+  title: '5.3.2.4.4 Enumeration: ReachabilityType'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.4 Referenced simple data types and enumerations.md
+  source_words: 131
+  kind: embedded-clause
+- clause: 5.3.2.4.5
+  title: '5.3.2.4.5 Enumeration: LocationType'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.4 Referenced simple data types and enumerations.md
+  source_words: 160
+  kind: embedded-clause
+- clause: 5.3.2.4.6
+  title: '5.3.2.4.6 Enumeration: AssociationType'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.4 Referenced simple data types and enumerations.md
+  source_words: 115
+  kind: embedded-clause
+- clause: 5.3.2.4.7
+  title: '5.3.2.4.7 Enumeration: Accuracy'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.4 Referenced simple data types and enumerations.md
+  source_words: 176
+  kind: embedded-clause
+- clause: 5.3.2.4.8
+  title: '5.3.2.4.8 Enumeration: PdnConnectionStatus'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.4 Referenced simple data types and enumerations.md
+  source_words: 88
+  kind: embedded-clause
+- clause: 5.3.2.4.9
+  title: '5.3.2.4.9 Enumeration: PdnType'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.4 Referenced simple data types and enumerations.md
+  source_words: 101
+  kind: embedded-clause
+- clause: 5.3.2.4.10
+  title: '5.3.2.4.10 Enumeration: InterfaceIndication'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.4 Referenced simple data types and enumerations.md
+  source_words: 110
+  kind: embedded-clause
+- clause: 5.3.2.4.11
+  title: '5.3.2.4.11 Enumeration: LocationFailureCause'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.4 Referenced simple data types and enumerations.md
+  source_words: 99
+  kind: embedded-clause
+- clause: 5.3.2.4.12
+  title: '5.3.2.4.12 Enumeration: SubType'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.4 Referenced simple data types and enumerations.md
+  source_words: 41
+  kind: embedded-clause
+- clause: 5.3.2.4.13
+  title: '5.3.2.4.13 Enumeration: SACRepFormat'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.2 Data model/5.3.2.4 Referenced simple data types and enumerations.md
+  source_words: 39
+  kind: embedded-clause
+- clause: 5.3.3
+  title: 5.3.3 Resource structure
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3 Resource structure.md
+  source_words: 2490
+  kind: source-file
+- clause: 5.3.3.1
+  title: 5.3.3.1 General
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3 Resource structure.md
+  source_words: 149
+  kind: embedded-clause
+- clause: 5.3.3.2
+  title: '5.3.3.2 Resource: Monitoring Event Subscriptions'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3 Resource structure.md
+  source_words: 913
+  kind: embedded-clause
+- clause: 5.3.3.2.1
+  title: 5.3.3.2.1 Introduction
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3 Resource structure.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 5.3.3.2.2
+  title: 5.3.3.2.2 Resource definition
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3 Resource structure.md
+  source_words: 55
+  kind: embedded-clause
+- clause: 5.3.3.2.3
+  title: 5.3.3.2.3 Resource methods
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.3.3.2.3.1
+  title: 5.3.3.2.3.1 GET
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3 Resource structure.md
+  source_words: 436
+  kind: embedded-clause
+- clause: 5.3.3.2.3.2
+  title: 5.3.3.2.3.2 PUT
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.3.3.2.3.3
+  title: 5.3.3.2.3.3 PATCH
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.3.3.2.3.4
+  title: 5.3.3.2.3.4 POST
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3 Resource structure.md
+  source_words: 366
+  kind: embedded-clause
+- clause: 5.3.3.2.3.5
+  title: 5.3.3.2.3.5 DELETE
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.3.3.3
+  title: '5.3.3.3 Resource: Individual Monitoring Event Subscription'
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3 Resource structure.md
+  source_words: 1428
+  kind: embedded-clause
+- clause: 5.3.3.3.1
+  title: 5.3.3.3.1 Introduction
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3 Resource structure.md
+  source_words: 19
+  kind: embedded-clause
+- clause: 5.3.3.3.2
+  title: 5.3.3.3.2 Resource definition
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3 Resource structure.md
+  source_words: 72
+  kind: embedded-clause
+- clause: 5.3.3.3.3
+  title: 5.3.3.3.3 Resource methods
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.3.3.3.3.1
+  title: 5.3.3.3.3.1 GET
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3 Resource structure.md
+  source_words: 312
+  kind: embedded-clause
+- clause: 5.3.3.3.3.2
+  title: 5.3.3.3.3.2 PUT
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3 Resource structure.md
+  source_words: 370
+  kind: embedded-clause
+- clause: 5.3.3.3.3.3
+  title: 5.3.3.3.3.3 PATCH
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3 Resource structure.md
+  source_words: 321
+  kind: embedded-clause
+- clause: 5.3.3.3.3.4
+  title: 5.3.3.3.3.4 POST
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.3.3.3.3.5
+  title: 5.3.3.3.3.5 DELETE
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3 Resource structure.md
+  source_words: 325
+  kind: embedded-clause
+- clause: 5.3.3.4
+  title: 5.3.3.4 Void
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.3.3A
+  title: 5.3.3A Notifications
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3A Notifications.md
+  source_words: 948
+  kind: source-file
+- clause: 5.3.3A.1
+  title: 5.3.3A.1 General
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3A Notifications.md
+  source_words: 94
+  kind: embedded-clause
+- clause: 5.3.3A.2
+  title: 5.3.3A.2 Monitoring Notification
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3A Notifications.md
+  source_words: 429
+  kind: embedded-clause
+- clause: 5.3.3A.2.1
+  title: 5.3.3A.2.1 Description
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3A Notifications.md
+  source_words: 26
+  kind: embedded-clause
+- clause: 5.3.3A.2.2
+  title: 5.3.3A.2.2 Target URI
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3A Notifications.md
+  source_words: 51
+  kind: embedded-clause
+- clause: 5.3.3A.2.3
+  title: 5.3.3A.2.3 Standard Methods
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3A Notifications.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.3.3A.2.3.1
+  title: 5.3.3A.2.3.1 Notification via POST
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3A Notifications.md
+  source_words: 323
+  kind: embedded-clause
+- clause: 5.3.3A.2.3.2
+  title: 5.3.3A.2.3.2 Notification via Websocket
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3A Notifications.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 5.3.3A.3
+  title: 5.3.3A.3 User Consent Revocation Notification
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3A Notifications.md
+  source_words: 425
+  kind: embedded-clause
+- clause: 5.3.3A.3.1
+  title: 5.3.3A.3.1 Description
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3A Notifications.md
+  source_words: 26
+  kind: embedded-clause
+- clause: 5.3.3A.3.2
+  title: 5.3.3A.3.2 Target URI
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3A Notifications.md
+  source_words: 75
+  kind: embedded-clause
+- clause: 5.3.3A.3.3
+  title: 5.3.3A.3.3 Operation Definition
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3A Notifications.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.3.3A.3.3.1
+  title: 5.3.3A.3.3.1 Notification via HTTP POST
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3A Notifications.md
+  source_words: 285
+  kind: embedded-clause
+- clause: 5.3.3A.3.3.2
+  title: 5.3.3A.3.3.2 Notification via Websocket
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.3A Notifications.md
+  source_words: 39
+  kind: embedded-clause
+- clause: 5.3.4
+  title: 5.3.4 Used Features
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.4 Used Features.md
+  source_words: 1147
+  kind: source-file
+- clause: 5.3.5
+  title: 5.3.5 Error handling
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.5 Error handling.md
+  source_words: 364
+  kind: source-file
+- clause: 5.3.5.1
+  title: 5.3.5.1 General
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.5 Error handling.md
+  source_words: 23
+  kind: embedded-clause
+- clause: 5.3.5.2
+  title: 5.3.5.2 Protocol Errors
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.5 Error handling.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.3.5.3
+  title: 5.3.5.3 Application Errors
+  path: 5 T8 APIs/5.3 MonitoringEvent API/5.3.5 Error handling.md
+  source_words: 324
+  kind: embedded-clause
+- clause: '5.4'
+  title: 5.4 ResourceManagementOfBdt API
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 4068
+  kind: source-file
+- clause: 5.4.1
+  title: 5.4.1 Overview
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 76
+  kind: embedded-clause
+- clause: 5.4.2
+  title: 5.4.2 Data model
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 1116
+  kind: embedded-clause
+- clause: 5.4.2.1
+  title: 5.4.2.1 Resource data types
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 873
+  kind: embedded-clause
+- clause: 5.4.2.1.1
+  title: 5.4.2.1.1 Introduction
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 249
+  kind: embedded-clause
+- clause: 5.4.2.1.2
+  title: '5.4.2.1.2 Type: Bdt'
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 358
+  kind: embedded-clause
+- clause: 5.4.2.1.3
+  title: '5.4.2.1.3 Type: BdtPatch'
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 100
+  kind: embedded-clause
+- clause: 5.4.2.1.4
+  title: '5.4.2.1.4 Type: ExNotification'
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 166
+  kind: embedded-clause
+- clause: 5.4.2.2
+  title: 5.4.2.2 Referenced structured data types
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 162
+  kind: embedded-clause
+- clause: 5.4.2.2.1
+  title: 5.4.2.2.1 Introduction
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.4.2.2.2
+  title: '5.4.2.2.2 Type: TransferPolicy'
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 145
+  kind: embedded-clause
+- clause: 5.4.2.3
+  title: 5.4.2.3 Referenced simple data types and enumerations
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 81
+  kind: embedded-clause
+- clause: 5.4.2.3.1
+  title: 5.4.2.3.1 Introduction
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 35
+  kind: embedded-clause
+- clause: 5.4.2.3.2
+  title: 5.4.2.3.2 Simple data types
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 46
+  kind: embedded-clause
+- clause: 5.4.3
+  title: 5.4.3 Resource structure
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 2103
+  kind: embedded-clause
+- clause: 5.4.3.1
+  title: 5.4.3.1 General
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 148
+  kind: embedded-clause
+- clause: 5.4.3.2
+  title: '5.4.3.2 Resource: BDT Subscriptions'
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 643
+  kind: embedded-clause
+- clause: 5.4.3.2.1
+  title: 5.4.3.2.1 Introduction
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.4.3.2.2
+  title: 5.4.3.2.2 Resource definition
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 54
+  kind: embedded-clause
+- clause: 5.4.3.2.3
+  title: 5.4.3.2.3 Resource methods
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.4.3.2.3.1
+  title: 5.4.3.2.3.1 GET
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 315
+  kind: embedded-clause
+- clause: 5.4.3.2.3.2
+  title: 5.4.3.2.3.2 PUT
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.4.3.2.3.3
+  title: 5.4.3.2.3.3 PATCH
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.4.3.2.3.4
+  title: 5.4.3.2.3.4 POST
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 230
+  kind: embedded-clause
+- clause: 5.4.3.2.3.5
+  title: 5.4.3.2.3.5 DELETE
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.4.3.3
+  title: '5.4.3.3 Resource: Individual BDT Subscription'
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 1312
+  kind: embedded-clause
+- clause: 5.4.3.3.1
+  title: 5.4.3.3.1 Introduction
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 5.4.3.3.2
+  title: 5.4.3.3.2 Resource definition
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 71
+  kind: embedded-clause
+- clause: 5.4.3.3.3
+  title: 5.4.3.3.3 Resource methods
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.4.3.3.3.1
+  title: 5.4.3.3.3.1 GET
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 316
+  kind: embedded-clause
+- clause: 5.4.3.3.3.2
+  title: 5.4.3.3.3.2 PUT
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 293
+  kind: embedded-clause
+- clause: 5.4.3.3.3.3
+  title: 5.4.3.3.3.3 PATCH
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 307
+  kind: embedded-clause
+- clause: 5.4.3.3.3.4
+  title: 5.4.3.3.3.4 POST
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.4.3.3.3.5
+  title: 5.4.3.3.3.5 DELETE
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 301
+  kind: embedded-clause
+- clause: 5.4.3.4
+  title: 5.4.3.4 Void
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.4.3A
+  title: 5.4.3A Notifications
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 518
+  kind: embedded-clause
+- clause: 5.4.3A.1
+  title: 5.4.3A.1 General
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 60
+  kind: embedded-clause
+- clause: 5.4.3A.2
+  title: 5.4.3A.2 BDT Warning Notification
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 458
+  kind: embedded-clause
+- clause: 5.4.3A.2.1
+  title: 5.4.3A.2.1 Description
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 24
+  kind: embedded-clause
+- clause: 5.4.3A.2.2
+  title: 5.4.3A.2.2 Target URI
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 81
+  kind: embedded-clause
+- clause: 5.4.3A.2.3
+  title: 5.4.3A.2.3 Standard Methods
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.4.3A.2.3.1
+  title: 5.4.3A.2.3.1 Notification via POST
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 325
+  kind: embedded-clause
+- clause: 5.4.3A.2.3.2
+  title: 5.4.3A.2.3.2 Notification via Websocket
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 28
+  kind: embedded-clause
+- clause: 5.4.4
+  title: 5.4.4 Used Features
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 186
+  kind: embedded-clause
+- clause: 5.4.5
+  title: 5.4.5 Error handling
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 69
+  kind: embedded-clause
+- clause: 5.4.5.1
+  title: 5.4.5.1 General
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 23
+  kind: embedded-clause
+- clause: 5.4.5.2
+  title: 5.4.5.2 Protocol Errors
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.4.5.3
+  title: 5.4.5.3 Application Errors
+  path: 5 T8 APIs/5.4 ResourceManagementOfBdt API.md
+  source_words: 29
+  kind: embedded-clause
+- clause: '5.5'
+  title: 5.5 ChargeableParty API
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 3812
+  kind: source-file
+- clause: 5.5.1
+  title: 5.5.1 Overview
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 93
+  kind: embedded-clause
+- clause: 5.5.2
+  title: 5.5.2 Data model
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 1023
+  kind: embedded-clause
+- clause: 5.5.2.1
+  title: 5.5.2.1 Resource data types
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 1023
+  kind: embedded-clause
+- clause: 5.5.2.1.1
+  title: 5.5.2.1.1 Introduction
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 242
+  kind: embedded-clause
+- clause: 5.5.2.1.2
+  title: '5.5.2.1.2 Type: ChargeableParty'
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 554
+  kind: embedded-clause
+- clause: 5.5.2.1.3
+  title: '5.5.2.1.3 Type: ChargeablePartyPatch'
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 227
+  kind: embedded-clause
+- clause: 5.5.3
+  title: 5.5.3 Resource structure
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 1903
+  kind: embedded-clause
+- clause: 5.5.3.1
+  title: 5.5.3.1 General
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 123
+  kind: embedded-clause
+- clause: 5.5.3.2
+  title: '5.5.3.2 Resource: Chargeable Party Transactions'
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 742
+  kind: embedded-clause
+- clause: 5.5.3.2.1
+  title: 5.5.3.2.1 Introduction
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 23
+  kind: embedded-clause
+- clause: 5.5.3.2.2
+  title: 5.5.3.2.2 Resource definition
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 55
+  kind: embedded-clause
+- clause: 5.5.3.2.3
+  title: 5.5.3.2.3 Resource methods
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.5.3.2.3.1
+  title: 5.5.3.2.3.1 GET
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 440
+  kind: embedded-clause
+- clause: 5.5.3.2.3.2
+  title: 5.5.3.2.3.2 PUT
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.5.3.2.3.3
+  title: 5.5.3.2.3.3 PATCH
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.5.3.2.3.4
+  title: 5.5.3.2.3.4 POST
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 197
+  kind: embedded-clause
+- clause: 5.5.3.2.3.5
+  title: 5.5.3.2.3.5 DELETE
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.5.3.3
+  title: '5.5.3.3 Resource: Individual Chargeable Party Transaction'
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 1038
+  kind: embedded-clause
+- clause: 5.5.3.3.1
+  title: 5.5.3.3.1 Introduction
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 19
+  kind: embedded-clause
+- clause: 5.5.3.3.2
+  title: 5.5.3.3.2 Resource definition
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 71
+  kind: embedded-clause
+- clause: 5.5.3.3.3
+  title: 5.5.3.3.3 Resource methods
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.5.3.3.3.1
+  title: 5.5.3.3.3.1 GET
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 313
+  kind: embedded-clause
+- clause: 5.5.3.3.3.2
+  title: 5.5.3.3.3.2 PUT
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.5.3.3.3.3
+  title: 5.5.3.3.3.3 PATCH
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 325
+  kind: embedded-clause
+- clause: 5.5.3.3.3.4
+  title: 5.5.3.3.3.4 POST
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.5.3.3.3.5
+  title: 5.5.3.3.3.5 DELETE
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 292
+  kind: embedded-clause
+- clause: 5.5.3.4
+  title: 5.5.3.4 Void
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.5.3A
+  title: 5.5.3A Notifications
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 504
+  kind: embedded-clause
+- clause: 5.5.3A.1
+  title: 5.5.3A.1 General
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 52
+  kind: embedded-clause
+- clause: 5.5.3A.2
+  title: 5.5.3A.2 Event Notification
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 452
+  kind: embedded-clause
+- clause: 5.5.3A.2.1
+  title: 5.5.3A.2.1 Description
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.5.3A.2.2
+  title: 5.5.3A.2.2 Target URI
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 76
+  kind: embedded-clause
+- clause: 5.5.3A.2.3
+  title: 5.5.3A.2.3 Standard Methods
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.5.3A.2.3.1
+  title: 5.5.3A.2.3.1 Notification via POST
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 330
+  kind: embedded-clause
+- clause: 5.5.3A.2.3.2
+  title: 5.5.3A.2.3.2 Notification via Websocket
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 5.5.4
+  title: 5.5.4 Used Features
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 220
+  kind: embedded-clause
+- clause: 5.5.5
+  title: 5.5.5 Error handling
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 69
+  kind: embedded-clause
+- clause: 5.5.5.1
+  title: 5.5.5.1 General
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 23
+  kind: embedded-clause
+- clause: 5.5.5.2
+  title: 5.5.5.2 Protocol Errors
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.5.5.3
+  title: 5.5.5.3 Application Errors
+  path: 5 T8 APIs/5.5 ChargeableParty API.md
+  source_words: 29
+  kind: embedded-clause
+- clause: '5.6'
+  title: 5.6 NIDD API
+  path: 5 T8 APIs/5.6 NIDD API/README.md
+  source_words: 13371
+  kind: navigation-directory
+- clause: 5.6.1
+  title: 5.6.1 Overview
+  path: 5 T8 APIs/5.6 NIDD API/5.6.1 Overview.md
+  source_words: 72
+  kind: source-file
+- clause: 5.6.2
+  title: 5.6.2 Data model
+  path: 5 T8 APIs/5.6 NIDD API/5.6.2 Data model/README.md
+  source_words: 4499
+  kind: navigation-directory
+- clause: 5.6.2.1
+  title: 5.6.2.1 Resource data types
+  path: 5 T8 APIs/5.6 NIDD API/5.6.2 Data model/5.6.2.1 Resource data types.md
+  source_words: 3338
+  kind: source-file
+- clause: 5.6.2.1.1
+  title: 5.6.2.1.1 Introduction
+  path: 5 T8 APIs/5.6 NIDD API/5.6.2 Data model/5.6.2.1 Resource data types.md
+  source_words: 455
+  kind: embedded-clause
+- clause: 5.6.2.1.2
+  title: '5.6.2.1.2 Type: NiddConfiguration'
+  path: 5 T8 APIs/5.6 NIDD API/5.6.2 Data model/5.6.2.1 Resource data types.md
+  source_words: 722
+  kind: embedded-clause
+- clause: 5.6.2.1.3
+  title: '5.6.2.1.3 Type: NiddDownlinkDataTransfer'
+  path: 5 T8 APIs/5.6 NIDD API/5.6.2 Data model/5.6.2.1 Resource data types.md
+  source_words: 508
+  kind: embedded-clause
+- clause: 5.6.2.1.4
+  title: '5.6.2.1.4 Type: NiddUplinkDataNotification'
+  path: 5 T8 APIs/5.6 NIDD API/5.6.2 Data model/5.6.2.1 Resource data types.md
+  source_words: 223
+  kind: embedded-clause
+- clause: 5.6.2.1.5
+  title: '5.6.2.1.5 Type: NiddDownlinkDataDeliveryStatusNotification'
+  path: 5 T8 APIs/5.6 NIDD API/5.6.2 Data model/5.6.2.1 Resource data types.md
+  source_words: 122
+  kind: embedded-clause
+- clause: 5.6.2.1.6
+  title: '5.6.2.1.6 Type: NiddConfigurationStatusNotification'
+  path: 5 T8 APIs/5.6 NIDD API/5.6.2 Data model/5.6.2.1 Resource data types.md
+  source_words: 201
+  kind: embedded-clause
+- clause: 5.6.2.1.7
+  title: '5.6.2.1.7 Type: NiddConfigurationPatch'
+  path: 5 T8 APIs/5.6 NIDD API/5.6.2 Data model/5.6.2.1 Resource data types.md
+  source_words: 321
+  kind: embedded-clause
+- clause: 5.6.2.1.8
+  title: '5.6.2.1.8 Type: GmdNiddDownlinkDataDeliveryNotification'
+  path: 5 T8 APIs/5.6 NIDD API/5.6.2 Data model/5.6.2.1 Resource data types.md
+  source_words: 96
+  kind: embedded-clause
+- clause: 5.6.2.1.9
+  title: '5.6.2.1.9 Type: ManagePort'
+  path: 5 T8 APIs/5.6 NIDD API/5.6.2 Data model/5.6.2.1 Resource data types.md
+  source_words: 233
+  kind: embedded-clause
+- clause: 5.6.2.1.10
+  title: '5.6.2.1.10 Type: ManagePortNotification'
+  path: 5 T8 APIs/5.6 NIDD API/5.6.2 Data model/5.6.2.1 Resource data types.md
+  source_words: 109
+  kind: embedded-clause
+- clause: 5.6.2.1.11
+  title: '5.6.2.1.11 Type: NiddDownlinkDataTransferPatch'
+  path: 5 T8 APIs/5.6 NIDD API/5.6.2 Data model/5.6.2.1 Resource data types.md
+  source_words: 348
+  kind: embedded-clause
+- clause: 5.6.2.2
+  title: 5.6.2.2 Referenced structured data types
+  path: 5 T8 APIs/5.6 NIDD API/5.6.2 Data model/5.6.2.2 Referenced structured data types.md
+  source_words: 478
+  kind: source-file
+- clause: 5.6.2.2.1
+  title: 5.6.2.2.1 Introduction
+  path: 5 T8 APIs/5.6 NIDD API/5.6.2 Data model/5.6.2.2 Referenced structured data types.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.6.2.2.2
+  title: '5.6.2.2.2 Type: RdsPort'
+  path: 5 T8 APIs/5.6 NIDD API/5.6.2 Data model/5.6.2.2 Referenced structured data types.md
+  source_words: 123
+  kind: embedded-clause
+- clause: 5.6.2.2.3
+  title: '5.6.2.2.3 Type: GmdResult'
+  path: 5 T8 APIs/5.6 NIDD API/5.6.2 Data model/5.6.2.2 Referenced structured data types.md
+  source_words: 131
+  kind: embedded-clause
+- clause: 5.6.2.2.4
+  title: '5.6.2.2.4 Type: NiddDownlinkDataDeliveryFailure'
+  path: 5 T8 APIs/5.6 NIDD API/5.6.2 Data model/5.6.2.2 Referenced structured data types.md
+  source_words: 81
+  kind: embedded-clause
+- clause: 5.6.2.2.5
+  title: '5.6.2.2.5 Type: RdsDownlinkDataDeliveryFailure'
+  path: 5 T8 APIs/5.6 NIDD API/5.6.2 Data model/5.6.2.2 Referenced structured data types.md
+  source_words: 126
+  kind: embedded-clause
+- clause: 5.6.2.3
+  title: 5.6.2.3 Referenced simple data types and enumerations
+  path: 5 T8 APIs/5.6 NIDD API/5.6.2 Data model/5.6.2.3 Referenced simple data types and enumerations.md
+  source_words: 683
+  kind: source-file
+- clause: 5.6.2.3.1
+  title: 5.6.2.3.1 Introduction
+  path: 5 T8 APIs/5.6 NIDD API/5.6.2 Data model/5.6.2.3 Referenced simple data types and enumerations.md
+  source_words: 35
+  kind: embedded-clause
+- clause: 5.6.2.3.2
+  title: 5.6.2.3.2 Simple data types
+  path: 5 T8 APIs/5.6 NIDD API/5.6.2 Data model/5.6.2.3 Referenced simple data types and enumerations.md
+  source_words: 27
+  kind: embedded-clause
+- clause: 5.6.2.3.3
+  title: '5.6.2.3.3 Enumeration: PdnEstablishmentOptions'
+  path: 5 T8 APIs/5.6 NIDD API/5.6.2 Data model/5.6.2.3 Referenced simple data types and enumerations.md
+  source_words: 95
+  kind: embedded-clause
+- clause: 5.6.2.3.4
+  title: '5.6.2.3.4 Enumeration: DeliveryStatus'
+  path: 5 T8 APIs/5.6 NIDD API/5.6.2 Data model/5.6.2.3 Referenced simple data types and enumerations.md
+  source_words: 217
+  kind: embedded-clause
+- clause: 5.6.2.3.5
+  title: '5.6.2.3.5 Enumeration: NiddStatus'
+  path: 5 T8 APIs/5.6 NIDD API/5.6.2 Data model/5.6.2.3 Referenced simple data types and enumerations.md
+  source_words: 97
+  kind: embedded-clause
+- clause: 5.6.2.3.6
+  title: '5.6.2.3.6 Enumeration: PdnEstablishmentOptionsRm'
+  path: 5 T8 APIs/5.6 NIDD API/5.6.2 Data model/5.6.2.3 Referenced simple data types and enumerations.md
+  source_words: 131
+  kind: embedded-clause
+- clause: 5.6.2.3.7
+  title: '5.6.2.3.7 Enumeration: ManageEntity'
+  path: 5 T8 APIs/5.6 NIDD API/5.6.2 Data model/5.6.2.3 Referenced simple data types and enumerations.md
+  source_words: 32
+  kind: embedded-clause
+- clause: 5.6.2.3.8
+  title: '5.6.2.3.8 Enumeration: SerializationFormat'
+  path: 5 T8 APIs/5.6 NIDD API/5.6.2 Data model/5.6.2.3 Referenced simple data types and enumerations.md
+  source_words: 49
+  kind: embedded-clause
+- clause: 5.6.3
+  title: 5.6.3 Resource structure
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/README.md
+  source_words: 5984
+  kind: navigation-directory
+- clause: 5.6.3.1
+  title: 5.6.3.1 General
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.1 General.md
+  source_words: 304
+  kind: source-file
+- clause: 5.6.3.2
+  title: '5.6.3.2 Resource: NIDD Configurations'
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.2 Resource NIDD Configurations.md
+  source_words: 636
+  kind: source-file
+- clause: 5.6.3.2.1
+  title: 5.6.3.2.1 Introduction
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.2 Resource NIDD Configurations.md
+  source_words: 22
+  kind: embedded-clause
+- clause: 5.6.3.2.2
+  title: 5.6.3.2.2 Resource definition
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.2 Resource NIDD Configurations.md
+  source_words: 54
+  kind: embedded-clause
+- clause: 5.6.3.2.3
+  title: 5.6.3.2.3 Resource methods
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.2 Resource NIDD Configurations.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.6.3.2.3.1
+  title: 5.6.3.2.3.1 GET
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.2 Resource NIDD Configurations.md
+  source_words: 316
+  kind: embedded-clause
+- clause: 5.6.3.2.3.2
+  title: 5.6.3.2.3.2 PUT
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.2 Resource NIDD Configurations.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.6.3.2.3.3
+  title: 5.6.3.2.3.3 PATCH
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.2 Resource NIDD Configurations.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.6.3.2.3.4
+  title: 5.6.3.2.3.4 POST
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.2 Resource NIDD Configurations.md
+  source_words: 217
+  kind: embedded-clause
+- clause: 5.6.3.2.3.5
+  title: 5.6.3.2.3.5 DELETE
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.2 Resource NIDD Configurations.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.6.3.3
+  title: '5.6.3.3 Resource: Individual NIDD Configuration'
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.3 Resource Individual NIDD Configuration.md
+  source_words: 1094
+  kind: source-file
+- clause: 5.6.3.3.1
+  title: 5.6.3.3.1 Introduction
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.3 Resource Individual NIDD Configuration.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.6.3.3.2
+  title: 5.6.3.3.2 Resource definition
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.3 Resource Individual NIDD Configuration.md
+  source_words: 70
+  kind: embedded-clause
+- clause: 5.6.3.3.3
+  title: 5.6.3.3.3 Resource methods
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.3 Resource Individual NIDD Configuration.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.6.3.3.3.1
+  title: 5.6.3.3.3.1 GET
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.3 Resource Individual NIDD Configuration.md
+  source_words: 313
+  kind: embedded-clause
+- clause: 5.6.3.3.3.2
+  title: 5.6.3.3.3.2 PUT
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.3 Resource Individual NIDD Configuration.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.6.3.3.3.3
+  title: 5.6.3.3.3.3 PATCH
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.3 Resource Individual NIDD Configuration.md
+  source_words: 358
+  kind: embedded-clause
+- clause: 5.6.3.3.3.4
+  title: 5.6.3.3.3.4 POST
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.3 Resource Individual NIDD Configuration.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.6.3.3.3.5
+  title: 5.6.3.3.3.5 DELETE
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.3 Resource Individual NIDD Configuration.md
+  source_words: 318
+  kind: embedded-clause
+- clause: 5.6.3.4
+  title: '5.6.3.4 Resource: NIDD downlink data deliveries'
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.4 Resource NIDD downlink data deliveries.md
+  source_words: 905
+  kind: source-file
+- clause: 5.6.3.4.1
+  title: 5.6.3.4.1 Introduction
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.4 Resource NIDD downlink data deliveries.md
+  source_words: 51
+  kind: embedded-clause
+- clause: 5.6.3.4.2
+  title: 5.6.3.4.2 Resource definition
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.4 Resource NIDD downlink data deliveries.md
+  source_words: 64
+  kind: embedded-clause
+- clause: 5.6.3.4.3
+  title: 5.6.3.4.3 Resource methods
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.4 Resource NIDD downlink data deliveries.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.6.3.4.3.1
+  title: 5.6.3.4.3.1 GET
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.4 Resource NIDD downlink data deliveries.md
+  source_words: 327
+  kind: embedded-clause
+- clause: 5.6.3.4.3.2
+  title: 5.6.3.4.3.2 PUT
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.4 Resource NIDD downlink data deliveries.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.6.3.4.3.3
+  title: 5.6.3.4.3.3 PATCH
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.4 Resource NIDD downlink data deliveries.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.6.3.4.3.4
+  title: 5.6.3.4.3.4 POST
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.4 Resource NIDD downlink data deliveries.md
+  source_words: 436
+  kind: embedded-clause
+- clause: 5.6.3.4.3.5
+  title: 5.6.3.4.3.5 DELETE
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.4 Resource NIDD downlink data deliveries.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.6.3.5
+  title: '5.6.3.5 Resource: Individual NIDD downlink data delivery'
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.5 Resource Individual NIDD downlink data delivery.md
+  source_words: 1596
+  kind: source-file
+- clause: 5.6.3.5.1
+  title: 5.6.3.5.1 Introduction
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.5 Resource Individual NIDD downlink data delivery.md
+  source_words: 68
+  kind: embedded-clause
+- clause: 5.6.3.5.2
+  title: 5.6.3.5.2 Resource definition
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.5 Resource Individual NIDD downlink data delivery.md
+  source_words: 74
+  kind: embedded-clause
+- clause: 5.6.3.5.3
+  title: 5.6.3.5.3 Resource methods
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.5 Resource Individual NIDD downlink data delivery.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.6.3.5.3.1
+  title: 5.6.3.5.3.1 GET
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.5 Resource Individual NIDD downlink data delivery.md
+  source_words: 309
+  kind: embedded-clause
+- clause: 5.6.3.5.3.2
+  title: 5.6.3.5.3.2 PUT
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.5 Resource Individual NIDD downlink data delivery.md
+  source_words: 394
+  kind: embedded-clause
+- clause: 5.6.3.5.3.3
+  title: 5.6.3.5.3.3 PATCH
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.5 Resource Individual NIDD downlink data delivery.md
+  source_words: 410
+  kind: embedded-clause
+- clause: 5.6.3.5.3.4
+  title: 5.6.3.5.3.4 POST
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.5 Resource Individual NIDD downlink data delivery.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.6.3.5.3.5
+  title: 5.6.3.5.3.5 DELETE
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.5 Resource Individual NIDD downlink data delivery.md
+  source_words: 332
+  kind: embedded-clause
+- clause: 5.6.3.6
+  title: 5.6.3.6 Void
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.6 Void.md
+  source_words: 0
+  kind: source-file
+- clause: 5.6.3.7
+  title: 5.6.3.7 Void
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.7 Void.md
+  source_words: 0
+  kind: source-file
+- clause: 5.6.3.8
+  title: 5.6.3.8 Void
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.8 Void.md
+  source_words: 0
+  kind: source-file
+- clause: 5.6.3.9
+  title: '5.6.3.9 Resource: Individual ManagePort Configuration'
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.9 Resource Individual ManagePort Configuration.md
+  source_words: 1008
+  kind: source-file
+- clause: 5.6.3.9.1
+  title: 5.6.3.9.1 Introduction
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.9 Resource Individual ManagePort Configuration.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 5.6.3.9.2
+  title: 5.6.3.9.2 Resource definition
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.9 Resource Individual ManagePort Configuration.md
+  source_words: 96
+  kind: embedded-clause
+- clause: 5.6.3.9.3
+  title: 5.6.3.9.3 Resource methods
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.9 Resource Individual ManagePort Configuration.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.6.3.9.3.1
+  title: 5.6.3.9.3.1 GET
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.9 Resource Individual ManagePort Configuration.md
+  source_words: 311
+  kind: embedded-clause
+- clause: 5.6.3.9.3.2
+  title: 5.6.3.9.3.2 PUT
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.9 Resource Individual ManagePort Configuration.md
+  source_words: 211
+  kind: embedded-clause
+- clause: 5.6.3.9.3.3
+  title: 5.6.3.9.3.3 PATCH
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.9 Resource Individual ManagePort Configuration.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.6.3.9.3.4
+  title: 5.6.3.9.3.4 POST
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.9 Resource Individual ManagePort Configuration.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.6.3.9.3.5
+  title: 5.6.3.9.3.5 DELETE
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.9 Resource Individual ManagePort Configuration.md
+  source_words: 354
+  kind: embedded-clause
+- clause: 5.6.3.10
+  title: 5.6.3.10 Void
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.10 Void.md
+  source_words: 0
+  kind: source-file
+- clause: 5.6.3.11
+  title: '5.6.3.11 Resource: ManagePort Configurations'
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.11 Resource ManagePort Configurations.md
+  source_words: 441
+  kind: source-file
+- clause: 5.6.3.11.1
+  title: 5.6.3.11.1 Introduction
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.11 Resource ManagePort Configurations.md
+  source_words: 19
+  kind: embedded-clause
+- clause: 5.6.3.11.2
+  title: 5.6.3.11.2 Resource definition
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.11 Resource ManagePort Configurations.md
+  source_words: 73
+  kind: embedded-clause
+- clause: 5.6.3.11.3
+  title: 5.6.3.11.3 Resource methods
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.11 Resource ManagePort Configurations.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.6.3.11.3.1
+  title: 5.6.3.11.3.1 GET
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.11 Resource ManagePort Configurations.md
+  source_words: 313
+  kind: embedded-clause
+- clause: 5.6.3.11.3.2
+  title: 5.6.3.11.3.2 PUT
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.11 Resource ManagePort Configurations.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.6.3.11.3.3
+  title: 5.6.3.11.3.3 PATCH
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.11 Resource ManagePort Configurations.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.6.3.11.3.4
+  title: 5.6.3.11.3.4 POST
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.11 Resource ManagePort Configurations.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.6.3.11.3.5
+  title: 5.6.3.11.3.5 DELETE
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3 Resource structure/5.6.3.11 Resource ManagePort Configurations.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.6.3A
+  title: 5.6.3A Notifications
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3A Notifications.md
+  source_words: 2256
+  kind: source-file
+- clause: 5.6.3A.1
+  title: 5.6.3A.1 General
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3A Notifications.md
+  source_words: 104
+  kind: embedded-clause
+- clause: 5.6.3A.2
+  title: 5.6.3A.2 NIDD Configuration Update Notification
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3A Notifications.md
+  source_words: 468
+  kind: embedded-clause
+- clause: 5.6.3A.2.1
+  title: 5.6.3A.2.1 Description
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3A Notifications.md
+  source_words: 22
+  kind: embedded-clause
+- clause: 5.6.3A.2.2
+  title: 5.6.3A.2.2 Target URI
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3A Notifications.md
+  source_words: 63
+  kind: embedded-clause
+- clause: 5.6.3A.2.3
+  title: 5.6.3A.2.3 Standard Methods
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3A Notifications.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.6.3A.2.3.1
+  title: 5.6.3A.2.3.1 Notification via POST
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3A Notifications.md
+  source_words: 354
+  kind: embedded-clause
+- clause: 5.6.3A.2.3.2
+  title: 5.6.3A.2.3.2 Notification via Websocket
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3A Notifications.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 5.6.3A.3
+  title: 5.6.3A.3 NIDD Downlink Data Delivery Status Notification
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3A Notifications.md
+  source_words: 730
+  kind: embedded-clause
+- clause: 5.6.3A.3.1
+  title: 5.6.3A.3.1 Description
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3A Notifications.md
+  source_words: 41
+  kind: embedded-clause
+- clause: 5.6.3A.3.2
+  title: 5.6.3A.3.2 Target URI
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3A Notifications.md
+  source_words: 64
+  kind: embedded-clause
+- clause: 5.6.3A.3.3
+  title: 5.6.3A.3.3 Standard Methods
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3A Notifications.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.6.3A.3.3.1
+  title: 5.6.3A.3.3.1 Notification via POST
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3A Notifications.md
+  source_words: 585
+  kind: embedded-clause
+- clause: 5.6.3A.3.3.2
+  title: 5.6.3A.3.3.2 Notification via Websocket
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3A Notifications.md
+  source_words: 40
+  kind: embedded-clause
+- clause: 5.6.3A.4
+  title: 5.6.3A.4 NIDD Uplink Data Notification
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3A Notifications.md
+  source_words: 472
+  kind: embedded-clause
+- clause: 5.6.3A.4.1
+  title: 5.6.3A.4.1 Description
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3A Notifications.md
+  source_words: 16
+  kind: embedded-clause
+- clause: 5.6.3A.4.2
+  title: 5.6.3A.4.2 Target URI
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3A Notifications.md
+  source_words: 64
+  kind: embedded-clause
+- clause: 5.6.3A.4.3
+  title: 5.6.3A.4.3 Standard Methods
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3A Notifications.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.6.3A.4.3.1
+  title: 5.6.3A.4.3.1 Notification via POST
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3A Notifications.md
+  source_words: 363
+  kind: embedded-clause
+- clause: 5.6.3A.4.3.2
+  title: 5.6.3A.4.3.2 Notification via Websocket
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3A Notifications.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 5.6.3A.5
+  title: 5.6.3A.5 ManagePort Notification
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3A Notifications.md
+  source_words: 482
+  kind: embedded-clause
+- clause: 5.6.3A.5.1
+  title: 5.6.3A.5.1 Description
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3A Notifications.md
+  source_words: 16
+  kind: embedded-clause
+- clause: 5.6.3A.5.2
+  title: 5.6.3A.5.2 Target URI
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3A Notifications.md
+  source_words: 64
+  kind: embedded-clause
+- clause: 5.6.3A.5.3
+  title: 5.6.3A.5.3 Standard Methods
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3A Notifications.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.6.3A.5.3.1
+  title: 5.6.3A.5.3.1 Notification via POST
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3A Notifications.md
+  source_words: 373
+  kind: embedded-clause
+- clause: 5.6.3A.5.3.2
+  title: 5.6.3A.5.3.2 Notification via Websocket
+  path: 5 T8 APIs/5.6 NIDD API/5.6.3A Notifications.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 5.6.4
+  title: 5.6.4 Used Features
+  path: 5 T8 APIs/5.6 NIDD API/5.6.4 Used Features.md
+  source_words: 235
+  kind: source-file
+- clause: 5.6.5
+  title: 5.6.5 Error handling
+  path: 5 T8 APIs/5.6 NIDD API/5.6.5 Error handling.md
+  source_words: 325
+  kind: source-file
+- clause: 5.6.5.1
+  title: 5.6.5.1 General
+  path: 5 T8 APIs/5.6 NIDD API/5.6.5 Error handling.md
+  source_words: 23
+  kind: embedded-clause
+- clause: 5.6.5.2
+  title: 5.6.5.2 Protocol Errors
+  path: 5 T8 APIs/5.6 NIDD API/5.6.5 Error handling.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.6.5.3
+  title: 5.6.5.3 Application Errors
+  path: 5 T8 APIs/5.6 NIDD API/5.6.5 Error handling.md
+  source_words: 285
+  kind: embedded-clause
+- clause: '5.7'
+  title: 5.7 DeviceTriggering API
+  path: 5 T8 APIs/5.7 DeviceTriggering API/README.md
+  source_words: 4359
+  kind: navigation-directory
+- clause: 5.7.1
+  title: 5.7.1 Overview
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.1 Overview.md
+  source_words: 113
+  kind: source-file
+- clause: 5.7.2
+  title: 5.7.2 Data model
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.2 Data model.md
+  source_words: 1259
+  kind: source-file
+- clause: 5.7.2.1
+  title: 5.7.2.1 Resource data types
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.2 Data model.md
+  source_words: 849
+  kind: embedded-clause
+- clause: 5.7.2.1.1
+  title: 5.7.2.1.1 Introduction
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.2 Data model.md
+  source_words: 195
+  kind: embedded-clause
+- clause: 5.7.2.1.2
+  title: '5.7.2.1.2 Type: DeviceTriggering'
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.2 Data model.md
+  source_words: 380
+  kind: embedded-clause
+- clause: 5.7.2.1.3
+  title: '5.7.2.1.3 Type: DeviceTriggeringDeliveryReportNotification'
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.2 Data model.md
+  source_words: 86
+  kind: embedded-clause
+- clause: 5.7.2.1.4
+  title: '5.7.2.1.4 Type: DeviceTriggeringPatch'
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.2 Data model.md
+  source_words: 188
+  kind: embedded-clause
+- clause: 5.7.2.2
+  title: 5.7.2.2 Referenced simple data types and enumerations
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.2 Data model.md
+  source_words: 410
+  kind: embedded-clause
+- clause: 5.7.2.2.1
+  title: 5.7.2.2.1 Introduction
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.2 Data model.md
+  source_words: 35
+  kind: embedded-clause
+- clause: 5.7.2.2.2
+  title: 5.7.2.2.2 Simple data types
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.2 Data model.md
+  source_words: 27
+  kind: embedded-clause
+- clause: 5.7.2.2.3
+  title: '5.7.2.2.3 Enumeration: DeliveryResult'
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.2 Data model.md
+  source_words: 267
+  kind: embedded-clause
+- clause: 5.7.2.2.4
+  title: '5.7.2.2.4 Enumeration: Priority'
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.2 Data model.md
+  source_words: 81
+  kind: embedded-clause
+- clause: 5.7.3
+  title: 5.7.3 Resource structure
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.3 Resource structure.md
+  source_words: 2275
+  kind: source-file
+- clause: 5.7.3.1
+  title: 5.7.3.1 General
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.3 Resource structure.md
+  source_words: 163
+  kind: embedded-clause
+- clause: 5.7.3.2
+  title: '5.7.3.2 Resource: Device Triggering Transactions'
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.3 Resource structure.md
+  source_words: 649
+  kind: embedded-clause
+- clause: 5.7.3.2.1
+  title: 5.7.3.2.1 Introduction
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.3 Resource structure.md
+  source_words: 27
+  kind: embedded-clause
+- clause: 5.7.3.2.2
+  title: 5.7.3.2.2 Resource definition
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.3 Resource structure.md
+  source_words: 55
+  kind: embedded-clause
+- clause: 5.7.3.2.3
+  title: 5.7.3.2.3 Resource methods
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.3 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.7.3.2.3.1
+  title: 5.7.3.2.3.1 GET
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.3 Resource structure.md
+  source_words: 318
+  kind: embedded-clause
+- clause: 5.7.3.2.3.2
+  title: 5.7.3.2.3.2 PUT
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.3 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.7.3.2.3.3
+  title: 5.7.3.2.3.3 PATCH
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.3 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.7.3.2.3.4
+  title: 5.7.3.2.3.4 POST
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.3 Resource structure.md
+  source_words: 222
+  kind: embedded-clause
+- clause: 5.7.3.2.3.5
+  title: 5.7.3.2.3.5 DELETE
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.3 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.7.3.3
+  title: '5.7.3.3 Resource: Individual Device Triggering Transaction'
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.3 Resource structure.md
+  source_words: 1463
+  kind: embedded-clause
+- clause: 5.7.3.3.1
+  title: 5.7.3.3.1 Introduction
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.3 Resource structure.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 5.7.3.3.2
+  title: 5.7.3.3.2 Resource definition
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.3 Resource structure.md
+  source_words: 72
+  kind: embedded-clause
+- clause: 5.7.3.3.3
+  title: 5.7.3.3.3 Resource methods
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.3 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.7.3.3.3.1
+  title: 5.7.3.3.3.1 GET
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.3 Resource structure.md
+  source_words: 317
+  kind: embedded-clause
+- clause: 5.7.3.3.3.2
+  title: 5.7.3.3.3.2 PUT
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.3 Resource structure.md
+  source_words: 352
+  kind: embedded-clause
+- clause: 5.7.3.3.3.3
+  title: 5.7.3.3.3.3 PATCH
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.3 Resource structure.md
+  source_words: 381
+  kind: embedded-clause
+- clause: 5.7.3.3.3.4
+  title: 5.7.3.3.3.4 POST
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.3 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.7.3.3.3.5
+  title: 5.7.3.3.3.5 DELETE
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.3 Resource structure.md
+  source_words: 314
+  kind: embedded-clause
+- clause: 5.7.3.4
+  title: 5.7.3.4 Void
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.3 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.7.3A
+  title: 5.7.3A Notifications
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.3A Notifications.md
+  source_words: 510
+  kind: source-file
+- clause: 5.7.3A.1
+  title: 5.7.3A.1 General
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.3A Notifications.md
+  source_words: 46
+  kind: embedded-clause
+- clause: 5.7.3A.2
+  title: 5.7.3A.2 Device Triggering Delivery Report Notification
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.3A Notifications.md
+  source_words: 464
+  kind: embedded-clause
+- clause: 5.7.3A.2.1
+  title: 5.7.3A.2.1 Description
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.3A Notifications.md
+  source_words: 22
+  kind: embedded-clause
+- clause: 5.7.3A.2.2
+  title: 5.7.3A.2.2 Target URI
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.3A Notifications.md
+  source_words: 64
+  kind: embedded-clause
+- clause: 5.7.3A.2.3
+  title: 5.7.3A.2.3 Standard Methods
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.3A Notifications.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.7.3A.2.3.1
+  title: 5.7.3A.2.3.1 Notification via POST
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.3A Notifications.md
+  source_words: 349
+  kind: embedded-clause
+- clause: 5-7-3a-2-3-2-notification-via-websocket
+  title: 5.7.3a.2.3.2 Notification via Websocket
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.3A Notifications.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 5.7.4
+  title: 5.7.4 Used Features
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.4 Used Features.md
+  source_words: 133
+  kind: source-file
+- clause: 5.7.5
+  title: 5.7.5 Error handling
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.5 Error handling.md
+  source_words: 69
+  kind: source-file
+- clause: 5.7.5.1
+  title: 5.7.5.1 General
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.5 Error handling.md
+  source_words: 23
+  kind: embedded-clause
+- clause: 5.7.5.2
+  title: 5.7.5.2 Protocol Errors
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.5 Error handling.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.7.5.3
+  title: 5.7.5.3 Application Errors
+  path: 5 T8 APIs/5.7 DeviceTriggering API/5.7.5 Error handling.md
+  source_words: 29
+  kind: embedded-clause
+- clause: '5.8'
+  title: 5.8 GMD via MBMS related APIs
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/README.md
+  source_words: 11976
+  kind: navigation-directory
+- clause: 5.8.1
+  title: 5.8.1 Overview
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.1 Overview.md
+  source_words: 92
+  kind: source-file
+- clause: 5.8.2
+  title: 5.8.2 GMDviaMBMSbyMB2 API
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/README.md
+  source_words: 6182
+  kind: navigation-directory
+- clause: 5.8.2.1
+  title: 5.8.2.1 Data model
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.1 Data model.md
+  source_words: 1284
+  kind: source-file
+- clause: 5.8.2.1.1
+  title: 5.8.2.1.1 Resource data types
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.1 Data model.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.8.2.1.1.1
+  title: 5.8.2.1.1.1 Introduction
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.1 Data model.md
+  source_words: 254
+  kind: embedded-clause
+- clause: 5.8.2.1.1.2
+  title: '5.8.2.1.1.2 Type: TMGIAllocation'
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.1 Data model.md
+  source_words: 185
+  kind: embedded-clause
+- clause: 5.8.2.1.1.3
+  title: '5.8.2.1.1.3 Type: GMDViaMBMSByMb2'
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.1 Data model.md
+  source_words: 298
+  kind: embedded-clause
+- clause: 5.8.2.1.1.4
+  title: '5.8.2.1.1.4 Type: GMDByMb2Notification'
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.1 Data model.md
+  source_words: 96
+  kind: embedded-clause
+- clause: 5.8.2.1.1.5
+  title: '5.8.2.1.1.5 Type: TMGIAllocationPatch'
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.1 Data model.md
+  source_words: 106
+  kind: embedded-clause
+- clause: 5.8.2.1.1.6
+  title: '5.8.2.1.1.6 Type: GMDViaMBMSByMb2Patch'
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.1 Data model.md
+  source_words: 174
+  kind: embedded-clause
+- clause: 5.8.2.1.1.7
+  title: '5.8.2.1.1.7 Type: MbmsLocArea'
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.1 Data model.md
+  source_words: 171
+  kind: embedded-clause
+- clause: 5.8.2.2
+  title: 5.8.2.2 Resource structure
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 4175
+  kind: source-file
+- clause: 5.8.2.2.1
+  title: 5.8.2.2.1 General
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 290
+  kind: embedded-clause
+- clause: 5.8.2.2.2
+  title: '5.8.2.2.2 Resource: TMGI Allocation'
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.8.2.2.2.1
+  title: 5.8.2.2.2.1 Introduction
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 16
+  kind: embedded-clause
+- clause: 5.8.2.2.2.2
+  title: 5.8.2.2.2.2 Resource definition
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 56
+  kind: embedded-clause
+- clause: 5.8.2.2.2.3
+  title: 5.8.2.2.2.3 Resource methods
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.8.2.2.2.3.1
+  title: 5.8.2.2.2.3.1 GET
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 275
+  kind: embedded-clause
+- clause: 5.8.2.2.2.3.2
+  title: 5.8.2.2.2.3.2 PUT
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.8.2.2.2.3.3
+  title: 5.8.2.2.2.3.3 PATCH
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.8.2.2.2.3.4
+  title: 5.8.2.2.2.3.4 POST
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 210
+  kind: embedded-clause
+- clause: 5.8.2.2.2.3.5
+  title: 5.8.2.2.2.3.5 DELETE
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.8.2.2.3
+  title: '5.8.2.2.3 Resource: Individual TMGI Allocation'
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.8.2.2.3.1
+  title: 5.8.2.2.3.1 Introduction
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 5.8.2.2.3.2
+  title: 5.8.2.2.3.2 Resource definition
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 61
+  kind: embedded-clause
+- clause: 5.8.2.2.3.3
+  title: 5.8.2.2.3.3 Resource methods
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.8.2.2.3.3.1
+  title: 5.8.2.2.3.3.1 GET
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 273
+  kind: embedded-clause
+- clause: 5.8.2.2.3.3.2
+  title: 5.8.2.2.3.3.2 PUT
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 305
+  kind: embedded-clause
+- clause: 5.8.2.2.3.3.3
+  title: 5.8.2.2.3.3.3 PATCH
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 305
+  kind: embedded-clause
+- clause: 5.8.2.2.3.3.4
+  title: 5.8.2.2.3.3.4 POST
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.8.2.2.3.3.5
+  title: 5.8.2.2.3.3.5 DELETE
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 271
+  kind: embedded-clause
+- clause: 5.8.2.2.4
+  title: '5.8.2.2.4 Resource: GMD via MBMS by MB2'
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.8.2.2.4.1
+  title: 5.8.2.2.4.1 Introduction
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 5.8.2.2.4.2
+  title: 5.8.2.2.4.2 Resource definition
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 64
+  kind: embedded-clause
+- clause: 5.8.2.2.4.3
+  title: 5.8.2.2.4.3 Resource methods
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.8.2.2.4.3.1
+  title: 5.8.2.2.4.3.1 GET
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 281
+  kind: embedded-clause
+- clause: 5.8.2.2.4.3.2
+  title: 5.8.2.2.4.3.2 PUT
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.8.2.2.4.3.3
+  title: 5.8.2.2.4.3.3 PATCH
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.8.2.2.4.3.4
+  title: 5.8.2.2.4.3.4 POST
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 243
+  kind: embedded-clause
+- clause: 5.8.2.2.4.3.5
+  title: 5.8.2.2.4.3.5 DELETE
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.8.2.2.5
+  title: '5.8.2.2.5 Resource: Individual GMD via MBMS by MB2'
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.8.2.2.5.1
+  title: 5.8.2.2.5.1 Introduction
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 19
+  kind: embedded-clause
+- clause: 5.8.2.2.5.2
+  title: 5.8.2.2.5.2 Resource definition
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 78
+  kind: embedded-clause
+- clause: 5.8.2.2.5.3
+  title: 5.8.2.2.5.3 Resource methods
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.8.2.2.5.3.1
+  title: 5.8.2.2.5.3.1 GET
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 286
+  kind: embedded-clause
+- clause: 5.8.2.2.5.3.2
+  title: 5.8.2.2.5.3.2 PUT
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 403
+  kind: embedded-clause
+- clause: 5.8.2.2.5.3.3
+  title: 5.8.2.2.5.3.3 PATCH
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 339
+  kind: embedded-clause
+- clause: 5.8.2.2.5.3.4
+  title: 5.8.2.2.5.3.4 POST
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.8.2.2.5.3.5
+  title: 5.8.2.2.5.3.5 DELETE
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 284
+  kind: embedded-clause
+- clause: 5.8.2.2.6
+  title: 5.8.2.2.6 Void
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.8.2.2A
+  title: 5.8.2.2A Notifications
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2A Notifications.md
+  source_words: 540
+  kind: source-file
+- clause: 5.8.2.2A.1
+  title: 5.8.2.2A.1 General
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2A Notifications.md
+  source_words: 59
+  kind: embedded-clause
+- clause: 5.8.2.2A.2
+  title: 5.8.2.2A.2 GMD via MBMS by MB2 Notification
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2A Notifications.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.8.2.2A.2.1
+  title: 5.8.2.2A.2.1 Description
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2A Notifications.md
+  source_words: 28
+  kind: embedded-clause
+- clause: 5.8.2.2A.2.2
+  title: 5.8.2.2A.2.2 Target URI
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2A Notifications.md
+  source_words: 63
+  kind: embedded-clause
+- clause: 5.8.2.2A.2.3
+  title: 5.8.2.2A.2.3 Standard Methods
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2A Notifications.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.8.2.2A.2.3.1
+  title: 5.8.2.2A.2.3.1 Notification via POST
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2A Notifications.md
+  source_words: 361
+  kind: embedded-clause
+- clause: 5.8.2.2A.2.3.2
+  title: 5.8.2.2A.2.3.2 Notification via Websocket
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.2A Notifications.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 5.8.2.3
+  title: 5.8.2.3 Used Features
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.3 Used Features.md
+  source_words: 112
+  kind: source-file
+- clause: 5.8.2.4
+  title: 5.8.2.4 Error handling
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.4 Error handling.md
+  source_words: 71
+  kind: source-file
+- clause: 5.8.2.4.1
+  title: 5.8.2.4.1 General
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.4 Error handling.md
+  source_words: 23
+  kind: embedded-clause
+- clause: 5.8.2.4.2
+  title: 5.8.2.4.2 Protocol Errors
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.4 Error handling.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.8.2.4.3
+  title: 5.8.2.4.3 Application Errors
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.2 GMDviaMBMSbyMB2 API/5.8.2.4 Error handling.md
+  source_words: 31
+  kind: embedded-clause
+- clause: 5.8.3
+  title: 5.8.3 GMDviaMBMSbyxMB API
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/README.md
+  source_words: 5702
+  kind: navigation-directory
+- clause: 5.8.3.1
+  title: 5.8.3.1 Data model
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.1 Data model.md
+  source_words: 1394
+  kind: source-file
+- clause: 5.8.3.1.1
+  title: 5.8.3.1.1 Resource data types
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.1 Data model.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.8.3.1.1.1
+  title: 5.8.3.1.1.1 Introduction
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.1 Data model.md
+  source_words: 247
+  kind: embedded-clause
+- clause: 5.8.3.1.1.2
+  title: '5.8.3.1.1.2 Type: ServiceCreation'
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.1 Data model.md
+  source_words: 246
+  kind: embedded-clause
+- clause: 5.8.3.1.1.3
+  title: '5.8.3.1.1.3 Type: GMDViaMBMSByxMB'
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.1 Data model.md
+  source_words: 304
+  kind: embedded-clause
+- clause: 5.8.3.1.1.4
+  title: '5.8.3.1.1.4 Type: GMDByxMBNotification'
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.1 Data model.md
+  source_words: 92
+  kind: embedded-clause
+- clause: 5.8.3.1.1.5
+  title: '5.8.3.1.1.5 Type: GMDViaMBMSByxMBPatch'
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.1 Data model.md
+  source_words: 179
+  kind: embedded-clause
+- clause: 5.8.3.1.1.6
+  title: '5.8.3.1.1.6 Type: MbmsLocArea'
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.1 Data model.md
+  source_words: 171
+  kind: embedded-clause
+- clause: 5.8.3.1.2
+  title: 5.8.3.1.2 Referenced simple data types and enumerations
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.1 Data model.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.8.3.1.2.1
+  title: 5.8.3.1.2.1 Introduction
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.1 Data model.md
+  source_words: 35
+  kind: embedded-clause
+- clause: 5.8.3.1.2.2
+  title: 5.8.3.1.2.2 Simple data types
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.1 Data model.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 5.8.3.1.2.3
+  title: '5.8.3.1.2.3 Enumeration: ServiceAnnouncementMode'
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.1 Data model.md
+  source_words: 91
+  kind: embedded-clause
+- clause: 5.8.3.2
+  title: 5.8.3.2 Resource structure
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 3585
+  kind: source-file
+- clause: 5.8.3.2.1
+  title: 5.8.3.2.1 General
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 255
+  kind: embedded-clause
+- clause: 5.8.3.2.2
+  title: '5.8.3.2.2 Resource: xMB Services'
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.8.3.2.2.1
+  title: 5.8.3.2.2.1 Introduction
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 19
+  kind: embedded-clause
+- clause: 5.8.3.2.2.2
+  title: 5.8.3.2.2.2 Resource definition
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 59
+  kind: embedded-clause
+- clause: 5.8.3.2.2.3
+  title: 5.8.3.2.2.3 Resource methods
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.8.3.2.2.3.1
+  title: 5.8.3.2.2.3.1 GET
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 279
+  kind: embedded-clause
+- clause: 5.8.3.2.2.3.2
+  title: 5.8.3.2.2.3.2 PUT
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.8.3.2.2.3.3
+  title: 5.8.3.2.2.3.3 PATCH
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.8.3.2.2.3.4
+  title: 5.8.3.2.2.3.4 POST
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 210
+  kind: embedded-clause
+- clause: 5.8.3.2.2.3.5
+  title: 5.8.3.2.2.3.5 DELETE
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.8.3.2.3
+  title: '5.8.3.2.3 Resource: Individual xMB Service'
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.8.3.2.3.1
+  title: 5.8.3.2.3.1 Introduction
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 11
+  kind: embedded-clause
+- clause: 5.8.3.2.3.2
+  title: 5.8.3.2.3.2 Resource definition
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 64
+  kind: embedded-clause
+- clause: 5.8.3.2.3.3
+  title: 5.8.3.2.3.3 Resource methods
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.8.3.2.3.3.1
+  title: 5.8.3.2.3.3.1 GET
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 281
+  kind: embedded-clause
+- clause: 5.8.3.2.3.3.2
+  title: 5.8.3.2.3.3.2 PUT
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.8.3.2.3.3.3
+  title: 5.8.3.2.3.3.3 PATCH
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.8.3.2.3.3.4
+  title: 5.8.3.2.3.3.4 POST
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.8.3.2.3.3.5
+  title: 5.8.3.2.3.3.5 DELETE
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 280
+  kind: embedded-clause
+- clause: 5.8.3.2.4
+  title: '5.8.3.2.4 Resource: GMD via MBMS by xMB'
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.8.3.2.4.1
+  title: 5.8.3.2.4.1 Introduction
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 43
+  kind: embedded-clause
+- clause: 5.8.3.2.4.2
+  title: 5.8.3.2.4.2 Resource definition
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 67
+  kind: embedded-clause
+- clause: 5.8.3.2.4.3
+  title: 5.8.3.2.4.3 Resource methods
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.8.3.2.4.3.1
+  title: 5.8.3.2.4.3.1 GET
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 288
+  kind: embedded-clause
+- clause: 5.8.3.2.4.3.2
+  title: 5.8.3.2.4.3.2 PUT
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.8.3.2.4.3.3
+  title: 5.8.3.2.4.3.3 PATCH
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.8.3.2.4.3.4
+  title: 5.8.3.2.4.3.4 POST
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 231
+  kind: embedded-clause
+- clause: 5.8.3.2.4.3.5
+  title: 5.8.3.2.4.3.5 DELETE
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.8.3.2.5
+  title: '5.8.3.2.5 Resource: Individual GMD via MBMS by xMB'
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.8.3.2.5.1
+  title: 5.8.3.2.5.1 Introduction
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.8.3.2.5.2
+  title: 5.8.3.2.5.2 Resource definition
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 81
+  kind: embedded-clause
+- clause: 5.8.3.2.5.3
+  title: 5.8.3.2.5.3 Resource methods
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.8.3.2.5.3.1
+  title: 5.8.3.2.5.3.1 GET
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 285
+  kind: embedded-clause
+- clause: 5.8.3.2.5.3.2
+  title: 5.8.3.2.5.3.2 PUT
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 401
+  kind: embedded-clause
+- clause: 5.8.3.2.5.3.3
+  title: 5.8.3.2.5.3.3 PATCH
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 340
+  kind: embedded-clause
+- clause: 5.8.3.2.5.3.4
+  title: 5.8.3.2.5.3.4 POST
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.8.3.2.5.3.5
+  title: 5.8.3.2.5.3.5 DELETE
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 284
+  kind: embedded-clause
+- clause: 5.8.3.2.6
+  title: 5.8.3.2.6 Void
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.8.3.2A
+  title: 5.8.3.2A Notifications
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2A Notifications.md
+  source_words: 540
+  kind: source-file
+- clause: 5.8.3.2A.1
+  title: 5.8.3.2A.1 General
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2A Notifications.md
+  source_words: 59
+  kind: embedded-clause
+- clause: 5.8.3.2A.2
+  title: 5.8.3.2A.2 GMD via MBMS by xMB Notification
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2A Notifications.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.8.3.2A.2.1
+  title: 5.8.3.2A.2.1 Description
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2A Notifications.md
+  source_words: 28
+  kind: embedded-clause
+- clause: 5.8.3.2A.2.2
+  title: 5.8.3.2A.2.2 Target URI
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2A Notifications.md
+  source_words: 63
+  kind: embedded-clause
+- clause: 5.8.3.2A.2.3
+  title: 5.8.3.2A.2.3 Standard Methods
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2A Notifications.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.8.3.2A.2.3.1
+  title: 5.8.3.2A.2.3.1 Notification via POST
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2A Notifications.md
+  source_words: 361
+  kind: embedded-clause
+- clause: 5-8-3-2a-2-3-2-notification-via-websocket
+  title: 5.8.3.2a.2.3.2 Notification via Websocket
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.2A Notifications.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 5.8.3.3
+  title: 5.8.3.3 Used Features
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.3 Used Features.md
+  source_words: 112
+  kind: source-file
+- clause: 5.8.3.4
+  title: 5.8.3.4 Error handling
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.4 Error handling.md
+  source_words: 71
+  kind: source-file
+- clause: 5.8.3.4.1
+  title: 5.8.3.4.1 General
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.4 Error handling.md
+  source_words: 23
+  kind: embedded-clause
+- clause: 5.8.3.4.2
+  title: 5.8.3.4.2 Protocol Errors
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.4 Error handling.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.8.3.4.3
+  title: 5.8.3.4.3 Application Errors
+  path: 5 T8 APIs/5.8 GMD via MBMS related APIs/5.8.3 GMDviaMBMSbyxMB API/5.8.3.4 Error handling.md
+  source_words: 31
+  kind: embedded-clause
+- clause: '5.9'
+  title: 5.9 ReportingNetworkStatus API
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 4082
+  kind: source-file
+- clause: 5.9.1
+  title: 5.9.1 Overview
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 78
+  kind: embedded-clause
+- clause: 5.9.2
+  title: 5.9.2 Data model
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 1086
+  kind: embedded-clause
+- clause: 5.9.2.1
+  title: 5.9.2.1 Resource data types
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 771
+  kind: embedded-clause
+- clause: 5.9.2.1.1
+  title: 5.9.2.1.1 Introduction
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 213
+  kind: embedded-clause
+- clause: 5.9.2.1.2
+  title: '5.9.2.1.2 Type: NetworkStatusReportingSubscription'
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 341
+  kind: embedded-clause
+- clause: 5.9.2.1.3
+  title: '5.9.2.1.3 Type: NetStatusRepSubsPatch'
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 217
+  kind: embedded-clause
+- clause: 5.9.2.2
+  title: 5.9.2.2 Notification data types
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 143
+  kind: embedded-clause
+- clause: 5.9.2.2.1
+  title: 5.9.2.2.1 Introduction
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 10
+  kind: embedded-clause
+- clause: 5.9.2.2.2
+  title: '5.9.2.2.2 Type: NetworkStatusReportingNotification'
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 133
+  kind: embedded-clause
+- clause: 5.9.2.3
+  title: 5.9.2.3 Referenced simple data types and enumerations
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 172
+  kind: embedded-clause
+- clause: 5.9.2.3.1
+  title: 5.9.2.3.1 Introduction
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 35
+  kind: embedded-clause
+- clause: 5.9.2.3.2
+  title: 5.9.2.3.2 Simple data types
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 62
+  kind: embedded-clause
+- clause: 5.9.2.3.3
+  title: '5.9.2.3.3 Enumeration: CongestionType'
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 75
+  kind: embedded-clause
+- clause: 5.9.3
+  title: 5.9.3 Resource structure
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 2226
+  kind: embedded-clause
+- clause: 5.9.3.1
+  title: 5.9.3.1 General
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 140
+  kind: embedded-clause
+- clause: 5.9.3.2
+  title: '5.9.3.2 Resource: Network Status Reporting Subscriptions'
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 672
+  kind: embedded-clause
+- clause: 5.9.3.2.1
+  title: 5.9.3.2.1 Introduction
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 5.9.3.2.2
+  title: 5.9.3.2.2 Resource definition
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 56
+  kind: embedded-clause
+- clause: 5.9.3.2.3
+  title: 5.9.3.2.3 Resource methods
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.9.3.2.3.1
+  title: 5.9.3.2.3.1 GET
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 320
+  kind: embedded-clause
+- clause: 5.9.3.2.3.2
+  title: 5.9.3.2.3.2 PUT
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.9.3.2.3.3
+  title: 5.9.3.2.3.3 PATCH
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.9.3.2.3.4
+  title: 5.9.3.2.3.4 POST
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 251
+  kind: embedded-clause
+- clause: 5.9.3.2.3.5
+  title: 5.9.3.2.3.5 DELETE
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.9.3.3
+  title: '5.9.3.3 Resource: Individual Network Status Reporting Subscription'
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 1414
+  kind: embedded-clause
+- clause: 5.9.3.3.1
+  title: 5.9.3.3.1 Introduction
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 19
+  kind: embedded-clause
+- clause: 5.9.3.3.2
+  title: 5.9.3.3.2 Resource definition
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 73
+  kind: embedded-clause
+- clause: 5.9.3.3.3
+  title: 5.9.3.3.3 Resource methods
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.9.3.3.3.1
+  title: 5.9.3.3.3.1 GET
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 309
+  kind: embedded-clause
+- clause: 5.9.3.3.3.2
+  title: 5.9.3.3.3.2 PUT
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 329
+  kind: embedded-clause
+- clause: 5.9.3.3.3.3
+  title: 5.9.3.3.3.3 PATCH
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 370
+  kind: embedded-clause
+- clause: 5.9.3.3.3.4
+  title: 5.9.3.3.3.4 POST
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.9.3.3.3.5
+  title: 5.9.3.3.3.5 DELETE
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 305
+  kind: embedded-clause
+- clause: 5.9.3.4
+  title: 5.9.3.4 Void
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.9.3A
+  title: 5.9.3A Notifications
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 480
+  kind: embedded-clause
+- clause: 5.9.3A.1
+  title: 5.9.3A.1 General
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 50
+  kind: embedded-clause
+- clause: 5.9.3A.2
+  title: 5.9.3A.2 Network Status Reporting Notification
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 430
+  kind: embedded-clause
+- clause: 5.9.3A.2.1
+  title: 5.9.3A.2.1 Description
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 20
+  kind: embedded-clause
+- clause: 5.9.3A.2.2
+  title: 5.9.3A.2.2 Target URI
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 53
+  kind: embedded-clause
+- clause: 5.9.3A.2.3
+  title: 5.9.3A.2.3 Standard Methods
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.9.3A.2.3.1
+  title: 5.9.3A.2.3.1 Notification via POST
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 328
+  kind: embedded-clause
+- clause: 5.9.3A.2.3.2
+  title: 5.9.3A.2.3.2 Notification via Websocket
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 5.9.4
+  title: 5.9.4 Used Features
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 133
+  kind: embedded-clause
+- clause: 5.9.5
+  title: 5.9.5 Error handling
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 79
+  kind: embedded-clause
+- clause: 5.9.5.1
+  title: 5.9.5.1 General
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 23
+  kind: embedded-clause
+- clause: 5.9.5.2
+  title: 5.9.5.2 Protocol Errors
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.9.5.3
+  title: 5.9.5.3 Application Errors
+  path: 5 T8 APIs/5.9 ReportingNetworkStatus API.md
+  source_words: 39
+  kind: embedded-clause
+- clause: '5.10'
+  title: 5.10 CpProvisioning API
+  path: 5 T8 APIs/5.10 CpProvisioning API/README.md
+  source_words: 6089
+  kind: navigation-directory
+- clause: 5.10.1
+  title: 5.10.1 Overview
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.1 Overview.md
+  source_words: 79
+  kind: source-file
+- clause: 5.10.2
+  title: 5.10.2 Data model
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.2 Data model.md
+  source_words: 2628
+  kind: source-file
+- clause: 5.10.2.1
+  title: 5.10.2.1 Resource data types
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.2 Data model.md
+  source_words: 831
+  kind: embedded-clause
+- clause: 5.10.2.1.1
+  title: 5.10.2.1.1 Introduction
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.2 Data model.md
+  source_words: 367
+  kind: embedded-clause
+- clause: 5.10.2.1.2
+  title: '5.10.2.1.2 Type: CpInfo'
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.2 Data model.md
+  source_words: 464
+  kind: embedded-clause
+- clause: 5.10.2.2
+  title: 5.10.2.2 Referenced structured data types
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.2 Data model.md
+  source_words: 1251
+  kind: embedded-clause
+- clause: 5.10.2.2.1
+  title: 5.10.2.2.1 Introduction
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.2 Data model.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.10.2.2.2
+  title: '5.10.2.2.2 Type: CpParameterSet'
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.2 Data model.md
+  source_words: 555
+  kind: embedded-clause
+- clause: 5.10.2.2.3
+  title: '5.10.2.2.3 Type: ScheduledCommunicationTime'
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.2 Data model.md
+  source_words: 105
+  kind: embedded-clause
+- clause: 5.10.2.2.4
+  title: '5.10.2.2.4 Type: CpReport'
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.2 Data model.md
+  source_words: 108
+  kind: embedded-clause
+- clause: 5.10.2.2.5
+  title: '5.10.2.2.5 Type: UmtLocationArea5G'
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.2 Data model.md
+  source_words: 136
+  kind: embedded-clause
+- clause: 5.10.2.2.6
+  title: '5.10.2.2.6 Type: AppExpUeBehaviour'
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.2 Data model.md
+  source_words: 330
+  kind: embedded-clause
+- clause: 5.10.2.3
+  title: 5.10.2.3 Referenced simple data types and enumerations
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.2 Data model.md
+  source_words: 546
+  kind: embedded-clause
+- clause: 5.10.2.3.1
+  title: 5.10.2.3.1 Introduction
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.2 Data model.md
+  source_words: 35
+  kind: embedded-clause
+- clause: 5.10.2.3.2
+  title: 5.10.2.3.2 Simple data types
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.2 Data model.md
+  source_words: 27
+  kind: embedded-clause
+- clause: 5.10.2.3.3
+  title: '5.10.2.3.3 Enumeration: CommunicationIndicator'
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.2 Data model.md
+  source_words: 62
+  kind: embedded-clause
+- clause: 5.10.2.3.4
+  title: '5.10.2.3.4 Enumeration: StationaryIndication'
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.2 Data model.md
+  source_words: 60
+  kind: embedded-clause
+- clause: 5.10.2.3.5
+  title: '5.10.2.3.5 Enumeration: CpFailureCode'
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.2 Data model.md
+  source_words: 131
+  kind: embedded-clause
+- clause: 5.10.2.3.6
+  title: '5.10.2.3.6 Enumeration: BatteryIndication'
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.2 Data model.md
+  source_words: 95
+  kind: embedded-clause
+- clause: 5.10.2.3.7
+  title: '5.10.2.3.7 Enumeration: TrafficProfile'
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.2 Data model.md
+  source_words: 108
+  kind: embedded-clause
+- clause: 5.10.2.3.8A
+  title: '5.10.2.3.8A Enumeration: ScheduledCommunicationType'
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.2 Data model.md
+  source_words: 28
+  kind: embedded-clause
+- clause: 5.10.3
+  title: 5.10.3 Resource structure
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.3 Resource structure.md
+  source_words: 2996
+  kind: source-file
+- clause: 5.10.3.1
+  title: 5.10.3.1 General
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.3 Resource structure.md
+  source_words: 247
+  kind: embedded-clause
+- clause: 5.10.3.2
+  title: '5.10.3.2 Resource: CP Provisioning Subscriptions'
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.3 Resource structure.md
+  source_words: 655
+  kind: embedded-clause
+- clause: 5.10.3.2.1
+  title: 5.10.3.2.1 Introduction
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.3 Resource structure.md
+  source_words: 19
+  kind: embedded-clause
+- clause: 5.10.3.2.2
+  title: 5.10.3.2.2 Resource definition
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.3 Resource structure.md
+  source_words: 55
+  kind: embedded-clause
+- clause: 5.10.3.2.3
+  title: 5.10.3.2.3 Resource methods
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.3 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.10.3.2.3.1
+  title: 5.10.3.2.3.1 GET
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.3 Resource structure.md
+  source_words: 312
+  kind: embedded-clause
+- clause: 5.10.3.2.3.2
+  title: 5.10.3.2.3.2 PUT
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.3 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.10.3.2.3.3
+  title: 5.10.3.2.3.3 PATCH
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.3 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.10.3.2.3.4
+  title: 5.10.3.2.3.4 POST
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.3 Resource structure.md
+  source_words: 242
+  kind: embedded-clause
+- clause: 5.10.3.2.3.5
+  title: 5.10.3.2.3.5 DELETE
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.3 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.10.3.3
+  title: '5.10.3.3 Resource: Individual CP Provisioning Subscription'
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.3 Resource structure.md
+  source_words: 1037
+  kind: embedded-clause
+- clause: 5.10.3.3.1
+  title: 5.10.3.3.1 Introduction
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.3 Resource structure.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.10.3.3.2
+  title: 5.10.3.3.2 Resource definition
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.3 Resource structure.md
+  source_words: 72
+  kind: embedded-clause
+- clause: 5.10.3.3.3
+  title: 5.10.3.3.3 Resource methods
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.3 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.10.3.3.3.1
+  title: 5.10.3.3.3.1 GET
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.3 Resource structure.md
+  source_words: 312
+  kind: embedded-clause
+- clause: 5.10.3.3.3.2
+  title: 5.10.3.3.3.2 PUT
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.3 Resource structure.md
+  source_words: 350
+  kind: embedded-clause
+- clause: 5.10.3.3.3.3
+  title: 5.10.3.3.3.3 PATCH
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.3 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.10.3.3.3.4
+  title: 5.10.3.3.3.4 POST
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.3 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.10.3.3.3.5
+  title: 5.10.3.3.3.5 DELETE
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.3 Resource structure.md
+  source_words: 268
+  kind: embedded-clause
+- clause: 5.10.3.4
+  title: '5.10.3.4 Resource: Individual CP Set Provisioning'
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.3 Resource structure.md
+  source_words: 1057
+  kind: embedded-clause
+- clause: 5.10.3.4.1
+  title: 5.10.3.4.1 Introduction
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.3 Resource structure.md
+  source_words: 21
+  kind: embedded-clause
+- clause: 5.10.3.4.2
+  title: 5.10.3.4.2 Resource definition
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.3 Resource structure.md
+  source_words: 74
+  kind: embedded-clause
+- clause: 5.10.3.4.3
+  title: 5.10.3.4.3 Resource methods
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.3 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.10.3.4.3.1
+  title: 5.10.3.4.3.1 GET
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.3 Resource structure.md
+  source_words: 307
+  kind: embedded-clause
+- clause: 5.10.3.4.3.2
+  title: 5.10.3.4.3.2 PUT
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.3 Resource structure.md
+  source_words: 369
+  kind: embedded-clause
+- clause: 5.10.3.4.3.3
+  title: 5.10.3.4.3.3 PATCH
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.3 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.10.3.4.3.4
+  title: 5.10.3.4.3.4 POST
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.3 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.10.3.4.3.5
+  title: 5.10.3.4.3.5 DELETE
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.3 Resource structure.md
+  source_words: 268
+  kind: embedded-clause
+- clause: 5.10.4
+  title: 5.10.4 Used Features
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.4 Used Features.md
+  source_words: 213
+  kind: source-file
+- clause: 5.10.5
+  title: 5.10.5 Error handling
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.5 Error handling.md
+  source_words: 173
+  kind: source-file
+- clause: 5.10.5.1
+  title: 5.10.5.1 General
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.5 Error handling.md
+  source_words: 23
+  kind: embedded-clause
+- clause: 5.10.5.2
+  title: 5.10.5.2 Protocol Errors
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.5 Error handling.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.10.5.3
+  title: 5.10.5.3 Application Errors
+  path: 5 T8 APIs/5.10 CpProvisioning API/5.10.5 Error handling.md
+  source_words: 133
+  kind: embedded-clause
+- clause: '5.11'
+  title: 5.11 PfdManagement API
+  path: 5 T8 APIs/5.11 PfdManagement API/README.md
+  source_words: 6719
+  kind: navigation-directory
+- clause: 5.11.1
+  title: 5.11.1 Overview
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.1 Overview.md
+  source_words: 65
+  kind: source-file
+- clause: 5.11.2
+  title: 5.11.2 Data model
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.2 Data model.md
+  source_words: 1875
+  kind: source-file
+- clause: 5.11.2.1
+  title: 5.11.2.1 Resource data types
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.2 Data model.md
+  source_words: 1544
+  kind: embedded-clause
+- clause: 5.11.2.1.1
+  title: 5.11.2.1.1 Introduction
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.2 Data model.md
+  source_words: 285
+  kind: embedded-clause
+- clause: 5.11.2.1.2
+  title: '5.11.2.1.2 Type: PfdManagement'
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.2 Data model.md
+  source_words: 314
+  kind: embedded-clause
+- clause: 5.11.2.1.3
+  title: '5.11.2.1.3 Type: PfdData'
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.2 Data model.md
+  source_words: 246
+  kind: embedded-clause
+- clause: 5.11.2.1.4
+  title: '5.11.2.1.4 Type: Pfd'
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.2 Data model.md
+  source_words: 231
+  kind: embedded-clause
+- clause: 5.11.2.1.5
+  title: '5.11.2.1.5 Type: PfdReport'
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.2 Data model.md
+  source_words: 155
+  kind: embedded-clause
+- clause: 5.11.2.1.6
+  title: '5.11.2.1.6 Type: UserPlaneLocationArea'
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.2 Data model.md
+  source_words: 199
+  kind: embedded-clause
+- clause: 5.11.2.1.7
+  title: '5.11.2.1.7 Type: PfdManagementPatch'
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.2 Data model.md
+  source_words: 114
+  kind: embedded-clause
+- clause: 5.11.2.2
+  title: 5.11.2.2 Referenced simple data types and enumerations
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.2 Data model.md
+  source_words: 331
+  kind: embedded-clause
+- clause: 5.11.2.2.1
+  title: 5.11.2.2.1 Introduction
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.2 Data model.md
+  source_words: 35
+  kind: embedded-clause
+- clause: 5.11.2.2.2
+  title: 5.11.2.2.2 Simple data types
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.2 Data model.md
+  source_words: 27
+  kind: embedded-clause
+- clause: 5.11.2.2.3
+  title: '5.11.2.2.3 Enumeration: FailureCode'
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.2 Data model.md
+  source_words: 140
+  kind: embedded-clause
+- clause: 5.11.2.2.4
+  title: '5.11.2.2.4 Enumeration: DomainNameProtocol'
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.2 Data model.md
+  source_words: 129
+  kind: embedded-clause
+- clause: 5.11.3
+  title: 5.11.3 Resource structure
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 4053
+  kind: source-file
+- clause: 5.11.3.1
+  title: 5.11.3.1 General
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 264
+  kind: embedded-clause
+- clause: 5.11.3.2
+  title: '5.11.3.2 Resource: PFD Management Transactions'
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 998
+  kind: embedded-clause
+- clause: 5.11.3.2.1
+  title: 5.11.3.2.1 Introduction
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 31
+  kind: embedded-clause
+- clause: 5.11.3.2.2
+  title: 5.11.3.2.2 Resource definition
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 55
+  kind: embedded-clause
+- clause: 5.11.3.2.3
+  title: 5.11.3.2.3 Resource methods
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.11.3.2.3.1
+  title: 5.11.3.2.3.1 GET
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 363
+  kind: embedded-clause
+- clause: 5.11.3.2.3.2
+  title: 5.11.3.2.3.2 PUT
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.11.3.2.3.3
+  title: 5.11.3.2.3.3 POST
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 259
+  kind: embedded-clause
+- clause: 5.11.3.2.3.4
+  title: 5.11.3.2.3.4 PATCH
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.11.3.2.3.5
+  title: 5.11.3.2.3.5 DELETE
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 272
+  kind: embedded-clause
+- clause: 5.11.3.3
+  title: '5.11.3.3 Resource: Individual PFD Management Transaction'
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 1377
+  kind: embedded-clause
+- clause: 5.11.3.3.1
+  title: 5.11.3.3.1 Introduction
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 32
+  kind: embedded-clause
+- clause: 5.11.3.3.2
+  title: 5.11.3.3.2 Resource definition
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 71
+  kind: embedded-clause
+- clause: 5.11.3.3.3
+  title: 5.11.3.3.3 Resource methods
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.11.3.3.3.1
+  title: 5.11.3.3.3.1 GET
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 287
+  kind: embedded-clause
+- clause: 5.11.3.3.3.2
+  title: 5.11.3.3.3.2 PUT
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 328
+  kind: embedded-clause
+- clause: 5.11.3.3.3.3
+  title: 5.11.3.3.3.3 PATCH
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 341
+  kind: embedded-clause
+- clause: 5.11.3.3.3.4
+  title: 5.11.3.3.3.4 POST
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.11.3.3.3.5
+  title: 5.11.3.3.3.5 DELETE
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 309
+  kind: embedded-clause
+- clause: 5.11.3.4
+  title: '5.11.3.4 Resource: Individual Application PFD Management'
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 1414
+  kind: embedded-clause
+- clause: 5.11.3.4.1
+  title: 5.11.3.4.1 Introduction
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 26
+  kind: embedded-clause
+- clause: 5.11.3.4.2
+  title: 5.11.3.4.2 Resource definition
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 70
+  kind: embedded-clause
+- clause: 5.11.3.4.3
+  title: 5.11.3.4.3 Resource methods
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.11.3.4.3.1
+  title: 5.11.3.4.3.1 GET
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 267
+  kind: embedded-clause
+- clause: 5.11.3.4.3.2
+  title: 5.11.3.4.3.2 PUT
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 373
+  kind: embedded-clause
+- clause: 5.11.3.4.3.3
+  title: 5.11.3.4.3.3 PATCH
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 373
+  kind: embedded-clause
+- clause: 5.11.3.4.3.4
+  title: 5.11.3.4.3.4 POST
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.11.3.4.3.5
+  title: 5.11.3.4.3.5 DELETE
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 296
+  kind: embedded-clause
+- clause: 5.11.3.5
+  title: 5.11.3.5 Void
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.11.3A
+  title: 5.11.3A Notifications
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3A Notifications.md
+  source_words: 470
+  kind: source-file
+- clause: 5.11.3A.1
+  title: 5.11.3A.1 General
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3A Notifications.md
+  source_words: 39
+  kind: embedded-clause
+- clause: 5.11.3A.2
+  title: 5.11.3A.2 PFD Management Notification
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3A Notifications.md
+  source_words: 431
+  kind: embedded-clause
+- clause: 5.11.3A.2.1
+  title: 5.11.3A.2.1 Description
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3A Notifications.md
+  source_words: 27
+  kind: embedded-clause
+- clause: 5.11.3A.2.2
+  title: 5.11.3A.2.2 Target URI
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3A Notifications.md
+  source_words: 51
+  kind: embedded-clause
+- clause: 5.11.3A.2.3
+  title: 5.11.3A.2.3 Standard Methods
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3A Notifications.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.11.3A.2.3.1
+  title: 5.11.3A.2.3.1 Notification via POST
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3A Notifications.md
+  source_words: 324
+  kind: embedded-clause
+- clause: 5.11.3A.2.3.2
+  title: 5.11.3A.2.3.2 Notification via Websocket
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.3A Notifications.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 5.11.4
+  title: 5.11.4 Used Features
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.4 Used Features.md
+  source_words: 187
+  kind: source-file
+- clause: 5.11.5
+  title: 5.11.5 Error handling
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.5 Error handling.md
+  source_words: 69
+  kind: source-file
+- clause: 5.11.5.1
+  title: 5.11.5.1 General
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.5 Error handling.md
+  source_words: 23
+  kind: embedded-clause
+- clause: 5.11.5.2
+  title: 5.11.5.2 Protocol Errors
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.5 Error handling.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.11.5.3
+  title: 5.11.5.3 Application Errors
+  path: 5 T8 APIs/5.11 PfdManagement API/5.11.5 Error handling.md
+  source_words: 29
+  kind: embedded-clause
+- clause: '5.12'
+  title: 5.12 ECRControl API
+  path: 5 T8 APIs/5.12 ECRControl API.md
+  source_words: 1683
+  kind: source-file
+- clause: 5.12.1
+  title: 5.12.1 Overview
+  path: 5 T8 APIs/5.12 ECRControl API.md
+  source_words: 71
+  kind: embedded-clause
+- clause: 5.12.2
+  title: 5.12.2 Data model
+  path: 5 T8 APIs/5.12 ECRControl API.md
+  source_words: 725
+  kind: embedded-clause
+- clause: 5.12.2.1
+  title: 5.12.2.1 Data types
+  path: 5 T8 APIs/5.12 ECRControl API.md
+  source_words: 725
+  kind: embedded-clause
+- clause: 5.12.2.1.1
+  title: 5.12.2.1.1 Introduction
+  path: 5 T8 APIs/5.12 ECRControl API.md
+  source_words: 188
+  kind: embedded-clause
+- clause: 5.12.2.1.2
+  title: '5.12.2.1.2 Type: ECRControl'
+  path: 5 T8 APIs/5.12 ECRControl API.md
+  source_words: 311
+  kind: embedded-clause
+- clause: 5.12.2.1.3
+  title: '5.12.2.1.3 Type: ECRData'
+  path: 5 T8 APIs/5.12 ECRControl API.md
+  source_words: 181
+  kind: embedded-clause
+- clause: 5.12.2.1.4
+  title: '5.12.2.1.4 Type: PlmnEcRestrictionDataWb'
+  path: 5 T8 APIs/5.12 ECRControl API.md
+  source_words: 45
+  kind: embedded-clause
+- clause: 5.12.3
+  title: 5.12.3 Custom Operations without associated resources
+  path: 5 T8 APIs/5.12 ECRControl API.md
+  source_words: 713
+  kind: embedded-clause
+- clause: 5.12.3.1
+  title: 5.12.3.1 Overview
+  path: 5 T8 APIs/5.12 ECRControl API.md
+  source_words: 67
+  kind: embedded-clause
+- clause: 5.12.3.2
+  title: '5.12.3.2 Operation: query'
+  path: 5 T8 APIs/5.12 ECRControl API.md
+  source_words: 323
+  kind: embedded-clause
+- clause: 5.12.3.2.1
+  title: 5.12.3.2.1 Description
+  path: 5 T8 APIs/5.12 ECRControl API.md
+  source_words: 31
+  kind: embedded-clause
+- clause: 5.12.3.2.2
+  title: 5.12.3.2.2 Operation Definition
+  path: 5 T8 APIs/5.12 ECRControl API.md
+  source_words: 292
+  kind: embedded-clause
+- clause: 5.12.3.3
+  title: '5.12.3.3 Operation: configure'
+  path: 5 T8 APIs/5.12 ECRControl API.md
+  source_words: 323
+  kind: embedded-clause
+- clause: 5.12.3.3.1
+  title: 5.12.3.3.1 Description
+  path: 5 T8 APIs/5.12 ECRControl API.md
+  source_words: 31
+  kind: embedded-clause
+- clause: 5.12.3.3.2
+  title: 5.12.3.3.2 Operation Definition
+  path: 5 T8 APIs/5.12 ECRControl API.md
+  source_words: 292
+  kind: embedded-clause
+- clause: 5.12.4
+  title: 5.12.4 Used Features
+  path: 5 T8 APIs/5.12 ECRControl API.md
+  source_words: 95
+  kind: embedded-clause
+- clause: 5.12.5
+  title: 5.12.5 Error handling
+  path: 5 T8 APIs/5.12 ECRControl API.md
+  source_words: 79
+  kind: embedded-clause
+- clause: 5.12.5.1
+  title: 5.12.5.1 General
+  path: 5 T8 APIs/5.12 ECRControl API.md
+  source_words: 23
+  kind: embedded-clause
+- clause: 5.12.5.2
+  title: 5.12.5.2 Protocol Errors
+  path: 5 T8 APIs/5.12 ECRControl API.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.12.5.3
+  title: 5.12.5.3 Application Errors
+  path: 5 T8 APIs/5.12 ECRControl API.md
+  source_words: 39
+  kind: embedded-clause
+- clause: '5.13'
+  title: 5.13 NpConfiguration API
+  path: 5 T8 APIs/5.13 NpConfiguration API/README.md
+  source_words: 4389
+  kind: navigation-directory
+- clause: 5.13.1
+  title: 5.13.1 Overview
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.1 Overview.md
+  source_words: 89
+  kind: source-file
+- clause: 5.13.2
+  title: 5.13.2 Data model
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.2 Data model.md
+  source_words: 1187
+  kind: source-file
+- clause: 5.13.2.1
+  title: 5.13.2.1 Resource data types
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.2 Data model.md
+  source_words: 1187
+  kind: embedded-clause
+- clause: 5.13.2.1.1
+  title: 5.13.2.1.1 Introduction
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.2 Data model.md
+  source_words: 192
+  kind: embedded-clause
+- clause: 5.13.2.1.2
+  title: '5.13.2.1.2 Type: NpConfiguration'
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.2 Data model.md
+  source_words: 631
+  kind: embedded-clause
+- clause: 5.13.2.1.3
+  title: '5.13.2.1.3 Type: NpConfigurationPatch'
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.2 Data model.md
+  source_words: 245
+  kind: embedded-clause
+- clause: 5.13.2.1.4
+  title: '5.13.2.1.4 Type: ConfigurationNotification'
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.2 Data model.md
+  source_words: 119
+  kind: embedded-clause
+- clause: 5.13.3
+  title: 5.13.3 Resource structure
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.3 Resource structure.md
+  source_words: 2310
+  kind: source-file
+- clause: 5.13.3.1
+  title: 5.13.3.1 General
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.3 Resource structure.md
+  source_words: 144
+  kind: embedded-clause
+- clause: 5.13.3.2
+  title: '5.13.3.2 Resource: NP Configurations'
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.3 Resource structure.md
+  source_words: 688
+  kind: embedded-clause
+- clause: 5.13.3.2.1
+  title: 5.13.3.2.1 Introduction
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.3 Resource structure.md
+  source_words: 22
+  kind: embedded-clause
+- clause: 5.13.3.2.2
+  title: 5.13.3.2.2 Resource definition
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.3 Resource structure.md
+  source_words: 54
+  kind: embedded-clause
+- clause: 5.13.3.2.3
+  title: 5.13.3.2.3 Resource methods
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.3 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.13.3.2.3.1
+  title: 5.13.3.2.3.1 GET
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.3 Resource structure.md
+  source_words: 322
+  kind: embedded-clause
+- clause: 5.13.3.2.3.2
+  title: 5.13.3.2.3.2 PUT
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.3 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.13.3.2.3.3
+  title: 5.13.3.2.3.3 PATCH
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.3 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.13.3.2.3.4
+  title: 5.13.3.2.3.4 POST
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.3 Resource structure.md
+  source_words: 263
+  kind: embedded-clause
+- clause: 5.13.3.2.3.5
+  title: 5.13.3.2.3.5 DELETE
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.3 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.13.3.3
+  title: '5.13.3.3 Resource: Individual NP Configuration'
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.3 Resource structure.md
+  source_words: 1478
+  kind: embedded-clause
+- clause: 5.13.3.3.1
+  title: 5.13.3.3.1 Introduction
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.3 Resource structure.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 5.13.3.3.2
+  title: 5.13.3.3.2 Resource definition
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.3 Resource structure.md
+  source_words: 63
+  kind: embedded-clause
+- clause: 5.13.3.3.3
+  title: 5.13.3.3.3 Resource methods
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.3 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.13.3.3.3.1
+  title: 5.13.3.3.3.1 GET
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.3 Resource structure.md
+  source_words: 317
+  kind: embedded-clause
+- clause: 5.13.3.3.3.2
+  title: 5.13.3.3.3.2 PUT
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.3 Resource structure.md
+  source_words: 362
+  kind: embedded-clause
+- clause: 5.13.3.3.3.3
+  title: 5.13.3.3.3.3 PATCH
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.3 Resource structure.md
+  source_words: 367
+  kind: embedded-clause
+- clause: 5.13.3.3.3.4
+  title: 5.13.3.3.3.4 POST
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.3 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.13.3.3.3.5
+  title: 5.13.3.3.3.5 DELETE
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.3 Resource structure.md
+  source_words: 331
+  kind: embedded-clause
+- clause: 5.13.3.4
+  title: 5.13.3.4 Void
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.3 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.13.3A
+  title: 5.13.3A Notifications
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.3A Notifications.md
+  source_words: 467
+  kind: source-file
+- clause: 5.13.3A.1
+  title: 5.13.3A.1 General
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.3A Notifications.md
+  source_words: 45
+  kind: embedded-clause
+- clause: 5.13.3A.2
+  title: 5.13.3A.2 Configuration Notification
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.3A Notifications.md
+  source_words: 422
+  kind: embedded-clause
+- clause: 5.13.3A.2.1
+  title: 5.13.3A.2.1 Description
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.3A Notifications.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.13.3A.2.2
+  title: 5.13.3A.2.2 Target URI
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.3A Notifications.md
+  source_words: 51
+  kind: embedded-clause
+- clause: 5.13.3A.2.3
+  title: 5.13.3A.2.3 Standard Methods
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.3A Notifications.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.13.3A.2.3.1
+  title: 5.13.3A.2.3.1 Notification via POST
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.3A Notifications.md
+  source_words: 325
+  kind: embedded-clause
+- clause: 5-13-3a-2-3-2-notification-via-websocket
+  title: 5.13.3a.2.3.2 Notification via Websocket
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.3A Notifications.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 5.13.4
+  title: 5.13.4 Used Features
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.4 Used Features.md
+  source_words: 179
+  kind: source-file
+- clause: 5.13.5
+  title: 5.13.5 Error handling
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.5 Error handling.md
+  source_words: 157
+  kind: source-file
+- clause: 5.13.5.1
+  title: 5.13.5.1 General
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.5 Error handling.md
+  source_words: 23
+  kind: embedded-clause
+- clause: 5.13.5.2
+  title: 5.13.5.2 Protocol Errors
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.5 Error handling.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.13.5.3
+  title: 5.13.5.3 Application Errors
+  path: 5 T8 APIs/5.13 NpConfiguration API/5.13.5 Error handling.md
+  source_words: 117
+  kind: embedded-clause
+- clause: '5.14'
+  title: 5.14 AsSessionWithQoS API
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/README.md
+  source_words: 14741
+  kind: navigation-directory
+- clause: 5.14.1
+  title: 5.14.1 Overview
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.1 Overview.md
+  source_words: 82
+  kind: source-file
+- clause: 5.14.2
+  title: 5.14.2 Data model
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.2 Data model/README.md
+  source_words: 10590
+  kind: navigation-directory
+- clause: 5.14.2.1
+  title: 5.14.2.1 Resource data types
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.2 Data model/5.14.2.1 Resource data types/README.md
+  source_words: 10181
+  kind: navigation-directory
+- clause: 5.14.2.1.1
+  title: 5.14.2.1.1 Introduction
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.2 Data model/5.14.2.1 Resource data types/5.14.2.1.1 Introduction.md
+  source_words: 1512
+  kind: source-file
+- clause: 5.14.2.1.2
+  title: '5.14.2.1.2 Type: AsSessionWithQoSSubscription'
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.2 Data model/5.14.2.1 Resource data types/5.14.2.1.2 Type AsSessionWithQoSSubscription.md
+  source_words: 2071
+  kind: source-file
+- clause: 5.14.2.1.3
+  title: '5.14.2.1.3 Type: AsSessionWithQoSSubscriptionPatch'
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.2 Data model/5.14.2.1 Resource data types/5.14.2.1.3 Type AsSessionWithQoSSubscriptionPatch.md
+  source_words: 1510
+  kind: source-file
+- clause: 5.14.2.1.4
+  title: '5.14.2.1.4 Type: UserPlaneNotificationData'
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.2 Data model/5.14.2.1 Resource data types/5.14.2.1.4 Type UserPlaneNotificationData.md
+  source_words: 61
+  kind: source-file
+- clause: 5.14.2.1.5
+  title: '5.14.2.1.5 Type: UserPlaneEventReport'
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.2 Data model/5.14.2.1 Resource data types/5.14.2.1.5 Type UserPlaneEventReport.md
+  source_words: 688
+  kind: source-file
+- clause: 5.14.2.1.6
+  title: '5.14.2.1.6 Type: QosMonitoringInformation'
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.2 Data model/5.14.2.1 Resource data types/5.14.2.1.6 Type QosMonitoringInformation.md
+  source_words: 708
+  kind: source-file
+- clause: 5.14.2.1.7
+  title: '5.14.2.1.7 Type: QosMonitoringInformationRm'
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.2 Data model/5.14.2.1 Resource data types/5.14.2.1.7 Type QosMonitoringInformationRm.md
+  source_words: 789
+  kind: source-file
+- clause: 5.14.2.1.8
+  title: '5.14.2.1.8 Type: QosMonitoringReport'
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.2 Data model/5.14.2.1 Resource data types/5.14.2.1.8 Type QosMonitoringReport.md
+  source_words: 205
+  kind: source-file
+- clause: 5.14.2.1.9
+  title: '5.14.2.1.9 Type: TscQosRequirement'
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.2 Data model/5.14.2.1 Resource data types/5.14.2.1.9 Type TscQosRequirement.md
+  source_words: 221
+  kind: source-file
+- clause: 5.14.2.1.10
+  title: '5.14.2.1.10 Type: TscQosRequirementRm'
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.2 Data model/5.14.2.1 Resource data types/5.14.2.1.10 Type TscQosRequirementRm.md
+  source_words: 214
+  kind: source-file
+- clause: 5.14.2.1.11
+  title: 5.14.2.1.11 Type AdditionInfoAsSessionWithQos
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.2 Data model/5.14.2.1 Resource data types/5.14.2.1.11 Type AdditionInfoAsSessionWithQos.md
+  source_words: 47
+  kind: source-file
+- clause: 5.14.2.1.12
+  title: '5.14.2.1.12 Type: ProblemDetailsAsSessionWithQos'
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.2 Data model/5.14.2.1 Resource data types/5.14.2.1.12 Type ProblemDetailsAsSessionWithQos.md
+  source_words: 51
+  kind: source-file
+- clause: 5.14.2.1.13
+  title: 5.14.2.1.13 Type AsSessionMediaComponent
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.2 Data model/5.14.2.1 Resource data types/5.14.2.1.13 Type AsSessionMediaComponent.md
+  source_words: 1055
+  kind: source-file
+- clause: 5.14.2.1.14
+  title: 5.14.2.1.14 Type AsSessionMediaComponentRm
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.2 Data model/5.14.2.1 Resource data types/5.14.2.1.14 Type AsSessionMediaComponentRm.md
+  source_words: 897
+  kind: source-file
+- clause: 5.14.2.1.15
+  title: '5.14.2.1.15 Type: MultiModalFlows'
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.2 Data model/5.14.2.1 Resource data types/5.14.2.1.15 Type MultiModalFlows.md
+  source_words: 83
+  kind: source-file
+- clause: 5.14.2.1.16
+  title: '5.14.2.1.16 Type: UeAddInfo'
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.2 Data model/5.14.2.1 Resource data types/5.14.2.1.16 Type UeAddInfo.md
+  source_words: 69
+  kind: source-file
+- clause: 5.14.2.2
+  title: 5.14.2.2 Referenced simple data types and enumerations
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.2 Data model/5.14.2.2 Referenced simple data types and enumerations.md
+  source_words: 409
+  kind: source-file
+- clause: 5.14.2.2.1
+  title: 5.14.2.2.1 Introduction
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.2 Data model/5.14.2.2 Referenced simple data types and enumerations.md
+  source_words: 35
+  kind: embedded-clause
+- clause: 5.14.2.2.2
+  title: 5.14.2.2.2 Simple data types
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.2 Data model/5.14.2.2 Referenced simple data types and enumerations.md
+  source_words: 27
+  kind: embedded-clause
+- clause: 5.14.2.2.3
+  title: '5.14.2.2.3 Enumeration: UserPlaneEvent'
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.2 Data model/5.14.2.2 Referenced simple data types and enumerations.md
+  source_words: 347
+  kind: embedded-clause
+- clause: 5.14.3
+  title: 5.14.3 Resource structure
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.3 Resource structure.md
+  source_words: 2481
+  kind: source-file
+- clause: 5.14.3.1
+  title: 5.14.3.1 General
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.3 Resource structure.md
+  source_words: 183
+  kind: embedded-clause
+- clause: 5.14.3.2
+  title: '5.14.3.2 Resource: AS Session with Required QoS subscriptions'
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.3 Resource structure.md
+  source_words: 855
+  kind: embedded-clause
+- clause: 5.14.3.2.1
+  title: 5.14.3.2.1 Introduction
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.3 Resource structure.md
+  source_words: 27
+  kind: embedded-clause
+- clause: 5.14.3.2.2
+  title: 5.14.3.2.2 Resource definition
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.3 Resource structure.md
+  source_words: 58
+  kind: embedded-clause
+- clause: 5.14.3.2.3
+  title: 5.14.3.2.3 Resource methods
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.3 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.14.3.2.3.1
+  title: 5.14.3.2.3.1 GET
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.3 Resource structure.md
+  source_words: 433
+  kind: embedded-clause
+- clause: 5.14.3.2.3.2
+  title: 5.14.3.2.3.2 PUT
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.3 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.14.3.2.3.3
+  title: 5.14.3.2.3.3 PATCH
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.3 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.14.3.2.3.4
+  title: 5.14.3.2.3.4 POST
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.3 Resource structure.md
+  source_words: 310
+  kind: embedded-clause
+- clause: 5.14.3.2.3.5
+  title: 5.14.3.2.3.5 DELETE
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.3 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.14.3.3
+  title: '5.14.3.3 Resource: Individual AS Session with Required QoS Subscription'
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.3 Resource structure.md
+  source_words: 1443
+  kind: embedded-clause
+- clause: 5.14.3.3.1
+  title: 5.14.3.3.1 Introduction
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.3 Resource structure.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 5.14.3.3.2
+  title: 5.14.3.3.2 Resource definition
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.3 Resource structure.md
+  source_words: 81
+  kind: embedded-clause
+- clause: 5.14.3.3.3
+  title: 5.14.3.3.3 Resource methods
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.3 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.14.3.3.3.1
+  title: 5.14.3.3.3.1 GET
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.3 Resource structure.md
+  source_words: 303
+  kind: embedded-clause
+- clause: 5.14.3.3.3.2
+  title: 5.14.3.3.3.2 PUT
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.3 Resource structure.md
+  source_words: 357
+  kind: embedded-clause
+- clause: 5.14.3.3.3.3
+  title: 5.14.3.3.3.3 PATCH
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.3 Resource structure.md
+  source_words: 348
+  kind: embedded-clause
+- clause: 5.14.3.3.3.4
+  title: 5.14.3.3.3.4 POST
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.3 Resource structure.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.14.3.3.3.5
+  title: 5.14.3.3.3.5 DELETE
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.3 Resource structure.md
+  source_words: 327
+  kind: embedded-clause
+- clause: 5.14.3.4
+  title: 5.14.3.4 Void
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.3 Resource structure.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.14.3A
+  title: 5.14.3A Notifications
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.3A Notifications.md
+  source_words: 492
+  kind: source-file
+- clause: 5.14.3A.1
+  title: 5.14.3A.1 General
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.3A Notifications.md
+  source_words: 46
+  kind: embedded-clause
+- clause: 5.14.3A.2
+  title: 5.14.3A.2 Event Notification
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.3A Notifications.md
+  source_words: 446
+  kind: embedded-clause
+- clause: 5.14.3A.2.1
+  title: 5.14.3A.2.1 Description
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.3A Notifications.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.14.3A.2.2
+  title: 5.14.3A.2.2 Target URI
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.3A Notifications.md
+  source_words: 76
+  kind: embedded-clause
+- clause: 5.14.3A.2.3
+  title: 5.14.3A.2.3 Standard Methods
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.3A Notifications.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.14.3A.2.3.1
+  title: 5.14.3A.2.3.1 Notification via POST
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.3A Notifications.md
+  source_words: 324
+  kind: embedded-clause
+- clause: 5.14.3A.2.3.2
+  title: 5.14.3A.2.3.2 Notification via Websocket
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.3A Notifications.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 5.14.4
+  title: 5.14.4 Used Features
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.4 Used Features.md
+  source_words: 916
+  kind: source-file
+- clause: 5.14.5
+  title: 5.14.5 Error handling
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.5 Error handling.md
+  source_words: 180
+  kind: source-file
+- clause: 5.14.5.1
+  title: 5.14.5.1 General
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.5 Error handling.md
+  source_words: 23
+  kind: embedded-clause
+- clause: 5.14.5.2
+  title: 5.14.5.2 Protocol Errors
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.5 Error handling.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.14.5.3
+  title: 5.14.5.3 Application Errors
+  path: 5 T8 APIs/5.14 AsSessionWithQoS API/5.14.5 Error handling.md
+  source_words: 140
+  kind: embedded-clause
+- clause: '5.15'
+  title: 5.15 MsisdnLessMoSms API
+  path: 5 T8 APIs/5.15 MsisdnLessMoSms API.md
+  source_words: 1098
+  kind: source-file
+- clause: 5.15.1
+  title: 5.15.1 Overview
+  path: 5 T8 APIs/5.15 MsisdnLessMoSms API.md
+  source_words: 45
+  kind: embedded-clause
+- clause: 5.15.2
+  title: 5.15.2 Data model
+  path: 5 T8 APIs/5.15 MsisdnLessMoSms API.md
+  source_words: 409
+  kind: embedded-clause
+- clause: 5.15.2.1
+  title: 5.15.2.1 Notification data types
+  path: 5 T8 APIs/5.15 MsisdnLessMoSms API.md
+  source_words: 409
+  kind: embedded-clause
+- clause: 5.15.2.1.1
+  title: 5.15.2.1.1 Introduction
+  path: 5 T8 APIs/5.15 MsisdnLessMoSms API.md
+  source_words: 142
+  kind: embedded-clause
+- clause: 5.15.2.1.2
+  title: '5.15.2.1.2 Type: MsisdnLessMoSmsNotification'
+  path: 5 T8 APIs/5.15 MsisdnLessMoSms API.md
+  source_words: 172
+  kind: embedded-clause
+- clause: 5.15.2.1.3
+  title: '5.15.2.1.3 Type: MsisdnLessMoSmsNotificationReply'
+  path: 5 T8 APIs/5.15 MsisdnLessMoSms API.md
+  source_words: 95
+  kind: embedded-clause
+- clause: 5.15.3
+  title: 5.15.3 Resource structure
+  path: 5 T8 APIs/5.15 MsisdnLessMoSms API.md
+  source_words: 512
+  kind: embedded-clause
+- clause: 5.15.3.1
+  title: 5.15.3.1 General
+  path: 5 T8 APIs/5.15 MsisdnLessMoSms API.md
+  source_words: 91
+  kind: embedded-clause
+- clause: 5.15.3.2
+  title: 5.15.3.2 MSISDN-less MO SMS Notification
+  path: 5 T8 APIs/5.15 MsisdnLessMoSms API.md
+  source_words: 421
+  kind: embedded-clause
+- clause: 5.15.3.2.1
+  title: 5.15.3.2.1 Introduction
+  path: 5 T8 APIs/5.15 MsisdnLessMoSms API.md
+  source_words: 19
+  kind: embedded-clause
+- clause: 5.15.3.2.2
+  title: 5.15.3.2.2 Resource definition
+  path: 5 T8 APIs/5.15 MsisdnLessMoSms API.md
+  source_words: 61
+  kind: embedded-clause
+- clause: 5.15.3.2.3
+  title: 5.15.3.2.3 Standard methods
+  path: 5 T8 APIs/5.15 MsisdnLessMoSms API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.15.3.2.3.1
+  title: 5.15.3.2.3.1 Notification via POST
+  path: 5 T8 APIs/5.15 MsisdnLessMoSms API.md
+  source_words: 341
+  kind: embedded-clause
+- clause: 5.15.4
+  title: 5.15.4 Used Features
+  path: 5 T8 APIs/5.15 MsisdnLessMoSms API.md
+  source_words: 63
+  kind: embedded-clause
+- clause: 5.15.5
+  title: 5.15.5 Error handling
+  path: 5 T8 APIs/5.15 MsisdnLessMoSms API.md
+  source_words: 69
+  kind: embedded-clause
+- clause: 5.15.5.1
+  title: 5.15.5.1 General
+  path: 5 T8 APIs/5.15 MsisdnLessMoSms API.md
+  source_words: 23
+  kind: embedded-clause
+- clause: 5.15.5.2
+  title: 5.15.5.2 Protocol Errors
+  path: 5 T8 APIs/5.15 MsisdnLessMoSms API.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.15.5.3
+  title: 5.15.5.3 Application Errors
+  path: 5 T8 APIs/5.15 MsisdnLessMoSms API.md
+  source_words: 29
+  kind: embedded-clause
+- clause: '5.16'
+  title: 5.16 RacsParameterProvisioning API
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 3640
+  kind: source-file
+- clause: 5.16.1
+  title: 5.16.1 Overview
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 69
+  kind: embedded-clause
+- clause: 5.16.2
+  title: 5.16.2 Data model
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 1124
+  kind: embedded-clause
+- clause: 5.16.2.1
+  title: 5.16.2.1 Resource data types
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 989
+  kind: embedded-clause
+- clause: 5.16.2.1.1
+  title: 5.16.2.1.1 Introduction
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 229
+  kind: embedded-clause
+- clause: 5.16.2.1.2
+  title: '5.16.2.1.2 Type: RacsProvisioningData'
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 211
+  kind: embedded-clause
+- clause: 5.16.2.1.3
+  title: '5.16.2.1.3 Type: RacsFailureReport'
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 93
+  kind: embedded-clause
+- clause: 5.16.2.1.4
+  title: '5.16.2.1.4 Type: RacsConfiguration'
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 227
+  kind: embedded-clause
+- clause: 5.16.2.1.5
+  title: '5.16.2.1.5 Type: RacsProvisioningDataPatch'
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 115
+  kind: embedded-clause
+- clause: 5.16.2.1.6
+  title: '5.16.2.1.6 Type: RacsConfigurationRm'
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 114
+  kind: embedded-clause
+- clause: 5.16.2.2
+  title: 5.16.2.2 Referenced simple data types and enumerations
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 135
+  kind: embedded-clause
+- clause: 5.16.2.2.1
+  title: 5.16.2.2.1 Introduction
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 35
+  kind: embedded-clause
+- clause: 5.16.2.2.2
+  title: 5.16.2.2.2 Simple data types
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 27
+  kind: embedded-clause
+- clause: 5.16.2.2.3
+  title: '5.16.2.2.3 Enumeration: RacsFailureCode'
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 73
+  kind: embedded-clause
+- clause: 5.16.3
+  title: 5.16.3 Resource structure
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 2315
+  kind: embedded-clause
+- clause: 5.16.3.1
+  title: 5.16.3.1 General
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 149
+  kind: embedded-clause
+- clause: 5.16.3.2
+  title: '5.16.3.2 Resource: RACS Parameter Provisionings'
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 672
+  kind: embedded-clause
+- clause: 5.16.3.2.1
+  title: 5.16.3.2.1 Introduction
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 20
+  kind: embedded-clause
+- clause: 5.16.3.2.2
+  title: 5.16.3.2.2 Resource definition
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 54
+  kind: embedded-clause
+- clause: 5.16.3.2.3
+  title: 5.16.3.2.3 Resource methods
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.16.3.2.3.1
+  title: 5.16.3.2.3.1 GET
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 323
+  kind: embedded-clause
+- clause: 5.16.3.2.3.2
+  title: 5.16.3.2.3.2 PUT
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.16.3.2.3.3
+  title: 5.16.3.2.3.3 PATCH
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.16.3.2.3.4
+  title: 5.16.3.2.3.4 POST
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 248
+  kind: embedded-clause
+- clause: 5.16.3.2.3.5
+  title: 5.16.3.2.3.5 DELETE
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.16.3.3
+  title: '5.16.3.3 Resource: Individual RACS Parameter Provisioning'
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 1494
+  kind: embedded-clause
+- clause: 5.16.3.3.1
+  title: 5.16.3.3.1 Introduction
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 28
+  kind: embedded-clause
+- clause: 5.16.3.3.2
+  title: 5.16.3.3.2 Resource definition
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 70
+  kind: embedded-clause
+- clause: 5.16.3.3.3
+  title: 5.16.3.3.3 Resource methods
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.16.3.3.3.1
+  title: 5.16.3.3.3.1 GET
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 318
+  kind: embedded-clause
+- clause: 5.16.3.3.3.2
+  title: 5.16.3.3.3.2 PATCH
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 379
+  kind: embedded-clause
+- clause: 5.16.3.3.3.3
+  title: 5.16.3.3.3.3 PUT
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 381
+  kind: embedded-clause
+- clause: 5.16.3.3.3.4
+  title: 5.16.3.3.3.4 POST
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 5.16.3.3.3.5
+  title: 5.16.3.3.3.5 DELETE
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 309
+  kind: embedded-clause
+- clause: 5.16.4
+  title: 5.16.4 Used Features
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 63
+  kind: embedded-clause
+- clause: 5.16.5
+  title: 5.16.5 Error handling
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 69
+  kind: embedded-clause
+- clause: 5.16.5.1
+  title: 5.16.5.1 General
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 23
+  kind: embedded-clause
+- clause: 5.16.5.2
+  title: 5.16.5.2 Protocol Errors
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.16.5.3
+  title: 5.16.5.3 Application Errors
+  path: 5 T8 APIs/5.16 RacsParameterProvisioning API.md
+  source_words: 29
+  kind: embedded-clause
+- clause: '6'
+  title: 6 Security
+  path: 6 Security.md
+  source_words: 84
+  kind: source-file
+- clause: '7'
+  title: 7 Using Common API Framework
+  path: 7 Using Common API Framework.md
+  source_words: 526
+  kind: source-file
+- clause: '7.1'
+  title: 7.1 General
+  path: 7 Using Common API Framework.md
+  source_words: 148
+  kind: embedded-clause
+- clause: '7.2'
+  title: 7.2 Security
+  path: 7 Using Common API Framework.md
+  source_words: 378
+  kind: embedded-clause
+- clause: Annex A
+  title: 'Annex A (normative): OpenAPI representation for the APIs defined in the present document'
+  path: Annex A (normative) OpenAPI representation for the APIs defined in the present document/README.md
+  source_words: 39743
+  kind: navigation-directory
+- clause: A.1
+  title: A.1 General
+  path: Annex A (normative) OpenAPI representation for the APIs defined in the present document/README.md
+  source_words: 152
+  kind: source-file
+- clause: A.2
+  title: A.2 Data Types applicable to several APIs
+  path: ../openapi/TS29122_CommonData.yaml
+  source_words: 2308
+  kind: exact-attachment
+- clause: A.3
+  title: A.3 MonitoringEvent API
+  path: ../openapi/TS29122_MonitoringEvent.yaml
+  source_words: 5443
+  kind: exact-attachment
+- clause: A.4
+  title: A.4 ResourceManagementOfBdt API
+  path: ../openapi/TS29122_ResourceManagementOfBdt.yaml
+  source_words: 1606
+  kind: exact-attachment
+- clause: A.5
+  title: A.5 ChargeableParty API
+  path: ../openapi/TS29122_ChargeableParty.yaml
+  source_words: 1567
+  kind: exact-attachment
+- clause: A.6
+  title: A.6 NIDD API
+  path: ../openapi/TS29122_NIDD.yaml
+  source_words: 4677
+  kind: exact-attachment
+- clause: A.7
+  title: A.7 DeviceTriggering API
+  path: ../openapi/TS29122_DeviceTriggering.yaml
+  source_words: 1874
+  kind: exact-attachment
+- clause: A.8.1
+  title: A.8.1 GMDviaMBMSbyMB2 API
+  path: ../openapi/TS29122_GMDviaMBMSbyMB2.yaml
+  source_words: 2929
+  kind: exact-attachment
+- clause: A.8.2
+  title: A.8.2 GMDviaMBMSbyxMB API
+  path: ../openapi/TS29122_GMDviaMBMSbyxMB.yaml
+  source_words: 2672
+  kind: exact-attachment
+- clause: A.9
+  title: A.9 ReportingNetworkStatus API
+  path: ../openapi/TS29122_ReportingNetworkStatus.yaml
+  source_words: 1575
+  kind: exact-attachment
+- clause: A.10
+  title: A.10 CpProvisioning API
+  path: ../openapi/TS29122_CpProvisioning.yaml
+  source_words: 2944
+  kind: exact-attachment
+- clause: A.11
+  title: A.11 PfdManagement API
+  path: ../openapi/TS29122_PfdManagement.yaml
+  source_words: 2965
+  kind: exact-attachment
+- clause: A.12
+  title: A.12 ECRControl API
+  path: ../openapi/TS29122_ECRControl.yaml
+  source_words: 700
+  kind: exact-attachment
+- clause: A.13
+  title: A.13 NpConfiguration API
+  path: ../openapi/TS29122_NpConfiguration.yaml
+  source_words: 1625
+  kind: exact-attachment
+- clause: A.14
+  title: A.14 AsSessionWithQoS API
+  path: ../openapi/TS29122_AsSessionWithQoS.yaml
+  source_words: 4741
+  kind: exact-attachment
+- clause: A.15
+  title: A.15 MsisdnLessMoSms API
+  path: ../openapi/TS29122_MsisdnLessMoSms.yaml
+  source_words: 320
+  kind: exact-attachment
+- clause: A.16
+  title: A.16 RacsParameterProvisioning API
+  path: ../openapi/TS29122_RacsParameterProvisioning.yaml
+  source_words: 1645
+  kind: exact-attachment
+- clause: Annex B
+  title: 'Annex B (informative): TS Skeleton Template'
+  path: Annex B (informative) TS Skeleton Template.md
+  source_words: 44
+  kind: source-file
+- clause: Annex C
+  title: 'Annex C (informative): Change history'
+  path: Annex C (informative) Change history/README.md
+  source_words: 10896
+  kind: navigation-directory

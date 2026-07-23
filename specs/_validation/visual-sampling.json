@@ -35,6 +35,27 @@
       "topic": "Nadrf_DataManagement storage request",
       "result": "pass",
       "observations": "POST data-store-records and 201 Created flow is legible."
+    },
+    {
+      "spec": "TS 29.122",
+      "asset": "assets/rendered/image3.png",
+      "topic": "T8 reference model between SCS/AS and SCEF",
+      "result": "pass",
+      "observations": "NF labels, T8 reference point and connector line are legible; no clipping observed."
+    },
+    {
+      "spec": "TS 29.576",
+      "asset": "assets/rendered/image8.png",
+      "topic": "Nmfaf_3daDataManagement configuration operation",
+      "result": "pass",
+      "observations": "Sequence participants, request URI, response paths and labels are legible."
+    },
+    {
+      "spec": "TS 29.576",
+      "asset": "assets/rendered/image12.png",
+      "topic": "MFAF service architecture and consumers",
+      "result": "pass",
+      "observations": "MFAF, service name and consumer NF labels are legible."
     }
   ],
   "limitations": [

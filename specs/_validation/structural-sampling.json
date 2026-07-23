@@ -206,5 +206,53 @@
     "output_tokens": 659,
     "token_multiset_overlap_source": 0.9954476479514416,
     "token_multiset_overlap_output": 0.9954476479514416
+  },
+  {
+    "spec": "TS 29.122",
+    "clause": "Annex A",
+    "source_title": "Annex A OpenAPI representation",
+    "output_path": "TS 29.122/Annex A (normative) OpenAPI representation for the APIs defined in the present document/README.md",
+    "checks": [
+      "Annex A promoted from Word H8 to corpus H1",
+      "A.1-A.16 hierarchy normalized from clause numbers",
+      "A.2-A.16 map to exact package YAML attachments"
+    ],
+    "result": "pass"
+  },
+  {
+    "spec": "TS 29.122",
+    "clause": "Annex C",
+    "source_title": "Annex C Change history",
+    "output_path": "TS 29.122/Annex C (informative) Change history/README.md",
+    "checks": [
+      "Rows grouped by calendar year",
+      "Table header repeated in each year file",
+      "Row wording unchanged"
+    ],
+    "result": "pass"
+  },
+  {
+    "spec": "TS 29.576",
+    "clause": "Annex A",
+    "source_title": "Annex A OpenAPI specification",
+    "output_path": "TS 29.576/Annex A (normative) OpenAPI specification/README.md",
+    "checks": [
+      "Annex A promoted from Word H8 to corpus H1",
+      "A.1-A.3 hierarchy normalized from clause numbers",
+      "A.2-A.3 map to exact package YAML attachments"
+    ],
+    "result": "pass"
+  },
+  {
+    "spec": "TS 29.576",
+    "clause": "Annex B",
+    "source_title": "Annex B Change history",
+    "output_path": "TS 29.576/Annex B (informative) Change history/README.md",
+    "checks": [
+      "Rows grouped by calendar year",
+      "HTML table structure retained",
+      "Row wording unchanged"
+    ],
+    "result": "pass"
   }
 ]

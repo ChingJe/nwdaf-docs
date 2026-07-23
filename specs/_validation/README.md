@@ -1,69 +1,48 @@
-# Validation report
+# Validation records
 
-## Included corpus
+This directory records deterministic conversion and validation results for the complete Release 18 corpus.
 
-All listed specifications are included in full:
+## Latest extension
 
-- TS 23.288 V18.13.0
-- TS 23.501 V18.12.0
-- TS 23.502 V18.14.0
-- TS 29.500 V18.10.0
-- TS 29.508 V18.11.0
-- TS 29.510 V18.11.0
-- TS 29.520 V18.14.0
-- TS 29.564 V18.7.0
-- TS 29.571 V18.12.0
-- TS 29.575 V18.11.0
+- Added TS 29.122 V18.10.0 in full, including all 16 official YAML attachments.
+- Added TS 29.576 V18.8.0 in full, including both official YAML attachments.
+- TS 29.122 originated as a legacy binary `.doc`; the original file was independently checked with `antiword`, while LibreOffice produced an intermediate DOCX for structural parsing.
+- OpenAPI attachments are retained byte-for-byte; package versions and file-declared point releases are intentionally not normalized.
 
-TS 23.502 has been replaced with the full specification; the earlier NRF-only scoped extract is no longer used.
+## Automated results
 
-## Automated checks
+- Files: 4264
+- Markdown files: 2297
+- Manifest entries: 6279
+- Local links checked: 2368
+- Image references checked: 698
+- OpenAPI YAML files parsed: 36
+- Exact package attachments checked: 37
+- Validation passed: True
 
-- Files: 4,009.
-- Markdown files: 2,106.
-- Local links: 2,142 checked; 0 broken.
-- Image references: 683 checked; 0 broken.
-- Manifest entries: 5,156; 0 missing paths.
-- YAML files parsed: 19/19, including the OpenAPI manifest.
-- Exact official attachments: 19/19 byte-identical to the supplied ZIPs (18 OpenAPI YAML files and one ABNF file).
-- Practical retrieval checks for NRF registration, SMF event subscription, UPF event exposure, ADRF storage and ADRF discovery all returned relevant clause files.
-- Final automated status: pass.
+## Fidelity method
 
-## Textual validation
-
-- Pandoc supplied the primary deterministic Word structure extraction.
-- `docx2txt` supplied an independent full-text path for DOCX sources.
-- TS 29.508 originated as a legacy binary `.doc`; the original file was checked with `antiword`, while LibreOffice produced an intermediate DOCX for structural parsing.
-- TS 23.501, TS 23.502, TS 29.564 and TS 29.575 retain identical counts for `shall`, `should`, `may`, negative modal forms, NOTE and EXAMPLE between the primary and independent paths.
-- TS 29.508 has lower antiword sequence overlap because antiword omits and rearranges complex table cells. Examined differences were localized to table serialization, including missing table rows and split column labels. The generated Markdown follows the more complete Word-to-DOCX structure rather than antiword's reduced table output.
-- Tree reassembly hashes match the normalized Pandoc source for every newly generated specification.
-
-## Image and object preservation
-
-| Specification | Original media | PNG previews | Embedded OLE/Visio payloads |
-|---|---:|---:|---:|
-| TS 23.501 | 150 | 150 | 150 |
-| TS 23.502 | 280 | 153 | 280 |
-| TS 29.508 | 10 | 10 | 9 |
-| TS 29.564 | 10 | 10 | 9 |
-| TS 29.575 | 25 | 25 | 24 |
-
-For TS 23.502, 127 source vectors did not complete bounded PNG conversion. Their original EMF/WMF files and embedded source objects remain present, and Markdown references resolve to either a preview or the original vector.
+- Pandoc supplies the primary structured extraction.
+- `docx2txt` supplies an independent text path for DOCX sources.
+- `antiword` supplies an independent path for legacy DOC sources.
+- Tree reassembly hashes match the normalized preprocessed source for both newly added specifications.
+- TS 29.576 retains identical `shall`, `should`, `may`, negative modal, NOTE and EXAMPLE counts across Pandoc and `docx2txt`.
+- TS 29.122 uses legacy DOC; `antiword` differs in complex table serialization (97.32% token-multiset overlap and 78.54% 12-token sequence overlap). Exact primary/secondary modal counts are retained in `text-cross-check.json`; no LLM correction was applied.
+- Modal terms, NOTE and EXAMPLE counts are recorded in `text-cross-check.json`; legacy DOC table serialization can reduce exact sequence overlap without implying prose rewriting.
 
 ## Known limitations
 
 - This delivery does not claim page-by-page visual certification of the complete Word documents.
-- Some large semantic clauses remain above the nominal 4,200-word target because arbitrary paragraph-level splitting would damage procedure or table context. They are listed in `final-checks.json`.
-- OpenAPI files reference schemas from other NF specifications not supplied here. The unresolved filenames are listed in `openapi/manifest.yaml`; no files from another Release were inserted automatically.
-- The Markdown corpus is a retrieval derivative. For a high-stakes normative decision, confirm the clause against the supplied original 3GPP Word document and the exact package OpenAPI attachment.
+- Complex merged-cell tables remain HTML when Markdown pipe tables cannot represent them safely.
+- Some large semantic clauses may exceed the nominal 4,200-word target because arbitrary paragraph-level splitting would damage procedure or table context.
+- OpenAPI files may reference schemas from NF specifications not supplied here. Unresolved filenames are listed in `openapi/manifest.yaml`; no files from another Release are inserted automatically.
+- The Markdown corpus is a retrieval derivative. For a high-stakes normative decision, confirm the clause against the original 3GPP Word document and exact package attachment.
 
 ## Detailed records
 
 - `report.json`: concise corpus summary.
 - `final-checks.json`: complete automated results.
-- `text-cross-check.json`: independent extraction comparisons for the ten specifications.
-- `full-extension-build.json`: heading-tree, source-word and asset build statistics for the newly added specifications.
-- `visual-sampling.json`: reviewed vector previews and visual limitations.
-- `deterministic-corrections.yaml`: deterministic heading and structure corrections.
-- `exact-attachment-checks.json`: byte-identity checks for YAML and ABNF attachments.
+- `text-cross-check.json`: independent extraction comparisons.
+- `additional-ts29122-ts29576-build.json`: build and asset statistics for this extension.
+- `deterministic-corrections.yaml`: heading and structure corrections.
 - `CONVERSION_WORKFLOW.md`: reproducible conversion process.

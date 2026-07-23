@@ -323,5 +323,113 @@
     },
     "marker_counts_equal": true,
     "independent_extractor": "docx2txt"
-  }
+  },
+  "specifications": [
+    {
+      "spec": "TS 29.122",
+      "primary_method": "pandoc-structured-word",
+      "secondary_method": "antiword-original-doc",
+      "primary_tokens": 195509,
+      "secondary_tokens": 195908,
+      "token_multiset_overlap_ratio": 0.973208394498463,
+      "sequence_12_token_overlap_ratio": 0.785441951379031,
+      "keyword_counts": {
+        "shall": {
+          "primary": 1620,
+          "secondary": 1594
+        },
+        "should": {
+          "primary": 120,
+          "secondary": 120
+        },
+        "may": {
+          "primary": 358,
+          "secondary": 353
+        },
+        "must": {
+          "primary": 2,
+          "secondary": 2
+        },
+        "note": {
+          "primary": 842,
+          "secondary": 827
+        },
+        "example": {
+          "primary": 36,
+          "secondary": 36
+        }
+      },
+      "negative_modal_counts": {
+        "shall not": {
+          "primary": 74,
+          "secondary": 73
+        },
+        "should not": {
+          "primary": 5,
+          "secondary": 5
+        },
+        "may not": {
+          "primary": 0,
+          "secondary": 0
+        },
+        "must not": {
+          "primary": 0,
+          "secondary": 0
+        }
+      }
+    },
+    {
+      "spec": "TS 29.576",
+      "primary_method": "pandoc-structured-word",
+      "secondary_method": "docx2txt-source-docx",
+      "primary_tokens": 13400,
+      "secondary_tokens": 13411,
+      "token_multiset_overlap_ratio": 0.9998507462686567,
+      "sequence_12_token_overlap_ratio": 0.973133805898311,
+      "keyword_counts": {
+        "shall": {
+          "primary": 110,
+          "secondary": 110
+        },
+        "should": {
+          "primary": 6,
+          "secondary": 6
+        },
+        "may": {
+          "primary": 14,
+          "secondary": 14
+        },
+        "must": {
+          "primary": 2,
+          "secondary": 2
+        },
+        "note": {
+          "primary": 43,
+          "secondary": 43
+        },
+        "example": {
+          "primary": 3,
+          "secondary": 3
+        }
+      },
+      "negative_modal_counts": {
+        "shall not": {
+          "primary": 6,
+          "secondary": 6
+        },
+        "should not": {
+          "primary": 1,
+          "secondary": 1
+        },
+        "may not": {
+          "primary": 1,
+          "secondary": 1
+        },
+        "must not": {
+          "primary": 1,
+          "secondary": 1
+        }
+      }
+    }
+  ]
 }

@@ -1,45 +1,11 @@
 {
-  "file_count": 4009,
-  "markdown_files": 2106,
-  "local_links_checked": 2142,
-  "image_references_checked": 683,
-  "manifest_entries": 5156,
-  "yaml_files": 19,
-  "yaml_valid": 19,
-  "exact_attachments_checked": 19,
-  "exact_attachments_byte_identical": 19,
-  "image_inventory": {
-    "TS 23.501": {
-      "original": 150,
-      "rendered_png": 150,
-      "embedded": 150,
-      "unrendered_original": 0
-    },
-    "TS 23.502": {
-      "original": 280,
-      "rendered_png": 153,
-      "embedded": 280,
-      "unrendered_original": 127
-    },
-    "TS 29.508": {
-      "original": 10,
-      "rendered_png": 10,
-      "embedded": 9,
-      "unrendered_original": 0
-    },
-    "TS 29.564": {
-      "original": 10,
-      "rendered_png": 10,
-      "embedded": 9,
-      "unrendered_original": 0
-    },
-    "TS 29.575": {
-      "original": 25,
-      "rendered_png": 25,
-      "embedded": 24,
-      "unrendered_original": 0
-    }
-  },
+  "file_count": 4266,
+  "markdown_files": 2297,
+  "local_links_checked": 2368,
+  "image_references_checked": 698,
+  "manifest_entries": 6279,
+  "yaml_files": 37,
+  "yaml_valid": 37,
   "oversized_markdown_files": [
     {
       "file": "TS 23.502/4 System procedures/4.2 Connection, Registration and Mobility Management procedures/4.2.2 Registration Management procedures/4.2.2.2 Registration procedures/4.2.2.2.2 General Registration.md",
@@ -59,7 +25,7 @@
     },
     {
       "file": "TS 23.501/Annex R (informative) Change history/2019.md",
-      "words": 9998
+      "words": 9997
     },
     {
       "file": "TS 23.501/01 Original contents.md",
@@ -126,6 +92,10 @@
       "words": 5497
     },
     {
+      "file": "TS 29.122/01 Original contents.md",
+      "words": 5427
+    },
+    {
       "file": "TS 23.502/5 Network Function Service procedures/5.2 Network Function services/5.2.3 UDM Services/5.2.3.3 Nudm_SubscriberDataManagement (SDM) Service/5.2.3.3.1 General.md",
       "words": 5359
     },
@@ -134,41 +104,101 @@
       "words": 5046
     }
   ],
-  "retrieval_tests": {
-    "NWDAF NRF registration": [
-      "TS 29.510/01 Original contents.md",
-      "TS 23.502/01 Original contents.md",
-      "TS 23.502/Annex K (informative) Change history/2020.md",
-      "TS 23.502/Annex K (informative) Change history/2021.md",
-      "TS 23.502/5 Network Function Service procedures/5.2 Network Function services/5.2.7 NRF Services/5.2.7.1 General.md",
-      "TS 23.502/5 Network Function Service procedures/5.2 Network Function services/5.2.7 NRF Services/5.2.7.2 Nnrf_NFManagement service.md",
-      "TS 23.502/5 Network Function Service procedures/5.2 Network Function services/5.2.7 NRF Services/5.2.7.3 Nnrf_NFDiscovery service.md",
-      "TS 23.502/4 System procedures/4.17 Network Function Service Framework Procedure/4.17.1 NF service Registration.md"
-    ],
-    "SMF event subscription": [
-      "TS 29.508/01 Original contents.md",
-      "TS 29.508/4 Session Management Event Exposure Service/4.2 Service Operations/4.2.3 Nsmf_EventExposure_Subscribe Service Operation.md"
-    ],
-    "UPF event exposure": [
-      "TS 29.564/01 Original contents.md",
-      "TS 29.564/5 Services offered by the UPF/5.2 Nupf_EventExposure Service.md",
-      "TS 29.564/Annex B (informative) Change history/2023.md",
-      "TS 23.502/5 Network Function Service procedures/5.2 Network Function services/5.2.26 UPF Services.md",
-      "TS 23.502/4 System procedures/4.15 Network Exposure/4.15.4 Core Network Internal Event Exposure/4.15.4.5 Exposure of Events from UPF for UPF Data Collection.md"
-    ],
-    "ADRF storage": [
-      "TS 29.575/01 Original contents.md",
-      "TS 29.575/4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/4.2.2.2 Nadrf_DataManagement_StorageRequest service operation.md"
-    ],
-    "ADRF discovery": [
-      "TS 23.501/6 Network Functions/6.3 Principles for Network Function and Network Function Service discovery and selection/6.3.20 ADRF discovery and selection.md"
-    ],
-    "UPF event exposure Stage 2": [
-      "TS 23.502/01 Original contents.md",
-      "TS 23.502/4 System procedures/4.15 Network Exposure/4.15.4 Core Network Internal Event Exposure/4.15.4.5 Exposure of Events from UPF for UPF Data Collection.md",
-      "TS 23.502/4 System procedures/4.15 Network Exposure/4.15.4 Core Network Internal Event Exposure/README.md"
-    ]
-  },
   "issues": [],
-  "passed": true
+  "passed": true,
+  "exact_attachments_checked": 37,
+  "exact_attachments_byte_identical": 37,
+  "image_inventory": {
+    "TS 29.122": {
+      "original": 3,
+      "rendered_png": 3,
+      "embedded": 3,
+      "unrendered_original": 0,
+      "render_results": [
+        {
+          "file": "image1.wmf",
+          "success": true,
+          "method": "inkscape"
+        },
+        {
+          "file": "image2.png",
+          "success": true,
+          "method": "copy"
+        },
+        {
+          "file": "image3.wmf",
+          "success": true,
+          "method": "inkscape"
+        }
+      ]
+    },
+    "TS 29.576": {
+      "original": 12,
+      "rendered_png": 12,
+      "embedded": 11,
+      "unrendered_original": 0,
+      "render_results": [
+        {
+          "file": "image1.emf",
+          "success": true,
+          "method": "inkscape"
+        },
+        {
+          "file": "image10.emf",
+          "success": true,
+          "method": "inkscape"
+        },
+        {
+          "file": "image11.emf",
+          "success": true,
+          "method": "inkscape"
+        },
+        {
+          "file": "image12.emf",
+          "success": true,
+          "method": "inkscape"
+        },
+        {
+          "file": "image2.png",
+          "success": true,
+          "method": "copy"
+        },
+        {
+          "file": "image3.emf",
+          "success": true,
+          "method": "inkscape"
+        },
+        {
+          "file": "image4.emf",
+          "success": true,
+          "method": "inkscape"
+        },
+        {
+          "file": "image5.emf",
+          "success": true,
+          "method": "inkscape"
+        },
+        {
+          "file": "image6.emf",
+          "success": true,
+          "method": "inkscape"
+        },
+        {
+          "file": "image7.emf",
+          "success": true,
+          "method": "inkscape"
+        },
+        {
+          "file": "image8.emf",
+          "success": true,
+          "method": "inkscape"
+        },
+        {
+          "file": "image9.emf",
+          "success": true,
+          "method": "inkscape"
+        }
+      ]
+    }
+  }
 }

@@ -833,6 +833,140 @@ corrections:
   type: promote-annex-heading
   original: '########  Annex E (informative): Change history'
   replacement: '# Annex E (informative): Change history'
+- spec: TS 29.122
+  line: 40
+  type: remove-empty-heading
+  original: '#  '
+- spec: TS 29.122
+  line: 27788
+  type: promote-annex-heading
+  original: '######## Annex A (normative): OpenAPI representation for the APIs defined in the present document'
+  replacement: '# Annex A (normative): OpenAPI representation for the APIs defined in the present document'
+- spec: TS 29.122
+  line: 27790
+  type: normalize-annex-subheading
+  original: '# A.1 General'
+  replacement: '## A.1 General'
+- spec: TS 29.122
+  line: 27802
+  type: normalize-annex-subheading
+  original: '# A.2 Data Types applicable to several APIs'
+  replacement: '## A.2 Data Types applicable to several APIs'
+- spec: TS 29.122
+  line: 29062
+  type: normalize-annex-subheading
+  original: '# A.3 MonitoringEvent API'
+  replacement: '## A.3 MonitoringEvent API'
+- spec: TS 29.122
+  line: 31864
+  type: normalize-annex-subheading
+  original: '# A.4 ResourceManagementOfBdt API'
+  replacement: '## A.4 ResourceManagementOfBdt API'
+- spec: TS 29.122
+  line: 32748
+  type: normalize-annex-subheading
+  original: '# A.5 ChargeableParty API'
+  replacement: '## A.5 ChargeableParty API'
+- spec: TS 29.122
+  line: 33648
+  type: normalize-annex-subheading
+  original: '# A.6 NIDD API'
+  replacement: '## A.6 NIDD API'
+- spec: TS 29.122
+  line: 36220
+  type: normalize-annex-subheading
+  original: '# A.7 DeviceTriggering API'
+  replacement: '## A.7 DeviceTriggering API'
+- spec: TS 29.122
+  line: 37264
+  type: normalize-annex-subheading
+  original: '# A.8 GMDViaMBMS APIs'
+  replacement: '## A.8 GMDViaMBMS APIs'
+- spec: TS 29.122
+  line: 37266
+  type: normalize-annex-subheading
+  original: '## A.8.1 GMDviaMBMSbyMB2 API'
+  replacement: '### A.8.1 GMDviaMBMSbyMB2 API'
+- spec: TS 29.122
+  line: 38966
+  type: normalize-annex-subheading
+  original: '## A.8.2 GMDviaMBMSbyxMB API'
+  replacement: '### A.8.2 GMDviaMBMSbyxMB API'
+- spec: TS 29.122
+  line: 40502
+  type: normalize-annex-subheading
+  original: '# A.9 ReportingNetworkStatus API'
+  replacement: '## A.9 ReportingNetworkStatus API'
+- spec: TS 29.122
+  line: 41388
+  type: normalize-annex-subheading
+  original: '# A.10 CpProvisioning API'
+  replacement: '## A.10 CpProvisioning API'
+- spec: TS 29.122
+  line: 42996
+  type: normalize-annex-subheading
+  original: '# A.11 PfdManagement API'
+  replacement: '## A.11 PfdManagement API'
+- spec: TS 29.122
+  line: 44618
+  type: normalize-annex-subheading
+  original: '# A.12 ECRControl API'
+  replacement: '## A.12 ECRControl API'
+- spec: TS 29.122
+  line: 45006
+  type: normalize-annex-subheading
+  original: '# A.13 NpConfiguration API'
+  replacement: '## A.13 NpConfiguration API'
+- spec: TS 29.122
+  line: 45948
+  type: normalize-annex-subheading
+  original: '# A.14 AsSessionWithQoS API'
+  replacement: '## A.14 AsSessionWithQoS API'
+- spec: TS 29.122
+  line: 48484
+  type: normalize-annex-subheading
+  original: '# A.15 MsisdnLessMoSms API'
+  replacement: '## A.15 MsisdnLessMoSms API'
+- spec: TS 29.122
+  line: 48688
+  type: normalize-annex-subheading
+  original: '# A.16 RacsParameterProvisioning API'
+  replacement: '## A.16 RacsParameterProvisioning API'
+- spec: TS 29.122
+  line: 49606
+  type: promote-annex-heading
+  original: '######## Annex B (informative): TS Skeleton Template'
+  replacement: '# Annex B (informative): TS Skeleton Template'
+- spec: TS 29.122
+  line: 49612
+  type: promote-annex-heading
+  original: '######## Annex C (informative): Change history'
+  replacement: '# Annex C (informative): Change history'
+- spec: TS 29.576
+  line: 2204
+  type: promote-annex-heading
+  original: '########  Annex A (normative): OpenAPI specification'
+  replacement: '# Annex A (normative): OpenAPI specification'
+- spec: TS 29.576
+  line: 2206
+  type: normalize-annex-subheading
+  original: '# A.1 General'
+  replacement: '## A.1 General'
+- spec: TS 29.576
+  line: 2216
+  type: normalize-annex-subheading
+  original: '# A.2 Nmfaf_3daDataManagement API'
+  replacement: '## A.2 Nmfaf_3daDataManagement API'
+- spec: TS 29.576
+  line: 2708
+  type: normalize-annex-subheading
+  original: '# A.3 Nmfaf_3caDataManagement API'
+  replacement: '## A.3 Nmfaf_3caDataManagement API'
+- spec: TS 29.576
+  line: 3090
+  type: promote-annex-heading
+  original: '########  Annex B (informative): Change history'
+  replacement: '# Annex B (informative): Change history'
 full_extension_2026_07:
 - spec: TS 23.501
   line: 77
@@ -992,10 +1126,8 @@ full_extension_2026_07:
 - spec: TS 23.501
   line: 23909
   type: normalize-heading-level
-  original: '# D.3 Support for access to PLMN services via Stand-alone Non-Public Network and access to Stand-alone Non Public Network services
-    via PLMN'
-  replacement: '## D.3 Support for access to PLMN services via Stand-alone Non-Public Network and access to Stand-alone Non Public Network services
-    via PLMN'
+  original: '# D.3 Support for access to PLMN services via Stand-alone Non-Public Network and access to Stand-alone Non Public Network services via PLMN'
+  replacement: '## D.3 Support for access to PLMN services via Stand-alone Non-Public Network and access to Stand-alone Non Public Network services via PLMN'
 - spec: TS 23.501
   line: 23931
   type: normalize-heading-level
