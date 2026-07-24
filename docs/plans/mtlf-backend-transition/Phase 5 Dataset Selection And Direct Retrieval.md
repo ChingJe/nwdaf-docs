@@ -2,7 +2,7 @@
 
 Date: 2026-07-24
 
-Status: Detailed plan drafted; implementation has not started
+Status: Implemented and verified across NWDAF, PyAnLF, PyMTLF, and nwdaf-resources; pinned free5GC NRF ADRF-discovery limitation recorded
 
 Parent plan:
 
@@ -216,6 +216,14 @@ defines `adrfInfoList`. The inspected workspace ADRF branch can register `NFType
 `nadrf-datamanagement` service, while the current free5GC OpenAPI/NRF path does not fully implement those newer
 capability filters. The first compatibility profile therefore discovers by NF type and exact service name and
 does not treat the branch's non-standard `customInfo` as normative evidence.
+
+Process verification found a stricter pinned-environment limitation: the local free5GC NRF under
+`resources/references/free5gc-main/NFs/nrf` accepts the ADRF NF profile through NF Management, but its older
+NF Discovery request validator rejects `target-nf-type=ADRF` with `400` before profile filtering. Therefore the
+Release 18 NRF-mode contract is implemented and covered with standard-shaped NRF contract tests, while the
+real-process data path uses the independently supported `configured` ADRF mode. No non-standard fallback through
+NF Management listing is added. A real local NRF-mode process proof requires upgrading the pinned NRF schema;
+this environment limitation is not hidden as a successful discovery.
 
 ### 3.3 Retrieval Wire Contract
 
@@ -493,6 +501,10 @@ Go legacy flow已具備以下可作characterization的mechanics：
 - direct GET一次只接受一個fetch ID；
 - DELETE對不存在resource也回204；
 - callback delivery目前沒有retry。
+- zero-data snapshot會送`terminationReq=true`且`fetchInstruct.fetchCorrIds=[]`。這不符合Release 18
+  `FetchInstruction`的1..N cardinality；Go與PyMTLF只對這個terminal empty-list形狀作scoped compatibility
+  acceptance，使workflow立即形成zero-data incomplete/FAILED，而不是等待watchdog。非terminal empty list仍
+  以400拒絕，且本相容行為不得描述為normative contract。
 
 The branch's heartbeat PATCH and failed-initial-register retry are not yet production-complete and its capability
 flags are carried in non-standard `customInfo`. Phase 5 does not modify the ADRF repository or claim long-lived
@@ -558,8 +570,13 @@ Rules：
 3. `nrf`呼叫Go generic discovery route，criteria為`ADRF`/`nadrf-datamanagement`，並從完整
    `SearchResult`選擇registered matching service。
 4. PyAnLF/PyMTLF各自保存selected apiRoot；Go只cache raw SearchResult，不cache或sync backend selection。
-5. NRF回多個candidate時使用同一個documented deterministic selection algorithm；兩個backend仍因不同mode、
-   不同query time或config而可能選到不同ADRF，該部署責任由實驗設定承擔。
+5. NRF回多個candidate時，兩個backend都只使用mandatory registration/service state篩選可用candidate，
+   將`nfServiceList`的map key作為缺少inline `serviceInstanceId`時的service identity fallback，再依
+   `(nfInstanceId, serviceInstanceId, normalized apiRoot)`升冪排序、按apiRoot去重並選第一個。
+   `priority`、`capacity`、`load`及`locality`都是optional selection inputs；第一版刻意不使用這些欄位，
+   也不提供load balancing或multi-ADRF failover。此選擇追求簡單、可重現的實驗行為，不表示排序第一的ADRF
+   具有較高服務品質。兩個backend仍可能因不同mode、不同query time或config而選到不同ADRF，該部署責任由
+   實驗設定承擔。
 6. Go原`configuration.adrf.url`不再是target source of truth；其storage/retrieval window等仍有active
    consumer的欄位分別搬到PyAnLF或PyMTLF，obsolete legacy-only fields由Phase 7移除。
 7. Go cache使用fixed 256-entry internal bound；Cache TTL不由local config覆寫，只使用NRF mandatory
@@ -1239,7 +1256,7 @@ Harness不放在`NWDAF/`、`PyAnLF/`或`PyMTLF/`內；單一repo只保留unit/co
 | Level | Required proof |
 |---|---|
 | Unit/contract | fake peer、deterministic clock、status/body/state transition |
-| Workspace process-level | real Go/Python processes、real free5GC NRF、real Mongo、real workspace ADRF、real HTTP discovery/callback/direct fetch |
+| Workspace process-level | real Go/Python processes、real free5GC NRF registration/compatibility check、real Mongo、real workspace ADRF、configured-mode callback/direct fetch |
 | Full 5GC environment | complete NRF registration lifecycle plus SMF/UPF-generated data；本phase可記錄但不是completion gate |
 
 不得以mock callback測試宣稱ADRF e2e完成，也不得把workspace process-level稱為完整5GC integration。
@@ -1285,6 +1302,55 @@ ADRF-first/Mongo fallback、single-active storage、source-cutover historical lo
 11. ADRF-first/Mongo cutover、endpoint recovery與incomplete history behavior可觀察、可測且不merge source。
 12. Every required scope有資料才產生READY DatasetSnapshot。
 13. Failure、timeout、restart與shutdown有bounded cleanup/retry，不留下失控worker。
-14. Workspace NRF、ADRF及Mongo real process paths都通過；不得以mock宣稱此gate完成。
+14. Workspace real-process path通過：ADRF向real NRF註冊，pinned R17 NRF對ADRF discovery的400限制被明確
+    驗證，configured-mode ADRF/Mongo storage與retrieval通過；不得以mock或NF Management listing fallback
+    宣稱Release 18 NRF-mode process discovery已完成。
 15. NWDAF、PyAnLF、PyMTLF各自full lint/test/build通過。
 16. 文件清楚區分normative spec、generated/local compatibility、workspace ADRF behavior及deferred limitation。
+
+---
+
+## 16. Implementation Record
+
+Implemented on 2026-07-24:
+
+- Go unified sync projects the accepted Events/SMF resource inventory to MTLF and carries the single
+  `trainingDataSource` state from PyAnLF to PyMTLF.
+- The private NRF discovery path accepts SMF Event Exposure and ADRF Data Management profiles. Go owns a
+  query-keyed validity cache; each backend still owns deterministic candidate selection.
+- PyAnLF owns independent ADRF resolution, ADRF-first single-sink routing, same-record Mongo fallback,
+  future-record recovery cutover, and the ADRF-aligned Mongo document/index contract.
+- Go accepts backend-selected `Target-Api-Root`, forwards ADRF storage and retrieval POST/DELETE, stores
+  process-local peer Locations, and forwards complete retrieval callbacks synchronously before returning 204.
+- PyMTLF consumes structured retrain intents, resolves every active scope through synced Events/SMF resources,
+  snapshots one window/source, performs direct ADRF fetch or read-only Mongo retrieval, and publishes READY only
+  when every required scope has a valid UPF record.
+- READY retains the Phase 4 model-level in-flight flag for the local trainer handoff; FAILED releases it after
+  bounded retrieval and cleanup.
+- The consolidated review on 2026-07-25 corrected source cutover timing, capped ADRF recovery, selected-source
+  retries, malformed Mongo record isolation, common dataset bounds, standard callback validation, idempotent
+  cleanup/shutdown, Go ADRF transport reuse, same-origin peer Location validation, and deterministic
+  identity-first ADRF candidate ordering.
+
+Verified locally:
+
+- `NWDAF`: `go test ./...`, `make lint`, and `make build`.
+- `PyAnLF`: `uv run ruff check .` and `uv run pytest -q` (`241 passed, 1 skipped`).
+- `PyMTLF`: `uv run ruff check .`, changed-file `uv run ruff format --check`, and `uv run pytest -q`
+  (`77 passed`, one dependency deprecation warning), including config/discovery, scope resolution, partition,
+  dedup, completeness, fetch URI, retry, malformed Mongo record, callback bound, validation, and cleanup tests.
+- `nwdaf-resources/tests/mtlf_dataset_retrieval/run.py`: real Mongo, free5GC NRF, workspace ADRF, NWDAF,
+  PyAnLF, and PyMTLF process run passed. It verified ADRF registration, the pinned NRF's explicit ADRF discovery
+  rejection, configured-mode ADRF storage/retrieval, Mongo cutover/direct retrieval, and ADRF future-write
+  recovery.
+- `nwdaf-resources/tests/mtlf_model_monitor`: remains the companion process-restart/sync proof from Phase 4;
+  Phase 5 does not duplicate that harness.
+
+The full PyMTLF repository-wide formatter check still identifies ten pre-existing files outside this phase.
+They were not mechanically reformatted because the development policy forbids mixing unrelated refactors into
+feature work; every Python file changed by Phase 5 passes `ruff format --check`.
+
+The PyAnLF repository-wide formatter baseline also predates this phase. All newly added or substantively edited
+Phase 5 implementation and test files pass `ruff format --check`; four previously modified integration/test files
+would require broad mechanical rewrites beyond the source-field removals made here, so they remain lint-clean but
+are intentionally not reformatted in this change.

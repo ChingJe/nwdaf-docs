@@ -2,7 +2,7 @@
 
 Date: 2026-07-23
 
-Status: Phase 1 through Phase 4 implemented and locally verified; Phase 5 dataset retrieval is next
+Status: Phase 1 through Phase 5 complete; pinned free5GC NRF ADRF-discovery limitation recorded for environment upgrade
 
 Related records:
 
@@ -695,6 +695,15 @@ Detailed plan:
 - 移除Go legacy MTLF scheduler、dataset provider及model coordinator
 - 移除Daisy client/callback/config/test/dependency
 - 移除被standard-shaped routes與direct data paths取代的custom APIs
+- 執行Go MTLF package-boundary consolidation，而不只刪除legacy檔案：保留下來的MTLF backend boundary必須
+  比照AnLF/SBI形成清楚的route/handler、processor、client與contract分層；PyMTLF使用的internal APIs不得繼續
+  因歷史原因掛在`anlfServer`或AnLF命名空間。詳細計畫需決定採AnLF/MTLF對稱server，或由中性的
+  `internal/backend` server統一掛載兩者routes
+- audit `internal/mlmodel/wire`：它只是因current generated dependency缺少Release 18 ML Model Provision/
+  Monitor types而存在的standard SBI compatibility layer，不得被保留成看似獨立business domain的頂層
+  `internal/mlmodel` package。優先以完整generated OpenAPI models取代並刪除；若external `$ref`或dependency
+  version仍阻擋generation，則移入明確的SBI-scoped compatibility位置（例如
+  `internal/sbi/compat/mlmodel`），保留exact schema provenance與lossless forwarding tests
 - final NRF advertisement、config、naming與dead-code audit
 
 ---
