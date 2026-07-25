@@ -1,11 +1,12 @@
 # MTLF Backend Transition Plan
 
-Date: 2026-07-25
+Date: 2026-07-26
 
-Status: Phase 1 through Phase 6 complete; Phase 7 detailed implementation plan ready
+Status: Phase 1 through Phase 7 complete; current feature architecture documented
 
 Related records:
 
+- `nwdaf-docs/docs/design/Current AnLF MTLF Feature Architecture.md`
 - `nwdaf-docs/docs/plans/mtlf-backend-transition/Phase 1 PyMTLF Foundation And Backend Boundary.md`
 - `nwdaf-docs/docs/plans/mtlf-backend-transition/Phase 2 Backend Connectivity And Standard Contract Foundation.md`
 - `nwdaf-docs/docs/plans/mtlf-backend-transition/Phase 3 Analytics Subscription Routing.md`
