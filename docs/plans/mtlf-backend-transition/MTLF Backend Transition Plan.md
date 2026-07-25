@@ -1,8 +1,8 @@
 # MTLF Backend Transition Plan
 
-Date: 2026-07-23
+Date: 2026-07-25
 
-Status: Phase 1 through Phase 5 complete; pinned free5GC NRF ADRF-discovery limitation recorded for environment upgrade
+Status: Phase 1 through Phase 6 complete; Phase 7 detailed implementation plan ready
 
 Related records:
 
@@ -10,6 +10,9 @@ Related records:
 - `nwdaf-docs/docs/plans/mtlf-backend-transition/Phase 2 Backend Connectivity And Standard Contract Foundation.md`
 - `nwdaf-docs/docs/plans/mtlf-backend-transition/Phase 3 Analytics Subscription Routing.md`
 - `nwdaf-docs/docs/plans/mtlf-backend-transition/Phase 4 ML Model Monitoring And Accuracy Policy.md`
+- `nwdaf-docs/docs/plans/mtlf-backend-transition/Phase 5 Dataset Selection And Direct Retrieval.md`
+- `nwdaf-docs/docs/plans/mtlf-backend-transition/Phase 6 Local Training And Model Update Reprovision.md`
+- `nwdaf-docs/docs/plans/mtlf-backend-transition/Phase 7 Deployment Integration And Legacy Closure.md`
 - `nwdaf-docs/docs/plans/mtlf-backend-transition/code-reviews/Initial Model Provision And Monitoring Review Ledger.md`
 - `nwdaf-docs/docs/plans/anlf-backend-transition/AnLF Backend Transition Plan.md`
 - `nwdaf-docs/docs/plans/daisy/general_improvement/nwdaf-daisy-improvement-plan.md`
@@ -67,7 +70,7 @@ Phase依feature組織。同一feature需要Go、PyAnLF與PyMTLF共同調整時�
 | NWDAF event subscription CRUD | TS 29.520 clauses 4.2.2.2、4.2.2.3；`TS29520_Nnwdaf_EventsSubscription.yaml` | create POST/201+Location、update PUT/200或204、delete DELETE/204 |
 | SMF event subscription | TS 29.508 clause 4.2.3；`TS29508_Nsmf_EventExposure.yaml` | create POST/201+Location、replace PUT、delete DELETE |
 | SMF notification | TS 29.508 clause 4.2.2.2；same OpenAPI callback | SMF POST `NsmfEventExposureNotification`到`notifUri`；成功處理回204 |
-| UPF direct notification | TS 29.564 clauses 5.2.1.2與6.1.5.2；`TS29564_Nupf_EventExposure.yaml` | 經SMF建立subscription後，UPF可直接通知NF consumer提供的URI；成功回204 |
+| UPF direct notification | TS 29.508 clause 4.2.3.2 Note 2；TS 23.502 clauses 4.15.4.5.1、4.15.4.5.2 steps 3–5；TS 29.564 clauses 5.2.2.2.2、6.1.5.2；`TS29564_Nupf_EventExposure.yaml` | 對明確的`UPF_EVENT` subscription，SMF將Nsmf consumer address/correlation傳給UPF，UPF直接通知該consumer；成功回204 |
 | ADRF storage | TS 29.575 clause 4.2.2.2；`TS29575_Nadrf_DataManagement.yaml` | POST `NadrfDataStoreRecord`到`/data-store-records`；成功201+Location |
 | ADRF retrieval subscription | TS 29.575 clause 4.2.2.6；same OpenAPI | POST `NadrfDataRetrievalSubscription`；成功201+Location |
 | ADRF fetch instruction | TS 29.575 clause 4.2.2.8 | callback body可含`fetchInstruct`；consumer成功存下notification後回204 |
@@ -342,9 +345,13 @@ AnLF backend <- same standard response
 SMF/UPF ---------------- POST standard notification ----------------> AnLF backend
 ```
 
-AnLF backend在subscription的`notifUri`或UPF event notification URI填入自己維護的callback endpoint。
-TS 29.508 clause 4.2.3.2說明`UPF_EVENT`/`QOS_MON`明確subscription會造成UPF direct notification；
-TS 29.564 clause 5.2.1.2也列出經SMF建立subscription後由UPF直接通知NF service consumer的流程。
+AnLF backend在Nsmf subscription的top-level `notifUri`填入自己維護的callback endpoint，並以
+top-level `notifId`提供correlation。依TS 29.508 clause 4.2.3.2 Note 2與TS 23.502 clauses
+4.15.4.5.1、4.15.4.5.2 steps 3–5，明確的`UPF_EVENT` subscription可由SMF代consumer建立Nupf
+subscription，再由UPF直接通知consumer。SMF因此把Nsmf `notifUri/notifId`分別映射成TS 29.564
+clauses 5.2.2.2.2、6.1.5.2及`TS29564_Nupf_EventExposure.yaml`定義的Nupf
+`eventNotifyUri/notifyCorrelationId`。本流程不依賴Release 19 BERMS的
+`bundledEventNotifyUri`。
 
 因此target architecture不再包含：
 
@@ -464,7 +471,7 @@ sync目的不是交換security key，而是讓三個process對目前runtime stat
 - AnLF backend目前實際寫入的`trainingDataSource`
 - active resource/routing snapshot
 
-Go是central sync coordinator，AnLF與MTLF backend不建立直接sync channel。兩個backend每次process
+Go是central sync hub，AnLF與MTLF backend不建立直接sync channel。兩個backend每次process
 啟動都產生新的`processInstanceId` UUID並由health回應回報；Go假如在兩次成功probe之間
 看到UUID變更，仍必須將該backend視為內存已重置的新process並完整resync。
 
@@ -704,21 +711,44 @@ activation lifecycle已完成本地實作與驗證。
   liveness推測activation
 - 移除remaining custom generation/apply assumptions
 
-### Phase 7: Legacy Removal And Closure
+### Phase 7: Deployment Integration And Legacy Closure
 
-- 移除Go legacy MTLF scheduler、dataset provider及model coordinator
-- 移除Daisy client/callback/config/test/dependency
-- 移除被standard-shaped routes與direct data paths取代的custom APIs
-- 執行Go MTLF package-boundary consolidation，而不只刪除legacy檔案：保留下來的MTLF backend boundary必須
-  比照AnLF/SBI形成清楚的route/handler、processor、client與contract分層；PyMTLF使用的internal APIs不得繼續
-  因歷史原因掛在`anlfServer`或AnLF命名空間。詳細計畫需決定採AnLF/MTLF對稱server，或由中性的
-  `internal/backend` server統一掛載兩者routes
-- audit `internal/mlmodel/wire`：它只是因current generated dependency缺少Release 18 ML Model Provision/
-  Monitor types而存在的standard SBI compatibility layer，不得被保留成看似獨立business domain的頂層
-  `internal/mlmodel` package。優先以完整generated OpenAPI models取代並刪除；若external `$ref`或dependency
-  version仍阻擋generation，則移入明確的SBI-scoped compatibility位置（例如
-  `internal/sbi/compat/mlmodel`），保留exact schema provenance與lossless forwarding tests
-- final NRF advertisement、config、naming與dead-code audit
+詳細計畫：
+
+- `Phase 7 Deployment Integration And Legacy Closure.md`
+
+- 在`nwdaf-resources`加入真實team SMF、team go-upf EES replay、ADRF與Mongo組成的portable
+  application E2E，驗證Nsmf/Nupf create/delete、UPF direct notification、storage、retrieval
+  callback/direct fetch、Mongo fallback與local retraining/model activation
+- team SMF加入預設關閉的static session resolution，以config將SUPI解析為UE IP與Nupf apiRoot；
+  team go-upf加入不初始化PFCP/gtp5g的standalone dataset replay entrypoint。兩者都維持標準wire API，
+  normal production behavior不變
+- configured SMF/ADRF endpoint是主要acceptance；NRF作為獨立選配scenario驗證SMF discovery與Go shared
+  validity cache。NWDAF加入預設enabled的NRF registration switch，configured scenario顯式關閉；
+  current pinned NRF仍無法查詢ADRF時，ADRF繼續使用configured mode
+- active PDU session、UE/RAN、PFCP、gtp5g與完整free5GC core的privileged full-core E2E延後為選配
+  deployment validation，不阻擋本階段完成，也不要求修改目前主機網路
+- portable application E2E前先在team SMF完成Release 18 third-party subscription修正：使用repository-local Nupf wire
+  types/client，接受PyAnLF現有Nsmf shape，並將top-level`notifUri/notifId`映射到Nupf
+  `eventNotifyUri/notifyCorrelationId`；不依賴額外OpenAPI fork，也不要求PyAnLF加入Release 19 BERMS欄位
+- 延續AnLF backend transition的domain package慣例：AnLF與MTLF各自保有薄的Go-side auxiliary HTTP
+  edge／processor／client，啟用既有`8090`／`8091`server config；共用能力只位於
+  `internal/backend`或`internal/sbi`，不建立neutral mega-gateway；兩個backend的sync分別提供對應
+  internal callback base URI
+- 依production call graph移除Go legacy MTLF scheduler、dataset/model coordinator、Daisy、fixed ADRF flow、
+  obsolete traffic state與custom APIs；同時拆解並移除`internal/anlf/coordinator`，且不為MTLF新增
+  coordinator
+- 移除fixed `externalMtlf` selection/config與舊runtime wiring，但不把標準ML Model Provision consumer
+  誤認為獨立MTLF NF client；保留或重構為未來另一個NWDAF所使用的薄standard consumer，目前不接入
+  production selection flow
+- 移除PyAnLF未掛載的legacy/Daisy routes與tests，完成三個runtime repositories的naming/config audit
+- 建立所有手寫3GPP wire types inventory；對ML Model、ADRF及NWDAF Nsmf `UPF_EVENT`等schema family
+  分別做scoped generation feasibility，成功則使用generated types，否則集中到
+  `internal/compat/<service>`；清除NWDAF legacy Release 19 BERMS bundling欄位，不同repository各自
+  保存自己的compat package
+- current free5GC NRF可接受ADRF registration但拒絕ADRF target discovery；本階段portable E2E先使用backend
+  configured ADRF endpoint，並保留這項pinned compatibility limitation
+- final build/lint/race/process verification與文件closure
 
 ---
 
@@ -748,10 +778,17 @@ activation lifecycle已完成本地實作與驗證。
 - ADRF retrieval callback → Go → MTLF → direct ADRF fetch
 - Mongo `dataSub + dataNotif` raw record → MTLF以`smfDataSub + timePeriod` direct query
 - accuracy notify → retrain → model provision → AnLF download/load
+- real ADRF storage → retrieval subscription/callback → PyMTLF direct fetch → local retraining
+- configured endpoint → team SMF static resolution → team go-upf standalone replay
+  subscription/notification/delete → PyAnLF
+- optional real NRF SMF discovery → Go shared cache → 同一portable application data path
 
 Go verification依`NWDAF/Makefile`執行`make test`、`make lint`、`make build`；Python repositories執行各自
 formatter/linter/test。需要Mongo、NRF、SMF、UPF或ADRF的check必須分開標示unit、process-level及environment
-integration，不得以mock test宣稱完整驗證。
+integration，不得以mock test宣稱完整驗證。Phase 7進一步區分fixture process E2E、使用真實team
+SMF/go-upf但以static resolution/dataset replay運作的portable application E2E，以及未來需要
+gtp5g/PFCP/PDU session的privileged full-core E2E。portable application可以證明標準Nsmf/Nupf
+HTTP/resource lifecycle，但只有full-core可以宣稱active-session resolution與真實user-plane通過。
 
 ---
 
