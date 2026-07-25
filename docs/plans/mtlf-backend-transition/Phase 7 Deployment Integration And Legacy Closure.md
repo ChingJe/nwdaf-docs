@@ -2,7 +2,7 @@
 
 Date: 2026-07-25
 
-Status: Detailed plan ready for implementation
+Status: Completed and verified
 
 Parent plan:
 
@@ -956,3 +956,93 @@ active-session resolution、PFCP/URR、gtp5g及真實free5GC user-plane通過。
 
 開始實作前沒有新的產品／架構決策 blocker。若scoped generation要求大幅升級OpenAPI dependency，或
 SMF/UPF portable contract與Release 18 OpenAPI有實質衝突，才需要停止該slice並提出新的決策。
+
+---
+
+## 13. Implementation And Verification Record
+
+### 13.1 Runtime repositories
+
+Closing implementation commits：
+
+- NWDAF：`2bdb01e`
+- PyAnLF：`2b43941`、`d616c06`、`694e3d8`
+- PyMTLF：`94f3304`、`11b3199`
+- nwdaf-resources：`4937b20`
+- team SMF local experiment revision：`08c7402`
+- team go-upf local experiment revision：`2a9a004`
+
+實作已完成下列責任收斂：
+
+- NWDAF以`:8090` AnLF auxiliary edge及`:8091` MTLF auxiliary edge分離backend-originated routes；
+  external SBI、NRF client/cache、SMF／ADRF標準consumer及process-local resource routing仍由Go負責。
+- `internal/anlf/coordinator`、Go-owned Daisy／training／dataset retrieval／traffic Mongo runtime、
+  fixed `externalMtlf` selection及被標準流程取代的custom report/model endpoints已移除。
+- AnLF、MTLF、ADRF、ML Model及Nsmf流程需要而current generated module缺少的wire types已集中到
+  `internal/compat/<service>`；`internal/mlmodel`與散落的重複wire definitions已移除。
+- 標準ML Model Provision peer consumer以NWDAF service語意保留；成功create必須驗證
+  `201 + Location`，不再以notification ID組出非標準fallback resource URI。
+- PyAnLF已移除未掛載的legacy analytics router，並修正model provision與Go sync同時發生時的
+  ownership race，以及UPF notification早於SMF association metadata時的ADRF pending retry。
+- PyMTLF不再因相同Go sync snapshot重建既有provision revision或重送同一model version；
+  sync log明確記錄接受的`trainingDataSource`。
+
+### 13.2 Team SMF、go-upf與portable deployment
+
+- team SMF已使用repository-local Release 18 Nsmf/Nupf compatibility types及bounded raw HTTP client，
+  把Nsmf top-level`notifUri/notifId`映射為Nupf
+  `eventNotifyUri/notifyCorrelationId`，並保留`201 + Location`、terminal delete cascade與peer
+  `ProblemDetails`分類。
+- SMF static session resolution預設關閉；啟用時只替代active PDU-session lookup，後續仍經相同
+  Nupf request builder、resource repository及delete path。
+- team go-upf已有獨立`cmd/ees-replay`，不初始化PFCP、gtp5g或GTP-U；它重用正常Nupf router及
+  subscription store，依target UE IP隔離Parquet records，且delete、shutdown與terminal failure會停止replay。
+- 跨process orchestration已由舊的單一test script搬到
+  `nwdaf-resources/deployments/portable_event_exposure/`；runner不修改任何sibling repository，
+  並在temporary directory產生binary、config、Mongo data、artifact與logs。
+- `components.yaml`已記錄remote、branch、implementation base、contract、required files與實際本地commit：
+  team SMF `08c740203720b33dbe794e49af6df1051f97ee25`、team go-upf
+  `2a9a00482fed7013f27077ac8329d14804b87c17`。兩者是本地實驗用魔改版本，不要求push；preflight會要求
+  sibling repository的branch及HEAD精確符合lock，不會以dirty worktree或遠端branch名稱代替revision。
+
+### 13.3 Verified portable sequence
+
+2026-07-26已以真實team SMF、team go-upf replay、NWDAF、PyAnLF、PyMTLF、ADRF、Mongo與consumer
+通過`portable application E2E`：
+
+1. Consumer建立NWDAF Events Subscription。
+2. PyAnLF經Go建立Nsmf resource；SMF static resolver建立真實Nupf resource。
+3. go-upf只重播matching SUPI／UE IP資料並直接通知PyAnLF。
+4. ADRF可用時PyAnLF只寫ADRF；PyMTLF經retrieval subscription、callback及direct GET取得dataset，
+   完成local training及generation 2 activation。
+5. ADRF停止後PyAnLF切換Mongo；training datasource經Go sync傳到PyMTLF，完成Mongo-backed training及
+   generation 3 activation。
+6. ADRF恢復後只接收future writes，不回填Mongo gap。
+7. Consumer刪除subscription後，Nsmf delete cascade到Nupf並停止replay。
+
+Runner最終輸出：
+
+```text
+PASS: Consumer -> NWDAF -> AnLF backend -> SMF -> go-upf direct notification -> ADRF training -> model activation -> Mongo fallback training -> ADRF future-write recovery -> terminal delete
+```
+
+### 13.4 Verification results
+
+| Repository | Result |
+|---|---|
+| NWDAF | `golangci-lint run ./...` 0 issues；`go test ./...`、affected packages `go test -race`及`go build ./...`通過 |
+| PyAnLF | Ruff lint／format及full pytest通過：235 passed、1 skipped |
+| PyMTLF | Ruff lint／format及full pytest通過：93 passed；只有既有dependency warnings |
+| ADRF | `go test ./...`通過，並由portable runner驗證真實storage/retrieval lifecycle |
+| team SMF | Event Exposure、context、consumer、processor、factory focused race tests及build通過；真實binary通過portable E2E |
+| team go-upf | `internal/ees` race tests、standalone replay build及new-code lint通過；真實binary通過portable E2E |
+| nwdaf-resources | portable scripts Ruff lint／format通過；既有model-monitor regression及portable application E2E通過 |
+
+team SMF的repository-wide test仍包含既有`internal/pfcp/handler` log/index parsing failures，且目前
+`golangci-lint` binary以Go 1.25執行時無法載入該module宣告的Go 1.26。go-upf repository-wide test仍包含
+既有root test unused import，以及需要gtp5g／network privilege的data-plane tests。這些路徑沒有被本次
+修改，affected packages與本階段portable application path均已通過；不得把這些結果寫成full repository
+pass，也不得把portable結果誤稱為privileged full-core E2E。
+
+Optional NRF scenario與privileged full-core substitution未執行，依第7.2、7.3及9.5節不阻擋configured
+endpoint portable acceptance，也不代表NRF cache、active PDU session、PFCP、URR或gtp5g已被驗證。

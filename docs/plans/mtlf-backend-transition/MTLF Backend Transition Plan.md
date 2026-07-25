@@ -717,6 +717,10 @@ activation lifecycle已完成本地實作與驗證。
 
 - `Phase 7 Deployment Integration And Legacy Closure.md`
 
+狀態：runtime、team component及portable deployment實作已完成，configured-endpoint
+`portable application E2E`已通過。SMF/go-upf已建立本地實驗commit並固定於component lock；
+NWDAF、PyAnLF、PyMTLF與support-tooling均已按repository及責任scope完成closing commits。
+
 - 在`nwdaf-resources`加入真實team SMF、team go-upf EES replay、ADRF與Mongo組成的portable
   application E2E，驗證Nsmf/Nupf create/delete、UPF direct notification、storage、retrieval
   callback/direct fetch、Mongo fallback與local retraining/model activation
