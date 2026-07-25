@@ -657,7 +657,7 @@ owner；code-review ledger中的current-slice defects及required三process integ
 
 ### Phase 5: Dataset Selection And Direct Retrieval
 
-Detailed plan:
+詳細計畫：
 
 - `Phase 5 Dataset Selection And Direct Retrieval.md`
 
@@ -680,14 +680,25 @@ Detailed plan:
 
 ### Phase 6: Local Training And Model Update/Reprovision
 
+詳細計畫：
+
+- `Phase 6 Local Training And Model Update Reprovision.md`
+
+狀態：詳細計畫已撰寫，尚未開始實作。
+
 - local trainer與job lifecycle
 - 產生new artifact package並publish到既有MTLF-owned URL repository
 - model generation/update completion
-- 從所有active scopes的dataset決定training/held-out split；所有scope資料都可參與training，candidate仍須
-  分scope驗證，避免整體平均正常但其中一條group regression
+- snapshot建立時對所有active scopes建立較新80% training與較早20% reference validation；符合資料資格的
+  scopes參與單次training/evaluation，永遠記錄per-scope/aggregate WAPE，並由config決定performance
+  regression是否阻擋promotion
+- triggering scope資料不足時job失敗；其他scope依training/evaluation資料資格降級加入或排除並告警，
+  不拖垮整個retraining
+- training期間scope新增/刪除只記錄warning，不浪費已完成candidate；base generation/model identity stale仍阻擋
 - 透過Phase 4既有standard Model Provision subscription通知updated/re-trained model
 - AnLF candidate download/load、failure保留old model與atomic runtime swap
-- successful swap後重設相關monitor policy generation/windows
+- promotion後建立新的local policy generation；PyAnLF successful swap後重設相關inference/accuracy windows，
+  並以不含`deviation`的standard monitoring notification形成cutover barrier
 - 移除remaining custom generation/apply assumptions
 
 ### Phase 7: Legacy Removal And Closure
