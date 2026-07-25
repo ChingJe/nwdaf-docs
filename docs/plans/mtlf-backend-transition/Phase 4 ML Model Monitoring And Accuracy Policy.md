@@ -669,6 +669,12 @@ Standard wire不加入`providerId`。`modelId`由target MTLF namespace界定；c
 MTLF backend，所以PyMTLF以自己的stable provider namespace加`modelId`形成internal model key。未來
 external MTLF target selection必須由Go routing/NRF結果決定，不能把provider identity塞進standard body。
 
+Phase 6 identity refinement：本節的stable `modelUniqueId`是指initial provision後可被registration與report
+一致引用的artifact identity，不再表示同一logical model family跨所有retrained artifacts永遠沿用同一ID。
+Phase 6對每個promoted artifact配發新`modelUniqueId`，並在PyMTLF另以FamilyKey維持跨代policy/retraining
+ownership。沒有`deviation`的periodic report仍只有資料不足/liveness語意，永遠不是model activation或
+generation cutover證據。
+
 Control-plane reconciliation intent不使用drop-oldest queue。相同logical key coalesce，只保存latest desired
 state；transport/503使用capped exponential backoff直到成功、intent取消或process shutdown。
 

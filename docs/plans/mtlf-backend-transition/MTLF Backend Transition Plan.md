@@ -673,7 +673,8 @@ owner；code-review ledger中的current-slice defects及required三process integ
   `dataNotif.upfEventNotifs`，不以correlation ID或top-level local `source`作dataset key
 - 模擬實驗中的UE固定視為已同意analytics/model-training data use；不新增consent config或UDM enforcement，
   且不宣稱production compliance
-- Dataset READY後保持canonical model的`retrain-in-flight`，直到Phase 6 terminal training/model-update outcome
+- Dataset READY後保持canonical logical model family的`retrain-in-flight`，直到Phase 6 terminal
+  training/model-update outcome
   才release，避免同一model重複retrieval
 - 真實free5GC NRF/ADRF/Mongo process-level discovery與retrieval tests
 - 不從dataset重建Phase 4 accuracy observation，也不承擔policy input enrichment
@@ -684,21 +685,23 @@ owner；code-review ledger中的current-slice defects及required三process integ
 
 - `Phase 6 Local Training And Model Update Reprovision.md`
 
-狀態：詳細計畫已撰寫，尚未開始實作。
+狀態：model family／per-artifact identity、local training/reprovision與registration-driven
+activation lifecycle已完成本地實作與驗證。
 
 - local trainer與job lifecycle
 - 產生new artifact package並publish到既有MTLF-owned URL repository
-- model generation/update completion
+- logical model family、每代artifact的新`modelUniqueId`與generation/update completion
 - snapshot建立時對所有active scopes建立較新80% training與較早20% reference validation；符合資料資格的
   scopes參與單次training/evaluation，永遠記錄per-scope/aggregate WAPE，並由config決定performance
   regression是否阻擋promotion
 - triggering scope資料不足時job失敗；其他scope依training/evaluation資料資格降級加入或排除並告警，
   不拖垮整個retraining
-- training期間scope新增/刪除只記錄warning，不浪費已完成candidate；base generation/model identity stale仍阻擋
+- training期間scope新增/刪除只記錄warning，不浪費已完成candidate；base family/version/generation stale仍阻擋
 - 透過Phase 4既有standard Model Provision subscription通知updated/re-trained model
-- AnLF candidate download/load、failure保留old model與atomic runtime swap
-- promotion後建立新的local policy generation；PyAnLF successful swap後重設相關inference/accuracy windows，
-  並以不含`deviation`的standard monitoring notification形成cutover barrier
+- AnLF candidate download/load、failure保留old model與atomic runtime identity/artifact swap
+- PyAnLF successful swap後重設相關inference/accuracy windows，接著以新model ID建立Model Monitor
+  registration；PyMTLF以新registration/subscription/correlation接受新WAPE，不再用no-deviation
+  liveness推測activation
 - 移除remaining custom generation/apply assumptions
 
 ### Phase 7: Legacy Removal And Closure

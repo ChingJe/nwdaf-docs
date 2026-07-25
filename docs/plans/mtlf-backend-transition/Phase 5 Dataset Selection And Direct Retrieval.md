@@ -1271,9 +1271,11 @@ ADRF-first/Mongo fallback、single-active storage、source-cutover historical lo
 
 1. **Simulated user consent**：所有模擬UE視為已同意；不新增consent config或UDM integration，且不宣稱
    production compliance。
-2. **READY handoff**：Phase 5完成dataset後保持canonical model identity的`retrain-in-flight = true`，
-   直到Phase 6 training/model update取得terminal success或failure才release；因此同一model即使有多個scope
-   再次degrade，也不會在既有workflow完成前建立重複retrieval job。
+2. **READY handoff**：Phase 5完成dataset後保持canonical logical model family的
+   `retrain-in-flight = true`，直到Phase 6 training/model update取得terminal success或failure才release；
+   因此同一family即使有多個scope再次degrade，也不會在既有workflow完成前建立重複retrieval job。Phase 6
+   將此stable identity正式命名為`FamilyKey`；每代`modelUniqueId`更新不得改變既有snapshot/retrieval
+   ownership。
 
 目前沒有剩餘high-level implementation decision gate。
 

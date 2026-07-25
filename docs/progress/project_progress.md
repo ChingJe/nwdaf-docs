@@ -1,7 +1,8 @@
 # NWDAF EventSubscription 實作進度報告
 
-**最後更新**: 2026-07-24
-**目前階段**: AnLF backend analytics/data collection cutover完成；MTLF backend initial model provision、standard monitoring、WAPE policy與review remediation已完成local verification
+**最後更新**: 2026-07-25
+**目前階段**: MTLF backend本地訓練、logical model family、per-artifact model identity與
+registration-driven activation lifecycle已完成重構及local verification
 
 ---
 
@@ -29,21 +30,33 @@
   完成。
 - Backend restart後，sync恢復的monitor registration與subscription binding會等待model runtime READY後再
   收斂；相同canonical scope只由一個代表runtime產生WAPE sample。
+- PyMTLF會原子 claim READY dataset，將所有符合資格的 active scopes 納入一次 CPU warm-start training，
+  永遠計算 per-scope/aggregate WAPE，並依 config 決定 regression 是否阻擋 promotion。
+- Candidate以相同四檔bundle contract發布到PyMTLF immutable artifact repository；每個promoted
+  artifact取得新的`modelUniqueId`，並由PyMTLF以內部FamilyKey維持跨代對應。Go仍不接觸
+  model bytes、family、generation或training state。
+- PyAnLF在背景prepare candidate、失敗保留舊模型並一次切換所有相依runtimes；不使用post-commit
+  liveness barrier，atomic activation後建立新model ID registration，再由新的
+  monitor subscription/correlation承載WAPE。
 - 舊custom model provision binding/event與`/model-accuracy-reports`已退出production route；舊Go
   accuracy/Daisy code目前只作unreachable historical oracle，後續legacy cleanup再移除。
-- Dataset retrieval仍由後續工作接續；local training、new generation artifact publication及reprovision尚未啟用。
+- ADRF-first/Mongo fallback dataset retrieval與 MongoDB-backed local training 已啟用；multiple-NWDAF FL、
+  Daisy/legacy cleanup及Go MTLF package最終整形仍留給後續工作。
 
 2026-07-24已關閉
 `docs/plans/mtlf-backend-transition/code-reviews/Initial Model Provision And Monitoring Review Ledger.md`
 的全部gate：sync atomicity、recoverable monitor ownership、active model catalog、per-resource monitor
 semantics、provider-owned response與Go operation-specific status/redirect boundary均已修正。
 
-Local verification結果為Go full test/lint/build及selected race packages通過、PyAnLF 232 passed/1 skipped且
-ruff通過、PyMTLF 55 passed且ruff通過。Actual Go、PyAnLF與PyMTLF三程序harness連續兩次通過，並涵蓋
+最新 local verification 結果為 Go full test/lint/build及selected race packages通過、PyAnLF
+245 passed/1 skipped且ruff通過、PyMTLF 92 passed且ruff通過。Initial flow 的 Go、PyAnLF、PyMTLF
+三程序 harness 通過，並涵蓋
 PyMTLF unavailable後polling/sync recovery、artifact首次失敗後retry、WAPE round-trip與restart orphan
-cleanup。跨repository harness位於`nwdaf-resources/tests/mtlf_model_monitor/`，搬移並修正fake SMF
-resource identity後已連續執行三次完整scenario通過；各runtime repository只保留unit／contract tests。
-此結果不宣稱real NRF/SMF/UPF/ADRF/Mongo E2E；dataset及training/new generation仍由後續工作完成。
+cleanup。同一目錄新增的 local-training harness 會再啟動真實 MongoDB，驗證兩個 scope dataset、
+generation 2／model ID 2 training/promotion、更新 artifact 首次下載失敗、retry、atomic
+multi-runtime replacement、M1→M2 registration/subscription重建，以及新correlation的fresh baseline。
+各runtime repository只保留unit／contract tests。
+此結果不宣稱real NRF/SMF/UPF/ADRF E2E、TLS/OAuth或restart durability。
 
 ---
 

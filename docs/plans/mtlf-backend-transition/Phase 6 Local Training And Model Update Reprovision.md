@@ -2,7 +2,8 @@
 
 日期：2026-07-25
 
-狀態：詳細計畫已撰寫，尚未開始實作
+狀態：FamilyKey、per-artifact model identity、local training/reprovision及
+registration-driven activation lifecycle已完成本地實作與驗證
 
 上層計畫：
 
@@ -24,22 +25,26 @@ model bundle，並沿用 Phase 4 已建立的標準 Model Provision subscription
 
 ```text
 任一 monitoring scope 發生 degradation
-    -> PyMTLF 建立 model-level retrain intent
-    -> Phase 5 蒐集同一模型所有 active scopes 的資料
+    -> PyMTLF 建立 family-level retrain intent
+    -> Phase 5 蒐集同一 logical model family 所有 active scopes 的資料
     -> READY DatasetSnapshot 被 Phase 6 原子 claim
     -> PyMTLF 建立較早 reference validation／較新 training dataset 並本地訓練 candidate
     -> 分 scope 與整體驗證 candidate
-    -> 建立、驗證並發布 immutable model bundle
-    -> 更新 PyMTLF current model catalog
+    -> 為 promoted artifact 配發新的 modelUniqueId
+    -> 建立、驗證並發布包含新 identity 的 immutable model bundle
+    -> 更新 PyMTLF logical model family 的 current version
     -> 透過既有標準 Model Provision notification 通知 PyAnLF
     -> PyAnLF 下載並完整準備 candidate
-    -> 所有相依 runtime 原子切換到新模型
-    -> 重設相關 accuracy window，開始回報新模型表現
+    -> 所有相依 runtime 原子切換到新 model identity
+    -> PyAnLF 以新 modelUniqueId 建立 Model Monitor registration
+    -> PyMTLF 建立新的 Monitor subscription/correlation
+    -> 重設相關 accuracy window，開始回報明確屬於新 modelUniqueId 的表現
 ```
 
-本階段不重新設計初始模型提供、Model Provision resource、accuracy monitor、ADRF/Mongo retrieval 或 Go
-backend lifecycle。這些已由 Phase 2 至 Phase 5 建立，本階段只補上「READY dataset 到更新模型正式套用」
-之間的缺口。
+本階段不重建初始 Model Provision resource、ADRF/Mongo retrieval 或 Go backend lifecycle。Phase 2 至
+Phase 5 建立的標準 resource 與 routing 繼續沿用；但原始實作把穩定 `modelUniqueId` 同時當成 logical model
+family 與 artifact version，必須在本階段拆開，才能讓更新模型的 activation 與 accuracy report 有可靠的
+標準身分分界。
 
 ---
 
@@ -53,10 +58,12 @@ PyMTLF 擁有：
 2. raw ADRF-aligned record 到訓練 sample 的轉換。
 3. chronological reference-validation/training split。
 4. local trainer、candidate evaluation 與 acceptance policy。
-5. model generation、bundle packaging、digest 驗證與 immutable artifact publication。
-6. current model catalog 與同一模型的 single retrain-in-flight。
+5. logical model family、model version identity、generation、bundle packaging、digest 驗證與 immutable
+   artifact publication。
+6. current model catalog、wire model ID allocation/index 與同一 family 的 single retrain-in-flight。
 7. Model Provision update notification 的 desired state 與 retry reconciliation。
-8. terminal training outcome 後釋放 Phase 4/5 的 retrain-in-flight。
+8. 依 Model Monitor registration lifecycle 記錄各 scope 採用哪個 model version。
+9. terminal training outcome 後釋放 Phase 4/5 的 retrain-in-flight。
 
 ### 2.2 PyAnLF
 
@@ -65,10 +72,12 @@ PyAnLF 擁有：
 1. 接收標準 Model Provision notification。
 2. 直接由 `mLFileAddr.mLModelUrl` 下載 candidate bundle。
 3. bundle 安全檢查、digest 驗證、模型與 scaler 完整載入。
-4. 找出所有使用同一 model identity 的 runtime。
-5. candidate-first、all-or-nothing 的 atomic runtime swap。
+4. 依 provision resource 與 canonical applicability 找出同一 logical model slot 的所有 runtime。
+5. candidate-first、all-or-nothing 的 atomic runtime identity/artifact swap。
 6. candidate 準備或切換失敗時保留舊模型。
-7. 更新等待期間的 accuracy report gate，以及成功切換後的 prediction/accuracy window reset。
+7. 成功切換後重新產生 Model Monitor desired registrations，讓新 registration 成為「已開始使用新模型」的
+   標準證據。
+8. 切換時停止舊 model ID 的 measurement，並重設 prediction/accuracy windows。
 
 ### 2.3 Go NWDAF
 
@@ -85,6 +94,7 @@ Go 不會：
 - 執行 feature extraction、training、validation 或 generation 決策。
 - 建立另一套 model coordinator。
 - 下載、儲存或代理 model artifact。
+- 對應 logical model family 與各代 model ID。
 - 解讀 private generation 欄位。
 
 ### 2.4 nwdaf-resources 與 nwdaf-docs
@@ -142,7 +152,39 @@ subscription/notification。Release 18 OpenAPI
 
 本階段沿用 Phase 4 已存在的 subscription resource 與 callback，不另建 update endpoint。
 
-### 3.4 generation 只屬於 PyMTLF 內部狀態
+TS 23.288 clause 6.2A.1允許 MTLF 對既有 subscription 提供 new 或 re-trained ML Model；clause 6.2A.2
+以 unique ML Model identifier 與 model information 組成提供結果。規格沒有要求 re-trained artifact
+必須沿用舊 identifier，也沒有定義 artifact generation 欄位。因此，本計畫採用「每個 promoted artifact
+使用新的 `modelUniqueId`」作為本地 identity policy。這是規格允許、但不是規格強制的選擇。
+
+### 3.4 Model Monitor lifecycle 是 activation 證據
+
+TS 23.288 clause 6.2E.3.2 明確描述：
+
+- AnLF 開始使用某個 ML Model 並具備監控能力時，向負責的 MTLF 執行
+  `Nnwdaf_MLModelMonitor_Register`。
+- AnLF 不再使用或監控該模型時執行 `Nnwdaf_MLModelMonitor_Deregister`。
+
+Clause 6.2E.3.3 接著由 MTLF 因 registration 建立 Model Monitor subscription。TS 29.520 Release 18
+OpenAPI 也要求 registration 具有 `modelId`，monitor subscription 具有 `modelIds` 與 `notifCorrId`，
+accuracy info 則具有 `modelId`。
+
+本階段據此採用下列可驗證分界：
+
+```text
+old model M1 + registration R1 + monitor subscription/correlation S1/C1
+    -> Model Provision 提供 candidate M2
+    -> PyAnLF 完成下載、驗證與 atomic activation
+    -> PyAnLF desired registration 改為 M2
+    -> 建立 R2，PyMTLF 再建立 S2/C2
+    -> 只有屬於 M2 且由 active C2 route 收到的 WAPE 才是新模型 observation
+    -> R1/S1 依既有 reconciler 刪除
+```
+
+`R2` 的出現代表 AnLF 已經開始使用 M2，而不是只收到 M2 的 URL。這是依 registration 的規格語意建立的
+implementation inference；規格並沒有另外定義 `ModelActivated` operation。
+
+### 3.5 generation 仍只屬於 PyMTLF 內部狀態
 
 TS 23.288 的程序文字提到 optional ML Model provide indicator，但目前 workspace 採用的
 Release 18 V18.13 `TS29520_Nnwdaf_MLModelProvision.yaml` 並沒有 `modelUpdateInd` 欄位。現有 schema
@@ -153,10 +195,17 @@ Release 18 V18.13 `TS29520_Nnwdaf_MLModelProvision.yaml` 並沒有 `modelUpdateI
 
 - 不自行發明或傳送 `modelUpdateInd`。
 - 不把 private generation 放入標準 payload。
-- 使用相同穩定 `modelUniqueId` 加上新的 immutable `mLModelUrl` 表示同一模型的新 artifact。
+- 每個 promoted artifact 使用新的 `modelUniqueId` 與新的 immutable `mLModelUrl`。
+- logical model family只存在PyMTLF的FamilyKey；PyAnLF以本地ModelSlotKey建立對應，兩者都不加入
+  標準payload，也不需要交換private family ID。
 - generation 只用於 PyMTLF process 內的順序、stale check、catalog promotion 與 retry coalescing。
 
-### 3.5 HTTP 行為
+`MLModelProvision` callback 的 `204` 只表示 notification 已成功送達／被接受，不表示 consumer 已下載或
+啟用模型。`validityPeriod` 表示模型資訊的適用期間，`monitorInterval` 表示 accuracy measurement window，
+兩者也不是 activation acknowledgement。沒有 `deviation` 的合法 periodic accuracy report 仍可依 Phase 4
+作為資料不足時的 liveness/observability，但不得再作為 model generation cutover barrier。
+
+### 3.6 HTTP 行為
 
 外部 SBI method、success status、error status、Location 與 `ProblemDetails` 全部沿用 Phase 4 已按
 `TS29520_Nnwdaf_MLModelProvision.yaml` 建立的 response matrix。本階段不得因 local training convenience
@@ -178,14 +227,16 @@ PyAnLF callback 在標準 notification 通過同步 schema/domain validation、�
 notification 並成功排入 bounded worker 後回 `204 No Content`。`204` 只表示 notification 已被接受，
 不表示 candidate 已完成下載或已成為 active model。
 
-### 3.6 本地規格來源
+### 3.7 本地規格來源
 
 - `specs/TS 23.288/6 Procedures to Support Network Data Analytics/6.2A Procedure for ML Model Provisioning.md`
 - `specs/TS 23.288/6 Procedures to Support Network Data Analytics/6.2E MTLF-based ML Model Accuracy Monitoring.md`
+- `specs/TS 23.288/7 Nnwdaf Services Description/7.9 Nnwdaf_MLModelMonitor Service.md`
 - `specs/TS 23.288/6 Procedures to Support Network Data Analytics/6.2F Procedure for ML Model Training.md`
 - `specs/TS 29.520/4 Services offered by the NWDAF/4.5 Nnwdaf_MLModelProvision Service.md`
 - `specs/TS 29.520/4 Services offered by the NWDAF/4.6 Nnwdaf_MLModelTraining Service.md`
 - `specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml`
+- `specs/openapi/TS29520_Nnwdaf_MLModelMonitor.yaml`
 - `specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml`
 
 ---
@@ -202,16 +253,18 @@ Phase 4 已完成：
 - PyAnLF 直接下載、驗證、載入與綁定 seed bundle。
 - 相同 canonical model context 共用模型，不同 group/filter/target 建立獨立 monitoring scope。
 - PyAnLF 以 `MLModelAccuracyInfo.deviation` 回報 WAPE。
-- PyMTLF 以 degradation-only policy 產生 model-level retrain intent。
+- PyMTLF 以 degradation-only policy 產生 family-level retrain intent。
 
-本階段不得重建上述 resource 或改變既有 WAPE/degradation 邏輯，除非是為了接上「模型更新等待」與
-「成功切換後重設 window」而做的必要延伸。
+本階段不得重建上述 resource 或改變既有 WAPE 計算、baseline、z-score、hit window 與 degradation
+threshold 邏輯。允許且必須調整的是 identity indexing：policy 從 `(provider, modelUniqueId)` 改綁
+logical family，stable scope key 不再包含每代 `modelId`，並在新 model registration 啟用該 scope 時重設
+該 scope 的 baseline/window。這是身分遷移，不是 accuracy policy redesign。
 
 ### 4.2 Phase 5 已有能力
 
 Phase 5 的 terminal READY snapshot 至少包含：
 
-- canonical model key
+- canonical logical model family key
 - triggering scope
 - required active scope snapshot
 - 固定 historical time window
@@ -309,7 +362,7 @@ target tensor 與 PyAnLF inference 都能以同一 manifest 表達；不得只�
 
 ### 6.1 所有具備足夠資料的 active scopes 都參與訓練
 
-任一 scope degradation 只代表觸發原因，不代表只使用該 scope 的資料。對同一 model：
+任一 scope degradation 只代表觸發原因，不代表只使用該 scope 的資料。對同一 logical model family：
 
 - snapshot 建立當下的所有 required active scopes 都先嘗試建立 training/reference-validation samples。
 - 每個 scope 都保留自己的 reference validation 區段。
@@ -397,7 +450,7 @@ current bundle；candidate packaging 再複製該受信任檔案。
 
 ### 7.2 訓練預設值
 
-第一版建議預設：
+第一版已確認預設：
 
 | 設定 | 預設值 |
 |---|---:|
@@ -490,7 +543,7 @@ Aggregate 只包含具有有效 reference validation 的 scopes；triggering sco
 - input、target、loss、weights、prediction 與 metric 均為 finite。
 - model output shape、feature order、output fields 與 scaler 相容。
 - bundle digest、safe package validation 與完整 reload。
-- ModelKey、base generation 與 artifact identity 的 stale check。
+- FamilyKey、base ModelVersionKey、generation 與 artifact identity 的 stale check。
 
 ### 8.4 不以單一 aggregate 掩蓋 group regression
 
@@ -501,34 +554,98 @@ Aggregate 只包含具有有效 reference validation 的 scopes；triggering sco
 
 ## 9. Model identity、generation 與 artifact
 
-### 9.1 三層 identity
+### 9.1 四層 identity
 
 本階段明確區分：
 
 | Identity | 用途 |
 |---|---|
-| `ModelKey` | PyMTLF canonical policy/catalog key；包含 provider namespace 與穩定 model identity |
-| `modelUniqueId` | 標準 Model Provision wire identity；同一模型更新時保持不變 |
+| `FamilyKey` | PyMTLF canonical policy/catalog key；在多代 retraining 間保持穩定 |
+| `ModelVersionKey` | `(provider namespace, modelUniqueId)`；識別可實際 provision／monitor 的一代模型 |
+| `modelUniqueId` | 標準 wire identity；每個 promoted artifact 配發新值 |
 | `ArtifactKey` | bundle bytes 的 SHA-256；每個 immutable artifact 唯一 |
 
-不得把 callback URL、scope ID、training job ID 或 transient generation 當成標準模型 identity。
+不得把 callback URL、monitor scope ID、training job ID、family ID 或 transient generation 放進標準
+`modelUniqueId` 欄位。
 
-目前 `provider namespace` 是 PyMTLF config 中固定的內部模型提供者名稱：
+PyMTLF config 為每個 configured seed 明確指定內部 `family_id`。已確認的形狀為：
 
-```text
-model_provision.provider_namespace = "local-mtlf"
-ModelKey = ("local-mtlf", modelUniqueId)
+```yaml
+model_provision:
+  provider_namespace: "local-mtlf"
+  seed_models:
+    - family_id: "ue-communication-default"
+      model_id: 1
+      artifact_key: "<sha256>"
+      event: "UE_COMMUNICATION"
+      event_filter: {}
 ```
 
-它不屬於 3GPP Model Provision wire，也不傳給 Go 或 PyAnLF；用途只是避免未來不同 model provider 使用相同
-數字 `modelUniqueId` 時在 PyMTLF 內部碰撞。current single-PyMTLF deployment 不需要動態協調或發現這個值。
+```text
+FamilyKey = ("local-mtlf", "ue-communication-default")
+ModelVersionKey(generation 1) = ("local-mtlf", 1)
+ModelVersionKey(generation 2) = ("local-mtlf", 2)
+```
+
+`provider_namespace` 與 `family_id` 都是 PyMTLF 本地 catalog identity，不加入 3GPP payload。`family_id`
+使用明確 config 而不直接 hash 整份 filter/target，避免 canonical applicability 因需求擴張而意外改變
+retraining ownership。
+
+FamilyKey本身只由`provider_namespace + family_id`組成。Applicability descriptor另外保存在family catalog：
+
+```text
+FamilyCatalogEntry
+  family_key
+  applicability:
+    event
+    event_filter
+    target_ue
+    model_interoperability
+    use_case_context
+  current_model_version
+```
+
+Applicability負責將Model Provision demand解析到family，但不構成FamilyKey，也不隨每代artifact重複建立。
+Configured seed descriptor是第一版authoritative來源；candidate/retrained version繼承相同descriptor。
+Bundle manifest可以保存descriptor snapshot供驗證與追蹤，但不能取代catalog selection state。
+
+第一版retraining不得順便改變family applicability。若event、interoperability或其他適用條件需要形成不同
+模型選擇語意，必須建立新的configured family，而不是在promotion時靜默修改既有family。
 
 `UE_COMMUNICATION` 則是 seed/current model 的 applicability。PyMTLF 先以 Model Provision demand 中的
-`mLEvent`、filter、target 等資訊解析相容模型，選定後才使用 ModelKey 管理該模型的 policy、artifact、
-generation 與 retraining。`UE_COMMUNICATION` 不是 ModelKey 的組成欄位；目前 config 已要求同一 provider
-內的 model IDs 唯一。
+`mLEvent`、filter、target、use-case context 與 interoperability requirement 解析相容 family，選定後才用
+`FamilyKey` 管理 policy、artifact、generation 與 retraining。若 demand 帶有已知舊 `modelId`，PyMTLF 先透過
+version index 找到 family，再提供該 family 的 current version；未知 ID 不可被錯誤視為另一個新 family。
 
-### 9.2 Generation
+### 9.2 Model ID allocation 與 index
+
+第一版由單一 PyMTLF provider 擁有 wire model ID allocation：
+
+1. configured seed 的 `model_id` 是 generation 1 的 wire ID。
+2. catalog startup 驗證所有 configured seed IDs 在 provider 內唯一。
+3. allocator等待initial sync完成，先收集configured/current IDs，以及sync snapshot內既有monitor
+   registrations/subscriptions引用的IDs；未知但仍被resource引用的ID只作tombstone reservation，不綁到family。
+4. allocator從所有configured/current/reserved/tombstoned IDs的最大值加一開始。
+5. candidate 通過 evaluation 後、bundle build 前，在catalog lock內reserve一個從未使用的非負ID。
+6. stale/rejected promotion 可以留下未使用的 reserved ID；不得回收給另一個 artifact。
+7. candidate manifest、Model Provision notification、Model Monitor registration/subscription/report 全部使用
+   這個新 ID。
+8. allocator超出implementation支援的integer range時promotion必須安全失敗，不得wrap或重用舊ID。
+
+Catalog 至少維護：
+
+```text
+current_by_family[FamilyKey] -> CatalogVersion
+version_index[ModelVersionKey] -> FamilyKey + generation + artifact
+reserved_model_ids -> candidate/job
+tombstoned_model_ids -> restored resource reference only
+```
+
+同一 provider process lifetime 內不得讓兩個不同 artifact 共用 ID。第一版 catalog 仍為 process-local，
+所以完整 PyMTLF restart 視為實驗重跑；跨 restart 永久 allocator 與 catalog journal 留待後續 durability
+設計，不在這次偷偷加入 SQLite。
+
+### 9.3 Generation
 
 - configured seed bundle 匯入後為 generation 1。
 - candidate generation 為 current generation + 1。
@@ -536,7 +653,10 @@ generation 與 retraining。`UE_COMMUNICATION` 不是 ModelKey 的組成欄位�
 - 不透過標準 Model Provision payload傳送 generation。
 - 不在 Go 建立 generation mirror 或 CAS protocol。
 
-### 9.3 Bundle 格式
+Generation 是 family 內的順序；`modelUniqueId` 是標準 wire 上可觀察的 version identity。兩者不能再是同一個
+概念，也不能用 `modelUniqueId + 1` 推導 generation。
+
+### 9.4 Bundle 格式
 
 沿用目前已由 PyMTLF 與 PyAnLF 驗證的四檔 bundle：
 
@@ -560,12 +680,18 @@ builder 必須：
 
 local manifest 可保存：
 
+- `model_family_id`
+- 新的 `model_identity.model_unique_id`
 - `model_generation`
+- `parent_model_unique_id`
 - `parent_artifact_key`
 - training source
 - training time window
 - 每個 scope 的 sample count
 - current/candidate validation summary
+
+Configured seed 的FamilyKey以config為authoritative；不要求只為加入`model_family_id`重新打包既有seed。
+若seed manifest已帶該欄位則必須與config一致；所有新candidate manifest都必須寫入family與parent identity。
 
 manifest 不得保存：
 
@@ -574,17 +700,35 @@ manifest 不得保存：
 - callback credential
 - NRF/ADRF endpoint credential
 
-### 9.4 Seed 與 retrained model 使用同一 catalog
+### 9.5 Seed 與 retrained model 使用同一 catalog
 
 目前只處理 seed 的 `SeedCatalog` 要泛化為 current model catalog：
 
 - configured seed 是 generation 1 baseline。
-- 每個 ModelKey 有 current generation、artifact、applicability 與 bundle metadata。
+- 每個 FamilyKey 有 current ModelVersionKey、generation、artifact、applicability 與 bundle metadata。
+- 每個歷史 ModelVersionKey 可反查 FamilyKey；舊 version 保留為 retired metadata，不能再成為新 demand 的
+  current selection。
 - candidate 先 staged，通過驗證與 stale check 後才 atomic promote。
-- Model Provision create 與 update notification 都在送出當下解析 catalog current artifact，不固定保存 seed tuple。
+- Model Provision create 與 update notification 都在送出當下解析 family current version，不固定保存 seed
+  tuple 或舊 model ID。
 
 第一版 catalog 仍為 process-local。PyMTLF restart 後回到 configured seed baseline；磁碟上的 candidate
 artifacts可以保留，但不得因檔案存在就自動視為 current model。
+
+### 9.6 Stable monitoring scope identity
+
+Accuracy scope 要在 M1 到 M2 的更新之間保持同一業務語意，因此 canonical scope key 固定由下列內容組成：
+
+```text
+consumerId or consumerSetId
++ mLEvent
++ canonical mLEventFilter
++ canonical tgtUe
+```
+
+`modelId`、registration ID、monitor subscription ID 與 `notifCorrId` 都不得放入 stable scope key。這些是某次
+model version／resource lifecycle 的身分。Policy state 以 `(FamilyKey, StableScopeKey)` 管理，另存該 scope
+目前採用的 `ModelVersionKey`。
 
 ---
 
@@ -594,14 +738,14 @@ artifacts可以保留，但不得因檔案存在就自動視為 current model。
 
 長時間訓練期間，provision demand 或 active monitoring scopes 可能改變。candidate promotion 前至少檢查：
 
-1. catalog current generation/artifact 仍是 training 開始時的 base。
-2. ModelKey 仍存在。
-3. triggering scope 沒有被錯誤改綁到另一個 model identity。
+1. family 的 catalog current ModelVersionKey/generation/artifact 仍是 training 開始時的 base。
+2. FamilyKey 仍存在。
+3. triggering scope 沒有被錯誤改綁到另一個 FamilyKey。
 
 若 base 已被其他更新取代，candidate 視為 stale，不得覆蓋較新的 current model。
 
 訓練期間新增或刪除 scope 不阻擋 promotion。例如 snapshot 建立時只有 group A/B，訓練期間又收到共用
-相同 ModelKey 的 group C subscription，candidate 仍可 promotion；C 沒有參與本次訓練/評估的事實必須記錄
+相同 FamilyKey 的 group C subscription，candidate 仍可 promotion；C 沒有參與本次訓練/評估的事實必須記錄
 warning。已刪除的 scope 也只記錄差異，不要求浪費已完成的訓練。
 
 第一版 stale policy 為：
@@ -609,24 +753,25 @@ warning。已刪除的 scope 也只記錄差異，不要求浪費已完成的訓
 | 變化 | Promotion 行為 |
 |---|---|
 | base generation/artifact 已被另一更新取代 | 阻擋 |
-| ModelKey 已不存在或已無任何有效 demand | 取消 |
-| triggering scope 改綁到另一 ModelKey | 阻擋 |
+| FamilyKey 已不存在或已無任何有效 demand | 取消 |
+| triggering scope 改綁到另一 FamilyKey | 阻擋 |
 | active scope 新增或刪除 | 記錄 structured warning，繼續 |
 
 這是為了優先縮短 degradation recovery time。其限制是新加入 scope 可能套用一個未使用該 scope 資料驗證的
 updated model，current experiment 明確接受此限制。
 
-### 10.2 建議 promotion 順序
+### 10.2 已確認 promotion 順序
 
 ```text
-build candidate bundle
-    -> reload/validate bundle
+train candidate weights
     -> calculate per-scope acceptance
+    -> reserve new modelUniqueId
+    -> build bundle with new model identity/parent identity
+    -> reload/validate bundle
     -> publish immutable artifact
-    -> recheck base generation/model identity and record scope drift
-    -> atomically promote current catalog
+    -> recheck base family/version/generation and record scope drift
+    -> atomically promote family current version
     -> establish notification desired state
-    -> advance/reset PyMTLF accuracy-policy generation
     -> release retrain-in-flight
 ```
 
@@ -642,7 +787,7 @@ artifact publish 在 promote 前完成；publish 成功但 stale check 失敗時
 Phase 4 建立的 Model Provision subscription resource 繼續有效。PyMTLF 不為每次 retrain 建立新 resource；
 對每個相容 resource 產生新的 desired notification：
 
-- 相同 `modelUniqueId`
+- family current 的新 `modelUniqueId`
 - 新的 immutable `mLModelUrl`
 - resource 所需的 event/filter/target applicability
 - resource 原有 `notifCorreId`
@@ -653,8 +798,9 @@ Phase 4 建立的 Model Provision subscription resource 繼續有效。PyMTLF �
 
 每個 provision resource 保存：
 
-- current desired generation/artifact
-- last delivered generation/artifact
+- resolved FamilyKey
+- current desired ModelVersionKey/generation/artifact
+- last delivered ModelVersionKey/generation/artifact
 - retry attempt 與 next retry time
 - resource mutation revision
 
@@ -666,7 +812,7 @@ callback transport failure 使用 capped exponential backoff。resource 被更�
 
 ### 11.3 Completion boundary
 
-建議 PyMTLF 在以下條件成立時，將 training job 視為完成：
+PyMTLF 在以下條件成立時，將 training job 視為完成：
 
 1. candidate 已驗證並成為 catalog current。
 2. 所有當下相容 provision resources 都已建立最新 desired notification reconciliation。
@@ -674,6 +820,10 @@ callback transport failure 使用 capped exponential backoff。resource 被更�
 不等待 PyAnLF 完成下載與 activation，因為標準 callback 的 `204` 不具有 activation acknowledgement 語意。
 callback 暫時不可達時，notification reconciliation 繼續 retry，但不 rollback 已成為 current 的 PyMTLF
 artifact。
+
+Training completion 與 model adoption 是兩個不同狀態。PyMTLF 可在 job 完成後另以 family adoption state
+觀察哪些 stable scopes 已透過新 `modelId` registration 採用 current version；adoption 不回寫成 training
+job failure，也不需要新增 private acknowledgement。
 
 ---
 
@@ -684,23 +834,32 @@ artifact。
 PyAnLF 收到更新 notification 時：
 
 1. 進行標準 schema 與 resource correlation 驗證。
-2. 保存該 resource 的最新 desired model URL。
-3. 以 bounded、coalescing worker 排入 model preparation。
-4. 回 `204 No Content`。
+2. 以 provision subscription、provider 與 canonical event/filter/target/use-case 建立本地
+   `ModelSlotKey`。
+3. 保存該 slot 最新 desired `modelUniqueId + model URL`。
+4. 同一 slot 的較新 notification 可 coalesce 尚未 activation 的舊 candidate。
+5. 以 bounded、coalescing worker 排入 model preparation。
+6. 回 `204 No Content`。
 
 下載、digest 驗證與 load 不在 callback request critical path 執行。
 
+Current first version 每個 canonical slot只選用一個模型，不啟用 Model Provision 的 multiple-model optional
+behavior。不同 `modelUniqueId` 但屬於同一 slot 時，視為同一 logical family 的候選更新，而不是第二個可並行
+使用的模型。
+
 ### 12.2 Prepare once，commit together
 
-同一 model identity 可能被多個 analytics subscriptions／monitor scopes 共用。更新時：
+同一 logical model slot 可能被多個 analytics subscriptions／monitor scopes 共用。更新時：
 
-1. 解析所有仍指向該 model identity 的 runtime。
+1. 依 slot/applicability 解析所有仍指向 old ModelVersionKey 的 runtime。
 2. 在 runtime locks 外只下載並完整 prepare candidate 一次。
-3. snapshot 各 runtime 的 expected revision/current artifact。
+3. snapshot 各 runtime 的 expected revision/current ModelVersionKey/current artifact。
 4. 以 deterministic order 取得必要 locks。
 5. 再次檢查 resource/model/runtime 沒有 stale。
-6. 一次將所有相依 runtime 切換到 candidate。
+6. 一次將所有相依 runtime 的 model identity、artifact reference、model/scaler 切換到 candidate。
 7. commit 成功後才 release old model references。
+8. 清除舊 model ID 的 prediction、ground-truth、cached measurement 與 report-period state。
+9. 重新計算 Model Monitor desired registrations；只有此時才會產生 candidate model ID 的 registration。
 
 若任一 runtime 不相容、resource 已變更、candidate 載入失敗或 stale check 失敗，全部 runtime 保持舊模型；
 不得只切一半 scopes。
@@ -720,38 +879,110 @@ PyAnLF 收到更新 notification 時：
 worker 依既有 retry/backoff 政策重新處理最新 desired artifact。使用者的 analytics subscription 不因一次
 model update 失敗而被刪除。
 
+只要 candidate 尚未 atomic activation：
+
+- runtimes 仍明確使用 old model ID；
+- old Model Monitor registrations/subscriptions 繼續代表 old model；
+- 若 PyMTLF 已將 family current promote 到 candidate，old report 只作 observability，不再觸發下一輪
+  degradation；
+- candidate registration 不得提前建立。
+
 ---
 
-## 13. Accuracy report 與 generation 切換
+## 13. Accuracy report 與 activation cutover
 
-### 13.1 為何需要 update-pending gate
+### 13.1 不再使用 liveness barrier
 
-標準 accuracy notification 沒有 private generation 欄位。若 PyMTLF promotion 後 PyAnLF 仍在下載
-candidate，PyAnLF 繼續送舊模型的 WAPE，PyMTLF 可能把舊表現誤認為新 generation 的 degradation。
+標準 Model Monitor accuracy notification 沒有 artifact URL 或 generation。沒有 `deviation` 的 report 在
+Phase 4 只表示該 periodic window 沒有足夠資料可計算 WAPE；它與 model activation 沒有規格關聯。Model
+Provision callback 的 `204` 也只表示 notification 被接受。
 
-### 13.2 採用的第一版語意
+因此下列舊語意明確廢止：
 
-當 PyAnLF 對某 model identity 有 replacement pending：
+- pending 期間用 no-deviation report 表示 model update。
+- 把第一筆 post-swap liveness 當 cutover barrier。
+- PyMTLF 等待 `204 + liveness` 後才推測新 generation 已啟用。
 
-- 在回應 Model Provision callback 前，先原子標記所有相依 scopes 為 pending，停止產生新的舊模型 WAPE。
-- 清除尚未送出的舊 report；若已有 report 正在傳送，先讓該次傳送完成，再回 Model Provision callback。
-- 仍依標準週期送出合法 monitor notification，維持 subscription liveness。
-- 暫時省略 optional `MLModelAccuracyInfo.deviation`。
-- PyMTLF 依 Phase 4 規則將沒有 `deviation` 的 notification 視為 liveness-only，不更新 degradation policy。
+資料不足時仍可照 Phase 4 傳送 no-deviation report，但只能更新一般 liveness/observability。
 
-candidate 成功 atomic swap 後：
+### 13.2 Registration-driven adoption
 
-- 清除每個相依 runtime 的 prediction/ground-truth alignment window。
-- 清除舊 report-period accumulator。
-- 每個 scope 的 ordered accuracy delivery lane 至少成功送出一次不含 `deviation` 的 pending-period
-  notification 後，才允許後續新模型 WAPE 通過；這個標準 notification 是 local policy 的 cutover barrier，
-  不是新增 wire 欄位。
-- 從新模型產生足夠穩定 prediction 後，再恢復帶 `deviation` 的 report。
-- PyMTLF promotion 後先將相關 scopes 設為 waiting-for-cutover；收到 Model Provision callback 的 `204`，
-  再收到該 scope ordered lane 的 liveness-only barrier 後，才使用已 advance 的 local policy generation
-  接受後續 observation。
+PyMTLF promotion 時建立 process-local adoption state：
 
-這避免新增 custom activation acknowledgement 或在標準 payload 夾帶 generation。
+```text
+FamilyAdoptionState
+  previous_model_id
+  current_model_id
+  expected_stable_scopes
+  adopted_stable_scopes
+  promoted_generation
+```
+
+它不進入 Go、不放入標準 payload，也不是 training job 的額外 blocking stage。各 scope 的狀態依標準
+registration lifecycle 更新：
+
+1. PyAnLF 尚未 activation 時，scope 仍只有 old model registration；old WAPE 可記錄但不得再驅動已
+   promotion family 的 degradation policy。
+2. PyAnLF atomic activation 後，monitor desired state 產生相同 stable scope、但 `modelId` 為 current
+   candidate 的新 registration。
+3. PyMTLF 接受新 registration 時，以 `modelId -> FamilyKey` index 驗證它是該 family 的 current version，
+   將 scope 標為 adopted，並為新 registration 建立全新的 monitor subscription／`notifCorrId`。
+4. 新 subscription 成功建立後，PyAnLF 才會對新 model ID 建立 measurement/report binding。
+5. 新 model 的第一筆 WAPE 需等待正常的 minimum matched predictions；不需要先送 liveness barrier。
+6. old registration/subscription 隨 desired reconciliation 刪除。任何延遲 old callback即使到達，也因
+   retired correlation、old model ID 或非current owner而不得更新 current policy。
+
+Stable scope 的新 WAPE 可在該 scope adopted 後立即建立新 baseline，不必等待其他 scope。當所有仍有效的
+expected scopes 都 adopted 或已被刪除，family adoption state 可移除。新加入的 scope若直接使用 current
+model，正常建立 current model registration即可，不阻擋既有 adoption。
+
+### 13.3 Resource ownership 與 callback validation
+
+PyMTLF 接受 accuracy notification 前必須同時確認：
+
+- `notifCorrId` 對應 active monitor subscription projection；
+- 該 subscription 仍由 active registration 擁有；
+- notification `modelId` 在 subscription `modelIds` 內；
+- registration、subscription、notification 的 event/filter/target scope一致；
+- model ID 可由 catalog version index 對應到預期 FamilyKey；
+- 該 stable scope目前採用的 model ID與 notification一致。
+
+任一條不成立時不得把 deviation 送入 WAPE policy。Well-formed但 correlation/resource 已刪除的 callback
+依既有標準 route回 `404`；若 race 已穿過 transport validation，PyMTLF business layer仍要 drop stale
+observation並記錄 structured log。
+
+Restart sync匯入但catalog無法識別的tombstoned model ID，不是current version、不能算adopted，也不能驅動
+新monitor subscription或policy；既有unknown subscription projection依orphan reconciliation清除，等待
+PyAnLF經seed reprovision重新建立可識別registration。
+
+### 13.4 Multi-scope atomicity
+
+同一 PyAnLF 內共用 model slot 的 runtimes仍必須原子切換 M1 到 M2；registration POST/DELETE 本身可由
+reconciler逐筆收斂。短暫同時存在 R1與R2是可接受的，因 model IDs及correlations不同。已確認由reconciler
+先成功建立R2/S2，再清除R1/S1，以避免不必要的monitoring gap；但只有atomic runtime commit後才可建立R2。
+
+### 13.5 Local state machines
+
+PyAnLF model slot只需下列本地狀態，不新增API欄位：
+
+```text
+CURRENT(M1)
+  -> PREPARING(M2, expected current M1)
+      -> CURRENT(M2), then reconcile R2/S2
+      -> CURRENT(M1) on validation/load/stale failure, retry latest desired
+```
+
+PyMTLF family adoption只需：
+
+```text
+CURRENT(M1)
+  -> PROMOTED(M2, expected scopes)
+      -> scope-by-scope ADOPTED(M2) when R2 arrives
+      -> CURRENT_OBSERVED(M2) when valid M2 WAPE begins
+```
+
+Model Provision delivery failure不把M2 rollback成M1；PyAnLF activation failure也不虛構R2。這兩個狀態機靠
+標準resource的實際存在收斂，而不是靠callback timing猜測。
 
 ---
 
@@ -795,10 +1026,10 @@ PENDING/RUNNING/REPROVISIONING
 
 ### 14.3 Concurrency
 
-- 同一 ModelKey 永遠只允許一個 retrain-in-flight。
+- 同一 FamilyKey 永遠只允許一個 retrain-in-flight。
 - 第一版整個 PyMTLF 預設最多一個 concurrent training job。
 - scheduler 使用 bounded queue；queue 滿時不得無聲覆蓋 job。
-- Phase 4 對同一 model 的後續 degradation 在 in-flight 期間只更新必要 observability，不建立重複 dataset
+- Phase 4 對同一 family 的後續 degradation 在 in-flight 期間只更新必要 observability，不建立重複 dataset
   retrieval/training。
 
 ---
@@ -812,7 +1043,7 @@ dataset conversion、training、validation、packaging 或 stale check 失敗時
 - current catalog 與現有 PyAnLF model 不變。
 - job 進入 FAILED。
 - Phase 5 snapshot 記錄 terminal outcome。
-- 呼叫既有 `complete_retrain` 釋放 model-level in-flight。
+- 呼叫調整後的 `complete_retrain` 釋放 family-level in-flight。
 - 不自動用完全相同 snapshot 無限重訓；後續 degradation 可用新的 historical window 再觸發。
 
 ### 15.2 Promotion 後 callback 暫時失敗
@@ -820,9 +1051,9 @@ dataset conversion、training、validation、packaging 或 stale check 失敗時
 - PyMTLF current model 不 rollback。
 - desired notification 保留並 capped backoff retry。
 - PyAnLF 繼續使用舊模型。
-- PyAnLF update-pending 只在已接受到 notification 後生效；尚未收到時仍可能回報舊模型 accuracy，
-  因此 PyMTLF promotion 後也必須忽略該 model 舊 policy generation 的 observation，直到新 generation
-  observation window 正式開始。
+- PyMTLF 以 old `modelId` 明確辨識仍來自舊模型的 accuracy，保留 observability但不再觸發該 family 的
+  degradation。
+- PyAnLF 成功 activation 並建立新 `modelId` registration 後，PyMTLF 才為該 stable scope 接受新 baseline。
 
 ### 15.3 Restart
 
@@ -830,19 +1061,33 @@ dataset conversion、training、validation、packaging 或 stale check 失敗時
 
 | Restart | 行為 |
 |---|---|
-| PyMTLF restart | training/current generation state 遺失，回到 configured seed baseline；實驗重跑 |
+| PyMTLF restart | family catalog、allocator、training/current generation state 遺失，回到 configured seed baseline；實驗重跑 |
 | PyAnLF restart | Go sync 恢復 subscription snapshot，PyMTLF 依 current catalog 重新提供模型；PyAnLF cache 可重用或重下載 |
 | Go restart | process-local mirror 遺失，依現有 backend reconnect/sync 重建；實驗可重跑 |
 
 本階段不新增 SQLite、journal、cross-process transaction 或 crash recovery database。
 
+因 model ID allocator 也是 process-local，不能宣稱 promoted model identity 可跨獨立 PyMTLF restart
+延續。完整 restart 測試必須以重跑實驗及 seed reprovision 為預期，不得讓殘留 old registration 被誤認為
+restart 後新配發的 model。Initial sync看到的unknown model IDs必須先tombstone reserve，直到對應resources
+被reconciliation清除；本process仍不得重新配發這些IDs。永久catalog/allocator是後續durability工作。
+
 ---
 
 ## 16. Config
 
-建議新增的 PyMTLF config 群組：
+已確認的 PyMTLF config target：
 
 ```yaml
+model_provision:
+  provider_namespace: "local-mtlf"
+  seed_models:
+    - family_id: "ue-communication-default"
+      model_id: 1
+      artifact_key: "<sha256>"
+      event: "UE_COMMUNICATION"
+      event_filter: {}
+
 training:
   enabled: true
   device: cpu
@@ -862,6 +1107,8 @@ training:
 實際 key 命名需遵守 PyMTLF 現有 config style；不得建立同義重複欄位。startup validation 必須覆蓋：
 
 - range 與 finite 檢查
+- non-empty、provider 內唯一的 `family_id`
+- provider 內唯一的 configured seed `model_id`
 - writable artifact root
 - public base URL 與現有 artifact server 一致
 - bundle size/download timeout 沿用既有較寬鬆網路預設
@@ -872,6 +1119,20 @@ training:
 ## 17. 實作切片
 
 本階段完成後再統一 review，不要求每個切片各自 commit。
+
+現有實作到target design的主要migration map：
+
+| 現有概念 | Target |
+|---|---|
+| PyMTLF `ModelKey = (provider, modelId)` | `FamilyKey`與`ModelVersionKey`分離 |
+| `CatalogModel.descriptor.model_id`永遠不變 | catalog current version每次promotion換新model ID |
+| `ProvisionResource.model_keys` | `family_keys`，send-time解析current version |
+| `DatasetSnapshot.model_key`／retrain-in-flight | family key |
+| Accuracy scope key包含subscription `modelIds` | stable scope排除model ID，另存active version |
+| `CutoverState`等待provision delivery+liveness | `FamilyAdoptionState`觀察new registration |
+| PyAnLF active model只以provider/model ID索引 | ModelSlotKey管理family-like applicability，version identity另存 |
+| same-ID/new-URL replacement | same-slot/new-ID/new-URL atomic identity replacement |
+| replacement pending省略deviation | 移除；old/new model由registration與correlation自然隔離 |
 
 ### Slice A：READY handoff 與 dataset builder
 
@@ -901,9 +1162,12 @@ PyMTLF：
 
 PyMTLF：
 
-- SeedCatalog 泛化為 current model catalog
+- 將既有 ModelKey 拆成 FamilyKey 與 ModelVersionKey
+- SeedCatalog 泛化為 family/current-version catalog
+- process-local model ID allocator 與 version index
 - generation/staged/promote
 - deterministic bundle builder
+- manifest 的 family/new identity/parent identity
 - digest/reload validation
 - immutable artifact publication
 - stale base/model check 與 non-blocking scope-drift warning
@@ -912,14 +1176,16 @@ PyMTLF：
 
 PyMTLF：
 
-- provision resource 在 send-time 解析 current catalog
-- desired/delivered generation state
+- provision resource 保存 FamilyKey，並在 send-time 解析 family current version
+- desired/delivered ModelVersionKey/generation/artifact state
 - retry、coalescing 與 resource revision cancellation
-- successful promotion 後 accuracy-policy generation advance
+- stable scope key 排除 model ID
+- current registration adoption state 與 old model report rejection
+- active registration/subscription/correlation ownership validation
 
 NWDAF：
 
-- 以 contract/regression tests 確認 same model ID/new URL payload lossless forwarding
+- 以 contract/regression tests 確認 new model ID/new URL payload lossless forwarding
 - 確認 standard status 與 callback mapping 未改變
 - 除非測試發現既有 routing defect，否則不新增 production business logic
 
@@ -927,24 +1193,27 @@ NWDAF：
 
 PyAnLF：
 
-- same identity/new URL 視為 candidate update
-- latest desired artifact coalescing
+- 以 ModelSlotKey 將 new identity/new URL 視為同一 family 的 candidate update
+- latest desired model identity/artifact coalescing
 - prepare-once
-- multi-runtime deterministic atomic swap
+- multi-runtime deterministic atomic identity/artifact swap
 - failure retains old
-- replacement-pending accuracy gate
 - successful swap 後清除 inference/accuracy windows
+- activation 後才建立 new model ID registration
+- new registration/subscription 建立前不產生新 model WAPE；old resource cleanup 可非同步收斂
 
 ### Slice F：Process-level verification 與文件
 
 nwdaf-resources：
 
 - 啟動 Go、PyAnLF、PyMTLF 的真實 process harness
-- 建立兩個不同 group/scopes，共用同一 model
+- 建立兩個不同 group/scopes，共用同一 logical model family/current artifact
 - 觸發其中一個 scope degradation
 - 驗證 snapshot 建立當下所有 active scope data 進入 dataset
 - 驗證 candidate training 與 per-scope gate
-- 驗證更新通知、direct download 與 atomic multi-scope switch
+- 驗證更新通知具有新 model ID、direct download 與 atomic multi-scope identity switch
+- 驗證新 registrations/subscriptions/correlations 只在 activation 後建立
+- 驗證 delayed old model/correlation report 不會進入 current policy
 - 驗證 callback/download 失敗保留舊模型並可恢復
 
 nwdaf-docs：
@@ -974,25 +1243,34 @@ nwdaf-docs：
 13. non-finite metric、trainer exception 正確失敗並釋放 in-flight。
 14. current bundle warm start 與 deterministic seed 可重現。
 15. bundle digest、reload、immutable URL 與 catalog promotion。
-16. stale base generation 不得 promote；scope 新增/刪除只記錄 warning。
-17. notification retry coalesces 到最新 desired artifact。
-18. resource update/delete 取消 stale retry。
+16. 每次 successful promotion 配發新的 model ID；同一 family current version 正確前進。
+17. version index 可由 seed、current 及 retired model ID 反查同一 FamilyKey。
+18. stale base generation/version 不得 promote；scope 新增/刪除只記錄 warning。
+19. provision resource 跨 promotion 保持 FamilyKey，notification retry coalesces 到最新 ModelVersionKey。
+20. resource update/delete 取消 stale retry。
+21. stable scope key 不含 model ID；M1/M2 registrations 對應同一業務 scope。
+22. old M1 report、retired correlation 或錯誤 owner 不得更新 current M2 policy。
+23. M2 registration 建立後，該 scope 才開始 M2 baseline；不依賴 liveness barrier。
 
 ### 18.2 PyAnLF unit/contract
 
-1. same `modelUniqueId`/new URL 進入 replacement path。
+1. 同 provision slot 的 new `modelUniqueId`/new URL 進入 replacement path。
 2. callback 在保存與 enqueue 後回 204，不等待下載。
 3. candidate 只 prepare 一次並提供給所有相依 runtimes。
-4. 多 runtime 全部成功才 commit。
+4. 多 runtime 的 identity、artifact、model/scaler 全部成功才 commit。
 5. 任一 validation/load/stale failure 時全部保留舊模型。
-6. replacement pending 時合法通知仍送出，但省略 `deviation`。
-7. swap 後 prediction、ground-truth 與 report windows 全部重設。
-8. 穩定累積足夠資料後恢復新模型 WAPE report。
+6. candidate 尚未 activation 時只保留 old model registration，不提前建立 new registration。
+7. swap 後 prediction、ground-truth、cached measurement 與 report windows 全部重設。
+8. swap 後 desired registration 從 M1 改為 M2，建立新 registration/subscription/correlation。
+9. old monitor subscription 不再匹配 M2 runtime，不能送出錯誤 model ID report。
+10. M2 穩定累積足夠資料後直接送 WAPE，不要求先送 no-deviation barrier。
+11. M2 準備失敗時 M1 inference、registration 與 WAPE 路徑維持可用。
+12. 連續收到 M2、M3 時同 slot coalesce 最新 desired candidate，不交錯 commit。
 
 ### 18.3 NWDAF regression
 
 1. Model Provision notification 的 standard fields lossless round-trip。
-2. 相同 model ID/new URL 不被 Go 誤判為 duplicate old notification。
+2. 新 model ID/new URL 不被 Go 誤判為 duplicate old notification。
 3. backend unavailable、peer error 與 callback error 保持 Phase 4 status mapping。
 4. Go 不解析 bundle、generation 或 training metadata。
 
@@ -1002,17 +1280,19 @@ nwdaf-docs：
 
 ```text
 two analytics subscriptions
-  -> same model identity
+  -> same logical model family and model M1
   -> two independent monitor scopes
   -> one scope degradation
-  -> one model-level retrain
+  -> one family-level retrain
   -> all eligible snapshot scopes included
   -> local candidate accepted
-  -> immutable updated artifact
+  -> immutable updated artifact with model M2
   -> standard Model Provision notify
   -> PyAnLF direct download
-  -> atomic replacement for both scopes
-  -> new stable WAPE reports
+  -> atomic identity/artifact replacement for both scopes
+  -> new M2 registrations/subscriptions/correlations
+  -> new stable WAPE reports tagged M2
+  -> delayed M1 report cannot enter M2 policy
 ```
 
 另測：
@@ -1053,7 +1333,7 @@ two analytics subscriptions
 2. Performance evaluation 永遠執行並寫入 structured log/manifest。
 3. `enforce_performance_gate=true` 時要求 triggering scope 與 aggregate 改善，其他 scope regression
    不超過 `0.02`；關閉時表現結果只告警，不阻擋 technically valid candidate。
-4. scope 新增或刪除不阻擋 promotion，只記錄 scope drift；base generation/identity stale 仍必須阻擋。
+4. scope 新增或刪除不阻擋 promotion，只記錄 scope drift；base family/version/generation stale 仍必須阻擋。
 5. triggering scope 資料不足時 job 失敗；其他 scope 資料不足時依 training/evaluation 資格降級處理並告警，
    不使整個 job 失敗。
 
@@ -1064,7 +1344,9 @@ two analytics subscriptions
 - `204` 只表示 PyAnLF 已接受 notification。
 - PyMTLF 在 artifact promotion 並建立 notification desired-state reconciliation 後完成 job。
 - 不等待 PyAnLF activation，不新增 private ack。
-- PyAnLF 以 pending 時省略 `deviation`、成功 swap 後 reset windows 解決 generation gap。
+- PyAnLF activation 後以標準 Model Monitor Register 表示開始使用新 model ID。
+- PyMTLF 以新 model ID、registration ownership 與新 correlation 判斷 observation 歸屬，不以 liveness
+  推測 activation。
 
 不新增 private activation acknowledgement。
 
@@ -1072,6 +1354,35 @@ two analytics subscriptions
 
 從 current model weights warm start，並對新 training-period data 重新 fit scaler；第一版不使用 fresh
 initialization。
+
+### D4. Model identity 與 family
+
+1. 同一 logical model family 在 PyMTLF 以穩定 FamilyKey 管理。
+2. 每個 successful promoted artifact 使用新的標準 `modelUniqueId`；多個 scopes若共用同一 artifact，
+   仍使用相同 model ID。
+3. Provision resource、retrain intent、dataset snapshot 與 single retrain-in-flight 綁 FamilyKey。
+4. Monitor registration/subscription/report 綁當代 ModelVersionKey，stable scope key排除 model ID。
+5. no-deviation report 只保留 Phase 4 的資料不足/liveness語意，不再作 cutover barrier。
+
+### D5. FamilyKey 與 applicability ownership
+
+1. `FamilyKey = (provider_namespace, family_id)`；`family_id`由PyMTLF seed config明確指定。
+2. 不從event/filter/target自動hash或推導family ID。
+3. Applicability descriptor作為family catalog資料另存，至少包含event、event filter、target、
+   interoperability與use-case context。
+4. Seed config/descriptor是runtime selection的authoritative來源；bundle manifest只保存可選的驗證snapshot。
+5. Retrained versions繼承family applicability。第一版若applicability語意不同，建立新family，不在promotion
+   中修改既有family。
+
+### D6. Allocator、adoption與第一版限制
+
+1. Model ID allocator維持process-local、provider-wide monotonic reservation；同一process不回收或重用ID。
+2. Initial sync引用的unknown model IDs先tombstone reserve；永久catalog/allocator不在本階段實作。
+3. PyMTLF restart回到configured seed並視為實驗重跑。
+4. Stable scope在自己的current-model registration建立後即可開始新baseline，不等待其他scopes。
+5. Promotion後尚未activation的old-model reports只保留observability，不再觸發family degradation。
+6. R2/S2先成功建立，再刪除R1/S1。
+7. 第一版每個PyAnLF ModelSlot只使用一個current model，不啟用multiple-model optional behavior。
 
 ---
 
@@ -1085,10 +1396,91 @@ initialization。
 3. Performance evaluation 永遠產生；是否因退步拒絕 candidate 由 `enforce_performance_gate` 控制，技術正確性
    與 stale base checks 永遠不可關閉。
 4. PyMTLF 建立可由 PyAnLF 直接下載的 immutable、可重載、digest 驗證 bundle。
-5. updated model 透過既有標準 Model Provision resource 送出，不含自創 wire 欄位。
-6. PyAnLF 對所有相依 runtime 做 atomic replacement，任何失敗皆保留舊模型。
-7. update gap 不會讓舊模型 WAPE 污染新 PyMTLF policy generation。
-8. Go 仍只負責 SBI validation/routing，沒有 training 或 artifact business logic。
-9. PyMTLF、PyAnLF、NWDAF 各自 lint/unit/contract tests 通過。
-10. nwdaf-resources 的真實三 process E2E 通過並有完整操作說明。
-11. 文件記錄實際 config、API、限制、驗證結果與剩餘 Phase 7 工作。
+5. updated model 以新的 `modelUniqueId` 透過既有標準 Model Provision resource 送出，不含自創 wire欄位。
+6. PyMTLF 可在 FamilyKey、ModelVersionKey與ArtifactKey間正確對應，provision/retrain ownership不因
+   model ID更新而斷裂。
+7. PyAnLF 對所有相依 runtime 做 atomic identity/artifact replacement，任何失敗皆保留舊模型。
+8. 新 Model Monitor registration 只在 activation 後建立；PyMTLF 以新 registration/subscription/correlation
+   接受新模型 WAPE。
+9. old model ID、retired correlation及delayed callback都不會污染current model policy，且不依賴liveness
+   barrier。
+10. Go 仍只負責 SBI validation/routing，沒有 training、family 或 artifact business logic。
+11. PyMTLF、PyAnLF、NWDAF 各自 lint/unit/contract tests 通過。
+12. nwdaf-resources 的真實三 process E2E 通過並有完整操作說明。
+13. 文件記錄實際 config、API、限制、驗證結果與剩餘 Phase 7 工作。
+
+---
+
+## 22. Current Implementation Result
+
+2026-07-25 已完成新版 FamilyKey／per-artifact model identity／registration-driven activation重構，
+並通過unit、lint、Go routing及真實三process local-training驗證。
+
+### 22.1 PyMTLF
+
+- `SeedCatalog` 已拆成穩定`FamilyKey`、每代`ModelVersionKey`、current-by-family及version index。
+  Configured seed為generation 1；candidate在打包前保留provider-wide新model ID，promotion使用base
+  generation與artifact digest CAS，Model Provision representation在送出時解析family current version。
+- Phase 5 `READY` snapshot 具有 `CLAIMED` 與 terminal state，單一 snapshot 只會被一個 bounded training
+  job 消費；terminal success、failure 或 cancellation 都會釋放 family-level retrain-in-flight。
+- 新增 ADRF-aligned raw notification 轉換、固定十個 feature 的 timestamp/scope aggregation、較早 20%
+  reference validation、較新 80% training、purge gap、training-only scaler fit 與資料資格紀錄。
+- 新增 CPU-only deterministic warm-start trainer，使用 Adam、Huber loss，並永遠計算 current/candidate
+  per-scope 與 aggregate WAPE。`training.enforce_performance_gate` 控制 regression 是否阻擋 promotion，
+  技術驗證與 stale checks 不可關閉。
+- Candidate 以既有四檔 bundle contract 打包，manifest 記錄 parent artifact、generation、time window、
+  datasource、scope eligibility、loss 與 validation summary；發布前後都會 reload/validate。
+- Promotion 與「當下仍有 provision demand」在同一 resource guard 內確認。Promotion 後對每個相容 resource
+  建立 latest-desired notification；retry 會 coalesce 新 artifact、採 capped exponential backoff，resource
+  revision 更新或刪除會取消舊 delivery。
+- Accuracy policy已移除liveness-based cutover state。Retired model ID與舊correlation不更新current
+  policy；每個scope只在new model registration建立後採用新version並重設baseline。
+- MongoDB client 使用 timezone-aware BSON datetime，避免合法 UTC measurement 在訓練轉換時被誤判為
+  naive timestamp。
+
+### 22.2 PyAnLF
+
+- 同一 ModelSlotKey 的new identity/new URL會進入background candidate replacement；slot由provider、
+  event、filter、target與use-case context組成，不出現在3GPP payload。
+- Candidate 只 prepare 一次，所有選定 runtime 在同一 commit 內all-or-nothing切換identity與artifact；
+  download、validation、load 或 stale runtime state 失敗時全部保留舊模型並由既有 worker retry。
+- Replacement liveness gate已移除。Activation後desired monitor state改為new model ID；reconciler先建立
+  新registration，再刪除舊registration，正常足量WAPE由新subscription/correlation承載。
+- 相同 Events Subscription snapshot 的週期性 sync 現在是 runtime no-op；同一 provision resource 下，
+  本地已接受但尚未套用的 candidate 不會被 snapshot 中的舊 immediate model 覆蓋。
+- Monitor registration create 與較舊 sync snapshot 的競爭以 unconfirmed identity 收斂，避免相同
+  canonical scope 被重複 POST 並讓後續 sync 因 duplicate scope 失敗。
+
+### 22.3 Go NWDAF
+
+- Production routing 未增加 training、generation 或 artifact business logic。
+- Regression test已涵蓋「新`modelUniqueId`、新`mLModelUrl`」，並確認Go只做lossless forwarding。
+
+### 22.4 Process-level harness
+
+`nwdaf-resources/tests/mtlf_model_monitor/` 新增 MongoDB-backed local-training scenario。它實際啟動：
+
+- Go NWDAF
+- PyAnLF
+- PyMTLF
+- MongoDB
+
+目前驗證兩個 SUPI scope 共用同一family、任一 scope degradation觸發單一family-level retrain、兩個
+scope都進入snapshot、generation 2／model ID 2 candidate發布、第一次artifact GET刻意回`503`、舊
+runtime保留、retry後兩個runtime原子切換、activation後registration/subscription重建，以及新
+correlation以model ID 2建立fresh baseline。
+
+### 22.5 實際驗證結果
+
+- PyMTLF：`ruff check` 通過；`pytest` 為 `92 passed`。
+- PyAnLF：`ruff check` 通過；`pytest` 為 `245 passed, 1 skipped`。
+- NWDAF：`go test ./...`、`golangci-lint run ./...`、`go build -o bin/nwdaf ./cmd/` 通過；
+  `go test -race ./internal/sbi/processor ./internal/mtlf ./internal/anlf/...` 通過。
+- nwdaf-resources：
+  `TestInitialModelProvisionAndMonitorRoundTrip` 通過；
+  `TestLocalTrainingAndUpdatedModelRoundTrip` 通過。
+
+測試使用真實 runtime processes 與 MongoDB，但 NRF、SMF、UPF、ADRF 仍為 fixture 或未啟動，因此不宣稱
+real free5GC deployment E2E、ADRF retrieval E2E、TLS/OAuth 或 restart durability。PyMTLF current
+family catalog、model ID allocator及generation仍依本文件決策為process-local，restart回到configured
+seed baseline。
