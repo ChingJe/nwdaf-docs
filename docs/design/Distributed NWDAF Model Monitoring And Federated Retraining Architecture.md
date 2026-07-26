@@ -60,26 +60,46 @@ scope-B = group-G intersect AoI-B
 把 group 數量或 AoI 數量固定為二。本情境只有一個 group；未來可依相同
 方式加入更多 AoI 與對應 NWDAF，並繼續使用同一個 group target。
 
+為避免把三種不同的關係混在同一張圖，拓撲分成以下三個視圖。
+
+Consumer 分別向兩個 Analytics NWDAFs 建立訂閱：
+
+```mermaid
+flowchart LR
+    Consumer["Consumer"]
+    A["NWDAF-A<br/>Analytics path-A"]
+    B["NWDAF-B<br/>Analytics path-B"]
+
+    Consumer -->|group-G + TAI-A| A
+    Consumer -->|group-G + TAI-B| B
+```
+
+NWDAF-C 負責模型提供、accuracy monitoring 協調與 FL Server：
+
 ```mermaid
 flowchart TB
-    Consumer["Consumer"]
     C["NWDAF-C<br/>Model Provider<br/>Monitor Coordinator<br/>FL Server"]
-    A["NWDAF-A<br/>Analytics path-A<br/>AnLF + MTLF<br/>FL Client"]
-    B["NWDAF-B<br/>Analytics path-B<br/>AnLF + MTLF<br/>FL Client"]
-    SMF["SMF<br/>Manages path-A and path-B"]
-    UPFA["UPF-A<br/>AoI-A / TAI-A"]
-    UPFB["UPF-B<br/>AoI-B / TAI-B"]
-
-    Consumer -->|Analytics subscription for path-A| A
-    Consumer -->|Analytics subscription for path-B| B
+    A["NWDAF-A<br/>AnLF + MTLF<br/>FL Client"]
+    B["NWDAF-B<br/>AnLF + MTLF<br/>FL Client"]
 
     C <-->|Model Provision / Model Monitor / FL| A
     C <-->|Model Provision / Model Monitor / FL| B
+```
 
-    A -->|SMF and UPF event collection| SMF
-    B -->|SMF and UPF event collection| SMF
-    SMF -->|path-A| UPFA
-    SMF -->|path-B| UPFB
+NWDAF-A、B 經同一個 SMF 蒐集不同 path 的 UPF data：
+
+```mermaid
+flowchart TB
+    A["NWDAF-A"]
+    B["NWDAF-B"]
+    SMF["Shared SMF"]
+    UPFA["UPF-A<br/>path-A / TAI-A"]
+    UPFB["UPF-B<br/>path-B / TAI-B"]
+
+    A -->|SMF / UPF event collection| SMF
+    B -->|SMF / UPF event collection| SMF
+    SMF --> UPFA
+    SMF --> UPFB
 ```
 
 ### 2.2 不使用 Analytics Aggregator
