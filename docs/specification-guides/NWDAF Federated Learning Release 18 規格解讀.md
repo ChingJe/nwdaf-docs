@@ -653,7 +653,7 @@ subscription，兩者不能互換。
 | Stage 2 概念 | OpenAPI 欄位 | 說明 |
 | --- | --- | --- |
 | Analytics 與適用範圍 | `mLEventSubscs` | Analytics ID、filter、target、use-case 等 |
-| Initial/global model | `mLModelInfos` | 模型 URL、ADRF reference、ID 及附加資訊 |
+| Initial/global model | `mLModelInfos` | 模型 URL 或 ADRF reference，以及選填的 ID／附加資訊 |
 | FL procedure identity | `mlCorreId` | 同一個 FL process 的 correlation |
 | Preparation | `mLPreFlag` | `true` 表示先檢查能否參與，不執行正式 round |
 | Global model accuracy check | `mLAccChkFlg` | 要求 client 以 local training data 測試 global model |
@@ -679,6 +679,9 @@ Stage 3 的實際限制如下：
 - `MLEventNotif` 雖然宣告了 `mlFile` string property，但其 schema
   同時要求 `event`，並要求 `mLFileAddr` 或 `mLModelAdrf` 至少存在
   一個；
+- top-level `MLEventNotif.modelUniqueId` 並非 required；正式管理的
+  initial／global model 可提供 ID，FL round 的 local／interim model
+  則可只靠 FL correlation identities 與 artifact URL 關聯；
 - 因此只提供 `mlFile` 無法通過 Release 18 OpenAPI validation；
 - Training API 的 request／notification body 使用 `application/json`，
   沒有定義 multipart 或 `application/octet-stream` 的模型 binary
@@ -1073,9 +1076,9 @@ Preparation response 也不是完整的資源盤點介面：
 - 真正用於 sample-weighted FedAvg 的 exact training sample count，仍需
   由每輪 local model artifact agreement 提供。
 
-因此第一版實作可將 preparation 結果簡化成 `201 = eligible candidate`、
-`403/500 = rejected`，再由 FL Server 等待所有候選回覆後固定正式
-participant set。
+因此 `201` 可解讀為 Client 接受 preparation，`403/500` 則代表拒絕或
+無法滿足要求。Client 是否因此進入正式 participant set，仍由 FL Server
+的 client selection policy 決定，標準未固定該 policy。
 
 ### 7.6 每輪 execution
 
@@ -1224,9 +1227,8 @@ Content-Type: application/json
   "mLModelInfos": [
     {
       "event": "UE_COMMUNICATION",
-      "modelUniqueId": 201,
       "mLFileAddr": {
-        "mLModelUrl": "https://client-a.example/models/local-201"
+        "mLModelUrl": "https://client-a.example/models/fl-process-2026-001/round-1/local"
       }
     }
   ],
@@ -1262,7 +1264,7 @@ callback 一次或多次，完整 FL 結束後才 `DELETE`/Unsubscribe。規格�
 強迫實作者禁止每輪重建 subscription，但那會製造多餘 resource lifecycle，
 也失去既有 update API 的用途。
 
-若模型放在 ADRF，`mLFileAddr` 可改成：
+一般標準情境也可以先把模型保存至 ADRF，再以 `mLModelAdrf` 傳遞：
 
 ```json
 {
@@ -1275,8 +1277,13 @@ callback 一次或多次，完整 FL 結束後才 `DELETE`/Unsubscribe。規格�
 }
 ```
 
-`modelUniqueId` 識別具體模型；`storTransId` 識別 ADRF storage record；
-`roundInd` 則是 FL iteration。三者語意不同。
+ADRF storage schema 要求每個 stored model 具有 `modelUniqueId`，因此
+如果實作選擇把 round local model 存入 ADRF，就必須先將它正式編號。
+`modelUniqueId` 識別 stored model；`storTransId` 識別 ADRF storage
+record；`roundInd` 則是 FL iteration，三者語意不同。
+
+這是標準允許的 transport alternative。若不用 ADRF，Training API 也允許
+以 `mLFileAddr` 指向模型；此時 top-level `modelUniqueId` 仍是選填。
 
 ### 7.7 Delay、skip 與 termination
 
@@ -1340,7 +1347,7 @@ server 建立 aggregated model 所需的資訊。`MLEventNotif` 能指向：
 
 - model URL/FQDN；
 - ADRF 中的 model record；
-- model unique ID；
+- 選填的 model unique ID；
 - validity、filter、target、metric 等 metadata。
 
 3GPP 沒有定義 PyTorch `state_dict`、TensorFlow checkpoint、ONNX training
@@ -1465,10 +1472,10 @@ TS 29.574 進一步把 DCCF 的 Stage 3 邊界具體化：
 這些 API 補足「DCCF 能做什麼」的 resource、欄位與 HTTP 證據，但沒有把
 DCCF 變成 FL participant，也沒有規定 FL client 必須透過 DCCF 取得資料。
 
-它們不是 FL Server，也不聚合模型。對第一版 NWDAF FL，可直接由
-FL Client NWDAF 向 data source、另一個 NWDAF 或 ADRF 取資料而不部署
-DCCF/MFAF；未來需要跨 consumer 重用資料蒐集、格式轉換或 messaging
-framework 時，再導入這一層。
+它們不是 FL Server，也不聚合模型。規格允許 FL Client NWDAF 直接向
+data source、另一個 NWDAF 或 ADRF 取資料，不要求所有 FL 部署都必須
+使用 DCCF/MFAF；是否導入這一層取決於是否需要跨 consumer 重用資料蒐集、
+格式轉換或 messaging framework。
 
 證據：
 
@@ -1731,7 +1738,8 @@ sequenceDiagram
 
 TS 29.575 說明 fetch instructions 中的 URI 預期與標準 retrieval URI
 一致；由於 fetch correlation IDs 已足以識別資料，consumer 也可以組合標準
-resource URI。對本專案而言，直接遵循 ADRF 回傳的 URI 仍是較低耦合做法。
+resource URI。直接遵循 ADRF 回傳的 URI 可避免 consumer 綁定 ADRF 的
+URI 組合細節。
 
 ### 11.5 DataSetTag 的用途
 
@@ -2143,15 +2151,123 @@ callback」後再靠 body 猜種類。
 | `notifCorreId` | subscription consumer | callback 與 subscription 的關聯 | Model identity |
 | `mlCorreId` | FL Server | 一個 FL procedure | 單一 round 或 HTTP resource ID |
 | `roundInd` | FL Server | FL process 中的 iteration | Model family identity |
-| `modelUniqueId` | Model provider/owner | 一個具體 model artifact/版本 | Analytics ID |
+| `modelUniqueId` | Model provider/owner | 一個 ML model；若提供，必須在 5GC scope 內唯一 | Analytics ID、FL round correlation |
 | `storeTransId` | ADRF | 一次 ADRF storage record | Model unique ID |
 | Fetch correlation ID | Data provider/ADRF | 一批待 fetch 的內容 | Data query specification |
 | `DataSetTag` | Data storage flow | ADRF 中的一組 data records | FL process/round ID |
 
 `mlCorreId + client subscriptionId + roundInd` 足以表達「哪個 client
-在某個 FL process 的哪一輪回報」，但 artifact 仍需要自己的
-`modelUniqueId`。同一個 model family 的不同 generation 應使用不同
-model unique IDs；family/applicability 如何管理則屬實作設計。
+在某個 FL process 的哪一輪回報」。若 artifact 只是在 Training
+Workspace 中短暫交換，可再由 `notifCorreId`、participant identity 與
+artifact URL 精確定位，不必配置 `modelUniqueId`。
+
+正式提供、持續監控或保存至 ADRF 的 completed model 則應具有
+`modelUniqueId`。同一個 model lineage 中的不同 completed versions 使用
+不同 model unique IDs；family/applicability 如何管理屬於實作設計。
+
+### 14.1 `modelUniqueId` 何時必填
+
+`modelUniqueId` 是否必填取決於它所在的 API 與 data type，不能只用
+「有沒有傳模型」判斷：
+
+| 情境 | Data type／欄位 | 標準要求 |
+| --- | --- | --- |
+| Model Training 傳送 initial/global model | `mLModelInfos[].MLEventNotif.modelUniqueId` | 選填；Training API 重用 `MLEventNotif`，未將此欄列為 required |
+| Model Training 回傳 local/interim model | `mLModelInfos[].MLEventNotif.modelUniqueId` | 選填；可用 FL correlation identities 關聯 |
+| Model Provision 的主要模型 | `MLEventNotif.modelUniqueId` | 條件式選填（`0..1`）；僅在支援 `ModelProvisionExt` 時才可提供 |
+| Model Provision 的 additional models | `addModelInfo[].AdditionalMLModelInformation.modelUniqueId` | 每個 additional model 必填 |
+| ADRF URL-backed storage | `MLModelInfo.modelUniqueId` | 必填 |
+| ADRF inline binary storage | `MLModel.modelUniqueId` | 必填 |
+| ADRF store／delete result | `ModelStoreResult`／`MLModelDelResult` | 必填，用來指出哪個模型的操作結果 |
+| ADRF retrieval 使用 `store-trans-id` | query parameter | 選擇此查詢方式時，不必再提供 model unique IDs |
+| ADRF retrieval 使用 `model-unique-ids` | query parameter | 選擇此查詢方式時，必須提供一組 model IDs |
+| ADRF retrieval response | `MLModelInfo.modelUniqueId` | 每個回傳模型必填 |
+| Model Monitor registration | `MLModelMonitorReg.modelId` | 必填 |
+| Model Monitor subscription | `MLModelMonitorSubsc.modelIds` | 必填 |
+| Accuracy information | 對應的 `modelId` | 必填，用來指出 observation 屬於哪個正式模型 |
+| NRF ML capability registration／discovery | `mlAnalyticsList`／`ml-analytics-info-list` | 不使用 `modelUniqueId`；只描述 Analytics ID、TAI、FL capability 等能力 |
+
+最容易混淆的是 `MLEventNotif`：
+
+- 它被 Model Provision 與 Model Training 共用；
+- top-level `modelUniqueId` 在 OpenAPI schema 中不是 required；
+- TS 29.520 將它標成 conditional、cardinality `0..1`，並規定只有協商
+  支援 `ModelProvisionExt` 時才可提供；
+- 但 `addModelInfo` 中的每個 additional model 又要求 ID；
+- 使用 `mLModelAdrf` 不會單憑 schema 讓 top-level ID 自動變成 required；
+  ADRF retrieval 可按 `store-trans-id` 或 `model-unique-ids` 查詢；
+- Training round 使用同一 envelope 時，暫存 local／interim model
+  可以不帶 ID。
+
+規格沒有定義「暫存模型」與「正式模型」的 lifecycle 分類，也沒有規定
+何時應把 Training round 的 local／interim artifact 升格為長期管理模型。
+能直接從標準得出的界線只有：
+
+- Training envelope 中的 top-level `modelUniqueId` 可省略；
+- 一旦模型進入 ADRF storage，對應的 storage data type 要求 ID；
+- 一旦模型被 Model Monitor 引用，registration、subscription 與 accuracy
+  information 都要求對應的 `modelId`；
+- 若提供 ID，TS 29.520 要求它在 5GC scope 內唯一。
+
+因此，是否替尚未存入 ADRF、也未進入 Model Monitor 的 Training artifact
+配置 ID，屬於實作決策，不是 Release 18 強制行為。
+
+### 14.2 `modelUniqueId` 的格式與跨 provider 唯一性
+
+`modelUniqueId` 的 data type 是 TS 29.571 `Uinteger`：
+
+```json
+{
+  "modelUniqueId": 42
+}
+```
+
+它是最小值為 `0` 的 JSON integer。規格沒有把它定義成 UUID、字串或
+`nfInstanceId:modelId` 形式，因此下列值不能直接放入標準欄位：
+
+```json
+{
+  "modelUniqueId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+TS 29.520 同時要求這個整數在 **5GC scope 內唯一**。這不是只在單一
+NWDAF、單一 MTLF 或單一 ADRF store record 內唯一。不同模型 provider
+若處於同一個 5GC，不能各自從 `1` 開始配置而不做協調，否則可能產生相同
+`modelUniqueId`。
+
+Release 18 API 沒有定義下列任何配號機制：
+
+- 由 NRF 發放 model ID；
+- 由 ADRF 在 storage 時自動配置 model ID；
+- model provider 先向中央服務保留一段 ID；
+- 將 provider `nfInstanceId` 編碼進 `modelUniqueId` 的標準演算法。
+
+ADRF storage request 反而要求 consumer 已經帶入 `modelUniqueId`。
+雖然 store record 另有 NWDAF containing MTLF 的 `nfInstanceId`，
+retrieval API 仍允許只用 `model-unique-ids` 查詢，沒有同時以 provider
+ID 篩選的標準 query parameter。因此不能把
+`(provider nfInstanceId, provider-local model ID)` 當成
+`modelUniqueId` 已符合規格唯一性的替代品。
+
+所以規格層級只能得出兩個結論：
+
+1. 同一個 5GC 中的模型建立者必須共用一個不碰撞的 numeric namespace；
+2. 具體如何協調這個 namespace，是 deployment／implementation policy，
+   不是 Release 18 已定義的 SBI 流程。
+
+實作可以在內部繼續使用 UUID 作資料庫主鍵或追蹤 ID，但對外映射到
+`modelUniqueId` 時仍必須是非負整數，並保證其在 5GC scope 內不重複。
+
+證據：
+
+- [TS 29.520 §5.4.6 Data Model](../../specs/TS%2029.520/5%20API%20Definitions/5.4%20Nnwdaf_MLModelProvision%20Service%20API/5.4.6%20Data%20Model.md)
+- [TS 29.571 §5.2.2 Simple Data Types](../../specs/TS%2029.571/5%20Common%20Data%20Types/5.2%20Data%20Types%20for%20Generic%20Usage/5.2.2%20Simple%20Data%20Types.md)
+- [Nnwdaf_MLModelProvision OpenAPI](../../specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
+- [Nnwdaf_MLModelTraining OpenAPI](../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
+- [Nnwdaf_MLModelMonitor OpenAPI](../../specs/openapi/TS29520_Nnwdaf_MLModelMonitor.yaml)
+- [TS 29.575 §5.2.6 Data Model](../../specs/TS%2029.575/5%20API%20Definitions/5.2%20Nadrf_MLModelManagement%20Service%20API/5.2.6%20Data%20Model.md)
+- [Nadrf_MLModelManagement OpenAPI](../../specs/openapi/TS29575_Nadrf_MLModelManagement.yaml)
 
 ## 15. 介面選擇速查
 
@@ -2292,8 +2408,7 @@ certificate trust 與 SBA authorization 還會引用 TS 33.501/33.310。
 9. Model Provision 如何把 final model 交給 AnLF；
 10. 現有 free5GC OpenAPI/NRF 缺口要以升級、擴充或 compatibility layer 處理。
 
-這些決策完成後，才適合把標準程序轉換成具體的本專案 Go/Python
-責任分工與實作階段。
+這些決策完成後，才適合把標準程序轉換成具體的元件責任分工與實作階段。
 
 ## 19. 規格證據索引
 
