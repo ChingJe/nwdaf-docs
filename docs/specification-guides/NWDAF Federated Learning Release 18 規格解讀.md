@@ -665,8 +665,42 @@ subscription，兩者不能互換。
 | Skip | `skipFlInd` | 要求跳過目前 round |
 | Reporting/expiry | `eventReq` | immediate、one-time、periodic、expiry 等共通 reporting 資訊 |
 
-Stage 2 亦明確允許直接提供 ML model file，但是否 inline 傳送取決於模型大小
-與實作。一般較適合傳 URL 或 ADRF reference。
+#### 7.3.1 Stage 2 的 model file 與 Stage 3 HTTP contract
+
+TS 23.288 §6.2F.2 在服務語意層將 `ML Model file` 列為 Training request
+的選填輸入，並說明 NWDAF 可依模型大小與實作決定是否包含。這不代表
+TS 29.520 已定義可單獨承載 inline model binary 的 HTTP contract。
+
+Stage 3 的實際限制如下：
+
+- `NwdafMLModelTrainSubsc.mLModelInfos` 與
+  `NwdafMLModelTrainNotif.mLModelInfos` 都重用 Model Provision 的
+  `MLEventNotif`；
+- `MLEventNotif` 雖然宣告了 `mlFile` string property，但其 schema
+  同時要求 `event`，並要求 `mLFileAddr` 或 `mLModelAdrf` 至少存在
+  一個；
+- 因此只提供 `mlFile` 無法通過 Release 18 OpenAPI validation；
+- Training API 的 request／notification body 使用 `application/json`，
+  沒有定義 multipart 或 `application/octet-stream` 的模型 binary
+  傳輸方式；
+- `mlFile` 即使和必要 reference 一起出現，也沒有足夠的標準 encoding
+  說明，不適合作為跨實作 contract。
+
+因此在可互通的 Stage 3 實作中，initial／global model 與
+local／interim model 都應使用：
+
+1. `mLFileAddr` 中的 URL 或 FQDN；或
+2. `mLModelAdrf` 中的 ADRF reference。
+
+本文件不把 inline model transport 視為目前可用的 Release 18 HTTP
+能力。這是 Stage 2 允許的抽象輸入與目前 Stage 3 OpenAPI 表達能力之間的
+落差，不應只以模型大小或實作偏好描述。
+
+證據：
+
+- [TS 23.288 §6.2F](../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2F%20Procedure%20for%20ML%20Model%20Training.md)
+- [TS 29.520 Nnwdaf_MLModelTraining OpenAPI](../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
+- [TS 29.520 Nnwdaf_MLModelProvision OpenAPI](../../specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
 
 概念範例：
 
