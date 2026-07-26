@@ -201,10 +201,64 @@ FL discovery 是兩件不同的事。
 
 - [TS 29.510 §5.2.2.2 NFRegister](../../specs/TS%2029.510/5%20Services%20Offered%20by%20the%20NRF/5.2%20Nnrf_NFManagement%20Service/5.2.2%20Service%20Operations/5.2.2.2%20NFRegister.md)
 
-### 5.2 NWDAF 的 FL capability profile
+### 5.2 NWDAF 的分析、模型提供與 FL capability profile
 
-Release 18 使用 `NwdafInfo.mlAnalyticsList` 中的一個或多個
-`MlAnalyticsInfo` 描述模型與 FL 能力。主要欄位為：
+NRF 對 NWDAF 能力的描述分成兩層，查詢者應同時檢查：
+
+1. `NFProfile.nfServiceList`：NF 實際註冊了哪些標準服務，以及服務的
+   status、版本、scheme 和 endpoint；
+2. `NFProfile.nwdafInfo`：這些服務可處理哪些 Analytics ID、模型適用
+   範圍，以及是否具備 FL Server 或 FL Client 能力。
+
+只看其中一層並不足夠。例如，只有 `mlAnalyticsList` 而沒有可用的
+`nnwdaf-mlmodelprovision` service endpoint，不能據此呼叫 Model Provision；
+反過來，只有 service endpoint 而未取得足夠的能力描述，也無法精確判斷
+它是否適合目前的 Analytics ID、S-NSSAI、TAI 或 interoperability 條件。
+
+| 要判斷的能力 | `nwdafInfo` 能力欄位 | 應確認的 service name |
+| --- | --- | --- |
+| 提供單次 analytics | `eventIds` | `nnwdaf-analyticsinfo` |
+| 提供 analytics subscription | `nwdafEvents` | `nnwdaf-eventssubscription` |
+| 提供某種 Analytics ID 的模型 | `mlAnalyticsList[].mlAnalyticsIds` | `nnwdaf-mlmodelprovision` |
+| 擔任 FL Server | `mlAnalyticsList[].flCapabilityType=FL_SERVER` 或 `FL_SERVER_AND_CLIENT` | 依後續程序所需服務確認；若同時要取得模型，應確認 `nnwdaf-mlmodelprovision` |
+| 擔任 FL Client | `mlAnalyticsList[].flCapabilityType=FL_CLIENT` 或 `FL_SERVER_AND_CLIENT` | `nnwdaf-mlmodeltraining` |
+
+#### 5.2.1 `nwdafEvents` 與 `mlAnalyticsIds` 不代表同一項能力
+
+這兩個欄位都可能包含 `UE_COMMUNICATION` 等相同的 `NwdafEvent` 值，
+但它們宣告的是不同服務邊界：
+
+- `nwdafEvents` 表示 `Nnwdaf_EventsSubscription` 支援哪些 analytics
+  event。它回答的是「這個 NWDAF 能不能接受此類分析訂閱並提供分析結果」；
+- `mlAnalyticsIds` 表示 `Nnwdaf_MLModelProvision` 支援哪些 Analytics ID
+  的模型，並作為同一個 `MlAnalyticsInfo` 內 FL capability 的適用範圍。
+  它回答的是「這個 NWDAF 能不能提供此類分析所需的模型，以及宣告的
+  FL 能力適用於哪類分析」。
+
+因此：
+
+```text
+nwdafEvents = ["UE_COMMUNICATION"]
+  -> 宣告可提供 UE_COMMUNICATION analytics
+
+mlAnalyticsIds = ["UE_COMMUNICATION"]
+  -> 宣告可提供 UE_COMMUNICATION 所需模型，
+     或其同一 MlAnalyticsInfo 內的 FL 能力適用於 UE_COMMUNICATION
+```
+
+兩者互不推導：
+
+- 只有 `nwdafEvents`，不代表該 NWDAF 能提供或訓練模型；
+- 只有 `mlAnalyticsIds`，不代表該 NWDAF 對外提供 analytics；
+- 同時提供兩者，才表示它分別宣告了 analytics 與模型／FL 兩類能力，
+  且仍需確認對應的 `NFService` 都已註冊。
+
+`mlAnalyticsIds` 的名稱容易被誤讀。它不是模型實例的 ID，也不是
+`modelUniqueId`；它描述的是模型所服務的 analytics 類型。實際模型 identity
+要到 Model Provision 或 Model Training 程序中處理。
+
+`mlAnalyticsList` 中的一個或多個 `MlAnalyticsInfo` 同時描述 Model
+Provision filter 與 FL 能力。主要欄位為：
 
 | 欄位 | 意義 |
 | --- | --- |
@@ -222,7 +276,44 @@ Release 18 使用 `NwdafInfo.mlAnalyticsList` 中的一個或多個
 FL capability 或 data source 條件不同，就必須分成不同
 `MlAnalyticsInfo` entries。
 
-概念範例：
+若一個 NWDAF 註冊 `nnwdaf-mlmodelprovision`，並在
+`mlAnalyticsIds` 宣告 `UE_COMMUNICATION`，但省略
+`flCapabilityType`，代表它可提供該類 analytics 的模型，但沒有宣告任何
+FL 能力。模型可能來自本地訓練或集中式訓練；提供模型本身不等於支援 FL。
+
+概念範例一：可提供 `UE_COMMUNICATION` 模型，但不支援 FL：
+
+```json
+{
+  "nwdafInfo": {
+    "mlAnalyticsList": [
+      {
+        "mlAnalyticsIds": ["UE_COMMUNICATION"],
+        "mlModelInterInfo": {
+          "vendorList": ["example-vendor"]
+        }
+      }
+    ]
+  },
+  "nfServiceList": {
+    "model-provision-service-id": {
+      "serviceInstanceId": "model-provision-service-id",
+      "serviceName": "nnwdaf-mlmodelprovision",
+      "versions": [
+        {
+          "apiVersionInUri": "v1",
+          "apiFullVersion": "1.1.4"
+        }
+      ],
+      "scheme": "http",
+      "nfServiceStatus": "REGISTERED",
+      "apiPrefix": "http://model-provider.example"
+    }
+  }
+}
+```
+
+概念範例二：針對 `UE_COMMUNICATION` 擔任 FL Client：
 
 ```json
 {
@@ -247,32 +338,116 @@ FL capability 或 data source 條件不同，就必須分成不同
 }
 ```
 
-範例只顯示 FL 相關片段，不是完整可註冊 NF Profile。
+兩個範例都只顯示相關片段，不是完整可註冊 NF Profile。
+
+缺省欄位的語意不能一律解讀為「不支援」：
+
+- `eventIds` 未提供時，對已提供的 `Nnwdaf_AnalyticsInfo` 而言表示可處理
+  任意 `eventId`；
+- `nwdafEvents` 未提供時，對已提供的
+  `Nnwdaf_EventsSubscription` 而言表示可處理任意 `nwdafEvent`；
+- 某個 `MlAnalyticsInfo` 未提供 `mlAnalyticsIds` 時，表示該 entry
+  可服務任意 ML Analytics ID，且其中其他屬性必須能適用於所有
+  ML Analytics ID；
+- 若 NWDAF 支援跨 vendor 的 ML model interoperability，
+  `mlModelInterInfo` 必須存在並以 `vendorList` 描述允許範圍；規格將
+  缺少此欄位解讀為模型不允許由任何 NWDAF vendor 取回；
+- `flCapabilityType` 未提供時，則明確表示該 NWDAF 不支援任何 FL
+  capability type；
+- 上述 wildcard 語意不會憑空建立服務。Discovery consumer 仍應以
+  `service-names` 與回傳的 `nfServiceList` 確認所需服務真的存在且可用。
 
 證據：
 
+- [TS 29.510 `NwdafInfo`](../../specs/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.45%20Type%20NwdafInfo.md)
 - [TS 29.510 `MlAnalyticsInfo`](../../specs/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.84%20Type%20MlAnalyticsInfo.md)
+- [TS 29.510 `NFService`](../../specs/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.3%20Type%20NFService.md)
 - [TS 23.288 §5.2 NWDAF Discovery and Selection](../../specs/TS%2023.288/5%20Network%20Data%20Analytics%20Functional%20Description.md)
 
-### 5.3 FL Server discovery
+### 5.3 Analytics 與模型提供者 discovery
+
+`Nnrf_NFDiscovery` 提供不同的 query parameters 分別篩選 analytics
+provider 與 model provider：
+
+| 需求 | `service-names` | 能力 filter |
+| --- | --- | --- |
+| 找可接受 analytics subscription 的 NWDAF | `nnwdaf-eventssubscription` | `nwdaf-event-list` |
+| 找可接受單次 analytics request 的 NWDAF | `nnwdaf-analyticsinfo` | `event-id-list` |
+| 找可提供模型的 NWDAF | `nnwdaf-mlmodelprovision` | `ml-analytics-info-list` |
+
+例如，要找可接受 `UE_COMMUNICATION` analytics subscription 的 NWDAF：
+
+```http
+GET {nrfApiRoot}/nnrf-disc/v1/nf-instances
+    ?target-nf-type=NWDAF
+    &requester-nf-type={requesterNfType}
+    &service-names=nnwdaf-eventssubscription
+    &nwdaf-event-list=UE_COMMUNICATION
+```
+
+要找可提供 `UE_COMMUNICATION` 模型的 NWDAF：
+
+```http
+GET {nrfApiRoot}/nnrf-disc/v1/nf-instances
+    ?target-nf-type=NWDAF
+    &requester-nf-type=NWDAF
+    &requester-nf-instance-id={requesterNwdafId}
+    &service-names=nnwdaf-mlmodelprovision
+    &ml-analytics-info-list=[{"mlAnalyticsIds":["UE_COMMUNICATION"]}]
+```
+
+`ml-analytics-info-list` 使用 JSON query content；實際 HTTP request 必須依
+URI 規則編碼。Consumer 還可在 `MlAnalyticsInfo` filter 中加入
+S-NSSAI、TAI、model interoperability、FL role、FL time interval 和
+local-training data source 條件。
+
+NRF 回覆的是「宣告具備能力且已註冊服務的候選 NWDAF」，不會列出該
+NWDAF 目前管理的模型 catalog。以下資訊不屬於 NRF model-provider
+discovery 的回答：
+
+- 目前是否已有符合完整 event filter、target UE 或 use case 的模型；
+- `modelUniqueId`、generation、revision 或其他 provider 內部 identity；
+- 模型 artifact、下載 URL 或 ADRF reference；
+- 模型當前 accuracy、是否正在訓練或何時 promotion。
+
+這些資訊要在選定 provider 後，由實際的
+`Nnwdaf_MLModelProvision_Subscribe`、建立訂閱的 response 與後續
+notification 決定。因此 discovery 與 Model Provision 的責任分界是：
+
+```text
+NRF discovery
+  -> 找到宣告可提供此類模型的 provider 與 service endpoint
+  -> 建立 Model Provision subscription
+  -> provider 依完整訂閱條件提供現有模型、後續更新或失敗資訊
+```
+
+證據：
+
+- [TS 29.510 Nnrf_NFDiscovery OpenAPI](../../specs/openapi/TS29510_Nnrf_NFDiscovery.yaml)
+- [TS 29.520 Nnwdaf_MLModelProvision OpenAPI](../../specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
+
+### 5.4 FL Server discovery
 
 需要 FL Server 的含 MTLF NWDAF 可向 NRF 查詢：
 
 - target NF type = `NWDAF`；
 - Analytics ID；
 - FL capability type = server；
+- 若目的包含向該 server 取得模型，service name =
+  `nnwdaf-mlmodelprovision`；
 - 可選的 Time Period of Interest；
 - 可選的 S-NSSAI、Area of Interest、model interoperability 等條件。
 
 NRF 回傳符合條件的候選 NWDAF profiles，consumer 再依本地政策選擇一個。
 
-### 5.4 FL Client discovery
+### 5.5 FL Client discovery
 
 FL Server 向 NRF 查詢候選 FL Clients 時，可使用：
 
 - target NF type = `NWDAF`；
 - Analytics ID；
 - FL capability type = client；
+- service name = `nnwdaf-mlmodeltraining`；
 - service area；
 - Time Period of Interest；
 - client 可取得資料的 NF type 或 NF Set ID；
@@ -284,7 +459,23 @@ NRF discovery 不等於 client 已接受參與。它只產生候選集合；serv
 **規格要求：** Release 18 中，發現 FL-capable NWDAF 的 consumer
 限於另一個含 MTLF 的 NWDAF。
 
-### 5.5 NF discovery 的 HTTP 與 cache 語意
+概念查詢：
+
+```http
+GET {nrfApiRoot}/nnrf-disc/v1/nf-instances
+    ?target-nf-type=NWDAF
+    &requester-nf-type=NWDAF
+    &requester-nf-instance-id={flServerNwdafId}
+    &service-names=nnwdaf-mlmodeltraining
+    &ml-analytics-info-list=[
+      {
+        "mlAnalyticsIds":["UE_COMMUNICATION"],
+        "flCapabilityType":"FL_CLIENT"
+      }
+    ]
+```
+
+### 5.6 NF discovery 的 HTTP 與 cache 語意
 
 ```http
 GET {nrfApiRoot}/nnrf-disc/v1/nf-instances
@@ -313,7 +504,7 @@ Server/Client discovery 使用，但 cache key 必須包含完整 query 語意�
 - [TS 29.510 §5.3.2.2 NFDiscover](../../specs/TS%2029.510/5%20Services%20Offered%20by%20the%20NRF/5.3%20Nnrf_NFDiscovery%20Service/5.3.2%20Service%20Operations/5.3.2.2%20NFDiscover.md)
 - [TS 29.510 Nnrf_NFDiscovery OpenAPI](../../specs/openapi/TS29510_Nnrf_NFDiscovery.yaml)
 
-### 5.6 ADRF 也能透過 NRF 發現
+### 5.7 ADRF 也能透過 NRF 發現
 
 ADRF 是標準 NF type。它使用相同的 NFRegister 程序註冊，並在
 `NFProfile.adrfInfoList` 中以 `AdrfInfo` 宣告：
