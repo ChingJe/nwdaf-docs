@@ -2070,26 +2070,7 @@ certificate trust 與 SBA authorization 還會引用 TS 33.501/33.310。
 不對完整安全程序作推論。後續若要從普通 HTTP 升級到標準安全部署，
 應另寫安全規格解讀。
 
-## 18. 與 Daisy 類型框架的概念對照
-
-Daisy 或其他 FL framework 可協助實作 3GPP 未定義的內部演算法層：
-
-| FL framework 概念 | 可對應的標準概念 | 是否標準化 |
-| --- | --- | --- |
-| Master/coordinator | FL Server NWDAF | 角色有標準，框架實作沒有 |
-| Worker/client | FL Client NWDAF | 角色有標準，框架實作沒有 |
-| Round | `roundInd` | round identity 有標準 |
-| Fit instruction | Training create/update | 控制 envelope 有標準 |
-| Client parameters | Local ML Model information | artifact 格式未標準化 |
-| Aggregated parameters | Global ML Model information | artifact 格式未標準化 |
-| Number of examples | 無精確標準欄位 | 需擴充 |
-| FedAvg | Server aggregation policy | 演算法未標準化 |
-
-因此可參考 Daisy 的 round state、client lifecycle、aggregation 與 callback
-實作經驗，但 Daisy 的自訂 API、資料上傳方式及 artifact schema
-不能被當成 3GPP SBI。
-
-## 19. 對後續架構設計的直接結論
+## 18. 對後續架構設計的直接結論
 
 完成本規格解讀後，後續架構設計至少需要明確決定：
 
@@ -2108,7 +2089,7 @@ Daisy 或其他 FL framework 可協助實作 3GPP 未定義的內部演算法層
 這些決策完成後，才適合把標準程序轉換成具體的本專案 Go/Python
 責任分工與實作階段。
 
-## 20. 規格證據索引
+## 19. 規格證據索引
 
 | 主題 | 主要證據 |
 | --- | --- |
