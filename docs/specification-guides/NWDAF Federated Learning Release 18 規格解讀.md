@@ -871,6 +871,212 @@ training data 計算 global model accuracy，屬於實際 evaluation workload。
 reporting deadline。這次狀態轉換才是 Client 啟動資料取得與訓練工作的
 execution trigger。
 
+#### 7.5.2 Preparation request／response schema
+
+Preparation 的核心語意不是交換一份完整的 Client capability object，而是：
+
+```text
+FL Server 提出 training requirements
+  -> FL Client 在本地檢查資料、時間、運算、通訊及模型相容性
+  -> Client 接受或拒絕 preparation
+  -> FL Server 再從接受者中決定正式 participants
+```
+
+FL Server 使用與正式 training 相同的
+`POST /nnwdaf-mlmodeltraining/v1/subscriptions`，但設定
+`mLPreFlag=true`。以下是以 `UE_COMMUNICATION`、同一 Internal Group 與
+TAI1 為例的 schema-shaped request：
+
+```http
+POST /nnwdaf-mlmodeltraining/v1/subscriptions
+Content-Type: application/json
+```
+
+```json
+{
+  "mLEventSubscs": [
+    {
+      "mLEvent": "UE_COMMUNICATION",
+      "mLEventFilter": {
+        "networkArea": {
+          "tais": [
+            {
+              "plmnId": {
+                "mcc": "466",
+                "mnc": "92"
+              },
+              "tac": "000001"
+            }
+          ]
+        }
+      },
+      "modelInterInfo": "pymtlf-model-bundle-v1"
+    }
+  ],
+  "notifUri": "http://nwdaf-c/training/preparation-callback",
+  "notifCorreId": "prep-client-1",
+  "mlCorreId": "fl-process-001",
+  "mLPreFlag": true,
+  "eventReq": {
+    "immRep": true
+  },
+  "tgtRepUe": {
+    "intGroupIds": [
+      "group-G"
+    ]
+  },
+  "mLModelTrainInfos": [
+    {
+      "dataAvReq": {
+        "inpEvents": [
+          {
+            "upfEvent": "USER_DATA_USAGE_TRENDS"
+          }
+        ],
+        "minNumSamples": 1000,
+        "timeWindows": [
+          {
+            "startTime": "2026-07-01T00:00:00Z",
+            "stopTime": "2026-07-27T00:00:00Z"
+          }
+        ]
+      },
+      "timeAvReq": "PT10M"
+    }
+  ]
+}
+```
+
+這個 request 表達：
+
+| 欄位 | Preparation 語意 |
+| --- | --- |
+| `mLEventSubscs` | 要求 Client 支援的 Analytics ID、filter 與 model interoperability |
+| `mLPreFlag=true` | 只做能力／資料檢查，不執行 local training |
+| `tgtRepUe` | 本次 training data 對應的 target UE／group |
+| `dataAvReq.inpEvents` | 所需的 input event 類型；`DataAvReq` 的必要內容 |
+| `dataAvReq.minNumSamples` | Server 要求的最低樣本數 |
+| `dataAvReq.timeWindows` | 所需資料時間範圍 |
+| `timeAvReq` | Client 需要能配合的 FL availability time |
+| `mlCorreId` | 將各 Client 的 preparation resource 關聯到同一 FL process |
+| `notifUri`、`notifCorreId` | 非同步結果的 callback contract |
+| `eventReq.immRep` | 結果當下可用時，要求隨 create response 立即回報 |
+
+若 Server 還要確認 Client 能否下載及解析共同 base model，可另外提供
+`mLModelInfos`。只想確認 capability 與 data availability 時則可省略，
+避免 preparation 先產生不必要的 model transfer。
+
+Client 能滿足要求時，Stage 3 建立 resource 並回：
+
+```http
+HTTP/1.1 201 Created
+Location: /nnwdaf-mlmodeltraining/v1/subscriptions/prep-sub-1
+Content-Type: application/json
+```
+
+Response body 是建立後的 `NwdafMLModelTrainSubsc` representation；至少
+仍會包含 request 的必要 subscription fields。若 `eventReq` 要求
+immediate reporting 且結果已可用，response 還可在 `immReport` 中包含
+`NwdafMLModelTrainNotif`：
+
+```json
+{
+  "mLEventSubscs": [
+    {
+      "mLEvent": "UE_COMMUNICATION",
+      "mLEventFilter": {
+        "networkArea": {
+          "tais": [
+            {
+              "plmnId": {
+                "mcc": "466",
+                "mnc": "92"
+              },
+              "tac": "000001"
+            }
+          ]
+        }
+      },
+      "modelInterInfo": "pymtlf-model-bundle-v1"
+    }
+  ],
+  "notifUri": "http://nwdaf-c/training/preparation-callback",
+  "notifCorreId": "prep-client-1",
+  "mlCorreId": "fl-process-001",
+  "mLPreFlag": true,
+  "eventReq": {
+    "immRep": true
+  },
+  "immReport": {
+    "notifCorreId": "prep-client-1",
+    "mlCorreId": "fl-process-001",
+    "statusReport": {
+      "trainInDataInfo": {
+        "areaInfo": {
+          "tais": [
+            {
+              "plmnId": {
+                "mcc": "466",
+                "mnc": "92"
+              },
+              "tac": "000001"
+            }
+          ]
+        },
+        "samplRatio": 100
+      }
+    }
+  }
+}
+```
+
+`NwdafMLModelTrainSubsc` 與 `NwdafMLModelTrainNotif` 都沒有標準
+`join: true/false` 欄位。對單一 event 的簡化判讀為：
+
+```text
+201 Created
+  -> Client 接受 preparation，表示目前能且願意加入候選集合
+  -> 不代表 Server 已將它選入最終 participant set
+
+403 / 500
+  -> Client 無法接受本次 preparation
+```
+
+若 Client 無法滿足 training requirements，可回：
+
+```http
+HTTP/1.1 403 Forbidden
+Content-Type: application/problem+json
+```
+
+```json
+{
+  "status": 403,
+  "cause": "ML_MODEL_TRAINING_REQS_NOT_MET",
+  "detail": "The requested training data or availability requirement cannot be met."
+}
+```
+
+其他標準 cause 包括 `ML_TRAINING_NOT_COMPLETE`、`OVERLOAD` 與
+`NOT_AVAILABLE_FOR_FL_PROCESS_ANYMORE`。若所有 requested events 都沒有
+可用 training，使用 `500` 與
+`UNAVAILABLE_ML_MODEL_TRAINING_FOR_ALLEVENTS`。多 event request 只有部分
+失敗時，成功 representation 可透過 `failEventReports` 表達失敗項目。
+
+Preparation response 也不是完整的資源盤點介面：
+
+- `TrainDataInfo` 可回報 area、sampling ratio 及資料各維度 min/max；
+- 它沒有 exact available sample count；
+- 它沒有 GPU、RAM、CPU、頻寬或其他通用 compute capability schema；
+- `minNumSamples` 是 Server 的需求，Client 接受 request 代表它判斷可滿足，
+  不等於 response 直接回傳精確數量；
+- 真正用於 sample-weighted FedAvg 的 exact training sample count，仍需
+  由每輪 local model artifact agreement 提供。
+
+因此第一版實作可將 preparation 結果簡化成 `201 = eligible candidate`、
+`403/500 = rejected`，再由 FL Server 等待所有候選回覆後固定正式
+participant set。
+
 ### 7.6 每輪 execution
 
 一個典型 round：
