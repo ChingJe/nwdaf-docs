@@ -46,3 +46,11 @@ This directory records deterministic conversion and validation results for the c
 - `additional-ts29122-ts29576-build.json`: build and asset statistics for this extension.
 - `deterministic-corrections.yaml`: heading and structure corrections.
 - `CONVERSION_WORKFLOW.md`: reproducible conversion process.
+
+## TS 29.552 and TS 29.574 integration
+
+- TS 29.552 V18.7.0 and TS 29.574 V18.12.0 are included in full.
+- Both native DOCX sources were independently extracted with `docx2txt`; modal verbs and NOTE/EXAMPLE markers are recorded in `text-cross-check.json`.
+- TS 29.574 official OpenAPI attachments are retained byte-for-byte.
+- TS 29.552 signalling diagrams and TS 29.574 service/resource diagrams retain original vectors and embedded Visio/OLE payloads, with PNG previews where rendering succeeded.
+- Annex OpenAPI bodies are not duplicated into Markdown when exact official YAML attachments are available.

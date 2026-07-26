@@ -313,6 +313,35 @@ files:
   - TS29514_Npcf_PolicyAuthorization.yaml
   - TS29571_CommonData.yaml
   - TS29572_Nlmf_Location.yaml
+- file: TS29574_Ndccf_ContextManagement.yaml
+  sha256: a38daf185dacf25d8fe56e2864b68313776b71165966d457f6e8502bf1d8497b
+  title: Ndccf_ContextManagement
+  external_docs_description: 3GPP TS 29.574 V18.11.0; 5G System; Data Collection Coordination Services; Stage 3.
+  external_refs:
+  - TS29520_Nnwdaf_EventsSubscription.yaml
+  - TS29571_CommonData.yaml
+  - TS29575_Nadrf_DataManagement.yaml
+- file: TS29574_Ndccf_DataManagement.yaml
+  sha256: c2c21919dbd725e2c1b682b9b73d704606ccdf9fecc1b6726e9182b82924a588
+  title: Ndccf_DataManagement
+  external_docs_description: 3GPP TS 29.574 V18.11.0; 5G System; Data Collection Coordination Services; Stage 3.
+  external_refs:
+  - TS29122_CommonData.yaml
+  - TS29503_Nudm_EE.yaml
+  - TS29508_Nsmf_EventExposure.yaml
+  - TS29510_Nnrf_NFManagement.yaml
+  - TS29515_Ngmlc_Location.yaml
+  - TS29517_Naf_EventExposure.yaml
+  - TS29518_Namf_EventExposure.yaml
+  - TS29520_Nnwdaf_DataManagement.yaml
+  - TS29520_Nnwdaf_EventsSubscription.yaml
+  - TS29536_Nnsacf_SliceEventExposure.yaml
+  - TS29554_Npcf_BDTPolicyControl.yaml
+  - TS29564_Nupf_EventExposure.yaml
+  - TS29571_CommonData.yaml
+  - TS29575_Nadrf_DataManagement.yaml
+  - TS29576_Nmfaf_3caDataManagement.yaml
+  - TS29591_Nnef_EventExposure.yaml
 - file: TS29575_Nadrf_DataManagement.yaml
   sha256: 1f86235326f0417356a11374bb86cf628af97cb4954f03c9c48af609e764f8d7
   title: Nadrf_DataManagement
@@ -354,8 +383,8 @@ files:
   external_refs:
   - TS29571_CommonData.yaml
   - TS29574_Ndccf_DataManagement.yaml
-included_count: 36
-unresolved_external_refs:
+included_count: 38
+unresolved_external_dependencies:
 - TS29503_Nudm_EE.yaml
 - TS29503_Nudm_SDM.yaml
 - TS29503_Nudm_UECM.yaml
@@ -374,5 +403,4 @@ unresolved_external_refs:
 - TS29565_Ntsctsf_QoSandTSCAssistance.yaml
 - TS29572_Nlmf_Location.yaml
 - TS29573_N32_Handshake.yaml
-- TS29574_Ndccf_DataManagement.yaml
 - TS29591_Nnef_EventExposure.yaml

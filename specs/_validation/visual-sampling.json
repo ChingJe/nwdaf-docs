@@ -56,6 +56,48 @@
       "topic": "MFAF service architecture and consumers",
       "result": "pass",
       "observations": "MFAF, service name and consumer NF labels are legible."
+    },
+    {
+      "spec": "TS 29.552",
+      "asset": "assets/rendered/image7.png",
+      "topic": "NWDAF analytics subscription signalling",
+      "result": "pass",
+      "observations": "Participants, service-operation arrows and request/response ordering are legible; no clipping observed."
+    },
+    {
+      "spec": "TS 29.552",
+      "asset": "assets/rendered/image23.png",
+      "topic": "DCCF-assisted analytics/data signalling",
+      "result": "pass",
+      "observations": "Multi-participant sequence flow and labels are rendered without missing lines."
+    },
+    {
+      "spec": "TS 29.552",
+      "asset": "assets/rendered/image49.png",
+      "topic": "NWDAF registration in UDM signalling",
+      "result": "pass",
+      "observations": "Registration request and response sequence is clearly readable."
+    },
+    {
+      "spec": "TS 29.574",
+      "asset": "assets/rendered/image5.png",
+      "topic": "DCCF analytics subscription creation",
+      "result": "pass",
+      "observations": "POST request and 201 Created response are legible and correctly oriented."
+    },
+    {
+      "spec": "TS 29.574",
+      "asset": "assets/rendered/image18.png",
+      "topic": "Ndccf_DataManagement resource structure",
+      "result": "pass",
+      "observations": "API root and analytics/data subscription resource hierarchy are legible."
+    },
+    {
+      "spec": "TS 29.574",
+      "asset": "assets/rendered/image20.png",
+      "topic": "Ndccf_ContextManagement resource structure",
+      "result": "pass",
+      "observations": "Data-collection-profile resource hierarchy and identifiers are legible."
     }
   ],
   "limitations": [

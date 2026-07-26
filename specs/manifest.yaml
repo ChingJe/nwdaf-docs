@@ -72,6 +72,15 @@ specifications:
   manifest: TS 29.520/manifest.yaml
   source_archive: 29520-ie0.zip
   source_archive_sha256: 4937d4ffcdc8760cac3dd990b10d5c0beb722f9eab26d94ce4b1f296287057c1
+- id: TS-29.552
+  spec: TS 29.552
+  version: 18.7.0
+  scope: full
+  purpose: NWDAF Stage 3 signalling flows across analytics, data collection, ML, ADRF, DCCF and MFAF procedures
+  index: TS 29.552/README.md
+  manifest: TS 29.552/manifest.yaml
+  source_archive: 29552-i70.zip
+  source_archive_sha256: 3b3ac7f50c83fc234294ba8224344053f512207c1fc13ce6502230d2a8af7464
 - id: TS-29.564
   spec: TS 29.564
   version: 18.7.0
@@ -90,6 +99,15 @@ specifications:
   manifest: TS 29.571/manifest.yaml
   source_archive: 29571-ic0.zip
   source_archive_sha256: 29f6909073a6bb58ca961b25273b5fbf9fd9237751ff9ee223dca3f3cae02227
+- id: TS-29.574
+  spec: TS 29.574
+  version: 18.12.0
+  scope: full
+  purpose: DCCF data subscription, notification, fetch, transfer and data-collection-profile APIs
+  index: TS 29.574/README.md
+  manifest: TS 29.574/manifest.yaml
+  source_archive: 29574-ic0.zip
+  source_archive_sha256: 998a8efc37e75c103b3e3dbd24941467f1b2ebe283ad8e840937a2f001283e90
 - id: TS-29.575
   spec: TS 29.575
   version: 18.11.0

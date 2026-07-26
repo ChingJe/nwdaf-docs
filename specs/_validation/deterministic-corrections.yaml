@@ -967,6 +967,126 @@ corrections:
   type: promote-annex-heading
   original: '########  Annex B (informative): Change history'
   replacement: '# Annex B (informative): Change history'
+- spec: TS 29.552
+  line: 77
+  type: normalize-heading-whitespace
+  original: '#  Contents'
+  replacement: '# Contents'
+- spec: TS 29.552
+  line: 355
+  type: normalize-heading-whitespace
+  original: '#  1 Scope'
+  replacement: '# 1 Scope'
+- spec: TS 29.552
+  line: 2593
+  type: normalize-heading-whitespace
+  original: '### 5.8.3 Procedures related to UDM '
+  replacement: '### 5.8.3 Procedures related to UDM'
+- spec: TS 29.552
+  line: 2921
+  type: normalize-heading-level
+  original: '########  Annex A (informative): Change history'
+  replacement: '# Annex A (informative): Change history'
+- spec: TS 29.574
+  line: 77
+  type: normalize-heading-whitespace
+  original: '#  Contents'
+  replacement: '# Contents'
+- spec: TS 29.574
+  line: 459
+  type: normalize-heading-whitespace
+  original: '#  Foreword'
+  replacement: '# Foreword'
+- spec: TS 29.574
+  line: 523
+  type: normalize-heading-whitespace
+  original: '#  1 Scope'
+  replacement: '# 1 Scope'
+- spec: TS 29.574
+  line: 1581
+  type: normalize-heading-level
+  original: '##### 5.1.3.2.3.1 POST'
+  replacement: '###### 5.1.3.2.3.1 POST'
+- spec: TS 29.574
+  line: 1680
+  type: normalize-heading-level
+  original: '##### 5.1.3.3.3.1 PUT'
+  replacement: '###### 5.1.3.3.3.1 PUT'
+- spec: TS 29.574
+  line: 1842
+  type: normalize-heading-level
+  original: '##### 5.1.3.3.3.2 DELETE'
+  replacement: '###### 5.1.3.3.3.2 DELETE'
+- spec: TS 29.574
+  line: 2006
+  type: normalize-heading-level
+  original: '##### 5.1.3.4.3.1 POST'
+  replacement: '###### 5.1.3.4.3.1 POST'
+- spec: TS 29.574
+  line: 2104
+  type: normalize-heading-level
+  original: '##### 5.1.3.5.3.1 PUT'
+  replacement: '###### 5.1.3.5.3.1 PUT'
+- spec: TS 29.574
+  line: 2266
+  type: normalize-heading-level
+  original: '##### 5.1.3.5.3.2 DELETE'
+  replacement: '###### 5.1.3.5.3.2 DELETE'
+- spec: TS 29.574
+  line: 2569
+  type: normalize-heading-level
+  original: '##### 5.1.5.2.3.1 POST'
+  replacement: '###### 5.1.5.2.3.1 POST'
+- spec: TS 29.574
+  line: 2639
+  type: normalize-heading-level
+  original: '##### 5.1.5.3.3.1 POST'
+  replacement: '###### 5.1.5.3.3.1 POST'
+- spec: TS 29.574
+  line: 2796
+  type: normalize-heading-level
+  original: '##### 5.1.5.4.3.1 POST'
+  replacement: '###### 5.1.5.4.3.1 POST'
+- spec: TS 29.574
+  line: 4028
+  type: normalize-heading-level
+  original: '##### 5.2.3.2.3.1 POST'
+  replacement: '###### 5.2.3.2.3.1 POST'
+- spec: TS 29.574
+  line: 4112
+  type: normalize-heading-level
+  original: '##### 5.2.3.3.3.1 PUT'
+  replacement: '###### 5.2.3.3.3.1 PUT'
+- spec: TS 29.574
+  line: 4259
+  type: normalize-heading-level
+  original: '##### 5.2.3.3.3.2 DELETE'
+  replacement: '###### 5.2.3.3.3.2 DELETE'
+- spec: TS 29.574
+  line: 4600
+  type: normalize-heading-level
+  original: '########  Annex A (normative): OpenAPI specification'
+  replacement: '# Annex A (normative): OpenAPI specification'
+- spec: TS 29.574
+  line: 4602
+  type: normalize-heading-level
+  original: '# A.1 General'
+  replacement: '## A.1 General'
+- spec: TS 29.574
+  line: 4612
+  type: normalize-heading-level
+  original: '# A.2 Ndccf_DataManagement API'
+  replacement: '## A.2 Ndccf_DataManagement API'
+- spec: TS 29.574
+  line: 6984
+  type: normalize-heading-level
+  original: '# A.3 Ndccf_ContextManagement API'
+  replacement: '## A.3 Ndccf_ContextManagement API'
+- spec: TS 29.574
+  line: 7418
+  type: normalize-heading-level
+  original: '########  Annex B (informative): Change history'
+  replacement: '# Annex B (informative): Change history'
 full_extension_2026_07:
 - spec: TS 23.501
   line: 77

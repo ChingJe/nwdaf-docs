@@ -1,0 +1,610 @@
+spec: TS 29.552
+version: 18.7.0
+release: '18'
+source_archive: 29552-i70.zip
+source_document: 29552-i70.docx
+source_archive_sha256: 3b3ac7f50c83fc234294ba8224344053f512207c1fc13ce6502230d2a8af7464
+source_document_sha256: 6c12a650b021585e94301121de56e86f3435eb485e484fcb4c9410d7741a1add
+max_source_words_per_semantic_file_target: 4200
+clauses:
+- clause: document-information
+  title: Document information
+  path: 00 Document information.md
+  source_words: 260
+  kind: source-file
+- clause: contents
+  title: Contents
+  path: 01 Original contents.md
+  source_words: 917
+  kind: source-file
+- clause: foreword
+  title: Foreword
+  path: 02 Foreword.md
+  source_words: 491
+  kind: source-file
+- clause: '1'
+  title: 1 Scope
+  path: 1 Scope.md
+  source_words: 301
+  kind: source-file
+- clause: '2'
+  title: 2 References
+  path: 2 References.md
+  source_words: 654
+  kind: source-file
+- clause: '3'
+  title: 3 Definitions of terms, symbols and abbreviations
+  path: 3 Definitions of terms, symbols and abbreviations.md
+  source_words: 200
+  kind: source-file
+- clause: '3.1'
+  title: 3.1 Terms
+  path: 3 Definitions of terms, symbols and abbreviations.md
+  source_words: 44
+  kind: embedded-clause
+- clause: '3.2'
+  title: 3.2 Symbols
+  path: 3 Definitions of terms, symbols and abbreviations.md
+  source_words: 1
+  kind: embedded-clause
+- clause: '3.3'
+  title: 3.3 Abbreviations
+  path: 3 Definitions of terms, symbols and abbreviations.md
+  source_words: 155
+  kind: embedded-clause
+- clause: '4'
+  title: 4 Reference Architecture for Data Analytics
+  path: 4 Reference Architecture for Data Analytics.md
+  source_words: 905
+  kind: source-file
+- clause: '4.1'
+  title: 4.1 General
+  path: 4 Reference Architecture for Data Analytics.md
+  source_words: 176
+  kind: embedded-clause
+- clause: '4.2'
+  title: 4.2 Data Collection
+  path: 4 Reference Architecture for Data Analytics.md
+  source_words: 368
+  kind: embedded-clause
+- clause: '4.3'
+  title: 4.3 Analytics Exposure
+  path: 4 Reference Architecture for Data Analytics.md
+  source_words: 208
+  kind: embedded-clause
+- clause: '4.4'
+  title: 4.4 Data Storage and Retrieval
+  path: 4 Reference Architecture for Data Analytics.md
+  source_words: 46
+  kind: embedded-clause
+- clause: '4.5'
+  title: 4.5 Roaming architecture for data collection and analytics exposure
+  path: 4 Reference Architecture for Data Analytics.md
+  source_words: 107
+  kind: embedded-clause
+- clause: '5'
+  title: 5 Signalling Flows for the Network Data Analytics Framework
+  path: 5 Signalling Flows for the Network Data Analytics Framework/README.md
+  source_words: 40504
+  kind: navigation-directory
+- clause: '5.1'
+  title: 5.1 General
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.1 General.md
+  source_words: 64
+  kind: source-file
+- clause: '5.2'
+  title: 5.2 Analytics Exposure Procedures
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/README.md
+  source_words: 6796
+  kind: navigation-directory
+- clause: 5.2.1
+  title: 5.2.1 General
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.1 General.md
+  source_words: 23
+  kind: source-file
+- clause: 5.2.2
+  title: 5.2.2 Network data analytics Subscribe/Unsubscribe/Notify
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.2 Network data analytics
+    Subscribe Unsubscribe Notify.md
+  source_words: 923
+  kind: source-file
+- clause: 5.2.2.1
+  title: 5.2.2.1 Analytics Subscribe/Unsubscribe/Notify initiated by 5GC NFs, OAM or AFs
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.2 Network data analytics
+    Subscribe Unsubscribe Notify.md
+  source_words: 389
+  kind: embedded-clause
+- clause: 5.2.2.2
+  title: 5.2.2.2 Analytics Subscribe/Unsubscribe/Notify initiated by AFs via the NEF
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.2 Network data analytics
+    Subscribe Unsubscribe Notify.md
+  source_words: 534
+  kind: embedded-clause
+- clause: 5.2.3
+  title: 5.2.3 Network data analytics information request
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.3 Network data analytics
+    information request.md
+  source_words: 340
+  kind: source-file
+- clause: 5.2.3.1
+  title: 5.2.3.1 Analytics information request initiated by 5GC NFs, OAM or AFs
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.3 Network data analytics
+    information request.md
+  source_words: 142
+  kind: embedded-clause
+- clause: 5.2.3.2
+  title: 5.2.3.2 Analytics information request initiated by AFs via the NEF
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.3 Network data analytics
+    information request.md
+  source_words: 198
+  kind: embedded-clause
+- clause: 5.2.4
+  title: 5.2.4 Analytics Exposure via DCCF
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.4 Analytics Exposure
+    via DCCF.md
+  source_words: 1772
+  kind: source-file
+- clause: 5.2.5
+  title: 5.2.5 Analytics Exposure via DCCF and MFAF
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.5 Analytics Exposure
+    via DCCF and MFAF.md
+  source_words: 2305
+  kind: source-file
+- clause: 5.2.6
+  title: 5.2.6 Procedure for Analytics Exposure in Roaming Case
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.6 Procedure for
+    Analytics Exposure in Roaming Case.md
+  source_words: 1433
+  kind: source-file
+- clause: 5.2.6.1
+  title: 5.2.6.1 Analytics Exposure from HPLMN to VPLMN for inbound roaming users
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.6 Procedure for
+    Analytics Exposure in Roaming Case.md
+  source_words: 689
+  kind: embedded-clause
+- clause: 5.2.6.2
+  title: 5.2.6.2 Analytics Exposure from VPLMN to HPLMN for outbound roaming users
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.6 Procedure for
+    Analytics Exposure in Roaming Case.md
+  source_words: 744
+  kind: embedded-clause
+- clause: '5.3'
+  title: 5.3 Analytics Aggregation from Multiple NWDAFs
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.3 Analytics Aggregation from Multiple NWDAFs.md
+  source_words: 978
+  kind: source-file
+- clause: 5.3.1
+  title: 5.3.1 General
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.3 Analytics Aggregation from Multiple NWDAFs.md
+  source_words: 123
+  kind: embedded-clause
+- clause: 5.3.2
+  title: 5.3.2 Analytics aggregation with provisioning of Area of Interest
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.3 Analytics Aggregation from Multiple NWDAFs.md
+  source_words: 422
+  kind: embedded-clause
+- clause: 5.3.3
+  title: 5.3.3 Analytics aggregation without provisioning of Area of Interest
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.3 Analytics Aggregation from Multiple NWDAFs.md
+  source_words: 433
+  kind: embedded-clause
+- clause: '5.4'
+  title: 5.4 Procedures for Analytics Transferring
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.4 Procedures for Analytics Transferring.md
+  source_words: 2502
+  kind: source-file
+- clause: 5.4.1
+  title: 5.4.1 Analytics context transfer initiated by target NWDAF selected by the NWDAF service consumer
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.4 Procedures for Analytics Transferring.md
+  source_words: 706
+  kind: embedded-clause
+- clause: 5.4.2
+  title: 5.4.2 Analytics Subscription Transfer initiated by source NWDAF
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.4 Procedures for Analytics Transferring.md
+  source_words: 1158
+  kind: embedded-clause
+- clause: 5.4.3
+  title: 5.4.3 Prepared analytics subscription transfer
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.4 Procedures for Analytics Transferring.md
+  source_words: 638
+  kind: embedded-clause
+- clause: '5.5'
+  title: 5.5 Data Collection
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/README.md
+  source_words: 6944
+  kind: navigation-directory
+- clause: 5.5.1
+  title: 5.5.1 Procedure for Data Collection from NFs
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/5.5.1 Procedure for Data Collection
+    from NFs.md
+  source_words: 861
+  kind: source-file
+- clause: 5.5.1.1
+  title: 5.5.1.1 Data Collection from NFs
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/5.5.1 Procedure for Data Collection
+    from NFs.md
+  source_words: 861
+  kind: embedded-clause
+- clause: 5.5.2
+  title: 5.5.2 Data collection profile registration
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/5.5.2 Data collection profile registration.md
+  source_words: 392
+  kind: source-file
+- clause: 5.5.3
+  title: 5.5.3 Procedure for Data Collection using DCCF
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/5.5.3 Procedure for Data Collection
+    using DCCF/README.md
+  source_words: 5010
+  kind: navigation-directory
+- clause: 5.5.3.1
+  title: 5.5.3.1 Data Collection via DCCF
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/5.5.3 Procedure for Data Collection
+    using DCCF/5.5.3.1 Data Collection via DCCF.md
+  source_words: 2262
+  kind: source-file
+- clause: 5.5.3.2
+  title: 5.5.3.2 Data Collection via Messaging Framework
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/5.5.3 Procedure for Data Collection
+    using DCCF/5.5.3.2 Data Collection via Messaging Framework.md
+  source_words: 2748
+  kind: source-file
+- clause: 5.5.4
+  title: 5.5.4 Procedure for Data Collection in Roaming Case
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/5.5.4 Procedure for Data Collection
+    in Roaming Case.md
+  source_words: 681
+  kind: source-file
+- clause: 5.5.4.1
+  title: 5.5.4.1 Data Collection by H-RE-NWDAF from V-RE-NWDAF for outbound roaming users
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/5.5.4 Procedure for Data Collection
+    in Roaming Case.md
+  source_words: 347
+  kind: embedded-clause
+- clause: 5.5.4.2
+  title: 5.5.4.2 Data Collection by V-RE-NWDAF from H-RE-NWDAF for inbound roaming users
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/5.5.4 Procedure for Data Collection
+    in Roaming Case.md
+  source_words: 334
+  kind: embedded-clause
+- clause: '5.6'
+  title: 5.6 ML Model provisioning procedures
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.6 ML Model provisioning procedures.md
+  source_words: 515
+  kind: source-file
+- clause: 5.6.1
+  title: 5.6.1 General
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.6 ML Model provisioning procedures.md
+  source_words: 72
+  kind: embedded-clause
+- clause: 5.6.2
+  title: 5.6.2 ML Model Subscribe/Unsubscribe/Notify procedure
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.6 ML Model provisioning procedures.md
+  source_words: 443
+  kind: embedded-clause
+- clause: 5.6A
+  title: 5.6A ML Model Training procedures
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.6A ML Model Training procedures.md
+  source_words: 535
+  kind: source-file
+- clause: 5.6A.1
+  title: 5.6A.1 General
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.6A ML Model Training procedures.md
+  source_words: 59
+  kind: embedded-clause
+- clause: 5.6A.2
+  title: 5.6A.2 ML Model Training Subscribe/Unsubscribe/Notify procedure
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.6A ML Model Training procedures.md
+  source_words: 476
+  kind: embedded-clause
+- clause: '5.7'
+  title: 5.7 Procedures for Specific Network Data Analytics
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/README.md
+  source_words: 15766
+  kind: navigation-directory
+- clause: 5.7.1
+  title: 5.7.1 General
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.1
+    General.md
+  source_words: 0
+  kind: source-file
+- clause: 5.7.2
+  title: 5.7.2 Network Slice (Instance) load level Analytics
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.2
+    Network Slice (Instance) load level Analytics.md
+  source_words: 944
+  kind: source-file
+- clause: 5.7.3
+  title: 5.7.3 Observed Service Experience Analytics
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.3
+    Observed Service Experience Analytics.md
+  source_words: 1233
+  kind: source-file
+- clause: 5.7.4
+  title: 5.7.4 NF load Analytics
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.4
+    NF load Analytics.md
+  source_words: 969
+  kind: source-file
+- clause: 5.7.5
+  title: 5.7.5 Network Performance Analytics
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.5
+    Network Performance Analytics.md
+  source_words: 558
+  kind: source-file
+- clause: 5.7.6
+  title: 5.7.6 UE Mobility Analytics
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.6
+    UE Mobility Analytics.md
+  source_words: 737
+  kind: source-file
+- clause: 5.7.7
+  title: 5.7.7 UE Communication Analytics
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.7
+    UE Communication Analytics.md
+  source_words: 941
+  kind: source-file
+- clause: 5.7.8
+  title: 5.7.8 Expected UE behavioural Analytics
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.8
+    Expected UE behavioural Analytics.md
+  source_words: 329
+  kind: source-file
+- clause: 5.7.9
+  title: 5.7.9 Abnormal UE behavioural Analytics
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.9
+    Abnormal UE behavioural Analytics.md
+  source_words: 408
+  kind: source-file
+- clause: 5.7.10
+  title: 5.7.10 User Data Congestion Analytics
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.10
+    User Data Congestion Analytics.md
+  source_words: 918
+  kind: source-file
+- clause: 5.7.11
+  title: 5.7.11 QoS Sustainability Analytics
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.11
+    QoS Sustainability Analytics.md
+  source_words: 817
+  kind: source-file
+- clause: 5.7.12
+  title: 5.7.12 Dispersion Analytics
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.12
+    Dispersion Analytics.md
+  source_words: 912
+  kind: source-file
+- clause: 5.7.13
+  title: 5.7.13 WLAN Performance Analytics
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.13
+    WLAN Performance Analytics.md
+  source_words: 562
+  kind: source-file
+- clause: 5.7.14
+  title: 5.7.14 Session Management Congestion Control Experience Analytics
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.14
+    Session Management Congestion Control Experience Analytics.md
+  source_words: 352
+  kind: source-file
+- clause: 5.7.15
+  title: 5.7.15 Redundant Transmission Experience Analytics
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.15
+    Redundant Transmission Experience Analytics.md
+  source_words: 1015
+  kind: source-file
+- clause: 5.7.16
+  title: 5.7.16 DN Performance Analytics
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.16
+    DN Performance Analytics.md
+  source_words: 675
+  kind: source-file
+- clause: 5.7.17
+  title: 5.7.17 PFD Determination Analytics
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.17
+    PFD Determination Analytics.md
+  source_words: 514
+  kind: source-file
+- clause: 5.7.18
+  title: 5.7.18 E2E data volume transfer time analytics
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.18
+    E2E data volume transfer time analytics.md
+  source_words: 1284
+  kind: source-file
+- clause: 5.7.19
+  title: 5.7.19 PDU Session Traffic Analytics
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.19
+    PDU Session Traffic Analytics.md
+  source_words: 582
+  kind: source-file
+- clause: 5.7.20
+  title: 5.7.20 Relative Proximity Analytics
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.20
+    Relative Proximity Analytics.md
+  source_words: 828
+  kind: source-file
+- clause: 5.7.21
+  title: 5.7.21 Movement Behaviour Analytics
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.21
+    Movement Behaviour Analytics.md
+  source_words: 406
+  kind: source-file
+- clause: 5.7.22
+  title: 5.7.22 Location Accuracy Analytics
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.22
+    Location Accuracy Analytics.md
+  source_words: 782
+  kind: source-file
+- clause: '5.8'
+  title: 5.8 Procedures for NWDAF Discovery and Selection
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.8 Procedures for NWDAF Discovery and Selection.md
+  source_words: 1637
+  kind: source-file
+- clause: 5.8.1
+  title: 5.8.1 General
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.8 Procedures for NWDAF Discovery and Selection.md
+  source_words: 60
+  kind: embedded-clause
+- clause: 5.8.2
+  title: 5.8.2 Procedures related to NRF
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.8 Procedures for NWDAF Discovery and Selection.md
+  source_words: 371
+  kind: embedded-clause
+- clause: 5.8.2.1
+  title: 5.8.2.1 General
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.8 Procedures for NWDAF Discovery and Selection.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.8.2.2
+  title: 5.8.2.2 NWDAF (De-)Registration in NRF
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.8 Procedures for NWDAF Discovery and Selection.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.8.2.3
+  title: 5.8.2.3 Consumer discovery and selection of NWDAF in NRF
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.8 Procedures for NWDAF Discovery and Selection.md
+  source_words: 354
+  kind: embedded-clause
+- clause: 5.8.3
+  title: 5.8.3 Procedures related to UDM
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.8 Procedures for NWDAF Discovery and Selection.md
+  source_words: 924
+  kind: embedded-clause
+- clause: 5.8.3.1
+  title: 5.8.3.1 General
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.8 Procedures for NWDAF Discovery and Selection.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.8.3.2
+  title: 5.8.3.2 NWDAF containing AnLF Registration/Deregistration in UDM
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.8 Procedures for NWDAF Discovery and Selection.md
+  source_words: 721
+  kind: embedded-clause
+- clause: 5.8.3.2.1
+  title: 5.8.3.2.1 NWDAF containing AnLF Registration in UDM
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.8 Procedures for NWDAF Discovery and Selection.md
+  source_words: 207
+  kind: embedded-clause
+- clause: 5.8.3.2.2
+  title: 5.8.3.2.2 NWDAF containing AnLF Update of Registration in UDM
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.8 Procedures for NWDAF Discovery and Selection.md
+  source_words: 278
+  kind: embedded-clause
+- clause: 5.8.3.2.3
+  title: 5.8.3.2.3 NWDAF containing AnLF De-Registration in UDM
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.8 Procedures for NWDAF Discovery and Selection.md
+  source_words: 236
+  kind: embedded-clause
+- clause: 5.8.3.3
+  title: 5.8.3.3 Consumer discovery and selection of NWDAF containing AnLF in UDM
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.8 Procedures for NWDAF Discovery and Selection.md
+  source_words: 203
+  kind: embedded-clause
+- clause: 5.8.4
+  title: 5.8.4 Procedures for PCF learning NWDAF IDs for served UEs
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.8 Procedures for NWDAF Discovery and Selection.md
+  source_words: 282
+  kind: embedded-clause
+- clause: '5.9'
+  title: 5.9 Analytics Data Repository procedures
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.9 Analytics Data Repository procedures.md
+  source_words: 1461
+  kind: source-file
+- clause: 5.9.1
+  title: 5.9.1 General
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.9 Analytics Data Repository procedures.md
+  source_words: 28
+  kind: embedded-clause
+- clause: 5.9.2
+  title: 5.9.2 Historical Data and Analytics Storage/Retrieval/Deletion procedure
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.9 Analytics Data Repository procedures.md
+  source_words: 489
+  kind: embedded-clause
+- clause: 5.9.3
+  title: 5.9.3 Historical Data and Analytics Storage via Notifications
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.9 Analytics Data Repository procedures.md
+  source_words: 944
+  kind: embedded-clause
+- clause: '5.10'
+  title: 5.10 Federated Learning among Multiple NWDAFs
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.10 Federated Learning among Multiple NWDAFs.md
+  source_words: 2939
+  kind: source-file
+- clause: 5.10.1
+  title: 5.10.1 General
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.10 Federated Learning among Multiple NWDAFs.md
+  source_words: 179
+  kind: embedded-clause
+- clause: 5.10.2
+  title: 5.10.2 Procedures related to Federated Learning
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.10 Federated Learning among Multiple NWDAFs.md
+  source_words: 2760
+  kind: embedded-clause
+- clause: 5.10.2.1
+  title: 5.10.2.1 General Procedure for Federated Learning among Multiple NWDAF Instances
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.10 Federated Learning among Multiple NWDAFs.md
+  source_words: 1603
+  kind: embedded-clause
+- clause: 5.10.2.2
+  title: 5.10.2.2 Preparation Procedure for Federated Learning
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.10 Federated Learning among Multiple NWDAFs.md
+  source_words: 403
+  kind: embedded-clause
+- clause: 5.10.2.3
+  title: 5.10.2.3 Procedure for Maintenance of Federated Learning Process
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.10 Federated Learning among Multiple NWDAFs.md
+  source_words: 754
+  kind: embedded-clause
+- clause: '5.11'
+  title: 5.11 Analytics Accuracy Monitoring Procedures
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.11 Analytics Accuracy Monitoring Procedures.md
+  source_words: 67
+  kind: source-file
+- clause: 5.11.1
+  title: 5.11.1 General
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.11 Analytics Accuracy Monitoring Procedures.md
+  source_words: 67
+  kind: embedded-clause
+- clause: '5.12'
+  title: 5.12 ML Model Accuracy Monitoring Procedures
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.12 ML Model Accuracy Monitoring Procedures.md
+  source_words: 68
+  kind: source-file
+- clause: 5.12.1
+  title: 5.12.1 General
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.12 ML Model Accuracy Monitoring Procedures.md
+  source_words: 68
+  kind: embedded-clause
+- clause: '5.13'
+  title: 5.13 DCCF Change Procedures
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.13 DCCF Change Procedures.md
+  source_words: 232
+  kind: source-file
+- clause: 5.13.1
+  title: 5.13.1 DCCF (re-)selection initiated by the data consumer
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.13 DCCF Change Procedures.md
+  source_words: 232
+  kind: embedded-clause
+- clause: Annex A
+  title: 'Annex A (informative): Change history'
+  path: Annex A (informative) Change history/README.md
+  source_words: 1701
+  kind: navigation-directory
+- clause: Annex A-2021
+  title: 'Annex A (informative): Change history — 2021'
+  path: Annex A (informative) Change history/2021.md
+  source_words: 106
+  kind: source-file
+- clause: Annex A-2022
+  title: 'Annex A (informative): Change history — 2022'
+  path: Annex A (informative) Change history/2022.md
+  source_words: 543
+  kind: source-file
+- clause: Annex A-2023
+  title: 'Annex A (informative): Change history — 2023'
+  path: Annex A (informative) Change history/2023.md
+  source_words: 679
+  kind: source-file
+- clause: Annex A-2024
+  title: 'Annex A (informative): Change history — 2024'
+  path: Annex A (informative) Change history/2024.md
+  source_words: 409
+  kind: source-file

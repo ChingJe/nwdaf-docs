@@ -431,5 +431,79 @@
         }
       }
     }
-  ]
+  ],
+  "TS 29.552": {
+    "pandoc_tokens": 49140,
+    "independent_tokens": 46176,
+    "token_multiset_overlap_against_pandoc": 0.9394383394383394,
+    "token_multiset_overlap_against_independent": 0.9997401247401247,
+    "12_token_windows_pandoc": 36283,
+    "12_token_windows_independent": 34033,
+    "12_token_window_overlap": 30648,
+    "12_token_window_overlap_pandoc": 0.8446931069646942,
+    "12_token_window_overlap_independent": 0.9005377133958217,
+    "modal_and_marker_counts_pandoc": {
+      "shall": 90,
+      "should": 9,
+      "may": 325,
+      "must": 7,
+      "note": 104,
+      "example": 2,
+      "shall not": 5,
+      "should not": 2,
+      "may not": 1,
+      "must not": 1
+    },
+    "modal_and_marker_counts_docx2txt": {
+      "shall": 90,
+      "should": 9,
+      "may": 325,
+      "must": 7,
+      "note": 104,
+      "example": 2,
+      "shall not": 5,
+      "should not": 2,
+      "may not": 1,
+      "must not": 1
+    },
+    "marker_counts_equal": true,
+    "independent_extractor": "docx2txt"
+  },
+  "TS 29.574": {
+    "pandoc_tokens": 40216,
+    "independent_tokens": 33056,
+    "token_multiset_overlap_against_pandoc": 0.8210911080167098,
+    "token_multiset_overlap_against_independent": 0.9989411907066795,
+    "12_token_windows_pandoc": 28235,
+    "12_token_windows_independent": 24376,
+    "12_token_window_overlap": 18289,
+    "12_token_window_overlap_pandoc": 0.6477421639808748,
+    "12_token_window_overlap_independent": 0.7502871677059403,
+    "modal_and_marker_counts_pandoc": {
+      "shall": 282,
+      "should": 15,
+      "may": 44,
+      "must": 2,
+      "note": 145,
+      "example": 12,
+      "shall not": 11,
+      "should not": 1,
+      "may not": 1,
+      "must not": 1
+    },
+    "modal_and_marker_counts_docx2txt": {
+      "shall": 282,
+      "should": 15,
+      "may": 44,
+      "must": 2,
+      "note": 145,
+      "example": 12,
+      "shall not": 11,
+      "should not": 1,
+      "may not": 1,
+      "must not": 1
+    },
+    "marker_counts_equal": true,
+    "independent_extractor": "docx2txt"
+  }
 }

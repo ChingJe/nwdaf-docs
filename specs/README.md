@@ -14,8 +14,10 @@ This corpus is organized for progressive loading by development agents. All list
 | [TS 29.508](TS%2029.508/README.md) | 18.11.0 | Full | SMF Session Management Event Exposure API |
 | [TS 29.510](TS%2029.510/README.md) | 18.11.0 | Full | NRF management, discovery, access token and bootstrapping APIs |
 | [TS 29.520](TS%2029.520/README.md) | 18.14.0 | Full | NWDAF Stage 3 APIs and data models |
+| [TS 29.552](TS%2029.552/README.md) | 18.7.0 | Full | NWDAF Stage 3 signalling flows across analytics, data collection, ML, ADRF, DCCF and MFAF procedures |
 | [TS 29.564](TS%2029.564/README.md) | 18.7.0 | Full | UPF Event Exposure and UE private IP/identifier APIs |
 | [TS 29.571](TS%2029.571/README.md) | 18.12.0 | Full | Common SBI data types and ProblemDetails |
+| [TS 29.574](TS%2029.574/README.md) | 18.12.0 | Full | DCCF data subscription, notification, fetch, transfer and data-collection-profile APIs |
 | [TS 29.575](TS%2029.575/README.md) | 18.11.0 | Full | ADRF data/analytics and ML model management APIs |
 | [TS 29.576](TS%2029.576/README.md) | 18.8.0 | Full | MFAF configuration, fetch and notification services for messaging-framework-based data delivery |
 | [Official OpenAPI YAML](openapi/README.md) | Package-specific | Exact attachments | Machine-readable API paths and schemas |
@@ -43,9 +45,11 @@ This corpus is organized for progressive loading by development agents. All list
 2. Use TS 23.501 for ADRF architecture, discovery and selection.
 3. Use TS 29.510 to discover the ADRF and select its service endpoint.
 4. Use TS 29.575 and its exact YAML attachments for Nadrf_DataManagement and Nadrf_MLModelManagement.
-5. Use TS 29.576 for MFAF configuration, FetchInstruction, fetch and notification paths when messaging-framework delivery is involved.
-6. Use TS 29.122 for shared northbound data types reused by the NWDAF/NRF/SMF/ADRF OpenAPI corpus.
-7. Use TS 29.571 and TS 29.500 for common schemas and HTTP behaviour.
+5. Use TS 29.574 and its exact OpenAPI attachments when DCCF coordinates subscriptions, notifications, fetch or data-collection profiles.
+6. Use TS 29.576 for MFAF configuration, FetchInstruction, fetch and notification paths when messaging-framework delivery is involved.
+7. Use TS 29.552 to trace the concrete Stage 3 signalling sequence across NWDAF, DCCF, MFAF, ADRF and data sources.
+8. Use TS 29.122 for shared northbound data types reused by the NWDAF/NRF/SMF/ADRF OpenAPI corpus.
+9. Use TS 29.571 and TS 29.500 for common schemas and HTTP behaviour.
 
 ## Fidelity boundary
 

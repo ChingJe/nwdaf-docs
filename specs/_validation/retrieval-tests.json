@@ -1,0 +1,91 @@
+{
+  "tests": [
+    {
+      "query": "TS 29.552 analytics exposure",
+      "needle": "Network data analytics Subscribe/Unsubscribe/Notify",
+      "passed": true,
+      "matches": [
+        "TS 29.552/manifest.yaml",
+        "TS 29.552/01 Original contents.md",
+        "TS 29.552/5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.2 Network data analytics Subscribe Unsubscribe Notify.md",
+        "TS 29.552/5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/README.md"
+      ]
+    },
+    {
+      "query": "TS 29.552 DCCF data collection",
+      "needle": "Data Collection via DCCF",
+      "passed": true,
+      "matches": [
+        "TS 23.288/manifest.yaml",
+        "TS 23.288/01 Original contents.md",
+        "TS 29.552/manifest.yaml",
+        "TS 29.552/01 Original contents.md",
+        "TS 29.552/Annex A (informative) Change history/2022.md",
+        "TS 29.552/5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/5.5.3 Procedure for Data Collection using DCCF/5.5.3.1 Data Collection via DCCF.md",
+        "TS 29.552/5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/5.5.3 Procedure for Data Collection using DCCF/README.md",
+        "TS 29.552/5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/5.5.3 Procedure for Data Collection using DCCF/5.5.3.2 Data Collection via Messaging Framework.md",
+        "TS 23.288/Annex B (informative) Change history/2023.md",
+        "TS 23.288/Annex B (informative) Change history/2022.md"
+      ]
+    },
+    {
+      "query": "TS 29.552 ADRF",
+      "needle": "Historical Data and Analytics Storage/Retrieval/Deletion procedure",
+      "passed": true,
+      "matches": [
+        "TS 29.552/manifest.yaml",
+        "TS 29.552/01 Original contents.md",
+        "TS 29.552/5 Signalling Flows for the Network Data Analytics Framework/5.9 Analytics Data Repository procedures.md"
+      ]
+    },
+    {
+      "query": "TS 29.574 subscribe operation",
+      "needle": "Ndccf_DataManagement_Subscribe service operation",
+      "passed": true,
+      "matches": [
+        "TS 23.288/8 DCCF Services.md",
+        "TS 23.288/manifest.yaml",
+        "TS 23.288/01 Original contents.md",
+        "TS 29.574/manifest.yaml",
+        "TS 29.574/01 Original contents.md",
+        "TS 29.574/Annex B (informative) Change history/2022.md",
+        "TS 29.574/4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.4 Ndccf_DataManagement_Notify service operation.md",
+        "TS 29.574/4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/README.md",
+        "TS 29.574/4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.2 Ndccf_DataManagement_Subscribe service operation/4.2.2.2.3 Update subscription for analytic notifications.md",
+        "TS 29.574/4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.2 Ndccf_DataManagement_Subscribe service operation/4.2.2.2.5 Update subscription for data notifications.md"
+      ]
+    },
+    {
+      "query": "TS 29.574 context management",
+      "needle": "Ndccf_ContextManagement_Register service operation",
+      "passed": true,
+      "matches": [
+        "TS 23.288/8 DCCF Services.md",
+        "TS 23.288/manifest.yaml",
+        "TS 23.288/01 Original contents.md",
+        "TS 29.574/manifest.yaml",
+        "TS 29.574/01 Original contents.md",
+        "TS 29.574/4 Services offered by the DCCF/4.3 Ndccf_ContextManagement Service.md",
+        "TS 29.552/5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/5.5.2 Data collection profile registration.md"
+      ]
+    },
+    {
+      "query": "OpenAPI DCCF data management",
+      "needle": "TS29574_Ndccf_DataManagement.yaml",
+      "passed": true,
+      "matches": [
+        "openapi/TS29520_Nnwdaf_MLModelTraining.yaml",
+        "openapi/TS29520_Nnwdaf_RoamingData.yaml",
+        "openapi/manifest.yaml",
+        "openapi/TS29520_Nnwdaf_DataManagement.yaml",
+        "openapi/TS29520_Nnwdaf_MLModelProvision.yaml",
+        "openapi/TS29575_Nadrf_DataManagement.yaml",
+        "openapi/README.md",
+        "openapi/TS29576_Nmfaf_3daDataManagement.yaml",
+        "TS 29.574/manifest.yaml",
+        "TS 29.574/README.md"
+      ]
+    }
+  ],
+  "passed": true
+}

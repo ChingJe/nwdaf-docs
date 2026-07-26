@@ -1,6 +1,6 @@
 # Official OpenAPI YAML attachments
 
-These files are copied byte-for-byte from the supplied 3GPP ZIP packages. They are not regenerated from Annex A Markdown.
+These files are copied byte-for-byte from the supplied Release 18 specification packages. They are not regenerated from the Markdown annexes and their individual `externalDocs` point-release declarations are preserved.
 
 ## Included files
 
@@ -36,6 +36,8 @@ These files are copied byte-for-byte from the supplied 3GPP ZIP packages. They a
 - [TS29564_Nupf_EventExposure.yaml](TS29564_Nupf_EventExposure.yaml) — 3GPP TS 29.564 V18.6.0; 5G System; User Plane Function Services; Stage 3.
 - [TS29564_Nupf_GetUEPrivateIPaddrAndIdentifiers.yaml](TS29564_Nupf_GetUEPrivateIPaddrAndIdentifiers.yaml) — 3GPP TS 29.564 V18.5.0; 5G System; 5G System; User Plane Function Services; Stage 3
 - [TS29571_CommonData.yaml](TS29571_CommonData.yaml) — 3GPP TS 29.571 Common Data Types for Service Based Interfaces, version 18.12.0
+- [TS29574_Ndccf_ContextManagement.yaml](TS29574_Ndccf_ContextManagement.yaml) — 3GPP TS 29.574 V18.11.0; 5G System; Data Collection Coordination Services; Stage 3.
+- [TS29574_Ndccf_DataManagement.yaml](TS29574_Ndccf_DataManagement.yaml) — 3GPP TS 29.574 V18.11.0; 5G System; Data Collection Coordination Services; Stage 3.
 - [TS29575_Nadrf_DataManagement.yaml](TS29575_Nadrf_DataManagement.yaml) — 3GPP TS 29.575 V18.11.0; 5G System; Analytics Data Repository Services; Stage 3.
 - [TS29575_Nadrf_MLModelManagement.yaml](TS29575_Nadrf_MLModelManagement.yaml) — 3GPP TS 29.575 V18.7.0; 5G System; Analytics Data Repository Services; Stage 3.
 - [TS29576_Nmfaf_3caDataManagement.yaml](TS29576_Nmfaf_3caDataManagement.yaml) — 3GPP TS 29.576 V18.7.0; 5G System; Messaging Framework Adaptor Services; Stage 3.
@@ -43,8 +45,8 @@ These files are copied byte-for-byte from the supplied 3GPP ZIP packages. They a
 
 ## Dependency status
 
-- Included official YAML files: 36
-- External YAML filenames referenced but not included: 20
+- Included official YAML files: 38
+- External YAML filenames referenced but not included: 19
 
 The unresolved references belong to other NF APIs not supplied in this corpus. They are listed for dependency tracking and are not automatically filled from another Release:
 
@@ -66,5 +68,4 @@ The unresolved references belong to other NF APIs not supplied in this corpus. T
 - `TS29565_Ntsctsf_QoSandTSCAssistance.yaml`
 - `TS29572_Nlmf_Location.yaml`
 - `TS29573_N32_Handshake.yaml`
-- `TS29574_Ndccf_DataManagement.yaml`
 - `TS29591_Nnef_EventExposure.yaml`
