@@ -717,17 +717,18 @@ C 完成 aggregation 後：
 1. 以各 participating scope 的 validation dataset 評估 final candidate；
 2. 將 per-scope metric、sample count 與 evaluation data window 寫入 final
    model description；
-3. 所有 participating scopes 通過 validation gate 後，建立新的
-   model unique identifier 與 final model artifact；
-4. 將 final artifact 保存至 ADRF並記錄 durable reference；
-5. ADRF storage 成功後，把新節點加入 Completed Model Tree 並更新對應的
-   Scope Assignments；
-6. 透過相關 Clients 既有的 Model Provision subscriptions 發送 updated
-   model；
-7. Clients 下載、驗證並原子切換 active model；
-8. Clients 以新 `modelId` 建立新的 Model Monitor registration；
-9. C 為新模型建立新的 monitor subscriptions／correlations；
-10. 舊模型的 monitoring relationship 在不再使用後
+3. 分別決定 candidate 通過哪些 scopes 的 validation gate，並以此形成
+   `applicableTo`；若沒有任何 scope 通過則不發布；
+4. 建立新的 model unique identifier 與 final model artifact；
+5. 將 final artifact 保存至 ADRF 並記錄 durable reference；
+6. ADRF storage 成功後，把新節點加入 Completed Model Tree，並依每個
+   scope 的 validation evidence 更新其模型優先集；
+7. 只對 selected model 發生變更的 Clients，透過既有 Model Provision
+   subscriptions 發送 updated model；
+8. Clients 下載、驗證並原子切換 active model；
+9. Clients 以新 `modelId` 建立新的 Model Monitor registration；
+10. C 為新模型建立新的 monitor subscriptions／correlations；
+11. 舊模型的 monitoring relationship 在不再使用後
     deregister／delete。
 
 Consumer 不需重新建立原 analytics subscription。各 Client 仍以原本的
@@ -869,7 +870,7 @@ spatial specialization dimension：當 Analytics ID、`tgtUe` 與其他 filters
 
 | Field | Meaning |
 | --- | --- |
-| `modelUniqueId` | model owner 配置且不重用的標準模型識別 |
+| `modelUniqueId` | model owner 配置、不得重用，且須在 5GC scope 內唯一的標準模型識別 |
 | `parentModelUniqueId` | 本次訓練實際使用的 base model；seed 無 parent |
 | analytics event | 例如 `UE_COMMUNICATION` |
 | `trainedWith` | 本次訓練實際使用過的 scopes 與 sample count |
@@ -881,8 +882,9 @@ spatial specialization dimension：當 Analytics ID、`tgtUe` 與其他 filters
 
 - `trainedWith` 是模型訓練來源的 provenance；
 - `applicableTo` 是後續選模的硬性適用範圍；
-- 第一版可在 final model 通過所有 participant scopes 的驗證後，將這些
-  scopes 同時加入 `applicableTo`。
+- final model 對每個 participant scope 分別驗證；通過該 scope 的
+  validation gate，才將該 scope 加入 `applicableTo`；
+- 某個 scope 未通過不會自動取消模型對其他已通過 scopes 的適用性。
 
 validation summary 會放進 final model bundle 的描述檔，至少分 scope
 記錄：
@@ -914,25 +916,29 @@ Analytics ID
 + use-case／interoperability context
 ```
 
-Scope Assignments 保存：
+Scope Assignments 對每個 scope 保存依序排列的模型候選集：
 
 ```text
-canonical analytics scope -> current modelUniqueId
+canonical analytics scope -> ordered modelUniqueIds
+selected model             -> first currently usable candidate
 ```
 
 收到模型需求時依下列順序決定：
 
-1. 若有完全相符的 scope assignment，提供其指定模型；
+1. 若有完全相符的 scope assignment，提供優先集中第一個仍有效且可取得的
+   模型；
 2. 否則從 `applicableTo` 涵蓋該 scope 的 completed models 中選擇；
-3. 多個模型都適用時，可比較 validation summary，並以較新且仍有效的
-   evidence 作為輔助；
+3. 多個模型都適用時，使用該 scope 自己的 validation summary 排序；
+   WAPE 較低者優先，evaluation protocol 相容性、data window 新舊與
+   sample count 作為 evidence 品質及 tie-breaker，不因模型較新就必然優先；
 4. 若沒有專用模型，回退到 applicability 涵蓋相同 lineage root 與該
    spatial scope 的通用 seed model；
 5. 若連通用 seed 都不適用，才表示目前沒有可提供模型。
 
-「active」因此是 scope 與 model 之間的關係，不是模型本身只能擁有一個
-全域 active／retired 狀態。同一個模型可以同時被多個 AoI 使用，也可以在
-不再被某個 AoI 使用後，繼續作為其他 scope 的模型或後續 retraining base。
+「selected／active」因此是 scope 與該 scope 優先集第一個模型之間的
+關係，不是模型本身只能擁有一個全域 active／retired 狀態。同一個模型
+可以同時被多個 AoI 使用，也可以在不再被某個 AoI 優先選用後，繼續作為
+其他 scope 的模型、fallback candidate 或後續 retraining base。
 
 ### 7.4 訓練期間的暫存模型（Training Workspace）
 
@@ -972,10 +978,12 @@ Model Tree，最後更新 Scope Assignments。
 5. 所有 participants 都取得同一個 base/global model，使用自己的本地
    資料訓練；不會把各 Client 目前用於推論的不同模型直接混在一起聚合；
 6. C 使用各 Client 實際 training sample count 做 weighted FedAvg；
-7. final aggregate 必須在所有 participating scopes 通過驗證，第一版才
-   promotion；
-8. promotion 後建立 completed model node、保存 ADRF reference、更新
-   Scope Assignments，並透過既有 Model Provision subscriptions 通知。
+7. final aggregate 在每個 participating scope 上分別執行 validation；
+8. 只要至少一個 scope 通過 validation gate，即可建立 completed model
+   node、保存 ADRF reference，並將新模型加入各已通過 scope 的優先集；
+9. 各 scope 以自己的 validation evidence 重新排序候選模型；只有 selected
+   model 發生變更的 scopes，才透過既有 Model Provision subscriptions
+   通知。
 
 NRF discovery 只提供候選者及 endpoint；Completed Model Tree、Scope
 Assignments、validation summary 與參與者選擇都是 C 的 PyMTLF 本地責任。
@@ -1034,17 +1042,18 @@ scope 的 WAPE degradation policy 成立時，C 才觸發 retraining，並由該
 scope 的 current assignment 決定使用 M2 作為 base model。C 接著透過
 NRF discovery 與 preparation 選到 Client-1、Client-2、Client-3；三者都
 取得 M2 作為共同 training base model，分別用 TAI1、TAI2、TAI3 資料
-訓練並產生 M3。三個 scope 的驗證都通過後：
+訓練並產生 M3。假設 M3 在三個 scope 都通過 validation gate，且分別
+成為該 scope 驗證表現最好的模型：
 
 ```text
 M1
 └── M2: TAI1, TAI2
     └── M3: TAI1, TAI2, TAI3
 
-Assignments:
-  TAI1 -> M3
-  TAI2 -> M3
-  TAI3 -> M3
+Scope model priorities:
+  TAI1: M3 > M2 > M1
+  TAI2: M3 > M2 > M1
+  TAI3: M3 > M1
   same lineage root, other supported AoI -> M1
 ```
 
@@ -1099,29 +1108,32 @@ validation:
     dataWindow: evaluation-window-TAI4
 ```
 
-若四個 scope 都通過設定的 validation gate，M4 加入模型樹並更新為：
+假設 M4 在四個 scope 都通過 validation gate，便會加入模型樹；但每個
+scope 會使用自己的 validation 結果排序，不會因為 M4 是最新模型就全部
+切換。以下是一個具體例子：M3 在 TAI1、TAI3 的 WAPE 較好，M4 則在
+TAI2、TAI4 較好：
 
 ```text
-Assignments:
-  TAI1 -> M4
-  TAI2 -> M4
-  TAI3 -> M4
-  TAI4 -> M4
+Scope model priorities after M4 validation:
+  TAI1: M3 > M4 > M2 > M1
+  TAI2: M4 > M3 > M2 > M1
+  TAI3: M3 > M4 > M1
+  TAI4: M4 > M1
   same lineage root, other supported AoI -> M1
 ```
 
-若任何 participating scope 未通過，第一版不 promotion M4，也不更新
-部分 assignments。保留同一批驗證結果，讓使用者能從 log／model
-description 看出 M4 對哪些 scope 變好或變差；selective assignment 可在
-後續有明確安全政策時再擴充。
+若 M4 在某個 participating scope 未通過 validation gate，該 scope 不加入
+M4 的 `applicableTo`，也不把 M4 放入該 scope 的優先集；其他已通過的
+scopes 仍可各自排序及使用 M4。若所有 scopes 都未通過，M4 才不進入
+completed model 管理。
 
 這個例子同時說明：
 
 - 模型樹只描述訓練血緣，M4 從 M1 分支並不表示它比 M3 舊或優先級較低；
 - Client selection 可以讓新 scope 與既有 scopes 一起訓練；
-- Scope Assignments 才決定實際提供哪個模型；
-- validation summary 能輔助未來比較候選模型，但不取代 applicability
-  與持續的線上 accuracy monitoring。
+- 各 scope 的模型優先集才決定實際提供哪個模型；
+- validation summary 用來分 scope 排列已通過 applicability gate 的候選
+  模型，但不取代持續的線上 accuracy monitoring。
 
 ### 7.7 與現有 PyMTLF 行為的銜接
 
@@ -1192,8 +1204,8 @@ application-level relationship。
   metric、sample count 與 evaluation data window，作為後續選模證據；
 - PyMTLF 管理 completed model metadata 與 ADRF references，ADRF 不承擔
   model selection／policy 責任；
-- `modelUniqueId` 是 owner-local 模型主識別；`storeTransId` 只是一筆
-  ADRF storage locator；
+- `modelUniqueId` 是正式模型的主識別，必須在 5GC scope 內唯一；
+  `storeTransId` 只是一筆 ADRF storage locator；
 - round local／interim models 不配置正式 `modelUniqueId`，只有通過驗證
   的 final model 才加入 Completed Model Tree；
 - 更新模型沿用既有 Model Provision subscriptions。
