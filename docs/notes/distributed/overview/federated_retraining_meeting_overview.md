@@ -95,6 +95,7 @@ sequenceDiagram
     participant B as Client-2 / TAI2
     participant C as NWDAF-C / FL Server
     participant NRF as NRF
+    participant ADRF as ADRF
 
     A-->>C: M1 WAPE degradation for TAI1
     C->>C: Resolve TAI1 current assignment to M1
@@ -104,15 +105,20 @@ sequenceDiagram
 
     C->>A: Model Training preparation
     C->>B: Model Training preparation
-    A-->>C: TAI1 data available
-    B-->>C: TAI2 data available
+    A->>ADRF: Retrieve TAI1 records<br/>(dataSub + timePeriod)
+    B->>ADRF: Retrieve TAI2 records<br/>(dataSub + timePeriod)
+    ADRF-->>A: TAI1 training records
+    ADRF-->>B: TAI2 training records
+    A-->>C: Join with TAI1 snapshot ready
+    B-->>C: Join with TAI2 snapshot ready
     C->>C: Fix Client-1 and Client-2 as participants
 ```
 
 - Model Monitor 決定何時 retrain，以及本次使用哪個 base model。
 - NRF 可依 Analytics ID、TAI、interoperability 與 `FL_CLIENT` capability
   找到候選者。
-- NRF 宣告的是能力；Client 是否真的有足夠資料，仍由 preparation 確認。
+- NRF 宣告的是能力；Client 是否真的有足夠資料，仍由 preparation 中的
+  ADRF retrieval 與 snapshot validation 確認。
 - 目前主要實驗固定使用 Client-1 與 Client-2，分別對應 TAI1、TAI2
   兩條 path。
 - Participant set 在本次 FL process 啟動後保持固定，不在 round 中途增減。
@@ -143,6 +149,10 @@ sequenceDiagram
 ```
 
 - 所有 Clients 使用 C 提供的同一個 global model。
+- 本情境假設 ADRF 永遠存在；各 Client 在 preparation 期間以自己的
+  `dataSub + timePeriod` 取得資料並固定一份 process dataset snapshot，
+  snapshot ready 後才回覆可參與，不使用 MongoDB fallback。
+- 同一份 snapshot 在所有 rounds 重複使用，不會每輪重新向 ADRF取資料。
 - Clients 只回傳 local model，不向 C 傳送 raw training data。
 - FedAvg 權重使用各 Client 實際使用的 training sample count。
 - 每一 round 必須收到所有 selected Clients 的有效結果。
@@ -263,6 +273,10 @@ Scope model priorities after M4 validation (example):
 - 同步、sample-count-weighted FedAvg。
 - FL process 啟動後固定 participant set。
 - 所有 selected Clients 成功才進行 aggregation。
-- 訓練期間使用暫存 URL，只有 final model 保存至 ADRF。
+- ADRF 永遠存在；每個 Client 在 preparation 期間從 ADRF 取得符合自身
+  scope 的 training records，建立一次固定 dataset snapshot 後供所有
+  rounds 使用。
+- 在 model artifact 方面，訓練期間使用暫存 URL，只有 final model 保存
+  至 ADRF。
 - 暫不支援 partial aggregation、client replacement、asynchronous FL 或
   secure aggregation。

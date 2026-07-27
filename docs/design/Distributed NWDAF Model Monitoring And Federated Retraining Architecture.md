@@ -24,8 +24,8 @@ Related documents:
   形成兩個 area-specific scopes；
 - Consumer 分別向 A、B 訂閱 analytics，不經過 C，也不要求 C 擔任
   Analytics Aggregator；
-- 當任一路徑的模型表現下降，C 可讓 A、B 都以各自持有或可取得的資料參與
-  FL，聚合出新模型後再提供給 A、B。
+- 當任一路徑的模型表現下降，C 可讓 A、B 各自從 ADRF 取得符合自身
+  scope 的訓練資料並參與 FL，聚合出新模型後再提供給 A、B。
 
 本文先固定高階工作流程、標準服務邊界、NRF capability、主要 identity
 關係，以及第一版 FL execution profile。第一版由 NRF discovery 與
@@ -121,8 +121,8 @@ flowchart TB
 
 | 角色 | Analytics | Model Provision | Model Monitor | Federated Learning | Training data |
 | --- | --- | --- | --- | --- | --- |
-| NWDAF-A | 提供 path-A analytics | 作為 model consumer | 量測並回報 path-A accuracy | FL Client | 使用 path-A 本地資料或 ADRF 資料 |
-| NWDAF-B | 提供 path-B analytics | 作為 model consumer | 量測並回報 path-B accuracy | FL Client | 使用 path-B 本地資料或 ADRF 資料 |
+| NWDAF-A | 提供 path-A analytics | 作為 model consumer | 量測並回報 path-A accuracy | FL Client | 從 ADRF 取得 path-A 資料 |
+| NWDAF-B | 提供 path-B analytics | 作為 model consumer | 量測並回報 path-B accuracy | FL Client | 從 ADRF 取得 path-B 資料 |
 | NWDAF-C | 不對 Consumer 提供本情境的 analytics | 初始／更新模型的 owner 與 provider | 接受 A、B registration，訂閱 A、B accuracy | FL Server | 不集中收取 A、B raw data |
 
 ### 3.1 NWDAF-C
@@ -155,7 +155,9 @@ A、B 都包含 AnLF 與 MTLF，負責：
 - 以自身 `nfInstanceId` 向 C 登錄模型使用與 monitoring capability；
 - 接受 C 建立的 Model Monitor subscription；
 - 在能形成有效 prediction／ground-truth window 時回報 accuracy；
-- 保留各自的 local training data，或知道如何向 ADRF 取得資料；
+- 將各自蒐集到的標準形狀 raw records 保存至 ADRF；
+- 根據 local training scope 向 ADRF 取得資料並建立固定 dataset
+  snapshot；
 - 接受 C 的 Model Training request，執行 local training 並回傳 local
   model information。
 
@@ -455,8 +457,18 @@ base 與 training intent，再另外選擇 FL participants。兩者不是同一�
   endpoint；
 - lineage root、training scope 與 model interoperability 證明候選者和
   本次 retraining intent 相容；
-- Model Training preparation 最後確認其 local data availability、
-  availability time、能力與參與意願。
+- Model Training preparation 最後確認其 ADRF dataset snapshot
+  availability、availability time、能力與參與意願。
+
+本情境假設 ADRF 永遠存在且可被各 Client 使用。這裡的 local data
+availability 表示 Client 能從 ADRF 取得符合自己 training scope 與時間
+範圍的 records，不要求 raw data 已經保存在 Client process 的本地磁碟，
+也不表示 C 可以集中讀取所有 Clients 的 raw data。
+
+第一版只有在 Client 已成功取回 required records、完成基本驗證並把
+dataset snapshot 標記為 ready 後，preparation 才能回覆可參與。因此 C
+固定 participant set 時，已經知道所有被選 Clients 都有一份可供本次
+process 使用的固定 snapshot。
 
 候選 FL Client 不需要先有 Consumer analytics subscription、正在執行
 inference、取得 C 的正式模型或建立 Model Monitor registration。base
@@ -469,7 +481,7 @@ compatibility 篩選同一 training intent 的候選者，再使用 Model Traini
 preparation 確認：
 
 - model interoperability；
-- local data availability；
+- ADRF dataset snapshot availability；
 - FL availability time；
 - 計算與通訊能力；
 - 是否願意加入本輪 FL。
@@ -480,16 +492,19 @@ rounds 開始前固定 participant set。已被選入者只要任一方 preparat
 擴大或替換 participant set。後續可再擴充 minimum participant、client
 sampling、replacement 與每 round 重新 preparation policy。
 
-### 5.6 Stage 5：Client local training 與 C aggregation
+### 5.6 Stage 5：Client ADRF retrieval、local training 與 C aggregation
 
 第一版固定採用同步、sample-count-weighted FedAvg。初始拓撲的
 participants 是 A、B；若後續有 TAI3 等 eligible Client，流程相同：
 
-1. C 建立或更新 Model Training subscription；
-2. C 提供 initial／current global model、round identity、training
+1. 各 Client 在 preparation 期間將 training scope 解析成 ADRF
+   `dataSub` 與固定 `timePeriod`，從 ADRF 建立並凍結 dataset snapshot；
+2. 所有 selected Clients 都回覆 snapshot ready 後，C 固定 participant
+   set，並建立或更新 Model Training subscription；
+3. C 提供 initial／current global model、round identity、training
    requirement 與 maximum response time；
-3. 各 Client 在本地選擇 dataset；
-4. 各 Client 使用本地資料訓練，不向 C 傳 raw training data；
+4. 各 Client 在所有 rounds 使用自己的同一份固定 snapshot 進行 local
+   training，不向 C 傳 raw training data；
 5. 各 Client 將完整 local model information、status、標準 training input
    data information 與含實際 training sample count 的 local model
    artifact reference 回傳 C；
@@ -513,7 +528,70 @@ globalWeights[r + 1] =
 必須在聚合前驗證 artifact identity、tensor shape、dtype、parameter
 ordering 與 sample count。
 
-#### 5.6.1 Training sample count contract
+#### 5.6.1 Client ADRF dataset snapshot
+
+ADRF 是本情境唯一的 training data source，不設計 MongoDB fallback。
+PyAnLF 在正常 collection 過程中，已將原始標準形狀 `dataSub` 與
+`dataNotif` records 保存至 ADRF。Client 的 PyMTLF 在 preparation
+期間、回覆 dataset ready 以前執行：
+
+```text
+training scope
+  -> resolve matching stored dataSub records
+  -> fix one historical timePeriod
+  -> create ADRF data retrieval subscription
+  -> receive fetch instructions
+  -> retrieve records directly from ADRF
+  -> validate and transform records
+  -> freeze one dataset snapshot for the FL process
+```
+
+對 raw NF event data，Client 使用
+`NadrfDataRetrievalSubscription.dataSub` 表達所需資料，並帶入：
+
+- `notificationURI`：該 containing NWDAF 的 ADRF retrieval callback；
+- `notifCorrId`：由 Client 為本次 dataset job 建立的 correlation；
+- `timePeriod`：本次 FL process 固定的歷史資料時間範圍；
+- `consTrigNotif=true`：要求 ADRF buffer matching records，並以 fetch
+  instructions 通知 Client 主動取回。
+
+標準互動如下：
+
+```mermaid
+sequenceDiagram
+    participant M as Client PyMTLF
+    participant G as Client Go NWDAF
+    participant A as ADRF
+
+    M->>G: Create retrieval subscription<br/>(dataSub, timePeriod, callback)
+    G->>A: POST data-retrieval-subscriptions
+    A-->>G: 201 Created + Location + representation
+    A->>G: POST retrieval callback<br/>(notifCorrId, fetchInstruct)
+    G->>M: Forward validated fetch instruction
+    M-->>G: Instruction accepted
+    G-->>A: 204 No Content
+    M->>A: GET fetch URI<br/>(fetch correlation IDs)
+    A-->>M: 200 records or 204 no data
+    M->>M: Validate, transform and freeze snapshot
+    M->>G: Delete retrieval subscription
+    G->>A: DELETE retrieval subscription
+    A-->>G: 204 No Content
+```
+
+Go 負責標準 SBI request、callback validation 與 retrieval resource
+routing，不代理 dataset bytes。PyMTLF 直接依 ADRF fetch instruction
+取得 records，並負責 scope resolution、資料完整性、feature conversion
+與 snapshot lifecycle。
+
+一個 group 若展開成多個 SUPI／`dataSub`，Client 可以建立多個 ADRF
+retrieval resources，再合成一份 scope-local snapshot。snapshot 在本次
+FL process 建立後固定，所有 rounds 重複使用同一份資料；不因每輪更新
+global model 而重新 retrieval。若 required records 不存在、取回失敗或
+無法形成有效 snapshot，Client 不得宣告 training data ready。依目前固定
+participant policy，該 process 應在開始前停止，或在已開始後標記失敗，
+不得把缺資料的 Client 靜默排除。
+
+#### 5.6.2 Training sample count contract
 
 `TrainDataInfo.samplRatio` 表示實際選取資料相對於 available data 的抽樣
 比例；`DataAvReq.minNumSamples` 表示 Server 對資料量提出的最低需求。兩者
@@ -613,7 +691,7 @@ binary transport。`mLModelInfos` 重用的 `MLEventNotif` 仍要求
 `mLFileAddr` 或 `mLModelAdrf`，而 API 也沒有 multipart／octet-stream
 body。因此本架構不在 Training JSON 中直接夾帶模型 binary。
 
-#### 5.6.2 Round artifact lifecycle
+#### 5.6.3 Round artifact lifecycle
 
 各 PyMTLF 為 round artifacts 維護本地暫存目錄與可下載 URL：
 
@@ -634,7 +712,7 @@ period，不是模型版本管理機制。PyMTLF 必須以 process、round 與
 participant 建立清楚的 Training Workspace 暫存索引，避免單純依檔案
 建立時間誤刪仍在執行中的模型。
 
-#### 5.6.3 第一版 ADRF completed-model flow
+#### 5.6.4 第一版 ADRF completed-model flow
 
 最終模型使用 `Nadrf_MLModelManagement` 保存：
 
@@ -782,8 +860,18 @@ sequenceDiagram
     NRF-->>S: NWDAF-A and NWDAF-B
     S->>L1: FL preparation
     S->>L2: FL preparation
-    L1-->>S: Join
-    L2-->>S: Join
+    Note over L1,ADRF: Each Client builds its snapshot before reporting ready
+    L1->>ADRF: Create retrieval subscription<br/>(scope-A dataSub + timePeriod)
+    L2->>ADRF: Create retrieval subscription<br/>(scope-B dataSub + timePeriod)
+    ADRF-->>L1: Fetch instructions
+    ADRF-->>L2: Fetch instructions
+    L1->>ADRF: Retrieve matching records
+    L2->>ADRF: Retrieve matching records
+    ADRF-->>L1: Scope-A raw records
+    ADRF-->>L2: Scope-B raw records
+    L1-->>S: Join with dataset snapshot ready
+    L2-->>S: Join with dataset snapshot ready
+
     S->>L1: Train round with temporary global model URL
     S->>L2: Train round with temporary global model URL
     L1-->>S: Temporary local model URL A
@@ -1006,10 +1094,10 @@ participant。
 
 | FL Client | Training scope | 可用於 local training 的資料 |
 | --- | --- | --- |
-| Client-1 | TAI1 | TAI1 的本地或 ADRF training data |
-| Client-2 | TAI2 | TAI2 的本地或 ADRF training data |
-| Client-3 | TAI3 | 後續加入，提供 TAI3 training data |
-| Client-4 | TAI4 | 更晚加入，提供 TAI4 training data |
+| Client-1 | TAI1 | 從 ADRF 取得的 TAI1 training data |
+| Client-2 | TAI2 | 從 ADRF 取得的 TAI2 training data |
+| Client-3 | TAI3 | 後續加入，從 ADRF 取得 TAI3 training data |
+| Client-4 | TAI4 | 更晚加入，從 ADRF 取得 TAI4 training data |
 
 Client 編號只是此例的簡稱。每個 Client 實際上都是向 NRF 註冊 FL Client
 capability 的 NWDAF，C 仍須經過 NRF discovery 與 Model Training
@@ -1187,6 +1275,9 @@ application-level relationship。
   process 一併參與；
 - 各 Client 使用自己的全部符合條件資料，不固定將其中一條 path 當
   validation-only dataset；
+- ADRF 在本情境中永遠存在，所有 Clients 在 preparation 期間、回覆可
+  參與以前，以 `dataSub + timePeriod` 取得資料並固定一份 process
+  dataset snapshot；不設計 MongoDB fallback；
 - 第一版使用同步、sample-count-weighted FedAvg，固定 round 數；
 - sample count 是本輪實際 local training windows 數，由 local model
   bundle manifest 提供，不使用 `samplRatio` 代替；
@@ -1251,18 +1342,16 @@ proximal transmission、FedAsync 或 secure aggregation。後續若加入：
 3. 後續是否加入 dynamic quorum、partial participation、early stopping
    或 asynchronous aggregation；
 4. local training dataset 的時間範圍、資料品質與最小樣本要求；
-5. A、B 如何把 analytics scope 對應到本地 MongoDB 或 ADRF
-   `DataSetTag`／retrieval criteria；
-6. 新模型 promotion 後，舊 monitor resources 的切換與清理時序；
-7. 後續面對 Client 暫時離線、拒絕 preparation 或 round timeout 時，
+5. 新模型 promotion 後，舊 monitor resources 的切換與清理時序；
+6. 後續面對 Client 暫時離線、拒絕 preparation 或 round timeout 時，
    deadline extension、retry、skip 與 replacement policy；
-8. 未來擴充為更多 NWDAFs、不同 vendors 或不同 model interoperability
+7. 未來擴充為更多 NWDAFs、不同 vendors 或不同 model interoperability
    formats 時的 selection policy；
-9. round artifact retention period 的預設值、磁碟上限與啟動時清理
+8. round artifact retention period 的預設值、磁碟上限與啟動時清理
     threshold；
-10. retired final models 在 ADRF 的最小保留時間，以及依 transaction
+9. retired final models 在 ADRF 的最小保留時間，以及依 transaction
     刪除或依 `modelUniqueId` 刪除的 policy；
-11. 標準安全機制與憑證部署。第一版實驗仍可先使用普通 HTTP，此項不在
+10. 標準安全機制與憑證部署。第一版實驗仍可先使用普通 HTTP，此項不在
     目前實作計畫內。
 
 ---
@@ -1283,5 +1372,7 @@ proximal transmission、FedAsync 或 secure aggregation。後續若加入：
 | Model monitoring API | [TS 29.520 Nnwdaf_MLModelMonitor OpenAPI](../../specs/openapi/TS29520_Nnwdaf_MLModelMonitor.yaml) |
 | Federated Learning procedure | [TS 23.288 §6.2C](../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md) |
 | Model training API | [TS 29.520 Nnwdaf_MLModelTraining OpenAPI](../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml) |
+| ADRF data retrieval procedure | [TS 29.575 §4.2](../../specs/TS%2029.575/4%20Services%20offered%20by%20the%20ADRF/4.2%20Nadrf_DataManagement%20Service/README.md) |
+| ADRF data retrieval API | [TS 29.575 Nadrf_DataManagement OpenAPI](../../specs/openapi/TS29575_Nadrf_DataManagement.yaml) |
 | ADRF ML model management procedure | [TS 29.575 §4.3](../../specs/TS%2029.575/4%20Services%20offered%20by%20the%20ADRF/4.3%20Nadrf%20_%20MLModelManagement%20Service.md) |
 | ADRF ML model management API | [TS 29.575 Nadrf_MLModelManagement OpenAPI](../../specs/openapi/TS29575_Nadrf_MLModelManagement.yaml) |
