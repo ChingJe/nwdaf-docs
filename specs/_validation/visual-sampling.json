@@ -98,6 +98,27 @@
       "topic": "Ndccf_ContextManagement resource structure",
       "result": "pass",
       "observations": "Data-collection-profile resource hierarchy and identifiers are legible."
+    },
+    {
+      "spec": "TS 29.503",
+      "asset": "assets/rendered/image11.png",
+      "topic": "Nudm_SDM retrieval flow",
+      "result": "pass",
+      "observations": "Sequence actors, GET URI, response and labels are legible; contact-sheet sampling covered 12 distributed assets. Full source PDF export exceeded the bounded runtime, so this is not page-by-page certification."
+    },
+    {
+      "spec": "TS 29.518",
+      "asset": "assets/rendered/image47.png",
+      "topic": "Namf_EventExposure resource structure",
+      "result": "pass",
+      "observations": "Resource hierarchy and path parameters are legible. Source PDF page 244 complex-table sample was also inspected without clipping."
+    },
+    {
+      "spec": "TS 29.554",
+      "asset": "assets/rendered/image5.png",
+      "topic": "Npcf_BDTPolicyControl create operation",
+      "result": "pass",
+      "observations": "Request and 201 Created response are legible. Source PDF page 19 complex response tables were inspected against generated HTML tables."
     }
   ],
   "limitations": [

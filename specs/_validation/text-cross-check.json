@@ -505,5 +505,98 @@
     },
     "marker_counts_equal": true,
     "independent_extractor": "docx2txt"
+  },
+  "TS 29.503": {
+    "pandoc_tokens": 220832,
+    "independent_tokens": 212462,
+    "independent_method": "docx2txt-original-docx",
+    "token_multiset_overlap": 0.999882,
+    "twelve_token_sequence_overlap": 0.989111,
+    "modal_and_marker_counts_pandoc": {
+      "shall": 1946,
+      "shall_not": 88,
+      "should": 206,
+      "should_not": 11,
+      "may": 493,
+      "may_not": 2,
+      "must": 4,
+      "note": 312,
+      "example": 5
+    },
+    "modal_and_marker_counts_independent": {
+      "shall": 1946,
+      "shall_not": 88,
+      "should": 206,
+      "should_not": 11,
+      "may": 493,
+      "may_not": 2,
+      "must": 4,
+      "note": 312,
+      "example": 5
+    },
+    "modal_and_marker_counts_match": true,
+    "note": "Native DOCX independent extraction."
+  },
+  "TS 29.518": {
+    "pandoc_tokens": 166959,
+    "independent_tokens": 166790,
+    "independent_method": "docx2txt-original-docx",
+    "token_multiset_overlap": 0.999778,
+    "twelve_token_sequence_overlap": 0.993384,
+    "modal_and_marker_counts_pandoc": {
+      "shall": 2044,
+      "shall_not": 50,
+      "should": 103,
+      "should_not": 5,
+      "may": 327,
+      "may_not": 1,
+      "must": 2,
+      "note": 203,
+      "example": 3
+    },
+    "modal_and_marker_counts_independent": {
+      "shall": 2044,
+      "shall_not": 50,
+      "should": 103,
+      "should_not": 5,
+      "may": 327,
+      "may_not": 1,
+      "must": 2,
+      "note": 203,
+      "example": 3
+    },
+    "modal_and_marker_counts_match": true,
+    "note": "Native DOCX independent extraction."
+  },
+  "TS 29.554": {
+    "pandoc_tokens": 12748,
+    "independent_tokens": 12400,
+    "independent_method": "antiword-original-doc",
+    "token_multiset_overlap": 0.98379,
+    "twelve_token_sequence_overlap": 0.852985,
+    "modal_and_marker_counts_pandoc": {
+      "shall": 90,
+      "shall_not": 3,
+      "should": 2,
+      "should_not": 0,
+      "may": 27,
+      "may_not": 0,
+      "must": 0,
+      "note": 20,
+      "example": 0
+    },
+    "modal_and_marker_counts_independent": {
+      "shall": 89,
+      "shall_not": 3,
+      "should": 2,
+      "should_not": 0,
+      "may": 27,
+      "may_not": 0,
+      "must": 0,
+      "note": 20,
+      "example": 0
+    },
+    "modal_and_marker_counts_match": false,
+    "note": "Legacy DOC: antiword serializes complex tables and one normative sentence incompletely; source-page inspection and the richer DOC-to-DOCX structural path were retained as the primary extraction."
   }
 }

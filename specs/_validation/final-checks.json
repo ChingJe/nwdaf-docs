@@ -1,46 +1,34 @@
 {
   "passed": true,
-  "file_count": 4620,
-  "markdown_files": 2408,
-  "manifest_entries": 6601,
-  "local_links_checked": 2483,
-  "image_references_checked": 778,
+  "file_count": 5958,
+  "markdown_files": 3140,
+  "manifest_entries": 8754,
+  "local_links_checked": 4236,
+  "image_references_checked": 976,
   "broken_links": [],
   "missing_manifest_paths": [],
   "h7_or_deeper_headings": [],
   "blank_headings": [],
   "absolute_work_paths": [],
-  "new_official_attachment_checks": [
-    {
-      "file": "TS29574_Ndccf_DataManagement.yaml",
-      "source_sha256": "c2c21919dbd725e2c1b682b9b73d704606ccdf9fecc1b6726e9182b82924a588",
-      "output_sha256": "c2c21919dbd725e2c1b682b9b73d704606ccdf9fecc1b6726e9182b82924a588",
-      "byte_identical": true
-    },
-    {
-      "file": "TS29574_Ndccf_ContextManagement.yaml",
-      "source_sha256": "a38daf185dacf25d8fe56e2864b68313776b71165966d457f6e8502bf1d8497b",
-      "output_sha256": "a38daf185dacf25d8fe56e2864b68313776b71165966d457f6e8502bf1d8497b",
-      "byte_identical": true
-    }
-  ],
-  "openapi_yaml_files": 38,
+  "openapi_yaml_files": 55,
+  "openapi_yaml_errors": [],
   "unresolved_openapi_dependencies": [
-    "TS29503_Nudm_EE.yaml",
-    "TS29503_Nudm_SDM.yaml",
-    "TS29503_Nudm_UECM.yaml",
+    "TS29502_Nsmf_PDUSession.yaml",
+    "TS29507_Npcf_AMPolicyControl.yaml",
+    "TS29509_Nausf_SoRProtection.yaml",
+    "TS29509_Nausf_UEAuthentication.yaml",
+    "TS29509_Nausf_UPUProtection.yaml",
     "TS29512_Npcf_SMPolicyControl.yaml",
     "TS29514_Npcf_PolicyAuthorization.yaml",
     "TS29515_Ngmlc_Location.yaml",
     "TS29517_Naf_EventExposure.yaml",
-    "TS29518_Namf_Communication.yaml",
-    "TS29518_Namf_EventExposure.yaml",
+    "TS29519_Policy_Data.yaml",
     "TS29522_AMPolicyAuthorization.yaml",
     "TS29522_TrafficInfluence.yaml",
     "TS29523_Npcf_EventExposure.yaml",
     "TS29531_Nnssf_NSSelection.yaml",
     "TS29536_Nnsacf_SliceEventExposure.yaml",
-    "TS29554_Npcf_BDTPolicyControl.yaml",
+    "TS29562_Nhss_imsUEAU.yaml",
     "TS29565_Ntsctsf_QoSandTSCAssistance.yaml",
     "TS29572_Nlmf_Location.yaml",
     "TS29573_N32_Handshake.yaml",
@@ -167,6 +155,76 @@
       "byte_identical": true
     },
     {
+      "file": "TS29503_Nudm_EE.yaml",
+      "source_archive": "29503-id0.zip",
+      "source_sha256": "3a5ebaeb05a6420715321a30e813813b2065eacf70a0a122eb04eeb14f7b1cbf",
+      "output_sha256": "3a5ebaeb05a6420715321a30e813813b2065eacf70a0a122eb04eeb14f7b1cbf",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29503_Nudm_MT.yaml",
+      "source_archive": "29503-id0.zip",
+      "source_sha256": "fe30050ad4789677b7ee89d04a3c7a8a3148ab7acd594bbb1a126126ab930ef2",
+      "output_sha256": "fe30050ad4789677b7ee89d04a3c7a8a3148ab7acd594bbb1a126126ab930ef2",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29503_Nudm_NIDDAU.yaml",
+      "source_archive": "29503-id0.zip",
+      "source_sha256": "60aa0613843eee216a721c49cd7aa83c9166eeab11f7567db0a2591587ca728a",
+      "output_sha256": "60aa0613843eee216a721c49cd7aa83c9166eeab11f7567db0a2591587ca728a",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29503_Nudm_PP.yaml",
+      "source_archive": "29503-id0.zip",
+      "source_sha256": "53c5583265787284e0a611fc02e0173a6294c5125051e825ad9bebf5136ebb21",
+      "output_sha256": "53c5583265787284e0a611fc02e0173a6294c5125051e825ad9bebf5136ebb21",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29503_Nudm_RSDS.yaml",
+      "source_archive": "29503-id0.zip",
+      "source_sha256": "d1d2084996220dbf3b69c9ed26bb9607049145778f8ff1e0b763838a8d2b9fb0",
+      "output_sha256": "d1d2084996220dbf3b69c9ed26bb9607049145778f8ff1e0b763838a8d2b9fb0",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29503_Nudm_SDM.yaml",
+      "source_archive": "29503-id0.zip",
+      "source_sha256": "2d90e73aa37ad02db94779efe5a7db42e6fa79f10c367d04c428f349b98197b7",
+      "output_sha256": "2d90e73aa37ad02db94779efe5a7db42e6fa79f10c367d04c428f349b98197b7",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29503_Nudm_SSAU.yaml",
+      "source_archive": "29503-id0.zip",
+      "source_sha256": "c224fd64ed11637006aa8322acd8347de0f7fff916084afab3a9a4ca5cb6a2df",
+      "output_sha256": "c224fd64ed11637006aa8322acd8347de0f7fff916084afab3a9a4ca5cb6a2df",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29503_Nudm_UEAU.yaml",
+      "source_archive": "29503-id0.zip",
+      "source_sha256": "11698a4ca8ac6a9657e48e61f8130dad65d0a28af9220e387cb527b13b15c416",
+      "output_sha256": "11698a4ca8ac6a9657e48e61f8130dad65d0a28af9220e387cb527b13b15c416",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29503_Nudm_UECM.yaml",
+      "source_archive": "29503-id0.zip",
+      "source_sha256": "08223a6cda578dbfe53392f614d698e8e5e30a6d7333b414089ee25ece60215f",
+      "output_sha256": "08223a6cda578dbfe53392f614d698e8e5e30a6d7333b414089ee25ece60215f",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29503_Nudm_UEID.yaml",
+      "source_archive": "29503-id0.zip",
+      "source_sha256": "66a52ab4e6c396f73e5c59cdd7dbb7515d98ba07cb178db9815cfa7a4656e861",
+      "output_sha256": "66a52ab4e6c396f73e5c59cdd7dbb7515d98ba07cb178db9815cfa7a4656e861",
+      "byte_identical": true
+    },
+    {
       "file": "TS29508_Nsmf_EventExposure.yaml",
       "source_archive": "29508-ib0.zip",
       "source_sha256": "a57c417f14c025ec081bb4befeb25e591d179713b1c43193cd23c56cc614d638",
@@ -199,6 +257,48 @@
       "source_archive": "29510-ib0.zip",
       "source_sha256": "3ec58412ebeec791b12309578258911fb8a41cce7dd5cd02b3a7b7d0d0435dda",
       "output_sha256": "3ec58412ebeec791b12309578258911fb8a41cce7dd5cd02b3a7b7d0d0435dda",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29518_Namf_Communication.yaml",
+      "source_archive": "29518-ie0.zip",
+      "source_sha256": "3c15020bde4651805d635a1450de58124bb42300de773c1735b0502c03c50aff",
+      "output_sha256": "3c15020bde4651805d635a1450de58124bb42300de773c1735b0502c03c50aff",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29518_Namf_EventExposure.yaml",
+      "source_archive": "29518-ie0.zip",
+      "source_sha256": "1836f8918685c0f1a43ed6b62b8237860375d591b1f6b124079064a0407b7737",
+      "output_sha256": "1836f8918685c0f1a43ed6b62b8237860375d591b1f6b124079064a0407b7737",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29518_Namf_Location.yaml",
+      "source_archive": "29518-ie0.zip",
+      "source_sha256": "59025c2144a4848dd3267cd5833bff08a233a4f2454fe6dadb6e1546b7f10c79",
+      "output_sha256": "59025c2144a4848dd3267cd5833bff08a233a4f2454fe6dadb6e1546b7f10c79",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29518_Namf_MBSBroadcast.yaml",
+      "source_archive": "29518-ie0.zip",
+      "source_sha256": "2b965527718c2602fb2618123e72d5338529a059a3af19d7053281491cd1ab19",
+      "output_sha256": "2b965527718c2602fb2618123e72d5338529a059a3af19d7053281491cd1ab19",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29518_Namf_MBSCommunication.yaml",
+      "source_archive": "29518-ie0.zip",
+      "source_sha256": "6ed2b30aaf1ba675cf805af0a1aeb17322ccbadfbb9c28d12e51eb4da04e22ef",
+      "output_sha256": "6ed2b30aaf1ba675cf805af0a1aeb17322ccbadfbb9c28d12e51eb4da04e22ef",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29518_Namf_MT.yaml",
+      "source_archive": "29518-ie0.zip",
+      "source_sha256": "ec5481ea9ac52a8178216c0b34c3d84d68ea55d279758c8ab16a3a46862fd13a",
+      "output_sha256": "ec5481ea9ac52a8178216c0b34c3d84d68ea55d279758c8ab16a3a46862fd13a",
       "byte_identical": true
     },
     {
@@ -255,6 +355,13 @@
       "source_archive": "29520-ie0.zip",
       "source_sha256": "8add0a519f601205334e35a0f1d0d846857b23da23fee7b3a9f8045b04de358d",
       "output_sha256": "8add0a519f601205334e35a0f1d0d846857b23da23fee7b3a9f8045b04de358d",
+      "byte_identical": true
+    },
+    {
+      "file": "TS29554_Npcf_BDTPolicyControl.yaml",
+      "source_archive": "29554-i30.zip",
+      "source_sha256": "b300cacb6e9aa60ea6fd32382834e300980e34c2a757962348050530f68a3996",
+      "output_sha256": "b300cacb6e9aa60ea6fd32382834e300980e34c2a757962348050530f68a3996",
       "byte_identical": true
     },
     {
@@ -320,162 +427,5 @@
       "output_sha256": "63ca4a0fe4385ecf2cdc1a3d99c60916075cbd806027f9717348cfde25be2614",
       "byte_identical": true
     }
-  ],
-  "official_attachments_checked": 39,
-  "official_attachments_byte_identical": 39,
-  "openapi_yaml_parse_checks": [
-    {
-      "file": "TS29122_AsSessionWithQoS.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29122_ChargeableParty.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29122_CommonData.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29122_CpProvisioning.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29122_DeviceTriggering.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29122_ECRControl.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29122_GMDviaMBMSbyMB2.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29122_GMDviaMBMSbyxMB.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29122_MonitoringEvent.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29122_MsisdnLessMoSms.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29122_NIDD.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29122_NpConfiguration.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29122_PfdManagement.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29122_RacsParameterProvisioning.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29122_ReportingNetworkStatus.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29122_ResourceManagementOfBdt.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29508_Nsmf_EventExposure.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29510_Nnrf_AccessToken.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29510_Nnrf_Bootstrapping.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29510_Nnrf_NFDiscovery.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29510_Nnrf_NFManagement.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29520_Nnwdaf_AnalyticsInfo.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29520_Nnwdaf_DataManagement.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29520_Nnwdaf_EventsSubscription.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29520_Nnwdaf_MLModelMonitor.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29520_Nnwdaf_MLModelProvision.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29520_Nnwdaf_MLModelTraining.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29520_Nnwdaf_RoamingAnalytics.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29520_Nnwdaf_RoamingData.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29564_Nupf_EventExposure.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29564_Nupf_GetUEPrivateIPaddrAndIdentifiers.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29571_CommonData.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29574_Ndccf_ContextManagement.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29574_Ndccf_DataManagement.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29575_Nadrf_DataManagement.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29575_Nadrf_MLModelManagement.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29576_Nmfaf_3caDataManagement.yaml",
-      "valid": true
-    },
-    {
-      "file": "TS29576_Nmfaf_3daDataManagement.yaml",
-      "valid": true
-    }
-  ],
-  "openapi_yaml_valid": 38
+  ]
 }

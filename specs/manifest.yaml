@@ -45,6 +45,15 @@ specifications:
   manifest: TS 29.500/manifest.yaml
   source_archive: 29500-ia0.zip
   source_archive_sha256: 3e0cbb6bc6ceec4dabb597410fb4b55ba03ae82e9b242972f441cd926971f5f2
+- id: TS-29.503
+  spec: TS 29.503
+  version: 18.13.0
+  scope: full
+  purpose: UDM subscriber data, UE context, event exposure, authentication and identifier services
+  index: TS 29.503/README.md
+  manifest: TS 29.503/manifest.yaml
+  source_archive: 29503-id0.zip
+  source_archive_sha256: 4c773b0d93af7d82fab12329d4c7d06807cc92271da897e23ee94e89a7112afa
 - id: TS-29.508
   spec: TS 29.508
   version: 18.11.0
@@ -63,6 +72,15 @@ specifications:
   manifest: TS 29.510/manifest.yaml
   source_archive: 29510-ib0.zip
   source_archive_sha256: 84e5ccfacace52d488cdca8f0ee1cb3b6817d390ee9903dc5e52105d58c6a1e6
+- id: TS-29.518
+  spec: TS 29.518
+  version: 18.14.0
+  scope: full
+  purpose: AMF communication, event exposure, location, mobility and messaging services
+  index: TS 29.518/README.md
+  manifest: TS 29.518/manifest.yaml
+  source_archive: 29518-ie0.zip
+  source_archive_sha256: aa2789dac49d4f52e56fcc9d04277a5122a40fdf4c22faf877a7832f844daae1
 - id: TS-29.520
   spec: TS 29.520
   version: 18.14.0
@@ -81,6 +99,15 @@ specifications:
   manifest: TS 29.552/manifest.yaml
   source_archive: 29552-i70.zip
   source_archive_sha256: 3b3ac7f50c83fc234294ba8224344053f512207c1fc13ce6502230d2a8af7464
+- id: TS-29.554
+  spec: TS 29.554
+  version: 18.3.0
+  scope: full
+  purpose: PCF background-data-transfer policy control API and shared BDT policy types
+  index: TS 29.554/README.md
+  manifest: TS 29.554/manifest.yaml
+  source_archive: 29554-i30.zip
+  source_archive_sha256: 6c4b6afbda7aac02b47c89a700c2dd7c4166f3101a06fd9f3a540f586d287f15
 - id: TS-29.564
   spec: TS 29.564
   version: 18.7.0

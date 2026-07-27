@@ -11,10 +11,13 @@ This corpus is organized for progressive loading by development agents. All list
 | [TS 23.502](TS%2023.502/README.md) | 18.14.0 | Full | 5GS Stage 2 procedures, including full registration, session, exposure and policy flows |
 | [TS 29.122](TS%2029.122/README.md) | 18.10.0 | Full | T8 northbound APIs and shared schemas reused by NWDAF, NRF, SMF and ADRF OpenAPI definitions |
 | [TS 29.500](TS%2029.500/README.md) | 18.10.0 | Full | Common SBA HTTP behaviour, headers, errors and routing |
+| [TS 29.503](TS%2029.503/README.md) | 18.13.0 | Full | UDM subscriber data, UE context, event exposure, authentication and identifier services |
 | [TS 29.508](TS%2029.508/README.md) | 18.11.0 | Full | SMF Session Management Event Exposure API |
 | [TS 29.510](TS%2029.510/README.md) | 18.11.0 | Full | NRF management, discovery, access token and bootstrapping APIs |
+| [TS 29.518](TS%2029.518/README.md) | 18.14.0 | Full | AMF communication, event exposure, location, mobility and messaging services |
 | [TS 29.520](TS%2029.520/README.md) | 18.14.0 | Full | NWDAF Stage 3 APIs and data models |
 | [TS 29.552](TS%2029.552/README.md) | 18.7.0 | Full | NWDAF Stage 3 signalling flows across analytics, data collection, ML, ADRF, DCCF and MFAF procedures |
+| [TS 29.554](TS%2029.554/README.md) | 18.3.0 | Full | PCF background-data-transfer policy control API and shared BDT policy types |
 | [TS 29.564](TS%2029.564/README.md) | 18.7.0 | Full | UPF Event Exposure and UE private IP/identifier APIs |
 | [TS 29.571](TS%2029.571/README.md) | 18.12.0 | Full | Common SBI data types and ProblemDetails |
 | [TS 29.574](TS%2029.574/README.md) | 18.12.0 | Full | DCCF data subscription, notification, fetch, transfer and data-collection-profile APIs |
@@ -39,6 +42,14 @@ This corpus is organized for progressive loading by development agents. All list
 4. Use TS 29.564 and its two YAML attachments for direct UPF service exposure.
 5. Use TS 23.501 to understand SMF/UPF selection, serving scope and user-plane architecture.
 
+## Common workflow: AMF and UDM data collection
+
+1. Use TS 23.288 to identify the analytics input and target-UE or group requirements.
+2. Use TS 23.502 for registration, mobility, reachability, location and subscription-data procedure context.
+3. Use TS 29.518 and Namf_EventExposure for AMF mobility, reachability and location-related events.
+4. Use TS 29.503 and Nudm_SDM/Nudm_UECM/Nudm_EE for subscriber data, UE context and UDM event exposure.
+5. Use TS 29.510 to discover AMF/UDM instances and service endpoints.
+
 ## Common workflow: ADRF and messaging-framework integration
 
 1. Use TS 23.288 clauses describing ADRF storage, retrieval, DataSetTag and ML-model procedures.
@@ -47,8 +58,8 @@ This corpus is organized for progressive loading by development agents. All list
 4. Use TS 29.575 and its exact YAML attachments for Nadrf_DataManagement and Nadrf_MLModelManagement.
 5. Use TS 29.574 and its exact OpenAPI attachments when DCCF coordinates subscriptions, notifications, fetch or data-collection profiles.
 6. Use TS 29.576 for MFAF configuration, FetchInstruction, fetch and notification paths when messaging-framework delivery is involved.
-7. Use TS 29.552 to trace the concrete Stage 3 signalling sequence across NWDAF, DCCF, MFAF, ADRF and data sources.
-8. Use TS 29.122 for shared northbound data types reused by the NWDAF/NRF/SMF/ADRF OpenAPI corpus.
+7. Use TS 29.552 to trace concrete Stage 3 signalling sequences.
+8. Use TS 29.122 and TS 29.554 for shared northbound and BDT policy types reused by this OpenAPI corpus.
 9. Use TS 29.571 and TS 29.500 for common schemas and HTTP behaviour.
 
 ## Fidelity boundary
@@ -56,6 +67,6 @@ This corpus is organized for progressive loading by development agents. All list
 - Clause wording is extracted deterministically from the supplied Word documents and is not rewritten by an LLM.
 - Generated navigation is explicitly marked.
 - Exact YAML and ABNF package attachments are retained byte-for-byte.
-- Diagrams link to PNG previews where bounded rendering succeeded; original EMF/WMF and embedded OLE/Visio payloads are retained for every source image.
-- Legacy DOC conversion and vector-rendering limitations are documented under [`_validation/`](_validation/README.md).
+- Diagrams link to PNG previews; original EMF/WMF and embedded OLE/Visio payloads are retained.
+- Legacy DOC conversion and validation limitations are documented under [`_validation/`](_validation/README.md).
 - For high-stakes interpretation, the supplied original Word document remains the final reference.

@@ -9,6 +9,7 @@ files:
   - TS29514_Npcf_PolicyAuthorization.yaml
   - TS29565_Ntsctsf_QoSandTSCAssistance.yaml
   - TS29571_CommonData.yaml
+  yaml_valid: true
 - file: TS29122_ChargeableParty.yaml
   sha256: d7555817d38363cdcc8ca6ca30b89233f31b91d3180c11d899d8185aa4e9b468
   title: 3gpp-chargeable-party
@@ -17,6 +18,7 @@ files:
   - TS29122_CommonData.yaml
   - TS29514_Npcf_PolicyAuthorization.yaml
   - TS29571_CommonData.yaml
+  yaml_valid: true
 - file: TS29122_CommonData.yaml
   sha256: 79e5727ff35dbb41852c2c7a80b96bb6e1d5bc84390986f0e39a25843de0398a
   title: TS 29.122 Common Data Types
@@ -26,6 +28,7 @@ files:
   - TS29554_Npcf_BDTPolicyControl.yaml
   - TS29571_CommonData.yaml
   - TS29572_Nlmf_Location.yaml
+  yaml_valid: true
 - file: TS29122_CpProvisioning.yaml
   sha256: d029b8abc6908c92478aa0cac9b0f4eb316797ae3ff012e9d3ee43d05501d4c7
   title: 3gpp-cp-parameter-provisioning
@@ -33,6 +36,7 @@ files:
   external_refs:
   - TS29122_CommonData.yaml
   - TS29571_CommonData.yaml
+  yaml_valid: true
 - file: TS29122_DeviceTriggering.yaml
   sha256: 61e57390590e05dbd9fd50e20c4b02488313ef143d3cca282caba4181f046255
   title: 3gpp-device-triggering
@@ -40,6 +44,7 @@ files:
   external_refs:
   - TS29122_CommonData.yaml
   - TS29571_CommonData.yaml
+  yaml_valid: true
 - file: TS29122_ECRControl.yaml
   sha256: a524d39456b77fef8d77e5ff742dd751ad310f05245fbf5cf168c68e34709cd2
   title: 3gpp-ecr-control
@@ -48,6 +53,7 @@ files:
   - TS29122_CommonData.yaml
   - TS29503_Nudm_SDM.yaml
   - TS29571_CommonData.yaml
+  yaml_valid: true
 - file: TS29122_GMDviaMBMSbyMB2.yaml
   sha256: 46a3879f268a20fdad3db0bb0b28c71eec6d1784c7381cca807630d89cd8b070
   title: GMDviaMBMSbyMB2
@@ -56,6 +62,7 @@ files:
   - TS29122_CommonData.yaml
   - TS29571_CommonData.yaml
   - TS29572_Nlmf_Location.yaml
+  yaml_valid: true
 - file: TS29122_GMDviaMBMSbyxMB.yaml
   sha256: 115951284089957a01748042b3cd09dc9b0583167e10bb56628a70191ad259cc
   title: GMDviaMBMSbyxMB
@@ -64,6 +71,7 @@ files:
   - TS29122_CommonData.yaml
   - TS29571_CommonData.yaml
   - TS29572_Nlmf_Location.yaml
+  yaml_valid: true
 - file: TS29122_MonitoringEvent.yaml
   sha256: b4b72ba0712cb307fcec06247e1afa72d010b06598992ba091d04cecd68a251f
   title: 3gpp-monitoring-event
@@ -76,6 +84,7 @@ files:
   - TS29523_Npcf_EventExposure.yaml
   - TS29571_CommonData.yaml
   - TS29572_Nlmf_Location.yaml
+  yaml_valid: true
 - file: TS29122_MsisdnLessMoSms.yaml
   sha256: a5e2993a865f0aa2ab8f52cbde21ddb7ed9f1ef37b851a596e4194ffa06b77bd
   title: 3gpp-msisdn-less-mo-sms
@@ -83,6 +92,7 @@ files:
   external_refs:
   - TS29122_CommonData.yaml
   - TS29571_CommonData.yaml
+  yaml_valid: true
 - file: TS29122_NIDD.yaml
   sha256: 3d5bdb254285119baf6c6002006337a9946d1b4d129aeb65be6a1bec592619ad
   title: 3gpp-nidd
@@ -90,6 +100,7 @@ files:
   external_refs:
   - TS29122_CommonData.yaml
   - TS29571_CommonData.yaml
+  yaml_valid: true
 - file: TS29122_NpConfiguration.yaml
   sha256: e5a34e62c5b625e66da3e3655e3debb6643f512438b3ea331682a8f38e0f1f14
   title: 3gpp-network-parameter-configuration
@@ -98,6 +109,7 @@ files:
   - TS29122_CommonData.yaml
   - TS29122_MonitoringEvent.yaml
   - TS29571_CommonData.yaml
+  yaml_valid: true
 - file: TS29122_PfdManagement.yaml
   sha256: b60b383115f1f7617b5fecc59bfdb861d4bf386fffd50c4c2eb3de8ae993b2ef
   title: 3gpp-pfd-management
@@ -105,6 +117,7 @@ files:
   external_refs:
   - TS29122_CommonData.yaml
   - TS29571_CommonData.yaml
+  yaml_valid: true
 - file: TS29122_RacsParameterProvisioning.yaml
   sha256: 7cded49276685b0d02963951c88246dec1bbe90086a74a2b1a38e782f67856dc
   title: 3gpp-racs-parameter-provisioning
@@ -112,6 +125,7 @@ files:
   external_refs:
   - TS29122_CommonData.yaml
   - TS29571_CommonData.yaml
+  yaml_valid: true
 - file: TS29122_ReportingNetworkStatus.yaml
   sha256: 8401e81765bbf36b9ba9a360ed377646cc0bddc64e9f2d82f9550730aab88671
   title: 3gpp-network-status-reporting
@@ -119,6 +133,7 @@ files:
   external_refs:
   - TS29122_CommonData.yaml
   - TS29571_CommonData.yaml
+  yaml_valid: true
 - file: TS29122_ResourceManagementOfBdt.yaml
   sha256: 2db5c22c477fda4c83fc310ec0d6b0c99df1281e8b822f2da4717d0b19c66f21
   title: 3gpp-bdt
@@ -126,6 +141,106 @@ files:
   external_refs:
   - TS29122_CommonData.yaml
   - TS29571_CommonData.yaml
+  yaml_valid: true
+- file: TS29503_Nudm_EE.yaml
+  sha256: 3a5ebaeb05a6420715321a30e813813b2065eacf70a0a122eb04eeb14f7b1cbf
+  title: Nudm_EE
+  external_docs_description: 3GPP TS 29.503 Unified Data Management Services, version 18.12.0
+  external_refs:
+  - TS29503_Nudm_SDM.yaml
+  - TS29503_Nudm_UECM.yaml
+  - TS29518_Namf_EventExposure.yaml
+  - TS29571_CommonData.yaml
+  yaml_valid: true
+- file: TS29503_Nudm_MT.yaml
+  sha256: fe30050ad4789677b7ee89d04a3c7a8a3148ab7acd594bbb1a126126ab930ef2
+  title: Nudm_MT
+  external_docs_description: 3GPP TS 29.503 Unified Data Management Services, version 18.6.0
+  external_refs:
+  - TS29518_Namf_EventExposure.yaml
+  - TS29518_Namf_MT.yaml
+  - TS29571_CommonData.yaml
+  - TS29572_Nlmf_Location.yaml
+  yaml_valid: true
+- file: TS29503_Nudm_NIDDAU.yaml
+  sha256: 60aa0613843eee216a721c49cd7aa83c9166eeab11f7567db0a2591587ca728a
+  title: Nudm_NIDDAU
+  external_docs_description: 3GPP TS 29.503 Unified Data Management Services, version 18.6.0
+  external_refs:
+  - TS29503_Nudm_SDM.yaml
+  - TS29510_Nnrf_NFManagement.yaml
+  - TS29571_CommonData.yaml
+  yaml_valid: true
+- file: TS29503_Nudm_PP.yaml
+  sha256: 53c5583265787284e0a611fc02e0173a6294c5125051e825ad9bebf5136ebb21
+  title: Nudm_PP
+  external_docs_description: 3GPP TS 29.503 Unified Data Management Services, version 18.12.0
+  external_refs:
+  - TS29503_Nudm_EE.yaml
+  - TS29503_Nudm_SDM.yaml
+  - TS29571_CommonData.yaml
+  - TS29572_Nlmf_Location.yaml
+  yaml_valid: true
+- file: TS29503_Nudm_RSDS.yaml
+  sha256: d1d2084996220dbf3b69c9ed26bb9607049145778f8ff1e0b763838a8d2b9fb0
+  title: Nudm_ReportSMDeliveryStatus
+  external_docs_description: 3GPP TS 29.503 Unified Data Management Services, version 18.6.0
+  external_refs:
+  - TS29571_CommonData.yaml
+  yaml_valid: true
+- file: TS29503_Nudm_SDM.yaml
+  sha256: 2d90e73aa37ad02db94779efe5a7db42e6fa79f10c367d04c428f349b98197b7
+  title: Nudm_SDM
+  external_docs_description: 3GPP TS 29.503 Unified Data Management Services, version 18.13.0
+  external_refs:
+  - TS29122_CommonData.yaml
+  - TS29503_Nudm_PP.yaml
+  - TS29503_Nudm_SDM.yaml
+  - TS29503_Nudm_UECM.yaml
+  - TS29509_Nausf_SoRProtection.yaml
+  - TS29509_Nausf_UPUProtection.yaml
+  - TS29510_Nnrf_NFManagement.yaml
+  - TS29514_Npcf_PolicyAuthorization.yaml
+  - TS29518_Namf_Location.yaml
+  - TS29519_Policy_Data.yaml
+  - TS29571_CommonData.yaml
+  - TS29572_Nlmf_Location.yaml
+  yaml_valid: true
+- file: TS29503_Nudm_SSAU.yaml
+  sha256: c224fd64ed11637006aa8322acd8347de0f7fff916084afab3a9a4ca5cb6a2df
+  title: Nudm_SSAU
+  external_docs_description: 3GPP TS 29.503 Unified Data Management Services, version 18.11.0
+  external_refs:
+  - TS29510_Nnrf_NFManagement.yaml
+  - TS29571_CommonData.yaml
+  yaml_valid: true
+- file: TS29503_Nudm_UEAU.yaml
+  sha256: 11698a4ca8ac6a9657e48e61f8130dad65d0a28af9220e387cb527b13b15c416
+  title: Nudm_UEAU
+  external_docs_description: 3GPP TS 29.503 Unified Data Management Services, version 18.9.0
+  external_refs:
+  - TS29503_Nudm_UECM.yaml
+  - TS29562_Nhss_imsUEAU.yaml
+  - TS29571_CommonData.yaml
+  yaml_valid: true
+- file: TS29503_Nudm_UECM.yaml
+  sha256: 08223a6cda578dbfe53392f614d698e8e5e30a6d7333b414089ee25ece60215f
+  title: Nudm_UECM
+  external_docs_description: 3GPP TS 29.503 Unified Data Management Services, version 18.9.0
+  external_refs:
+  - TS29503_Nudm_SDM.yaml
+  - TS29510_Nnrf_NFManagement.yaml
+  - TS29520_Nnwdaf_AnalyticsInfo.yaml
+  - TS29571_CommonData.yaml
+  yaml_valid: true
+- file: TS29503_Nudm_UEID.yaml
+  sha256: 66a52ab4e6c396f73e5c59cdd7dbb7515d98ba07cb178db9815cfa7a4656e861
+  title: Nudm_UEIdentifier
+  external_docs_description: 3GPP TS 29.503 Unified Data Management Services, version 17.10.0
+  external_refs:
+  - TS29509_Nausf_UEAuthentication.yaml
+  - TS29571_CommonData.yaml
+  yaml_valid: true
 - file: TS29508_Nsmf_EventExposure.yaml
   sha256: a57c417f14c025ec081bb4befeb25e591d179713b1c43193cd23c56cc614d638
   title: Nsmf_EventExposure
@@ -140,6 +255,7 @@ files:
   - TS29554_Npcf_BDTPolicyControl.yaml
   - TS29564_Nupf_EventExposure.yaml
   - TS29571_CommonData.yaml
+  yaml_valid: true
 - file: TS29510_Nnrf_AccessToken.yaml
   sha256: 47951718c79b77d8cf84bc75e8ff7711447daf13899d8472378d2f0071907f25
   title: NRF OAuth2
@@ -148,12 +264,14 @@ files:
   - TS29510_Nnrf_NFManagement.yaml
   - TS29520_Nnwdaf_EventsSubscription.yaml
   - TS29571_CommonData.yaml
+  yaml_valid: true
 - file: TS29510_Nnrf_Bootstrapping.yaml
   sha256: e625b4d9f167921bb994b678cd671c7691085c690ea78b1a3372d06e5714071e
   title: NRF Bootstrapping
   external_docs_description: 3GPP TS 29.510 V18.7.0; 5G System; Network Function Repository Services; Stage 3
   external_refs:
   - TS29571_CommonData.yaml
+  yaml_valid: true
 - file: TS29510_Nnrf_NFDiscovery.yaml
   sha256: f1c8fe4e64fa4b9d6d6e24344bfb367c57ab3ae28c656df0ad93aad90eec9b8e
   title: NRF NFDiscovery Service
@@ -169,6 +287,7 @@ files:
   - TS29571_CommonData.yaml
   - TS29572_Nlmf_Location.yaml
   - TS29573_N32_Handshake.yaml
+  yaml_valid: true
 - file: TS29510_Nnrf_NFManagement.yaml
   sha256: 3ec58412ebeec791b12309578258911fb8a41cce7dd5cd02b3a7b7d0d0435dda
   title: NRF NFManagement Service
@@ -185,6 +304,67 @@ files:
   - TS29571_CommonData.yaml
   - TS29572_Nlmf_Location.yaml
   - TS29573_N32_Handshake.yaml
+  yaml_valid: true
+- file: TS29518_Namf_Communication.yaml
+  sha256: 3c15020bde4651805d635a1450de58124bb42300de773c1735b0502c03c50aff
+  title: Namf_Communication
+  external_docs_description: 3GPP TS 29.518 V18.14.0; 5G System; Access and Mobility Management Services
+  external_refs:
+  - TS29502_Nsmf_PDUSession.yaml
+  - TS29503_Nudm_SDM.yaml
+  - TS29503_Nudm_UECM.yaml
+  - TS29507_Npcf_AMPolicyControl.yaml
+  - TS29510_Nnrf_NFManagement.yaml
+  - TS29518_Namf_EventExposure.yaml
+  - TS29520_Nnwdaf_EventsSubscription.yaml
+  - TS29531_Nnssf_NSSelection.yaml
+  - TS29571_CommonData.yaml
+  - TS29572_Nlmf_Location.yaml
+  yaml_valid: true
+- file: TS29518_Namf_EventExposure.yaml
+  sha256: 1836f8918685c0f1a43ed6b62b8237860375d591b1f6b124079064a0407b7737
+  title: Namf_EventExposure
+  external_docs_description: 3GPP TS 29.518 V18.10.0; 5G System; Access and Mobility Management Services
+  external_refs:
+  - TS29503_Nudm_EE.yaml
+  - TS29510_Nnrf_NFManagement.yaml
+  - TS29531_Nnssf_NSSelection.yaml
+  - TS29571_CommonData.yaml
+  yaml_valid: true
+- file: TS29518_Namf_Location.yaml
+  sha256: 59025c2144a4848dd3267cd5833bff08a233a4f2454fe6dadb6e1546b7f10c79
+  title: Namf_Location
+  external_docs_description: 3GPP TS 29.518 V18.9.0; 5G System; Access and Mobility Management Services
+  external_refs:
+  - TS29503_Nudm_UECM.yaml
+  - TS29515_Ngmlc_Location.yaml
+  - TS29571_CommonData.yaml
+  - TS29572_Nlmf_Location.yaml
+  yaml_valid: true
+- file: TS29518_Namf_MBSBroadcast.yaml
+  sha256: 2b965527718c2602fb2618123e72d5338529a059a3af19d7053281491cd1ab19
+  title: Namf_MBSBroadcast
+  external_docs_description: 3GPP TS 29.518 V18.6.0; 5G System; Access and Mobility Management Services
+  external_refs:
+  - TS29571_CommonData.yaml
+  yaml_valid: true
+- file: TS29518_Namf_MBSCommunication.yaml
+  sha256: 6ed2b30aaf1ba675cf805af0a1aeb17322ccbadfbb9c28d12e51eb4da04e22ef
+  title: Namf_MBSCommunication
+  external_docs_description: 3GPP TS 29.518 V18.6.0; 5G System; Access and Mobility Management Services
+  external_refs:
+  - TS29518_Namf_Communication.yaml
+  - TS29571_CommonData.yaml
+  yaml_valid: true
+- file: TS29518_Namf_MT.yaml
+  sha256: ec5481ea9ac52a8178216c0b34c3d84d68ea55d279758c8ab16a3a46862fd13a
+  title: Namf_MT
+  external_docs_description: 3GPP TS 29.518 V18.6.0; 5G System; Access and Mobility Management Services
+  external_refs:
+  - TS29518_Namf_Communication.yaml
+  - TS29518_Namf_EventExposure.yaml
+  - TS29571_CommonData.yaml
+  yaml_valid: true
 - file: TS29520_Nnwdaf_AnalyticsInfo.yaml
   sha256: 1b8d480a45721f7bfef6db7733c189528480dd33a6e31bcab64abcf6ded2f239
   title: Nnwdaf_AnalyticsInfo
@@ -201,6 +381,7 @@ files:
   - TS29554_Npcf_BDTPolicyControl.yaml
   - TS29571_CommonData.yaml
   - TS29575_Nadrf_DataManagement.yaml
+  yaml_valid: true
 - file: TS29520_Nnwdaf_DataManagement.yaml
   sha256: 5922d5d975e71f82b53006f01c285398f8701f02efdb6b53a677d25ff631d499
   title: Nnwdaf_DataManagement
@@ -212,6 +393,7 @@ files:
   - TS29574_Ndccf_DataManagement.yaml
   - TS29575_Nadrf_DataManagement.yaml
   - TS29576_Nmfaf_3caDataManagement.yaml
+  yaml_valid: true
 - file: TS29520_Nnwdaf_EventsSubscription.yaml
   sha256: 6603c6af385accee815a5bbc76152fb52afbed66167ced9f0ac96f1a9ebe7dee
   title: Nnwdaf_EventsSubscription
@@ -233,6 +415,7 @@ files:
   - TS29554_Npcf_BDTPolicyControl.yaml
   - TS29571_CommonData.yaml
   - TS29572_Nlmf_Location.yaml
+  yaml_valid: true
 - file: TS29520_Nnwdaf_MLModelMonitor.yaml
   sha256: 63841486cfe523ac43015516bd1ded54795a81e783cf8954252a69c3679bc47e
   title: Nnwdaf_MLModelMonitor
@@ -245,6 +428,7 @@ files:
   - TS29523_Npcf_EventExposure.yaml
   - TS29571_CommonData.yaml
   - TS29575_Nadrf_DataManagement.yaml
+  yaml_valid: true
 - file: TS29520_Nnwdaf_MLModelProvision.yaml
   sha256: 49fca42f3b33dc518580f9797d1517cd5fb041d65e8e502d64fcd53ceb4d717b
   title: Nnwdaf_MLModelProvision
@@ -259,6 +443,7 @@ files:
   - TS29571_CommonData.yaml
   - TS29574_Ndccf_DataManagement.yaml
   - TS29575_Nadrf_DataManagement.yaml
+  yaml_valid: true
 - file: TS29520_Nnwdaf_MLModelTraining.yaml
   sha256: b6ccbe8729ac145e501f784b08a0c3d1bcdfd15c44118c9e30da7fd05ed99bfb
   title: Nnwdaf_MLModelTraining
@@ -271,6 +456,7 @@ files:
   - TS29554_Npcf_BDTPolicyControl.yaml
   - TS29571_CommonData.yaml
   - TS29574_Ndccf_DataManagement.yaml
+  yaml_valid: true
 - file: TS29520_Nnwdaf_RoamingAnalytics.yaml
   sha256: 620e549e96a6cb623d7cc17ddcb451df7d8e2b48954fdace900e37206c51c88b
   title: Nnwdaf_RoamingAnalytics
@@ -279,6 +465,7 @@ files:
   - TS29520_Nnwdaf_EventsSubscription.yaml
   - TS29523_Npcf_EventExposure.yaml
   - TS29571_CommonData.yaml
+  yaml_valid: true
 - file: TS29520_Nnwdaf_RoamingData.yaml
   sha256: 8add0a519f601205334e35a0f1d0d846857b23da23fee7b3a9f8045b04de358d
   title: Nnwdaf_RoamingData
@@ -290,6 +477,18 @@ files:
   - TS29571_CommonData.yaml
   - TS29574_Ndccf_DataManagement.yaml
   - TS29575_Nadrf_DataManagement.yaml
+  yaml_valid: true
+- file: TS29554_Npcf_BDTPolicyControl.yaml
+  sha256: b300cacb6e9aa60ea6fd32382834e300980e34c2a757962348050530f68a3996
+  title: Npcf_BDTPolicyControl Service API
+  external_docs_description: '3GPP TS 29.554 V18.3.0; 5G System; Background Data Transfer Policy Control Service.
+
+    '
+  external_refs:
+  - TS29122_CommonData.yaml
+  - TS29122_ResourceManagementOfBdt.yaml
+  - TS29571_CommonData.yaml
+  yaml_valid: true
 - file: TS29564_Nupf_EventExposure.yaml
   sha256: 489c2e3b3618147569b1ca0c0a1c8acaa5227565285217b1b3867434de3d44af
   title: UPF Event Exposure Service
@@ -297,12 +496,14 @@ files:
   external_refs:
   - TS29512_Npcf_SMPolicyControl.yaml
   - TS29571_CommonData.yaml
+  yaml_valid: true
 - file: TS29564_Nupf_GetUEPrivateIPaddrAndIdentifiers.yaml
   sha256: e22abb5b3c6ef7bfc3c3b9263a16e8a635e788fcd8efb497641b8bb7ab7f898c
   title: UPF GET UE Private IP address and Identifiers Service
   external_docs_description: 3GPP TS 29.564 V18.5.0; 5G System; 5G System; User Plane Function Services; Stage 3
   external_refs:
   - TS29571_CommonData.yaml
+  yaml_valid: true
 - file: TS29571_CommonData.yaml
   sha256: 0ddb99782ddf1038bafb50bccd6aaaa074d76cb582dba60bb5ba89bd7f130745
   title: Common Data Types
@@ -313,6 +514,7 @@ files:
   - TS29514_Npcf_PolicyAuthorization.yaml
   - TS29571_CommonData.yaml
   - TS29572_Nlmf_Location.yaml
+  yaml_valid: true
 - file: TS29574_Ndccf_ContextManagement.yaml
   sha256: a38daf185dacf25d8fe56e2864b68313776b71165966d457f6e8502bf1d8497b
   title: Ndccf_ContextManagement
@@ -321,6 +523,7 @@ files:
   - TS29520_Nnwdaf_EventsSubscription.yaml
   - TS29571_CommonData.yaml
   - TS29575_Nadrf_DataManagement.yaml
+  yaml_valid: true
 - file: TS29574_Ndccf_DataManagement.yaml
   sha256: c2c21919dbd725e2c1b682b9b73d704606ccdf9fecc1b6726e9182b82924a588
   title: Ndccf_DataManagement
@@ -342,6 +545,7 @@ files:
   - TS29575_Nadrf_DataManagement.yaml
   - TS29576_Nmfaf_3caDataManagement.yaml
   - TS29591_Nnef_EventExposure.yaml
+  yaml_valid: true
 - file: TS29575_Nadrf_DataManagement.yaml
   sha256: 1f86235326f0417356a11374bb86cf628af97cb4954f03c9c48af609e764f8d7
   title: Nadrf_DataManagement
@@ -361,6 +565,7 @@ files:
   - TS29574_Ndccf_DataManagement.yaml
   - TS29576_Nmfaf_3caDataManagement.yaml
   - TS29591_Nnef_EventExposure.yaml
+  yaml_valid: true
 - file: TS29575_Nadrf_MLModelManagement.yaml
   sha256: 3d5b794a6801d7adfcdd3c14efdce37fea128c87fe2c2ad5fddec9e68d9ebd10
   title: Nadrf_MLModelManagement
@@ -368,6 +573,7 @@ files:
   external_refs:
   - TS29520_Nnwdaf_MLModelProvision.yaml
   - TS29571_CommonData.yaml
+  yaml_valid: true
 - file: TS29576_Nmfaf_3caDataManagement.yaml
   sha256: 238b5727726eb9ff625beac5498c29f06311f939b406fbb262a3d92365cdb04b
   title: Nmfaf_3caDataManagement
@@ -376,6 +582,7 @@ files:
   - TS29520_Nnwdaf_EventsSubscription.yaml
   - TS29571_CommonData.yaml
   - TS29575_Nadrf_DataManagement.yaml
+  yaml_valid: true
 - file: TS29576_Nmfaf_3daDataManagement.yaml
   sha256: 63ca4a0fe4385ecf2cdc1a3d99c60916075cbd806027f9717348cfde25be2614
   title: Nmfaf_3daDataManagement
@@ -383,24 +590,4 @@ files:
   external_refs:
   - TS29571_CommonData.yaml
   - TS29574_Ndccf_DataManagement.yaml
-included_count: 38
-unresolved_external_dependencies:
-- TS29503_Nudm_EE.yaml
-- TS29503_Nudm_SDM.yaml
-- TS29503_Nudm_UECM.yaml
-- TS29512_Npcf_SMPolicyControl.yaml
-- TS29514_Npcf_PolicyAuthorization.yaml
-- TS29515_Ngmlc_Location.yaml
-- TS29517_Naf_EventExposure.yaml
-- TS29518_Namf_Communication.yaml
-- TS29518_Namf_EventExposure.yaml
-- TS29522_AMPolicyAuthorization.yaml
-- TS29522_TrafficInfluence.yaml
-- TS29523_Npcf_EventExposure.yaml
-- TS29531_Nnssf_NSSelection.yaml
-- TS29536_Nnsacf_SliceEventExposure.yaml
-- TS29554_Npcf_BDTPolicyControl.yaml
-- TS29565_Ntsctsf_QoSandTSCAssistance.yaml
-- TS29572_Nlmf_Location.yaml
-- TS29573_N32_Handshake.yaml
-- TS29591_Nnef_EventExposure.yaml
+  yaml_valid: true

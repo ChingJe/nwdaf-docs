@@ -1087,6 +1087,1006 @@ corrections:
   type: normalize-heading-level
   original: '########  Annex B (informative): Change history'
   replacement: '# Annex B (informative): Change history'
+- spec: TS 29.503
+  line: 6253
+  type: normalize-heading-level
+  original: '##### 6.1.3.2.3.1 GET'
+  replacement: '###### 6.1.3.2.3.1 GET'
+- spec: TS 29.503
+  line: 6419
+  type: normalize-heading-level
+  original: '##### 6.1.3.3.3.1 POST'
+  replacement: '###### 6.1.3.3.3.1 POST'
+- spec: TS 29.503
+  line: 6569
+  type: normalize-heading-level
+  original: '##### 6.1.3.4.3.1 DELETE'
+  replacement: '###### 6.1.3.4.3.1 DELETE'
+- spec: TS 29.503
+  line: 6633
+  type: normalize-heading-level
+  original: '##### 6.1.3.4.3.2 PATCH'
+  replacement: '###### 6.1.3.4.3.2 PATCH'
+- spec: TS 29.503
+  line: 6764
+  type: normalize-heading-level
+  original: '##### 6.1.3.5.3.1 GET'
+  replacement: '###### 6.1.3.5.3.1 GET'
+- spec: TS 29.503
+  line: 6909
+  type: normalize-heading-level
+  original: '##### 6.1.3.5.4.1 Overview'
+  replacement: '###### 6.1.3.5.4.1 Overview'
+- spec: TS 29.503
+  line: 6917
+  type: normalize-heading-level
+  original: '##### 6.1.3.5.4.2 Operation: update-sor'
+  replacement: '###### 6.1.3.5.4.2 Operation: update-sor'
+- spec: TS 29.503
+  line: 6919
+  type: normalize-heading-level
+  original: '##### 6.1.3.5.4.2.1 Description'
+  replacement: '###### 6.1.3.5.4.2.1 Description'
+- spec: TS 29.503
+  line: 6923
+  type: normalize-heading-level
+  original: '##### 6.1.3.5.4.2.2 Operation Definition'
+  replacement: '###### 6.1.3.5.4.2.2 Operation Definition'
+- spec: TS 29.503
+  line: 7024
+  type: normalize-heading-level
+  original: '##### 6.1.3.6.3.1 GET'
+  replacement: '###### 6.1.3.6.3.1 GET'
+- spec: TS 29.503
+  line: 7188
+  type: normalize-heading-level
+  original: '##### 6.1.3.7.3.1 GET'
+  replacement: '###### 6.1.3.7.3.1 GET'
+- spec: TS 29.503
+  line: 7299
+  type: normalize-heading-level
+  original: '##### 6.1.3.8.3.1 GET'
+  replacement: '###### 6.1.3.8.3.1 GET'
+- spec: TS 29.503
+  line: 7486
+  type: normalize-heading-level
+  original: '##### 6.1.3.9.3.1 GET'
+  replacement: '###### 6.1.3.9.3.1 GET'
+- spec: TS 29.503
+  line: 7637
+  type: normalize-heading-level
+  original: '##### 6.1.3.10.3.1 GET'
+  replacement: '###### 6.1.3.10.3.1 GET'
+- spec: TS 29.503
+  line: 7788
+  type: normalize-heading-level
+  original: '##### 6.1.3.11.3.1 GET'
+  replacement: '###### 6.1.3.11.3.1 GET'
+- spec: TS 29.503
+  line: 7999
+  type: normalize-heading-level
+  original: '##### 6.1.3.12.3.1 GET'
+  replacement: '###### 6.1.3.12.3.1 GET'
+- spec: TS 29.503
+  line: 8196
+  type: normalize-heading-level
+  original: '##### 6.1.3.13.3.1 PUT'
+  replacement: '###### 6.1.3.13.3.1 PUT'
+- spec: TS 29.503
+  line: 8300
+  type: normalize-heading-level
+  original: '##### 6.1.3.14.3.1 GET'
+  replacement: '###### 6.1.3.14.3.1 GET'
+- spec: TS 29.503
+  line: 8403
+  type: normalize-heading-level
+  original: '##### 6.1.3.15.3.1 GET'
+  replacement: '###### 6.1.3.15.3.1 GET'
+- spec: TS 29.503
+  line: 8501
+  type: normalize-heading-level
+  original: '##### 6.1.3.16.3.1 POST'
+  replacement: '###### 6.1.3.16.3.1 POST'
+- spec: TS 29.503
+  line: 8593
+  type: normalize-heading-level
+  original: '##### 6.1.3.17.3.1 DELETE'
+  replacement: '###### 6.1.3.17.3.1 DELETE'
+- spec: TS 29.503
+  line: 8654
+  type: normalize-heading-level
+  original: '##### 6.1.3.17.3.2 PATCH'
+  replacement: '###### 6.1.3.17.3.2 PATCH'
+- spec: TS 29.503
+  line: 8785
+  type: normalize-heading-level
+  original: '##### 6.1.3.18.3.1 GET'
+  replacement: '###### 6.1.3.18.3.1 GET'
+- spec: TS 29.503
+  line: 8890
+  type: normalize-heading-level
+  original: '##### 6.1.3.19.3.1 PUT'
+  replacement: '###### 6.1.3.19.3.1 PUT'
+- spec: TS 29.503
+  line: 8972
+  type: normalize-heading-level
+  original: '##### 6.1.3.20.3.1 GET'
+  replacement: '###### 6.1.3.20.3.1 GET'
+- spec: TS 29.503
+  line: 9158
+  type: normalize-heading-level
+  original: '##### 6.1.3.21.3.1 PUT'
+  replacement: '###### 6.1.3.21.3.1 PUT'
+- spec: TS 29.503
+  line: 9262
+  type: normalize-heading-level
+  original: '##### 6.1.3.22.3.1 PUT'
+  replacement: '###### 6.1.3.22.3.1 PUT'
+- spec: TS 29.503
+  line: 9369
+  type: normalize-heading-level
+  original: '##### 6.1.3.23.3.1 GET'
+  replacement: '###### 6.1.3.23.3.1 GET'
+- spec: TS 29.503
+  line: 9476
+  type: normalize-heading-level
+  original: '##### 6.1.3.24.3.1 GET'
+  replacement: '###### 6.1.3.24.3.1 GET'
+- spec: TS 29.503
+  line: 9583
+  type: normalize-heading-level
+  original: '##### 6.1.3.25.3.1 GET'
+  replacement: '###### 6.1.3.25.3.1 GET'
+- spec: TS 29.503
+  line: 9684
+  type: normalize-heading-level
+  original: '##### 6.1.3.26.3.1 GET'
+  replacement: '###### 6.1.3.26.3.1 GET'
+- spec: TS 29.503
+  line: 9785
+  type: normalize-heading-level
+  original: '##### 6.1.3.27.3.1 GET'
+  replacement: '###### 6.1.3.27.3.1 GET'
+- spec: TS 29.503
+  line: 9886
+  type: normalize-heading-level
+  original: '##### 6.1.3.28.3.1 GET'
+  replacement: '###### 6.1.3.28.3.1 GET'
+- spec: TS 29.503
+  line: 9973
+  type: normalize-heading-level
+  original: '##### 6.1.3.29.3.1 GET'
+  replacement: '###### 6.1.3.29.3.1 GET'
+- spec: TS 29.503
+  line: 10077
+  type: normalize-heading-level
+  original: '##### 6.1.3.30.3.1 GET'
+  replacement: '###### 6.1.3.30.3.1 GET'
+- spec: TS 29.503
+  line: 10184
+  type: normalize-heading-level
+  original: '##### 6.1.3.31.3.1 GET'
+  replacement: '###### 6.1.3.31.3.1 GET'
+- spec: TS 29.503
+  line: 10291
+  type: normalize-heading-level
+  original: '##### 6.1.3.32.3.1 GET'
+  replacement: '###### 6.1.3.32.3.1 GET'
+- spec: TS 29.503
+  line: 10403
+  type: normalize-heading-level
+  original: '##### 6.1.3.33.3.1 GET'
+  replacement: '###### 6.1.3.33.3.1 GET'
+- spec: TS 29.503
+  line: 10526
+  type: normalize-heading-level
+  original: '##### 6.1.3.35.3.1 GET'
+  replacement: '###### 6.1.3.35.3.1 GET'
+- spec: TS 29.503
+  line: 10648
+  type: normalize-heading-level
+  original: '##### 6.1.3.36.3.1 GET'
+  replacement: '###### 6.1.3.36.3.1 GET'
+- spec: TS 29.503
+  line: 10755
+  type: normalize-heading-level
+  original: '##### 6.1.3.37.3.1 GET'
+  replacement: '###### 6.1.3.37.3.1 GET'
+- spec: TS 29.503
+  line: 10966
+  type: normalize-heading-level
+  original: '##### 6.1.3.39.3.1 GET'
+  replacement: '###### 6.1.3.39.3.1 GET'
+- spec: TS 29.503
+  line: 18982
+  type: normalize-heading-level
+  original: '##### 6.2.3.2.3.1 PUT'
+  replacement: '###### 6.2.3.2.3.1 PUT'
+- spec: TS 29.503
+  line: 19077
+  type: normalize-heading-level
+  original: '##### 6.2.3.2.3.2 PATCH'
+  replacement: '###### 6.2.3.2.3.2 PATCH'
+- spec: TS 29.503
+  line: 19177
+  type: normalize-heading-level
+  original: '##### 6.2.3.2.3.3 GET'
+  replacement: '###### 6.2.3.2.3.3 GET'
+- spec: TS 29.503
+  line: 19240
+  type: normalize-heading-level
+  original: '##### 6.2.3.2.4.1 Overview'
+  replacement: '###### 6.2.3.2.4.1 Overview'
+- spec: TS 29.503
+  line: 19250
+  type: normalize-heading-level
+  original: '##### 6.2.3.2.4.2 Operation: dereg-amf'
+  replacement: '###### 6.2.3.2.4.2 Operation: dereg-amf'
+- spec: TS 29.503
+  line: 19252
+  type: normalize-heading-level
+  original: '##### 6.2.3.2.4.2.1 Description'
+  replacement: '###### 6.2.3.2.4.2.1 Description'
+- spec: TS 29.503
+  line: 19256
+  type: normalize-heading-level
+  original: '##### 6.2.3.2.4.2.2 Operation Definition'
+  replacement: '###### 6.2.3.2.4.2.2 Operation Definition'
+- spec: TS 29.503
+  line: 19307
+  type: normalize-heading-level
+  original: '##### 6.2.3.2.4.3 Operation: pei-update'
+  replacement: '###### 6.2.3.2.4.3 Operation: pei-update'
+- spec: TS 29.503
+  line: 19309
+  type: normalize-heading-level
+  original: '##### 6.2.3.2.4.3.1 Description'
+  replacement: '###### 6.2.3.2.4.3.1 Description'
+- spec: TS 29.503
+  line: 19313
+  type: normalize-heading-level
+  original: '##### 6.2.3.2.4.3.2 Operation Definition'
+  replacement: '###### 6.2.3.2.4.3.2 Operation Definition'
+- spec: TS 29.503
+  line: 19364
+  type: normalize-heading-level
+  original: '##### 6.2.3.2.4.4 Operation: roaming-info-update'
+  replacement: '###### 6.2.3.2.4.4 Operation: roaming-info-update'
+- spec: TS 29.503
+  line: 19366
+  type: normalize-heading-level
+  original: '##### 6.2.3.2.4.4.1 Description'
+  replacement: '###### 6.2.3.2.4.4.1 Description'
+- spec: TS 29.503
+  line: 19370
+  type: normalize-heading-level
+  original: '##### 6.2.3.2.4.4.2 Operation Definition'
+  replacement: '###### 6.2.3.2.4.4.2 Operation Definition'
+- spec: TS 29.503
+  line: 19473
+  type: normalize-heading-level
+  original: '##### 6.2.3.3.3.1 PUT'
+  replacement: '###### 6.2.3.3.3.1 PUT'
+- spec: TS 29.503
+  line: 19568
+  type: normalize-heading-level
+  original: '##### 6.2.3.3.3.2 PATCH'
+  replacement: '###### 6.2.3.3.3.2 PATCH'
+- spec: TS 29.503
+  line: 19660
+  type: normalize-heading-level
+  original: '##### 6.2.3.3.3.3 GET'
+  replacement: '###### 6.2.3.3.3.3 GET'
+- spec: TS 29.503
+  line: 19765
+  type: normalize-heading-level
+  original: '##### 6.2.3.4.3.1 GET'
+  replacement: '###### 6.2.3.4.3.1 GET'
+- spec: TS 29.503
+  line: 19918
+  type: normalize-heading-level
+  original: '##### 6.2.3.5.2.1 PUT'
+  replacement: '###### 6.2.3.5.2.1 PUT'
+- spec: TS 29.503
+  line: 20009
+  type: normalize-heading-level
+  original: '##### 6.2.3.5.2.2 DELETE'
+  replacement: '###### 6.2.3.5.2.2 DELETE'
+- spec: TS 29.503
+  line: 20099
+  type: normalize-heading-level
+  original: '##### 6.2.3.5.2.3 GET'
+  replacement: '###### 6.2.3.5.2.3 GET'
+- spec: TS 29.503
+  line: 20160
+  type: normalize-heading-level
+  original: '##### 6.2.3.5.2.4 PATCH'
+  replacement: '###### 6.2.3.5.2.4 PATCH'
+- spec: TS 29.503
+  line: 20282
+  type: normalize-heading-level
+  original: '##### 6.2.3.6.3.1 PUT'
+  replacement: '###### 6.2.3.6.3.1 PUT'
+- spec: TS 29.503
+  line: 20389
+  type: normalize-heading-level
+  original: '##### 6.2.3.6.3.2 DELETE'
+  replacement: '###### 6.2.3.6.3.2 DELETE'
+- spec: TS 29.503
+  line: 20448
+  type: normalize-heading-level
+  original: '##### 6.2.3.6.3.3 GET'
+  replacement: '###### 6.2.3.6.3.3 GET'
+- spec: TS 29.503
+  line: 20519
+  type: normalize-heading-level
+  original: '##### 6.2.3.6.3.4 PATCH'
+  replacement: '###### 6.2.3.6.3.4 PATCH'
+- spec: TS 29.503
+  line: 20644
+  type: normalize-heading-level
+  original: '##### 6.2.3.7.3.1 PUT'
+  replacement: '###### 6.2.3.7.3.1 PUT'
+- spec: TS 29.503
+  line: 20751
+  type: normalize-heading-level
+  original: '##### 6.2.3.7.3.2 DELETE'
+  replacement: '###### 6.2.3.7.3.2 DELETE'
+- spec: TS 29.503
+  line: 20810
+  type: normalize-heading-level
+  original: '##### 6.2.3.7.3.3 GET'
+  replacement: '###### 6.2.3.7.3.3 GET'
+- spec: TS 29.503
+  line: 20881
+  type: normalize-heading-level
+  original: '##### 6.2.3.7.3.4 PATCH'
+  replacement: '###### 6.2.3.7.3.4 PATCH'
+- spec: TS 29.503
+  line: 21005
+  type: normalize-heading-level
+  original: '##### 6.2.3.8.3.1 GET'
+  replacement: '###### 6.2.3.8.3.1 GET'
+- spec: TS 29.503
+  line: 21107
+  type: normalize-heading-level
+  original: '##### 6.2.3.9.3.1 GET'
+  replacement: '###### 6.2.3.9.3.1 GET'
+- spec: TS 29.503
+  line: 21227
+  type: normalize-heading-level
+  original: '##### 6.2.3.9.4.1 Overview'
+  replacement: '###### 6.2.3.9.4.1 Overview'
+- spec: TS 29.503
+  line: 21235
+  type: normalize-heading-level
+  original: '##### 6.2.3.9.4.2 Operation: send-routing-info-sm'
+  replacement: '###### 6.2.3.9.4.2 Operation: send-routing-info-sm'
+- spec: TS 29.503
+  line: 21237
+  type: normalize-heading-level
+  original: '##### 6.2.3.9.4.2.1 Description'
+  replacement: '###### 6.2.3.9.4.2.1 Description'
+- spec: TS 29.503
+  line: 21241
+  type: normalize-heading-level
+  original: '##### 6.2.3.9.4.2.2 Operation Definition'
+  replacement: '###### 6.2.3.9.4.2.2 Operation Definition'
+- spec: TS 29.503
+  line: 21342
+  type: normalize-heading-level
+  original: '##### 6.2.3.10.3.1 PUT'
+  replacement: '###### 6.2.3.10.3.1 PUT'
+- spec: TS 29.503
+  line: 21421
+  type: normalize-heading-level
+  original: '##### 6.2.3.10.3.2 DELETE'
+  replacement: '###### 6.2.3.10.3.2 DELETE'
+- spec: TS 29.503
+  line: 21470
+  type: normalize-heading-level
+  original: '##### 6.2.3.10.3.3 GET'
+  replacement: '###### 6.2.3.10.3.3 GET'
+- spec: TS 29.503
+  line: 21574
+  type: normalize-heading-level
+  original: '##### 6.2.3.11.2.1 PUT'
+  replacement: '###### 6.2.3.11.2.1 PUT'
+- spec: TS 29.503
+  line: 21641
+  type: normalize-heading-level
+  original: '##### 6.2.3.11.2.2 DELETE'
+  replacement: '###### 6.2.3.11.2.2 DELETE'
+- spec: TS 29.503
+  line: 21693
+  type: normalize-heading-level
+  original: '##### 6.2.3.11.2.3 PATCH'
+  replacement: '###### 6.2.3.11.2.3 PATCH'
+- spec: TS 29.503
+  line: 21824
+  type: normalize-heading-level
+  original: '##### 6.2.3.12.3.1 GET'
+  replacement: '###### 6.2.3.12.3.1 GET'
+- spec: TS 29.503
+  line: 21931
+  type: normalize-heading-level
+  original: '##### 6.2.3.13.4.1 Overview'
+  replacement: '###### 6.2.3.13.4.1 Overview'
+- spec: TS 29.503
+  line: 21939
+  type: normalize-heading-level
+  original: '##### 6.2.3.13.4.2 Operation: trigger-auth'
+  replacement: '###### 6.2.3.13.4.2 Operation: trigger-auth'
+- spec: TS 29.503
+  line: 21941
+  type: normalize-heading-level
+  original: '##### 6.2.3.13.4.2.1 Description'
+  replacement: '###### 6.2.3.13.4.2.1 Description'
+- spec: TS 29.503
+  line: 21945
+  type: normalize-heading-level
+  original: '##### 6.2.3.13.4.2.2 Operation Definition'
+  replacement: '###### 6.2.3.13.4.2.2 Operation Definition'
+- spec: TS 29.503
+  line: 25547
+  type: normalize-heading-level
+  original: '##### 6.3.3.2.4.1 Overview'
+  replacement: '###### 6.3.3.2.4.1 Overview'
+- spec: TS 29.503
+  line: 25555
+  type: normalize-heading-level
+  original: '##### 6.3.3.2.4.2 Operation: generate-auth-data'
+  replacement: '###### 6.3.3.2.4.2 Operation: generate-auth-data'
+- spec: TS 29.503
+  line: 25557
+  type: normalize-heading-level
+  original: '##### 6.3.3.2.4.2.1 Description'
+  replacement: '###### 6.3.3.2.4.2.1 Description'
+- spec: TS 29.503
+  line: 25561
+  type: normalize-heading-level
+  original: '##### 6.3.3.2.4.2.2 Operation Definition'
+  replacement: '###### 6.3.3.2.4.2.2 Operation Definition'
+- spec: TS 29.503
+  line: 25675
+  type: normalize-heading-level
+  original: '##### 6.3.3.3.3.1 POST'
+  replacement: '###### 6.3.3.3.3.1 POST'
+- spec: TS 29.503
+  line: 25792
+  type: normalize-heading-level
+  original: '##### 6.3.3.4.3.1 GET'
+  replacement: '###### 6.3.3.4.3.1 GET'
+- spec: TS 29.503
+  line: 25921
+  type: normalize-heading-level
+  original: '##### 6.3.3.5.4.1 Overview'
+  replacement: '###### 6.3.3.5.4.1 Overview'
+- spec: TS 29.503
+  line: 25929
+  type: normalize-heading-level
+  original: '##### 6.3.3.5.4.2 Operation: generate-av'
+  replacement: '###### 6.3.3.5.4.2 Operation: generate-av'
+- spec: TS 29.503
+  line: 25931
+  type: normalize-heading-level
+  original: '##### 6.3.3.5.4.2.1 Description'
+  replacement: '###### 6.3.3.5.4.2.1 Description'
+- spec: TS 29.503
+  line: 25935
+  type: normalize-heading-level
+  original: '##### 6.3.3.5.4.2.2 Operation Definition'
+  replacement: '###### 6.3.3.5.4.2.2 Operation Definition'
+- spec: TS 29.503
+  line: 26048
+  type: normalize-heading-level
+  original: '##### 6.3.3.6.2.1 PUT'
+  replacement: '###### 6.3.3.6.2.1 PUT'
+- spec: TS 29.503
+  line: 26141
+  type: normalize-heading-level
+  original: '##### 6.3.3.7.4.1 Overview'
+  replacement: '###### 6.3.3.7.4.1 Overview'
+- spec: TS 29.503
+  line: 26149
+  type: normalize-heading-level
+  original: '##### 6.3.3.7.4.2 Operation: generate-av'
+  replacement: '###### 6.3.3.7.4.2 Operation: generate-av'
+- spec: TS 29.503
+  line: 26151
+  type: normalize-heading-level
+  original: '##### 6.3.3.7.4.2.1 Description'
+  replacement: '###### 6.3.3.7.4.2.1 Description'
+- spec: TS 29.503
+  line: 26155
+  type: normalize-heading-level
+  original: '##### 6.3.3.7.4.2.2 Operation Definition'
+  replacement: '###### 6.3.3.7.4.2.2 Operation Definition'
+- spec: TS 29.503
+  line: 26286
+  type: normalize-heading-level
+  original: '##### 6.3.3.8.4.2.1 Description'
+  replacement: '###### 6.3.3.8.4.2.1 Description'
+- spec: TS 29.503
+  line: 26290
+  type: normalize-heading-level
+  original: '##### 6.3.3.8.4.2.2 Operation Definition'
+  replacement: '###### 6.3.3.8.4.2.2 Operation Definition'
+- spec: TS 29.503
+  line: 27655
+  type: normalize-heading-level
+  original: '##### 6.4.3.2.3.1 POST'
+  replacement: '###### 6.4.3.2.3.1 POST'
+- spec: TS 29.503
+  line: 27795
+  type: normalize-heading-level
+  original: '##### 6.4.3.3.2.1 DELETE'
+  replacement: '###### 6.4.3.3.2.1 DELETE'
+- spec: TS 29.503
+  line: 27856
+  type: normalize-heading-level
+  original: '##### 6.4.3.3.2.2 PATCH'
+  replacement: '###### 6.4.3.3.2.2 PATCH'
+- spec: TS 29.503
+  line: 30313
+  type: normalize-heading-level
+  original: '##### 6.5.3.2.3.1 PATCH'
+  replacement: '###### 6.5.3.2.3.1 PATCH'
+- spec: TS 29.503
+  line: 30451
+  type: normalize-heading-level
+  original: '##### 6.5.3.3.3.1 PUT'
+  replacement: '###### 6.5.3.3.3.1 PUT'
+- spec: TS 29.503
+  line: 30513
+  type: normalize-heading-level
+  original: '##### 6.5.3.3.3.2 DELETE'
+  replacement: '###### 6.5.3.3.3.2 DELETE'
+- spec: TS 29.503
+  line: 30611
+  type: normalize-heading-level
+  original: '##### 6.5.3.3.3.3 PATCH'
+  replacement: '###### 6.5.3.3.3.3 PATCH'
+- spec: TS 29.503
+  line: 30689
+  type: normalize-heading-level
+  original: '##### 6.5.3.3.3.4 GET'
+  replacement: '###### 6.5.3.3.3.4 GET'
+- spec: TS 29.503
+  line: 30813
+  type: normalize-heading-level
+  original: '##### 6.5.3.4.3.1 PUT'
+  replacement: '###### 6.5.3.4.3.1 PUT'
+- spec: TS 29.503
+  line: 30890
+  type: normalize-heading-level
+  original: '##### 6.5.3.4.3.2 DELETE'
+  replacement: '###### 6.5.3.4.3.2 DELETE'
+- spec: TS 29.503
+  line: 30959
+  type: normalize-heading-level
+  original: '##### 6.5.3.4.3.3 GET'
+  replacement: '###### 6.5.3.4.3.3 GET'
+- spec: TS 29.503
+  line: 31070
+  type: normalize-heading-level
+  original: '##### 6.5.3.5.3.1 PUT'
+  replacement: '###### 6.5.3.5.3.1 PUT'
+- spec: TS 29.503
+  line: 31131
+  type: normalize-heading-level
+  original: '##### 6.5.3.5.3.2 DELETE'
+  replacement: '###### 6.5.3.5.3.2 DELETE'
+- spec: TS 29.503
+  line: 31224
+  type: normalize-heading-level
+  original: '##### 6.5.3.5.3.3 PATCH'
+  replacement: '###### 6.5.3.5.3.3 PATCH'
+- spec: TS 29.503
+  line: 31301
+  type: normalize-heading-level
+  original: '##### 6.5.3.5.3.4 GET'
+  replacement: '###### 6.5.3.5.3.4 GET'
+- spec: TS 29.503
+  line: 33774
+  type: normalize-heading-level
+  original: '##### 6.6.3.2.4.1 Overview'
+  replacement: '###### 6.6.3.2.4.1 Overview'
+- spec: TS 29.503
+  line: 33782
+  type: normalize-heading-level
+  original: '##### 6.6.3.2.4.2 Operation: authorize'
+  replacement: '###### 6.6.3.2.4.2 Operation: authorize'
+- spec: TS 29.503
+  line: 33784
+  type: normalize-heading-level
+  original: '##### 6.6.3.2.4.2.1 Description'
+  replacement: '###### 6.6.3.2.4.2.1 Description'
+- spec: TS 29.503
+  line: 33788
+  type: normalize-heading-level
+  original: '##### 6.6.3.2.4.2.2 Operation Definition'
+  replacement: '###### 6.6.3.2.4.2.2 Operation Definition'
+- spec: TS 29.503
+  line: 34510
+  type: normalize-heading-level
+  original: '##### 6.7.3.2.3.1 GET'
+  replacement: '###### 6.7.3.2.3.1 GET'
+- spec: TS 29.503
+  line: 34620
+  type: normalize-heading-level
+  original: '##### 6.7.3.3.4.1 Overview'
+  replacement: '###### 6.7.3.3.4.1 Overview'
+- spec: TS 29.503
+  line: 34628
+  type: normalize-heading-level
+  original: '##### 6.7.3.3.4.2 Operation: provide-loc-info'
+  replacement: '###### 6.7.3.3.4.2 Operation: provide-loc-info'
+- spec: TS 29.503
+  line: 34630
+  type: normalize-heading-level
+  original: '##### 6.7.3.3.4.2.1 Description'
+  replacement: '###### 6.7.3.3.4.2.1 Description'
+- spec: TS 29.503
+  line: 34634
+  type: normalize-heading-level
+  original: '##### 6.7.3.3.4.2.2 Operation Definition'
+  replacement: '###### 6.7.3.3.4.2.2 Operation Definition'
+- spec: TS 29.503
+  line: 35215
+  type: normalize-heading-level
+  original: '##### 6.8.3.2.4.1 Overview'
+  replacement: '###### 6.8.3.2.4.1 Overview'
+- spec: TS 29.503
+  line: 35224
+  type: normalize-heading-level
+  original: '##### 6.8.3.2.4.2 Operation: authorize'
+  replacement: '###### 6.8.3.2.4.2 Operation: authorize'
+- spec: TS 29.503
+  line: 35226
+  type: normalize-heading-level
+  original: '##### 6.8.3.2.4.2.1 Description'
+  replacement: '###### 6.8.3.2.4.2.1 Description'
+- spec: TS 29.503
+  line: 35230
+  type: normalize-heading-level
+  original: '##### 6.8.3.2.4.2.2 Operation Definition'
+  replacement: '###### 6.8.3.2.4.2.2 Operation Definition'
+- spec: TS 29.503
+  line: 35293
+  type: normalize-heading-level
+  original: '##### 6.8.3.2.4.3 Operation: remove'
+  replacement: '###### 6.8.3.2.4.3 Operation: remove'
+- spec: TS 29.503
+  line: 35295
+  type: normalize-heading-level
+  original: '##### 6.8.3.2.4.3.1 Description'
+  replacement: '###### 6.8.3.2.4.3.1 Description'
+- spec: TS 29.503
+  line: 35299
+  type: normalize-heading-level
+  original: '##### 6.8.3.2.4.3.2 Operation Definition'
+  replacement: '###### 6.8.3.2.4.3.2 Operation Definition'
+- spec: TS 29.503
+  line: 35930
+  type: normalize-heading-level
+  original: '##### 6.9.3.2.4.1 Overview'
+  replacement: '###### 6.9.3.2.4.1 Overview'
+- spec: TS 29.503
+  line: 35938
+  type: normalize-heading-level
+  original: '##### 6.9.3.2.4.2 Operation: sm-delivery-status'
+  replacement: '###### 6.9.3.2.4.2 Operation: sm-delivery-status'
+- spec: TS 29.503
+  line: 35940
+  type: normalize-heading-level
+  original: '##### 6.9.3.2.4.2.1 Description'
+  replacement: '###### 6.9.3.2.4.2.1 Description'
+- spec: TS 29.503
+  line: 35944
+  type: normalize-heading-level
+  original: '##### 6.9.3.2.4.2.2 Operation Definition'
+  replacement: '###### 6.9.3.2.4.2.2 Operation Definition'
+- spec: TS 29.503
+  line: 36373
+  type: normalize-heading-level
+  original: '######## Annex A (normative): OpenAPI specification'
+  replacement: '# Annex A (normative): OpenAPI specification'
+- spec: TS 29.503
+  line: 36375
+  type: normalize-heading-level
+  original: '# A.1 General'
+  replacement: '## A.1 General'
+- spec: TS 29.503
+  line: 36385
+  type: normalize-heading-level
+  original: '# A.2 Nudm_SDM API'
+  replacement: '## A.2 Nudm_SDM API'
+- spec: TS 29.503
+  line: 47967
+  type: normalize-heading-level
+  original: '# A.3 Nudm_UECM API'
+  replacement: '## A.3 Nudm_UECM API'
+- spec: TS 29.503
+  line: 55031
+  type: normalize-heading-level
+  original: '# A.4 Nudm_UEAU API'
+  replacement: '## A.4 Nudm_UEAU API'
+- spec: TS 29.503
+  line: 56985
+  type: normalize-heading-level
+  original: '# A.5 Nudm_EE API'
+  replacement: '## A.5 Nudm_EE API'
+- spec: TS 29.503
+  line: 58983
+  type: normalize-heading-level
+  original: '# A.6 Nudm_PP API'
+  replacement: '## A.6 Nudm_PP API'
+- spec: TS 29.503
+  line: 61579
+  type: normalize-heading-level
+  original: '# A.7 Nudm_NIDDAU API'
+  replacement: '## A.7 Nudm_NIDDAU API'
+- spec: TS 29.503
+  line: 62013
+  type: normalize-heading-level
+  original: '# A.8 Nudm_MT API'
+  replacement: '## A.8 Nudm_MT API'
+- spec: TS 29.503
+  line: 62443
+  type: normalize-heading-level
+  original: '# A.9 Nudm_SSAU API'
+  replacement: '## A.9 Nudm_SSAU API'
+- spec: TS 29.503
+  line: 63047
+  type: normalize-heading-level
+  original: '# A.10 Nudm_ReportSMDeliveryStatus API'
+  replacement: '## A.10 Nudm_ReportSMDeliveryStatus API'
+- spec: TS 29.503
+  line: 63235
+  type: normalize-heading-level
+  original: '# A.11 Nudm_UEIdentifier API'
+  replacement: '## A.11 Nudm_UEIdentifier API'
+- spec: TS 29.503
+  line: 63405
+  type: normalize-heading-level
+  original: '######## Annex B (informative): Stateless UDMs'
+  replacement: '# Annex B (informative): Stateless UDMs'
+- spec: TS 29.503
+  line: 63493
+  type: normalize-heading-level
+  original: '######## Annex C (informative): SUCI encoding'
+  replacement: '# Annex C (informative): SUCI encoding'
+- spec: TS 29.503
+  line: 63637
+  type: normalize-heading-level
+  original: '######## Annex D (informative): Change history'
+  replacement: '# Annex D (informative): Change history'
+- spec: TS 29.518
+  line: 5159
+  type: normalize-heading-level
+  original: '####### 6.1.3.2.4.2.1 Description'
+  replacement: '###### 6.1.3.2.4.2.1 Description'
+- spec: TS 29.518
+  line: 5163
+  type: normalize-heading-level
+  original: '####### 6.1.3.2.4.2.2 Operation Definition'
+  replacement: '###### 6.1.3.2.4.2.2 Operation Definition'
+- spec: TS 29.518
+  line: 5321
+  type: normalize-heading-level
+  original: '####### 6.1.3.2.4.3.1 Description'
+  replacement: '###### 6.1.3.2.4.3.1 Description'
+- spec: TS 29.518
+  line: 5325
+  type: normalize-heading-level
+  original: '####### 6.1.3.2.4.3.2 Operation Definition'
+  replacement: '###### 6.1.3.2.4.3.2 Operation Definition'
+- spec: TS 29.518
+  line: 5490
+  type: normalize-heading-level
+  original: '####### 6.1.3.2.4.4.1 Description'
+  replacement: '###### 6.1.3.2.4.4.1 Description'
+- spec: TS 29.518
+  line: 5494
+  type: normalize-heading-level
+  original: '####### 6.1.3.2.4.4.2 Operation Definition'
+  replacement: '###### 6.1.3.2.4.4.2 Operation Definition'
+- spec: TS 29.518
+  line: 5647
+  type: normalize-heading-level
+  original: '####### 6.1.3.2.4.5.1 Description'
+  replacement: '###### 6.1.3.2.4.5.1 Description'
+- spec: TS 29.518
+  line: 5651
+  type: normalize-heading-level
+  original: '####### 6.1.3.2.4.5.2 Operation Definition'
+  replacement: '###### 6.1.3.2.4.5.2 Operation Definition'
+- spec: TS 29.518
+  line: 5801
+  type: normalize-heading-level
+  original: '####### 6.1.3.2.4.6.1 Description'
+  replacement: '###### 6.1.3.2.4.6.1 Description'
+- spec: TS 29.518
+  line: 5805
+  type: normalize-heading-level
+  original: '####### 6.1.3.2.4.6.2 Operation Definition'
+  replacement: '###### 6.1.3.2.4.6.2 Operation Definition'
+- spec: TS 29.518
+  line: 5950
+  type: normalize-heading-level
+  original: '####### 6.1.3.2.4.7.1 Description'
+  replacement: '###### 6.1.3.2.4.7.1 Description'
+- spec: TS 29.518
+  line: 5954
+  type: normalize-heading-level
+  original: '####### 6.1.3.2.4.7.2 Operation Definition'
+  replacement: '###### 6.1.3.2.4.7.2 Operation Definition'
+- spec: TS 29.518
+  line: 7430
+  type: normalize-heading-level
+  original: '####### 6.1.3.8.4.2.1 Description'
+  replacement: '###### 6.1.3.8.4.2.1 Description'
+- spec: TS 29.518
+  line: 7434
+  type: normalize-heading-level
+  original: '####### 6.1.3.8.4.2.2 Operation Definition'
+  replacement: '###### 6.1.3.8.4.2.2 Operation Definition'
+- spec: TS 29.518
+  line: 19395
+  type: normalize-heading-level
+  original: '####### 6.3.3.4.4.2.1 Description'
+  replacement: '###### 6.3.3.4.4.2.1 Description'
+- spec: TS 29.518
+  line: 19397
+  type: normalize-heading-level
+  original: '####### 6.3.3.4.4.2.2 Operation Definition'
+  replacement: '###### 6.3.3.4.4.2.2 Operation Definition'
+- spec: TS 29.518
+  line: 20503
+  type: normalize-heading-level
+  original: '####### 6.4.3.2.4.2.1 Description'
+  replacement: '###### 6.4.3.2.4.2.1 Description'
+- spec: TS 29.518
+  line: 20507
+  type: normalize-heading-level
+  original: '####### 6.4.3.2.4.2.2 Operation Definition'
+  replacement: '###### 6.4.3.2.4.2.2 Operation Definition'
+- spec: TS 29.518
+  line: 20700
+  type: normalize-heading-level
+  original: '####### 6.4.3.2.4.3.1 Description'
+  replacement: '###### 6.4.3.2.4.3.1 Description'
+- spec: TS 29.518
+  line: 20704
+  type: normalize-heading-level
+  original: '####### 6.4.3.2.4.3.2 Operation Definition'
+  replacement: '###### 6.4.3.2.4.3.2 Operation Definition'
+- spec: TS 29.518
+  line: 20857
+  type: normalize-heading-level
+  original: '####### 6.4.3.2.4.4.1 Description'
+  replacement: '###### 6.4.3.2.4.4.1 Description'
+- spec: TS 29.518
+  line: 20861
+  type: normalize-heading-level
+  original: '####### 6.4.3.2.4.4.2 Operation Definition'
+  replacement: '###### 6.4.3.2.4.4.2 Operation Definition'
+- spec: TS 29.518
+  line: 23208
+  type: normalize-heading-level
+  original: '##### 6.5.3.2.4.1 Overview'
+  replacement: '###### 6.5.3.2.4.1 Overview'
+- spec: TS 29.518
+  line: 23218
+  type: normalize-heading-level
+  original: '####### 6.5.3.2.4.2.1 Description'
+  replacement: '###### 6.5.3.2.4.2.1 Description'
+- spec: TS 29.518
+  line: 23222
+  type: normalize-heading-level
+  original: '####### 6.5.3.2.4.2.2 Operation Definition'
+  replacement: '###### 6.5.3.2.4.2.2 Operation Definition'
+- spec: TS 29.518
+  line: 24337
+  type: normalize-heading-level
+  original: '####### 6.6.3.1.4.2.1 Description'
+  replacement: '###### 6.6.3.1.4.2.1 Description'
+- spec: TS 29.518
+  line: 24341
+  type: normalize-heading-level
+  original: '####### 6.6.3.1.4.2.2 Operation Definition'
+  replacement: '###### 6.6.3.1.4.2.2 Operation Definition'
+- spec: TS 29.518
+  line: 25057
+  type: normalize-heading-level
+  original: '######## Annex A (normative): OpenAPI specification'
+  replacement: '# Annex A (normative): OpenAPI specification'
+- spec: TS 29.518
+  line: 25059
+  type: normalize-heading-level
+  original: '# A.1 General'
+  replacement: '## A.1 General'
+- spec: TS 29.518
+  line: 25079
+  type: normalize-heading-level
+  original: '# A.2 Namf_Communication API'
+  replacement: '## A.2 Namf_Communication API'
+- spec: TS 29.518
+  line: 34175
+  type: normalize-heading-level
+  original: '# A.3 Namf_EventExposure API'
+  replacement: '## A.3 Namf_EventExposure API'
+- spec: TS 29.518
+  line: 36389
+  type: normalize-heading-level
+  original: '# A.4 Namf_MT'
+  replacement: '## A.4 Namf_MT'
+- spec: TS 29.518
+  line: 37257
+  type: normalize-heading-level
+  original: '# A.5 Namf_Location'
+  replacement: '## A.5 Namf_Location'
+- spec: TS 29.518
+  line: 38563
+  type: normalize-heading-level
+  original: '# A.6 Namf_MBSBroadcast API'
+  replacement: '## A.6 Namf_MBSBroadcast API'
+- spec: TS 29.518
+  line: 40309
+  type: normalize-heading-level
+  original: '# A.7 Namf_MBSCommunication API'
+  replacement: '## A.7 Namf_MBSCommunication API'
+- spec: TS 29.518
+  line: 40799
+  type: normalize-heading-level
+  original: '######## Annex B (Informative): HTTP Multipart Messages'
+  replacement: '# Annex B (Informative): HTTP Multipart Messages'
+- spec: TS 29.518
+  line: 40801
+  type: normalize-heading-level
+  original: '# B.1 Example of HTTP multipart message'
+  replacement: '## B.1 Example of HTTP multipart message'
+- spec: TS 29.518
+  line: 40803
+  type: normalize-heading-level
+  original: '## B.1.1 General'
+  replacement: '### B.1.1 General'
+- spec: TS 29.518
+  line: 40809
+  type: normalize-heading-level
+  original: '## B.1.2 Example HTTP multipart message with N2 Information binary data'
+  replacement: '### B.1.2 Example HTTP multipart message with N2 Information binary data'
+- spec: TS 29.518
+  line: 40861
+  type: normalize-heading-level
+  original: '########  Annex C (informative): Change history'
+  replacement: '# Annex C (informative): Change history'
+- spec: TS 29.554
+  line: 39
+  type: remove-empty-heading
+  original: '#  '
+  replacement: ''
+- spec: TS 29.554
+  line: 1933
+  type: normalize-heading-level
+  original: '######## Annex A (normative): OpenAPI specification'
+  replacement: '# Annex A (normative): OpenAPI specification'
+- spec: TS 29.554
+  line: 1935
+  type: normalize-heading-level
+  original: '# A.1 General'
+  replacement: '## A.1 General'
+- spec: TS 29.554
+  line: 1945
+  type: normalize-heading-level
+  original: '# A.2 Npcf_BDTPolicyControl API'
+  replacement: '## A.2 Npcf_BDTPolicyControl API'
+- spec: TS 29.554
+  line: 2787
+  type: normalize-heading-level
+  original: '######## Annex B (informative): Change history'
+  replacement: '# Annex B (informative): Change history'
 full_extension_2026_07:
 - spec: TS 23.501
   line: 77

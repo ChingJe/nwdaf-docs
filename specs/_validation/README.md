@@ -54,3 +54,12 @@ This directory records deterministic conversion and validation results for the c
 - TS 29.574 official OpenAPI attachments are retained byte-for-byte.
 - TS 29.552 signalling diagrams and TS 29.574 service/resource diagrams retain original vectors and embedded Visio/OLE payloads, with PNG previews where rendering succeeded.
 - Annex OpenAPI bodies are not duplicated into Markdown when exact official YAML attachments are available.
+
+## TS 29.503, TS 29.518 and TS 29.554 integration
+
+- TS 29.503 V18.13.0, TS 29.518 V18.14.0 and TS 29.554 V18.3.0 are included in full.
+- The 17 official OpenAPI YAML attachments are retained byte-for-byte.
+- TS 29.503 and TS 29.518 native DOCX sources were independently extracted with `docx2txt`; normative marker counts match exactly.
+- TS 29.554 is a legacy DOC. `antiword` was used as an independent check; its table serialization omits part of one sentence, so the richer LibreOffice/Pandoc structural path and source-page samples remain the primary extraction evidence.
+- All 195 added media items produced PNG previews; original EMF/WMF and embedded OLE/Visio payloads are retained.
+- Full PDF export for TS 29.503 exceeded the bounded runtime and is explicitly not claimed as page-by-page visual certification.

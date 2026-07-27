@@ -1,0 +1,469 @@
+spec: TS 29.554
+version: 18.3.0
+release: '18'
+source_archive: 29554-i30.zip
+source_document: 29554-i30.doc
+source_archive_sha256: 6c4b6afbda7aac02b47c89a700c2dd7c4166f3101a06fd9f3a540f586d287f15
+source_document_sha256: 06837a9c2fc89dc80b80bbf8ee033acd765c9ddade475b2ddd9610099ccf6367
+max_source_words_per_semantic_file_target: 4200
+clauses:
+- clause: document-information
+  title: Document information
+  path: 00 Document information.md
+  source_words: 263
+  kind: source-file
+- clause: contents
+  title: Contents
+  path: 01 Original contents.md
+  source_words: 534
+  kind: source-file
+- clause: foreword
+  title: Foreword
+  path: 02 Foreword.md
+  source_words: 132
+  kind: source-file
+- clause: '1'
+  title: 1 Scope
+  path: 1 Scope.md
+  source_words: 126
+  kind: source-file
+- clause: '2'
+  title: 2 References
+  path: 2 References.md
+  source_words: 360
+  kind: source-file
+- clause: '3'
+  title: 3 Definitions and abbreviations
+  path: 3 Definitions and abbreviations.md
+  source_words: 229
+  kind: source-file
+- clause: '3.1'
+  title: 3.1 Definitions
+  path: 3 Definitions and abbreviations.md
+  source_words: 124
+  kind: embedded-clause
+- clause: '3.2'
+  title: 3.2 Abbreviations
+  path: 3 Definitions and abbreviations.md
+  source_words: 105
+  kind: embedded-clause
+- clause: '4'
+  title: 4 Background Data Transfer Policy Control Service
+  path: 4 Background Data Transfer Policy Control Service.md
+  source_words: 2933
+  kind: source-file
+- clause: '4.1'
+  title: 4.1 Service Description
+  path: 4 Background Data Transfer Policy Control Service.md
+  source_words: 340
+  kind: embedded-clause
+- clause: 4.1.1
+  title: 4.1.1 Overview
+  path: 4 Background Data Transfer Policy Control Service.md
+  source_words: 92
+  kind: embedded-clause
+- clause: 4.1.2
+  title: 4.1.2 Service Architecture
+  path: 4 Background Data Transfer Policy Control Service.md
+  source_words: 130
+  kind: embedded-clause
+- clause: 4.1.3
+  title: 4.1.3 Network Functions
+  path: 4 Background Data Transfer Policy Control Service.md
+  source_words: 118
+  kind: embedded-clause
+- clause: 4.1.3.1
+  title: 4.1.3.1 Policy Control Function (PCF)
+  path: 4 Background Data Transfer Policy Control Service.md
+  source_words: 82
+  kind: embedded-clause
+- clause: 4.1.3.2
+  title: 4.1.3.2 NF Service Consumers
+  path: 4 Background Data Transfer Policy Control Service.md
+  source_words: 36
+  kind: embedded-clause
+- clause: '4.2'
+  title: 4.2 Service Operations
+  path: 4 Background Data Transfer Policy Control Service.md
+  source_words: 2593
+  kind: embedded-clause
+- clause: 4.2.1
+  title: 4.2.1 Introduction
+  path: 4 Background Data Transfer Policy Control Service.md
+  source_words: 79
+  kind: embedded-clause
+- clause: 4.2.2
+  title: 4.2.2 Npcf_BDTPolicyControl_Create service operation
+  path: 4 Background Data Transfer Policy Control Service.md
+  source_words: 884
+  kind: embedded-clause
+- clause: 4.2.2.1
+  title: 4.2.2.1 General
+  path: 4 Background Data Transfer Policy Control Service.md
+  source_words: 38
+  kind: embedded-clause
+- clause: 4.2.2.2
+  title: 4.2.2.2 Creation of a BDT Policy
+  path: 4 Background Data Transfer Policy Control Service.md
+  source_words: 846
+  kind: embedded-clause
+- clause: 4.2.3
+  title: 4.2.3 Npcf_BDTPolicyControl_Update service operation
+  path: 4 Background Data Transfer Policy Control Service.md
+  source_words: 934
+  kind: embedded-clause
+- clause: 4.2.3.1
+  title: 4.2.3.1 General
+  path: 4 Background Data Transfer Policy Control Service.md
+  source_words: 47
+  kind: embedded-clause
+- clause: 4.2.3.2
+  title: 4.2.3.2 Indication about selected transfer policy
+  path: 4 Background Data Transfer Policy Control Service.md
+  source_words: 642
+  kind: embedded-clause
+- clause: 4.2.3.3
+  title: 4.2.3.3 Modification of BDT warning notification request indication
+  path: 4 Background Data Transfer Policy Control Service.md
+  source_words: 245
+  kind: embedded-clause
+- clause: 4.2.4
+  title: 4.2.4 Npcf_BDTPolicyControl_Notify service operation
+  path: 4 Background Data Transfer Policy Control Service.md
+  source_words: 696
+  kind: embedded-clause
+- clause: 4.2.4.1
+  title: 4.2.4.1 General
+  path: 4 Background Data Transfer Policy Control Service.md
+  source_words: 43
+  kind: embedded-clause
+- clause: 4.2.4.2
+  title: 4.2.4.2 Sending the BDT warning notification
+  path: 4 Background Data Transfer Policy Control Service.md
+  source_words: 653
+  kind: embedded-clause
+- clause: '5'
+  title: 5 Npcf_BDTPolicyControl API
+  path: 5 Npcf_BDTPolicyControl API/README.md
+  source_words: 4815
+  kind: navigation-directory
+- clause: '5.1'
+  title: 5.1 Introduction
+  path: 5 Npcf_BDTPolicyControl API/5.1 Introduction.md
+  source_words: 92
+  kind: source-file
+- clause: '5.2'
+  title: 5.2 Usage of HTTP
+  path: 5 Npcf_BDTPolicyControl API/5.2 Usage of HTTP.md
+  source_words: 255
+  kind: source-file
+- clause: 5.2.1
+  title: 5.2.1 General
+  path: 5 Npcf_BDTPolicyControl API/5.2 Usage of HTTP.md
+  source_words: 57
+  kind: embedded-clause
+- clause: 5.2.2
+  title: 5.2.2 HTTP standard headers
+  path: 5 Npcf_BDTPolicyControl API/5.2 Usage of HTTP.md
+  source_words: 136
+  kind: embedded-clause
+- clause: 5.2.2.1
+  title: 5.2.2.1 General
+  path: 5 Npcf_BDTPolicyControl API/5.2 Usage of HTTP.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 5.2.2.2
+  title: 5.2.2.2 Content type
+  path: 5 Npcf_BDTPolicyControl API/5.2 Usage of HTTP.md
+  source_words: 118
+  kind: embedded-clause
+- clause: 5.2.3
+  title: 5.2.3 HTTP custom headers
+  path: 5 Npcf_BDTPolicyControl API/5.2 Usage of HTTP.md
+  source_words: 62
+  kind: embedded-clause
+- clause: '5.3'
+  title: 5.3 Resources
+  path: 5 Npcf_BDTPolicyControl API/5.3 Resources.md
+  source_words: 1553
+  kind: source-file
+- clause: 5.3.1
+  title: 5.3.1 Resource Structure
+  path: 5 Npcf_BDTPolicyControl API/5.3 Resources.md
+  source_words: 120
+  kind: embedded-clause
+- clause: 5.3.2
+  title: '5.3.2 Resource: BDT policies (Collection)'
+  path: 5 Npcf_BDTPolicyControl API/5.3 Resources.md
+  source_words: 376
+  kind: embedded-clause
+- clause: 5.3.2.1
+  title: 5.3.2.1 Description
+  path: 5 Npcf_BDTPolicyControl API/5.3 Resources.md
+  source_words: 22
+  kind: embedded-clause
+- clause: 5.3.2.2
+  title: 5.3.2.2 Resource definition
+  path: 5 Npcf_BDTPolicyControl API/5.3 Resources.md
+  source_words: 42
+  kind: embedded-clause
+- clause: 5.3.2.3
+  title: 5.3.2.3 Resource Standard Methods
+  path: 5 Npcf_BDTPolicyControl API/5.3 Resources.md
+  source_words: 311
+  kind: embedded-clause
+- clause: 5.3.2.3.1
+  title: 5.3.2.3.1 POST
+  path: 5 Npcf_BDTPolicyControl API/5.3 Resources.md
+  source_words: 311
+  kind: embedded-clause
+- clause: 5.3.2.4
+  title: 5.3.2.4 Resource Custom Operations
+  path: 5 Npcf_BDTPolicyControl API/5.3 Resources.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 5.3.3
+  title: '5.3.3 Resource: Individual BDT policy (Document)'
+  path: 5 Npcf_BDTPolicyControl API/5.3 Resources.md
+  source_words: 1057
+  kind: embedded-clause
+- clause: 5.3.3.1
+  title: 5.3.3.1 Description
+  path: 5 Npcf_BDTPolicyControl API/5.3 Resources.md
+  source_words: 22
+  kind: embedded-clause
+- clause: 5.3.3.2
+  title: 5.3.3.2 Resource definition
+  path: 5 Npcf_BDTPolicyControl API/5.3 Resources.md
+  source_words: 103
+  kind: embedded-clause
+- clause: 5.3.3.3
+  title: 5.3.3.3 Resource Standard Methods
+  path: 5 Npcf_BDTPolicyControl API/5.3 Resources.md
+  source_words: 932
+  kind: embedded-clause
+- clause: 5.3.3.3.1
+  title: 5.3.3.3.1 GET
+  path: 5 Npcf_BDTPolicyControl API/5.3 Resources.md
+  source_words: 440
+  kind: embedded-clause
+- clause: 5.3.3.3.2
+  title: 5.3.3.3.2 PATCH
+  path: 5 Npcf_BDTPolicyControl API/5.3 Resources.md
+  source_words: 492
+  kind: embedded-clause
+- clause: '5.4'
+  title: 5.4 Custom Operations without associated resources
+  path: 5 Npcf_BDTPolicyControl API/5.4 Custom Operations without associated resources.md
+  source_words: 11
+  kind: source-file
+- clause: '5.5'
+  title: 5.5 Notifications
+  path: 5 Npcf_BDTPolicyControl API/5.5 Notifications.md
+  source_words: 582
+  kind: source-file
+- clause: 5.5.1
+  title: 5.5.1 General
+  path: 5 Npcf_BDTPolicyControl API/5.5 Notifications.md
+  source_words: 49
+  kind: embedded-clause
+- clause: 5.5.2
+  title: 5.5.2 BDT Notification
+  path: 5 Npcf_BDTPolicyControl API/5.5 Notifications.md
+  source_words: 533
+  kind: embedded-clause
+- clause: 5.5.2.1
+  title: 5.5.2.1 Description
+  path: 5 Npcf_BDTPolicyControl API/5.5 Notifications.md
+  source_words: 40
+  kind: embedded-clause
+- clause: 5.5.2.2
+  title: 5.5.2.2 Target URI
+  path: 5 Npcf_BDTPolicyControl API/5.5 Notifications.md
+  source_words: 66
+  kind: embedded-clause
+- clause: 5.5.2.3
+  title: 5.5.2.3 Standard Methods
+  path: 5 Npcf_BDTPolicyControl API/5.5 Notifications.md
+  source_words: 427
+  kind: embedded-clause
+- clause: 5.5.2.3.1
+  title: 5.5.2.3.1 POST
+  path: 5 Npcf_BDTPolicyControl API/5.5 Notifications.md
+  source_words: 427
+  kind: embedded-clause
+- clause: '5.6'
+  title: 5.6 Data Model
+  path: 5 Npcf_BDTPolicyControl API/5.6 Data Model.md
+  source_words: 1646
+  kind: source-file
+- clause: 5.6.1
+  title: 5.6.1 General
+  path: 5 Npcf_BDTPolicyControl API/5.6 Data Model.md
+  source_words: 455
+  kind: embedded-clause
+- clause: 5.6.2
+  title: 5.6.2 Structured data types
+  path: 5 Npcf_BDTPolicyControl API/5.6 Data Model.md
+  source_words: 1131
+  kind: embedded-clause
+- clause: 5.6.2.1
+  title: 5.6.2.1 Introduction
+  path: 5 Npcf_BDTPolicyControl API/5.6 Data Model.md
+  source_words: 11
+  kind: embedded-clause
+- clause: 5.6.2.2
+  title: 5.6.2.2 Type BdtPolicy
+  path: 5 Npcf_BDTPolicyControl API/5.6 Data Model.md
+  source_words: 102
+  kind: embedded-clause
+- clause: 5.6.2.3
+  title: 5.6.2.3 Type BdtReqData
+  path: 5 Npcf_BDTPolicyControl API/5.6 Data Model.md
+  source_words: 385
+  kind: embedded-clause
+- clause: 5.6.2.4
+  title: 5.6.2.4 Type BdtPolicyData
+  path: 5 Npcf_BDTPolicyControl API/5.6 Data Model.md
+  source_words: 151
+  kind: embedded-clause
+- clause: 5.6.2.5
+  title: 5.6.2.5 Type TransferPolicy
+  path: 5 Npcf_BDTPolicyControl API/5.6 Data Model.md
+  source_words: 100
+  kind: embedded-clause
+- clause: 5.6.2.6
+  title: 5.6.2.6 Type BdtPolicyDataPatch
+  path: 5 Npcf_BDTPolicyControl API/5.6 Data Model.md
+  source_words: 52
+  kind: embedded-clause
+- clause: 5.6.2.7
+  title: 5.6.2.7 Void
+  path: 5 Npcf_BDTPolicyControl API/5.6 Data Model.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.6.2.8
+  title: 5.6.2.8 Type NetworkAreaInfo
+  path: 5 Npcf_BDTPolicyControl API/5.6 Data Model.md
+  source_words: 102
+  kind: embedded-clause
+- clause: 5.6.2.9
+  title: 5.6.2.9 Void
+  path: 5 Npcf_BDTPolicyControl API/5.6 Data Model.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 5.6.2.10
+  title: 5.6.2.10 Type Notification
+  path: 5 Npcf_BDTPolicyControl API/5.6 Data Model.md
+  source_words: 122
+  kind: embedded-clause
+- clause: 5.6.2.11
+  title: 5.6.2.11 Type PatchBdtPolicy
+  path: 5 Npcf_BDTPolicyControl API/5.6 Data Model.md
+  source_words: 70
+  kind: embedded-clause
+- clause: 5.6.2.12
+  title: 5.6.2.12 Type BdtReqDataPatch
+  path: 5 Npcf_BDTPolicyControl API/5.6 Data Model.md
+  source_words: 36
+  kind: embedded-clause
+- clause: 5.6.3
+  title: 5.6.3 Simple data types and enumerations
+  path: 5 Npcf_BDTPolicyControl API/5.6 Data Model.md
+  source_words: 60
+  kind: embedded-clause
+- clause: 5.6.3.1
+  title: 5.6.3.1 Introduction
+  path: 5 Npcf_BDTPolicyControl API/5.6 Data Model.md
+  source_words: 20
+  kind: embedded-clause
+- clause: 5.6.3.2
+  title: 5.6.3.2 Simple data types
+  path: 5 Npcf_BDTPolicyControl API/5.6 Data Model.md
+  source_words: 40
+  kind: embedded-clause
+- clause: '5.7'
+  title: 5.7 Error handling
+  path: 5 Npcf_BDTPolicyControl API/5.7 Error handling.md
+  source_words: 214
+  kind: source-file
+- clause: 5.7.1
+  title: 5.7.1 General
+  path: 5 Npcf_BDTPolicyControl API/5.7 Error handling.md
+  source_words: 103
+  kind: embedded-clause
+- clause: 5.7.2
+  title: 5.7.2 Protocol Errors
+  path: 5 Npcf_BDTPolicyControl API/5.7 Error handling.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 5.7.3
+  title: 5.7.3 Application Errors
+  path: 5 Npcf_BDTPolicyControl API/5.7 Error handling.md
+  source_words: 93
+  kind: embedded-clause
+- clause: '5.8'
+  title: 5.8 Feature negotiation
+  path: 5 Npcf_BDTPolicyControl API/5.8 Feature negotiation.md
+  source_words: 286
+  kind: source-file
+- clause: '5.9'
+  title: 5.9 Security
+  path: 5 Npcf_BDTPolicyControl API/5.9 Security.md
+  source_words: 176
+  kind: source-file
+- clause: Annex A
+  title: 'Annex A (normative): OpenAPI specification'
+  path: Annex A (normative)_ OpenAPI specification/README.md
+  source_words: 1605
+  kind: navigation-directory
+- clause: A.1
+  title: A.1 General
+  path: Annex A (normative)_ OpenAPI specification/README.md
+  source_words: 136
+  kind: source-file
+- clause: A.2
+  title: A.2 Npcf_BDTPolicyControl API
+  path: ../openapi/TS29554_Npcf_BDTPolicyControl.yaml
+  source_words: 1469
+  kind: exact-attachment
+- clause: Annex B
+  title: 'Annex B (informative): Change history'
+  path: Annex B (informative)_ Change history/README.md
+  source_words: 1278
+  kind: navigation-directory
+- clause: Annex B-2018
+  title: 'Annex B (informative): Change history — 2018'
+  path: Annex B (informative)_ Change history/2018.md
+  source_words: 428
+  kind: source-file
+- clause: Annex B-2019
+  title: 'Annex B (informative): Change history — 2019'
+  path: Annex B (informative)_ Change history/2019.md
+  source_words: 172
+  kind: source-file
+- clause: Annex B-2020
+  title: 'Annex B (informative): Change history — 2020'
+  path: Annex B (informative)_ Change history/2020.md
+  source_words: 277
+  kind: source-file
+- clause: Annex B-2021
+  title: 'Annex B (informative): Change history — 2021'
+  path: Annex B (informative)_ Change history/2021.md
+  source_words: 156
+  kind: source-file
+- clause: Annex B-2022
+  title: 'Annex B (informative): Change history — 2022'
+  path: Annex B (informative)_ Change history/2022.md
+  source_words: 133
+  kind: source-file
+- clause: Annex B-2023
+  title: 'Annex B (informative): Change history — 2023'
+  path: Annex B (informative)_ Change history/2023.md
+  source_words: 68
+  kind: source-file
+- clause: Annex B-2024
+  title: 'Annex B (informative): Change history — 2024'
+  path: Annex B (informative)_ Change history/2024.md
+  source_words: 31
+  kind: source-file

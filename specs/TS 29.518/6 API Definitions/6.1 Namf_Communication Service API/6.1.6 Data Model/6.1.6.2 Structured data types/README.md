@@ -1,0 +1,108 @@
+---
+spec: TS 29.518
+version: 18.14.0
+release: '18'
+clause: 6.1.6.2
+title: 6.1.6.2 Structured data types
+source_archive: 29518-ie0.zip
+source_document: 29518-ie0.docx
+source_archive_sha256: aa2789dac49d4f52e56fcc9d04277a5122a40fdf4c22faf877a7832f844daae1
+source_document_sha256: 263e0bf7e06ccfa30ab69e661e2a65e0fedf654b22d2675975add5f47f8acad0
+content_origin: generated-navigation-and-3gpp-source
+conversion: deterministic-pandoc-structure
+---
+
+# 6.1.6.2 Structured data types
+
+> Navigation is generated. Source wording below, if present, precedes the child clauses in the supplied specification.
+
+## Navigation
+
+- [6.1.6.2.1 Introduction](6.1.6.2.1%20Introduction.md)
+- [6.1.6.2.2 Type: SubscriptionData](6.1.6.2.2%20Type_%20SubscriptionData.md)
+- [6.1.6.2.3 Type: AmfStatusChangeNotification](6.1.6.2.3%20Type_%20AmfStatusChangeNotification.md)
+- [6.1.6.2.4 Type: AmfStatusInfo](6.1.6.2.4%20Type_%20AmfStatusInfo.md)
+- [6.1.6.2.5 Type: AssignEbiData](6.1.6.2.5%20Type_%20AssignEbiData.md)
+- [6.1.6.2.6 Type: AssignedEbiData](6.1.6.2.6%20Type_%20AssignedEbiData.md)
+- [6.1.6.2.7 Type: AssignEbiFailed](6.1.6.2.7%20Type_%20AssignEbiFailed.md)
+- [6.1.6.2.8 Type: UEContextRelease](6.1.6.2.8%20Type_%20UEContextRelease.md)
+- [6.1.6.2.9 Type: N2InformationTransferReqData](6.1.6.2.9%20Type_%20N2InformationTransferReqData.md)
+- [6.1.6.2.10 Type: NonUeN2InfoSubscriptionCreateData](6.1.6.2.10%20Type_%20NonUeN2InfoSubscriptionCreateData.md)
+- [6.1.6.2.11 Type: NonUeN2InfoSubscriptionCreatedData](6.1.6.2.11%20Type_%20NonUeN2InfoSubscriptionCreatedData.md)
+- [6.1.6.2.12 Type: UeN1N2InfoSubscriptionCreateData](6.1.6.2.12%20Type_%20UeN1N2InfoSubscriptionCreateData.md)
+- [6.1.6.2.13 Type: UeN1N2InfoSubscriptionCreatedData](6.1.6.2.13%20Type_%20UeN1N2InfoSubscriptionCreatedData.md)
+- [6.1.6.2.14 Type: N2InformationNotification](6.1.6.2.14%20Type_%20N2InformationNotification.md)
+- [6.1.6.2.15 Type: N2InfoContainer](6.1.6.2.15%20Type_%20N2InfoContainer.md)
+- [6.1.6.2.16 Type: N1MessageNotification](6.1.6.2.16%20Type_%20N1MessageNotification.md)
+- [6.1.6.2.17 Type: N1MessageContainer](6.1.6.2.17%20Type_%20N1MessageContainer.md)
+- [6.1.6.2.18 Type: N1N2MessageTransferReqData](6.1.6.2.18%20Type_%20N1N2MessageTransferReqData.md)
+- [6.1.6.2.19 Type: N1N2MessageTransferRspData](6.1.6.2.19%20Type_%20N1N2MessageTransferRspData.md)
+- [6.1.6.2.20 Type: RegistrationContextContainer](6.1.6.2.20%20Type_%20RegistrationContextContainer.md)
+- [6.1.6.2.21 Type: AreaOfValidity](6.1.6.2.21%20Type_%20AreaOfValidity.md)
+- [6.1.6.2.22 Void](6.1.6.2.22%20Void.md)
+- [6.1.6.2.23 Type: UeContextTransferReqData](6.1.6.2.23%20Type_%20UeContextTransferReqData.md)
+- [6.1.6.2.24 Type: UeContextTransferRspData](6.1.6.2.24%20Type_%20UeContextTransferRspData.md)
+- [6.1.6.2.25 Type: UeContext](6.1.6.2.25%20Type_%20UeContext.md)
+- [6.1.6.2.26 Type: N2SmInformation](6.1.6.2.26%20Type_%20N2SmInformation.md)
+- [6.1.6.2.27 Type: N2InfoContent](6.1.6.2.27%20Type_%20N2InfoContent.md)
+- [6.1.6.2.28 Type: NrppaInformation](6.1.6.2.28%20Type_%20NrppaInformation.md)
+- [6.1.6.2.29 Type: PwsInformation](6.1.6.2.29%20Type_%20PwsInformation.md)
+- [6.1.6.2.30 Type: N1N2MsgTxfrFailureNotification](6.1.6.2.30%20Type_%20N1N2MsgTxfrFailureNotification.md)
+- [6.1.6.2.31 Type: N1N2MessageTransferError](6.1.6.2.31%20Type_%20N1N2MessageTransferError.md)
+- [6.1.6.2.32 Type: N1N2MsgTxfrErrDetail](6.1.6.2.32%20Type_%20N1N2MsgTxfrErrDetail.md)
+- [6.1.6.2.33 Type: N2InformationTransferRspData](6.1.6.2.33%20Type_%20N2InformationTransferRspData.md)
+- [6.1.6.2.34 Type: MmContext](6.1.6.2.34%20Type_%20MmContext.md)
+- [6.1.6.2.35 Type: SeafData](6.1.6.2.35%20Type_%20SeafData.md)
+- [6.1.6.2.36 Type: NasSecurityMode](6.1.6.2.36%20Type_%20NasSecurityMode.md)
+- [6.1.6.2.37 Type: PduSessionContext](6.1.6.2.37%20Type_%20PduSessionContext.md)
+- [6.1.6.2.38 Type: NssaiMapping](6.1.6.2.38%20Type_%20NssaiMapping.md)
+- [6.1.6.2.39 Type: UeRegStatusUpdateReqData](6.1.6.2.39%20Type_%20UeRegStatusUpdateReqData.md)
+- [6.1.6.2.40 Type: AssignEbiError](6.1.6.2.40%20Type_%20AssignEbiError.md)
+- [6.1.6.2.41 Type: UeContextCreateData](6.1.6.2.41%20Type_%20UeContextCreateData.md)
+- [6.1.6.2.42 Type: UeContextCreatedData](6.1.6.2.42%20Type_%20UeContextCreatedData.md)
+- [6.1.6.2.43 Type: UeContextCreateError](6.1.6.2.43%20Type_%20UeContextCreateError.md)
+- [6.1.6.2.44 Type: NgRanTargetId](6.1.6.2.44%20Type_%20NgRanTargetId.md)
+- [6.1.6.2.45 Type: N2InformationTransferError](6.1.6.2.45%20Type_%20N2InformationTransferError.md)
+- [6.1.6.2.46 Type: PWSResponseData](6.1.6.2.46%20Type_%20PWSResponseData.md)
+- [6.1.6.2.47 Type: PWSErrorData](6.1.6.2.47%20Type_%20PWSErrorData.md)
+- [6.1.6.2.48 Void](6.1.6.2.48%20Void.md)
+- [6.1.6.2.49 Type: NgKsi](6.1.6.2.49%20Type_%20NgKsi.md)
+- [6.1.6.2.50 Type: KeyAmf](6.1.6.2.50%20Type_%20KeyAmf.md)
+- [6.1.6.2.51 Type: ExpectedUeBehavior](6.1.6.2.51%20Type_%20ExpectedUeBehavior.md)
+- [6.1.6.2.52 Type: UeRegStatusUpdateRspData](6.1.6.2.52%20Type_%20UeRegStatusUpdateRspData.md)
+- [6.1.6.2.53 Type: N2RanInformation](6.1.6.2.53%20Type_%20N2RanInformation.md)
+- [6.1.6.2.54 Type: N2InfoNotificationRspData](6.1.6.2.54%20Type_%20N2InfoNotificationRspData.md)
+- [6.1.6.2.55 Type: SmallDataRateStatusInfo](6.1.6.2.55%20Type_%20SmallDataRateStatusInfo.md)
+- [6.1.6.2.56 Type: SmfChangeInfo](6.1.6.2.56%20Type_%20SmfChangeInfo.md)
+- [6.1.6.2.57 Type: V2xContext](6.1.6.2.57%20Type_%20V2xContext.md)
+- [6.1.6.2.58 Type: ImmediateMdtConf](6.1.6.2.58%20Type_%20ImmediateMdtConf.md)
+- [6.1.6.2.59 Type: V2xInformation](6.1.6.2.59%20Type_%20V2xInformation.md)
+- [6.1.6.2.60 Type: EpsNasSecurityMode](6.1.6.2.60%20Type_%20EpsNasSecurityMode.md)
+- [6.1.6.2.61 Type: UeContextRelocateData](6.1.6.2.61%20Type_%20UeContextRelocateData.md)
+- [6.1.6.2.62 Type: UeContextRelocatedData](6.1.6.2.62%20Type_%20UeContextRelocatedData.md)
+- [6.1.6.2.63 Void](6.1.6.2.63%20Void.md)
+- [6.1.6.2.64 Type: EcRestrictionDataWb](6.1.6.2.64%20Type_%20EcRestrictionDataWb.md)
+- [6.1.6.2.65 Type: ExtAmfEventSubscription](6.1.6.2.65%20Type_%20ExtAmfEventSubscription.md)
+- [6.1.6.2.66 Type: AmfEventSubscriptionAddInfo](6.1.6.2.66%20Type_%20AmfEventSubscriptionAddInfo.md)
+- [6.1.6.2.67 Type: UeContextCancelRelocateData](6.1.6.2.67%20Type_%20UeContextCancelRelocateData.md)
+- [6.1.6.2.68 Type: UeDifferentiationInfo](6.1.6.2.68%20Type_%20UeDifferentiationInfo.md)
+- [6.1.6.2.69 Type: CeModeBInd](6.1.6.2.69%20Type_%20CeModeBInd.md)
+- [6.1.6.2.70 Type: LteMInd](6.1.6.2.70%20Type_%20LteMInd.md)
+- [6.1.6.2.71 Type: NpnAccessInfo](6.1.6.2.71%20Type_%20NpnAccessInfo.md)
+- [6.1.6.2.72 Type: ProseContext](6.1.6.2.72%20Type_%20ProseContext.md)
+- [6.1.6.2.73 Type: AnalyticsSubscription](6.1.6.2.73%20Type_%20AnalyticsSubscription.md)
+- [6.1.6.2.74 Type: NwdafSubscription](6.1.6.2.74%20Type_%20NwdafSubscription.md)
+- [6.1.6.2.75 Type: UpdpSubscriptionData](6.1.6.2.75%20Type_%20UpdpSubscriptionData.md)
+- [6.1.6.2.76 Type: ProSeInformation](6.1.6.2.76%20Type_%20ProSeInformation.md)
+- [6.1.6.2.77 Type: ReleaseSessionInfo](6.1.6.2.77%20Type_%20ReleaseSessionInfo.md)
+- [6.1.6.2.78 Type: AreaOfInterestEventState](6.1.6.2.78%20Type_%20AreaOfInterestEventState.md)
+- [6.1.6.2.79 Type: TssInformation](6.1.6.2.79%20Type_%20TssInformation.md)
+- [6.1.6.2.80 Type: AmPolicyInfoContainer](6.1.6.2.80%20Type_%20AmPolicyInfoContainer.md)
+- [6.1.6.2.81 Type: RslpInformation](6.1.6.2.81%20Type_%20RslpInformation.md)
+- [6.1.6.2.82 Type: A2xContext](6.1.6.2.82%20Type_%20A2xContext.md)
+- [6.1.6.2.83 Type: A2xInformation](6.1.6.2.83%20Type_%20A2xInformation.md)
+- [6.1.6.2.84 Type: LcsUpContext](6.1.6.2.84%20Type_%20LcsUpContext.md)
+- [6.1.6.2.85 Type: DeregInactTimerInfo](6.1.6.2.85%20Type_%20DeregInactTimerInfo.md)
+- [6.1.6.2.86 Type: TssRspPerNgran](6.1.6.2.86%20Type_%20TssRspPerNgran.md)
+- [6.1.6.2.87 Type: SliceReplacementMapping](6.1.6.2.87%20Type_%20SliceReplacementMapping.md)
+- [6.1.6.2.88 Type: SliceDeregInactConfig](6.1.6.2.88%20Type_%20SliceDeregInactConfig.md)

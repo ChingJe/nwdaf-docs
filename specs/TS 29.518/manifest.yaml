@@ -1,0 +1,3759 @@
+spec: TS 29.518
+version: 18.14.0
+release: '18'
+source_archive: 29518-ie0.zip
+source_document: 29518-ie0.docx
+source_archive_sha256: aa2789dac49d4f52e56fcc9d04277a5122a40fdf4c22faf877a7832f844daae1
+source_document_sha256: 263e0bf7e06ccfa30ab69e661e2a65e0fedf654b22d2675975add5f47f8acad0
+max_source_words_per_semantic_file_target: 4200
+clauses:
+- clause: document-information
+  title: Document information
+  path: 00 Document information.md
+  source_words: 260
+  kind: source-file
+- clause: contents
+  title: Contents
+  path: 01 Original contents.md
+  source_words: 5804
+  kind: source-file
+- clause: foreword
+  title: Foreword
+  path: 02 Foreword.md
+  source_words: 491
+  kind: source-file
+- clause: '1'
+  title: 1 Scope
+  path: 1 Scope.md
+  source_words: 89
+  kind: source-file
+- clause: '2'
+  title: 2 References
+  path: 2 References.md
+  source_words: 796
+  kind: source-file
+- clause: '3'
+  title: 3 Definitions and abbreviations
+  path: 3 Definitions and abbreviations.md
+  source_words: 340
+  kind: source-file
+- clause: '3.1'
+  title: 3.1 Definitions
+  path: 3 Definitions and abbreviations.md
+  source_words: 55
+  kind: embedded-clause
+- clause: '3.2'
+  title: 3.2 Abbreviations
+  path: 3 Definitions and abbreviations.md
+  source_words: 285
+  kind: embedded-clause
+- clause: '4'
+  title: 4 Overview
+  path: 4 Overview.md
+  source_words: 105
+  kind: source-file
+- clause: '4.1'
+  title: 4.1 Introduction
+  path: 4 Overview.md
+  source_words: 105
+  kind: embedded-clause
+- clause: '5'
+  title: 5 Services offered by the AMF
+  path: 5 Services offered by the AMF/README.md
+  source_words: 32728
+  kind: navigation-directory
+- clause: '5.1'
+  title: 5.1 Introduction
+  path: 5 Services offered by the AMF/5.1 Introduction.md
+  source_words: 373
+  kind: source-file
+- clause: '5.2'
+  title: 5.2 Namf_Communication Service
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/README.md
+  source_words: 17538
+  kind: navigation-directory
+- clause: 5.2.1
+  title: 5.2.1 Service Description
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.1 Service Description.md
+  source_words: 111
+  kind: source-file
+- clause: 5.2.2
+  title: 5.2.2 Service Operations
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/README.md
+  source_words: 17427
+  kind: navigation-directory
+- clause: 5.2.2.1
+  title: 5.2.2.1 Introduction
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.1 Introduction.md
+  source_words: 40
+  kind: source-file
+- clause: 5.2.2.2
+  title: 5.2.2.2 UE Context Operations
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.2 UE Context Operations/README.md
+  source_words: 5209
+  kind: navigation-directory
+- clause: 5.2.2.2.1
+  title: 5.2.2.2.1 UEContextTransfer
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.2 UE Context Operations/5.2.2.2.1 UEContextTransfer.md
+  source_words: 1675
+  kind: source-file
+- clause: 5.2.2.2.1.1
+  title: 5.2.2.2.1.1 General
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.2 UE Context Operations/5.2.2.2.1 UEContextTransfer.md
+  source_words: 1515
+  kind: embedded-clause
+- clause: 5.2.2.2.1.2
+  title: 5.2.2.2.1.2 Retrieve UE Context after successful UE authentication
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.2 UE Context Operations/5.2.2.2.1 UEContextTransfer.md
+  source_words: 160
+  kind: embedded-clause
+- clause: 5.2.2.2.2
+  title: 5.2.2.2.2 RegistrationStatusUpdate
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.2 UE Context Operations/5.2.2.2.2 RegistrationStatusUpdate.md
+  source_words: 914
+  kind: source-file
+- clause: 5.2.2.2.2.1
+  title: 5.2.2.2.2.1 General
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.2 UE Context Operations/5.2.2.2.2 RegistrationStatusUpdate.md
+  source_words: 914
+  kind: embedded-clause
+- clause: 5.2.2.2.3
+  title: 5.2.2.2.3 CreateUEContext
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.2 UE Context Operations/5.2.2.2.3 CreateUEContext.md
+  source_words: 1628
+  kind: source-file
+- clause: 5.2.2.2.3.1
+  title: 5.2.2.2.3.1 General
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.2 UE Context Operations/5.2.2.2.3 CreateUEContext.md
+  source_words: 1350
+  kind: embedded-clause
+- clause: 5.2.2.2.3.2
+  title: 5.2.2.2.3.2 Create UE Context with AMF Relocation
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.2 UE Context Operations/5.2.2.2.3 CreateUEContext.md
+  source_words: 278
+  kind: embedded-clause
+- clause: 5.2.2.2.4
+  title: 5.2.2.2.4 ReleaseUEContext
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.2 UE Context Operations/5.2.2.2.4 ReleaseUEContext.md
+  source_words: 240
+  kind: source-file
+- clause: 5.2.2.2.4.1
+  title: 5.2.2.2.4.1 General
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.2 UE Context Operations/5.2.2.2.4 ReleaseUEContext.md
+  source_words: 240
+  kind: embedded-clause
+- clause: 5.2.2.2.5
+  title: 5.2.2.2.5 RelocateUEContext
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.2 UE Context Operations/5.2.2.2.5 RelocateUEContext.md
+  source_words: 492
+  kind: source-file
+- clause: 5.2.2.2.5.1
+  title: 5.2.2.2.5.1 General
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.2 UE Context Operations/5.2.2.2.5 RelocateUEContext.md
+  source_words: 492
+  kind: embedded-clause
+- clause: 5.2.2.2.6
+  title: 5.2.2.2.6 CancelRelocateUEContext
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.2 UE Context Operations/5.2.2.2.6 CancelRelocateUEContext.md
+  source_words: 260
+  kind: source-file
+- clause: 5.2.2.2.6.1
+  title: 5.2.2.2.6.1 General
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.2 UE Context Operations/5.2.2.2.6 CancelRelocateUEContext.md
+  source_words: 260
+  kind: embedded-clause
+- clause: 5.2.2.3
+  title: 5.2.2.3 UE Specific N1N2 Message Operations
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.3 UE Specific N1N2 Message Operations/README.md
+  source_words: 7350
+  kind: navigation-directory
+- clause: 5.2.2.3.1
+  title: 5.2.2.3.1 N1N2MessageTransfer
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.3 UE Specific N1N2 Message Operations/5.2.2.3.1 N1N2MessageTransfer.md
+  source_words: 3708
+  kind: source-file
+- clause: 5.2.2.3.1.1
+  title: 5.2.2.3.1.1 General
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.3 UE Specific N1N2 Message Operations/5.2.2.3.1 N1N2MessageTransfer.md
+  source_words: 1311
+  kind: embedded-clause
+- clause: 5.2.2.3.1.2
+  title: 5.2.2.3.1.2 Detailed behaviour of the AMF
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.3 UE Specific N1N2 Message Operations/5.2.2.3.1 N1N2MessageTransfer.md
+  source_words: 2397
+  kind: embedded-clause
+- clause: 5.2.2.3.2
+  title: 5.2.2.3.2 N1N2Transfer Failure Notification
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.3 UE Specific N1N2 Message Operations/5.2.2.3.2 N1N2Transfer Failure Notification.md
+  source_words: 369
+  kind: source-file
+- clause: 5.2.2.3.3
+  title: 5.2.2.3.3 N1N2MessageSubscribe
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.3 UE Specific N1N2 Message Operations/5.2.2.3.3 N1N2MessageSubscribe.md
+  source_words: 346
+  kind: source-file
+- clause: 5.2.2.3.3.1
+  title: 5.2.2.3.3.1 General
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.3 UE Specific N1N2 Message Operations/5.2.2.3.3 N1N2MessageSubscribe.md
+  source_words: 346
+  kind: embedded-clause
+- clause: 5.2.2.3.4
+  title: 5.2.2.3.4 N1N2MessageUnSubscribe
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.3 UE Specific N1N2 Message Operations/5.2.2.3.4 N1N2MessageUnSubscribe.md
+  source_words: 168
+  kind: source-file
+- clause: 5.2.2.3.4.1
+  title: 5.2.2.3.4.1 General
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.3 UE Specific N1N2 Message Operations/5.2.2.3.4 N1N2MessageUnSubscribe.md
+  source_words: 168
+  kind: embedded-clause
+- clause: 5.2.2.3.5
+  title: 5.2.2.3.5 N1MessageNotify
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.3 UE Specific N1N2 Message Operations/5.2.2.3.5 N1MessageNotify.md
+  source_words: 1502
+  kind: source-file
+- clause: 5.2.2.3.5.1
+  title: 5.2.2.3.5.1 General
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.3 UE Specific N1N2 Message Operations/5.2.2.3.5 N1MessageNotify.md
+  source_words: 421
+  kind: embedded-clause
+- clause: 5.2.2.3.5.2
+  title: 5.2.2.3.5.2 Using N1MessageNotify in the Registration with AMF Re-allocation Procedure
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.3 UE Specific N1N2 Message Operations/5.2.2.3.5 N1MessageNotify.md
+  source_words: 292
+  kind: embedded-clause
+- clause: 5.2.2.3.5.3
+  title: 5.2.2.3.5.3 Using N1MessageNotify in the UE Assisted and UE Based Positioning Procedure
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.3 UE Specific N1N2 Message Operations/5.2.2.3.5 N1MessageNotify.md
+  source_words: 179
+  kind: embedded-clause
+- clause: 5.2.2.3.5.4
+  title: 5.2.2.3.5.4 Using N1MessageNotify in the UE Configuration Update for transparent UE Policy delivery
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.3 UE Specific N1N2 Message Operations/5.2.2.3.5 N1MessageNotify.md
+  source_words: 76
+  kind: embedded-clause
+- clause: 5.2.2.3.5.5
+  title: 5.2.2.3.5.5 Using N1MessageNotify in the LCS Event Report, Event Reporting in RRC INACTIVE state procedures, LCS Cancel Location and LCS Periodic-Triggered Invoke Procedures
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.3 UE Specific N1N2 Message Operations/5.2.2.3.5 N1MessageNotify.md
+  source_words: 287
+  kind: embedded-clause
+- clause: 5.2.2.3.5.6
+  title: 5.2.2.3.5.6 Using N1MessageNotify in the UE triggered policy provisioning procedure to request UE policies
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.3 UE Specific N1N2 Message Operations/5.2.2.3.5 N1MessageNotify.md
+  source_words: 72
+  kind: embedded-clause
+- clause: 5.2.2.3.5.7
+  title: 5.2.2.3.5.7 Using N1MessageNotify in the procedures applicable to a PRU
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.3 UE Specific N1N2 Message Operations/5.2.2.3.5 N1MessageNotify.md
+  source_words: 175
+  kind: embedded-clause
+- clause: 5.2.2.3.6
+  title: 5.2.2.3.6 N2InfoNotify
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.3 UE Specific N1N2 Message Operations/5.2.2.3.6 N2InfoNotify.md
+  source_words: 1257
+  kind: source-file
+- clause: 5.2.2.3.6.1
+  title: 5.2.2.3.6.1 General
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.3 UE Specific N1N2 Message Operations/5.2.2.3.6 N2InfoNotify.md
+  source_words: 258
+  kind: embedded-clause
+- clause: 5.2.2.3.6.2
+  title: 5.2.2.3.6.2 Using N2InfoNotify during Inter NG-RAN node N2 based handover procedure
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.3 UE Specific N1N2 Message Operations/5.2.2.3.6 N2InfoNotify.md
+  source_words: 613
+  kind: embedded-clause
+- clause: 5.2.2.3.6.3
+  title: 5.2.2.3.6.3 Using N2InfoNotify during Location Services procedures
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.3 UE Specific N1N2 Message Operations/5.2.2.3.6 N2InfoNotify.md
+  source_words: 181
+  kind: embedded-clause
+- clause: 5.2.2.3.6.4
+  title: 5.2.2.3.6.4 Using N2InfoNotify during AMF planned removal procedure with UDSF deployed procedure
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.3 UE Specific N1N2 Message Operations/5.2.2.3.6 N2InfoNotify.md
+  source_words: 205
+  kind: embedded-clause
+- clause: 5.2.2.4
+  title: 5.2.2.4 Non-UE N2 Message Operations
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.4 Non-UE N2 Message Operations.md
+  source_words: 2965
+  kind: source-file
+- clause: 5.2.2.4.1
+  title: 5.2.2.4.1 NonUeN2MessageTransfer
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.4 Non-UE N2 Message Operations.md
+  source_words: 1457
+  kind: embedded-clause
+- clause: 5.2.2.4.1.1
+  title: 5.2.2.4.1.1 General
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.4 Non-UE N2 Message Operations.md
+  source_words: 279
+  kind: embedded-clause
+- clause: 5.2.2.4.1.2
+  title: 5.2.2.4.1.2 Obtaining Non UE Associated Network Assistance Data Procedure
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.4 Non-UE N2 Message Operations.md
+  source_words: 115
+  kind: embedded-clause
+- clause: 5.2.2.4.1.3
+  title: 5.2.2.4.1.3 Warning Request Transfer Procedure
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.4 Non-UE N2 Message Operations.md
+  source_words: 369
+  kind: embedded-clause
+- clause: 5.2.2.4.1.4
+  title: 5.2.2.4.1.4 Configuration Transfer Procedure
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.4 Non-UE N2 Message Operations.md
+  source_words: 126
+  kind: embedded-clause
+- clause: 5.2.2.4.1.5
+  title: 5.2.2.4.1.5 RIM Information Transfer Procedures
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.4 Non-UE N2 Message Operations.md
+  source_words: 125
+  kind: embedded-clause
+- clause: 5.2.2.4.1.6
+  title: 5.2.2.4.1.6 Broadcast of Assistance Data by an LMF
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.4 Non-UE N2 Message Operations.md
+  source_words: 121
+  kind: embedded-clause
+- clause: 5.2.2.4.1.7
+  title: 5.2.2.4.1.7 Management of network timing synchronization status monitoring procedures
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.4 Non-UE N2 Message Operations.md
+  source_words: 322
+  kind: embedded-clause
+- clause: 5.2.2.4.2
+  title: 5.2.2.4.2 NonUeN2InfoSubscribe
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.4 Non-UE N2 Message Operations.md
+  source_words: 242
+  kind: embedded-clause
+- clause: 5.2.2.4.2.1
+  title: 5.2.2.4.2.1 General
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.4 Non-UE N2 Message Operations.md
+  source_words: 242
+  kind: embedded-clause
+- clause: 5.2.2.4.3
+  title: 5.2.2.4.3 NonUeN2InfoUnSubscribe
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.4 Non-UE N2 Message Operations.md
+  source_words: 179
+  kind: embedded-clause
+- clause: 5.2.2.4.3.1
+  title: 5.2.2.4.3.1 General
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.4 Non-UE N2 Message Operations.md
+  source_words: 179
+  kind: embedded-clause
+- clause: 5.2.2.4.4
+  title: 5.2.2.4.4 NonUeN2InfoNotify
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.4 Non-UE N2 Message Operations.md
+  source_words: 1087
+  kind: embedded-clause
+- clause: 5.2.2.4.4.1
+  title: 5.2.2.4.4.1 General
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.4 Non-UE N2 Message Operations.md
+  source_words: 251
+  kind: embedded-clause
+- clause: 5.2.2.4.4.2
+  title: 5.2.2.4.4.2 Using NonUeN2InfoNotify during Location Services procedures
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.4 Non-UE N2 Message Operations.md
+  source_words: 183
+  kind: embedded-clause
+- clause: 5.2.2.4.4.3
+  title: 5.2.2.4.4.3 Use of NonUeN2InfoNotify for PWS related events
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.4 Non-UE N2 Message Operations.md
+  source_words: 390
+  kind: embedded-clause
+- clause: 5.2.2.4.4.4
+  title: 5.2.2.4.4.4 Using NonUeN2InfoNotify during network timing synchronization status monitoring procedure
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.4 Non-UE N2 Message Operations.md
+  source_words: 263
+  kind: embedded-clause
+- clause: 5.2.2.5
+  title: 5.2.2.5 AMF Status Change Operations
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.5 AMF Status Change Operations.md
+  source_words: 943
+  kind: source-file
+- clause: 5.2.2.5.1
+  title: 5.2.2.5.1 AMFStatusChangeSubscribe
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.5 AMF Status Change Operations.md
+  source_words: 528
+  kind: embedded-clause
+- clause: 5.2.2.5.1.1
+  title: 5.2.2.5.1.1 General
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.5 AMF Status Change Operations.md
+  source_words: 42
+  kind: embedded-clause
+- clause: 5.2.2.5.1.2
+  title: 5.2.2.5.1.2 Creation of a subscription
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.5 AMF Status Change Operations.md
+  source_words: 251
+  kind: embedded-clause
+- clause: 5.2.2.5.1.3
+  title: 5.2.2.5.1.3 Modification of a subscription
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.5 AMF Status Change Operations.md
+  source_words: 235
+  kind: embedded-clause
+- clause: 5.2.2.5.2
+  title: 5.2.2.5.2 AMFStatusChangeUnSubscribe
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.5 AMF Status Change Operations.md
+  source_words: 179
+  kind: embedded-clause
+- clause: 5.2.2.5.2.1
+  title: 5.2.2.5.2.1 General
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.5 AMF Status Change Operations.md
+  source_words: 179
+  kind: embedded-clause
+- clause: 5.2.2.5.3
+  title: 5.2.2.5.3 AMFStatusChangeNotify
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.5 AMF Status Change Operations.md
+  source_words: 236
+  kind: embedded-clause
+- clause: 5.2.2.5.3.1
+  title: 5.2.2.5.3.1 General
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.5 AMF Status Change Operations.md
+  source_words: 236
+  kind: embedded-clause
+- clause: 5.2.2.6
+  title: 5.2.2.6 EBIAssignment
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.6 EBIAssignment.md
+  source_words: 920
+  kind: source-file
+- clause: 5.2.2.6.1
+  title: 5.2.2.6.1 General
+  path: 5 Services offered by the AMF/5.2 Namf_Communication Service/5.2.2 Service Operations/5.2.2.6 EBIAssignment.md
+  source_words: 920
+  kind: embedded-clause
+- clause: '5.3'
+  title: 5.3 Namf_EventExposure Service
+  path: 5 Services offered by the AMF/5.3 Namf_EventExposure Service/README.md
+  source_words: 7059
+  kind: navigation-directory
+- clause: 5.3.1
+  title: 5.3.1 Service Description
+  path: 5 Services offered by the AMF/5.3 Namf_EventExposure Service/5.3.1 Service Description.md
+  source_words: 3531
+  kind: source-file
+- clause: 5.3.2
+  title: 5.3.2 Service Operations
+  path: 5 Services offered by the AMF/5.3 Namf_EventExposure Service/5.3.2 Service Operations.md
+  source_words: 3528
+  kind: source-file
+- clause: 5.3.2.1
+  title: 5.3.2.1 Introduction
+  path: 5 Services offered by the AMF/5.3 Namf_EventExposure Service/5.3.2 Service Operations.md
+  source_words: 14
+  kind: embedded-clause
+- clause: 5.3.2.2
+  title: 5.3.2.2 Subscribe
+  path: 5 Services offered by the AMF/5.3 Namf_EventExposure Service/5.3.2 Service Operations.md
+  source_words: 2638
+  kind: embedded-clause
+- clause: 5.3.2.2.1
+  title: 5.3.2.2.1 General
+  path: 5 Services offered by the AMF/5.3 Namf_EventExposure Service/5.3.2 Service Operations.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 5.3.2.2.2
+  title: 5.3.2.2.2 Creation of a subscription
+  path: 5 Services offered by the AMF/5.3 Namf_EventExposure Service/5.3.2 Service Operations.md
+  source_words: 1737
+  kind: embedded-clause
+- clause: 5.3.2.2.3
+  title: 5.3.2.2.3 Modification of a subscription
+  path: 5 Services offered by the AMF/5.3 Namf_EventExposure Service/5.3.2 Service Operations.md
+  source_words: 629
+  kind: embedded-clause
+- clause: 5.3.2.2.4
+  title: 5.3.2.2.4 Remove or add group member UE(s) for a group subscription
+  path: 5 Services offered by the AMF/5.3 Namf_EventExposure Service/5.3.2 Service Operations.md
+  source_words: 243
+  kind: embedded-clause
+- clause: 5.3.2.3
+  title: 5.3.2.3 Unsubscribe
+  path: 5 Services offered by the AMF/5.3 Namf_EventExposure Service/5.3.2 Service Operations.md
+  source_words: 174
+  kind: embedded-clause
+- clause: 5.3.2.3.1
+  title: 5.3.2.3.1 General
+  path: 5 Services offered by the AMF/5.3 Namf_EventExposure Service/5.3.2 Service Operations.md
+  source_words: 174
+  kind: embedded-clause
+- clause: 5.3.2.4
+  title: 5.3.2.4 Notify
+  path: 5 Services offered by the AMF/5.3 Namf_EventExposure Service/5.3.2 Service Operations.md
+  source_words: 702
+  kind: embedded-clause
+- clause: 5.3.2.4.1
+  title: 5.3.2.4.1 General
+  path: 5 Services offered by the AMF/5.3 Namf_EventExposure Service/5.3.2 Service Operations.md
+  source_words: 318
+  kind: embedded-clause
+- clause: 5.3.2.4.2
+  title: 5.3.2.4.2 Event Subscription Synchronization for specific UE
+  path: 5 Services offered by the AMF/5.3 Namf_EventExposure Service/5.3.2 Service Operations.md
+  source_words: 384
+  kind: embedded-clause
+- clause: '5.4'
+  title: 5.4 Namf_MT Service
+  path: 5 Services offered by the AMF/5.4 Namf_MT Service.md
+  source_words: 2134
+  kind: source-file
+- clause: 5.4.1
+  title: 5.4.1 Service Description
+  path: 5 Services offered by the AMF/5.4 Namf_MT Service.md
+  source_words: 138
+  kind: embedded-clause
+- clause: 5.4.2
+  title: 5.4.2 Service Operations
+  path: 5 Services offered by the AMF/5.4 Namf_MT Service.md
+  source_words: 1996
+  kind: embedded-clause
+- clause: 5.4.2.1
+  title: 5.4.2.1 Introduction
+  path: 5 Services offered by the AMF/5.4 Namf_MT Service.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 5.4.2.2
+  title: 5.4.2.2 EnableUEReachability
+  path: 5 Services offered by the AMF/5.4 Namf_MT Service.md
+  source_words: 1260
+  kind: embedded-clause
+- clause: 5.4.2.2.1
+  title: 5.4.2.2.1 General
+  path: 5 Services offered by the AMF/5.4 Namf_MT Service.md
+  source_words: 1260
+  kind: embedded-clause
+- clause: 5.4.2.3
+  title: 5.4.2.3 ProvideDomainSelectionInfo
+  path: 5 Services offered by the AMF/5.4 Namf_MT Service.md
+  source_words: 290
+  kind: embedded-clause
+- clause: 5.4.2.3.1
+  title: 5.4.2.3.1 General
+  path: 5 Services offered by the AMF/5.4 Namf_MT Service.md
+  source_words: 290
+  kind: embedded-clause
+- clause: 5.4.2.4
+  title: 5.4.2.4 EnableGroupReachability
+  path: 5 Services offered by the AMF/5.4 Namf_MT Service.md
+  source_words: 275
+  kind: embedded-clause
+- clause: 5.4.2.4.1
+  title: 5.4.2.4.1 General
+  path: 5 Services offered by the AMF/5.4 Namf_MT Service.md
+  source_words: 275
+  kind: embedded-clause
+- clause: 5.4.2.5
+  title: 5.4.2.5 UEReachabilityInfoNotify
+  path: 5 Services offered by the AMF/5.4 Namf_MT Service.md
+  source_words: 156
+  kind: embedded-clause
+- clause: 5.4.2.5.1
+  title: 5.4.2.5.1 General
+  path: 5 Services offered by the AMF/5.4 Namf_MT Service.md
+  source_words: 156
+  kind: embedded-clause
+- clause: '5.5'
+  title: 5.5 Namf_Location Service
+  path: 5 Services offered by the AMF/5.5 Namf_Location Service.md
+  source_words: 1948
+  kind: source-file
+- clause: 5.5.1
+  title: 5.5.1 Service Description
+  path: 5 Services offered by the AMF/5.5 Namf_Location Service.md
+  source_words: 151
+  kind: embedded-clause
+- clause: 5.5.2
+  title: 5.5.2 Service Operations
+  path: 5 Services offered by the AMF/5.5 Namf_Location Service.md
+  source_words: 1797
+  kind: embedded-clause
+- clause: 5.5.2.1
+  title: 5.5.2.1 Introduction
+  path: 5 Services offered by the AMF/5.5 Namf_Location Service.md
+  source_words: 16
+  kind: embedded-clause
+- clause: 5.5.2.2
+  title: 5.5.2.2 ProvidePositioningInfo
+  path: 5 Services offered by the AMF/5.5 Namf_Location Service.md
+  source_words: 732
+  kind: embedded-clause
+- clause: 5.5.2.2.1
+  title: 5.5.2.2.1 General
+  path: 5 Services offered by the AMF/5.5 Namf_Location Service.md
+  source_words: 732
+  kind: embedded-clause
+- clause: 5.5.2.3
+  title: 5.5.2.3 EventNotify
+  path: 5 Services offered by the AMF/5.5 Namf_Location Service.md
+  source_words: 393
+  kind: embedded-clause
+- clause: 5.5.2.3.1
+  title: 5.5.2.3.1 General
+  path: 5 Services offered by the AMF/5.5 Namf_Location Service.md
+  source_words: 393
+  kind: embedded-clause
+- clause: 5.5.2.4
+  title: 5.5.2.4 ProvideLocationInfo
+  path: 5 Services offered by the AMF/5.5 Namf_Location Service.md
+  source_words: 432
+  kind: embedded-clause
+- clause: 5.5.2.4.1
+  title: 5.5.2.4.1 General
+  path: 5 Services offered by the AMF/5.5 Namf_Location Service.md
+  source_words: 432
+  kind: embedded-clause
+- clause: 5.5.2.5
+  title: 5.5.2.5 CancelLocation
+  path: 5 Services offered by the AMF/5.5 Namf_Location Service.md
+  source_words: 224
+  kind: embedded-clause
+- clause: 5.5.2.5.1
+  title: 5.5.2.5.1 General
+  path: 5 Services offered by the AMF/5.5 Namf_Location Service.md
+  source_words: 224
+  kind: embedded-clause
+- clause: '5.6'
+  title: 5.6 Namf_MBSBroadcast Service
+  path: 5 Services offered by the AMF/5.6 Namf_MBSBroadcast Service.md
+  source_words: 2805
+  kind: source-file
+- clause: 5.6.1
+  title: 5.6.1 Service Description
+  path: 5 Services offered by the AMF/5.6 Namf_MBSBroadcast Service.md
+  source_words: 35
+  kind: embedded-clause
+- clause: 5.6.2
+  title: 5.6.2 Service Operations
+  path: 5 Services offered by the AMF/5.6 Namf_MBSBroadcast Service.md
+  source_words: 2770
+  kind: embedded-clause
+- clause: 5.6.2.1
+  title: 5.6.2.1 Introduction
+  path: 5 Services offered by the AMF/5.6 Namf_MBSBroadcast Service.md
+  source_words: 12
+  kind: embedded-clause
+- clause: 5.6.2.2
+  title: 5.6.2.2 ContextCreate
+  path: 5 Services offered by the AMF/5.6 Namf_MBSBroadcast Service.md
+  source_words: 768
+  kind: embedded-clause
+- clause: 5.6.2.3
+  title: 5.6.2.3 ContextUpdate
+  path: 5 Services offered by the AMF/5.6 Namf_MBSBroadcast Service.md
+  source_words: 865
+  kind: embedded-clause
+- clause: 5.6.2.4
+  title: 5.6.2.4 ContextRelease
+  path: 5 Services offered by the AMF/5.6 Namf_MBSBroadcast Service.md
+  source_words: 202
+  kind: embedded-clause
+- clause: 5.6.2.5
+  title: 5.6.2.5 ContextStatusNotify
+  path: 5 Services offered by the AMF/5.6 Namf_MBSBroadcast Service.md
+  source_words: 923
+  kind: embedded-clause
+- clause: '5.7'
+  title: 5.7 Namf_MBSCommunication Service
+  path: 5 Services offered by the AMF/5.7 Namf_MBSCommunication Service.md
+  source_words: 871
+  kind: source-file
+- clause: 5.7.1
+  title: 5.7.1 Service Description
+  path: 5 Services offered by the AMF/5.7 Namf_MBSCommunication Service.md
+  source_words: 38
+  kind: embedded-clause
+- clause: 5.7.2
+  title: 5.7.2 Service Operations
+  path: 5 Services offered by the AMF/5.7 Namf_MBSCommunication Service.md
+  source_words: 833
+  kind: embedded-clause
+- clause: 5.7.2.1
+  title: 5.7.2.1 Introduction
+  path: 5 Services offered by the AMF/5.7 Namf_MBSCommunication Service.md
+  source_words: 11
+  kind: embedded-clause
+- clause: 5.7.2.2
+  title: 5.7.2.2 N2MessageTransfer
+  path: 5 Services offered by the AMF/5.7 Namf_MBSCommunication Service.md
+  source_words: 548
+  kind: embedded-clause
+- clause: 5.7.2.3
+  title: 5.7.2.3 Notify
+  path: 5 Services offered by the AMF/5.7 Namf_MBSCommunication Service.md
+  source_words: 274
+  kind: embedded-clause
+- clause: '6'
+  title: 6 API Definitions
+  path: 6 API Definitions/README.md
+  source_words: 87255
+  kind: navigation-directory
+- clause: '6.1'
+  title: 6.1 Namf_Communication Service API
+  path: 6 API Definitions/6.1 Namf_Communication Service API/README.md
+  source_words: 46208
+  kind: navigation-directory
+- clause: 6.1.1
+  title: 6.1.1 API URI
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.1 API URI.md
+  source_words: 92
+  kind: source-file
+- clause: 6.1.2
+  title: 6.1.2 Usage of HTTP
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.2 Usage of HTTP.md
+  source_words: 614
+  kind: source-file
+- clause: 6.1.2.1
+  title: 6.1.2.1 General
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.2 Usage of HTTP.md
+  source_words: 58
+  kind: embedded-clause
+- clause: 6.1.2.2
+  title: 6.1.2.2 HTTP standard headers
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.2 Usage of HTTP.md
+  source_words: 262
+  kind: embedded-clause
+- clause: 6.1.2.2.1
+  title: 6.1.2.2.1 General
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.2 Usage of HTTP.md
+  source_words: 21
+  kind: embedded-clause
+- clause: 6.1.2.2.2
+  title: 6.1.2.2.2 Content type
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.2 Usage of HTTP.md
+  source_words: 241
+  kind: embedded-clause
+- clause: 6.1.2.3
+  title: 6.1.2.3 HTTP custom headers
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.2 Usage of HTTP.md
+  source_words: 39
+  kind: embedded-clause
+- clause: 6.1.2.3.1
+  title: 6.1.2.3.1 General
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.2 Usage of HTTP.md
+  source_words: 39
+  kind: embedded-clause
+- clause: 6.1.2.4
+  title: 6.1.2.4 HTTP multipart messages
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.2 Usage of HTTP.md
+  source_words: 255
+  kind: embedded-clause
+- clause: 6.1.3
+  title: 6.1.3 Resources
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/README.md
+  source_words: 11160
+  kind: navigation-directory
+- clause: 6.1.3.1
+  title: 6.1.3.1 Overview
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.1 Overview.md
+  source_words: 165
+  kind: source-file
+- clause: 6.1.3.2
+  title: '6.1.3.2 Resource: Individual ueContext'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.2 Resource_ Individual ueContext/README.md
+  source_words: 4232
+  kind: navigation-directory
+- clause: 6.1.3.2.1
+  title: 6.1.3.2.1 Description
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.2 Resource_ Individual ueContext/6.1.3.2.1 Description.md
+  source_words: 29
+  kind: source-file
+- clause: 6.1.3.2.2
+  title: 6.1.3.2.2 Resource Definition
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.2 Resource_ Individual ueContext/6.1.3.2.2 Resource Definition.md
+  source_words: 173
+  kind: source-file
+- clause: 6.1.3.2.3
+  title: 6.1.3.2.3 Resource Standard Methods
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.2 Resource_ Individual ueContext/6.1.3.2.3 Resource Standard Methods.md
+  source_words: 610
+  kind: source-file
+- clause: 6.1.3.2.3.1
+  title: 6.1.3.2.3.1 PUT
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.2 Resource_ Individual ueContext/6.1.3.2.3 Resource Standard Methods.md
+  source_words: 610
+  kind: embedded-clause
+- clause: 6.1.3.2.4
+  title: 6.1.3.2.4 Resource Custom Operations
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.2 Resource_ Individual ueContext/6.1.3.2.4 Resource Custom Operations.md
+  source_words: 3420
+  kind: source-file
+- clause: 6.1.3.2.4.1
+  title: 6.1.3.2.4.1 Overview
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.2 Resource_ Individual ueContext/6.1.3.2.4 Resource Custom Operations.md
+  source_words: 161
+  kind: embedded-clause
+- clause: 6.1.3.2.4.2
+  title: '6.1.3.2.4.2 Operation: release (POST)'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.2 Resource_ Individual ueContext/6.1.3.2.4 Resource Custom Operations.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.1.3.2.4.2.1
+  title: 6.1.3.2.4.2.1 Description
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.2 Resource_ Individual ueContext/6.1.3.2.4 Resource Custom Operations.md
+  source_words: 21
+  kind: embedded-clause
+- clause: 6.1.3.2.4.2.2
+  title: 6.1.3.2.4.2.2 Operation Definition
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.2 Resource_ Individual ueContext/6.1.3.2.4 Resource Custom Operations.md
+  source_words: 470
+  kind: embedded-clause
+- clause: 6.1.3.2.4.3
+  title: '6.1.3.2.4.3 Operation: assign-ebi (POST)'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.2 Resource_ Individual ueContext/6.1.3.2.4 Resource Custom Operations.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.1.3.2.4.3.1
+  title: 6.1.3.2.4.3.1 Description
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.2 Resource_ Individual ueContext/6.1.3.2.4 Resource Custom Operations.md
+  source_words: 21
+  kind: embedded-clause
+- clause: 6.1.3.2.4.3.2
+  title: 6.1.3.2.4.3.2 Operation Definition
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.2 Resource_ Individual ueContext/6.1.3.2.4 Resource Custom Operations.md
+  source_words: 773
+  kind: embedded-clause
+- clause: 6.1.3.2.4.4
+  title: '6.1.3.2.4.4 Operation: transfer (POST)'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.2 Resource_ Individual ueContext/6.1.3.2.4 Resource Custom Operations.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.1.3.2.4.4.1
+  title: 6.1.3.2.4.4.1 Description
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.2 Resource_ Individual ueContext/6.1.3.2.4 Resource Custom Operations.md
+  source_words: 21
+  kind: embedded-clause
+- clause: 6.1.3.2.4.4.2
+  title: 6.1.3.2.4.4.2 Operation Definition
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.2 Resource_ Individual ueContext/6.1.3.2.4 Resource Custom Operations.md
+  source_words: 509
+  kind: embedded-clause
+- clause: 6.1.3.2.4.5
+  title: '6.1.3.2.4.5 Operation: transfer-update (POST)'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.2 Resource_ Individual ueContext/6.1.3.2.4 Resource Custom Operations.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.1.3.2.4.5.1
+  title: 6.1.3.2.4.5.1 Description
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.2 Resource_ Individual ueContext/6.1.3.2.4 Resource Custom Operations.md
+  source_words: 19
+  kind: embedded-clause
+- clause: 6.1.3.2.4.5.2
+  title: 6.1.3.2.4.5.2 Operation Definition
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.2 Resource_ Individual ueContext/6.1.3.2.4 Resource Custom Operations.md
+  source_words: 469
+  kind: embedded-clause
+- clause: 6.1.3.2.4.6
+  title: '6.1.3.2.4.6 Operation: relocate (POST)'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.2 Resource_ Individual ueContext/6.1.3.2.4 Resource Custom Operations.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.1.3.2.4.6.1
+  title: 6.1.3.2.4.6.1 Description
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.2 Resource_ Individual ueContext/6.1.3.2.4 Resource Custom Operations.md
+  source_words: 21
+  kind: embedded-clause
+- clause: 6.1.3.2.4.6.2
+  title: 6.1.3.2.4.6.2 Operation Definition
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.2 Resource_ Individual ueContext/6.1.3.2.4 Resource Custom Operations.md
+  source_words: 449
+  kind: embedded-clause
+- clause: 6.1.3.2.4.7
+  title: '6.1.3.2.4.7 Operation: cancel-relocate (POST)'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.2 Resource_ Individual ueContext/6.1.3.2.4 Resource Custom Operations.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.1.3.2.4.7.1
+  title: 6.1.3.2.4.7.1 Description
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.2 Resource_ Individual ueContext/6.1.3.2.4 Resource Custom Operations.md
+  source_words: 21
+  kind: embedded-clause
+- clause: 6.1.3.2.4.7.2
+  title: 6.1.3.2.4.7.2 Operation Definition
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.2 Resource_ Individual ueContext/6.1.3.2.4 Resource Custom Operations.md
+  source_words: 465
+  kind: embedded-clause
+- clause: 6.1.3.3
+  title: '6.1.3.3 Resource: N1N2 Subscriptions Collection for Individual UE Contexts'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.3 Resource_ N1N2 Subscriptions Collection for Individual UE Contexts.md
+  source_words: 736
+  kind: source-file
+- clause: 6.1.3.3.1
+  title: 6.1.3.3.1 Description
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.3 Resource_ N1N2 Subscriptions Collection for Individual UE Contexts.md
+  source_words: 42
+  kind: embedded-clause
+- clause: 6.1.3.3.2
+  title: 6.1.3.3.2 Resource Definition
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.3 Resource_ N1N2 Subscriptions Collection for Individual UE Contexts.md
+  source_words: 150
+  kind: embedded-clause
+- clause: 6.1.3.3.3
+  title: 6.1.3.3.3 Resource Standard Methods
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.3 Resource_ N1N2 Subscriptions Collection for Individual UE Contexts.md
+  source_words: 535
+  kind: embedded-clause
+- clause: 6.1.3.3.3.1
+  title: 6.1.3.3.3.1 POST
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.3 Resource_ N1N2 Subscriptions Collection for Individual UE Contexts.md
+  source_words: 535
+  kind: embedded-clause
+- clause: 6.1.3.3.4
+  title: 6.1.3.3.4 Resource Custom Operations
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.3 Resource_ N1N2 Subscriptions Collection for Individual UE Contexts.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 6.1.3.4
+  title: '6.1.3.4 Resource: N1N2 Individual Subscription'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.4 Resource_ N1N2 Individual Subscription.md
+  source_words: 651
+  kind: source-file
+- clause: 6.1.3.4.1
+  title: 6.1.3.4.1 Description
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.4 Resource_ N1N2 Individual Subscription.md
+  source_words: 37
+  kind: embedded-clause
+- clause: 6.1.3.4.2
+  title: 6.1.3.4.2 Resource Definition
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.4 Resource_ N1N2 Individual Subscription.md
+  source_words: 165
+  kind: embedded-clause
+- clause: 6.1.3.4.3
+  title: 6.1.3.4.3 Resource Standard Methods
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.4 Resource_ N1N2 Individual Subscription.md
+  source_words: 440
+  kind: embedded-clause
+- clause: 6.1.3.4.3.1
+  title: 6.1.3.4.3.1 DELETE
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.4 Resource_ N1N2 Individual Subscription.md
+  source_words: 440
+  kind: embedded-clause
+- clause: 6.1.3.4.4
+  title: 6.1.3.4.4 Resource Custom Operations
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.4 Resource_ N1N2 Individual Subscription.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 6.1.3.5
+  title: '6.1.3.5 Resource: N1N2 Messages Collection'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.5 Resource_ N1N2 Messages Collection.md
+  source_words: 1703
+  kind: source-file
+- clause: 6.1.3.5.1
+  title: 6.1.3.5.1 Description
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.5 Resource_ N1N2 Messages Collection.md
+  source_words: 50
+  kind: embedded-clause
+- clause: 6.1.3.5.2
+  title: 6.1.3.5.2 Resource Definition
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.5 Resource_ N1N2 Messages Collection.md
+  source_words: 230
+  kind: embedded-clause
+- clause: 6.1.3.5.3
+  title: 6.1.3.5.3 Resource Standard Methods
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.5 Resource_ N1N2 Messages Collection.md
+  source_words: 1423
+  kind: embedded-clause
+- clause: 6.1.3.5.3.1
+  title: 6.1.3.5.3.1 POST
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.5 Resource_ N1N2 Messages Collection.md
+  source_words: 1423
+  kind: embedded-clause
+- clause: 6.1.3.6
+  title: '6.1.3.6 Resource: subscriptions collection'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.6 Resource_ subscriptions collection.md
+  source_words: 636
+  kind: source-file
+- clause: 6.1.3.6.1
+  title: 6.1.3.6.1 Description
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.6 Resource_ subscriptions collection.md
+  source_words: 41
+  kind: embedded-clause
+- clause: 6.1.3.6.2
+  title: 6.1.3.6.2 Resource Definition
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.6 Resource_ subscriptions collection.md
+  source_words: 51
+  kind: embedded-clause
+- clause: 6.1.3.6.3
+  title: 6.1.3.6.3 Resource Standard Methods
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.6 Resource_ subscriptions collection.md
+  source_words: 544
+  kind: embedded-clause
+- clause: 6.1.3.6.3.1
+  title: 6.1.3.6.3.1 POST
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.6 Resource_ subscriptions collection.md
+  source_words: 544
+  kind: embedded-clause
+- clause: 6.1.3.7
+  title: '6.1.3.7 Resource: individual subscription'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.7 Resource_ individual subscription.md
+  source_words: 1043
+  kind: source-file
+- clause: 6.1.3.7.1
+  title: 6.1.3.7.1 Description
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.7 Resource_ individual subscription.md
+  source_words: 41
+  kind: embedded-clause
+- clause: 6.1.3.7.2
+  title: 6.1.3.7.2 Resource Definition
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.7 Resource_ individual subscription.md
+  source_words: 58
+  kind: embedded-clause
+- clause: 6.1.3.7.3
+  title: 6.1.3.7.3 Resource Standard Methods
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.7 Resource_ individual subscription.md
+  source_words: 944
+  kind: embedded-clause
+- clause: 6.1.3.7.3.1
+  title: 6.1.3.7.3.1 DELETE
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.7 Resource_ individual subscription.md
+  source_words: 460
+  kind: embedded-clause
+- clause: 6.1.3.7.3.2
+  title: 6.1.3.7.3.2 PUT
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.7 Resource_ individual subscription.md
+  source_words: 484
+  kind: embedded-clause
+- clause: 6.1.3.8
+  title: '6.1.3.8 Resource: Non UE N2 Messages Collection'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.8 Resource_ Non UE N2 Messages Collection.md
+  source_words: 818
+  kind: source-file
+- clause: 6.1.3.8.1
+  title: 6.1.3.8.1 Description
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.8 Resource_ Non UE N2 Messages Collection.md
+  source_words: 37
+  kind: embedded-clause
+- clause: 6.1.3.8.2
+  title: 6.1.3.8.2 Resource Definition
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.8 Resource_ Non UE N2 Messages Collection.md
+  source_words: 51
+  kind: embedded-clause
+- clause: 6.1.3.8.3
+  title: 6.1.3.8.3 Resource Standard Methods
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.8 Resource_ Non UE N2 Messages Collection.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 6.1.3.8.4
+  title: 6.1.3.8.4 Resource Custom Operations
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.8 Resource_ Non UE N2 Messages Collection.md
+  source_words: 713
+  kind: embedded-clause
+- clause: 6.1.3.8.4.1
+  title: 6.1.3.8.4.1 Overview
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.8 Resource_ Non UE N2 Messages Collection.md
+  source_words: 28
+  kind: embedded-clause
+- clause: 6.1.3.8.4.2
+  title: '6.1.3.8.4.2 Operation: transfer'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.8 Resource_ Non UE N2 Messages Collection.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.1.3.8.4.2.1
+  title: 6.1.3.8.4.2.1 Description
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.8 Resource_ Non UE N2 Messages Collection.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 6.1.3.8.4.2.2
+  title: 6.1.3.8.4.2.2 Operation Definition
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.8 Resource_ Non UE N2 Messages Collection.md
+  source_words: 656
+  kind: embedded-clause
+- clause: 6.1.3.9
+  title: '6.1.3.9 Resource: Non UE N2 Messages Subscriptions Collection'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.9 Resource_ Non UE N2 Messages Subscriptions Collection.md
+  source_words: 620
+  kind: source-file
+- clause: 6.1.3.9.1
+  title: 6.1.3.9.1 Description
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.9 Resource_ Non UE N2 Messages Subscriptions Collection.md
+  source_words: 37
+  kind: embedded-clause
+- clause: 6.1.3.9.2
+  title: 6.1.3.9.2 Resource Definition
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.9 Resource_ Non UE N2 Messages Subscriptions Collection.md
+  source_words: 52
+  kind: embedded-clause
+- clause: 6.1.3.9.3
+  title: 6.1.3.9.3 Resource Standard Methods
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.9 Resource_ Non UE N2 Messages Subscriptions Collection.md
+  source_words: 522
+  kind: embedded-clause
+- clause: 6.1.3.9.3.1
+  title: 6.1.3.9.3.1 POST
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.9 Resource_ Non UE N2 Messages Subscriptions Collection.md
+  source_words: 522
+  kind: embedded-clause
+- clause: 6.1.3.9.4
+  title: 6.1.3.9.4 Resource Custom Operations
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.9 Resource_ Non UE N2 Messages Subscriptions Collection.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 6.1.3.10
+  title: '6.1.3.10 Resource: Non UE N2 Message Notification Individual Subscription'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.10 Resource_ Non UE N2 Message Notification Individual Subscription.md
+  source_words: 556
+  kind: source-file
+- clause: 6.1.3.10.1
+  title: 6.1.3.10.1 Description
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.10 Resource_ Non UE N2 Message Notification Individual Subscription.md
+  source_words: 39
+  kind: embedded-clause
+- clause: 6.1.3.10.2
+  title: 6.1.3.10.2 Resource Definition
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.10 Resource_ Non UE N2 Message Notification Individual Subscription.md
+  source_words: 67
+  kind: embedded-clause
+- clause: 6.1.3.10.3
+  title: 6.1.3.10.3 Resource Standard Methods
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.10 Resource_ Non UE N2 Message Notification Individual Subscription.md
+  source_words: 441
+  kind: embedded-clause
+- clause: 6.1.3.10.3.1
+  title: 6.1.3.10.3.1 DELETE
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.10 Resource_ Non UE N2 Message Notification Individual Subscription.md
+  source_words: 441
+  kind: embedded-clause
+- clause: 6.1.3.10.4
+  title: 6.1.3.10.4 Resource Custom Operations
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.3 Resources/6.1.3.10 Resource_ Non UE N2 Message Notification Individual Subscription.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 6.1.4
+  title: 6.1.4 Custom Operations without associated resources
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.4 Custom Operations without associated resources.md
+  source_words: 13
+  kind: source-file
+- clause: 6.1.5
+  title: 6.1.5 Notifications
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.5 Notifications.md
+  source_words: 2532
+  kind: source-file
+- clause: 6.1.5.1
+  title: 6.1.5.1 General
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.5 Notifications.md
+  source_words: 62
+  kind: embedded-clause
+- clause: 6.1.5.2
+  title: 6.1.5.2 AMF Status Change Notification
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.5 Notifications.md
+  source_words: 477
+  kind: embedded-clause
+- clause: 6.1.5.2.1
+  title: 6.1.5.2.1 Description
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.5 Notifications.md
+  source_words: 56
+  kind: embedded-clause
+- clause: 6.1.5.2.2
+  title: 6.1.5.2.2 Notification Definition
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.5 Notifications.md
+  source_words: 16
+  kind: embedded-clause
+- clause: 6.1.5.2.3
+  title: 6.1.5.2.3 Notification Standard Methods
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.5 Notifications.md
+  source_words: 405
+  kind: embedded-clause
+- clause: 6.1.5.2.3.1
+  title: 6.1.5.2.3.1 POST
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.5 Notifications.md
+  source_words: 405
+  kind: embedded-clause
+- clause: 6.1.5.3
+  title: 6.1.5.3 Non UE N2 Information Notification
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.5 Notifications.md
+  source_words: 478
+  kind: embedded-clause
+- clause: 6.1.5.3.1
+  title: 6.1.5.3.1 Description
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.5 Notifications.md
+  source_words: 30
+  kind: embedded-clause
+- clause: 6.1.5.3.2
+  title: 6.1.5.3.2 Notification Definition
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.5 Notifications.md
+  source_words: 48
+  kind: embedded-clause
+- clause: 6.1.5.3.3
+  title: 6.1.5.3.3 Notification Standard Methods
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.5 Notifications.md
+  source_words: 400
+  kind: embedded-clause
+- clause: 6.1.5.3.3.1
+  title: 6.1.5.3.3.1 POST
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.5 Notifications.md
+  source_words: 400
+  kind: embedded-clause
+- clause: 6.1.5.4
+  title: 6.1.5.4 N1 Message Notification
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.5 Notifications.md
+  source_words: 506
+  kind: embedded-clause
+- clause: 6.1.5.4.1
+  title: 6.1.5.4.1 Description
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.5 Notifications.md
+  source_words: 28
+  kind: embedded-clause
+- clause: 6.1.5.4.2
+  title: 6.1.5.4.2 Notification Definition
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.5 Notifications.md
+  source_words: 47
+  kind: embedded-clause
+- clause: 6.1.5.4.3
+  title: 6.1.5.4.3 Notification Standard Methods
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.5 Notifications.md
+  source_words: 431
+  kind: embedded-clause
+- clause: 6.1.5.4.3.1
+  title: 6.1.5.4.3.1 POST
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.5 Notifications.md
+  source_words: 431
+  kind: embedded-clause
+- clause: 6.1.5.5
+  title: 6.1.5.5 UE Specific N2 Information Notification
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.5 Notifications.md
+  source_words: 468
+  kind: embedded-clause
+- clause: 6.1.5.5.1
+  title: 6.1.5.5.1 Description
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.5 Notifications.md
+  source_words: 23
+  kind: embedded-clause
+- clause: 6.1.5.5.2
+  title: 6.1.5.5.2 Notification Definition
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.5 Notifications.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 6.1.5.5.3
+  title: 6.1.5.5.3 Notification Standard Methods
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.5 Notifications.md
+  source_words: 427
+  kind: embedded-clause
+- clause: 6.1.5.5.3.1
+  title: 6.1.5.5.3.1 POST
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.5 Notifications.md
+  source_words: 427
+  kind: embedded-clause
+- clause: 6.1.5.6
+  title: 6.1.5.6 N1N2 Transfer Failure Notification
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.5 Notifications.md
+  source_words: 541
+  kind: embedded-clause
+- clause: 6.1.5.6.1
+  title: 6.1.5.6.1 Description
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.5 Notifications.md
+  source_words: 25
+  kind: embedded-clause
+- clause: 6.1.5.6.2
+  title: 6.1.5.6.2 Notification Definition
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.5 Notifications.md
+  source_words: 26
+  kind: embedded-clause
+- clause: 6.1.5.6.3
+  title: 6.1.5.6.3 Notification Standard Methods
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.5 Notifications.md
+  source_words: 490
+  kind: embedded-clause
+- clause: 6.1.5.6.3.1
+  title: 6.1.5.6.3.1 POST
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.5 Notifications.md
+  source_words: 490
+  kind: embedded-clause
+- clause: 6.1.5.7
+  title: 6.1.5.7 Void
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.5 Notifications.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.1.6
+  title: 6.1.6 Data Model
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/README.md
+  source_words: 29332
+  kind: navigation-directory
+- clause: 6.1.6.1
+  title: 6.1.6.1 General
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.1 General.md
+  source_words: 2618
+  kind: source-file
+- clause: 6.1.6.2
+  title: 6.1.6.2 Structured data types
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/README.md
+  source_words: 22038
+  kind: navigation-directory
+- clause: 6.1.6.2.1
+  title: 6.1.6.2.1 Introduction
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.1 Introduction.md
+  source_words: 13
+  kind: source-file
+- clause: 6.1.6.2.2
+  title: '6.1.6.2.2 Type: SubscriptionData'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.2 Type_ SubscriptionData.md
+  source_words: 71
+  kind: source-file
+- clause: 6.1.6.2.3
+  title: '6.1.6.2.3 Type: AmfStatusChangeNotification'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.3 Type_ AmfStatusChangeNotification.md
+  source_words: 34
+  kind: source-file
+- clause: 6.1.6.2.4
+  title: '6.1.6.2.4 Type: AmfStatusInfo'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.4 Type_ AmfStatusInfo.md
+  source_words: 91
+  kind: source-file
+- clause: 6.1.6.2.5
+  title: '6.1.6.2.5 Type: AssignEbiData'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.5 Type_ AssignEbiData.md
+  source_words: 208
+  kind: source-file
+- clause: 6.1.6.2.6
+  title: '6.1.6.2.6 Type: AssignedEbiData'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.6 Type_ AssignedEbiData.md
+  source_words: 233
+  kind: source-file
+- clause: 6.1.6.2.7
+  title: '6.1.6.2.7 Type: AssignEbiFailed'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.7 Type_ AssignEbiFailed.md
+  source_words: 57
+  kind: source-file
+- clause: 6.1.6.2.8
+  title: '6.1.6.2.8 Type: UEContextRelease'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.8 Type_ UEContextRelease.md
+  source_words: 110
+  kind: source-file
+- clause: 6.1.6.2.9
+  title: '6.1.6.2.9 Type: N2InformationTransferReqData'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.9 Type_ N2InformationTransferReqData.md
+  source_words: 155
+  kind: source-file
+- clause: 6.1.6.2.10
+  title: '6.1.6.2.10 Type: NonUeN2InfoSubscriptionCreateData'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.10 Type_ NonUeN2InfoSubscriptionCreateData.md
+  source_words: 385
+  kind: source-file
+- clause: 6.1.6.2.11
+  title: '6.1.6.2.11 Type: NonUeN2InfoSubscriptionCreatedData'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.11 Type_ NonUeN2InfoSubscriptionCreatedData.md
+  source_words: 81
+  kind: source-file
+- clause: 6.1.6.2.12
+  title: '6.1.6.2.12 Type: UeN1N2InfoSubscriptionCreateData'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.12 Type_ UeN1N2InfoSubscriptionCreateData.md
+  source_words: 292
+  kind: source-file
+- clause: 6.1.6.2.13
+  title: '6.1.6.2.13 Type: UeN1N2InfoSubscriptionCreatedData'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.13 Type_ UeN1N2InfoSubscriptionCreatedData.md
+  source_words: 62
+  kind: source-file
+- clause: 6.1.6.2.14
+  title: '6.1.6.2.14 Type: N2InformationNotification'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.14 Type_ N2InformationNotification.md
+  source_words: 633
+  kind: source-file
+- clause: 6.1.6.2.15
+  title: '6.1.6.2.15 Type: N2InfoContainer'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.15 Type_ N2InfoContainer.md
+  source_words: 254
+  kind: source-file
+- clause: 6.1.6.2.16
+  title: '6.1.6.2.16 Type: N1MessageNotification'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.16 Type_ N1MessageNotification.md
+  source_words: 593
+  kind: source-file
+- clause: 6.1.6.2.17
+  title: '6.1.6.2.17 Type: N1MessageContainer'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.17 Type_ N1MessageContainer.md
+  source_words: 186
+  kind: source-file
+- clause: 6.1.6.2.18
+  title: '6.1.6.2.18 Type: N1N2MessageTransferReqData'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.18 Type_ N1N2MessageTransferReqData.md
+  source_words: 1319
+  kind: source-file
+- clause: 6.1.6.2.19
+  title: '6.1.6.2.19 Type: N1N2MessageTransferRspData'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.19 Type_ N1N2MessageTransferRspData.md
+  source_words: 60
+  kind: source-file
+- clause: 6.1.6.2.20
+  title: '6.1.6.2.20 Type: RegistrationContextContainer'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.20 Type_ RegistrationContextContainer.md
+  source_words: 683
+  kind: source-file
+- clause: 6.1.6.2.21
+  title: '6.1.6.2.21 Type: AreaOfValidity'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.21 Type_ AreaOfValidity.md
+  source_words: 87
+  kind: source-file
+- clause: 6.1.6.2.22
+  title: 6.1.6.2.22 Void
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.22 Void.md
+  source_words: 0
+  kind: source-file
+- clause: 6.1.6.2.23
+  title: '6.1.6.2.23 Type: UeContextTransferReqData'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.23 Type_ UeContextTransferReqData.md
+  source_words: 139
+  kind: source-file
+- clause: 6.1.6.2.24
+  title: '6.1.6.2.24 Type: UeContextTransferRspData'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.24 Type_ UeContextTransferRspData.md
+  source_words: 247
+  kind: source-file
+- clause: 6.1.6.2.25
+  title: '6.1.6.2.25 Type: UeContext'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.25 Type_ UeContext.md
+  source_words: 4588
+  kind: source-file
+- clause: 6.1.6.2.26
+  title: '6.1.6.2.26 Type: N2SmInformation'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.26 Type_ N2SmInformation.md
+  source_words: 313
+  kind: source-file
+- clause: 6.1.6.2.27
+  title: '6.1.6.2.27 Type: N2InfoContent'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.27 Type_ N2InfoContent.md
+  source_words: 173
+  kind: source-file
+- clause: 6.1.6.2.28
+  title: '6.1.6.2.28 Type: NrppaInformation'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.28 Type_ NrppaInformation.md
+  source_words: 90
+  kind: source-file
+- clause: 6.1.6.2.29
+  title: '6.1.6.2.29 Type: PwsInformation'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.29 Type_ PwsInformation.md
+  source_words: 437
+  kind: source-file
+- clause: 6.1.6.2.30
+  title: '6.1.6.2.30 Type: N1N2MsgTxfrFailureNotification'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.30 Type_ N1N2MsgTxfrFailureNotification.md
+  source_words: 237
+  kind: source-file
+- clause: 6.1.6.2.31
+  title: '6.1.6.2.31 Type: N1N2MessageTransferError'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.31 Type_ N1N2MessageTransferError.md
+  source_words: 55
+  kind: source-file
+- clause: 6.1.6.2.32
+  title: '6.1.6.2.32 Type: N1N2MsgTxfrErrDetail'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.32 Type_ N1N2MsgTxfrErrDetail.md
+  source_words: 317
+  kind: source-file
+- clause: 6.1.6.2.33
+  title: '6.1.6.2.33 Type: N2InformationTransferRspData'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.33 Type_ N2InformationTransferRspData.md
+  source_words: 124
+  kind: source-file
+- clause: 6.1.6.2.34
+  title: '6.1.6.2.34 Type: MmContext'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.34 Type_ MmContext.md
+  source_words: 1497
+  kind: source-file
+- clause: 6.1.6.2.35
+  title: '6.1.6.2.35 Type: SeafData'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.35 Type_ SeafData.md
+  source_words: 221
+  kind: source-file
+- clause: 6.1.6.2.36
+  title: '6.1.6.2.36 Type: NasSecurityMode'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.36 Type_ NasSecurityMode.md
+  source_words: 34
+  kind: source-file
+- clause: 6.1.6.2.37
+  title: '6.1.6.2.37 Type: PduSessionContext'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.37 Type_ PduSessionContext.md
+  source_words: 1864
+  kind: source-file
+- clause: 6.1.6.2.38
+  title: '6.1.6.2.38 Type: NssaiMapping'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.38 Type_ NssaiMapping.md
+  source_words: 39
+  kind: source-file
+- clause: 6.1.6.2.39
+  title: '6.1.6.2.39 Type: UeRegStatusUpdateReqData'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.39 Type_ UeRegStatusUpdateReqData.md
+  source_words: 322
+  kind: source-file
+- clause: 6.1.6.2.40
+  title: '6.1.6.2.40 Type: AssignEbiError'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.40 Type_ AssignEbiError.md
+  source_words: 59
+  kind: source-file
+- clause: 6.1.6.2.41
+  title: '6.1.6.2.41 Type: UeContextCreateData'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.41 Type_ UeContextCreateData.md
+  source_words: 334
+  kind: source-file
+- clause: 6.1.6.2.42
+  title: '6.1.6.2.42 Type: UeContextCreatedData'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.42 Type_ UeContextCreatedData.md
+  source_words: 352
+  kind: source-file
+- clause: 6.1.6.2.43
+  title: '6.1.6.2.43 Type: UeContextCreateError'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.43 Type_ UeContextCreateError.md
+  source_words: 97
+  kind: source-file
+- clause: 6.1.6.2.44
+  title: '6.1.6.2.44 Type: NgRanTargetId'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.44 Type_ NgRanTargetId.md
+  source_words: 48
+  kind: source-file
+- clause: 6.1.6.2.45
+  title: '6.1.6.2.45 Type: N2InformationTransferError'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.45 Type_ N2InformationTransferError.md
+  source_words: 54
+  kind: source-file
+- clause: 6.1.6.2.46
+  title: '6.1.6.2.46 Type: PWSResponseData'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.46 Type_ PWSResponseData.md
+  source_words: 198
+  kind: source-file
+- clause: 6.1.6.2.47
+  title: '6.1.6.2.47 Type: PWSErrorData'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.47 Type_ PWSErrorData.md
+  source_words: 102
+  kind: source-file
+- clause: 6.1.6.2.48
+  title: 6.1.6.2.48 Void
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.48 Void.md
+  source_words: 0
+  kind: source-file
+- clause: 6.1.6.2.49
+  title: '6.1.6.2.49 Type: NgKsi'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.49 Type_ NgKsi.md
+  source_words: 50
+  kind: source-file
+- clause: 6.1.6.2.50
+  title: '6.1.6.2.50 Type: KeyAmf'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.50 Type_ KeyAmf.md
+  source_words: 52
+  kind: source-file
+- clause: 6.1.6.2.51
+  title: '6.1.6.2.51 Type: ExpectedUeBehavior'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.51 Type_ ExpectedUeBehavior.md
+  source_words: 59
+  kind: source-file
+- clause: 6.1.6.2.52
+  title: '6.1.6.2.52 Type: UeRegStatusUpdateRspData'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.52 Type_ UeRegStatusUpdateRspData.md
+  source_words: 66
+  kind: source-file
+- clause: 6.1.6.2.53
+  title: '6.1.6.2.53 Type: N2RanInformation'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.53 Type_ N2RanInformation.md
+  source_words: 31
+  kind: source-file
+- clause: 6.1.6.2.54
+  title: '6.1.6.2.54 Type: N2InfoNotificationRspData'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.54 Type_ N2InfoNotificationRspData.md
+  source_words: 119
+  kind: source-file
+- clause: 6.1.6.2.55
+  title: '6.1.6.2.55 Type: SmallDataRateStatusInfo'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.55 Type_ SmallDataRateStatusInfo.md
+  source_words: 96
+  kind: source-file
+- clause: 6.1.6.2.56
+  title: '6.1.6.2.56 Type: SmfChangeInfo'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.56 Type_ SmfChangeInfo.md
+  source_words: 44
+  kind: source-file
+- clause: 6.1.6.2.57
+  title: '6.1.6.2.57 Type: V2xContext'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.57 Type_ V2xContext.md
+  source_words: 158
+  kind: source-file
+- clause: 6.1.6.2.58
+  title: '6.1.6.2.58 Type: ImmediateMdtConf'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.58 Type_ ImmediateMdtConf.md
+  source_words: 587
+  kind: source-file
+- clause: 6.1.6.2.59
+  title: '6.1.6.2.59 Type: V2xInformation'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.59 Type_ V2xInformation.md
+  source_words: 56
+  kind: source-file
+- clause: 6.1.6.2.60
+  title: '6.1.6.2.60 Type: EpsNasSecurityMode'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.60 Type_ EpsNasSecurityMode.md
+  source_words: 40
+  kind: source-file
+- clause: 6.1.6.2.61
+  title: '6.1.6.2.61 Type: UeContextRelocateData'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.61 Type_ UeContextRelocateData.md
+  source_words: 252
+  kind: source-file
+- clause: 6.1.6.2.62
+  title: '6.1.6.2.62 Type: UeContextRelocatedData'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.62 Type_ UeContextRelocatedData.md
+  source_words: 31
+  kind: source-file
+- clause: 6.1.6.2.63
+  title: 6.1.6.2.63 Void
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.63 Void.md
+  source_words: 0
+  kind: source-file
+- clause: 6.1.6.2.64
+  title: '6.1.6.2.64 Type: EcRestrictionDataWb'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.64 Type_ EcRestrictionDataWb.md
+  source_words: 82
+  kind: source-file
+- clause: 6.1.6.2.65
+  title: '6.1.6.2.65 Type: ExtAmfEventSubscription'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.65 Type_ ExtAmfEventSubscription.md
+  source_words: 51
+  kind: source-file
+- clause: 6.1.6.2.66
+  title: '6.1.6.2.66 Type: AmfEventSubscriptionAddInfo'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.66 Type_ AmfEventSubscriptionAddInfo.md
+  source_words: 610
+  kind: source-file
+- clause: 6.1.6.2.67
+  title: '6.1.6.2.67 Type: UeContextCancelRelocateData'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.67 Type_ UeContextCancelRelocateData.md
+  source_words: 71
+  kind: source-file
+- clause: 6.1.6.2.68
+  title: '6.1.6.2.68 Type: UeDifferentiationInfo'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.68 Type_ UeDifferentiationInfo.md
+  source_words: 226
+  kind: source-file
+- clause: 6.1.6.2.69
+  title: '6.1.6.2.69 Type: CeModeBInd'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.69 Type_ CeModeBInd.md
+  source_words: 55
+  kind: source-file
+- clause: 6.1.6.2.70
+  title: '6.1.6.2.70 Type: LteMInd'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.70 Type_ LteMInd.md
+  source_words: 60
+  kind: source-file
+- clause: 6.1.6.2.71
+  title: '6.1.6.2.71 Type: NpnAccessInfo'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.71 Type_ NpnAccessInfo.md
+  source_words: 34
+  kind: source-file
+- clause: 6.1.6.2.72
+  title: '6.1.6.2.72 Type: ProseContext'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.72 Type_ ProseContext.md
+  source_words: 375
+  kind: source-file
+- clause: 6.1.6.2.73
+  title: '6.1.6.2.73 Type: AnalyticsSubscription'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.73 Type_ AnalyticsSubscription.md
+  source_words: 93
+  kind: source-file
+- clause: 6.1.6.2.74
+  title: '6.1.6.2.74 Type: NwdafSubscription'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.74 Type_ NwdafSubscription.md
+  source_words: 42
+  kind: source-file
+- clause: 6.1.6.2.75
+  title: '6.1.6.2.75 Type: UpdpSubscriptionData'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.75 Type_ UpdpSubscriptionData.md
+  source_words: 152
+  kind: source-file
+- clause: 6.1.6.2.76
+  title: '6.1.6.2.76 Type: ProSeInformation'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.76 Type_ ProSeInformation.md
+  source_words: 46
+  kind: source-file
+- clause: 6.1.6.2.77
+  title: '6.1.6.2.77 Type: ReleaseSessionInfo'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.77 Type_ ReleaseSessionInfo.md
+  source_words: 51
+  kind: source-file
+- clause: 6.1.6.2.78
+  title: '6.1.6.2.78 Type: AreaOfInterestEventState'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.78 Type_ AreaOfInterestEventState.md
+  source_words: 102
+  kind: source-file
+- clause: 6.1.6.2.79
+  title: '6.1.6.2.79 Type: TssInformation'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.79 Type_ TssInformation.md
+  source_words: 186
+  kind: source-file
+- clause: 6.1.6.2.80
+  title: '6.1.6.2.80 Type: AmPolicyInfoContainer'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.80 Type_ AmPolicyInfoContainer.md
+  source_words: 74
+  kind: source-file
+- clause: 6.1.6.2.81
+  title: '6.1.6.2.81 Type: RslpInformation'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.81 Type_ RslpInformation.md
+  source_words: 48
+  kind: source-file
+- clause: 6.1.6.2.82
+  title: '6.1.6.2.82 Type: A2xContext'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.82 Type_ A2xContext.md
+  source_words: 158
+  kind: source-file
+- clause: 6.1.6.2.83
+  title: '6.1.6.2.83 Type: A2xInformation'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.83 Type_ A2xInformation.md
+  source_words: 56
+  kind: source-file
+- clause: 6.1.6.2.84
+  title: '6.1.6.2.84 Type: LcsUpContext'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.84 Type_ LcsUpContext.md
+  source_words: 33
+  kind: source-file
+- clause: 6.1.6.2.85
+  title: '6.1.6.2.85 Type: DeregInactTimerInfo'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.85 Type_ DeregInactTimerInfo.md
+  source_words: 52
+  kind: source-file
+- clause: 6.1.6.2.86
+  title: '6.1.6.2.86 Type: TssRspPerNgran'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.86 Type_ TssRspPerNgran.md
+  source_words: 106
+  kind: source-file
+- clause: 6.1.6.2.87
+  title: '6.1.6.2.87 Type: SliceReplacementMapping'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.87 Type_ SliceReplacementMapping.md
+  source_words: 33
+  kind: source-file
+- clause: 6.1.6.2.88
+  title: '6.1.6.2.88 Type: SliceDeregInactConfig'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.88 Type_ SliceDeregInactConfig.md
+  source_words: 53
+  kind: source-file
+- clause: 6.1.6.3
+  title: 6.1.6.3 Simple data types and enumerations
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 2376
+  kind: source-file
+- clause: 6.1.6.3.1
+  title: 6.1.6.3.1 Introduction
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 20
+  kind: embedded-clause
+- clause: 6.1.6.3.2
+  title: 6.1.6.3.2 Simple data types
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 349
+  kind: embedded-clause
+- clause: 6.1.6.3.3
+  title: '6.1.6.3.3 Enumeration: StatusChange'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 41
+  kind: embedded-clause
+- clause: 6.1.6.3.4
+  title: '6.1.6.3.4 Enumeration: N2InformationClass'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 130
+  kind: embedded-clause
+- clause: 6.1.6.3.5
+  title: '6.1.6.3.5 Enumeration: N1MessageClass'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 96
+  kind: embedded-clause
+- clause: 6.1.6.3.6
+  title: '6.1.6.3.6 Enumeration: N1N2MessageTransferCause'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 421
+  kind: embedded-clause
+- clause: 6.1.6.3.7
+  title: '6.1.6.3.7 Enumeration: UeContextTransferStatus'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 56
+  kind: embedded-clause
+- clause: 6.1.6.3.8
+  title: '6.1.6.3.8 Enumeration: N2InformationTransferResult'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 33
+  kind: embedded-clause
+- clause: 6.1.6.3.9
+  title: '6.1.6.3.9 Enumeration: CipheringAlgorithm'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 31
+  kind: embedded-clause
+- clause: 6.1.6.3.10
+  title: '6.1.6.3.10 Enumeration: IntegrityAlgorithm'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 32
+  kind: embedded-clause
+- clause: 6.1.6.3.11
+  title: '6.1.6.3.11 Enumeration: SmsSupport'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 43
+  kind: embedded-clause
+- clause: 6.1.6.3.12
+  title: '6.1.6.3.12 Enumeration: ScType'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 25
+  kind: embedded-clause
+- clause: 6.1.6.3.13
+  title: '6.1.6.3.13 Enumeration: KeyAmfType'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 25
+  kind: embedded-clause
+- clause: 6.1.6.3.14
+  title: '6.1.6.3.14 Enumeration: TransferReason'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 68
+  kind: embedded-clause
+- clause: 6.1.6.3.15
+  title: '6.1.6.3.15 Enumeration: PolicyReqTrigger'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 258
+  kind: embedded-clause
+- clause: 6.1.6.3.16
+  title: '6.1.6.3.16 Enumeration: RatSelector'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 76
+  kind: embedded-clause
+- clause: 6.1.6.3.17
+  title: '6.1.6.3.17 Enumeration: NgapIeType'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 151
+  kind: embedded-clause
+- clause: 6.1.6.3.18
+  title: '6.1.6.3.18 Enumeration: N2InfoNotifyReason'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 28
+  kind: embedded-clause
+- clause: 6.1.6.3.19
+  title: '6.1.6.3.19 Enumeration: SmfChangeIndication'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 91
+  kind: embedded-clause
+- clause: 6.1.6.3.20
+  title: '6.1.6.3.20 Enumeration: SbiBindingLevel'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 47
+  kind: embedded-clause
+- clause: 6.1.6.3.21
+  title: '6.1.6.3.21 Enumeration: EpsNasCipheringAlgorithm'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 56
+  kind: embedded-clause
+- clause: 6.1.6.3.22
+  title: '6.1.6.3.22 Enumeration: EpsNasIntegrityAlgorithm'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 58
+  kind: embedded-clause
+- clause: 6.1.6.3.23
+  title: '6.1.6.3.23 Enumeration: PeriodicCommunicationIndicator'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 26
+  kind: embedded-clause
+- clause: 6.1.6.3.24
+  title: '6.1.6.3.24 Enumeration: UuaaMmStatus'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 25
+  kind: embedded-clause
+- clause: 6.1.6.3.25
+  title: '6.1.6.3.25 Enumeration: ReleaseCause'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 87
+  kind: embedded-clause
+- clause: 6.1.6.3.26
+  title: '6.1.6.3.26 Enumeration: NgranFailureInfo'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 82
+  kind: embedded-clause
+- clause: 6.1.6.3.27
+  title: '6.1.6.3.27 Enumeration: XrDeviceWith2Rx'
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations.md
+  source_words: 21
+  kind: embedded-clause
+- clause: 6.1.6.4
+  title: 6.1.6.4 Binary data
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.4 Binary data.md
+  source_words: 2300
+  kind: source-file
+- clause: 6.1.6.4.1
+  title: 6.1.6.4.1 Introduction
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.4 Binary data.md
+  source_words: 87
+  kind: embedded-clause
+- clause: 6.1.6.4.2
+  title: 6.1.6.4.2 N1 Message
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.4 Binary data.md
+  source_words: 448
+  kind: embedded-clause
+- clause: 6.1.6.4.3
+  title: 6.1.6.4.3 N2 Information
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.4 Binary data.md
+  source_words: 1551
+  kind: embedded-clause
+- clause: 6.1.6.4.3.1
+  title: 6.1.6.4.3.1 Introduction
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.4 Binary data.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 6.1.6.4.3.2
+  title: 6.1.6.4.3.2 NGAP IEs
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.4 Binary data.md
+  source_words: 833
+  kind: embedded-clause
+- clause: 6.1.6.4.3.3
+  title: 6.1.6.4.3.3 NGAP Messages
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.4 Binary data.md
+  source_words: 689
+  kind: embedded-clause
+- clause: 6.1.6.4.4
+  title: 6.1.6.4.4 Mobile Terminated Data
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.4 Binary data.md
+  source_words: 84
+  kind: embedded-clause
+- clause: 6.1.6.4.5
+  title: 6.1.6.4.5 GTP-C Message
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.6 Data Model/6.1.6.4 Binary data.md
+  source_words: 130
+  kind: embedded-clause
+- clause: 6.1.7
+  title: 6.1.7 Error Handling
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.7 Error Handling.md
+  source_words: 848
+  kind: source-file
+- clause: 6.1.7.1
+  title: 6.1.7.1 General
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.7 Error Handling.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 6.1.7.2
+  title: 6.1.7.2 Protocol Errors
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.7 Error Handling.md
+  source_words: 19
+  kind: embedded-clause
+- clause: 6.1.7.3
+  title: 6.1.7.3 Application Errors
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.7 Error Handling.md
+  source_words: 811
+  kind: embedded-clause
+- clause: 6.1.8
+  title: 6.1.8 Feature Negotiation
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.8 Feature Negotiation.md
+  source_words: 1207
+  kind: source-file
+- clause: 6.1.9
+  title: 6.1.9 Security
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.9 Security.md
+  source_words: 243
+  kind: source-file
+- clause: 6.1.10
+  title: 6.1.10 HTTP redirection
+  path: 6 API Definitions/6.1 Namf_Communication Service API/6.1.10 HTTP redirection.md
+  source_words: 167
+  kind: source-file
+- clause: '6.2'
+  title: 6.2 Namf_EventExposure Service API
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/README.md
+  source_words: 16249
+  kind: navigation-directory
+- clause: 6.2.1
+  title: 6.2.1 API URI
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.1 API URI.md
+  source_words: 92
+  kind: source-file
+- clause: 6.2.2
+  title: 6.2.2 Usage of HTTP
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.2 Usage of HTTP.md
+  source_words: 219
+  kind: source-file
+- clause: 6.2.2.1
+  title: 6.2.2.1 General
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.2 Usage of HTTP.md
+  source_words: 58
+  kind: embedded-clause
+- clause: 6.2.2.2
+  title: 6.2.2.2 HTTP standard headers
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.2 Usage of HTTP.md
+  source_words: 122
+  kind: embedded-clause
+- clause: 6.2.2.2.1
+  title: 6.2.2.2.1 General
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.2 Usage of HTTP.md
+  source_words: 21
+  kind: embedded-clause
+- clause: 6.2.2.2.2
+  title: 6.2.2.2.2 Content type
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.2 Usage of HTTP.md
+  source_words: 101
+  kind: embedded-clause
+- clause: 6.2.2.3
+  title: 6.2.2.3 HTTP custom headers
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.2 Usage of HTTP.md
+  source_words: 39
+  kind: embedded-clause
+- clause: 6.2.2.3.1
+  title: 6.2.2.3.1 General
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.2 Usage of HTTP.md
+  source_words: 39
+  kind: embedded-clause
+- clause: 6.2.3
+  title: 6.2.3 Resources
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.3 Resources.md
+  source_words: 1835
+  kind: source-file
+- clause: 6.2.3.1
+  title: 6.2.3.1 Overview
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.3 Resources.md
+  source_words: 82
+  kind: embedded-clause
+- clause: 6.2.3.2
+  title: '6.2.3.2 Resource: Subscriptions collection'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.3 Resources.md
+  source_words: 644
+  kind: embedded-clause
+- clause: 6.2.3.2.1
+  title: 6.2.3.2.1 Description
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.3 Resources.md
+  source_words: 34
+  kind: embedded-clause
+- clause: 6.2.3.2.2
+  title: 6.2.3.2.2 Resource Definition
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.3 Resources.md
+  source_words: 51
+  kind: embedded-clause
+- clause: 6.2.3.2.3
+  title: 6.2.3.2.3 Resource Standard Methods
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.3 Resources.md
+  source_words: 558
+  kind: embedded-clause
+- clause: 6.2.3.2.3.1
+  title: 6.2.3.2.3.1 POST
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.3 Resources.md
+  source_words: 558
+  kind: embedded-clause
+- clause: 6.2.3.2.4
+  title: 6.2.3.2.4 Resource Custom Operations
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.3 Resources.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 6.2.3.3
+  title: '6.2.3.3 Resource: Individual subscription'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.3 Resources.md
+  source_words: 1109
+  kind: embedded-clause
+- clause: 6.2.3.3.1
+  title: 6.2.3.3.1 Description
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.3 Resources.md
+  source_words: 34
+  kind: embedded-clause
+- clause: 6.2.3.3.2
+  title: 6.2.3.3.2 Resource Definition
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.3 Resources.md
+  source_words: 65
+  kind: embedded-clause
+- clause: 6.2.3.3.3
+  title: 6.2.3.3.3 Resource Standard Methods
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.3 Resources.md
+  source_words: 1009
+  kind: embedded-clause
+- clause: 6.2.3.3.3.1
+  title: 6.2.3.3.3.1 PATCH
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.3 Resources.md
+  source_words: 560
+  kind: embedded-clause
+- clause: 6.2.3.3.3.2
+  title: 6.2.3.3.3.2 DELETE
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.3 Resources.md
+  source_words: 449
+  kind: embedded-clause
+- clause: 6.2.3.3.4
+  title: 6.2.3.3.4 Resource Custom Operations
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.3 Resources.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 6.2.4
+  title: 6.2.4 Custom Operations without associated resources
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.4 Custom Operations without associated resources.md
+  source_words: 13
+  kind: source-file
+- clause: 6.2.5
+  title: 6.2.5 Notifications
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.5 Notifications.md
+  source_words: 522
+  kind: source-file
+- clause: 6.2.5.1
+  title: 6.2.5.1 Void
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.5 Notifications.md
+  source_words: 39
+  kind: embedded-clause
+- clause: 6.2.5.2
+  title: 6.2.5.2 AMF Event Notification
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.5 Notifications.md
+  source_words: 483
+  kind: embedded-clause
+- clause: 6.2.5.2.1
+  title: 6.2.5.2.1 Notification Definition
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.5 Notifications.md
+  source_words: 60
+  kind: embedded-clause
+- clause: 6.2.5.2.3
+  title: 6.2.5.2.3 Notification Standard Methods
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.5 Notifications.md
+  source_words: 368
+  kind: embedded-clause
+- clause: 6.2.5.2.3.1
+  title: 6.2.5.2.3.1 POST
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.5 Notifications.md
+  source_words: 368
+  kind: embedded-clause
+- clause: 6.2.6
+  title: 6.2.6 Data Model
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/README.md
+  source_words: 12112
+  kind: navigation-directory
+- clause: 6.2.6.1
+  title: 6.2.6.1 General
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.1 General.md
+  source_words: 923
+  kind: source-file
+- clause: 6.2.6.2
+  title: 6.2.6.2 Structured data types
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/README.md
+  source_words: 9408
+  kind: navigation-directory
+- clause: 6.2.6.2.1
+  title: 6.2.6.2.1 Introduction
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.1 Introduction.md
+  source_words: 13
+  kind: source-file
+- clause: 6.2.6.2.2
+  title: '6.2.6.2.2 Type: AmfEventSubscription'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.2 Type_ AmfEventSubscription.md
+  source_words: 841
+  kind: source-file
+- clause: 6.2.6.2.3
+  title: '6.2.6.2.3 Type: AmfEvent'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.3 Type_ AmfEvent.md
+  source_words: 1992
+  kind: source-file
+- clause: 6.2.6.2.4
+  title: '6.2.6.2.4 Type: AmfEventNotification'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.4 Type_ AmfEventNotification.md
+  source_words: 251
+  kind: source-file
+- clause: 6.2.6.2.5
+  title: '6.2.6.2.5 Type: AmfEventReport'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.5 Type_ AmfEventReport.md
+  source_words: 1537
+  kind: source-file
+- clause: 6.2.6.2.6
+  title: '6.2.6.2.6 Type: AmfEventMode'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.6 Type_ AmfEventMode.md
+  source_words: 732
+  kind: source-file
+- clause: 6.2.6.2.7
+  title: '6.2.6.2.7 Type: AmfEventState'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.7 Type_ AmfEventState.md
+  source_words: 81
+  kind: source-file
+- clause: 6.2.6.2.8
+  title: '6.2.6.2.8 Type: RmInfo'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.8 Type_ RmInfo.md
+  source_words: 48
+  kind: source-file
+- clause: 6.2.6.2.9
+  title: '6.2.6.2.9 Type: CmInfo'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.9 Type_ CmInfo.md
+  source_words: 48
+  kind: source-file
+- clause: 6.2.6.2.10
+  title: 6.2.6.2.10 Void
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.10 Void.md
+  source_words: 0
+  kind: source-file
+- clause: 6.2.6.2.11
+  title: '6.2.6.2.11 Type: CommunicationFailure'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.11 Type_ CommunicationFailure.md
+  source_words: 86
+  kind: source-file
+- clause: 6.2.6.2.12
+  title: '6.2.6.2.12 Type: AmfCreateEventSubscription'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.12 Type_ AmfCreateEventSubscription.md
+  source_words: 102
+  kind: source-file
+- clause: 6.2.6.2.13
+  title: '6.2.6.2.13 Type: AmfCreatedEventSubscription'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.13 Type_ AmfCreatedEventSubscription.md
+  source_words: 160
+  kind: source-file
+- clause: 6.2.6.2.14
+  title: '6.2.6.2.14 Type: AmfUpdateEventSubscriptionItem'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.14 Type_ AmfUpdateEventSubscriptionItem.md
+  source_words: 657
+  kind: source-file
+- clause: 6.2.6.2.15
+  title: '6.2.6.2.15 Type: AmfUpdatedEventSubscription'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.15 Type_ AmfUpdatedEventSubscription.md
+  source_words: 82
+  kind: source-file
+- clause: 6.2.6.2.16
+  title: '6.2.6.2.16 Type: AmfEventArea'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.16 Type_ AmfEventArea.md
+  source_words: 391
+  kind: source-file
+- clause: 6.2.6.2.17
+  title: '6.2.6.2.17 Type: LadnInfo'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.17 Type_ LadnInfo.md
+  source_words: 84
+  kind: source-file
+- clause: 6.2.6.2.18
+  title: '6.2.6.2.18 Type: AmfUpdateEventOptionItem'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.18 Type_ AmfUpdateEventOptionItem.md
+  source_words: 229
+  kind: source-file
+- clause: 6.2.6.2.19
+  title: '6.2.6.2.19 Type: 5GsUserStateInfo'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.19 Type_ 5GsUserStateInfo.md
+  source_words: 48
+  kind: source-file
+- clause: 6.2.6.2.20
+  title: '6.2.6.2.20 Type: TrafficDescriptor'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.20 Type_ TrafficDescriptor.md
+  source_words: 93
+  kind: source-file
+- clause: 6.2.6.2.21
+  title: '6.2.6.2.21 Type: UEIdExt'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.21 Type_ UEIdExt.md
+  source_words: 69
+  kind: source-file
+- clause: 6.2.6.2.22
+  title: '6.2.6.2.22 Type: AmfEventSubsSyncInfo'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.22 Type_ AmfEventSubsSyncInfo.md
+  source_words: 75
+  kind: source-file
+- clause: 6.2.6.2.23
+  title: '6.2.6.2.23 Type: AmfEventSubscriptionInfo'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.23 Type_ AmfEventSubscriptionInfo.md
+  source_words: 133
+  kind: source-file
+- clause: 6.2.6.2.24
+  title: '6.2.6.2.24 Type: TargetArea'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.24 Type_ TargetArea.md
+  source_words: 94
+  kind: source-file
+- clause: 6.2.6.2.25
+  title: '6.2.6.2.25 Type: SnssaiTaiMapping'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.25 Type_ SnssaiTaiMapping.md
+  source_words: 107
+  kind: source-file
+- clause: 6.2.6.2.26
+  title: '6.2.6.2.26 Type: SupportedSnssai'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.26 Type_ SupportedSnssai.md
+  source_words: 88
+  kind: source-file
+- clause: 6.2.6.2.27
+  title: '6.2.6.2.27 Type: UeInAreaFilter'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.27 Type_ UeInAreaFilter.md
+  source_words: 180
+  kind: source-file
+- clause: 6.2.6.2.28
+  title: '6.2.6.2.28 Type: IdleStatusIndication'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.28 Type_ IdleStatusIndication.md
+  source_words: 97
+  kind: source-file
+- clause: 6.2.6.2.29
+  title: '6.2.6.2.29 Type: UeAccessBehaviorReportItem'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.29 Type_ UeAccessBehaviorReportItem.md
+  source_words: 276
+  kind: source-file
+- clause: 6.2.6.2.30
+  title: '6.2.6.2.30 Type: UeLocationTrendsReportItem'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.30 Type_ UeLocationTrendsReportItem.md
+  source_words: 283
+  kind: source-file
+- clause: 6.2.6.2.31
+  title: '6.2.6.2.31 Type: DispersionArea'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.31 Type_ DispersionArea.md
+  source_words: 144
+  kind: source-file
+- clause: 6.2.6.2.32
+  title: '6.2.6.2.32 Type: MmTransactionLocationReportItem'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.32 Type_ MmTransactionLocationReportItem.md
+  source_words: 126
+  kind: source-file
+- clause: 6.2.6.2.33
+  title: '6.2.6.2.33 Type: MmTransactionSliceReportItem'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.33 Type_ MmTransactionSliceReportItem.md
+  source_words: 115
+  kind: source-file
+- clause: 6.2.6.2.34
+  title: '6.2.6.2.34 Type: SliceAreaRestrictionInfo'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.34 Type_ SliceAreaRestrictionInfo.md
+  source_words: 146
+  kind: source-file
+- clause: 6.2.6.3
+  title: 6.2.6.3 Simple data types and enumerations
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.3 Simple data types and enumerations.md
+  source_words: 1780
+  kind: source-file
+- clause: 6.2.6.3.1
+  title: 6.2.6.3.1 Introduction
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.3 Simple data types and enumerations.md
+  source_words: 20
+  kind: embedded-clause
+- clause: 6.2.6.3.2
+  title: 6.2.6.3.2 Simple data types
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.3 Simple data types and enumerations.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 6.2.6.3.3
+  title: '6.2.6.3.3 Enumeration: AmfEventType'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.3 Simple data types and enumerations.md
+  source_words: 965
+  kind: embedded-clause
+- clause: 6.2.6.3.4
+  title: '6.2.6.3.4 Enumeration: AmfEventTrigger'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.3 Simple data types and enumerations.md
+  source_words: 110
+  kind: embedded-clause
+- clause: 6.2.6.3.5
+  title: '6.2.6.3.5 Enumeration: LocationFilter'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.3 Simple data types and enumerations.md
+  source_words: 146
+  kind: embedded-clause
+- clause: 6.2.6.3.6
+  title: 6.2.6.3.6 Void
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.3 Simple data types and enumerations.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.2.6.3.7
+  title: '6.2.6.3.7 Enumeration: UeReachability'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.3 Simple data types and enumerations.md
+  source_words: 59
+  kind: embedded-clause
+- clause: 6.2.6.3.8
+  title: 6.2.6.3.8 Void
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.3 Simple data types and enumerations.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.2.6.3.9
+  title: '6.2.6.3.9 Enumeration: RmState'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.3 Simple data types and enumerations.md
+  source_words: 25
+  kind: embedded-clause
+- clause: 6.2.6.3.10
+  title: '6.2.6.3.10 Enumeration: CmState'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.3 Simple data types and enumerations.md
+  source_words: 27
+  kind: embedded-clause
+- clause: 6.2.6.3.11
+  title: '6.2.6.3.11 Enumeration: 5GsUserState'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.3 Simple data types and enumerations.md
+  source_words: 95
+  kind: embedded-clause
+- clause: 6.2.6.3.12
+  title: '6.2.6.3.12 Enumeration: LossOfConnectivityReason'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.3 Simple data types and enumerations.md
+  source_words: 43
+  kind: embedded-clause
+- clause: 6.2.6.3.13
+  title: '6.2.6.3.13 Enumeration: ReachabilityFilter'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.3 Simple data types and enumerations.md
+  source_words: 34
+  kind: embedded-clause
+- clause: 6.2.6.3.14
+  title: '6.2.6.3.14 Enumeration: UeType'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.3 Simple data types and enumerations.md
+  source_words: 20
+  kind: embedded-clause
+- clause: 6.2.6.3.15
+  title: '6.2.6.3.15 Enumeration: AccessStateTransitionType'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.3 Simple data types and enumerations.md
+  source_words: 121
+  kind: embedded-clause
+- clause: 6.2.6.3.16
+  title: '6.2.6.3.16 Enumeration: SubTerminationReason'
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.3 Simple data types and enumerations.md
+  source_words: 86
+  kind: embedded-clause
+- clause: 6.2.6.4
+  title: 6.2.6.4 Binary data
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.6 Data Model/6.2.6.4 Binary data.md
+  source_words: 1
+  kind: source-file
+- clause: 6.2.7
+  title: 6.2.7 Error Handling
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.7 Error Handling.md
+  source_words: 222
+  kind: source-file
+- clause: 6.2.7.1
+  title: 6.2.7.1 General
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.7 Error Handling.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 6.2.7.2
+  title: 6.2.7.2 Protocol Errors
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.7 Error Handling.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 6.2.7.3
+  title: 6.2.7.3 Application Errors
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.7 Error Handling.md
+  source_words: 186
+  kind: embedded-clause
+- clause: 6.2.8
+  title: 6.2.8 Feature Negotiation
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.8 Feature Negotiation.md
+  source_words: 897
+  kind: source-file
+- clause: 6.2.9
+  title: 6.2.9 Security
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.9 Security.md
+  source_words: 170
+  kind: source-file
+- clause: 6.2.10
+  title: 6.2.10 HTTP redirection
+  path: 6 API Definitions/6.2 Namf_EventExposure Service API/6.2.10 HTTP redirection.md
+  source_words: 167
+  kind: source-file
+- clause: '6.3'
+  title: 6.3 Namf_MT Service API
+  path: 6 API Definitions/6.3 Namf_MT Service API/README.md
+  source_words: 5935
+  kind: navigation-directory
+- clause: 6.3.1
+  title: 6.3.1 API URI
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.1 API URI.md
+  source_words: 92
+  kind: source-file
+- clause: 6.3.2
+  title: 6.3.2 Usage of HTTP
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.2 Usage of HTTP.md
+  source_words: 191
+  kind: source-file
+- clause: 6.3.2.1
+  title: 6.3.2.1 General
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.2 Usage of HTTP.md
+  source_words: 58
+  kind: embedded-clause
+- clause: 6.3.2.2
+  title: 6.3.2.2 HTTP standard headers
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.2 Usage of HTTP.md
+  source_words: 94
+  kind: embedded-clause
+- clause: 6.3.2.2.1
+  title: 6.3.2.2.1 General
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.2 Usage of HTTP.md
+  source_words: 21
+  kind: embedded-clause
+- clause: 6.3.2.2.2
+  title: 6.3.2.2.2 Content type
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.2 Usage of HTTP.md
+  source_words: 73
+  kind: embedded-clause
+- clause: 6.3.2.3
+  title: 6.3.2.3 HTTP custom headers
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.2 Usage of HTTP.md
+  source_words: 39
+  kind: embedded-clause
+- clause: 6.3.2.3.1
+  title: 6.3.2.3.1 General
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.2 Usage of HTTP.md
+  source_words: 39
+  kind: embedded-clause
+- clause: 6.3.3
+  title: 6.3.3 Resources
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.3 Resources.md
+  source_words: 2346
+  kind: source-file
+- clause: 6.3.3.1
+  title: 6.3.3.1 Overview
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.3 Resources.md
+  source_words: 86
+  kind: embedded-clause
+- clause: 6.3.3.2
+  title: '6.3.3.2 Resource: ueReachInd'
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.3 Resources.md
+  source_words: 818
+  kind: embedded-clause
+- clause: 6.3.3.2.1
+  title: 6.3.3.2.1 Description
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.3 Resources.md
+  source_words: 26
+  kind: embedded-clause
+- clause: 6.3.3.2.2
+  title: 6.3.3.2.2 Resource Definition
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.3 Resources.md
+  source_words: 80
+  kind: embedded-clause
+- clause: 6.3.3.2.3
+  title: 6.3.3.2.3 Resource Standard Methods
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.3 Resources.md
+  source_words: 703
+  kind: embedded-clause
+- clause: 6.3.3.2.3.1
+  title: 6.3.3.2.3.1 PUT
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.3 Resources.md
+  source_words: 703
+  kind: embedded-clause
+- clause: 6.3.3.2.4
+  title: 6.3.3.2.4 Resource Custom Operations
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.3 Resources.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 6.3.3.3
+  title: '6.3.3.3 Resource: ueContext'
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.3 Resources.md
+  source_words: 826
+  kind: embedded-clause
+- clause: 6.3.3.3.1
+  title: 6.3.3.3.1 Description
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.3 Resources.md
+  source_words: 26
+  kind: embedded-clause
+- clause: 6.3.3.3.2
+  title: 6.3.3.3.2 Resource Definition
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.3 Resources.md
+  source_words: 79
+  kind: embedded-clause
+- clause: 6.3.3.3.3
+  title: 6.3.3.3.3 Resource Standard Methods
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.3 Resources.md
+  source_words: 712
+  kind: embedded-clause
+- clause: 6.3.3.3.3.1
+  title: 6.3.3.3.3.1 GET
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.3 Resources.md
+  source_words: 712
+  kind: embedded-clause
+- clause: 6.3.3.3.4
+  title: 6.3.3.3.4 Resource Custom Operations
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.3 Resources.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 6.3.3.4
+  title: '6.3.3.4 Resource: ueContexts collection'
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.3 Resources.md
+  source_words: 616
+  kind: embedded-clause
+- clause: 6.3.3.4.1
+  title: 6.3.3.4.1 Description
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.3 Resources.md
+  source_words: 31
+  kind: embedded-clause
+- clause: 6.3.3.4.2
+  title: 6.3.3.4.2 Resource Definition
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.3 Resources.md
+  source_words: 51
+  kind: embedded-clause
+- clause: 6.3.3.4.3
+  title: 6.3.3.4.3 Resource Standard Methods
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.3 Resources.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 6.3.3.4.4
+  title: 6.3.3.4.4 Resource Custom Operations
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.3 Resources.md
+  source_words: 525
+  kind: embedded-clause
+- clause: 6.3.3.4.4.1
+  title: 6.3.3.4.4.1 Overview
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.3 Resources.md
+  source_words: 27
+  kind: embedded-clause
+- clause: 6.3.3.4.4.2
+  title: '6.3.3.4.4.2 Operation: enable-group-reachability'
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.3 Resources.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.3.3.4.4.2.1
+  title: 6.3.3.4.4.2.1 Description
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.3 Resources.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.3.3.4.4.2.2
+  title: 6.3.3.4.4.2.2 Operation Definition
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.3 Resources.md
+  source_words: 498
+  kind: embedded-clause
+- clause: 6.3.4
+  title: 6.3.4 Custom Operations without associated resources
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.4 Custom Operations without associated resources.md
+  source_words: 13
+  kind: source-file
+- clause: 6.3.5
+  title: 6.3.5 Notifications
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.5 Notifications.md
+  source_words: 464
+  kind: source-file
+- clause: 6.3.5.1
+  title: 6.3.5.1 General
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.5 Notifications.md
+  source_words: 35
+  kind: embedded-clause
+- clause: 6.3.5.2
+  title: 6.3.5.2 UE Reachability Info Notify
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.5 Notifications.md
+  source_words: 429
+  kind: embedded-clause
+- clause: 6.3.5.2.1
+  title: 6.3.5.2.1 Notification Definition
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.5 Notifications.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 6.3.5.2.3
+  title: 6.3.5.2.3 Notification Standard Methods
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.5 Notifications.md
+  source_words: 362
+  kind: embedded-clause
+- clause: 6.3.5.2.3.1
+  title: 6.3.5.2.3.1 POST
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.5 Notifications.md
+  source_words: 362
+  kind: embedded-clause
+- clause: 6.3.6
+  title: 6.3.6 Data Model
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.6 Data Model.md
+  source_words: 1830
+  kind: source-file
+- clause: 6.3.6.1
+  title: 6.3.6.1 General
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.6 Data Model.md
+  source_words: 397
+  kind: embedded-clause
+- clause: 6.3.6.2
+  title: 6.3.6.2 Structured data types
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.6 Data Model.md
+  source_words: 1357
+  kind: embedded-clause
+- clause: 6.3.6.2.1
+  title: 6.3.6.2.1 Introduction
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.6 Data Model.md
+  source_words: 13
+  kind: embedded-clause
+- clause: 6.3.6.2.2
+  title: '6.3.6.2.2 Type: EnableUeReachabilityReqData'
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.6 Data Model.md
+  source_words: 276
+  kind: embedded-clause
+- clause: 6.3.6.2.3
+  title: '6.3.6.2.3 Type: EnableUeReachabilityRspData'
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.6 Data Model.md
+  source_words: 52
+  kind: embedded-clause
+- clause: 6.3.6.2.4
+  title: '6.3.6.2.4 Type: UeContextInfo'
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.6 Data Model.md
+  source_words: 250
+  kind: embedded-clause
+- clause: 6.3.6.2.5
+  title: '6.3.6.2.5 Type: ProblemDetailsEnableUeReachability'
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.6 Data Model.md
+  source_words: 40
+  kind: embedded-clause
+- clause: 6.3.6.2.6
+  title: '6.3.6.2.6 Type: AdditionInfoEnableUeReachability'
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.6 Data Model.md
+  source_words: 46
+  kind: embedded-clause
+- clause: 6.3.6.2.7
+  title: '6.3.6.2.7 Type: EnableGroupReachabilityReqData'
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.6 Data Model.md
+  source_words: 226
+  kind: embedded-clause
+- clause: 6.3.6.2.8
+  title: '6.3.6.2.8 Type: EnableGroupReachabilityRspData'
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.6 Data Model.md
+  source_words: 86
+  kind: embedded-clause
+- clause: 6.3.6.2.9
+  title: '6.3.6.2.9 Type: UeInfo'
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.6 Data Model.md
+  source_words: 80
+  kind: embedded-clause
+- clause: 6.3.6.2.10
+  title: '6.3.6.2.10 Type: ReachabilityNotificationData'
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.6 Data Model.md
+  source_words: 47
+  kind: embedded-clause
+- clause: 6.3.6.2.11
+  title: '6.3.6.2.11 Type: ReachableUeInfo'
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.6 Data Model.md
+  source_words: 48
+  kind: embedded-clause
+- clause: 6.3.6.2.12
+  title: '6.3.6.2.12 Type: QosFlowInfo'
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.6 Data Model.md
+  source_words: 193
+  kind: embedded-clause
+- clause: 6.3.6.3
+  title: 6.3.6.3 Simple data types and enumerations
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.6 Data Model.md
+  source_words: 75
+  kind: embedded-clause
+- clause: 6.3.6.3.1
+  title: 6.3.6.3.1 Introduction
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.6 Data Model.md
+  source_words: 20
+  kind: embedded-clause
+- clause: 6.3.6.3.2
+  title: 6.3.6.3.2 Simple data types
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.6 Data Model.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 6.3.6.3.3
+  title: '6.3.6.3.3 Enumeration: UeContextInfoClass'
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.6 Data Model.md
+  source_words: 26
+  kind: embedded-clause
+- clause: 6.3.6.4
+  title: 6.3.6.4 Binary data
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.6 Data Model.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 6.3.7
+  title: 6.3.7 Error Handling
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.7 Error Handling.md
+  source_words: 315
+  kind: source-file
+- clause: 6.3.7.1
+  title: 6.3.7.1 General
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.7 Error Handling.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 6.3.7.2
+  title: 6.3.7.2 Protocol Errors
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.7 Error Handling.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 6.3.7.3
+  title: 6.3.7.3 Application Errors
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.7 Error Handling.md
+  source_words: 279
+  kind: embedded-clause
+- clause: 6.3.8
+  title: 6.3.8 Feature Negotiation
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.8 Feature Negotiation.md
+  source_words: 337
+  kind: source-file
+- clause: 6.3.9
+  title: 6.3.9 Security
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.9 Security.md
+  source_words: 180
+  kind: source-file
+- clause: 6.3.10
+  title: 6.3.10 HTTP redirection
+  path: 6 API Definitions/6.3 Namf_MT Service API/6.3.10 HTTP redirection.md
+  source_words: 167
+  kind: source-file
+- clause: '6.4'
+  title: 6.4 Namf_Location Service API
+  path: 6 API Definitions/6.4 Namf_Location Service API/README.md
+  source_words: 9463
+  kind: navigation-directory
+- clause: 6.4.1
+  title: 6.4.1 API URI
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.1 API URI.md
+  source_words: 92
+  kind: source-file
+- clause: 6.4.2
+  title: 6.4.2 Usage of HTTP
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.2 Usage of HTTP.md
+  source_words: 191
+  kind: source-file
+- clause: 6.4.2.1
+  title: 6.4.2.1 General
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.2 Usage of HTTP.md
+  source_words: 58
+  kind: embedded-clause
+- clause: 6.4.2.2
+  title: 6.4.2.2 HTTP standard headers
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.2 Usage of HTTP.md
+  source_words: 94
+  kind: embedded-clause
+- clause: 6.4.2.2.1
+  title: 6.4.2.2.1 General
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.2 Usage of HTTP.md
+  source_words: 21
+  kind: embedded-clause
+- clause: 6.4.2.2.2
+  title: 6.4.2.2.2 Content type
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.2 Usage of HTTP.md
+  source_words: 73
+  kind: embedded-clause
+- clause: 6.4.2.3
+  title: 6.4.2.3 HTTP custom headers
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.2 Usage of HTTP.md
+  source_words: 39
+  kind: embedded-clause
+- clause: 6.4.2.3.1
+  title: 6.4.2.3.1 General
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.2 Usage of HTTP.md
+  source_words: 39
+  kind: embedded-clause
+- clause: 6.4.3
+  title: 6.4.3 Resources
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.3 Resources.md
+  source_words: 1889
+  kind: source-file
+- clause: 6.4.3.1
+  title: 6.4.3.1 Overview
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.3 Resources.md
+  source_words: 63
+  kind: embedded-clause
+- clause: 6.4.3.2
+  title: '6.4.3.2 Resource: Individual UE Context'
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.3 Resources.md
+  source_words: 1826
+  kind: embedded-clause
+- clause: 6.4.3.2.1
+  title: 6.4.3.2.1 Description
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.3 Resources.md
+  source_words: 24
+  kind: embedded-clause
+- clause: 6.4.3.2.2
+  title: 6.4.3.2.2 Resource Definition
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.3 Resources.md
+  source_words: 127
+  kind: embedded-clause
+- clause: 6.4.3.2.3
+  title: 6.4.3.2.3 Resource Standard Methods
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.3 Resources.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 6.4.3.2.4
+  title: 6.4.3.2.4 Resource Custom Operations
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.3 Resources.md
+  source_words: 1666
+  kind: embedded-clause
+- clause: 6.4.3.2.4.1
+  title: 6.4.3.2.4.1 Overview
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.3 Resources.md
+  source_words: 62
+  kind: embedded-clause
+- clause: 6.4.3.2.4.2
+  title: '6.4.3.2.4.2 Operation: provide-pos-info (POST)'
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.3 Resources.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.4.3.2.4.2.1
+  title: 6.4.3.2.4.2.1 Description
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.3 Resources.md
+  source_words: 35
+  kind: embedded-clause
+- clause: 6.4.3.2.4.2.2
+  title: 6.4.3.2.4.2.2 Operation Definition
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.3 Resources.md
+  source_words: 601
+  kind: embedded-clause
+- clause: 6.4.3.2.4.3
+  title: '6.4.3.2.4.3 Operation: provide-loc-info (POST)'
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.3 Resources.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.4.3.2.4.3.1
+  title: 6.4.3.2.4.3.1 Description
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.3 Resources.md
+  source_words: 14
+  kind: embedded-clause
+- clause: 6.4.3.2.4.3.2
+  title: 6.4.3.2.4.3.2 Operation Definition
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.3 Resources.md
+  source_words: 476
+  kind: embedded-clause
+- clause: 6.4.3.2.4.4
+  title: '6.4.3.2.4.4 Operation: cancel-pos-info (POST)'
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.3 Resources.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.4.3.2.4.4.1
+  title: 6.4.3.2.4.4.1 Description
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.3 Resources.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 6.4.3.2.4.4.2
+  title: 6.4.3.2.4.4.2 Operation Definition
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.3 Resources.md
+  source_words: 463
+  kind: embedded-clause
+- clause: 6.4.4
+  title: 6.4.4 Custom Operations without associated resources
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.4 Custom Operations without associated resources.md
+  source_words: 13
+  kind: source-file
+- clause: 6.4.5
+  title: 6.4.5 Notifications
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.5 Notifications.md
+  source_words: 469
+  kind: source-file
+- clause: 6.4.5.1
+  title: 6.4.5.1 General
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.5 Notifications.md
+  source_words: 36
+  kind: embedded-clause
+- clause: 6.4.5.2
+  title: 6.4.5.2 Event Notify
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.5 Notifications.md
+  source_words: 433
+  kind: embedded-clause
+- clause: 6.4.5.2.1
+  title: 6.4.5.2.1 Description
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.5 Notifications.md
+  source_words: 19
+  kind: embedded-clause
+- clause: 6.4.5.2.2
+  title: 6.4.5.2.2 Notification Definition
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.5 Notifications.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 6.4.5.2.3
+  title: 6.4.5.2.3 Notification Standard Methods
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.5 Notifications.md
+  source_words: 385
+  kind: embedded-clause
+- clause: 6.4.5.2.3.1
+  title: 6.4.5.2.3.1 POST
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.5 Notifications.md
+  source_words: 385
+  kind: embedded-clause
+- clause: 6.4.6
+  title: 6.4.6 Data Model
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.6 Data Model/README.md
+  source_words: 5842
+  kind: navigation-directory
+- clause: 6.4.6.1
+  title: 6.4.6.1 General
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.6 Data Model/6.4.6.1 General.md
+  source_words: 908
+  kind: source-file
+- clause: 6.4.6.2
+  title: 6.4.6.2 Structured data types
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.6 Data Model/6.4.6.2 Structured data types/README.md
+  source_words: 4592
+  kind: navigation-directory
+- clause: 6.4.6.2.1
+  title: 6.4.6.2.1 Introduction
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.6 Data Model/6.4.6.2 Structured data types/6.4.6.2.1 Introduction.md
+  source_words: 13
+  kind: source-file
+- clause: 6.4.6.2.2
+  title: '6.4.6.2.2 Type: RequestPosInfo'
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.6 Data Model/6.4.6.2 Structured data types/6.4.6.2.2 Type_ RequestPosInfo.md
+  source_words: 1454
+  kind: source-file
+- clause: 6.4.6.2.3
+  title: '6.4.6.2.3 Type: ProvidePosInfo'
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.6 Data Model/6.4.6.2 Structured data types/6.4.6.2.3 Type_ ProvidePosInfo.md
+  source_words: 1116
+  kind: source-file
+- clause: 6.4.6.2.4
+  title: '6.4.6.2.4 Type: NotifiedPosInfo'
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.6 Data Model/6.4.6.2 Structured data types/6.4.6.2.4 Type_ NotifiedPosInfo.md
+  source_words: 1118
+  kind: source-file
+- clause: 6.4.6.2.5
+  title: '6.4.6.2.5 Type: RequestLocInfo'
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.6 Data Model/6.4.6.2 Structured data types/6.4.6.2.5 Type_ RequestLocInfo.md
+  source_words: 293
+  kind: source-file
+- clause: 6.4.6.2.6
+  title: '6.4.6.2.6 Type: ProvideLocInfo'
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.6 Data Model/6.4.6.2 Structured data types/6.4.6.2.6 Type_ ProvideLocInfo.md
+  source_words: 323
+  kind: source-file
+- clause: 6.4.6.2.7
+  title: '6.4.6.2.7 Type: CancelPosInfo'
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.6 Data Model/6.4.6.2 Structured data types/6.4.6.2.7 Type_ CancelPosInfo.md
+  source_words: 205
+  kind: source-file
+- clause: 6.4.6.2.11
+  title: '6.4.6.2.11 Type: ProvidePosInfoExt'
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.6 Data Model/6.4.6.2 Structured data types/6.4.6.2.11 Type_ ProvidePosInfoExt.md
+  source_words: 33
+  kind: source-file
+- clause: 6.4.6.2.12
+  title: '6.4.6.2.12 Type: NotifiedPosInfoExt'
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.6 Data Model/6.4.6.2 Structured data types/6.4.6.2.12 Type_ NotifiedPosInfoExt.md
+  source_words: 37
+  kind: source-file
+- clause: 6.4.6.3
+  title: 6.4.6.3 Simple data types and enumerations
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.6 Data Model/6.4.6.3 Simple data types and enumerations.md
+  source_words: 342
+  kind: source-file
+- clause: 6.4.6.3.1
+  title: 6.4.6.3.1 Introduction
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.6 Data Model/6.4.6.3 Simple data types and enumerations.md
+  source_words: 20
+  kind: embedded-clause
+- clause: 6.4.6.3.2
+  title: 6.4.6.3.2 Simple data types
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.6 Data Model/6.4.6.3 Simple data types and enumerations.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 6.4.6.3.3
+  title: '6.4.6.3.3 Enumeration: LocationType'
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.6 Data Model/6.4.6.3 Simple data types and enumerations.md
+  source_words: 89
+  kind: embedded-clause
+- clause: 6.4.6.3.4
+  title: '6.4.6.3.4 Enumeration: LocationEvent'
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.6 Data Model/6.4.6.3 Simple data types and enumerations.md
+  source_words: 82
+  kind: embedded-clause
+- clause: 6.4.6.3.5
+  title: '6.4.6.3.5 Enumeration: LocationPrivacyVerResult'
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.6 Data Model/6.4.6.3 Simple data types and enumerations.md
+  source_words: 85
+  kind: embedded-clause
+- clause: 6.4.6.3.6
+  title: '6.4.6.3.6 Enumeration: LpHapType'
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.6 Data Model/6.4.6.3 Simple data types and enumerations.md
+  source_words: 37
+  kind: embedded-clause
+- clause: 6.4.7
+  title: 6.4.7 Error Handling
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.7 Error Handling.md
+  source_words: 251
+  kind: source-file
+- clause: 6.4.7.1
+  title: 6.4.7.1 General
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.7 Error Handling.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 6.4.7.2
+  title: 6.4.7.2 Protocol Errors
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.7 Error Handling.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 6.4.7.3
+  title: 6.4.7.3 Application Errors
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.7 Error Handling.md
+  source_words: 215
+  kind: embedded-clause
+- clause: 6.4.8
+  title: 6.4.8 Feature Negotiation
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.8 Feature Negotiation.md
+  source_words: 379
+  kind: source-file
+- clause: 6.4.9
+  title: 6.4.9 Security
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.9 Security.md
+  source_words: 170
+  kind: source-file
+- clause: 6.4.10
+  title: 6.4.10 HTTP redirection
+  path: 6 API Definitions/6.4 Namf_Location Service API/6.4.10 HTTP redirection.md
+  source_words: 167
+  kind: source-file
+- clause: '6.5'
+  title: 6.5 Namf_MBSBroadcast Service API
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/README.md
+  source_words: 5745
+  kind: navigation-directory
+- clause: 6.5.1
+  title: 6.5.1 API URI
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.1 API URI.md
+  source_words: 93
+  kind: source-file
+- clause: 6.5.2
+  title: 6.5.2 Usage of HTTP
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.2 Usage of HTTP.md
+  source_words: 570
+  kind: source-file
+- clause: 6.5.2.1
+  title: 6.5.2.1 General
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.2 Usage of HTTP.md
+  source_words: 58
+  kind: embedded-clause
+- clause: 6.5.2.2
+  title: 6.5.2.2 HTTP standard headers
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.2 Usage of HTTP.md
+  source_words: 241
+  kind: embedded-clause
+- clause: 6.5.2.2.1
+  title: 6.5.2.2.1 General
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.2 Usage of HTTP.md
+  source_words: 21
+  kind: embedded-clause
+- clause: 6.5.2.2.2
+  title: 6.5.2.2.2 Content type
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.2 Usage of HTTP.md
+  source_words: 220
+  kind: embedded-clause
+- clause: 6.5.2.3
+  title: 6.5.2.3 HTTP custom headers
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.2 Usage of HTTP.md
+  source_words: 38
+  kind: embedded-clause
+- clause: 6.5.2.3.1
+  title: 6.5.2.3.1 General
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.2 Usage of HTTP.md
+  source_words: 38
+  kind: embedded-clause
+- clause: 6.5.2.4
+  title: 6.5.2.4 HTTP multipart messages
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.2 Usage of HTTP.md
+  source_words: 233
+  kind: embedded-clause
+- clause: 6.5.3
+  title: 6.5.3 Resources
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.3 Resources.md
+  source_words: 1585
+  kind: source-file
+- clause: 6.5.3.1
+  title: 6.5.3.1 Overview
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.3 Resources.md
+  source_words: 73
+  kind: embedded-clause
+- clause: 6.5.3.2
+  title: '6.5.3.2 Resource: Broadcast MBS session contexts collection'
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.3 Resources.md
+  source_words: 553
+  kind: embedded-clause
+- clause: 6.5.3.2.1
+  title: 6.5.3.2.1 Description
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.3 Resources.md
+  source_words: 38
+  kind: embedded-clause
+- clause: 6.5.3.2.2
+  title: 6.5.3.2.2 Resource Definition
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.3 Resources.md
+  source_words: 51
+  kind: embedded-clause
+- clause: 6.5.3.2.3
+  title: 6.5.3.2.3 Resource Standard Methods
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.3 Resources.md
+  source_words: 463
+  kind: embedded-clause
+- clause: 6.5.3.2.3.1
+  title: 6.5.3.2.3.1 POST
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.3 Resources.md
+  source_words: 463
+  kind: embedded-clause
+- clause: 6.5.3.2.4
+  title: 6.5.3.2.4 Resource Custom Operations
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.3 Resources.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 6.5.3.3
+  title: '6.5.3.3 Resource: Individual broadcast MBS session context'
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.3 Resources.md
+  source_words: 959
+  kind: embedded-clause
+- clause: 6.5.3.3.1
+  title: 6.5.3.3.1 Description
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.3 Resources.md
+  source_words: 38
+  kind: embedded-clause
+- clause: 6.5.3.3.2
+  title: 6.5.3.3.2 Resource Definition
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.3 Resources.md
+  source_words: 62
+  kind: embedded-clause
+- clause: 6.5.3.3.3
+  title: 6.5.3.3.3 Resource Standard Methods
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.3 Resources.md
+  source_words: 415
+  kind: embedded-clause
+- clause: 6.5.3.3.3.1
+  title: 6.5.3.3.3.1 DELETE
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.3 Resources.md
+  source_words: 415
+  kind: embedded-clause
+- clause: 6.5.3.3.4
+  title: 6.5.3.3.4 Resource Custom Operations
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.3 Resources.md
+  source_words: 444
+  kind: embedded-clause
+- clause: 6.5.3.2.4.1
+  title: 6.5.3.2.4.1 Overview
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.3 Resources.md
+  source_words: 26
+  kind: embedded-clause
+- clause: 6.5.3.2.4.2
+  title: '6.5.3.2.4.2 Operation: update (POST)'
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.3 Resources.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.5.3.2.4.2.1
+  title: 6.5.3.2.4.2.1 Description
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.3 Resources.md
+  source_words: 12
+  kind: embedded-clause
+- clause: 6.5.3.2.4.2.2
+  title: 6.5.3.2.4.2.2 Operation Definition
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.3 Resources.md
+  source_words: 406
+  kind: embedded-clause
+- clause: 6.5.4
+  title: 6.5.4 Custom Operations without associated resources
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.4 Custom Operations without associated resources.md
+  source_words: 20
+  kind: source-file
+- clause: 6.5.5
+  title: 6.5.5 Notifications
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.5 Notifications.md
+  source_words: 426
+  kind: source-file
+- clause: 6.5.5.1
+  title: 6.5.5.1 General
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.5 Notifications.md
+  source_words: 38
+  kind: embedded-clause
+- clause: 6.5.5.2
+  title: 6.5.5.2 Broadcast MBS Session Context Status Notification
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.5 Notifications.md
+  source_words: 388
+  kind: embedded-clause
+- clause: 6.5.5.2.1
+  title: 6.5.5.2.1 Description
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.5 Notifications.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 6.5.5.2.2
+  title: 6.5.5.2.2 Target URI
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.5 Notifications.md
+  source_words: 40
+  kind: embedded-clause
+- clause: 6.5.5.2.3
+  title: 6.5.5.2.3 Notification Standard Methods
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.5 Notifications.md
+  source_words: 319
+  kind: embedded-clause
+- clause: 6.5.5.2.3.1
+  title: 6.5.5.2.3.1 POST
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.5 Notifications.md
+  source_words: 319
+  kind: embedded-clause
+- clause: 6.5.6
+  title: 6.5.6 Data Model
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.6 Data Model.md
+  source_words: 2595
+  kind: source-file
+- clause: 6.5.6.1
+  title: 6.5.6.1 General
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.6 Data Model.md
+  source_words: 307
+  kind: embedded-clause
+- clause: 6.5.6.2
+  title: 6.5.6.2 Structured data types
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.6 Data Model.md
+  source_words: 1549
+  kind: embedded-clause
+- clause: 6.5.6.2.1
+  title: 6.5.6.2.1 Introduction
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.6 Data Model.md
+  source_words: 13
+  kind: embedded-clause
+- clause: 6.5.6.2.2
+  title: '6.5.6.2.2 Type: ContextCreateReqData'
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.6 Data Model.md
+  source_words: 285
+  kind: embedded-clause
+- clause: 6.5.6.2.3
+  title: '6.5.6.2.3 Type: ContextCreateRspData'
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.6 Data Model.md
+  source_words: 136
+  kind: embedded-clause
+- clause: 6.5.6.2.4
+  title: '6.5.6.2.4 Type: ContextStatusNotification'
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.6 Data Model.md
+  source_words: 316
+  kind: embedded-clause
+- clause: 6.5.6.2.5
+  title: '6.5.6.2.5 Type: ContextUpdateReqData'
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.6 Data Model.md
+  source_words: 295
+  kind: embedded-clause
+- clause: 6.5.6.2.6
+  title: '6.5.6.2.6 Type: ContextUpdateRspData'
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.6 Data Model.md
+  source_words: 129
+  kind: embedded-clause
+- clause: 6.5.6.2.7
+  title: '6.5.6.2.7 Type: N2MbsSmInfo'
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.6 Data Model.md
+  source_words: 164
+  kind: embedded-clause
+- clause: 6.5.6.2.8
+  title: '6.5.6.2.8 Type: OperationEvent'
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.6 Data Model.md
+  source_words: 91
+  kind: embedded-clause
+- clause: 6.5.6.2.9
+  title: '6.5.6.2.9 Type: NgranFailureEvent'
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.6 Data Model.md
+  source_words: 50
+  kind: embedded-clause
+- clause: 6.5.6.2.10
+  title: '6.5.6.2.10 Type: ContextStatusNotificationResponse'
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.6 Data Model.md
+  source_words: 70
+  kind: embedded-clause
+- clause: 6.5.6.3
+  title: 6.5.6.3 Simple data types and enumerations
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.6 Data Model.md
+  source_words: 426
+  kind: embedded-clause
+- clause: 6.5.6.3.1
+  title: 6.5.6.3.1 Introduction
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.6 Data Model.md
+  source_words: 20
+  kind: embedded-clause
+- clause: 6.5.6.3.2
+  title: 6.5.6.3.2 Simple data types
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.6 Data Model.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 6.5.6.3.3
+  title: '6.5.6.3.3 Enumeration: OperationStatus'
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.6 Data Model.md
+  source_words: 153
+  kind: embedded-clause
+- clause: 6.5.6.3.4
+  title: '6.5.6.3.4 Enumeration: NgapIeType'
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.6 Data Model.md
+  source_words: 71
+  kind: embedded-clause
+- clause: 6.5.6.3.5
+  title: '6.5.6.3.5 Enumeration: OpEventType'
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.6 Data Model.md
+  source_words: 48
+  kind: embedded-clause
+- clause: 6.5.6.3.6
+  title: '6.5.6.3.6 Enumeration: NgranFailureIndication'
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.6 Data Model.md
+  source_words: 105
+  kind: embedded-clause
+- clause: 6.5.6.4
+  title: 6.5.6.4 Binary data
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.6 Data Model.md
+  source_words: 313
+  kind: embedded-clause
+- clause: 6.5.6.4.1
+  title: 6.5.6.4.1 Introduction
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.6 Data Model.md
+  source_words: 56
+  kind: embedded-clause
+- clause: 6.5.6.4.2
+  title: 6.5.6.4.2 N2 Information
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.6 Data Model.md
+  source_words: 257
+  kind: embedded-clause
+- clause: 6.5.6.4.2.1
+  title: 6.5.6.4.2.1 Introduction
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.6 Data Model.md
+  source_words: 30
+  kind: embedded-clause
+- clause: 6.5.6.4.2.2
+  title: 6.5.6.4.2.2 NGAP IEs
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.6 Data Model.md
+  source_words: 227
+  kind: embedded-clause
+- clause: 6.5.7
+  title: 6.5.7 Error Handling
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.7 Error Handling.md
+  source_words: 94
+  kind: source-file
+- clause: 6.5.7.1
+  title: 6.5.7.1 General
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.7 Error Handling.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 6.5.7.2
+  title: 6.5.7.2 Protocol Errors
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.7 Error Handling.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 6.5.7.3
+  title: 6.5.7.3 Application Errors
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.7 Error Handling.md
+  source_words: 58
+  kind: embedded-clause
+- clause: 6.5.8
+  title: 6.5.8 Feature Negotiation
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.8 Feature Negotiation.md
+  source_words: 44
+  kind: source-file
+- clause: 6.5.9
+  title: 6.5.9 Security
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.9 Security.md
+  source_words: 160
+  kind: source-file
+- clause: 6.5.10
+  title: 6.5.10 HTTP redirection
+  path: 6 API Definitions/6.5 Namf_MBSBroadcast Service API/6.5.10 HTTP redirection.md
+  source_words: 158
+  kind: source-file
+- clause: '6.6'
+  title: 6.6 Namf_MBSCommunication Service API
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 3655
+  kind: source-file
+- clause: 6.6.1
+  title: 6.6.1 API URI
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 93
+  kind: embedded-clause
+- clause: 6.6.2
+  title: 6.6.2 Usage of HTTP
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 558
+  kind: embedded-clause
+- clause: 6.6.2.1
+  title: 6.6.2.1 General
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 58
+  kind: embedded-clause
+- clause: 6.6.2.2
+  title: 6.6.2.2 HTTP standard headers
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 239
+  kind: embedded-clause
+- clause: 6.6.2.2.1
+  title: 6.6.2.2.1 General
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 21
+  kind: embedded-clause
+- clause: 6.6.2.2.2
+  title: 6.6.2.2.2 Content type
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 218
+  kind: embedded-clause
+- clause: 6.6.2.3
+  title: 6.6.2.3 HTTP custom headers
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 38
+  kind: embedded-clause
+- clause: 6.6.2.3.1
+  title: 6.6.2.3.1 General
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 38
+  kind: embedded-clause
+- clause: 6.6.2.4
+  title: 6.6.2.4 HTTP multipart messages
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 223
+  kind: embedded-clause
+- clause: 6.6.3
+  title: 6.6.3 Resources
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 676
+  kind: embedded-clause
+- clause: 6.6.3.1
+  title: 6.6.3.1 Overview
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 74
+  kind: embedded-clause
+- clause: 6.6.3.1
+  title: '6.6.3.1 Resource: N2 Message Handler (Custom Operation)'
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 602
+  kind: embedded-clause
+- clause: 6.6.3.1.1
+  title: 6.6.3.1.1 Description
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 22
+  kind: embedded-clause
+- clause: 6.6.3.1.2
+  title: 6.6.3.1.2 Resource Definition
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 51
+  kind: embedded-clause
+- clause: 6.6.3.1.3
+  title: 6.6.3.1.3 Resource Standard Methods
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 6.6.3.1.4
+  title: 6.6.3.1.4 Resource Custom Operations
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 511
+  kind: embedded-clause
+- clause: 6.6.3.1.4.1
+  title: 6.6.3.1.4.1 Overview
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 25
+  kind: embedded-clause
+- clause: 6.6.3.1.4.2
+  title: '6.6.3.1.4.2 Operation: transfer'
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.6.3.1.4.2.1
+  title: 6.6.3.1.4.2.1 Description
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 34
+  kind: embedded-clause
+- clause: 6.6.3.1.4.2.2
+  title: 6.6.3.1.4.2.2 Operation Definition
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 452
+  kind: embedded-clause
+- clause: 6.6.4
+  title: 6.6.4 Custom Operations without associated resources
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.6.5
+  title: 6.6.5 Notifications
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 463
+  kind: embedded-clause
+- clause: 6.6.5.1
+  title: 6.6.5.1 General
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 35
+  kind: embedded-clause
+- clause: 6.6.5.2
+  title: 6.6.5.2 Notification
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 428
+  kind: embedded-clause
+- clause: 6.6.5.2.1
+  title: 6.6.5.2.1 Description
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 26
+  kind: embedded-clause
+- clause: 6.6.5.2.2
+  title: 6.6.5.2.2 Notification Definitionn
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 40
+  kind: embedded-clause
+- clause: 6.6.5.2.3
+  title: 6.6.5.2.3 Notification Standard Methods
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 362
+  kind: embedded-clause
+- clause: 6.6.5.2.3.1
+  title: 6.6.5.2.3.1 POST
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 362
+  kind: embedded-clause
+- clause: 6.6.6
+  title: 6.6.6 Data Model
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 1083
+  kind: embedded-clause
+- clause: 6.6.6.1
+  title: 6.6.6.1 General
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 239
+  kind: embedded-clause
+- clause: 6.6.6.2
+  title: 6.6.6.2 Structured data types
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 540
+  kind: embedded-clause
+- clause: 6.6.6.2.1
+  title: 6.6.6.2.1 Introduction
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 13
+  kind: embedded-clause
+- clause: 6.6.6.2.2
+  title: '6.6.6.2.2 Type: MbsN2MessageTransferReqData'
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 216
+  kind: embedded-clause
+- clause: 6.6.6.2.3
+  title: '6.6.6.2.3 Type: MbsN2MessageTransferRspData'
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 74
+  kind: embedded-clause
+- clause: 6.6.6.2.4
+  title: '6.6.6.2.4 Type: N2MbsSmInfo'
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 60
+  kind: embedded-clause
+- clause: 6.6.6.2.5
+  title: '6.6.6.2.5 Type: Notification'
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 91
+  kind: embedded-clause
+- clause: 6.6.6.2.6
+  title: '6.6.6.2.6 Type: RanFailure'
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 86
+  kind: embedded-clause
+- clause: 6.6.6.3
+  title: 6.6.6.3 Simple data types and enumerations
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 122
+  kind: embedded-clause
+- clause: 6.6.6.3.1
+  title: 6.6.6.3.1 Introduction
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 20
+  kind: embedded-clause
+- clause: 6.6.6.3.2
+  title: 6.6.6.3.2 Simple data types
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 6.6.6.3.3
+  title: '6.6.6.3.3 Enumeration: MbsNgapIeType'
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 38
+  kind: embedded-clause
+- clause: 6.6.6.3.4
+  title: '6.6.6.3.4 Enumeration: RanFailureIndication'
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 49
+  kind: embedded-clause
+- clause: 6.6.6.4
+  title: 6.6.6.4 Binary data
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 182
+  kind: embedded-clause
+- clause: 6.6.6.4.1
+  title: 6.6.6.4.1 Introduction
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 59
+  kind: embedded-clause
+- clause: 6.6.6.4.2
+  title: 6.6.6.4.2 N2 Information
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 123
+  kind: embedded-clause
+- clause: 6.6.6.4.2.1
+  title: 6.6.6.4.2.1 Introduction
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 30
+  kind: embedded-clause
+- clause: 6.6.6.4.2.2
+  title: 6.6.6.4.2.2 NGAP IEs
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 93
+  kind: embedded-clause
+- clause: 6.6.7
+  title: 6.6.7 Error Handling
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 121
+  kind: embedded-clause
+- clause: 6.6.7.1
+  title: 6.6.7.1 General
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 6.6.7.2
+  title: 6.6.7.2 Protocol Errors
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 6.6.7.3
+  title: 6.6.7.3 Application Errors
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 85
+  kind: embedded-clause
+- clause: 6.6.8
+  title: 6.6.8 Feature Negotiation
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 333
+  kind: embedded-clause
+- clause: 6.6.9
+  title: 6.6.9 Security
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 170
+  kind: embedded-clause
+- clause: 6.6.10
+  title: 6.6.10 HTTP redirection
+  path: 6 API Definitions/6.6 Namf_MBSCommunication Service API.md
+  source_words: 158
+  kind: embedded-clause
+- clause: Annex A
+  title: 'Annex A (normative): OpenAPI specification'
+  path: Annex A (normative)_ OpenAPI specification/README.md
+  source_words: 21934
+  kind: navigation-directory
+- clause: A.1
+  title: A.1 General
+  path: Annex A (normative)_ OpenAPI specification/README.md
+  source_words: 161
+  kind: source-file
+- clause: A.2
+  title: A.2 Namf_Communication API
+  path: ../openapi/TS29518_Namf_Communication.yaml
+  source_words: 12393
+  kind: exact-attachment
+- clause: A.3
+  title: A.3 Namf_EventExposure API
+  path: ../openapi/TS29518_Namf_EventExposure.yaml
+  source_words: 3081
+  kind: exact-attachment
+- clause: A.4
+  title: A.4 Namf_MT
+  path: ../openapi/TS29518_Namf_MT.yaml
+  source_words: 1304
+  kind: exact-attachment
+- clause: A.5
+  title: A.5 Namf_Location
+  path: ../openapi/TS29518_Namf_Location.yaml
+  source_words: 2190
+  kind: exact-attachment
+- clause: A.6
+  title: A.6 Namf_MBSBroadcast API
+  path: ../openapi/TS29518_Namf_MBSBroadcast.yaml
+  source_words: 2114
+  kind: exact-attachment
+- clause: A.7
+  title: A.7 Namf_MBSCommunication API
+  path: ../openapi/TS29518_Namf_MBSCommunication.yaml
+  source_words: 691
+  kind: exact-attachment
+- clause: Annex B
+  title: 'Annex B (Informative): HTTP Multipart Messages'
+  path: Annex B (Informative)_ HTTP Multipart Messages.md
+  source_words: 107
+  kind: source-file
+- clause: B.1
+  title: B.1 Example of HTTP multipart message
+  path: Annex B (Informative)_ HTTP Multipart Messages.md
+  source_words: 107
+  kind: embedded-clause
+- clause: B.1.1
+  title: B.1.1 General
+  path: Annex B (Informative)_ HTTP Multipart Messages.md
+  source_words: 56
+  kind: embedded-clause
+- clause: B.1.2
+  title: B.1.2 Example HTTP multipart message with N2 Information binary data
+  path: Annex B (Informative)_ HTTP Multipart Messages.md
+  source_words: 51
+  kind: embedded-clause
+- clause: Annex C
+  title: 'Annex C (informative): Change history'
+  path: Annex C (informative)_ Change history/README.md
+  source_words: 11820
+  kind: navigation-directory
+- clause: Annex C-2017
+  title: 'Annex C (informative): Change history — 2017'
+  path: Annex C (informative)_ Change history/2017.md
+  source_words: 50
+  kind: source-file
+- clause: Annex C-2018
+  title: 'Annex C (informative): Change history — 2018'
+  path: Annex C (informative)_ Change history/2018.md
+  source_words: 1779
+  kind: source-file
+- clause: Annex C-2019
+  title: 'Annex C (informative): Change history — 2019'
+  path: Annex C (informative)_ Change history/2019.md
+  source_words: 1524
+  kind: source-file
+- clause: Annex C-2020
+  title: 'Annex C (informative): Change history — 2020'
+  path: Annex C (informative)_ Change history/2020.md
+  source_words: 1813
+  kind: source-file
+- clause: Annex C-2021
+  title: 'Annex C (informative): Change history — 2021'
+  path: Annex C (informative)_ Change history/2021.md
+  source_words: 1959
+  kind: source-file
+- clause: Annex C-2022
+  title: 'Annex C (informative): Change history — 2022'
+  path: Annex C (informative)_ Change history/2022.md
+  source_words: 1618
+  kind: source-file
+- clause: Annex C-2023
+  title: 'Annex C (informative): Change history — 2023'
+  path: Annex C (informative)_ Change history/2023.md
+  source_words: 1807
+  kind: source-file
+- clause: Annex C-2024
+  title: 'Annex C (informative): Change history — 2024'
+  path: Annex C (informative)_ Change history/2024.md
+  source_words: 1038
+  kind: source-file
+- clause: Annex C-2025
+  title: 'Annex C (informative): Change history — 2025'
+  path: Annex C (informative)_ Change history/2025.md
+  source_words: 139
+  kind: source-file
+- clause: Annex C-2026
+  title: 'Annex C (informative): Change history — 2026'
+  path: Annex C (informative)_ Change history/2026.md
+  source_words: 81
+  kind: source-file
