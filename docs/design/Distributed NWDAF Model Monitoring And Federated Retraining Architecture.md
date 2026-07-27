@@ -1,6 +1,6 @@
 # Distributed NWDAF Model Monitoring and Federated Retraining Architecture
 
-Date: 2026-07-26
+Date: 2026-07-27
 
 Status: Architecture draft for discussion
 
@@ -164,6 +164,12 @@ A、B 都包含 AnLF 與 MTLF，負責：
 A、B 對 Consumer 的 analytics subscriptions 彼此獨立；它們使用相同
 group target 與相同 global model，但不同 AoI 仍形成不同的 analytics
 subscription、monitor scope 與 local dataset。
+
+在資料蒐集責任上，A、B 內部的 AnLF 決定 group、DNN、S-NSSAI、AoI
+與需要蒐集的 UPF events；NWDAF 的標準 SBI 層負責和 NRF、UDM、SMF
+交換標準 request／response。MTLF 不另外解析 Internal Group ID，而是從
+NWDAF runtime sync 取得已建立的 per-SUPI SMF data-subscription
+associations，之後用這些 associations 描述要向 ADRF 取回的訓練資料。
 
 ---
 
@@ -346,6 +352,117 @@ A、B 可以在接受 analytics subscription 後立即建立資源，不必等�
 下載與資料蒐集全部完成；analytics 何時能實際產生，仍取決於各自的 model
 與 collection readiness。
 
+下列 collection resolution 與 5.3 的 initial model provisioning 可在
+subscription 接受後並行啟動；章節順序不表示必須先完成所有 SMF
+subscriptions 才能向 C 要模型。
+
+#### 5.2.1 Group、serving SMF 與 AoI collection resolution
+
+Consumer 不需要先把 Internal Group ID 展開成 SUPI，也不需要知道各 UE
+由哪一個 SMF 服務。這些是收到 subscription 的 NWDAF-A／B 各自執行的
+資料蒐集準備：
+
+1. 以 `internal-group-identity` 向 NRF 發現服務該 group、且提供
+   `nudm-sdm` 的 UDM；
+2. 呼叫 UDM 的
+   `GET /nudm-sdm/v2/group-data/group-identifiers`，帶
+   `int-group-id={group-G}` 與 `ue-id-ind=true`，取得
+   `GroupIdentifiers.ueIdList[].supi`；
+3. 對每個 SUPI 呼叫
+   `GET /nudm-uecm/v1/{supi}/registrations/smf-registrations`，並以
+   analytics subscription 的 DNN／S-NSSAI 篩選相關 PDU session；
+4. 從每筆 `SmfRegistration` 取得 `smfInstanceId`、`pduSessionId`、
+   `singleNssai` 與可選的 `dnn`；
+5. 以 `target-nf-instance-id={smfInstanceId}` 向 NRF 解析該 SMF 的
+   `nsmf-event-exposure` endpoint；
+6. 對每筆相關 registration 建立 per-SUPI
+   `Nsmf_EventExposure` subscription，帶入 `supi`、`pduSeId`、DNN、
+   S-NSSAI，並把原 analytics request 的 `networkArea` 放入
+   `eventSubs[].networkArea`；
+7. SMF 只在 UE 位於該 AoI 時啟用下游 UPF subscription，UE 離開 AoI
+   時停止。因此 A、B 即使找到同一個 SMF，分別帶 TAI-A、TAI-B 後仍可
+   收到不同 path 的資料。
+
+```mermaid
+sequenceDiagram
+    participant A as NWDAF-A / TAI-A
+    participant B as NWDAF-B / TAI-B
+    participant NRF as NRF
+    participant UDM as UDM
+    participant SMF as Shared SMF
+    participant UA as UPF-A
+    participant UB as UPF-B
+    participant ADRF as ADRF
+
+    A->>NRF: Discover UDM for group-G
+    B->>NRF: Discover UDM for group-G
+    NRF-->>A: UDM SDM and UECM endpoints
+    NRF-->>B: UDM SDM and UECM endpoints
+    A->>UDM: Get group-G identifiers with UE list
+    B->>UDM: Get group-G identifiers with UE list
+    UDM-->>A: Complete SUPI list
+    UDM-->>B: Complete SUPI list
+
+    loop Each relevant SUPI and PDU session
+        A->>UDM: Get SMF registrations with DNN and S-NSSAI
+        UDM-->>A: smfInstanceId and PDU session identity
+        A->>NRF: Resolve that SMF Event Exposure endpoint
+        NRF-->>A: Shared SMF endpoint
+        A->>SMF: Subscribe SUPI UPF events with TAI-A
+    end
+
+    loop Each relevant SUPI and PDU session
+        B->>UDM: Get SMF registrations with DNN and S-NSSAI
+        UDM-->>B: smfInstanceId and PDU session identity
+        B->>NRF: Resolve that SMF Event Exposure endpoint
+        NRF-->>B: Shared SMF endpoint
+        B->>SMF: Subscribe SUPI UPF events with TAI-B
+    end
+
+    Note over SMF,UB: SMF applies the AoI gate to downstream subscriptions
+    SMF->>UA: Activate matching TAI-A UPF subscriptions
+    SMF->>UB: Activate matching TAI-B UPF subscriptions
+    UA-->>A: Direct UPF event notifications
+    UB-->>B: Direct UPF event notifications
+    A->>ADRF: Store raw records with accepted smfDataSub
+    B->>ADRF: Store raw records with accepted smfDataSub
+```
+
+同一 SUPI 可能同時有多個 PDU sessions，甚至由不同 SMF instances
+服務。A、B 不能任意取第一個 SMF，也不能把 group 中每個 SUPI 和 NRF
+找到的所有 SMFs 做 Cartesian product；必須以 UDM 回傳的 registrations
+及 DNN／S-NSSAI 選出相關資源。相同 collection identity 可由本地
+reference count 共用，但其 identity 至少需要保留 SUPI、PDU session、
+SMF instance、DNN／S-NSSAI、AoI 與 requested events。
+
+兩邊必須取得同一份完整 group membership。TAI 分流來自
+`eventSubs[].networkArea` 與 SMF 的 AoI gating，而不是把同一個 group
+在 A、B 的 config 中各自寫成不同的部分 SUPI 清單。UDM SDM response
+提供 `Cache-Control`、`ETag` 與 `Last-Modified`，因此 membership 可被
+快取及條件式更新；NRF 所解析的 UDM／SMF endpoints 則沿用 NWDAF 的
+通用 NRF discovery cache。TS 23.502 在此程序中假設同一 Group ID 的
+成員由同一個 UDM 服務；若首次 discovery 結果只解析 `nudm-sdm`，
+NWDAF 可用相同 UDM instance identity 再解析其 `nudm-uecm` endpoint。
+
+SMF 接受後的 subscription representation 會成為 ADRF record 的
+`dataSub.smfDataSub`。因此後續 FL preparation 不必重新從 group 猜測
+資料：各 Client 直接以自身保存的 accepted data-subscription
+associations 加上 `timePeriod` 建立 ADRF retrieval request。
+
+TS 23.502 §4.15.4.5.4 另定義一條 AoI-specific alternative：NWDAF 先向
+AMF 訂閱 AoI 內 UE list，計算「group SUPIs 與 AoI UE list 的交集」，
+再依 UE 進出動態建立或刪除 per-SUPI SMF subscriptions。本情境第一個
+profile 採用前述「每筆 SMF subscription 帶 AoI，由 SMF gating」流程；
+AMF-assisted intersection 保留為後續可替換的 collection profile，不與
+第一個 profile 同時執行。
+
+目前實驗環境若 UDM／UECM 尚未可用，可以暫時以完整
+`group_memberships` fixture 與 configured SMF endpoint 代替上述查詢，
+但這是過渡測試資料，不是標準 group resolution。fixture 必須使用合法
+的 3GPP `GroupId` wire format，且不能藉由給 A、B 不同的 membership
+內容來模擬 TAI 分流。圖中的 `group-G` 只是易讀標籤；實際 wire value
+可使用符合 TS 29.571 pattern 的值，例如 `00000001-001-01-01`。
+
 ### 5.3 Stage 2：A、B 取得初始模型
 
 A、B 發現手上沒有適用模型時，分別發現 C：
@@ -369,20 +486,18 @@ GET {nrfApiRoot}/nnrf-disc/v1/nf-instances
 - 需要時可帶 accuracy interest、model-needed time 或 monitoring
   information。
 
-C 檢查現有 catalog：
+C 檢查目前唯一 model family 的 `latestModelId`：
 
-- 有適用模型時，提供該模型；
-- 尚無適用模型時，保留 model demand，並依本地政策產生模型；
+- 已有 latest model 時，向 A、B 提供相同版本；
+- 尚無 latest model 時，保留 model demand，並依本地政策產生 seed
+  model；
 - subscription 保持存在時，後續模型更新沿用同一條通知關係。
 
 A、B 下載、驗證並成功啟用模型後，才把該模型視為目前 active model。
-模型複用不能只比較 Analytics ID；仍需考慮 model filter、target、
-interoperability 與既有 applicability identity。
-
-本情境預期 C 能把「同一 group、AoI-A」與「同一 group、AoI-B」關聯到
-同一個可共同再訓練的 model family，同時保留兩個獨立 use／monitor
-scopes。初始 artifact 可以相同，但其 spatial applicability 必須涵蓋相應
-AoI；確切的 family canonicalization rule 留在第 9 章繼續討論。
+目前情境只支援一組預先確認相容的 `UE_COMMUNICATION` model contract：
+相同 target semantics、non-spatial filters 與 interoperability。AoI-A、
+AoI-B 仍建立兩個獨立 use／monitor scopes，但不再用 AoI 選擇不同模型；
+兩邊對外永遠取得 C 的同一個 latest model。
 
 ### 5.4 Stage 3：建立分路徑 Model Monitor
 
@@ -422,7 +537,7 @@ WAPE、window size、minimum samples、threshold 與 degradation 判斷方式是
 
 ```text
 scope-A degraded OR scope-B degraded
-  -> current assigned model requires retraining
+  -> latest model requires retraining
   -> discover and prepare all eligible Clients for this intent
 ```
 
@@ -447,16 +562,15 @@ GET {nrfApiRoot}/nnrf-disc/v1/nf-instances
     ]
 ```
 
-C 先用發生 degradation 的 Model Monitor relationship 決定 retraining
-base 與 training intent，再另外選擇 FL participants。兩者不是同一份
-清單：
+C 先用發生 degradation 的 Model Monitor relationship 決定需要 retrain，
+並固定以當時的 latest model 作為 base，再另外選擇 FL participants：
 
 - Model Monitor registration 證明某個正在使用的模型 scope 發生
   degradation，負責觸發 retraining；
 - NRF 證明候選 NWDAF 目前宣告 FL Client capability，並提供 Training
   endpoint；
-- lineage root、training scope 與 model interoperability 證明候選者和
-  本次 retraining intent 相容；
+- training scope 與 model interoperability 證明候選者和本次 retraining
+  intent 相容；
 - Model Training preparation 最後確認其 ADRF dataset snapshot
   availability、availability time、能力與參與意願。
 
@@ -471,14 +585,12 @@ dataset snapshot 標記為 ready 後，preparation 才能回覆可參與。因�
 process 使用的固定 snapshot。
 
 候選 FL Client 不需要先有 Consumer analytics subscription、正在執行
-inference、取得 C 的正式模型或建立 Model Monitor registration。base
-model 也不必已經是該 Client 的 inference model，且不必在訓練前就把新
-AoI 列為 `applicableTo`。
+inference、取得 C 的正式模型或建立 Model Monitor registration。latest
+base model 也不必已經是該 Client 的 inference model。
 
 目前的初始實驗拓撲只會發現 A、B，但 participants 不硬編碼為這兩個
-identity。C 先從 NRF candidates、lineage root 與 training scope
-compatibility 篩選同一 training intent 的候選者，再使用 Model Training
-preparation 確認：
+identity。C 先從 NRF candidates 與 training scope compatibility 篩選同一
+training intent 的候選者，再使用 Model Training preparation 確認：
 
 - model interoperability；
 - ADRF dataset snapshot availability；
@@ -730,9 +842,9 @@ participant 建立清楚的 Training Workspace 暫存索引，避免單純依檔
    既有 Model Provision subscriptions 提供給 A、B；
 7. A、B 使用已知的 `storeTransId` 向同一 ADRF retrieval，再依 record
    中的 `mlFileAddr` 下載 final artifact；
-8. final model 不再被任何 Scope Assignment、Model Provision subscriber
-   或 retained completed model policy 引用時，才由 C 決定是否要求 ADRF
-   刪除。
+8. final model 不是 current latest、沒有 Model Provision consumer 仍在
+   使用，且不再被 retained revision／rollback policy 保留時，才由 C
+   決定是否要求 ADRF 刪除。
 
 若 aggregation 已完成但 ADRF storage 暫時失敗，C 保留本地 final
 artifact 與可重試狀態；不得把尚未 durable 的模型當成 ADRF-published，
@@ -783,10 +895,10 @@ Training data 可以：
 - 由 A、B 向其 data source NFs 蒐集；
 - 由 A、B 透過 ADRF retrieval 取得。
 
-ADRF 只負責保存與取回資料／completed model artifact，不決定 model
-tree、Scope Assignments、FL membership、degradation 或 model promotion。
-這些 model-management relationships 仍由 C 的 PyMTLF 保存。C 不需要為
-FL 把各 Client 的 raw dataset 集中取回。
+ADRF 只負責保存與取回資料／completed model artifact，不決定 completed
+revision list、`latestModelId`、FL membership、degradation 或 model
+promotion。這些 model-management relationships 仍由 C 的 PyMTLF 保存。
+C 不需要為 FL 把各 Client 的 raw dataset 集中取回。
 
 ### 5.7 Stage 6：新模型提供與監控世代切換
 
@@ -794,27 +906,118 @@ C 完成 aggregation 後：
 
 1. 以各 participating scope 的 validation dataset 評估 final candidate；
 2. 將 per-scope metric、sample count 與 evaluation data window 寫入 final
-   model description；
-3. 分別決定 candidate 通過哪些 scopes 的 validation gate，並以此形成
-   `applicableTo`；若沒有任何 scope 通過則不發布；
-4. 建立新的 model unique identifier 與 final model artifact；
+   model description，作為觀察證據而非分 scope 選模依據；
+3. 對整個 candidate 做一次 global promotion decision；不建立
+   per-TAI applicability gate 或候選排名；
+4. 通過 promotion 後建立新的 model unique identifier 與 final artifact；
 5. 將 final artifact 保存至 ADRF 並記錄 durable reference；
-6. ADRF storage 成功後，把新節點加入 Completed Model Tree，並依每個
-   scope 的 validation evidence 更新其模型優先集；
-7. 只對 selected model 發生變更的 Clients，透過既有 Model Provision
-   subscriptions 發送 updated model；
-8. Clients 下載、驗證並原子切換 active model；
-9. Clients 以新 `modelId` 建立新的 Model Monitor registration；
-10. C 為新模型建立新的 monitor subscriptions／correlations；
-11. 舊模型的 monitoring relationship 在不再使用後
-    deregister／delete。
+6. ADRF storage 成功後，把新版本加入 completed revision list，原子更新
+   `latestModelId`；
+7. 透過既有 Model Provision subscriptions，把同一個 latest model 發送
+   給 A、B；
+8. Clients 下載並驗證新 artifact；下載或驗證失敗時繼續使用舊模型，
+   不變更任何舊 monitoring relationship；
+9. 驗證成功後，Clients 原子切換 active model，並立即以新 `modelId`
+   向 C 建立新的 Model Monitor registration；
+10. C 為新模型建立新的 monitor subscriptions／correlations；新模型在
+    累積到足夠 prediction／ground-truth window 前保持 warm-up，不送出
+    虛假的 WAPE；
+11. 新 registration 與 monitor subscription 都建立成功後，C 才刪除位於
+    Clients 的舊模型 monitor subscriptions，Clients 再向 C deregister
+    舊模型 usage registrations；
+12. 若新 monitoring relationship 無法在 cutover timeout 內建立，Client
+    保留舊模型與舊監控，並可依本地政策 rollback，而不是先清除舊世代。
 
 Consumer 不需重新建立原 analytics subscription。各 Client 仍以原本的
 analytics resource 對 Consumer 提供結果，只替換內部使用的模型。
 
+舊模型也不因停止監控而立即刪除：
+
+- C 將舊模型保留在 completed revision history，作為歷史 validation
+  comparison 與 rollback candidate；
+- 正常 Model Provision 只讀取 `latestModelId`；monitor deletion 不等同
+  模型 artifact 立即退役；
+- A、B 可在本地保留舊 artifact 一段 configurable rollback grace period，
+  確認新模型穩定後再清除未被使用的副本；
+- ADRF 中的 completed model 依獨立 retention policy 保存。只有不是
+  latest、沒有 Consumer 仍在使用，且不再受 retained revision／rollback
+  policy 保護時，C 才能要求刪除；
+- 舊世代已保存的 accuracy observations 保留為歷史紀錄。遲到的舊
+  `modelId` notification 只能歸入已關閉的舊 relationship，不得更新新模型
+  的 degradation state。
+
+標準定義了 AnLF 開始使用模型時的 Register、不再使用時的 Deregister，
+以及 MTLF 對 monitor subscription 的 Subscribe／Delete；上述
+「new-before-old」切換順序、timeout 與 rollback grace period 是本情境
+為避免監控空窗所採用的本地政策。
+
 ---
 
 ## 6. Complete sequence
+
+### 6.1 Analytics collection 與 raw-data persistence
+
+完整的 analytics 前置流程是：
+
+```mermaid
+sequenceDiagram
+    participant U as Consumer
+    participant A as NWDAF-A
+    participant B as NWDAF-B
+    participant NRF as NRF
+    participant UDM as UDM
+    participant SMF as Shared SMF
+    participant UA as UPF-A
+    participant UB as UPF-B
+    participant ADRF as ADRF
+
+    U->>NRF: Discover UE communication analytics providers for TAI-A and TAI-B
+    NRF-->>U: NWDAF-A and NWDAF-B
+    U->>A: Subscribe group-G analytics with TAI-A
+    U->>B: Subscribe group-G analytics with TAI-B
+    A-->>U: Subscription resource accepted
+    B-->>U: Subscription resource accepted
+
+    A->>NRF: Discover group-serving UDM
+    B->>NRF: Discover group-serving UDM
+    NRF-->>A: UDM profile
+    NRF-->>B: UDM profile
+    A->>UDM: Resolve group-G to SUPIs
+    B->>UDM: Resolve group-G to SUPIs
+    UDM-->>A: Complete group membership
+    UDM-->>B: Complete group membership
+
+    Note over A,SMF: Per SUPI and matching PDU session
+    A->>UDM: Resolve serving SMF registration
+    UDM-->>A: smfInstanceId and session information
+    A->>NRF: Resolve exact SMF endpoint
+    NRF-->>A: nsmf-event-exposure endpoint
+    A->>SMF: Subscribe UPF events with TAI-A
+
+    Note over B,SMF: Per SUPI and matching PDU session
+    B->>UDM: Resolve serving SMF registration
+    UDM-->>B: smfInstanceId and session information
+    B->>NRF: Resolve exact SMF endpoint
+    NRF-->>B: nsmf-event-exposure endpoint
+    B->>SMF: Subscribe UPF events with TAI-B
+
+    SMF->>UA: Activate subscriptions while UE is in TAI-A
+    SMF->>UB: Activate subscriptions while UE is in TAI-B
+    UA-->>A: Direct event notifications
+    UB-->>B: Direct event notifications
+    A->>ADRF: Store TAI-A raw records and smfDataSub
+    B->>ADRF: Store TAI-B raw records and smfDataSub
+    A-->>U: Path-A analytics notifications
+    B-->>U: Path-B analytics notifications
+```
+
+Consumer subscription acceptance 與 collection readiness 是分開的狀態。
+若 UDM、SMF 或資料暫時不可用，A／B 已建立的 analytics resource 不因此
+變成另一個 target；NWDAF 繼續依本地 retry／reconciliation policy 建立
+必要 collection resources，並只在資料與模型足以產生有效 analytics 時
+通知 Consumer。
+
+### 6.2 Model monitoring、FL 與 reprovision
 
 ```mermaid
 sequenceDiagram
@@ -888,8 +1091,23 @@ sequenceDiagram
     Note over S,L2: Reprovision
     S-->>L1: Notify updated model with ADRF reference
     S-->>L2: Notify updated model with ADRF reference
+    L1->>ADRF: Retrieve and verify new model
+    L2->>ADRF: Retrieve and verify new model
+    ADRF-->>L1: New completed model artifact
+    ADRF-->>L2: New completed model artifact
+    Note over L1,L2: Atomically activate new model<br/>Keep old model for rollback
     L1->>S: Register new model use
     L2->>S: Register new model use
+    S->>L1: Subscribe new-model accuracy
+    S->>L2: Subscribe new-model accuracy
+    L1-->>S: New monitor resource created
+    L2-->>S: New monitor resource created
+    Note over L1,L2: Warm up stable measurement windows
+    S->>L1: Delete old-model monitor subscription
+    S->>L2: Delete old-model monitor subscription
+    L1->>S: Deregister old model use
+    L2->>S: Deregister old model use
+    Note over S,L2: Old model and observations remain retained history
 
     Note over S,L2: Temporary artifact retention elapsed
     L1->>L1: Delete local round artifacts
@@ -897,138 +1115,78 @@ sequenceDiagram
     S->>S: Delete interim and staged artifacts
 ```
 
-Analytics notifications from A／B to Consumer and multiple FL rounds are omitted
-from the diagram only to keep it readable.
+Analytics collection 已在 6.1 展開；multiple FL rounds 在此圖中省略，只
+為保持可讀性。
 
 ---
 
 ## 7. PyMTLF model management
 
-### 7.1 模型從訓練到使用的流程
+### 7.1 第一階段管理模型
 
-PyMTLF 依照模型所在階段處理資料：
-
-```text
-FL training
-  -> 暫存每一 round 的 local／global model
-  -> 產生 final candidate
-  -> 驗證通過並配置 modelUniqueId
-  -> 加入正式模型的訓練血緣
-  -> 指定哪些 analytics scopes 改用這個模型
-  -> 透過 Model Provision 通知正在使用相關 scopes 的 NWDAFs
-```
-
-因此只需要分清楚三件事：
-
-1. 訓練還沒完成的模型只是暫存檔，不是正式模型；
-2. 訓練完成的模型會記錄它是從哪個 base model 訓練而來；
-3. 另外記錄每個 analytics scope 現在實際使用哪個正式模型。
-
-後續段落使用 Completed Model Tree 表示第 2 項的訓練血緣，使用 Scope
-Assignments 表示第 3 項的實際使用關係。兩者用途不同：模型在樹中的深度
-或建立時間，不會直接決定 Model Provision 應提供哪一個模型。
-
-### 7.2 正式模型與訓練血緣（Completed Model Tree）
-
-模型樹只保存 seed model 與完成訓練、通過驗證並可被正式提供的 final
-model。Client local result 與中間 round global model 不進入樹中。
-所有進入模型樹的正式模型都必須配置 `modelUniqueId`，供 ADRF storage、
-Model Provision 與 Model Monitor 共同引用。
-
-同一棵模型樹的根必須先具有相容的分析目的，不能只因 Analytics ID 相同
-就放在一起。概念上的 lineage root 至少由以下資訊決定：
+目前情境只管理一個預先確認相容的 `UE_COMMUNICATION` model family，
+並採用線性版本：
 
 ```text
-Analytics ID
-+ target UE semantics
-+ non-spatial analytics filters
-+ use-case／model interoperability context
+M1 seed -> M2 -> M3 -> ...
+                       ^
+                       latestModelId
 ```
 
-例如 `tgtUe` 的 Internal Group、S-NSSAI、DNN 或 Application ID 不同時，
-第一版不應自動假設它們能共用模型血緣。只有經過明確 compatibility policy
-確認後，才可跨這些條件共同訓練。
+每次成功的 retraining 都以前一個 latest model 為 base，產生下一個完成
+版本。第一階段不建立 model tree、branch、per-TAI Scope Assignment 或
+候選模型排名。A、B 即使監控不同 TAI，Model Provision 對外也只提供同一
+個 `latestModelId`。
 
-AoI／TAI 仍然是完整 analytics scope 的一部分，但在本情境中被視為特別的
-spatial specialization dimension：當 Analytics ID、`tgtUe` 與其他 filters
-都相同時，可以由通用模型往下建立適用於不同 TAI 集合的分支。子模型可只
-涵蓋單一 TAI，也可像後面的 M3、M4 一樣涵蓋逐步擴大的 TAI 集合。
+若未來出現不同 Analytics ID、target semantics、non-spatial filters 或
+不相容 model format，應拆成不同 model families，且每個 family 各自維護
+latest；但這不是目前實作範圍。
 
-每個完成模型節點至少保存：
+### 7.2 Completed revisions 與 latest pointer
+
+只有 seed model，以及通過完整性檢查、global promotion decision 並成功
+保存至 ADRF 的 final models，才進入 completed revision list。每筆至少
+保存：
 
 | Field | Meaning |
 | --- | --- |
-| `modelUniqueId` | model owner 配置、不得重用，且須在 5GC scope 內唯一的標準模型識別 |
-| `parentModelUniqueId` | 本次訓練實際使用的 base model；seed 無 parent |
-| analytics event | 例如 `UE_COMMUNICATION` |
-| `trainedWith` | 本次訓練實際使用過的 scopes 與 sample count |
-| `applicableTo` | 經驗證後允許提供及使用此模型的 scopes |
-| validation summary | final model 在各驗證 scope 的 metric、sample count 與資料區段 |
-| artifact reference | 本地 artifact reference，以及可選的 ADRF reference |
+| `modelUniqueId` | model owner 配置、不得重用的標準模型識別 |
+| previous revision | 前一個 latest model；只記錄線性迭代來源，不允許分支 |
+| analytics contract | 固定的 Analytics ID、target／filter 與 interoperability 摘要 |
+| training summary | 本次 FL process、participants、各 scope sample count |
+| validation summary | 各 scope 的 WAPE、evaluation sample count 與資料區段 |
+| artifact reference | 本地 artifact reference 與 durable ADRF reference |
+| creation time | 模型完成及發布時間 |
 
-`trainedWith` 與 `applicableTo` 必須分開：
-
-- `trainedWith` 是模型訓練來源的 provenance；
-- `applicableTo` 是後續選模的硬性適用範圍；
-- final model 對每個 participant scope 分別驗證；通過該 scope 的
-  validation gate，才將該 scope 加入 `applicableTo`；
-- 某個 scope 未通過不會自動取消模型對其他已通過 scopes 的適用性。
-
-validation summary 會放進 final model bundle 的描述檔，至少分 scope
-記錄：
-
-- metric 名稱與數值，例如 WAPE；
-- evaluation sample count；
-- evaluation data window 或 dataset snapshot identity；
-- evaluation time 與必要的 evaluator／config revision。
-
-這是 PyMTLF bundle manifest 的內部 metadata，不新增 3GPP Model
-Provision 欄位。Model Provision 仍只投影標準模型識別、applicability 與
-artifact reference。
-
-這些數值只代表模型建立時的離線證據，不保證未來線上表現。選模時必須先
-通過 `applicableTo`，才可用歷史 validation summary 比較同樣適用的候選
-模型；線上 Model Monitor observation 仍是後續 degradation 判斷依據。
-
-`storeTransId` 不是模型 identity。它只是 final model 保存至 ADRF 後附加
-在該節點的 storage locator；模型管理與選模資訊仍由 PyMTLF 維護。
-
-### 7.3 分析範圍與目前模型（Scope Assignments）
-
-PyMTLF 將 Model Provision demand 正規化成 analytics scope，例如：
+PyMTLF 另保存一個 `latestModelId`。標準 Model Provision request 不用執行
+歷史模型搜尋或排名，只處理：
 
 ```text
-Analytics ID
-+ tgtUe
-+ complete analytics filter, including AoI
-+ use-case／interoperability context
+model demand compatible with the configured contract
+  -> return latestModelId and its artifact reference
 ```
 
-Scope Assignments 對每個 scope 保存依序排列的模型候選集：
+Per-scope validation summary 仍保留在 bundle metadata，供 log、實驗分析與
+global promotion policy 參考，但不會讓 TAI-A、TAI-B 選到不同版本。
+`storeTransId` 仍只是 ADRF locator，不是模型版本或 latest identity。
 
-```text
-canonical analytics scope -> ordered modelUniqueIds
-selected model             -> first currently usable candidate
-```
+Global promotion 只有一次 yes／no decision。設定可以選擇「技術檢查通過
+就發布」或「aggregate validation 未達門檻／劣於舊版時拒絕發布」；即使
+採用後者，也只產生一個全域結果，不做 per-TAI promotion。
 
-收到模型需求時依下列順序決定：
+更新 latest 必須是原子操作：
 
-1. 若有完全相符的 scope assignment，提供優先集中第一個仍有效且可取得的
-   模型；
-2. 否則從 `applicableTo` 涵蓋該 scope 的 completed models 中選擇；
-3. 多個模型都適用時，使用該 scope 自己的 validation summary 排序；
-   WAPE 較低者優先，evaluation protocol 相容性、data window 新舊與
-   sample count 作為 evidence 品質及 tie-breaker，不因模型較新就必然優先；
-4. 若沒有專用模型，回退到 applicability 涵蓋相同 lineage root 與該
-   spatial scope 的通用 seed model；
-5. 若連通用 seed 都不適用，才表示目前沒有可提供模型。
+1. final candidate 完成 aggregation 與 bundle validation；
+2. 執行一次 global promotion decision；
+3. 配置新 `modelUniqueId` 並成功保存至 ADRF；
+4. 加入 completed revision list；
+5. 最後才把 `latestModelId` 從舊版切到新版。
 
-「selected／active」因此是 scope 與該 scope 優先集第一個模型之間的
-關係，不是模型本身只能擁有一個全域 active／retired 狀態。同一個模型
-可以同時被多個 AoI 使用，也可以在不再被某個 AoI 優先選用後，繼續作為
-其他 scope 的模型、fallback candidate 或後續 retraining base。
+任何步驟失敗都維持原 latest，不向 A、B 發布半完成版本。舊 completed
+revisions 可依 retention policy 保存作歷史與 rollback，但不再透過一般
+Model Provision 對外提供。
 
-### 7.4 訓練期間的暫存模型（Training Workspace）
+### 7.3 訓練期間的暫存模型（Training Workspace）
 
 每次 FL process 建立獨立工作區，暫存索引使用：
 
@@ -1042,21 +1200,21 @@ flProcessId + roundInd + participant
 - 不需要正式 `modelUniqueId`；
 - 第一版不使用 `addModelInfo`；每次只交換一個由 process、round 與
   participant 關聯的暫存模型；
-- 不進入 Completed Model Tree 或 Model Provision selection；
+- 不進入 completed revision list，也不影響 `latestModelId`；
 - bundle 描述以 `ROUND_INTERMEDIATE`、process、round、participant 與
   sample count 表明它是訓練中的過渡產物；
 - FL process terminal 且 retention period 到期後即可清除。
 
 最後一輪聚合結果離開 Training Workspace 前，仍只是 final candidate。
 它通過 bundle、aggregation、validation 與 stale-base 檢查後，才配置新的
-`modelUniqueId`，以 `PROCESS_FINAL` 打包、保存至 ADRF、加入 Completed
-Model Tree，最後更新 Scope Assignments。
+`modelUniqueId`，以 `PROCESS_FINAL` 打包並保存至 ADRF，最後更新
+`latestModelId`。
 
-### 7.5 Retraining 與 client selection
+### 7.4 Retraining、promotion 與 provision
 
 任一 scope degradation 觸發 retraining 時：
 
-1. 由該 scope assignment 找到本次共同訓練的 base model；
+1. 讀取當時的 `latestModelId` 作為本次共同 base model；
 2. C 透過 NRF discovery 取得宣告相容 FL Client capability 的候選
    NWDAFs；
 3. C 再以 Model Training preparation 確認各候選者的 model
@@ -1064,176 +1222,58 @@ Model Tree，最後更新 Scope Assignments。
 4. 本次 process 納入所有符合本次訓練目的的 eligible clients，並在
    process 啟動時固定 participant set；
 5. 所有 participants 都取得同一個 base/global model，使用自己的本地
-   資料訓練；不會把各 Client 目前用於推論的不同模型直接混在一起聚合；
+   資料訓練；
 6. C 使用各 Client 實際 training sample count 做 weighted FedAvg；
 7. final aggregate 在每個 participating scope 上分別執行 validation；
-8. 只要至少一個 scope 通過 validation gate，即可建立 completed model
-   node、保存 ADRF reference，並將新模型加入各已通過 scope 的優先集；
-9. 各 scope 以自己的 validation evidence 重新排序候選模型；只有 selected
-   model 發生變更的 scopes，才透過既有 Model Provision subscriptions
-   通知。
+8. C 對整個 candidate 做一次 global promotion decision；通過後配置新
+   `modelUniqueId`、保存 ADRF reference，並原子更新 `latestModelId`；
+9. C 透過現有 Model Provision subscriptions 向 A、B 發送相同新版本。
 
-NRF discovery 只提供候選者及 endpoint；Completed Model Tree、Scope
-Assignments、validation summary 與參與者選擇都是 C 的 PyMTLF 本地責任。
-process 啟動後才出現的新 Client 留到下一次 retraining，不在執行中替換
-participant。
+NRF discovery 只提供候選者及 endpoint；completed revision list、
+`latestModelId`、validation summary 與參與者選擇都是 C 的 PyMTLF 本地
+責任。process 啟動後才出現的新 Client 留到下一次 retraining，不在執行
+中替換 participant。
 
-### 7.6 TAI1–TAI4 範例
+### 7.5 M1–M3 線性範例
 
-本例中的 TAI1、TAI2、TAI3、TAI4 是完整 scope 的簡稱。四者具有相同的：
-
-- Analytics ID：`UE_COMMUNICATION`；
-- `tgtUe`：同一個 Internal Group；
-- S-NSSAI、DNN、Application ID 等其他 filters；
-- use-case 與 model interoperability requirements。
-
-四個 scopes 唯一刻意不同的條件是 AoI／TAI。若上述其他條件不同，不能
-直接套用本例的同一模型樹與共同 FL participant selection。
-
-本例中的 FL Clients 與本地資料範圍如下：
-
-| FL Client | Training scope | 可用於 local training 的資料 |
-| --- | --- | --- |
-| Client-1 | TAI1 | 從 ADRF 取得的 TAI1 training data |
-| Client-2 | TAI2 | 從 ADRF 取得的 TAI2 training data |
-| Client-3 | TAI3 | 後續加入，從 ADRF 取得 TAI3 training data |
-| Client-4 | TAI4 | 更晚加入，從 ADRF 取得 TAI4 training data |
-
-Client 編號只是此例的簡稱。每個 Client 實際上都是向 NRF 註冊 FL Client
-capability 的 NWDAF，C 仍須經過 NRF discovery 與 Model Training
-preparation 才能把它加入某次 FL process。
-
-初始狀態只有一個對本例的固定 event、target 與 non-spatial filters
-通用，但尚未針對特定 TAI 專門化的 seed model：
+目前實驗只有 Client-1／TAI1 與 Client-2／TAI2：
 
 ```text
-M1: UE_COMMUNICATION + group-G + common filters
-    spatial applicability = generic
+Initial:
+  completed = [M1]
+  latestModelId = M1
+
+TAI1 or TAI2 reports M1 degradation:
+  Client-1 + Client-2 train from M1
+  -> validate and publish M2
+  completed = [M1, M2]
+  latestModelId = M2
+  -> A and B both switch to M2
+
+TAI1 or TAI2 later reports M2 degradation:
+  Client-1 + Client-2 train from M2
+  -> validate and publish M3
+  completed = [M1, M2, M3]
+  latestModelId = M3
+  -> A and B both switch to M3
 ```
 
-Client-1 與 Client-2 最初分別使用 M1 服務 TAI1、TAI2。兩者各自使用
-TAI1、TAI2 的資料完成一次 FL 後建立 M2：
+M1、M2 仍可保留於 ADRF 作為歷史與 rollback artifacts，但不會因為某個
+TAI 上曾有較好的離線 WAPE 而重新成為一般 Model Provision 的輸出。若
+未來加入 Client-3／TAI3，它可以加入下一次 participant set 並提供更多
+training data，但結果仍只會產生 `M3 -> M4` 的下一個線性版本，不建立
+TAI-specific branch。
 
-```text
-M1
-└── M2: trainedWith={TAI1, TAI2}
-        applicableTo={TAI1, TAI2}
-```
-
-之後 NRF 可以發現 Client-3 宣告相同 training intent 的 FL Client
-capability，且 Model Training preparation 確認它能提供 TAI3 training
-data。Client-3 不需要先接受 Consumer analytics subscription、執行
-inference 或使用任何正式模型。
-
-Client-1 與 Client-2 分別回報 M2 在 TAI1、TAI2 的線上表現。當其中任一
-scope 的 WAPE degradation policy 成立時，C 才觸發 retraining，並由該
-scope 的 current assignment 決定使用 M2 作為 base model。C 接著透過
-NRF discovery 與 preparation 選到 Client-1、Client-2、Client-3；三者都
-取得 M2 作為共同 training base model，分別用 TAI1、TAI2、TAI3 資料
-訓練並產生 M3。假設 M3 在三個 scope 都通過 validation gate，且分別
-成為該 scope 驗證表現最好的模型：
-
-```text
-M1
-└── M2: TAI1, TAI2
-    └── M3: TAI1, TAI2, TAI3
-
-Scope model priorities:
-  TAI1: M3 > M2 > M1
-  TAI2: M3 > M2 > M1
-  TAI3: M3 > M1
-  same lineage root, other supported AoI -> M1
-```
-
-此後新的 TAI3 模型需求可直接取得 M3。更晚加入的 Client-4 服務 TAI4；
-它第一次請求模型時，PyMTLF 沒有 TAI4 專用 assignment 或 applicability，
-因此先提供通用 M1。
-
-假設 Client-4 使用 M1 後，TAI4 的監控表現下降，C 以 TAI4 的 current
-assignment 決定本次 base 是 M1。NRF discovery 與 preparation 發現
-Client-1、Client-2、Client-3、Client-4 皆可參與，於是四個 Client 都
-取得 **M1** 作為本次共同 global model，並分別使用 TAI1、TAI2、TAI3、
-TAI4 的本地資料訓練。部分 Clients 當時可能用 M3 推論，另一些可能沒有
-analytics inference responsibility；兩者都不會把 M3 混入這次 FedAvg。
-
-訓練完成後產生 M4：
-
-```text
-M1
-├── M2: trainedWith={TAI1, TAI2}
-│   └── M3: trainedWith={TAI1, TAI2, TAI3}
-└── M4: trainedWith={TAI1, TAI2, TAI3, TAI4}
-```
-
-M4 bundle 會分別保存 TAI1–TAI4 的 validation WAPE、evaluation sample
-count 與資料區段。概念上的描述如下；這不是預先鎖定的實作 schema：
-
-```yaml
-modelUniqueId: 4
-parentModelUniqueId: 1
-trainedWith: [TAI1, TAI2, TAI3, TAI4]
-applicableTo: [TAI1, TAI2, TAI3, TAI4]
-validation:
-  - scope: TAI1
-    metric: WAPE
-    value: 0.08
-    sampleCount: 420
-    dataWindow: evaluation-window-TAI1
-  - scope: TAI2
-    metric: WAPE
-    value: 0.07
-    sampleCount: 390
-    dataWindow: evaluation-window-TAI2
-  - scope: TAI3
-    metric: WAPE
-    value: 0.09
-    sampleCount: 405
-    dataWindow: evaluation-window-TAI3
-  - scope: TAI4
-    metric: WAPE
-    value: 0.11
-    sampleCount: 360
-    dataWindow: evaluation-window-TAI4
-```
-
-假設 M4 在四個 scope 都通過 validation gate，便會加入模型樹；但每個
-scope 會使用自己的 validation 結果排序，不會因為 M4 是最新模型就全部
-切換。以下是一個具體例子：M3 在 TAI1、TAI3 的 WAPE 較好，M4 則在
-TAI2、TAI4 較好：
-
-```text
-Scope model priorities after M4 validation:
-  TAI1: M3 > M4 > M2 > M1
-  TAI2: M4 > M3 > M2 > M1
-  TAI3: M3 > M4 > M1
-  TAI4: M4 > M1
-  same lineage root, other supported AoI -> M1
-```
-
-若 M4 在某個 participating scope 未通過 validation gate，該 scope 不加入
-M4 的 `applicableTo`，也不把 M4 放入該 scope 的優先集；其他已通過的
-scopes 仍可各自排序及使用 M4。若所有 scopes 都未通過，M4 才不進入
-completed model 管理。
-
-這個例子同時說明：
-
-- 模型樹只描述訓練血緣，M4 從 M1 分支並不表示它比 M3 舊或優先級較低；
-- Client selection 可以讓新 scope 與既有 scopes 一起訓練；
-- 各 scope 的模型優先集才決定實際提供哪個模型；
-- validation summary 用來分 scope 排列已通過 applicability gate 的候選
-  模型，但不取代持續的線上 accuracy monitoring。
-
-### 7.7 與現有 PyMTLF 行為的銜接
+### 7.6 與現有 PyMTLF 行為的銜接
 
 第一版繼續沿用現有 immutable bundle、component digest、archive safety、
-applicability canonicalization、stale-base protection、notification
-coalescing 與 WAPE monitoring 行為。需要調整的是將現有 catalog 語意
-收斂成上述模型樹與 assignments，並讓 FL round artifacts 留在獨立
-Training Workspace。
+model contract validation、stale-base protection、notification coalescing
+與 WAPE monitoring 行為。Catalog 只需收斂成 ordered completed revisions、
+單一 `latestModelId` 與獨立 Training Workspace。
 
-模型樹、assignments、ADRF reference 與 restart recovery 要使用哪種
-持久化格式，留到 implementation plan 決定；本架構文件不預先綁定單一
-JSON 檔、資料庫 schema 或 lifecycle enum。NRF 也不保存上述任何
+Completed revisions、latest pointer、ADRF reference 與 restart recovery
+要使用哪種持久化格式，留到 implementation plan 決定；本架構文件不預先
+綁定單一 JSON 檔、資料庫 schema 或 lifecycle enum。NRF 也不保存上述
 application-level relationship。
 
 ---
@@ -1243,6 +1283,12 @@ application-level relationship。
 ### 8.1 由 Release 18 標準支持的行為
 
 - NWDAF 透過 NRF 註冊／發現 analytics、model 與 FL capability；
+- NWDAF 可透過 NRF 找到服務 Internal Group 的 UDM，再以
+  `Nudm_SDM_Get` 將 group 展開為 SUPIs；
+- NWDAF 可透過 `Nudm_UECM_Get` 取得每個 SUPI 的 SMF registrations，
+  再透過 NRF 解析特定 `smfInstanceId` 的 Event Exposure endpoint；
+- `Nsmf_EventExposure` 可攜帶 AoI，SMF 依 UE 是否位於 AoI 啟停下游
+  UPF subscription；
 - AnLF NWDAF 向 MTLF NWDAF 訂閱模型；
 - MTLF NWDAF 提供初始模型與後續 retrained model；
 - AnLF NWDAF 使用模型後向 responsible MTLF NWDAF 登錄 monitoring；
@@ -1257,17 +1303,24 @@ application-level relationship。
 
 - C 不提供 analytics，也不是 Analytics Aggregator；
 - Consumer 分別向 A、B 訂閱；
+- A、B 解析相同的完整 group membership，並以不同 AoI 建立 per-SUPI
+  SMF subscriptions；不以不同的 partial group fixtures 模擬 path；
+- A、B 保存 SMF 接受的 data-subscription association，寫入 ADRF 時一併
+  保存，讓 FL Client 後續能以 `dataSub + timePeriod` 精確取回資料；
+- 第一個 collection profile 由 SMF 執行 AoI gating；AMF-assisted UE-list
+  intersection 是後續替代 profile；
 - C 是初始模型 owner、Model Provision provider 與 FL Server；
 - A、B 是 analytics providers、model consumers、accuracy providers 與
   FL Clients；
 - A、B 以同一 group target、不同 AoI 對相同模型建立分開的 monitoring
   scopes；
+- 目前只管理一個預先確認相容的 `UE_COMMUNICATION` model family，對外
+  Model Provision 永遠提供同一個 `latestModelId`；
 - accuracy policy 第一版只使用 WAPE degradation；
-- 任一 scope degraded 就以該 scope 的 current assignment 所指模型作為
-  retraining base；
-- C 以 Model Monitor relationship 決定 degradation trigger 與 base
-  model，再經 NRF discovery、training scope compatibility 與 preparation
-  選出 eligible Clients，並在 process 啟動時固定 participant set；
+- 任一 scope degraded 就以當時 latest model 作為共同 retraining base；
+- C 以 Model Monitor relationship 決定 degradation trigger，再經 NRF
+  discovery、training scope compatibility 與 preparation 選出 eligible
+  Clients，並在 process 啟動時固定 participant set；
 - Client eligibility 不要求 Consumer analytics subscription、現行
   inference model 或 active Model Monitor registration；NRF capability、
   training scope compatibility 與 preparation 成功即可參與；
@@ -1289,17 +1342,25 @@ application-level relationship。
   使用 PyMTLF 暫存 URL；completed final model 由 C 保存至 ADRF；
 - A、B、C 的 round 暫存 artifacts 在 FL process terminal state 經過
   configurable retention period 後清除；
-- PyMTLF 以 Completed Model Tree、Scope Assignments 與 Training
-  Workspace 分離完成模型血緣、實際選模及 round 暫存資料；
+- PyMTLF 只維護 ordered completed revisions、單一 `latestModelId` 與
+  Training Workspace；
 - final model description 保存各 participating scope 的 validation
-  metric、sample count 與 evaluation data window，作為後續選模證據；
+  metric、sample count 與 evaluation data window，作為實驗觀察與 global
+  promotion evidence，不做 per-scope 選模；
 - PyMTLF 管理 completed model metadata 與 ADRF references，ADRF 不承擔
   model selection／policy 責任；
 - `modelUniqueId` 是正式模型的主識別，必須在 5GC scope 內唯一；
   `storeTransId` 只是一筆 ADRF storage locator；
 - round local／interim models 不配置正式 `modelUniqueId`，只有通過驗證
-  的 final model 才加入 Completed Model Tree；
-- 更新模型沿用既有 Model Provision subscriptions。
+  與 global promotion 的 final model 才加入 completed revision list；
+- 更新模型沿用既有 Model Provision subscriptions；
+- 新模型切換採 new-before-old：先驗證與啟用新 artifact，再建立新
+  registration／monitor subscription，確認成功後才刪除舊 monitor 並
+  deregister 舊 model usage；
+- 新 monitor 在穩定 measurement window 形成前不回報 WAPE；舊世代的遲到
+  notification 不得影響新模型；
+- 舊 completed model、validation evidence 與 accuracy history 不因停止
+  監控立即刪除，並依 revision、rollback 與 ADRF retention policy 保存。
 
 這些政策符合標準允許的本地決策空間，但不是 3GPP 強制的唯一做法。
 
@@ -1334,24 +1395,24 @@ proximal transmission、FedAsync 或 secure aggregation。後續若加入：
 
 以下項目不阻擋目前高階架構成立，但需要在後續版本逐步決定：
 
-1. 同一個 Internal Group ID、各 NWDAF service area 與各 AoI／TAI
-   如何在實驗 config 中表達，以及 group membership 跨區域變動時如何
-   更新 local scope；
-2. 同一 group、不同 AoI 的 scopes 在什麼條件下共用同一個 training
-   intent／model-tree root，以及何時應拆成獨立模型集合；
+1. Group membership 與 serving-SMF registration 的 refresh／invalidating
+   policy，以及是否在後續 profile 加入 AMF-assisted AoI UE-list 動態
+   reconciliation；
+2. 未來出現不同 Analytics ID、target／filter semantics 或不相容 model
+   formats 時，何時從單一 model family 擴充為多個各自維護 latest 的
+   families；
 3. 後續是否加入 dynamic quorum、partial participation、early stopping
    或 asynchronous aggregation；
 4. local training dataset 的時間範圍、資料品質與最小樣本要求；
-5. 新模型 promotion 後，舊 monitor resources 的切換與清理時序；
-6. 後續面對 Client 暫時離線、拒絕 preparation 或 round timeout 時，
+5. 後續面對 Client 暫時離線、拒絕 preparation 或 round timeout 時，
    deadline extension、retry、skip 與 replacement policy；
-7. 未來擴充為更多 NWDAFs、不同 vendors 或不同 model interoperability
+6. 未來擴充為更多 NWDAFs、不同 vendors 或不同 model interoperability
    formats 時的 selection policy；
-8. round artifact retention period 的預設值、磁碟上限與啟動時清理
+7. round artifact retention period 的預設值、磁碟上限與啟動時清理
     threshold；
-9. retired final models 在 ADRF 的最小保留時間，以及依 transaction
+8. retired final models 在 ADRF 的最小保留時間，以及依 transaction
     刪除或依 `modelUniqueId` 刪除的 policy；
-10. 標準安全機制與憑證部署。第一版實驗仍可先使用普通 HTTP，此項不在
+9. 標準安全機制與憑證部署。第一版實驗仍可先使用普通 HTTP，此項不在
     目前實作計畫內。
 
 ---
@@ -1366,6 +1427,13 @@ proximal transmission、FedAsync 或 secure aggregation。後續若加入：
 | NRF discovery query | [TS 29.510 Nnrf_NFDiscovery OpenAPI](../../specs/openapi/TS29510_Nnrf_NFDiscovery.yaml) |
 | `UE_COMMUNICATION` target 與 AoI | [TS 23.288 §6.7.3](../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.7%20UE%20related%20analytics/6.7.3%20UE%20Communication%20Analytics.md) |
 | `UE_COMMUNICATION` Stage 3 target validation | [TS 29.520 Events Subscription](../../specs/TS%2029.520/4%20Services%20offered%20by%20the%20NWDAF/4.2%20Nnwdaf_EventsSubscription%20Service/4.2.2%20Service%20Operations/4.2.2.2%20Nnwdaf_EventsSubscription_Subscribe%20service%20operation/4.2.2.2.2%20Subscription%20for%20event%20notifications.md) |
+| Group-to-SUPI and per-SUPI serving-SMF procedure | [TS 23.502 §4.15.4.5](../../specs/TS%2023.502/4%20System%20procedures/4.15%20Network%20Exposure/4.15.4%20Core%20Network%20Internal%20Event%20Exposure/4.15.4.5%20Exposure%20of%20Events%20from%20UPF%20for%20UPF%20Data%20Collection.md) |
+| Group identifier mapping API | [TS 29.503 Nudm_SDM OpenAPI](../../specs/openapi/TS29503_Nudm_SDM.yaml) |
+| Internal Group ID wire format | [TS 29.571 Common Data OpenAPI](../../specs/openapi/TS29571_CommonData.yaml) |
+| SMF registration lookup API | [TS 29.503 Nudm_UECM OpenAPI](../../specs/openapi/TS29503_Nudm_UECM.yaml) |
+| SMF Event Exposure and `networkArea` | [TS 29.508 Nsmf_EventExposure OpenAPI](../../specs/openapi/TS29508_Nsmf_EventExposure.yaml) |
+| `NetworkAreaInfo.tais` schema | [TS 29.554 Npcf_BDTPolicyControl OpenAPI](../../specs/openapi/TS29554_Npcf_BDTPolicyControl.yaml) |
+| AMF-assisted AoI UE-list alternative | [TS 29.518 Namf_EventExposure OpenAPI](../../specs/openapi/TS29518_Namf_EventExposure.yaml) |
 | Model provisioning procedure | [TS 23.288 §6.2A](../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2A%20Procedure%20for%20ML%20Model%20Provisioning.md) |
 | Model provisioning API | [TS 29.520 Nnwdaf_MLModelProvision OpenAPI](../../specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml) |
 | Accuracy monitoring procedure | [TS 23.288 §6.2E](../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2E%20MTLF-based%20ML%20Model%20Accuracy%20Monitoring.md) |

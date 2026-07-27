@@ -1,7 +1,8 @@
 # 分散式 NWDAF 模型監控與聯邦再訓練
 
-這份筆記用於會議中快速說明目前的設計。內容依序呈現正常分析、模型監控、
-退化觸發、FL Client 發現、聯邦訓練及新模型發布。
+這份筆記用於會議中快速說明目前的設計。內容依序呈現 group 與 TAI
+資料分流、正常分析、模型監控、退化觸發、FL Client 發現、聯邦訓練及
+新模型發布。
 
 ---
 
@@ -54,7 +55,59 @@ flowchart TB
 
 ---
 
-## 2. 初始模型與 Accuracy Monitoring
+## 2. Group 與 TAI 資料分流
+
+```mermaid
+sequenceDiagram
+    participant A as NWDAF-A / TAI1
+    participant B as NWDAF-B / TAI2
+    participant NRF as NRF
+    participant UDM as UDM
+    participant SMF as Shared SMF
+    participant UA as UPF-A
+    participant UB as UPF-B
+    participant ADRF as ADRF
+
+    A->>NRF: Find UDM serving group-G
+    B->>NRF: Find UDM serving group-G
+    NRF-->>A: UDM endpoint
+    NRF-->>B: UDM endpoint
+    A->>UDM: Resolve group-G to complete SUPI list
+    B->>UDM: Resolve group-G to complete SUPI list
+    loop Each SUPI and matching PDU session
+        A->>UDM: Get serving SMF registration
+        B->>UDM: Get serving SMF registration
+        UDM-->>A: smfInstanceId
+        UDM-->>B: smfInstanceId
+        A->>NRF: Resolve exact SMF endpoint
+        B->>NRF: Resolve exact SMF endpoint
+        NRF-->>A: SMF Event Exposure endpoint
+        NRF-->>B: SMF Event Exposure endpoint
+        A->>SMF: Subscribe UPF events with TAI1
+        B->>SMF: Subscribe UPF events with TAI2
+    end
+    SMF->>UA: Activate TAI1 subscriptions
+    SMF->>UB: Activate TAI2 subscriptions
+    UA-->>A: TAI1 path records
+    UB-->>B: TAI2 path records
+    A->>ADRF: Store records with accepted smfDataSub
+    B->>ADRF: Store records with accepted smfDataSub
+```
+
+- A、B 取得的是同一份完整 group-G membership，不是各自維護一半
+  SUPIs。
+- UDM 告知每個 SUPI／PDU session 由哪個 SMF instance 服務；不能把每個
+  SUPI 向所有 SMFs 都訂閱。
+- A、B 對同一個 SMF 分別帶 TAI1、TAI2；SMF 依 UE 是否位於該 AoI
+  啟停下游 UPF subscription，因此資料自然分成兩條 path。
+- SMF 接受的 subscription 會隨 raw records 存入 ADRF。之後 FL Client
+  以這份 `smfDataSub + timePeriod` 取回自己的訓練資料。
+- UDM 尚未導入實驗環境時，可暫時使用完整 group fixture 與固定 SMF
+  endpoint；TAI 分流仍不能靠不同的 partial group fixtures 模擬。
+
+---
+
+## 3. 初始模型與 Accuracy Monitoring
 
 ```mermaid
 sequenceDiagram
@@ -87,7 +140,7 @@ sequenceDiagram
 
 ---
 
-## 3. Degradation Trigger 與 FL Client 發現
+## 4. Degradation Trigger 與 FL Client 發現
 
 ```mermaid
 sequenceDiagram
@@ -98,7 +151,7 @@ sequenceDiagram
     participant ADRF as ADRF
 
     A-->>C: M1 WAPE degradation for TAI1
-    C->>C: Resolve TAI1 current assignment to M1
+    C->>C: Use latest model M1 as retraining base
     C->>NRF: Discover UE_COMMUNICATION FL Clients
     Note over C,NRF: Include TAI1, TAI2 and FL_CLIENT capability
     NRF-->>C: Client-1, Client-2
@@ -114,7 +167,7 @@ sequenceDiagram
     C->>C: Fix Client-1 and Client-2 as participants
 ```
 
-- Model Monitor 決定何時 retrain，以及本次使用哪個 base model。
+- Model Monitor 決定何時 retrain；本次 base model 固定使用 C 的 latest。
 - NRF 可依 Analytics ID、TAI、interoperability 與 `FL_CLIENT` capability
   找到候選者。
 - NRF 宣告的是能力；Client 是否真的有足夠資料，仍由 preparation 中的
@@ -125,7 +178,7 @@ sequenceDiagram
 
 ---
 
-## 4. FL Training 與 FedAvg
+## 5. FL Training 與 FedAvg
 
 ```mermaid
 sequenceDiagram
@@ -161,7 +214,7 @@ sequenceDiagram
 
 ---
 
-## 5. Final Model 驗證與發布
+## 6. Final Model 驗證與發布
 
 ```mermaid
 sequenceDiagram
@@ -173,98 +226,85 @@ sequenceDiagram
     Note over C: Build final candidate<br/>Validate WAPE for TAI1 and TAI2<br/>Allocate formal modelUniqueId
     C->>ADRF: Store final model artifact
     ADRF-->>C: Created and storage reference
-    Note over C: Add completed model<br/>Rank candidate independently for TAI1 and TAI2
-    Note over C,B: This example assumes the new model ranks first for both TAIs
+    Note over C: Add completed revision<br/>Atomically update latestModelId
     C-->>A: Model Provision Notify<br/>(modelUniqueId + ADRF reference)
     C-->>B: Model Provision Notify<br/>(modelUniqueId + ADRF reference)
-    A->>ADRF: Retrieve by modelUniqueId
+    A->>ADRF: Retrieve by provided ADRF reference
     ADRF-->>A: Model file address
     A->>ADRF: Download model artifact
     ADRF-->>A: Final model artifact
-    B->>ADRF: Retrieve by modelUniqueId
+    B->>ADRF: Retrieve by provided ADRF reference
     ADRF-->>B: Model file address
     B->>ADRF: Download model artifact
     ADRF-->>B: Final model artifact
-    Note over A: Verify and activate new model
-    Note over B: Verify and activate new model
-    A->>C: Model Monitor Register<br/>(consumerId + modelId)
-    B->>C: Model Monitor Register<br/>(consumerId + modelId)
+    Note over A,B: Verify and atomically activate M2<br/>Keep M1 for rollback
+    A->>C: Model Monitor Register for M2
+    B->>C: Model Monitor Register for M2
+    C->>A: Subscribe M2 accuracy
+    C->>B: Subscribe M2 accuracy
+    A-->>C: New monitor resource created
+    B-->>C: New monitor resource created
+    Note over A,B: Warm up stable WAPE windows
+    C->>A: Delete M1 monitor subscription
+    C->>B: Delete M1 monitor subscription
+    A->>C: Deregister M1 usage
+    B->>C: Deregister M1 usage
 ```
 
-- Final candidate 對每個 participating scope 分別驗證；某個 TAI 未通過
-  不影響其他已通過 TAI 使用該模型。
+- Final candidate 可對每個 participating scope 分別計算 WAPE，但最後只做
+  一次 global promotion decision；不讓不同 TAI 選擇不同版本。
 - 正式模型會取得 `modelUniqueId`；round 暫存模型不會。
 - Model description 保存各 TAI 的 WAPE、evaluation sample count 與資料區段。
-- ADRF 保存 final model artifact，但不決定模型選擇或 active assignment。
-- PyMTLF 依各 scope 的 validation evidence 更新模型優先集；只有新模型
-  成為該 scope 首選時，才沿用 Model Provision subscription 通知相關
-  NWDAF。通知傳遞 `modelUniqueId` 與 ADRF reference，不直接夾帶模型
-  binary。
+- ADRF 保存 final model artifact，但不決定模型版本或 latest。
+- PyMTLF 保存 completed revisions 與單一 `latestModelId`。新模型通過
+  global promotion 並存入 ADRF 後，才原子更新 latest，再沿用 Model
+  Provision subscription 向 A、B 提供同一版本。通知傳遞
+  `modelUniqueId` 與 ADRF reference，不直接夾帶模型 binary。
 - A、B 根據通知向 ADRF 查詢模型檔案位置並下載；驗證及啟用成功後，再向
   C 註冊新模型的 Model Monitor 能力。
+- 切換採 new-before-old：M2 artifact 或新監控建立失敗時，A、B 保持 M1
+  與原監控；只有 M2 registration 和 monitor subscription 都成功後，才
+  刪除 M1 monitor 並 deregister M1 usage。
+- M2 monitor 在累積足夠 prediction／ground-truth window 前不回報 WAPE。
+  遲到的 M1 notification 只歸入舊歷史，不得影響 M2。
+- M1 仍保留在 C 的 completed revisions 與 ADRF，作為歷史比較及
+  rollback candidate；停止監控不代表立即刪除模型。
 
 ---
 
-## 6. 模型演進與未來擴充範例
+## 7. 線性模型版本
 
-目前主要實驗只使用 Client-1、Client-2 與 TAI1、TAI2。以下加入
-Client-3、Client-4，是用來說明未來增加 NWDAF／path 時，模型管理可以
-如何延伸；不是目前第一版實驗必須完成的拓撲。
-
-每個 FL Client 提供自己可取得的 spatial training data：
-
-| FL Client | Training data |
-| --- | --- |
-| Client-1 | TAI1 |
-| Client-2 | TAI2 |
-| Client-3 | TAI3 |
-| Client-4 | TAI4 |
+第一階段只管理一個相容的 `UE_COMMUNICATION` model family：
 
 ```mermaid
 flowchart LR
-    M1["M1<br/>Generic spatial seed"]
-    M2["M2<br/>TAI1 + TAI2"]
-    M3["M3<br/>TAI1 + TAI2 + TAI3"]
-    M4["M4<br/>TAI1 + TAI2 + TAI3 + TAI4"]
+    M1["M1<br/>seed"]
+    M2["M2"]
+    M3["M3<br/>latest"]
 
-    M1 -->|Client-1 + Client-2| M2
-    M2 -->|M2 degraded; add Client-3| M3
-    M1 -->|M1 degraded on TAI4; Clients 1-4| M4
+    M1 -->|retrain with Client-1 + Client-2| M2
+    M2 -->|next retraining| M3
 ```
-
-模型發展順序：
-
-1. M1 是尚未針對特定 TAI 專門化的 seed model。
-2. Client-1 或 Client-2 的 M1 表現下降後，使用 TAI1、TAI2 資料訓練 M2。
-3. Client-1 或 Client-2 的 M2 表現下降後，NRF 額外發現能提供 TAI3
-   training data 的 Client-3，三者共同訓練 M3。
-4. Client-4 使用 M1 服務 TAI4，並由 TAI4 degradation 觸發另一次訓練；
-   Client-1 至 Client-4 共同以 M1 為 base，產生 M4。
-
-模型血緣與實際模型指派是兩件事：
 
 ```text
-Model lineage:
-  M1
-  +-- M2
-  |   `-- M3
-  `-- M4
-
-Scope model priorities after M4 validation (example):
-  TAI1: M3 > M4 > M2 > M1
-  TAI2: M4 > M3 > M2 > M1
-  TAI3: M3 > M4 > M1
-  TAI4: M4 > M1
-  other compatible AoI -> M1
+completed = [M1, M2, M3]
+latestModelId = M3
+Model Provision output = M3
 ```
 
-- 模型血緣表示模型從哪個 base model 訓練而來。
-- 每個 scope 依自己的 validation 結果維護候選模型優先集，第一順位才是
-  Model Provision 實際提供的模型；不同 TAI 不必同時切換到最新模型。
-- 本例的 Analytics ID、`tgtUe`、S-NSSAI、DNN、Application ID 與
-  interoperability requirements 相同，只有 AoI／TAI 不同。
-- 多個模型都適用時，使用該 TAI 的 validation summary 排序；圖中的順序
-  只是一個可能結果，不代表 M3 或 M4 固定具有較高優先級。
+- 任一 TAI degradation 都以前一個 latest model 作為共同 base。
+- A、B 的 WAPE 分開保存，但不因此選用不同模型。
+- Final candidate 仍可保存各 TAI validation WAPE，僅供實驗觀察與一次
+  global promotion decision。
+- Global promotion 可設定為技術檢查通過就發布，或 aggregate validation
+  不佳時拒絕；兩種模式都只產生一個全域結果。
+- Promotion 及 ADRF storage 成功後才更新 `latestModelId`；A、B 隨後都
+  切換到相同新版本。
+- M1、M2 可保留作歷史或 rollback，但一般 Model Provision 不提供舊版。
+- 暫不支援 model tree、TAI-specific branches、Scope Assignments 或候選
+  模型排名。
+- 未來增加 Client-3／TAI3 時，它可加入下一次 FL 並提供更多資料，但結果
+  仍只是 `M3 -> M4`，不建立另一條模型分支。
 
 ---
 
@@ -278,5 +318,7 @@ Scope model priorities after M4 validation (example):
   rounds 使用。
 - 在 model artifact 方面，訓練期間使用暫存 URL，只有 final model 保存
   至 ADRF。
+- 只維護單一 `UE_COMMUNICATION` model family、線性 completed revisions
+  與一個 `latestModelId`；A、B 對外取得同一最新版本。
 - 暫不支援 partial aggregation、client replacement、asynchronous FL 或
   secure aggregation。
