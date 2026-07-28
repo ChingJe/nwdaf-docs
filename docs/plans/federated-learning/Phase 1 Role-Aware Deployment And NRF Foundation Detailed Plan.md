@@ -1684,7 +1684,41 @@ schema與本文 field name／conditional rule不一致，必須先以 OpenAPI／
   MongoDB、NRF、三個 NWDAF、PyAnLF-A/B與 PyMTLF-A/B/C，驗證 profile、
   discovery、cache及 deregistration。
 
-### 19.2 驗證紀錄
+### 19.2 已收斂的 NRF `nwdafInfo` 遺失問題
+
+先前 Priority 11 integration 曾接受 free5GC NRF v1.4.5 在 registration
+後遺失 `nwdafInfo` 的 NRF-side limitation。其根因不是既有 generated
+`NFProfile` 完全沒有 `nwdafInfo`：Release 17 generated
+`NrfNfManagementNfProfile`、`NwdafInfo` 已包含 `nwdafInfo`、
+`nwdafEvents` 與基礎 `mlAnalyticsList`。問題出在舊 NRF
+`NnrfNFManagementDataModel()` 另外建立 profile，並以手寫邏輯逐欄複製
+共同欄位及各 NF 的專屬 info，卻沒有複製 `nwdafInfo`／
+`nwdafInfoList`。因此 NRF 可接受 registration 並回傳成功，但寫入
+MongoDB 及後續 GET／discovery 使用的 profile 已經沒有該 subtree。
+
+這種逐欄重建方式也使每次新增 NF 專屬欄位或規格欄位時，都必須同步
+修改 NRF copy list；漏掉欄位時會形成 silent data loss。驗證、預設值
+處理與 profile 保存不應依賴一份不完整的手寫欄位白名單。
+
+Phase 1 已收掉此問題：
+
+- NWDAF 以 compatibility profile lossless 編碼完整 registration body；
+- team NRF fork 對完整 compatibility profile 執行 validation，並保留
+  `nwdafInfo`／`nwdafInfoList` 通過 MongoDB persistence、GET、PATCH、
+  registration response、profile notification與 discovery；
+- Release 17 generated `MlAnalyticsInfo` 尚未涵蓋的 Release 18 FL
+  properties，例如 `flCapabilityType`、`flTimeInterval`、
+  `nfTypeList`、`nfSetIdList` 與 `mlModelInterInfo`，由隔離的 compat
+  type補足；這與舊 NRF 漏複製整個 `nwdafInfo` 是兩個不同問題；
+- distributed runner實際檢查 A／B／C 從 NRF 取回的 profile，以及依
+  Events、ML analytics、FL capability與 TAI執行的 discovery，證明
+  registration → MongoDB → GET／discovery 路徑不再遺失能力資訊。
+
+因此 Priority 11 文件所記錄的 NRF v1.4.5 `nwdafInfo` copy limitation，
+在本專案採用 team NRF fork的 Phase 1 deployment boundary內已完成
+收斂，不再列為後續 Phase 的已知限制。
+
+### 19.3 驗證紀錄
 
 | Repository | Verification | Result |
 | --- | --- | --- |
@@ -1709,7 +1743,7 @@ NRF使用 repository workflow指定的 Go 1.26.2-compatible
 `golangci-lint v2.11.4`完成驗證；workspace原先的 Go 1.25-built binary
 不作為結果依據。
 
-### 19.3 明確 deferred boundary
+### 19.4 明確 deferred boundary
 
 Phase 1沒有實作或宣告：
 
