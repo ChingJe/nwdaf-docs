@@ -638,6 +638,10 @@ NRF role discovery
 
 ## 8. Phase 0：Release 18 contract foundation
 
+詳細實作計畫：
+
+- [Phase 0 Release 18 Contract Foundation Detailed Plan](./Phase%200%20Release%2018%20Contract%20Foundation%20Detailed%20Plan.md)
+
 ### 8.1 目標
 
 建立由 NWDAF 維護、直接對照 Release 18 OpenAPI／TS 的 typed
@@ -788,8 +792,10 @@ base 複製，否則拒絕該 result。不得放寬 completed-bundle validator �
   state／Location；
 - journal 引用的 candidate／final artifact 在 terminal state 前由 durable
   publication directory pin 住，不受 workspace TTL 清理；
-- atomic write／startup recovery；
-- ADRF 已成功、latest 尚未 commit 時的 restart reconciliation；
+- freeze atomic write／startup recovery semantics；filesystem repository 與
+  recovery worker 在 Phase 5 接入；
+- freeze ADRF 已成功、latest 尚未 commit 時的 restart reconciliation
+  semantics；實際 ADRF probe／retry 在 Phase 5 接入；
 - corrupt catalog fail-fast；
 - explicit experiment reset procedure。
 
