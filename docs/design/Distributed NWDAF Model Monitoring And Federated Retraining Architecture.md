@@ -30,7 +30,8 @@ Related documents:
 本文先固定高階工作流程、標準服務邊界、NRF capability、主要 identity
 關係，以及第一版 FL execution profile。第一版由 NRF discovery 與
 Model Training preparation 選出 eligible participants，在每次 process
-啟動時固定 participant set，並使用同步、sample-count-weighted FedAvg；
+正式 training rounds 開始前固定 participant set，並使用同步、
+sample-count-weighted FedAvg；
 完整 dataset schema、程式 package 與 private backend API 不在目前版本中
 定案。
 
@@ -620,10 +621,11 @@ availability 表示 Client 能從 ADRF 取得符合自己 training scope 與時�
 範圍的 records，不要求 raw data 已經保存在 Client process 的本地磁碟，
 也不表示 C 可以集中讀取所有 Clients 的 raw data。
 
-第一版只有在 Client 已成功取回 required records、完成基本驗證並把
-dataset snapshot 標記為 ready 後，preparation 才能回覆可參與。因此 C
-固定 participant set 時，已經知道所有被選 Clients 都有一份可供本次
-process 使用的固定 snapshot。
+第一版只有在 Client 已成功取回 required records、完成基本驗證並凍結
+dataset snapshot 後，preparation POST 才回覆 `201 Created`。標準
+Training notification 沒有自訂 `READY` 欄位；因此 C 以成功的 preparation
+response 判斷可參與，固定 participant set 時已經知道所有被選 Clients
+都有一份可供本次 process 使用的固定 snapshot。
 
 候選 FL Client 不需要先有 Consumer analytics subscription、正在執行
 inference、取得 C 的正式模型或建立 Model Monitor registration。latest
@@ -651,9 +653,10 @@ sampling、replacement 與每 round 重新 preparation policy。
 participants 是 A、B；若後續有 TAI3 等 eligible Client，流程相同：
 
 1. 各 Client 在 preparation 期間將 training scope 解析成 ADRF
-   `dataSub` 與固定 `timePeriod`，從 ADRF 建立並凍結 dataset snapshot；
-2. 所有 selected Clients 都回覆 snapshot ready 後，C 固定 participant
-   set，並建立或更新 Model Training subscription；
+   `dataSub` 與固定 `timePeriod`，從 ADRF 建立 dataset snapshot，沿既有
+   temporal split／purge gap 凍結 training 與 validation subsets；
+2. 所有 required Clients 都回覆 preparation `201 Created` 後，C 固定
+   participant set，並更新既有 Model Training resources；
 3. C 提供 initial／current global model、round identity、training
    requirement 與 maximum response time；
 4. 各 Client 在所有 rounds 使用自己的同一份固定 snapshot 進行 local
@@ -665,7 +668,17 @@ participants 是 A、B；若後續有 TAI3 等 eligible Client，流程相同：
 7. C 驗證所有 artifact 與 sample count，再做 sample-count-weighted
    FedAvg，形成下一版 global model；
 8. 若尚未達到設定的固定 round 數，C 發送下一 round 的 global model；
-9. 達到固定 round 數後，C 結束各 Client 的 FL training resources。
+9. 達到固定 round 數後，C 先保留各 Client 的 Model Training resource，
+   並以同一 resource 發出 final-candidate evaluation update；
+10. A、B 使用各自在 preparation 時凍結的 validation subset，同時評估
+    base latest 與同一 final candidate，回傳帶有 base／candidate
+    digest、WAPE sums、scope digest、evaluation sample count 與 data
+    window 的暫存 evaluation artifact；
+11. C 驗證所有 participating scopes 的 evaluation evidence，對整個
+    candidate 做一次 global promotion gate；
+12. C 將 gate result 與 candidate durable handoff 給 publication job 後，
+    bounded delete 各 Client 的 Model Training resources；ADRF publication
+    不再依賴 Training subscription。
 
 若將第 `i` 個 Client 回傳的完整模型參數記為 `weights[i, r]`，實際
 training sample count 記為 `sampleCount[i, r]`，第一版聚合為：
@@ -677,8 +690,15 @@ globalWeights[r + 1] =
 ```
 
 第一版不交換 gradient、parameter delta 或 optimizer state。所有 Client 必須
-使用相容的 model bundle、相同參數結構與 preprocessing contract，C
-必須在聚合前驗證 artifact identity、tensor shape、dtype、parameter
+使用相容的 model bundle、相同參數結構，以及 base/global bundle 內同一
+份 scaler 與 preprocessing contract；不得各自重新 fit scaler。C
+不集中取得 raw training／validation data。WAPE 也不是 Release 18
+`MLModelMetric` 的 `ACCURACY`；因此 Client 不得把 WAPE 假裝成標準
+`mlModelAcc`，而是透過 evaluation artifact metadata 回傳，標準 callback
+仍只承載該 artifact 的 `mLFileAddr` 與 training status。
+`CLIENT_EVALUATION` 仍是包含被評估 final candidate 的 model bundle；
+WAPE evidence 是其 sidecar metadata，不是借模型 URL 傳送獨立報表。
+C 必須在聚合前驗證 artifact identity、tensor shape、dtype、parameter
 ordering 與 sample count。
 
 #### 5.6.1 Client ADRF dataset snapshot
@@ -686,7 +706,7 @@ ordering 與 sample count。
 ADRF 是本情境唯一的 training data source，不設計 MongoDB fallback。
 PyAnLF 在正常 collection 過程中，已將原始標準形狀 `dataSub` 與
 `dataNotif` records 保存至 ADRF。Client 的 PyMTLF 在 preparation
-期間、回覆 dataset ready 以前執行：
+期間、回覆 `201 Created` 以前執行：
 
 ```text
 training scope
@@ -696,7 +716,7 @@ training scope
   -> receive fetch instructions
   -> retrieve records directly from ADRF
   -> validate and transform records
-  -> freeze one dataset snapshot for the FL process
+  -> freeze training and validation subsets for the FL process
 ```
 
 對 raw NF event data，Client 使用
@@ -875,7 +895,8 @@ participant 建立清楚的 Training Workspace 暫存索引，避免單純依檔
 3. C 以自己的 `nfInstanceId`、標準 numeric `modelUniqueId`、
    `mlFileAddr` 與 `mlStorageSize` 建立 ADRF ML model store record；
 4. ADRF 下載並保存 artifact，回覆 `201 Created`、record representation
-   與指向 individual store record 的 `Location`；
+   與指向 individual store record 的 `Location`；C 仍須檢查
+   `modelStoreResult`，必要時再 retrieval probe；
 5. C 以 `modelUniqueId` 作為模型管理主識別，從 `Location` 解析並記錄
    `storeTransId`，將 ADRF NF identity 與 transaction ID 視為該模型的
    storage reference；
@@ -891,6 +912,12 @@ participant 建立清楚的 Training Workspace 暫存索引，避免單純依檔
 artifact 與可重試狀態；不得把尚未 durable 的模型當成 ADRF-published，
 也不得因暫存 TTL 將它刪除。ADRF 恢復後可重試相同 completed-model
 publication。
+
+此時的 publication 已經在 final evaluation 後從 FL execution durable
+handoff：Client Training resources 可被刪除，optimizer／round 不會跨
+restart resume；只有由 journal 保存的 model ID reservation、candidate／
+final bundle digest、previous revision、validation summary、ADRF target
+與 store state 可以在 C restart 後 retry／reconcile。
 
 同一個 `modelUniqueId` 因 publication retry、ADRF relocation 或重新保存，
 可以先後對應不同的 `storeTransId`。這不建立新的 completed model，也不
@@ -915,7 +942,8 @@ alignment：
 - GET response 必須符合單一 `NadrfMLModelStoreRecord` schema，不依賴
   非標準的 individual-record GET；
 - `modelUniqueId` 使用 OpenAPI 定義的 `Uinteger`，不得以 UUID 字串代替；
-- `MLModelInfo.mlStorageSize` 必填，並補齊 `allowConsumerList`；
+- `MLModelInfo.mlStorageSize` 必填，並以 A、B、C 的 `nfInstanceId`
+  補齊 `allowConsumerList`；
 - storage result 使用標準 `modelStoreResult` 結構；
 - record 中的 `mlModelInfo`／`mlModels` 是可包含多個模型的陣列；目前只
   處理第一個元素的限制不得被當成完整標準行為；
@@ -945,28 +973,34 @@ C 不需要為 FL 把各 Client 的 raw dataset 集中取回。
 
 C 完成 aggregation 後：
 
-1. 以各 participating scope 的 validation dataset 評估 final candidate；
-2. 將 per-scope metric、sample count 與 evaluation data window 寫入 final
+1. 透過尚未刪除的 Model Training resources，要求各 participating Client
+   以本地凍結的 validation snapshot 同時評估 base latest 與同一 final
+   candidate；
+2. 接收並驗證各 Client 回傳的 evaluation artifact，不集中取得其 raw
+   validation data；
+3. 以各 scope 的 base／candidate WAPE、absolute-error sum、
+   actual-value sum、sample count 與 evaluation data window 重現既有
+   triggering-scope／aggregate／non-triggering-scope gate，並寫入 final
    model description，作為觀察證據而非分 scope 選模依據；
-3. 對整個 candidate 做一次 global promotion decision；不建立
+4. 對整個 candidate 做一次 global promotion gate；不建立
    per-TAI applicability gate 或候選排名；
-4. 通過 promotion 後建立新的 model unique identifier 與 final artifact；
-5. 將 final artifact 保存至 ADRF 並記錄 durable reference；
-6. ADRF storage 成功後，把新版本加入 completed revision list，原子更新
+5. 通過 gate 後建立新的 model unique identifier 與 final artifact；
+6. 將 final artifact 保存至 ADRF 並記錄 durable reference；
+7. ADRF storage 成功後，把新版本加入 completed revision list，原子更新
    `latestModelId`；
-7. 透過既有 Model Provision subscriptions，把同一個 latest model 發送
+8. 透過既有 Model Provision subscriptions，把同一個 latest model 發送
    給 A、B；
-8. Clients 下載並驗證新 artifact；下載或驗證失敗時繼續使用舊模型，
+9. Clients 下載並驗證新 artifact；下載或驗證失敗時繼續使用舊模型，
    不變更任何舊 monitoring relationship；
-9. 驗證成功後，Clients 原子切換 active model，並立即以新 `modelId`
+10. 驗證成功後，Clients 原子切換 active model，並立即以新 `modelId`
    向 C 建立新的 Model Monitor registration；
-10. C 為新模型建立新的 monitor subscriptions／correlations；新模型在
+11. C 為新模型建立新的 monitor subscriptions／correlations；新模型在
     累積到足夠 prediction／ground-truth window 前保持 warm-up，不送出
     虛假的 WAPE；
-11. 新 registration 與 monitor subscription 都建立成功後，C 才刪除位於
+12. 新 registration 與 monitor subscription 都建立成功後，C 才刪除位於
     Clients 的舊模型 monitor subscriptions，Clients 再向 C deregister
     舊模型 usage registrations；
-12. 若新 monitoring relationship 無法在 cutover timeout 內建立，Client
+13. 若新 monitoring relationship 無法在 cutover timeout 內建立，Client
     保留舊模型與舊監控，並可依本地政策 rollback，而不是先清除舊世代。
 
 Consumer 不需重新建立原 analytics subscription。各 Client 仍以原本的
@@ -1104,7 +1138,7 @@ sequenceDiagram
     NRF-->>S: NWDAF-A and NWDAF-B
     S->>L1: FL preparation
     S->>L2: FL preparation
-    Note over L1,ADRF: Each Client builds its snapshot before reporting ready
+    Note over L1,ADRF: Each Client builds its snapshot before accepting preparation
     L1->>ADRF: Create retrieval subscription<br/>(scope-A dataSub + timePeriod)
     L2->>ADRF: Create retrieval subscription<br/>(scope-B dataSub + timePeriod)
     ADRF-->>L1: Fetch instructions
@@ -1113,14 +1147,21 @@ sequenceDiagram
     L2->>ADRF: Retrieve matching records
     ADRF-->>L1: Scope-A raw records
     ADRF-->>L2: Scope-B raw records
-    L1-->>S: Join with dataset snapshot ready
-    L2-->>S: Join with dataset snapshot ready
+    L1-->>S: 201 Created<br/>preparation accepted
+    L2-->>S: 201 Created<br/>preparation accepted
 
     S->>L1: Train round with temporary global model URL
     S->>L2: Train round with temporary global model URL
     L1-->>S: Temporary local model URL A
     L2-->>S: Temporary local model URL B
     S->>S: Aggregate final candidate
+
+    Note over S,L2: Client-side final evaluation
+    S->>L1: Evaluation-only update<br/>final candidate
+    S->>L2: Evaluation-only update<br/>final candidate
+    L1-->>S: Evaluation artifact<br/>scope-A base/candidate WAPE
+    L2-->>S: Evaluation artifact<br/>scope-B base/candidate WAPE
+    S->>S: Verify evaluations<br/>Decide global promotion
 
     Note over S,ADRF: Completed model persistence
     S->>NRF: Discover ADRF ML model storage
@@ -1185,7 +1226,7 @@ latest；但這不是目前實作範圍。
 
 ### 7.2 Completed revisions 與 latest pointer
 
-只有 seed model，以及通過完整性檢查、global promotion decision 並成功
+只有 seed model，以及通過完整性檢查、global promotion gate 並成功
 保存至 ADRF 的 final models，才進入 completed revision list。每筆至少
 保存：
 
@@ -1211,17 +1252,18 @@ Per-scope validation summary 仍保留在 bundle metadata，供 log、實驗分�
 global promotion policy 參考，但不會讓 TAI-A、TAI-B 選到不同版本。
 `storeTransId` 仍只是 ADRF locator，不是模型版本或 latest identity。
 
-Global promotion 只有一次 yes／no decision。設定可以選擇「技術檢查通過
+Global promotion gate 只有一次 yes／no decision。設定可以選擇「技術檢查通過
 就發布」或「aggregate validation 未達門檻／劣於舊版時拒絕發布」；即使
 採用後者，也只產生一個全域結果，不做 per-TAI promotion。
 
 更新 latest 必須是原子操作：
 
 1. final candidate 完成 aggregation 與 bundle validation；
-2. 執行一次 global promotion decision；
-3. 配置新 `modelUniqueId` 並成功保存至 ADRF；
-4. 加入 completed revision list；
-5. 最後才把 `latestModelId` 從舊版切到新版。
+2. 執行一次 global promotion gate；
+3. reserve 不得重用的新 `modelUniqueId`，建立 final bundle；
+4. 成功保存至 ADRF；
+5. 加入 completed revision list；
+6. 最後才把 `latestModelId` 從舊版切到新版。
 
 任何步驟失敗都維持原 latest，不向 A、B 發布半完成版本。舊 completed
 revisions 可依 retention policy 保存作歷史與 rollback，但不再透過一般
@@ -1232,8 +1274,11 @@ Model Provision 對外提供。
 每次 FL process 建立獨立工作區，暫存索引使用：
 
 ```text
-flProcessId + roundInd + participant
+mlCorreId + artifactRole + roundInd + participant
 ```
+
+`mlCorreId` 是標準 FL correlation，也就是本文所稱的 FL process
+identity。
 
 工作區保存 Client local models 與 Server interim global models。這些模型：
 
@@ -1242,8 +1287,8 @@ flProcessId + roundInd + participant
 - 第一版不使用 `addModelInfo`；每次只交換一個由 process、round 與
   participant 關聯的暫存模型；
 - 不進入 completed revision list，也不影響 `latestModelId`；
-- bundle 描述以 `ROUND_INTERMEDIATE`、process、round、participant 與
-  sample count 表明它是訓練中的過渡產物；
+- bundle 以 `ROUND_LOCAL` 或 `ROUND_GLOBAL`、process、round、participant
+  或 aggregated participants 與 sample count 表明它是訓練中的過渡產物；
 - FL process terminal 且 retention period 到期後即可清除。
 
 最後一輪聚合結果離開 Training Workspace 前，仍只是 final candidate。
@@ -1261,12 +1306,15 @@ flProcessId + roundInd + participant
 3. C 再以 Model Training preparation 確認各候選者的 model
    interoperability、local data、availability 與參與意願；
 4. 本次 process 納入所有符合本次訓練目的的 eligible clients，並在
-   process 啟動時固定 participant set；
+   preparation 成功、正式 training rounds 開始前固定 participant set；
 5. 所有 participants 都取得同一個 base/global model，使用自己的本地
    資料訓練；
 6. C 使用各 Client 實際 training sample count 做 weighted FedAvg；
-7. final aggregate 在每個 participating scope 上分別執行 validation；
-8. C 對整個 candidate 做一次 global promotion decision；通過後配置新
+7. C 要求各 Client 以本地凍結的 validation snapshot 同時評估 base
+   latest 與 final aggregate，並回傳可驗證的 per-scope evaluation
+   artifact；
+8. C 驗證所有 participating scopes 的 evidence，再對整個 candidate
+   做一次 global promotion gate；通過後配置新
    `modelUniqueId`、保存 ADRF reference，並原子更新 `latestModelId`；
 9. C 透過現有 Model Provision subscriptions 向 A、B 發送相同新版本。
 
@@ -1364,7 +1412,8 @@ application-level relationship。
 - 任一 scope degraded 就以當時 latest model 作為共同 retraining base；
 - C 以 Model Monitor relationship 決定 degradation trigger，再經 NRF
   discovery、training scope compatibility 與 preparation 選出 eligible
-  Clients，並在 process 啟動時固定 participant set；
+  Clients，並在 preparation 成功、正式 rounds 開始前固定 participant
+  set；
 - Client eligibility 不要求 Consumer analytics subscription、現行
   inference model 或 active Model Monitor registration；NRF capability、
   training scope compatibility 與 preparation 成功即可參與；
@@ -1388,6 +1437,11 @@ application-level relationship。
   configurable retention period 後清除；
 - PyMTLF 只維護 ordered completed revisions、單一 `latestModelId` 與
   Training Workspace；
+- final candidate 與 base latest 的 per-scope WAPE 由各 Client 使用
+  preparation 時凍結的 validation snapshot 計算，再以暫存 evaluation
+  artifact 回傳 C；C
+  不集中取得 raw validation data，且不得把 WAPE 寫成標準
+  `mlModelAcc=ACCURACY`；
 - final model description 保存各 participating scope 的 validation
   metric、sample count 與 evaluation data window，作為實驗觀察與 global
   promotion evidence，不做 per-scope 選模；

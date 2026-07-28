@@ -937,11 +937,23 @@ ArtifactKey     = SHA-256(content)
 - 每次promotion取得新的`modelUniqueId`。
 - 同一model artifact服務多個scope時，這些scope共用相同ModelVersionKey。
 
-`provider_namespace`是current PyMTLF model ID namespace，預設為`local-mtlf`，並映射到Model Provision
-notification的`modelProviderId`。它讓相同numeric `modelUniqueId`可由不同provider區分；不是另一個analytics
-event，也不是獨立NF identity。`family_id`則完全是PyMTLF private catalog key，不出現在Model Provision
-subscription。standard wire傳遞provider、`modelUniqueId`、applicability descriptor與artifact address，
-PyMTLF再用自己的catalog把該version對回FamilyKey。
+`provider_namespace`是current PyMTLF private model ID namespace，預設為
+`local-mtlf`。目前PyAnLF compatibility model雖可攜帶
+`modelProviderId`，並在欄位缺少時退回本地config，但Release 18 Model
+Provision OpenAPI與Go standard compatibility model並沒有定義這個欄位；
+因此它只是現有local compatibility metadata，不能被當作標準wire identity，
+也不能用來識別remote provider NWDAF。
+
+`provider_namespace`不是另一個analytics event，也不是獨立NF identity。
+`family_id`同樣完全是PyMTLF private catalog key，不出現在Model
+Provision subscription。現有單NWDAF流程以private catalog把numeric
+`modelUniqueId`對回FamilyKey。
+
+分散式remote-provider identity與route migration不屬於本current-state
+文件；其目標設計見
+[Distributed NWDAF Federated Learning Implementation Plan](../plans/federated-learning/Distributed%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)，
+其中改用NRF選出的`nfInstanceId`、service/API root與subscription
+`Location`，不再依賴非標準`modelProviderId`欄位。
 
 ### 9.2 Demand與reuse
 
