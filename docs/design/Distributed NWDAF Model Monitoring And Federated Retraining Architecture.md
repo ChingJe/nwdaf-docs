@@ -383,12 +383,50 @@ Consumer 不需要先把 Internal Group ID 展開成 SUPI，也不需要知道�
    時停止。因此 A、B 即使找到同一個 SMF，分別帶 TAI-A、TAI-B 後仍可
    收到不同 path 的資料。
 
+SMF 判斷 UE 所在 TAI 不以額外的 AMF Event Exposure subscription
+作為唯一前提。TS 23.288 §6.2.2.1 明確區分下列情況：
+
+1. SMF 若支援在 AMF–SMF 的
+   `Nsmf_PDUSession_Create`／`Update`／`CreateSMContext`／
+   `UpdateSMContext` 交互中取得 UE Location，可直接把 PDU sessions
+   對應到 TA-granularity AoI；
+2. SMF 若不支援上述 UE Location exchange，但支援 per-TA PDU session
+   mapping，可訂閱 AMF 的 `UE moving in or out of Area of Interest`
+   event；
+3. 兩種 mapping 能力都不支援時，SMF 拒絕相關 NWDAF request，再由
+   NWDAF 採用 AMF-assisted mapping。
+
+因此，AMF subscription 是標準允許的替代機制，不是每個 SMF 都必須執行
+的固定步驟。TS 23.502 §4.15.4.5.1 對 UPF Event Exposure 的要求是 SMF
+必須依 UE 是否位於 requested AoI 啟停下游 subscription，並以 `may`
+描述 SMF 為此訂閱 AMF。
+
+第一個實驗 profile 採用直接 UE Location exchange：
+
+```text
+AMF learns the current UE location from NG-RAN
+  -> Create/Update SM Context carries UeLocation to SMF
+  -> SMF stores the latest TAI for the PDU session
+  -> SMF compares that TAI with eventSubs[].networkArea
+  -> matching: activate the downstream UPF subscription
+  -> not matching: do not activate, or stop an active subscription
+```
+
+SMF 必須在收到含新 `UeLocation` 的 SM Context update 後重新評估相關
+AoI subscriptions。此 profile 假設實驗中的 UE 固定於其 TAI，或 TAI
+變化會伴隨 Service Request、handover 或其他 PDU Session context
+update。若 UE 在 CM-IDLE 改變 TAI、AMF 已更新位置但尚未與 SMF
+交互，SMF 可能暫時只持有 last-known TAI；需要嚴格即時追蹤 AoI
+進出時，再啟用 SMF-to-AMF event subscription 或本節後述的
+AMF-assisted alternative。
+
 ```mermaid
 sequenceDiagram
     participant A as NWDAF-A / TAI-A
     participant B as NWDAF-B / TAI-B
     participant NRF as NRF
     participant UDM as UDM
+    participant AMF as AMF
     participant SMF as Shared SMF
     participant UA as UPF-A
     participant UB as UPF-B
@@ -402,6 +440,9 @@ sequenceDiagram
     B->>UDM: Get group-G identifiers with UE list
     UDM-->>A: Complete SUPI list
     UDM-->>B: Complete SUPI list
+
+    AMF->>SMF: Create or update SM context with UeLocation
+    Note over AMF,SMF: SMF maps each PDU session to the latest known TAI
 
     loop Each relevant SUPI and PDU session
         A->>UDM: Get SMF registrations with DNN and S-NSSAI
@@ -1287,6 +1328,9 @@ application-level relationship。
   `Nudm_SDM_Get` 將 group 展開為 SUPIs；
 - NWDAF 可透過 `Nudm_UECM_Get` 取得每個 SUPI 的 SMF registrations，
   再透過 NRF 解析特定 `smfInstanceId` 的 Event Exposure endpoint；
+- 支援 AMF–SMF UE Location exchange 的 SMF，可直接把 PDU sessions
+  對應到 TA-granularity AoI；不支援此 exchange 時，SMF 可改為訂閱 AMF
+  的 UE moving in/out of AoI event；
 - `Nsmf_EventExposure` 可攜帶 AoI，SMF 依 UE 是否位於 AoI 啟停下游
   UPF subscription；
 - AnLF NWDAF 向 MTLF NWDAF 訂閱模型；
@@ -1431,6 +1475,9 @@ proximal transmission、FedAsync 或 secure aggregation。後續若加入：
 | Group identifier mapping API | [TS 29.503 Nudm_SDM OpenAPI](../../specs/openapi/TS29503_Nudm_SDM.yaml) |
 | Internal Group ID wire format | [TS 29.571 Common Data OpenAPI](../../specs/openapi/TS29571_CommonData.yaml) |
 | SMF registration lookup API | [TS 29.503 Nudm_UECM OpenAPI](../../specs/openapi/TS29503_Nudm_UECM.yaml) |
+| SMF direct PDU-session-to-AoI mapping and AMF-assisted fallback | [TS 23.288 §6.2.2.1](../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2%20Procedures%20for%20Data%20Collection/6.2.2%20Data%20Collection%20from%20NFs/6.2.2.1%20General.md) |
+| AMF–SMF UE Location exchange | [TS 23.502 §5.2.8.2](../../specs/TS%2023.502/5%20Network%20Function%20Service%20procedures/5.2%20Network%20Function%20services/5.2.8%20SMF%20Services/5.2.8.2%20Nsmf_PDUSession%20Service/README.md) |
+| Service Request carrying UE location to SMF | [TS 23.502 §4.2.3.2](../../specs/TS%2023.502/4%20System%20procedures/4.2%20Connection%2C%20Registration%20and%20Mobility%20Management%20procedures/4.2.3%20Service%20Request%20procedures/4.2.3.2%20UE%20Triggered%20Service%20Request.md) |
 | SMF Event Exposure and `networkArea` | [TS 29.508 Nsmf_EventExposure OpenAPI](../../specs/openapi/TS29508_Nsmf_EventExposure.yaml) |
 | `NetworkAreaInfo.tais` schema | [TS 29.554 Npcf_BDTPolicyControl OpenAPI](../../specs/openapi/TS29554_Npcf_BDTPolicyControl.yaml) |
 | AMF-assisted AoI UE-list alternative | [TS 29.518 Namf_EventExposure OpenAPI](../../specs/openapi/TS29518_Namf_EventExposure.yaml) |
