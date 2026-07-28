@@ -2,7 +2,7 @@
 
 日期：2026-07-28
 
-狀態：待實作
+狀態：實作與驗證完成（包含 final validation contract correction）
 
 上層計畫：
 
@@ -551,7 +551,60 @@ TrainingResourceIdentity
 
 它不是 resource repository；Phase 3 的 state owner 再提供這些值。
 
-### 7.5 Service-specific errors
+### 7.5 Final validation profile
+
+final training round aggregation 完成後，Server 不直接 promotion。第一版
+使用一個獨立 validation-only round：
+
+```text
+C -> A/B Training resource update
+     mLAccChkFlg=true
+     skipFlInd=true
+     roundInd=final training round + 1
+     mLModelInfos=final candidate
+
+A/B -> download candidate
+     -> use frozen local validation data
+     -> do not perform local fitting
+     -> publish ROUND_LOCAL/result_type=ACCURACY_CHECK
+
+A/B -> C notifUri
+     NwdafMLModelTrainNotif
+     mLModelInfos=Client-hosted accuracy-check bundle
+     statusReport.mlModelAcc (when true ACCURACY is available)
+
+C -> verify candidate digest and WAPE evidence
+  -> one global promotion gate
+  -> FINAL_MODEL
+```
+
+約束：
+
+- `mLAccChkFlg=true` 表示要求 Client 驗證 global model，本身不表示停止
+  training；
+- `skipFlInd=true` 才表示本 round 不執行 local fitting；
+- `statusReport` 不能獨自滿足 Training notification 的 at-least-one
+  condition，因此正常成功 callback 同時提供 `mLModelInfos`；
+- `mLModelInfos.mLFileAddr` 指向合法 model bundle；bundle 包含未修改的
+  candidate model，並由 project model interoperability contract 加入
+  WAPE components 等 private metadata；
+- accuracy-check bundle 的 output weights digest 必須等於 request 中
+  candidate digest；
+- `statusReport.mlModelAcc` 只用於真正的 0–100 accuracy，不把 WAPE
+  重新命名後塞入該欄位；
+- WAPE exact sample count、error sum、actual-value sum 與 time window
+  只存在 project bundle metadata，不新增標準 notification field。
+
+規格依據：
+
+- TS 23.288 §6.2F 將 Model Accuracy Check Flag 與 skip current FL round
+  indication列為獨立 optional inputs；
+- TS 29.520 §5.5.6 與
+  `TS29520_Nnwdaf_MLModelTraining.yaml` 定義 `mLAccChkFlg`、
+  `skipFlInd`、notification `statusReport` 與 `mLModelInfos` conditional
+  rule。
+
+### 7.6 Service-specific errors
 
 Phase 0 定義 typed cause constants 與 validation-to-cause mapping：
 
@@ -694,12 +747,11 @@ bundle.tar.gz
 
 | Role | Meaning | Formal `modelUniqueId` | Durable completed revision |
 | --- | --- | --- | --- |
-| `ROUND_LOCAL` | Client local training result | no | no |
+| `ROUND_LOCAL` | Client training 或 accuracy-check result | no | no |
 | `ROUND_GLOBAL` | Server aggregated round result | no | no |
-| `CLIENT_EVALUATION` | Client 對 final candidate 的本地評估 | no | no |
-| `PROCESS_FINAL` | 通過 global gate、待／已 publication 的 final model | yes | ADRF store 成功後 |
+| `FINAL_MODEL` | 通過 global gate、待／已 publication 的正式模型 | yes | ADRF store 成功後 |
 
-`PROCESS_FINAL` 在送 ADRF 前先配置一個不再重用的正式 ID，並把它寫入
+`FINAL_MODEL` 在送 ADRF 前先配置一個不再重用的正式 ID，並把它寫入
 immutable bundle；只有 ADRF store 成功及 catalog commit 後，才成為
 completed／latest。
 
@@ -710,6 +762,7 @@ completed／latest。
 ```json
 {
   "artifact_role": "ROUND_LOCAL",
+  "result_type": "TRAINING",
   "fl_metadata": {
     "contract_version": "1.0",
     "ml_corre_id": "fl-process-001",
@@ -717,6 +770,44 @@ completed／latest。
     "preprocessing_contract_digest": "<sha256>",
     "base_weights_digest": "<sha256>",
     "weights_digest": "<sha256>"
+  }
+}
+```
+
+`result_type` 只適用於 `ROUND_LOCAL`，並與 `artifact_role` 同層。final
+validation response 範例：
+
+```json
+{
+  "artifact_role": "ROUND_LOCAL",
+  "result_type": "ACCURACY_CHECK",
+  "fl_metadata": {
+    "contract_version": "1.0",
+    "ml_corre_id": "fl-process-001",
+    "round_ind": 3,
+    "participant_nf_instance_id": "<nf-instance-id>",
+    "scope_digest": "<scope-sha256>",
+    "model_contract_digest": "<sha256>",
+    "preprocessing_contract_digest": "<sha256>",
+    "base_weights_digest": "<candidate-sha256>",
+    "input_global_weights_digest": "<candidate-sha256>",
+    "weights_digest": "<same-candidate-sha256>",
+    "evaluation": {
+      "evaluation_stage": "FINAL_VALIDATION",
+      "evaluation_sample_count": 400,
+      "start_time": "2026-07-27T00:00:00Z",
+      "end_time": "2026-07-28T00:00:00Z",
+      "base_model_weights_digest": "<base-model-sha256>",
+      "candidate_weights_digest": "<candidate-sha256>",
+      "base": {
+        "absolute_error_sum": 100.0,
+        "absolute_actual_sum": 1000.0
+      },
+      "candidate": {
+        "absolute_error_sum": 50.0,
+        "absolute_actual_sum": 1000.0
+      }
+    }
   }
 }
 ```
@@ -750,12 +841,44 @@ completed／latest。
 
 #### ROUND_LOCAL
 
+- `result_type`：
+  - `TRAINING`；
+  - `ACCURACY_CHECK`；
 - `round_ind`；
 - `participant_nf_instance_id`；
 - `scope_digest`；
-- `training_sample_count`；
 - `input_global_weights_digest`；
 - output `weights_digest`。
+
+`TRAINING`：
+
+- 必須有 `training_sample_count > 0`；
+- output weights 可與 input global weights 不同；
+- 若同一輪也設定 `mLAccChkFlg=true`，可選擇附帶對 input global model
+  的 evaluation metadata。
+
+`ACCURACY_CHECK`：
+
+- 對應 Server request 的 `mLAccChkFlg=true + skipFlInd=true`；
+- 不執行 local fitting；
+- 不宣告 `training_sample_count`；
+- 必須有 evaluation metadata；
+- output `weights_digest` 必須等於 `input_global_weights_digest`，證明
+  Client 沒有修改被驗證的 candidate；
+- bundle 仍包含合法模型內容，evaluation metadata 是 bundle 中的
+  project-private metadata。
+
+evaluation metadata：
+
+- evaluation stage；
+- evaluation sample count；
+- evaluation time window；
+- base model digest 與：
+  - `absolute_error_sum`；
+  - `absolute_actual_sum`；
+- candidate model digest 與：
+  - `absolute_error_sum`；
+  - `absolute_actual_sum`。
 
 #### ROUND_GLOBAL
 
@@ -771,29 +894,14 @@ completed／latest。
 participant ordering 固定以 normalized NF instance ID 排序，避免相同輸入
 產生不同 manifest。
 
-#### CLIENT_EVALUATION
-
-- `evaluation_stage`；
-- `round_ind`；
-- `participant_nf_instance_id`；
-- `scope_digest`；
-- `evaluation_sample_count`；
-- evaluation time window；
-- base：
-  - `absolute_error_sum`；
-  - `absolute_actual_sum`；
-- candidate：
-  - `absolute_error_sum`；
-  - `absolute_actual_sum`；
-- `candidate_weights_digest`。
-
-WAPE 不以各 Client 的百分比再平均。C 以 sums 重建：
+WAPE 不以各 Client 的百分比再平均。C 從 `ROUND_LOCAL` accuracy-check
+metadata 取得 sums 後重建：
 
 ```text
 WAPE = sum(absolute_error_sum) / sum(absolute_actual_sum)
 ```
 
-#### PROCESS_FINAL
+#### FINAL_MODEL
 
 - `model_identity.model_unique_id`；
 - `previous_model_unique_id`；
@@ -801,9 +909,17 @@ WAPE = sum(absolute_error_sum) / sum(absolute_actual_sum)
 - participants；
 - 各 Client training sample count；
 - final candidate digest；
-- per-Client validation summary；
+- per-Client validation summary：
+  - participant NF instance ID；
+  - scope digest；
+  - evaluation sample count 與 time window；
+  - base／candidate weights digests；
+  - base／candidate WAPE component sums；
 - global gate result；
 - creation timestamp。
+
+per-Client summary 只保存 evidence，不包含 `accepted`；是否發布只有
+top-level `global_gate_accepted` 一次決策。
 
 `storeTransId` 不放入 bundle，因為它在 ADRF 接受 store request 後才存在。
 
@@ -813,9 +929,10 @@ WAPE = sum(absolute_error_sum) / sum(absolute_actual_sum)
 - non-floating state 必須與 base model 完全一致；
 - scaler 與 preprocessing contract 在整個 process 不變；
 - model contract 或 preprocessing digest 不同即拒絕；
-- `training_sample_count` 必須大於零；
+- `ROUND_LOCAL/TRAINING.training_sample_count` 必須大於零；
+- `ROUND_LOCAL/ACCURACY_CHECK` 必須維持 candidate weights digest；
 - temp roles 不得包含正式 `model_identity`；
-- `PROCESS_FINAL` 必須包含正式 numeric model ID。
+- `FINAL_MODEL` 必須包含正式 numeric model ID。
 
 Phase 0 只實作 model／validator／fixture；builder、download、FedAvg 與 TTL
 cleanup 在 Phase 4／5 接入。
@@ -972,10 +1089,11 @@ contracts/federated_learning/v1/
 ├── training-delay-notification.json
 ├── training-termination-notification.json
 ├── training-partial-update.json
+├── training-final-validation-result.json
 ├── artifact-round-local.json
+├── artifact-round-local-accuracy-check.json
 ├── artifact-round-global.json
-├── artifact-client-evaluation.json
-├── artifact-process-final.json
+├── artifact-final-model.json
 ├── catalog-current.json
 ├── catalog-seed-migration.json
 └── publication-pending.json
@@ -1004,6 +1122,7 @@ TRAIN_ROUND_VALID
 TRAIN_NOTIFY_DELAY_VALID
 TRAIN_NOTIFY_DELAY_CONFLICT
 ARTIFACT_ROUND_LOCAL_VALID
+ARTIFACT_ROUND_LOCAL_ACCURACY_CHECK_VALID
 CATALOG_CURRENT_VALID
 ```
 
@@ -1171,7 +1290,8 @@ tests/test_events_subscription_api.py
 
 ### Step 5：PyMTLF artifact and durable-state schemas
 
-1. 建立四種 role models；
+1. 建立三種 artifact roles，並以 `ROUND_LOCAL.result_type` 區分 training
+   與 accuracy-check result；
 2. 建立 role-specific invariant validator；
 3. 建立 catalog／journal models；
 4. 建立 seed migration pure function／fixture；
@@ -1227,8 +1347,8 @@ review 發現只做 targeted remediation；不重新進行無範圍的整體掃�
 - object key order does not change digest；
 - array order does change digest；
 - process／notification IDs do not change scope digest；
-- temp artifact rejects formal model ID；
-- final artifact requires formal model ID；
+- temporary round artifact rejects formal model ID；
+- final model artifact requires formal model ID；
 - digest mismatch rejection；
 - non-floating state mismatch rejection；
 - WAPE component validation；
@@ -1299,8 +1419,8 @@ Phase 0 只有在以下全部成立時完成：
 8. generated model 與 compatibility model ownership不重疊；
 9. `NWDAF/go.mod` 無 OpenAPI fork／local `replace`；
 10. supported-profile examples 在各語言的 code-native tests 語意一致；
-11. `ROUND_LOCAL`／`ROUND_GLOBAL`／`CLIENT_EVALUATION` 無正式 model ID；
-12. `PROCESS_FINAL` 有正式 numeric model ID；
+11. `ROUND_LOCAL`／`ROUND_GLOBAL` 無正式 model ID；
+12. `FINAL_MODEL` 有正式 numeric model ID；
 13. `storeTransId` 不寫回 immutable final bundle；
 14. current completed bundle validator 沒有被放寬；
 15. current local training、Provision、Monitor、AnLF WAPE behavior不變；
@@ -1357,3 +1477,112 @@ Phase 0 沒有新的 product decision blocker。
 - Phase 5 publication retry parameters。
 
 這些值只影響後續 runtime config，不影響本 Phase contract schema。
+
+---
+
+## 19. 實作結果
+
+### 19.1 Compatibility ownership
+
+實際 ownership 與本計畫一致：
+
+- `NWDAF/internal/compat/mlmodel/`
+  - shared Release 18 `ReportingInformation`；
+  - Provision／Monitor 共用 reporting contract；
+  - existing completed model bundle validator 未放寬。
+- `NWDAF/internal/compat/mlmodeltraining/`
+  - Training subscription、PATCH、notification 與 nested supported-profile
+    types；
+  - OpenAPI shape validation 與 FL procedure conditional validation；
+  - 只提供 pure types／validators，未註冊 public route。
+- `NWDAF/internal/compat/nrf/`
+  - generated Release 17 profile wrapper；
+  - Release 18 `MlAnalyticsInfo` FL fields；
+  - model-only、analytics-provider、FL Client、FL Server、combined role 與
+    future capability round-trip。
+- `PyMTLF/src/py_mtlf/wire/`
+  - shared reporting 與完整 Training wire models。
+- `PyMTLF/src/py_mtlf/core/`
+  - canonical training scope；
+  - role-aware artifact contract 與 tensor compatibility validator；
+  - completed catalog、pending publication journal、seed migration 與
+    cross-record invariants。
+- `PyAnLF`
+  - Provision／Monitor／Events 使用同一 Release 18 reporting field
+    semantics；
+  - containing provider identity 改由 private provision context 保存；
+  - standard `MLEventNotif` 不再宣告非規格 `modelProviderId`。
+- `nwdaf-resources/contracts/federated_learning/v1/`
+  - 18 個 standard／project-private JSON examples 與 case inventory。
+
+### 19.2 Preserved runtime boundary
+
+本次沒有：
+
+- 新增 `Nnwdaf_MLModelTraining` route、handler、consumer 或 worker；
+- 啟動 FL preparation、round、FedAvg、ADRF publication 或 recovery；
+- 將 current in-memory `ModelCatalog` 切換為 persistent catalog；
+- 放寬 existing completed bundle 的 archive、file set 或 digest 驗證；
+- 修改 `NWDAF/go.mod` 或建立 OpenAPI fork／local `replace`；
+- 宣稱真實 NRF、ADRF、SMF、UPF 或三 NWDAF process-level E2E。
+
+### 19.3 Verification evidence
+
+2026-07-28 實際執行：
+
+#### NWDAF
+
+- `go test ./internal/compat/...`：passed；
+- `go test -race ./internal/compat/...`：passed；
+- `make test`：passed；
+- `make build`：passed；
+- `make lint`：passed。
+
+#### PyMTLF
+
+- `uv run pytest -q`：128 passed；
+- `uv run ruff check .`：passed。
+
+測試涵蓋 Training shape／conditional rules、final validation flags 與
+callback、scope digest、三種 artifact roles、`ROUND_LOCAL` result types、
+unchanged-candidate digest、完整 validation evidence、tensor
+compatibility、WAPE components、linear catalog、journal states、seed
+migration、reserved ID 與 catalog cross-record invariants。
+
+#### PyAnLF
+
+- `uv run pytest -q`：239 passed、1 skipped；
+- `uv run ruff check .`：passed。
+
+skip 是既有 test suite 的環境性 skip；本次 contract、demand、monitor、
+runtime 與 Events regression tests 均通過。
+
+#### nwdaf-resources
+
+- 18 個 JSON examples 全部通過 `jq` JSON parse；
+- 15 個 Training／artifact／catalog／journal examples 另由 PyMTLF 的實際
+  Pydantic contract parse；
+- README inventory 與實際 examples 一致。
+
+PyMTLF full suite 的 10 個 warnings 來自既有 Starlette/httpx 與
+joblib/NumPy 相依套件 deprecation，未視為本次 contract failure。
+
+### 19.4 Final validation design correction
+
+後續討論將 initial artifact contract 修正為：
+
+- 移除 `CLIENT_EVALUATION` role；
+- `ROUND_LOCAL.result_type` 使用 `TRAINING` 或 `ACCURACY_CHECK`；
+- final validation request 使用
+  `mLAccChkFlg=true + skipFlInd=true`；
+- accuracy-check bundle 保存未修改的 candidate model 及 evaluation
+  metadata；
+- `PROCESS_FINAL` 改名為 `FINAL_MODEL`。
+
+correction 已同步至 PyMTLF schema／tests、Go Training wire validation、
+`nwdaf-resources` examples、主計畫與 architecture design。正式模型的
+per-Client validation summary 只保存 scope、data window、model digests
+與 WAPE components；不再保存 per-Client `accepted`，promotion 只由
+top-level global gate 決定。
+
+重新驗證結果已併入 §19.3，因此 Phase 0 contract foundation 現在完成。

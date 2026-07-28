@@ -1,6 +1,6 @@
 # Distributed NWDAF Model Monitoring and Federated Retraining Architecture
 
-Date: 2026-07-27
+Date: 2026-07-28
 
 Status: Architecture draft for discussion
 
@@ -669,14 +669,21 @@ participants 是 A、B；若後續有 TAI3 等 eligible Client，流程相同：
    FedAvg，形成下一版 global model；
 8. 若尚未達到設定的固定 round 數，C 發送下一 round 的 global model；
 9. 達到固定 round 數後，C 先保留各 Client 的 Model Training resource，
-   並以同一 resource 發出 final-candidate evaluation update；
-10. A、B 使用各自在 preparation 時凍結的 validation subset，同時評估
-    base latest 與同一 final candidate，回傳帶有 base／candidate
-    digest、WAPE sums、scope digest、evaluation sample count 與 data
-    window 的暫存 evaluation artifact；
-11. C 驗證所有 participating scopes 的 evaluation evidence，對整個
+   並以同一 resource 發出獨立的 final validation-only round：
+   `roundInd=final training round + 1`、`mLAccChkFlg=true`、
+   `skipFlInd=true`，且 `mLModelInfos` 指向 final candidate；
+10. A、B 不執行 local fitting，而是使用各自在 preparation 時凍結的
+    validation subset 同時評估 base latest 與同一 final candidate；
+11. A、B 透過標準 `NwdafMLModelTrainNotif` callback 回傳
+    `mLModelInfos`。其 `mLFileAddr` 指向暫存
+    `ROUND_LOCAL/result_type=ACCURACY_CHECK` bundle；bundle 保留未修改的
+    final candidate weights，並以 project-private metadata 攜帶
+    base／candidate digest、WAPE sums、scope digest、evaluation sample
+    count 與 data window；
+12. C 下載並驗證所有 participating scopes 的 accuracy-check bundles，
+    確認 output weights digest 與 input candidate digest 相同，再對整個
     candidate 做一次 global promotion gate；
-12. C 將 gate result 與 candidate durable handoff 給 publication job 後，
+13. C 將 gate result 與 candidate durable handoff 給 publication job 後，
     bounded delete 各 Client 的 Model Training resources；ADRF publication
     不再依賴 Training subscription。
 
@@ -694,12 +701,18 @@ globalWeights[r + 1] =
 份 scaler 與 preprocessing contract；不得各自重新 fit scaler。C
 不集中取得 raw training／validation data。WAPE 也不是 Release 18
 `MLModelMetric` 的 `ACCURACY`；因此 Client 不得把 WAPE 假裝成標準
-`mlModelAcc`，而是透過 evaluation artifact metadata 回傳，標準 callback
-仍只承載該 artifact 的 `mLFileAddr` 與 training status。
-`CLIENT_EVALUATION` 仍是包含被評估 final candidate 的 model bundle；
-WAPE evidence 是其 sidecar metadata，不是借模型 URL 傳送獨立報表。
-C 必須在聚合前驗證 artifact identity、tensor shape、dtype、parameter
-ordering 與 sample count。
+`statusReport.mlModelAcc`。標準 callback 以 `mLModelInfos` 回傳合法
+model bundle 的 `mLFileAddr`；只有能表達真正 0–100 accuracy 時才另外
+提供 `statusReport.mlModelAcc`。WAPE evidence 存在
+`ROUND_LOCAL/result_type=ACCURACY_CHECK` bundle 的 project-private
+metadata 中，不是新的 SBI 欄位，也不是借模型 URL 傳送一份純報表。
+因為該 round 設定 `skipFlInd=true`，accuracy-check bundle 必須包含未被
+修改的 final candidate，且 output weights digest 必須等於 input
+candidate digest。
+C 對 local training artifact 必須在聚合前驗證 identity、tensor shape、
+dtype、parameter ordering 與 sample count；對 accuracy-check artifact
+則必須在 global gate 前驗證相同 model contract 與未修改的 candidate
+digest。
 
 #### 5.6.1 Client ADRF dataset snapshot
 
@@ -974,33 +987,38 @@ C 不需要為 FL 把各 Client 的 raw dataset 集中取回。
 C 完成 aggregation 後：
 
 1. 透過尚未刪除的 Model Training resources，要求各 participating Client
-   以本地凍結的 validation snapshot 同時評估 base latest 與同一 final
-   candidate；
-2. 接收並驗證各 Client 回傳的 evaluation artifact，不集中取得其 raw
-   validation data；
-3. 以各 scope 的 base／candidate WAPE、absolute-error sum、
+   執行 final validation-only round；request 使用
+   `mLAccChkFlg=true`、`skipFlInd=true`、下一個 `roundInd`，並以
+   `mLModelInfos` 提供同一 final candidate；
+2. 各 Client 以本地凍結的 validation snapshot 同時評估 base latest 與
+   final candidate，不執行 local fitting；再透過標準 Training callback
+   回傳 `ROUND_LOCAL/result_type=ACCURACY_CHECK` bundle URL；
+3. C 接收並驗證各 Client 回傳的 accuracy-check bundle，不集中取得其 raw
+   validation data，並確認 bundle 中的 candidate weights 沒有被修改；
+4. 以各 scope 的 base／candidate WAPE、absolute-error sum、
    actual-value sum、sample count 與 evaluation data window 重現既有
    triggering-scope／aggregate／non-triggering-scope gate，並寫入 final
    model description，作為觀察證據而非分 scope 選模依據；
-4. 對整個 candidate 做一次 global promotion gate；不建立
+5. 對整個 candidate 做一次 global promotion gate；不建立
    per-TAI applicability gate 或候選排名；
-5. 通過 gate 後建立新的 model unique identifier 與 final artifact；
-6. 將 final artifact 保存至 ADRF 並記錄 durable reference；
-7. ADRF storage 成功後，把新版本加入 completed revision list，原子更新
+6. 通過 gate 後建立新的 model unique identifier 與 `FINAL_MODEL`
+   artifact；
+7. 將 final artifact 保存至 ADRF 並記錄 durable reference；
+8. ADRF storage 成功後，把新版本加入 completed revision list，原子更新
    `latestModelId`；
-8. 透過既有 Model Provision subscriptions，把同一個 latest model 發送
+9. 透過既有 Model Provision subscriptions，把同一個 latest model 發送
    給 A、B；
-9. Clients 下載並驗證新 artifact；下載或驗證失敗時繼續使用舊模型，
+10. Clients 下載並驗證新 artifact；下載或驗證失敗時繼續使用舊模型，
    不變更任何舊 monitoring relationship；
-10. 驗證成功後，Clients 原子切換 active model，並立即以新 `modelId`
+11. 驗證成功後，Clients 原子切換 active model，並立即以新 `modelId`
    向 C 建立新的 Model Monitor registration；
-11. C 為新模型建立新的 monitor subscriptions／correlations；新模型在
+12. C 為新模型建立新的 monitor subscriptions／correlations；新模型在
     累積到足夠 prediction／ground-truth window 前保持 warm-up，不送出
     虛假的 WAPE；
-12. 新 registration 與 monitor subscription 都建立成功後，C 才刪除位於
+13. 新 registration 與 monitor subscription 都建立成功後，C 才刪除位於
     Clients 的舊模型 monitor subscriptions，Clients 再向 C deregister
     舊模型 usage registrations；
-13. 若新 monitoring relationship 無法在 cutover timeout 內建立，Client
+14. 若新 monitoring relationship 無法在 cutover timeout 內建立，Client
     保留舊模型與舊監控，並可依本地政策 rollback，而不是先清除舊世代。
 
 Consumer 不需重新建立原 analytics subscription。各 Client 仍以原本的
@@ -1157,11 +1175,12 @@ sequenceDiagram
     S->>S: Aggregate final candidate
 
     Note over S,L2: Client-side final evaluation
-    S->>L1: Evaluation-only update<br/>final candidate
-    S->>L2: Evaluation-only update<br/>final candidate
-    L1-->>S: Evaluation artifact<br/>scope-A base/candidate WAPE
-    L2-->>S: Evaluation artifact<br/>scope-B base/candidate WAPE
-    S->>S: Verify evaluations<br/>Decide global promotion
+    S->>L1: Training resource update<br/>mLAccChkFlg=true, skipFlInd=true<br/>final candidate
+    S->>L2: Training resource update<br/>mLAccChkFlg=true, skipFlInd=true<br/>final candidate
+    Note over L1,L2: Reuse frozen validation snapshot<br/>No local fitting
+    L1-->>S: Training callback<br/>ROUND_LOCAL accuracy-check URL
+    L2-->>S: Training callback<br/>ROUND_LOCAL accuracy-check URL
+    S->>S: Verify unchanged candidate digest<br/>Rebuild WAPE and decide global promotion
 
     Note over S,ADRF: Completed model persistence
     S->>NRF: Discover ADRF ML model storage
@@ -1287,14 +1306,22 @@ identity。
 - 第一版不使用 `addModelInfo`；每次只交換一個由 process、round 與
   participant 關聯的暫存模型；
 - 不進入 completed revision list，也不影響 `latestModelId`；
-- bundle 以 `ROUND_LOCAL` 或 `ROUND_GLOBAL`、process、round、participant
-  或 aggregated participants 與 sample count 表明它是訓練中的過渡產物；
+- bundle 使用 `ROUND_LOCAL` 或 `ROUND_GLOBAL`：
+  - `ROUND_LOCAL/result_type=TRAINING` 是 Client local training result，
+    必須有實際 `training_sample_count > 0`；
+  - `ROUND_LOCAL/result_type=ACCURACY_CHECK` 是 final validation result，
+    不宣告 training sample count，必須含 evaluation metadata，且 weights
+    digest 不得偏離 Server 提供的 candidate；
+  - `ROUND_GLOBAL` 是 Server 聚合出的 round global model；
+- process、round、participant 或 aggregated participants 與 sample count
+  共同表明 artifact 是訓練中的過渡產物；
 - FL process terminal 且 retention period 到期後即可清除。
 
 最後一輪聚合結果離開 Training Workspace 前，仍只是 final candidate。
-它通過 bundle、aggregation、validation 與 stale-base 檢查後，才配置新的
-`modelUniqueId`，以 `PROCESS_FINAL` 打包並保存至 ADRF，最後更新
-`latestModelId`。
+它通過 bundle、aggregation、client-side final validation、global gate
+與 stale-base 檢查後，才配置新的 `modelUniqueId`，以 `FINAL_MODEL`
+打包並保存至 ADRF，最後更新 `latestModelId`。`FINAL_MODEL` 是正式模型，
+不屬於可被 TTL 清理的 round 暫存 artifact。
 
 ### 7.4 Retraining、promotion 與 provision
 
@@ -1310,10 +1337,12 @@ identity。
 5. 所有 participants 都取得同一個 base/global model，使用自己的本地
    資料訓練；
 6. C 使用各 Client 實際 training sample count 做 weighted FedAvg；
-7. C 要求各 Client 以本地凍結的 validation snapshot 同時評估 base
-   latest 與 final aggregate，並回傳可驗證的 per-scope evaluation
-   artifact；
-8. C 驗證所有 participating scopes 的 evidence，再對整個 candidate
+7. C 以 `mLAccChkFlg=true + skipFlInd=true` 發出獨立 final
+   validation-only round；各 Client 重用本地凍結的 validation snapshot，
+   不做 local fitting，並回傳可驗證的
+   `ROUND_LOCAL/result_type=ACCURACY_CHECK` bundle；
+8. C 驗證所有 participating scopes 的 evidence 與未修改的 candidate
+   digest，再對整個 candidate
    做一次 global promotion gate；通過後配置新
    `modelUniqueId`、保存 ADRF reference，並原子更新 `latestModelId`；
 9. C 透過現有 Model Provision subscriptions 向 A、B 發送相同新版本。
@@ -1438,9 +1467,15 @@ application-level relationship。
 - PyMTLF 只維護 ordered completed revisions、單一 `latestModelId` 與
   Training Workspace；
 - final candidate 與 base latest 的 per-scope WAPE 由各 Client 使用
-  preparation 時凍結的 validation snapshot 計算，再以暫存 evaluation
-  artifact 回傳 C；C
-  不集中取得 raw validation data，且不得把 WAPE 寫成標準
+  preparation 時凍結的 validation snapshot 計算；C 以
+  `mLAccChkFlg=true + skipFlInd=true` 發出獨立 validation-only round，
+  Client 再以標準 Training callback 回傳暫存
+  `ROUND_LOCAL/result_type=ACCURACY_CHECK` bundle；
+- accuracy-check bundle 必須保留原 final candidate weights，且 output
+  weights digest 必須等於 input candidate digest；WAPE sums、sample
+  count 與 time window 存在 project-private bundle metadata；
+- C 不集中取得 raw validation data；標準 `statusReport.mlModelAcc` 只在
+  Client 能提供真正 0–100 accuracy 時使用，不把 WAPE 寫成
   `mlModelAcc=ACCURACY`；
 - final model description 保存各 participating scope 的 validation
   metric、sample count 與 evaluation data window，作為實驗觀察與 global
@@ -1449,8 +1484,9 @@ application-level relationship。
   model selection／policy 責任；
 - `modelUniqueId` 是正式模型的主識別，必須在 5GC scope 內唯一；
   `storeTransId` 只是一筆 ADRF storage locator；
-- round local／interim models 不配置正式 `modelUniqueId`，只有通過驗證
-  與 global promotion 的 final model 才加入 completed revision list；
+- round local／interim models 不配置正式 `modelUniqueId`；artifact roles
+  固定為 `ROUND_LOCAL`、`ROUND_GLOBAL` 與 `FINAL_MODEL`，只有通過驗證
+  與 global promotion 的 `FINAL_MODEL` 才加入 completed revision list；
 - 更新模型沿用既有 Model Provision subscriptions；
 - 新模型切換採 new-before-old：先驗證與啟用新 artifact，再建立新
   registration／monitor subscription，確認成功後才刪除舊 monitor 並
@@ -1541,6 +1577,7 @@ proximal transmission、FedAsync 或 secure aggregation。後續若加入：
 | Model monitoring API | [TS 29.520 Nnwdaf_MLModelMonitor OpenAPI](../../specs/openapi/TS29520_Nnwdaf_MLModelMonitor.yaml) |
 | Federated Learning procedure | [TS 23.288 §6.2C](../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md) |
 | Model training API | [TS 29.520 Nnwdaf_MLModelTraining OpenAPI](../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml) |
+| Final validation flags and callback conditions | [TS 29.520 §5.5.6 ML Model Training data model](../../specs/TS%2029.520/5%20API%20Definitions/5.5%20Nnwdaf_MLModelTraining%20Service%20API/5.5.6%20Data%20Model.md) |
 | ADRF data retrieval procedure | [TS 29.575 §4.2](../../specs/TS%2029.575/4%20Services%20offered%20by%20the%20ADRF/4.2%20Nadrf_DataManagement%20Service/README.md) |
 | ADRF data retrieval API | [TS 29.575 Nadrf_DataManagement OpenAPI](../../specs/openapi/TS29575_Nadrf_DataManagement.yaml) |
 | ADRF ML model management procedure | [TS 29.575 §4.3](../../specs/TS%2029.575/4%20Services%20offered%20by%20the%20ADRF/4.3%20Nadrf%20_%20MLModelManagement%20Service.md) |

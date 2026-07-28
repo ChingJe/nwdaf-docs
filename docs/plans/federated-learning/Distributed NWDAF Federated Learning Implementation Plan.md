@@ -2,7 +2,7 @@
 
 日期：2026-07-28
 
-狀態：設計、現況與 Release 18 規格已完成第一輪核對；待團隊審核後分切片實作
+狀態：Phase 0 contract foundation 已實作並完成重新驗證
 
 相關文件：
 
@@ -290,9 +290,23 @@ PUT/PATCH round 1
 PUT/PATCH round 2
   -> local model callback
 PUT/PATCH final validation
-  -> local evaluation callback
+  -> ROUND_LOCAL accuracy-check callback
 DELETE
 ```
+
+final validation 是獨立的 validation-only round。Server 提供 final
+candidate，並同時設定：
+
+```json
+{
+  "mLAccChkFlg": true,
+  "skipFlInd": true
+}
+```
+
+`mLAccChkFlg=true` 要求 Client 使用本地資料驗證 candidate；
+`skipFlInd=true` 明確表示該 round 不執行 local fitting。只設定
+`mLAccChkFlg` 不代表停止訓練。
 
 Training notification 不含 subscription ID。Go 先以必填
 `notifCorreId` 找到 local route／peer resource，再由 PyMTLF 驗證 FL
@@ -401,15 +415,17 @@ C 因此不能直接沿用 current single-NWDAF trainer 的 local evaluation。
 
 1. 最後一輪 FedAvg 形成 final candidate，但尚未 promotion；
 2. C 對同一批 Client Training resources 發出 evaluation-only update；
-3. request 使用 `mLPreFlag=true` 阻止 local fitting，並使用
-   `mLAccChkFlg=true` 要求以 local data 評估 global model；同時遵守
-   preparation request 對 `dataAvReq`／`timeAvReq` 的條件要求；
+3. request 同時使用：
+   - `mLAccChkFlg=true`：要求以 local data 評估 global model；
+   - `skipFlInd=true`：跳過本 round 的 local fitting；
+   - `mLModelInfos`：提供 final candidate bundle URL；
 4. 此 update 使用保留的 `roundInd = final training round + 1`，但 resource
-   expected stage 是 `FINAL_EVALUATION`，不得被 round duplicate guard
+   expected stage 是 `FINAL_VALIDATION`，不得被 round duplicate guard
    當成另一輪 local training；
 5. 各 Client 重用本 process 已凍結的 validation snapshot，同時評估
    base latest model 與 final candidate；
-6. Client 發布暫存 `CLIENT_EVALUATION` bundle：
+6. Client 發布暫存 `ROUND_LOCAL` bundle，並設定
+   `result_type=ACCURACY_CHECK`：
    - 被評估的 final candidate weights；
    - base／candidate weights 與 contract digest；
    - scope identity digest；
@@ -419,6 +435,8 @@ C 因此不能直接沿用 current single-NWDAF trainer 的 local evaluation。
 7. callback 仍使用 `NwdafMLModelTrainNotif` 與暫存 `mLFileAddr`；
    該 URL 指向包含 final candidate 的合法 model bundle，evaluation
    metadata 是 bundle sidecar，不是只借模型 URL 傳一份報表；
+   因為 request 設定 `skipFlInd=true`，bundle 的 `weights_digest` 必須
+   等於 input global candidate digest；
 8. 標準 `statusReport.mlModelAcc` 只在能表達真正 ACCURACY 時提供；
    不把 WAPE 塞入該欄位；
 9. C 驗證所有 bundle 指向相同 final candidate，並用各 scope sums 重現
@@ -427,10 +445,33 @@ C 因此不能直接沿用 current single-NWDAF trainer 的 local evaluation。
 10. `enforce_performance_gate=false` 時仍保存相同 evidence，但不因結果
     較差拒絕；最後仍只有一次 global promotion gate。
 
-`CLIENT_EVALUATION` 是 project artifact contract，不是新的 SBI 或
-vendor JSON field。上述 `mLPreFlag + mLAccChkFlg`、WAPE sidecar 與
-`roundInd` 分配是本計畫的 implementation profile，不是 3GPP 新增的
-資料模型。
+```mermaid
+sequenceDiagram
+    participant C as NWDAF-C FL Server
+    participant AB as NWDAF-A or NWDAF-B FL Client
+
+    Note over C: Last FedAvg result becomes final candidate
+    C->>AB: PATCH or PUT Training resource<br/>mLAccChkFlg=true, skipFlInd=true<br/>roundInd=final round + 1<br/>mLModelInfos=final candidate
+    AB->>C: GET final candidate bundle
+    Note over AB: Reuse frozen validation data<br/>No local fitting<br/>Calculate accuracy and WAPE evidence
+    AB-->>C: POST notifUri<br/>NwdafMLModelTrainNotif<br/>mLModelInfos=ROUND_LOCAL accuracy-check URL<br/>statusReport when applicable
+    C->>AB: GET ROUND_LOCAL accuracy-check bundle
+    Note over C: Verify unchanged candidate digest<br/>Rebuild per-scope and aggregate WAPE
+    Note over C: One global promotion gate
+    Note over C: Create FINAL_MODEL only after gate passes
+```
+
+`ROUND_LOCAL.result_type` 與 WAPE sidecar 是 project artifact
+contract，不是新的 SBI 或 vendor JSON field。標準通訊仍使用
+`mLAccChkFlg`、`skipFlInd`、`mLModelInfos`、`statusReport` 與 callback。
+bundle 內額外保存哪些相容 metadata，由本專案的 model interoperability
+contract 定義。
+
+規格依據：
+
+- [TS 23.288 §6.2F ML Model Training](../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2F%20Procedure%20for%20ML%20Model%20Training.md)：request 可提供 Model Accuracy Check Flag 與 skip current FL round indication；
+- [TS 29.520 §5.5.6 Training data model](../../../specs/TS%2029.520/5%20API%20Definitions/5.5%20Nnwdaf_MLModelTraining%20Service%20API/5.5.6%20Data%20Model.md)：定義 `mLAccChkFlg`、`skipFlInd`、`mLModelInfos`、`statusReport` 與 notification conditional rule；
+- [TS 29.520 ML Model Training OpenAPI](../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)：定義 PUT／PATCH body 與 callback schema。
 
 ### 5.2 Remote model provider identity
 
@@ -556,7 +597,7 @@ NRF candidate 不等於正式 participant。
 | --- | --- |
 | Go NWDAF | NF identity、role profile、NRF registration/discovery/cache、public standard SBI、outbound Training／Provision／Monitor／ADRF clients、callback relay、peer resource mirror、backend sync |
 | PyAnLF | analytics/model demand、provider selection policy、model activation、monitor registration、WAPE measurement、collection descriptors、ADRF raw data write |
-| PyMTLF on A/B | FL Client Training producer resource、preparation、ADRF snapshot、shared-scaler local trainer、round/evaluation artifacts |
+| PyMTLF on A/B | FL Client Training producer resource、preparation、ADRF snapshot、shared-scaler local trainer、`ROUND_LOCAL` training／accuracy-check bundles |
 | PyMTLF on C | FL Server model catalog、degradation intent、Client selection、FL process/round、FedAvg、global promotion、ADRF final-model publication |
 | NRF extension | preserve and match Release 18 NF Profile／`MlAnalyticsInfo` |
 | ADRF | raw record retrieval、completed model storage/retrieval |
@@ -637,6 +678,8 @@ NRF role discovery
 ---
 
 ## 8. Phase 0：Release 18 contract foundation
+
+狀態：已實作並完成 final validation artifact correction 與重新驗證。
 
 詳細實作計畫：
 
@@ -736,14 +779,13 @@ Tasks：
 
 ### 8.4 Slice 0C：FL artifact manifest
 
-建立四種 bundle role：
+建立三種 bundle role：
 
 | Role | Formal model ID | Durable |
 | --- | --- | --- |
 | `ROUND_LOCAL` | no | no |
 | `ROUND_GLOBAL` | no | no |
-| `CLIENT_EVALUATION` | no | no |
-| `PROCESS_FINAL` | yes | yes after ADRF store |
+| `FINAL_MODEL` | yes | yes after ADRF store |
 
 所有 role 共用：
 
@@ -757,18 +799,21 @@ Tasks：
 
 Role-specific fields：
 
-- `ROUND_LOCAL`：`roundInd`、participant NF instance ID、scope digest、
-  actual local training sample count；
+- `ROUND_LOCAL`：
+  - 共用 `roundInd`、participant NF instance ID、scope digest、
+    input global weights digest；
+  - `result_type=TRAINING` 時保存 actual local training sample count 與
+    local output weights；
+  - `result_type=ACCURACY_CHECK` 時保存 base／candidate WAPE sums、
+    evaluation sample count、time window，且 output weights digest 必須
+    等於 input global candidate digest；
 - `ROUND_GLOBAL`：`roundInd`、ordered participants、input digests 與
   aggregated training sample count；
-- `CLIENT_EVALUATION`：evaluation stage／`roundInd`、participant、
-  scope digest、base／candidate WAPE sums、evaluation sample count 與
-  time window；
-- `PROCESS_FINAL`：formal model ID、participants、各 Client training
+- `FINAL_MODEL`：formal model ID、participants、各 Client training
   sample count、validation summary 與 previous revision。
 
 ADRF `storeTransId` 在 ADRF 接受 bundle 後才存在，只保存於 catalog 的
-completed revision metadata，不反寫 immutable `PROCESS_FINAL` bundle。
+completed revision metadata，不反寫 immutable `FINAL_MODEL` bundle。
 Round roles 統一使用 `ROUND_LOCAL`／`ROUND_GLOBAL`；舊 design 中泛稱的
 `ROUND_INTERMEDIATE` 只代表這兩者的上位概念。
 
@@ -1241,7 +1286,7 @@ CREATED
   -> ROUND_WAITING
   -> AGGREGATING
   -> next ROUND_DISPATCH
-  -> FINAL_EVALUATION
+  -> FINAL_VALIDATION
   -> PUBLICATION_HANDOFF
   -> EXECUTION_COMPLETE
 
@@ -1276,7 +1321,7 @@ State 至少記錄：
 
 同一 participant／stage／`roundInd` 的重複 callback若 digest 相同回
 `204` 並保持原 state；digest 不同則 process failed。Final evaluation
-使用下一個保留 `roundInd` 與 `FINAL_EVALUATION` stage，不與最後一個
+使用下一個保留 `roundInd` 與 `FINAL_VALIDATION` stage，不與最後一個
 training result 混用。
 
 PyMTLF-C 是所有 outbound Training resources 的 lifecycle owner：
@@ -1324,10 +1369,17 @@ C 下載全部 `ROUND_LOCAL` bundles 後：
 
 ### 13.1 Slice 5A：Client-side final validation
 
-- C 對 A/B 發 evaluation-only update；
+- C 對 A/B 發 final validation-only update：
+  - `mLAccChkFlg=true`；
+  - `skipFlInd=true`；
+  - `mLModelInfos` 指向 final candidate；
+  - `roundInd=final training round + 1`；
 - A/B 使用 frozen validation snapshot；
 - 不執行 local fitting；
-- A/B 發布 `CLIENT_EVALUATION` bundle；
+- A/B 發布 `ROUND_LOCAL/result_type=ACCURACY_CHECK` bundle；
+- accuracy-check bundle 包含未修改的 candidate model 與 project-private
+  evaluation metadata；
+- bundle `weights_digest` 必須等於 request 的 candidate digest；
 - C 驗證 base／candidate weights 與 preprocessing digest；
 - C 收集每 scope 的 base／candidate WAPE、absolute-error sum、
   actual-value sum、sample count 與 time window；
@@ -1375,7 +1427,7 @@ C：
    並 durable 寫入含 candidate／previous revision／validation evidence 的
    pending-publication journal；
 2. 將 candidate pin 到 durable publication directory；
-3. 建立 immutable `PROCESS_FINAL` bundle，fsync 後將 path／digest 更新至
+3. 建立 immutable `FINAL_MODEL` bundle，fsync 後將 path／digest 更新至
    journal；
 4. 讓 ADRF 可由 temporary URL 下載；
 5. 以 C `nfInstanceId` 作 owner 發送 Nadrf ML Model store request；
