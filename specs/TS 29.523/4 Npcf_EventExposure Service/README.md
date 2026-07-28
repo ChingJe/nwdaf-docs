@@ -1,0 +1,24 @@
+---
+spec: TS 29.523
+version: 18.7.0
+release: '18'
+clause: '4'
+title: 4 Npcf_EventExposure Service
+source_archive: 29523-i70.zip
+source_document: 29523-i70.docx
+source_archive_sha256: 5cd859d1209362653dc38885359730445b9477dac772b9b67bc95f3bbe64cdf0
+source_document_sha256: 1f2227da69ad8fc7af4a88265d73ec63df4f366a7ed3eccf8bbbe8b037dba1ba
+content_origin: generated-navigation-and-3gpp-source
+conversion: deterministic-pandoc-structure
+---
+
+# 4 Npcf_EventExposure Service
+
+> This index is generated navigation. Clause files preserve deterministically extracted source wording.
+
+## Child clauses
+
+| Clause | Source words |
+|---|---:|
+| [4.1 Service Description](4.1%20Service%20Description.md) | 776 |
+| [4.2 Service Operations](4.2%20Service%20Operations.md) | 3,804 |

@@ -180,6 +180,50 @@
         "openapi/TS29520_Nnwdaf_MLModelTraining.yaml",
         "openapi/manifest.yaml"
       ]
+    },
+    {
+      "query": "TS 29.523 PCF event exposure",
+      "needle": "Npcf_EventExposure_Subscribe",
+      "passed": true,
+      "matches": [
+        "TS 23.502/01 Original contents.md",
+        "TS 23.502/manifest.yaml",
+        "TS 29.523/01 Original contents.md",
+        "TS 29.523/manifest.yaml",
+        "TS 29.523/4 Npcf_EventExposure Service/4.2 Service Operations.md",
+        "TS 23.502/5 Network Function Service procedures/5.2 Network Function services/5.2.5 PCF Services/5.2.5.7 Npcf_EventExposure service.md"
+      ]
+    },
+    {
+      "query": "TS 29.523 notification",
+      "needle": "Policy Control Event Notification",
+      "passed": true,
+      "matches": [
+        "TS 29.523/01 Original contents.md",
+        "TS 29.523/manifest.yaml",
+        "TS 29.523/5 Npcf_EventExposure Service API/5.5 Notifications.md",
+        "TS 29.523/Annex B (informative)_ Change history/2018.md"
+      ]
+    },
+    {
+      "query": "OpenAPI PCF event exposure",
+      "needle": "TS29523_Npcf_EventExposure.yaml",
+      "passed": true,
+      "matches": [
+        "README.md",
+        "_validation/README.md",
+        "openapi/TS29122_MonitoringEvent.yaml",
+        "openapi/TS29520_Nnwdaf_MLModelProvision.yaml",
+        "openapi/TS29520_Nnwdaf_MLModelMonitor.yaml",
+        "openapi/README.md",
+        "openapi/TS29520_Nnwdaf_EventsSubscription.yaml",
+        "openapi/TS29520_Nnwdaf_RoamingAnalytics.yaml",
+        "openapi/TS29520_Nnwdaf_MLModelTraining.yaml",
+        "openapi/manifest.yaml",
+        "TS 29.523/README.md",
+        "TS 29.523/manifest.yaml",
+        "TS 29.523/Annex A (normative)_ OpenAPI specification/README.md"
+      ]
     }
   ],
   "passed": true

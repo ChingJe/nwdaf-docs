@@ -820,11 +820,29 @@ reporting 可實現 `MLModelTrainingInfo`。因此 one-time result 完成後，
 刪除 subscription」，所以實作不應只靠這個假設避免 resource 殘留。
 若 reporting information 帶 expiry，provider 也可依 expiry 清理。
 
-本地 Release 18 OpenAPI corpus 缺少 `TS29523_Npcf_EventExposure.yaml`
-這個外部 dependency，因此本文件不虛構 `eventReq` 內 immediate/one-time
-的完整 JSON；可確認的是 `NwdafMLModelTrainSubsc.eventReq` 重用
-`ReportingInformation`，而 response representation 可使用
-`immReport` 承載立即的 `NwdafMLModelTrainNotif`。
+本地 Release 18 corpus 已包含 TS 29.523 V18.7.0 與 official
+`TS29523_Npcf_EventExposure.yaml` V18.5.0，因此
+`NwdafMLModelTrainSubsc.eventReq` 所重用的 `ReportingInformation`
+可以完整展開。其欄位包括：
+
+- `immRep`；
+- `notifMethod`；
+- `maxReportNbr`；
+- `monDur`；
+- `repPeriod`；
+- `sampRatio`；
+- `partitionCriteria`；
+- `grpRepTime`；
+- `notifFlag`；
+- `notifFlagInstruct`；
+- `mutingSetting`。
+
+`eventReq` 本身是 optional；省略時依 `ReportingInformation` 的 default
+semantics處理。立即回報仍由 request 中的 `immRep`／其他 reporting
+requirements表達，建立後的 response representation可使用
+`immReport` 承載立即的 `NwdafMLModelTrainNotif`。這些 reporting欄位
+只決定本次結果如何回報，不改變 `mLPreFlag` 所決定的
+preparation／training工作內容。
 
 #### 7.5.1 避免 preparation 與 execution 混淆
 
@@ -2342,19 +2360,22 @@ ID 篩選的標準 query parameter。因此不能把
   `TS29574_Ndccf_DataManagement.yaml`、
   `TS29574_Ndccf_ContextManagement.yaml`，因此 NWDAF YAML 引用的
   DCCF event/data types，以及 DCCF subscriptions、fetch、transfer、
-  data collection profile resource 已可在本地查證。
+  data collection profile resource 已可在本地查證；
+- TS 29.523 完整規格及 `TS29523_Npcf_EventExposure.yaml`，因此
+  NWDAF Training／Provision／Monitor YAML 引用的
+  `ReportingInformation`，包括 immediate、one-time、sampling、
+  notification muting等欄位已可在本地完整展開。
 
-這補掉了本文件先前所列的 TS 29.552 與 TS 29.574 缺口，但不代表整個
-OpenAPI corpus 已無外部 dependency。現有 38 份官方 YAML 仍引用 19 份
-尚未提供的其他 NF API YAML。和本文直接相關的例子是
-`TS29523_Npcf_EventExposure.yaml`：`NwdafMLModelTrainSubsc.eventReq`
-重用其中的 `ReportingInformation`，所以目前仍無法只靠本地 YAML
-完整展開並驗證 immediate/one-time reporting 的 JSON schema。
+這補掉了本文件先前所列的 TS 29.552、TS 29.574 與 TS 29.523 缺口，但
+不代表整個 OpenAPI corpus 已無外部 dependency。目前收錄 56 份 official
+YAML，仍引用 21 份尚未提供的其他 NF API YAML；它們保留在 corpus
+validation record中追蹤。與本文件核心 FL Training contract直接相關的
+`ReportingInformation` dependency已經解除。
 
 因此：
 
 - 本文件現在可直接引用 TS 29.552 證明 FL HTTP 行為，也可引用
-  TS 29.574 說明 DCCF；
+  TS 29.574 說明 DCCF，並引用 TS 29.523 驗證 `eventReq`；
 - 目前不需要再為 DCCF 建立推測性的最小 compatibility type；
 - 若要對全部 NWDAF YAML 做完整 bundle/code generation，仍須補齊實際
   被目標 API 引用的外部 YAML，不能把「本文件所需證據較完整」誤認成
@@ -2364,6 +2385,8 @@ OpenAPI corpus 已無外部 dependency。現有 38 份官方 YAML 仍引用 19 �
 
 - [本地 OpenAPI corpus 說明](../../specs/openapi/README.md)
 - [本地規格總覽](../../specs/README.md)
+- [TS 29.523 `ReportingInformation`](../../specs/TS%2029.523/5%20Npcf_EventExposure%20Service%20API/5.6%20Data%20Model/5.6.2%20Structured%20data%20types.md)
+- [TS 29.523 official OpenAPI](../../specs/openapi/TS29523_Npcf_EventExposure.yaml)
 
 ### 17.2 free5GC OpenAPI 版本落差
 

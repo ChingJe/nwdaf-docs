@@ -598,5 +598,41 @@
     },
     "modal_and_marker_counts_match": false,
     "note": "Legacy DOC: antiword serializes complex tables and one normative sentence incompletely; source-page inspection and the richer DOC-to-DOCX structural path were retained as the primary extraction."
+  },
+  "TS 29.523": {
+    "pandoc_tokens": 16027,
+    "docx2txt_tokens": 16038,
+    "token_multiset_overlap_pandoc": 0.9998752105821427,
+    "token_multiset_overlap_docx2txt": 0.999189425115351,
+    "12_token_windows_pandoc": 16016,
+    "12_token_windows_docx2txt": 16027,
+    "12_token_window_overlap": 14200,
+    "12_token_window_overlap_pandoc": 0.9990853444030113,
+    "12_token_window_overlap_docx2txt": 0.9983127109111362,
+    "modal_and_marker_counts_pandoc": {
+      "shall": 119,
+      "should": 2,
+      "may": 24,
+      "must": 1,
+      "note": 63,
+      "example": 2,
+      "shall not": 2,
+      "should not": 0,
+      "may not": 0,
+      "must not": 0
+    },
+    "modal_and_marker_counts_docx2txt": {
+      "shall": 119,
+      "should": 2,
+      "may": 24,
+      "must": 1,
+      "note": 63,
+      "example": 2,
+      "shall not": 2,
+      "should not": 0,
+      "may not": 0,
+      "must not": 0
+    },
+    "modal_and_marker_counts_match": true
   }
 }

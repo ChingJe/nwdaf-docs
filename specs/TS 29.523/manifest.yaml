@@ -1,0 +1,489 @@
+spec: TS 29.523
+version: 18.7.0
+release: '18'
+source_archive: 29523-i70.zip
+source_document: 29523-i70.docx
+source_archive_sha256: 5cd859d1209362653dc38885359730445b9477dac772b9b67bc95f3bbe64cdf0
+source_document_sha256: 1f2227da69ad8fc7af4a88265d73ec63df4f366a7ed3eccf8bbbe8b037dba1ba
+max_source_words_per_semantic_file_target: 4200
+clauses:
+- clause: document-information
+  title: Document information
+  path: 00 Document information.md
+  source_words: 293
+  kind: source-file
+- clause: contents
+  title: Contents
+  path: 01 Original contents.md
+  source_words: 627
+  kind: source-file
+- clause: foreword
+  title: Foreword
+  path: 02 Foreword.md
+  source_words: 131
+  kind: source-file
+- clause: '1'
+  title: 1 Scope
+  path: 1 Scope.md
+  source_words: 137
+  kind: source-file
+- clause: '2'
+  title: 2 References
+  path: 2 References.md
+  source_words: 424
+  kind: source-file
+- clause: '3'
+  title: 3 Definitions, symbols and abbreviations
+  path: 3 Definitions, symbols and abbreviations.md
+  source_words: 224
+  kind: source-file
+- clause: '3.1'
+  title: 3.1 Definitions
+  path: 3 Definitions, symbols and abbreviations.md
+  source_words: 57
+  kind: embedded-clause
+- clause: '3.2'
+  title: 3.2 Abbreviations
+  path: 3 Definitions, symbols and abbreviations.md
+  source_words: 167
+  kind: embedded-clause
+- clause: '4'
+  title: 4 Npcf_EventExposure Service
+  path: 4 Npcf_EventExposure Service/README.md
+  source_words: 4580
+  kind: navigation-directory
+- clause: '4.1'
+  title: 4.1 Service Description
+  path: 4 Npcf_EventExposure Service/4.1 Service Description.md
+  source_words: 776
+  kind: source-file
+- clause: 4.1.1
+  title: 4.1.1 Overview
+  path: 4 Npcf_EventExposure Service/4.1 Service Description.md
+  source_words: 221
+  kind: embedded-clause
+- clause: 4.1.2
+  title: 4.1.2 Service Architecture
+  path: 4 Npcf_EventExposure Service/4.1 Service Description.md
+  source_words: 186
+  kind: embedded-clause
+- clause: 4.1.3
+  title: 4.1.3 Network Functions
+  path: 4 Npcf_EventExposure Service/4.1 Service Description.md
+  source_words: 369
+  kind: embedded-clause
+- clause: 4.1.3.1
+  title: 4.1.3.1 Policy Control Function (PCF)
+  path: 4 Npcf_EventExposure Service/4.1 Service Description.md
+  source_words: 195
+  kind: embedded-clause
+- clause: 4.1.3.2
+  title: 4.1.3.2 NF Service Consumers
+  path: 4 Npcf_EventExposure Service/4.1 Service Description.md
+  source_words: 174
+  kind: embedded-clause
+- clause: '4.2'
+  title: 4.2 Service Operations
+  path: 4 Npcf_EventExposure Service/4.2 Service Operations.md
+  source_words: 3804
+  kind: source-file
+- clause: 4.2.1
+  title: 4.2.1 Introduction
+  path: 4 Npcf_EventExposure Service/4.2 Service Operations.md
+  source_words: 122
+  kind: embedded-clause
+- clause: 4.2.2
+  title: 4.2.2 Npcf_EventExposure_Subscribe service operation
+  path: 4 Npcf_EventExposure Service/4.2 Service Operations.md
+  source_words: 2248
+  kind: embedded-clause
+- clause: 4.2.2.1
+  title: 4.2.2.1 General
+  path: 4 Npcf_EventExposure Service/4.2 Service Operations.md
+  source_words: 246
+  kind: embedded-clause
+- clause: 4.2.2.2
+  title: 4.2.2.2 Creating a new subscription
+  path: 4 Npcf_EventExposure Service/4.2 Service Operations.md
+  source_words: 1080
+  kind: embedded-clause
+- clause: 4.2.2.3
+  title: 4.2.2.3 Modifying an existing subscription
+  path: 4 Npcf_EventExposure Service/4.2 Service Operations.md
+  source_words: 922
+  kind: embedded-clause
+- clause: 4.2.3
+  title: 4.2.3 Npcf_EventExposure_UnSubscribe service operation
+  path: 4 Npcf_EventExposure Service/4.2 Service Operations.md
+  source_words: 229
+  kind: embedded-clause
+- clause: 4.2.3.1
+  title: 4.2.3.1 General
+  path: 4 Npcf_EventExposure Service/4.2 Service Operations.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 4.2.3.2
+  title: 4.2.3.2 Unsubscription from event notifications
+  path: 4 Npcf_EventExposure Service/4.2 Service Operations.md
+  source_words: 200
+  kind: embedded-clause
+- clause: 4.2.4
+  title: 4.2.4 Npcf_EventExposure_Notify service operation
+  path: 4 Npcf_EventExposure Service/4.2 Service Operations.md
+  source_words: 1205
+  kind: embedded-clause
+- clause: 4.2.4.1
+  title: 4.2.4.1 General
+  path: 4 Npcf_EventExposure Service/4.2 Service Operations.md
+  source_words: 38
+  kind: embedded-clause
+- clause: 4.2.4.2
+  title: 4.2.4.2 Notification about subscribed events
+  path: 4 Npcf_EventExposure Service/4.2 Service Operations.md
+  source_words: 1167
+  kind: embedded-clause
+- clause: '5'
+  title: 5 Npcf_EventExposure Service API
+  path: 5 Npcf_EventExposure Service API/README.md
+  source_words: 8790
+  kind: navigation-directory
+- clause: '5.1'
+  title: 5.1 Introduction
+  path: 5 Npcf_EventExposure Service API/5.1 Introduction.md
+  source_words: 97
+  kind: source-file
+- clause: '5.2'
+  title: 5.2 Usage of HTTP
+  path: 5 Npcf_EventExposure Service API/5.2 Usage of HTTP.md
+  source_words: 219
+  kind: source-file
+- clause: 5.2.1
+  title: 5.2.1 General
+  path: 5 Npcf_EventExposure Service API/5.2 Usage of HTTP.md
+  source_words: 56
+  kind: embedded-clause
+- clause: 5.2.2
+  title: 5.2.2 HTTP standard headers
+  path: 5 Npcf_EventExposure Service API/5.2 Usage of HTTP.md
+  source_words: 102
+  kind: embedded-clause
+- clause: 5.2.2.1
+  title: 5.2.2.1 General
+  path: 5 Npcf_EventExposure Service API/5.2 Usage of HTTP.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 5.2.2.2
+  title: 5.2.2.2 Content type
+  path: 5 Npcf_EventExposure Service API/5.2 Usage of HTTP.md
+  source_words: 84
+  kind: embedded-clause
+- clause: 5.2.3
+  title: 5.2.3 HTTP custom headers
+  path: 5 Npcf_EventExposure Service API/5.2 Usage of HTTP.md
+  source_words: 61
+  kind: embedded-clause
+- clause: 5.2.3.1
+  title: 5.2.3.1 General
+  path: 5 Npcf_EventExposure Service API/5.2 Usage of HTTP.md
+  source_words: 61
+  kind: embedded-clause
+- clause: '5.3'
+  title: 5.3 Resources
+  path: 5 Npcf_EventExposure Service API/5.3 Resources.md
+  source_words: 2557
+  kind: source-file
+- clause: 5.3.1
+  title: 5.3.1 Resource Structure
+  path: 5 Npcf_EventExposure Service API/5.3 Resources.md
+  source_words: 141
+  kind: embedded-clause
+- clause: 5.3.2
+  title: '5.3.2 Resource: Policy Control Events Subscriptions (Collection)'
+  path: 5 Npcf_EventExposure Service API/5.3 Resources.md
+  source_words: 282
+  kind: embedded-clause
+- clause: 5.3.2.1
+  title: 5.3.2.1 Description
+  path: 5 Npcf_EventExposure Service API/5.3 Resources.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.3.2.2
+  title: 5.3.2.2 Resource definition
+  path: 5 Npcf_EventExposure Service API/5.3 Resources.md
+  source_words: 42
+  kind: embedded-clause
+- clause: 5.3.2.3
+  title: 5.3.2.3 Resource Standard Methods
+  path: 5 Npcf_EventExposure Service API/5.3 Resources.md
+  source_words: 222
+  kind: embedded-clause
+- clause: 5.3.2.3.1
+  title: 5.3.2.3.1 POST
+  path: 5 Npcf_EventExposure Service API/5.3 Resources.md
+  source_words: 222
+  kind: embedded-clause
+- clause: 5.3.2.4
+  title: 5.3.2.4 Resource Custom Operations
+  path: 5 Npcf_EventExposure Service API/5.3 Resources.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 5.3.3
+  title: '5.3.3 Resource: Individual Policy Control Events Subscription (Document)'
+  path: 5 Npcf_EventExposure Service API/5.3 Resources.md
+  source_words: 2134
+  kind: embedded-clause
+- clause: 5.3.3.1
+  title: 5.3.3.1 Description
+  path: 5 Npcf_EventExposure Service API/5.3 Resources.md
+  source_words: 19
+  kind: embedded-clause
+- clause: 5.3.3.2
+  title: 5.3.3.2 Resource definition
+  path: 5 Npcf_EventExposure Service API/5.3 Resources.md
+  source_words: 54
+  kind: embedded-clause
+- clause: 5.3.3.3
+  title: 5.3.3.3 Resource Standard Methods
+  path: 5 Npcf_EventExposure Service API/5.3 Resources.md
+  source_words: 2060
+  kind: embedded-clause
+- clause: 5.3.3.3.1
+  title: 5.3.3.3.1 GET
+  path: 5 Npcf_EventExposure Service API/5.3 Resources.md
+  source_words: 668
+  kind: embedded-clause
+- clause: 5.3.3.3.2
+  title: 5.3.3.3.2 PUT
+  path: 5 Npcf_EventExposure Service API/5.3 Resources.md
+  source_words: 721
+  kind: embedded-clause
+- clause: 5.3.3.3.3
+  title: 5.3.3.3.3 DELETE
+  path: 5 Npcf_EventExposure Service API/5.3 Resources.md
+  source_words: 671
+  kind: embedded-clause
+- clause: 5.3.3.4
+  title: 5.3.3.4 Resource Custom Operations
+  path: 5 Npcf_EventExposure Service API/5.3 Resources.md
+  source_words: 1
+  kind: embedded-clause
+- clause: '5.4'
+  title: 5.4 Custom Operations without associated resources
+  path: 5 Npcf_EventExposure Service API/5.4 Custom Operations without associated
+    resources.md
+  source_words: 1
+  kind: source-file
+- clause: '5.5'
+  title: 5.5 Notifications
+  path: 5 Npcf_EventExposure Service API/5.5 Notifications.md
+  source_words: 941
+  kind: source-file
+- clause: 5.5.1
+  title: 5.5.1 General
+  path: 5 Npcf_EventExposure Service API/5.5 Notifications.md
+  source_words: 54
+  kind: embedded-clause
+- clause: 5.5.2
+  title: 5.5.2 Policy Control Event Notification
+  path: 5 Npcf_EventExposure Service API/5.5 Notifications.md
+  source_words: 887
+  kind: embedded-clause
+- clause: 5.5.2.1
+  title: 5.5.2.1 Description
+  path: 5 Npcf_EventExposure Service API/5.5 Notifications.md
+  source_words: 104
+  kind: embedded-clause
+- clause: 5.5.2.2
+  title: 5.5.2.2 Target URI
+  path: 5 Npcf_EventExposure Service API/5.5 Notifications.md
+  source_words: 102
+  kind: embedded-clause
+- clause: 5.5.2.3
+  title: 5.5.2.3 Standard Methods
+  path: 5 Npcf_EventExposure Service API/5.5 Notifications.md
+  source_words: 681
+  kind: embedded-clause
+- clause: 5.5.2.3.1
+  title: 5.5.2.3.1 POST
+  path: 5 Npcf_EventExposure Service API/5.5 Notifications.md
+  source_words: 681
+  kind: embedded-clause
+- clause: '5.6'
+  title: 5.6 Data Model
+  path: 5 Npcf_EventExposure Service API/5.6 Data Model/README.md
+  source_words: 4226
+  kind: navigation-directory
+- clause: 5.6.1
+  title: 5.6.1 General
+  path: 5 Npcf_EventExposure Service API/5.6 Data Model/5.6.1 General.md
+  source_words: 1243
+  kind: source-file
+- clause: 5.6.2
+  title: 5.6.2 Structured data types
+  path: 5 Npcf_EventExposure Service API/5.6 Data Model/5.6.2 Structured data types.md
+  source_words: 2646
+  kind: source-file
+- clause: 5.6.2.1
+  title: 5.6.2.1 Introduction
+  path: 5 Npcf_EventExposure Service API/5.6 Data Model/5.6.2 Structured data types.md
+  source_words: 11
+  kind: embedded-clause
+- clause: 5.6.2.2
+  title: 5.6.2.2 Type PcEventExposureSubsc
+  path: 5 Npcf_EventExposure Service API/5.6 Data Model/5.6.2 Structured data types.md
+  source_words: 642
+  kind: embedded-clause
+- clause: 5.6.2.3
+  title: 5.6.2.3 Type PcEventExposureNotif
+  path: 5 Npcf_EventExposure Service API/5.6 Data Model/5.6.2 Structured data types.md
+  source_words: 54
+  kind: embedded-clause
+- clause: 5.6.2.4
+  title: 5.6.2.4 Type ReportingInformation
+  path: 5 Npcf_EventExposure Service API/5.6 Data Model/5.6.2 Structured data types.md
+  source_words: 704
+  kind: embedded-clause
+- clause: 5.6.2.5
+  title: 5.6.2.5 Type ServiceIdentification
+  path: 5 Npcf_EventExposure Service API/5.6 Data Model/5.6.2 Structured data types.md
+  source_words: 79
+  kind: embedded-clause
+- clause: 5.6.2.6
+  title: 5.6.2.6 Type EthernetFlowInfo
+  path: 5 Npcf_EventExposure Service API/5.6 Data Model/5.6.2 Structured data types.md
+  source_words: 55
+  kind: embedded-clause
+- clause: 5.6.2.7
+  title: 5.6.2.7 Type IpFlowInfo
+  path: 5 Npcf_EventExposure Service API/5.6 Data Model/5.6.2 Structured data types.md
+  source_words: 55
+  kind: embedded-clause
+- clause: 5.6.2.8
+  title: 5.6.2.8 Type PcEventNotification
+  path: 5 Npcf_EventExposure Service API/5.6 Data Model/5.6.2 Structured data types.md
+  source_words: 705
+  kind: embedded-clause
+- clause: 5.6.2.9
+  title: 5.6.2.9 Type PduSessionInformation
+  path: 5 Npcf_EventExposure Service API/5.6 Data Model/5.6.2 Structured data types.md
+  source_words: 312
+  kind: embedded-clause
+- clause: 5.6.2.10
+  title: 5.6.2.10 Type SnssaiDnnCombination
+  path: 5 Npcf_EventExposure Service API/5.6 Data Model/5.6.2 Structured data types.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 5.6.3
+  title: 5.6.3 Simple data types and enumerations
+  path: 5 Npcf_EventExposure Service API/5.6 Data Model/5.6.3 Simple data types and
+    enumerations.md
+  source_words: 337
+  kind: source-file
+- clause: 5.6.3.1
+  title: 5.6.3.1 Introduction
+  path: 5 Npcf_EventExposure Service API/5.6 Data Model/5.6.3 Simple data types and
+    enumerations.md
+  source_words: 20
+  kind: embedded-clause
+- clause: 5.6.3.2
+  title: 5.6.3.2 Simple data types
+  path: 5 Npcf_EventExposure Service API/5.6 Data Model/5.6.3 Simple data types and
+    enumerations.md
+  source_words: 28
+  kind: embedded-clause
+- clause: 5.6.3.3
+  title: '5.6.3.3 Enumeration: PcEvent'
+  path: 5 Npcf_EventExposure Service API/5.6 Data Model/5.6.3 Simple data types and
+    enumerations.md
+  source_words: 289
+  kind: embedded-clause
+- clause: '5.7'
+  title: 5.7 Error handling
+  path: 5 Npcf_EventExposure Service API/5.7 Error handling.md
+  source_words: 151
+  kind: source-file
+- clause: 5.7.1
+  title: 5.7.1 General
+  path: 5 Npcf_EventExposure Service API/5.7 Error handling.md
+  source_words: 106
+  kind: embedded-clause
+- clause: 5.7.2
+  title: 5.7.2 Protocol Errors
+  path: 5 Npcf_EventExposure Service API/5.7 Error handling.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 5.7.3
+  title: 5.7.3 Application Errors
+  path: 5 Npcf_EventExposure Service API/5.7 Error handling.md
+  source_words: 27
+  kind: embedded-clause
+- clause: '5.8'
+  title: 5.8 Feature negotiation
+  path: 5 Npcf_EventExposure Service API/5.8 Feature negotiation.md
+  source_words: 436
+  kind: source-file
+- clause: '5.9'
+  title: 5.9 Security
+  path: 5 Npcf_EventExposure Service API/5.9 Security.md
+  source_words: 162
+  kind: source-file
+- clause: Annex A
+  title: 'Annex A (normative): OpenAPI specification'
+  path: Annex A (normative)_ OpenAPI specification/README.md
+  source_words: 1623
+  kind: navigation-directory
+- clause: A.1
+  title: A.1 General
+  path: Annex A (normative)_ OpenAPI specification/README.md
+  source_words: 135
+  kind: source-file
+- clause: A.2
+  title: A.2 Npcf_EventExposure API
+  path: ../openapi/TS29523_Npcf_EventExposure.yaml
+  source_words: 1488
+  kind: exact-attachment
+- clause: Annex B
+  title: 'Annex B (informative): Change history'
+  path: Annex B (informative)_ Change history/README.md
+  source_words: 1516
+  kind: navigation-directory
+- clause: Annex B-2018
+  title: 'Annex B (informative): Change history — 2018'
+  path: Annex B (informative)_ Change history/2018.md
+  source_words: 145
+  kind: source-file
+- clause: Annex B-2019
+  title: 'Annex B (informative): Change history — 2019'
+  path: Annex B (informative)_ Change history/2019.md
+  source_words: 245
+  kind: source-file
+- clause: Annex B-2020
+  title: 'Annex B (informative): Change history — 2020'
+  path: Annex B (informative)_ Change history/2020.md
+  source_words: 231
+  kind: source-file
+- clause: Annex B-2021
+  title: 'Annex B (informative): Change history — 2021'
+  path: Annex B (informative)_ Change history/2021.md
+  source_words: 332
+  kind: source-file
+- clause: Annex B-2022
+  title: 'Annex B (informative): Change history — 2022'
+  path: Annex B (informative)_ Change history/2022.md
+  source_words: 257
+  kind: source-file
+- clause: Annex B-2023
+  title: 'Annex B (informative): Change history — 2023'
+  path: Annex B (informative)_ Change history/2023.md
+  source_words: 200
+  kind: source-file
+- clause: Annex B-2024
+  title: 'Annex B (informative): Change history — 2024'
+  path: Annex B (informative)_ Change history/2024.md
+  source_words: 65
+  kind: source-file
+- clause: Annex B-2025
+  title: 'Annex B (informative): Change history — 2025'
+  path: Annex B (informative)_ Change history/2025.md
+  source_words: 29
+  kind: source-file

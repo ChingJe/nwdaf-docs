@@ -63,3 +63,11 @@ This directory records deterministic conversion and validation results for the c
 - TS 29.554 is a legacy DOC. `antiword` was used as an independent check; its table serialization omits part of one sentence, so the richer LibreOffice/Pandoc structural path and source-page samples remain the primary extraction evidence.
 - All 195 added media items produced PNG previews; original EMF/WMF and embedded OLE/Visio payloads are retained.
 - Full PDF export for TS 29.503 exceeded the bounded runtime and is explicitly not claimed as page-by-page visual certification.
+
+## TS 29.523 integration
+
+- TS 29.523 V18.7.0 is included in full.
+- `TS29523_Npcf_EventExposure.yaml` is retained byte-for-byte from the supplied package.
+- The native DOCX was independently extracted with `docx2txt`; normative modal and NOTE/EXAMPLE marker counts are recorded in `text-cross-check.json`.
+- Original vector media and embedded OLE payloads are retained, with PNG previews for retrieval-oriented viewing.
+- Annex A OpenAPI prose retains the normative general text while the API body links to the exact official YAML attachment.

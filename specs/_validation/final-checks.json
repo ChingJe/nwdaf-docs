@@ -1,16 +1,18 @@
 {
   "passed": true,
-  "file_count": 5958,
-  "markdown_files": 3140,
-  "manifest_entries": 8754,
-  "local_links_checked": 4236,
-  "image_references_checked": 976,
+  "specification_count": 18,
+  "file_count": 6020,
+  "markdown_files": 3173,
+  "manifest_entries": 8849,
+  "local_links_checked": 3294,
+  "image_references_checked": 985,
   "broken_links": [],
+  "broken_image_references": [],
   "missing_manifest_paths": [],
   "h7_or_deeper_headings": [],
   "blank_headings": [],
   "absolute_work_paths": [],
-  "openapi_yaml_files": 55,
+  "openapi_yaml_files": 56,
   "openapi_yaml_errors": [],
   "unresolved_openapi_dependencies": [
     "TS29502_Nsmf_PDUSession.yaml",
@@ -24,9 +26,10 @@
     "TS29517_Naf_EventExposure.yaml",
     "TS29519_Policy_Data.yaml",
     "TS29522_AMPolicyAuthorization.yaml",
+    "TS29522_ServiceParameter.yaml",
     "TS29522_TrafficInfluence.yaml",
-    "TS29523_Npcf_EventExposure.yaml",
     "TS29531_Nnssf_NSSelection.yaml",
+    "TS29534_Npcf_AMPolicyAuthorization.yaml",
     "TS29536_Nnsacf_SliceEventExposure.yaml",
     "TS29562_Nhss_imsUEAU.yaml",
     "TS29565_Ntsctsf_QoSandTSCAssistance.yaml",
@@ -426,6 +429,16 @@
       "source_sha256": "63ca4a0fe4385ecf2cdc1a3d99c60916075cbd806027f9717348cfde25be2614",
       "output_sha256": "63ca4a0fe4385ecf2cdc1a3d99c60916075cbd806027f9717348cfde25be2614",
       "byte_identical": true
+    },
+    {
+      "file": "TS29523_Npcf_EventExposure.yaml",
+      "source_archive": "29523-i70.zip",
+      "source_sha256": "ca8d301010f9a3523caf5176750fc93d336d0b0d3335d41980758dcf21488fd8",
+      "output_sha256": "ca8d301010f9a3523caf5176750fc93d336d0b0d3335d41980758dcf21488fd8",
+      "byte_identical": true
     }
-  ]
+  ],
+  "official_attachments_checked": 57,
+  "official_attachments_byte_identical": 57,
+  "retrieval_tests_passed": true
 }

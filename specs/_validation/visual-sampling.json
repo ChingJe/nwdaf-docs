@@ -119,6 +119,20 @@
       "topic": "Npcf_BDTPolicyControl create operation",
       "result": "pass",
       "observations": "Request and 201 Created response are legible. Source PDF page 19 complex response tables were inspected against generated HTML tables."
+    },
+    {
+      "spec": "TS 29.523",
+      "asset": "assets/rendered/image5.png",
+      "topic": "Npcf_EventExposure subscription creation",
+      "result": "pass",
+      "observations": "POST /subscriptions and 201 Created sequence is legible; all nine rendered media previews were inspected in a contact sheet."
+    },
+    {
+      "spec": "TS 29.523",
+      "asset": "source pages 1-49",
+      "topic": "Full source Word render review",
+      "result": "pass",
+      "observations": "All 49 source pages were rendered and reviewed via four contact sheets, including procedure diagrams, complex API tables, Annex A and change history."
     }
   ],
   "limitations": [

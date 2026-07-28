@@ -2,8 +2,10 @@ corrections:
 - spec: TS 23.288
   line: 13865
   type: promote-annex-heading
-  original: '######## Annex A (informative): Methods to handle NAT on IPv4 between UE and AF'
-  replacement: '# Annex A (informative): Methods to handle NAT on IPv4 between UE and AF'
+  original: '######## Annex A (informative): Methods to handle NAT on IPv4 between
+    UE and AF'
+  replacement: '# Annex A (informative): Methods to handle NAT on IPv4 between UE
+    and AF'
 - spec: TS 23.288
   line: 13867
   type: demote-annex-subheading
@@ -76,7 +78,8 @@ corrections:
 - spec: TS 23.502
   line: 32594
   type: promote-annex-heading
-  original: '########  Annex A (informative): Drafting rules and conventions for NF services'
+  original: '########  Annex A (informative): Drafting rules and conventions for NF
+    services'
   replacement: '# Annex A (informative): Drafting rules and conventions for NF services'
 - spec: TS 23.502
   line: 32596
@@ -116,8 +119,10 @@ corrections:
 - spec: TS 23.502
   line: 32720
   type: promote-annex-heading
-  original: '########  Annex C (informative): Generating EPS PDN Connection parameters from 5G PDU Session parameters'
-  replacement: '# Annex C (informative): Generating EPS PDN Connection parameters from 5G PDU Session parameters'
+  original: '########  Annex C (informative): Generating EPS PDN Connection parameters
+    from 5G PDU Session parameters'
+  replacement: '# Annex C (informative): Generating EPS PDN Connection parameters
+    from 5G PDU Session parameters'
 - spec: TS 23.502
   line: 32744
   type: promote-annex-heading
@@ -126,13 +131,17 @@ corrections:
 - spec: TS 23.502
   line: 32818
   type: promote-annex-heading
-  original: '########  Annex E (normative): Delegated SMF and PCF discovery in the Home Routed and specific SMF Service Areas scenarios'
-  replacement: '# Annex E (normative): Delegated SMF and PCF discovery in the Home Routed and specific SMF Service Areas scenarios'
+  original: '########  Annex E (normative): Delegated SMF and PCF discovery in the
+    Home Routed and specific SMF Service Areas scenarios'
+  replacement: '# Annex E (normative): Delegated SMF and PCF discovery in the Home
+    Routed and specific SMF Service Areas scenarios'
 - spec: TS 23.502
   line: 32942
   type: promote-annex-heading
-  original: '######## Annex F (informative): Information flows for 5GS integration with TSN or with Deterministic Networking'
-  replacement: '# Annex F (informative): Information flows for 5GS integration with TSN or with Deterministic Networking'
+  original: '######## Annex F (informative): Information flows for 5GS integration
+    with TSN or with Deterministic Networking'
+  replacement: '# Annex F (informative): Information flows for 5GS integration with
+    TSN or with Deterministic Networking'
 - spec: TS 23.502
   line: 33154
   type: promote-annex-heading
@@ -141,13 +150,17 @@ corrections:
 - spec: TS 23.502
   line: 33202
   type: promote-annex-heading
-  original: '######## Annex H (normative): Support of EAP-based secondary authentication and authorization by DN-AAA over EPC'
-  replacement: '# Annex H (normative): Support of EAP-based secondary authentication and authorization by DN-AAA over EPC'
+  original: '######## Annex H (normative): Support of EAP-based secondary authentication
+    and authorization by DN-AAA over EPC'
+  replacement: '# Annex H (normative): Support of EAP-based secondary authentication
+    and authorization by DN-AAA over EPC'
 - spec: TS 23.502
   line: 33276
   type: promote-annex-heading
-  original: '######## Annex I (informative): Member UE selection without the NEF assistance at the AF'
-  replacement: '# Annex I (informative): Member UE selection without the NEF assistance at the AF'
+  original: '######## Annex I (informative): Member UE selection without the NEF assistance
+    at the AF'
+  replacement: '# Annex I (informative): Member UE selection without the NEF assistance
+    at the AF'
 - spec: TS 23.502
   line: 33302
   type: promote-annex-heading
@@ -161,8 +174,10 @@ corrections:
 - spec: TS 29.500
   line: 6041
   type: promote-annex-heading
-  original: '######## Annex A (informative): Client-side Adaptive Throttling for Overload Control'
-  replacement: '# Annex A (informative): Client-side Adaptive Throttling for Overload Control'
+  original: '######## Annex A (informative): Client-side Adaptive Throttling for Overload
+    Control'
+  replacement: '# Annex A (informative): Client-side Adaptive Throttling for Overload
+    Control'
 - spec: TS 29.500
   line: 6071
   type: promote-annex-heading
@@ -236,18 +251,24 @@ corrections:
 - spec: TS 29.510
   line: 38443
   type: promote-annex-heading
-  original: '########  Annex B (normative): NF Profile changes in NFRegister and NFUpdate responses'
-  replacement: '# Annex B (normative): NF Profile changes in NFRegister and NFUpdate responses'
+  original: '########  Annex B (normative): NF Profile changes in NFRegister and NFUpdate
+    responses'
+  replacement: '# Annex B (normative): NF Profile changes in NFRegister and NFUpdate
+    responses'
 - spec: TS 29.510
   line: 38479
   type: promote-annex-heading
-  original: '######## Annex C (normative): Enhanced Authorization Policy using RuleSets in NF (Service) Profile'
-  replacement: '# Annex C (normative): Enhanced Authorization Policy using RuleSets in NF (Service) Profile'
+  original: '######## Annex C (normative): Enhanced Authorization Policy using RuleSets
+    in NF (Service) Profile'
+  replacement: '# Annex C (normative): Enhanced Authorization Policy using RuleSets
+    in NF (Service) Profile'
 - spec: TS 29.510
   line: 38597
   type: promote-annex-heading
-  original: '######## Annex D (normative): Support of "Canary Release" testing in the NRF'
-  replacement: '# Annex D (normative): Support of "Canary Release" testing in the NRF'
+  original: '######## Annex D (normative): Support of "Canary Release" testing in
+    the NRF'
+  replacement: '# Annex D (normative): Support of "Canary Release" testing in the
+    NRF'
 - spec: TS 29.510
   line: 38809
   type: promote-annex-heading
@@ -256,7 +277,8 @@ corrections:
 - spec: TS 23.502
   line: 32594
   type: promote-annex-heading
-  original: '########  Annex A (informative): Drafting rules and conventions for NF services'
+  original: '########  Annex A (informative): Drafting rules and conventions for NF
+    services'
   replacement: '# Annex A (informative): Drafting rules and conventions for NF services'
 - spec: TS 23.502
   line: 32596
@@ -296,8 +318,10 @@ corrections:
 - spec: TS 23.502
   line: 32720
   type: promote-annex-heading
-  original: '########  Annex C (informative): Generating EPS PDN Connection parameters from 5G PDU Session parameters'
-  replacement: '# Annex C (informative): Generating EPS PDN Connection parameters from 5G PDU Session parameters'
+  original: '########  Annex C (informative): Generating EPS PDN Connection parameters
+    from 5G PDU Session parameters'
+  replacement: '# Annex C (informative): Generating EPS PDN Connection parameters
+    from 5G PDU Session parameters'
 - spec: TS 23.502
   line: 32744
   type: promote-annex-heading
@@ -316,8 +340,10 @@ corrections:
 - spec: TS 23.502
   line: 32818
   type: promote-annex-heading
-  original: '########  Annex E (normative): Delegated SMF and PCF discovery in the Home Routed and specific SMF Service Areas scenarios'
-  replacement: '# Annex E (normative): Delegated SMF and PCF discovery in the Home Routed and specific SMF Service Areas scenarios'
+  original: '########  Annex E (normative): Delegated SMF and PCF discovery in the
+    Home Routed and specific SMF Service Areas scenarios'
+  replacement: '# Annex E (normative): Delegated SMF and PCF discovery in the Home
+    Routed and specific SMF Service Areas scenarios'
 - spec: TS 23.502
   line: 32820
   type: demote-annex-subheading
@@ -341,8 +367,10 @@ corrections:
 - spec: TS 23.502
   line: 32942
   type: promote-annex-heading
-  original: '######## Annex F (informative): Information flows for 5GS integration with TSN or with Deterministic Networking'
-  replacement: '# Annex F (informative): Information flows for 5GS integration with TSN or with Deterministic Networking'
+  original: '######## Annex F (informative): Information flows for 5GS integration
+    with TSN or with Deterministic Networking'
+  replacement: '# Annex F (informative): Information flows for 5GS integration with
+    TSN or with Deterministic Networking'
 - spec: TS 23.502
   line: 32948
   type: demote-annex-subheading
@@ -381,8 +409,10 @@ corrections:
 - spec: TS 23.502
   line: 33202
   type: promote-annex-heading
-  original: '######## Annex H (normative): Support of EAP-based secondary authentication and authorization by DN-AAA over EPC'
-  replacement: '# Annex H (normative): Support of EAP-based secondary authentication and authorization by DN-AAA over EPC'
+  original: '######## Annex H (normative): Support of EAP-based secondary authentication
+    and authorization by DN-AAA over EPC'
+  replacement: '# Annex H (normative): Support of EAP-based secondary authentication
+    and authorization by DN-AAA over EPC'
 - spec: TS 23.502
   line: 33204
   type: demote-annex-subheading
@@ -396,8 +426,10 @@ corrections:
 - spec: TS 23.502
   line: 33276
   type: promote-annex-heading
-  original: '######## Annex I (informative): Member UE selection without the NEF assistance at the AF'
-  replacement: '# Annex I (informative): Member UE selection without the NEF assistance at the AF'
+  original: '######## Annex I (informative): Member UE selection without the NEF assistance
+    at the AF'
+  replacement: '# Annex I (informative): Member UE selection without the NEF assistance
+    at the AF'
 - spec: TS 23.502
   line: 33302
   type: promote-annex-heading
@@ -416,8 +448,10 @@ corrections:
 - spec: TS 29.500
   line: 6041
   type: promote-annex-heading
-  original: '######## Annex A (informative): Client-side Adaptive Throttling for Overload Control'
-  replacement: '# Annex A (informative): Client-side Adaptive Throttling for Overload Control'
+  original: '######## Annex A (informative): Client-side Adaptive Throttling for Overload
+    Control'
+  replacement: '# Annex A (informative): Client-side Adaptive Throttling for Overload
+    Control'
 - spec: TS 29.500
   line: 6071
   type: promote-annex-heading
@@ -501,8 +535,10 @@ corrections:
 - spec: TS 29.510
   line: 38443
   type: promote-annex-heading
-  original: '########  Annex B (normative): NF Profile changes in NFRegister and NFUpdate responses'
-  replacement: '# Annex B (normative): NF Profile changes in NFRegister and NFUpdate responses'
+  original: '########  Annex B (normative): NF Profile changes in NFRegister and NFUpdate
+    responses'
+  replacement: '# Annex B (normative): NF Profile changes in NFRegister and NFUpdate
+    responses'
 - spec: TS 29.510
   line: 38445
   type: demote-annex-subheading
@@ -511,8 +547,10 @@ corrections:
 - spec: TS 29.510
   line: 38479
   type: promote-annex-heading
-  original: '######## Annex C (normative): Enhanced Authorization Policy using RuleSets in NF (Service) Profile'
-  replacement: '# Annex C (normative): Enhanced Authorization Policy using RuleSets in NF (Service) Profile'
+  original: '######## Annex C (normative): Enhanced Authorization Policy using RuleSets
+    in NF (Service) Profile'
+  replacement: '# Annex C (normative): Enhanced Authorization Policy using RuleSets
+    in NF (Service) Profile'
 - spec: TS 29.510
   line: 38481
   type: demote-annex-subheading
@@ -521,13 +559,17 @@ corrections:
 - spec: TS 29.510
   line: 38487
   type: demote-annex-subheading
-  original: '# C.2 Examples of NF-Producer profile only using RuleSets (i.e. without AllowedXXX parameters) in NF (Service) Profile'
-  replacement: '## C.2 Examples of NF-Producer profile only using RuleSets (i.e. without AllowedXXX parameters) in NF (Service) Profile'
+  original: '# C.2 Examples of NF-Producer profile only using RuleSets (i.e. without
+    AllowedXXX parameters) in NF (Service) Profile'
+  replacement: '## C.2 Examples of NF-Producer profile only using RuleSets (i.e. without
+    AllowedXXX parameters) in NF (Service) Profile'
 - spec: TS 29.510
   line: 38539
   type: demote-annex-subheading
-  original: '# C.3 Example of NF-Producer profile using RuleSets and AllowedXXX parameters in NF (Service) Profile'
-  replacement: '## C.3 Example of NF-Producer profile using RuleSets and AllowedXXX parameters in NF (Service) Profile'
+  original: '# C.3 Example of NF-Producer profile using RuleSets and AllowedXXX parameters
+    in NF (Service) Profile'
+  replacement: '## C.3 Example of NF-Producer profile using RuleSets and AllowedXXX
+    parameters in NF (Service) Profile'
 - spec: TS 29.510
   line: 38567
   type: demote-annex-subheading
@@ -536,8 +578,10 @@ corrections:
 - spec: TS 29.510
   line: 38597
   type: promote-annex-heading
-  original: '######## Annex D (normative): Support of "Canary Release" testing in the NRF'
-  replacement: '# Annex D (normative): Support of "Canary Release" testing in the NRF'
+  original: '######## Annex D (normative): Support of "Canary Release" testing in
+    the NRF'
+  replacement: '# Annex D (normative): Support of "Canary Release" testing in the
+    NRF'
 - spec: TS 29.510
   line: 38809
   type: promote-annex-heading
@@ -546,7 +590,8 @@ corrections:
 - spec: TS 23.502
   line: 32594
   type: promote-annex-heading
-  original: '########  Annex A (informative): Drafting rules and conventions for NF services'
+  original: '########  Annex A (informative): Drafting rules and conventions for NF
+    services'
   replacement: '# Annex A (informative): Drafting rules and conventions for NF services'
 - spec: TS 23.502
   line: 32596
@@ -586,8 +631,10 @@ corrections:
 - spec: TS 23.502
   line: 32720
   type: promote-annex-heading
-  original: '########  Annex C (informative): Generating EPS PDN Connection parameters from 5G PDU Session parameters'
-  replacement: '# Annex C (informative): Generating EPS PDN Connection parameters from 5G PDU Session parameters'
+  original: '########  Annex C (informative): Generating EPS PDN Connection parameters
+    from 5G PDU Session parameters'
+  replacement: '# Annex C (informative): Generating EPS PDN Connection parameters
+    from 5G PDU Session parameters'
 - spec: TS 23.502
   line: 32744
   type: promote-annex-heading
@@ -606,8 +653,10 @@ corrections:
 - spec: TS 23.502
   line: 32818
   type: promote-annex-heading
-  original: '########  Annex E (normative): Delegated SMF and PCF discovery in the Home Routed and specific SMF Service Areas scenarios'
-  replacement: '# Annex E (normative): Delegated SMF and PCF discovery in the Home Routed and specific SMF Service Areas scenarios'
+  original: '########  Annex E (normative): Delegated SMF and PCF discovery in the
+    Home Routed and specific SMF Service Areas scenarios'
+  replacement: '# Annex E (normative): Delegated SMF and PCF discovery in the Home
+    Routed and specific SMF Service Areas scenarios'
 - spec: TS 23.502
   line: 32820
   type: demote-annex-subheading
@@ -631,8 +680,10 @@ corrections:
 - spec: TS 23.502
   line: 32942
   type: promote-annex-heading
-  original: '######## Annex F (informative): Information flows for 5GS integration with TSN or with Deterministic Networking'
-  replacement: '# Annex F (informative): Information flows for 5GS integration with TSN or with Deterministic Networking'
+  original: '######## Annex F (informative): Information flows for 5GS integration
+    with TSN or with Deterministic Networking'
+  replacement: '# Annex F (informative): Information flows for 5GS integration with
+    TSN or with Deterministic Networking'
 - spec: TS 23.502
   line: 32948
   type: demote-annex-subheading
@@ -671,8 +722,10 @@ corrections:
 - spec: TS 23.502
   line: 33202
   type: promote-annex-heading
-  original: '######## Annex H (normative): Support of EAP-based secondary authentication and authorization by DN-AAA over EPC'
-  replacement: '# Annex H (normative): Support of EAP-based secondary authentication and authorization by DN-AAA over EPC'
+  original: '######## Annex H (normative): Support of EAP-based secondary authentication
+    and authorization by DN-AAA over EPC'
+  replacement: '# Annex H (normative): Support of EAP-based secondary authentication
+    and authorization by DN-AAA over EPC'
 - spec: TS 23.502
   line: 33204
   type: demote-annex-subheading
@@ -686,8 +739,10 @@ corrections:
 - spec: TS 23.502
   line: 33276
   type: promote-annex-heading
-  original: '######## Annex I (informative): Member UE selection without the NEF assistance at the AF'
-  replacement: '# Annex I (informative): Member UE selection without the NEF assistance at the AF'
+  original: '######## Annex I (informative): Member UE selection without the NEF assistance
+    at the AF'
+  replacement: '# Annex I (informative): Member UE selection without the NEF assistance
+    at the AF'
 - spec: TS 23.502
   line: 33302
   type: promote-annex-heading
@@ -706,8 +761,10 @@ corrections:
 - spec: TS 29.500
   line: 6041
   type: promote-annex-heading
-  original: '######## Annex A (informative): Client-side Adaptive Throttling for Overload Control'
-  replacement: '# Annex A (informative): Client-side Adaptive Throttling for Overload Control'
+  original: '######## Annex A (informative): Client-side Adaptive Throttling for Overload
+    Control'
+  replacement: '# Annex A (informative): Client-side Adaptive Throttling for Overload
+    Control'
 - spec: TS 29.500
   line: 6071
   type: promote-annex-heading
@@ -791,8 +848,10 @@ corrections:
 - spec: TS 29.510
   line: 38443
   type: promote-annex-heading
-  original: '########  Annex B (normative): NF Profile changes in NFRegister and NFUpdate responses'
-  replacement: '# Annex B (normative): NF Profile changes in NFRegister and NFUpdate responses'
+  original: '########  Annex B (normative): NF Profile changes in NFRegister and NFUpdate
+    responses'
+  replacement: '# Annex B (normative): NF Profile changes in NFRegister and NFUpdate
+    responses'
 - spec: TS 29.510
   line: 38445
   type: demote-annex-subheading
@@ -801,8 +860,10 @@ corrections:
 - spec: TS 29.510
   line: 38479
   type: promote-annex-heading
-  original: '######## Annex C (normative): Enhanced Authorization Policy using RuleSets in NF (Service) Profile'
-  replacement: '# Annex C (normative): Enhanced Authorization Policy using RuleSets in NF (Service) Profile'
+  original: '######## Annex C (normative): Enhanced Authorization Policy using RuleSets
+    in NF (Service) Profile'
+  replacement: '# Annex C (normative): Enhanced Authorization Policy using RuleSets
+    in NF (Service) Profile'
 - spec: TS 29.510
   line: 38481
   type: demote-annex-subheading
@@ -811,13 +872,17 @@ corrections:
 - spec: TS 29.510
   line: 38487
   type: demote-annex-subheading
-  original: '# C.2 Examples of NF-Producer profile only using RuleSets (i.e. without AllowedXXX parameters) in NF (Service) Profile'
-  replacement: '## C.2 Examples of NF-Producer profile only using RuleSets (i.e. without AllowedXXX parameters) in NF (Service) Profile'
+  original: '# C.2 Examples of NF-Producer profile only using RuleSets (i.e. without
+    AllowedXXX parameters) in NF (Service) Profile'
+  replacement: '## C.2 Examples of NF-Producer profile only using RuleSets (i.e. without
+    AllowedXXX parameters) in NF (Service) Profile'
 - spec: TS 29.510
   line: 38539
   type: demote-annex-subheading
-  original: '# C.3 Example of NF-Producer profile using RuleSets and AllowedXXX parameters in NF (Service) Profile'
-  replacement: '## C.3 Example of NF-Producer profile using RuleSets and AllowedXXX parameters in NF (Service) Profile'
+  original: '# C.3 Example of NF-Producer profile using RuleSets and AllowedXXX parameters
+    in NF (Service) Profile'
+  replacement: '## C.3 Example of NF-Producer profile using RuleSets and AllowedXXX
+    parameters in NF (Service) Profile'
 - spec: TS 29.510
   line: 38567
   type: demote-annex-subheading
@@ -826,8 +891,10 @@ corrections:
 - spec: TS 29.510
   line: 38597
   type: promote-annex-heading
-  original: '######## Annex D (normative): Support of "Canary Release" testing in the NRF'
-  replacement: '# Annex D (normative): Support of "Canary Release" testing in the NRF'
+  original: '######## Annex D (normative): Support of "Canary Release" testing in
+    the NRF'
+  replacement: '# Annex D (normative): Support of "Canary Release" testing in the
+    NRF'
 - spec: TS 29.510
   line: 38809
   type: promote-annex-heading
@@ -840,8 +907,10 @@ corrections:
 - spec: TS 29.122
   line: 27788
   type: promote-annex-heading
-  original: '######## Annex A (normative): OpenAPI representation for the APIs defined in the present document'
-  replacement: '# Annex A (normative): OpenAPI representation for the APIs defined in the present document'
+  original: '######## Annex A (normative): OpenAPI representation for the APIs defined
+    in the present document'
+  replacement: '# Annex A (normative): OpenAPI representation for the APIs defined
+    in the present document'
 - spec: TS 29.122
   line: 27790
   type: normalize-annex-subheading
@@ -2056,7 +2125,8 @@ corrections:
   line: 40809
   type: normalize-heading-level
   original: '## B.1.2 Example HTTP multipart message with N2 Information binary data'
-  replacement: '### B.1.2 Example HTTP multipart message with N2 Information binary data'
+  replacement: '### B.1.2 Example HTTP multipart message with N2 Information binary
+    data'
 - spec: TS 29.518
   line: 40861
   type: normalize-heading-level
@@ -2087,6 +2157,22 @@ corrections:
   type: normalize-heading-level
   original: '######## Annex B (informative): Change history'
   replacement: '# Annex B (informative): Change history'
+- spec: TS 29.523
+  type: promote-annex-heading
+  original: '########  Annex A (normative): OpenAPI specification'
+  replacement: '# Annex A (normative): OpenAPI specification'
+- spec: TS 29.523
+  type: demote-annex-child-heading
+  original: '# A.1 General'
+  replacement: '## A.1 General'
+- spec: TS 29.523
+  type: demote-annex-child-heading
+  original: '# A.2 Npcf_EventExposure API'
+  replacement: '## A.2 Npcf_EventExposure API'
+- spec: TS 29.523
+  type: promote-annex-heading
+  original: '########  Annex B (informative): Change history'
+  replacement: '# Annex B (informative): Change history'
 full_extension_2026_07:
 - spec: TS 23.501
   line: 77
@@ -2106,13 +2192,17 @@ full_extension_2026_07:
 - spec: TS 23.501
   line: 9670
   type: normalize-heading-level
-  original: '##### 5.8.2.13.3.1 User plane traffic replication based on UPF internal functionality'
-  replacement: '###### 5.8.2.13.3.1 User plane traffic replication based on UPF internal functionality'
+  original: '##### 5.8.2.13.3.1 User plane traffic replication based on UPF internal
+    functionality'
+  replacement: '###### 5.8.2.13.3.1 User plane traffic replication based on UPF internal
+    functionality'
 - spec: TS 23.501
   line: 9690
   type: normalize-heading-level
-  original: '##### 5.8.2.13.3.2 User plane traffic replication based on PDRs with replication instructions'
-  replacement: '###### 5.8.2.13.3.2 User plane traffic replication based on PDRs with replication instructions'
+  original: '##### 5.8.2.13.3.2 User plane traffic replication based on PDRs with
+    replication instructions'
+  replacement: '###### 5.8.2.13.3.2 User plane traffic replication based on PDRs with
+    replication instructions'
 - spec: TS 23.501
   line: 14702
   type: normalize-heading-level
@@ -2156,8 +2246,10 @@ full_extension_2026_07:
 - spec: TS 23.501
   line: 16700
   type: normalize-heading-level
-  original: '##### 5.30.2.10.2.7 Deregistration from the ON-SNPN for onboarding registered UE'
-  replacement: '###### 5.30.2.10.2.7 Deregistration from the ON-SNPN for onboarding registered UE'
+  original: '##### 5.30.2.10.2.7 Deregistration from the ON-SNPN for onboarding registered
+    UE'
+  replacement: '###### 5.30.2.10.2.7 Deregistration from the ON-SNPN for onboarding
+    registered UE'
 - spec: TS 23.501
   line: 16714
   type: normalize-heading-level
@@ -2181,13 +2273,17 @@ full_extension_2026_07:
 - spec: TS 23.501
   line: 16758
   type: normalize-heading-level
-  original: '##### 5.30.2.10.4.3 User Plane Remote Provisioning of UEs when Onboarding Network is an ON-SNPN'
-  replacement: '###### 5.30.2.10.4.3 User Plane Remote Provisioning of UEs when Onboarding Network is an ON-SNPN'
+  original: '##### 5.30.2.10.4.3 User Plane Remote Provisioning of UEs when Onboarding
+    Network is an ON-SNPN'
+  replacement: '###### 5.30.2.10.4.3 User Plane Remote Provisioning of UEs when Onboarding
+    Network is an ON-SNPN'
 - spec: TS 23.501
   line: 16778
   type: normalize-heading-level
-  original: '##### 5.30.2.10.4.4 User Plane Remote Provisioning of UEs when Onboarding Network is a PLMN'
-  replacement: '###### 5.30.2.10.4.4 User Plane Remote Provisioning of UEs when Onboarding Network is a PLMN'
+  original: '##### 5.30.2.10.4.4 User Plane Remote Provisioning of UEs when Onboarding
+    Network is a PLMN'
+  replacement: '###### 5.30.2.10.4.4 User Plane Remote Provisioning of UEs when Onboarding
+    Network is a PLMN'
 - spec: TS 23.501
   line: 17272
   type: normalize-heading-level
@@ -2196,8 +2292,10 @@ full_extension_2026_07:
 - spec: TS 23.501
   line: 17280
   type: normalize-heading-level
-  original: '##### 5.31.7.2.2.1 Hyper SFN, Paging Hyperframe and Paging Time Window length'
-  replacement: '###### 5.31.7.2.2.1 Hyper SFN, Paging Hyperframe and Paging Time Window length'
+  original: '##### 5.31.7.2.2.1 Hyper SFN, Paging Hyperframe and Paging Time Window
+    length'
+  replacement: '###### 5.31.7.2.2.1 Hyper SFN, Paging Hyperframe and Paging Time Window
+    length'
 - spec: TS 23.501
   line: 17286
   type: normalize-heading-level
@@ -2216,8 +2314,10 @@ full_extension_2026_07:
 - spec: TS 23.501
   line: 23807
   type: normalize-heading-level
-  original: '########  Annex A (informative): Relationship between Service-Based Interfaces and Reference Points'
-  replacement: '# Annex A (informative): Relationship between Service-Based Interfaces and Reference Points'
+  original: '########  Annex A (informative): Relationship between Service-Based Interfaces
+    and Reference Points'
+  replacement: '# Annex A (informative): Relationship between Service-Based Interfaces
+    and Reference Points'
 - spec: TS 23.501
   line: 23833
   type: normalize-heading-level
@@ -2226,13 +2326,17 @@ full_extension_2026_07:
 - spec: TS 23.501
   line: 23851
   type: normalize-heading-level
-  original: '########  Annex C (informative): Guidelines and Principles for Compute-Storage Separation'
-  replacement: '# Annex C (informative): Guidelines and Principles for Compute-Storage Separation'
+  original: '########  Annex C (informative): Guidelines and Principles for Compute-Storage
+    Separation'
+  replacement: '# Annex C (informative): Guidelines and Principles for Compute-Storage
+    Separation'
 - spec: TS 23.501
   line: 23867
   type: normalize-heading-level
-  original: '########  Annex D (informative): 5GS support for Non-Public Network deployment options'
-  replacement: '# Annex D (informative): 5GS support for Non-Public Network deployment options'
+  original: '########  Annex D (informative): 5GS support for Non-Public Network deployment
+    options'
+  replacement: '# Annex D (informative): 5GS support for Non-Public Network deployment
+    options'
 - spec: TS 23.501
   line: 23869
   type: normalize-heading-level
@@ -2246,28 +2350,38 @@ full_extension_2026_07:
 - spec: TS 23.501
   line: 23909
   type: normalize-heading-level
-  original: '# D.3 Support for access to PLMN services via Stand-alone Non-Public Network and access to Stand-alone Non Public Network services via PLMN'
-  replacement: '## D.3 Support for access to PLMN services via Stand-alone Non-Public Network and access to Stand-alone Non Public Network services via PLMN'
+  original: '# D.3 Support for access to PLMN services via Stand-alone Non-Public
+    Network and access to Stand-alone Non Public Network services via PLMN'
+  replacement: '## D.3 Support for access to PLMN services via Stand-alone Non-Public
+    Network and access to Stand-alone Non Public Network services via PLMN'
 - spec: TS 23.501
   line: 23931
   type: normalize-heading-level
-  original: '# D.4 Support for UE capable of simultaneously connecting to an SNPN and a PLMN'
-  replacement: '## D.4 Support for UE capable of simultaneously connecting to an SNPN and a PLMN'
+  original: '# D.4 Support for UE capable of simultaneously connecting to an SNPN
+    and a PLMN'
+  replacement: '## D.4 Support for UE capable of simultaneously connecting to an SNPN
+    and a PLMN'
 - spec: TS 23.501
   line: 23939
   type: normalize-heading-level
-  original: '# D.5 Support for keeping UE in CM-CONNECTED state in overlay network when accessing services via NWu'
-  replacement: '## D.5 Support for keeping UE in CM-CONNECTED state in overlay network when accessing services via NWu'
+  original: '# D.5 Support for keeping UE in CM-CONNECTED state in overlay network
+    when accessing services via NWu'
+  replacement: '## D.5 Support for keeping UE in CM-CONNECTED state in overlay network
+    when accessing services via NWu'
 - spec: TS 23.501
   line: 23953
   type: normalize-heading-level
-  original: '# D.6 Support for session/service continuity between SNPN and PLMN when using N3IWF'
-  replacement: '## D.6 Support for session/service continuity between SNPN and PLMN when using N3IWF'
+  original: '# D.6 Support for session/service continuity between SNPN and PLMN when
+    using N3IWF'
+  replacement: '## D.6 Support for session/service continuity between SNPN and PLMN
+    when using N3IWF'
 - spec: TS 23.501
   line: 23969
   type: normalize-heading-level
-  original: '# D.7 Guidance for underlay network to support QoS differentiation for User Plane IPsec Child SA'
-  replacement: '## D.7 Guidance for underlay network to support QoS differentiation for User Plane IPsec Child SA'
+  original: '# D.7 Guidance for underlay network to support QoS differentiation for
+    User Plane IPsec Child SA'
+  replacement: '## D.7 Guidance for underlay network to support QoS differentiation
+    for User Plane IPsec Child SA'
 - spec: TS 23.501
   line: 23971
   type: normalize-heading-level
@@ -2281,7 +2395,8 @@ full_extension_2026_07:
 - spec: TS 23.501
   line: 24005
   type: normalize-heading-level
-  original: '########  Annex E (informative): Communication models for NF/NF services interaction'
+  original: '########  Annex E (informative): Communication models for NF/NF services
+    interaction'
   replacement: '# Annex E (informative): Communication models for NF/NF services interaction'
 - spec: TS 23.501
   line: 24007
@@ -2291,8 +2406,10 @@ full_extension_2026_07:
 - spec: TS 23.501
   line: 24034
   type: normalize-heading-level
-  original: '########  Annex F (informative): Redundant user plane paths based on multiple UEs per device'
-  replacement: '# Annex F (informative): Redundant user plane paths based on multiple UEs per device'
+  original: '########  Annex F (informative): Redundant user plane paths based on
+    multiple UEs per device'
+  replacement: '# Annex F (informative): Redundant user plane paths based on multiple
+    UEs per device'
 - spec: TS 23.501
   line: 24098
   type: normalize-heading-level
@@ -2391,8 +2508,10 @@ full_extension_2026_07:
 - spec: TS 23.501
   line: 24354
   type: normalize-heading-level
-  original: '######## Annex K (normative): Port and user plane node management information exchange'
-  replacement: '# Annex K (normative): Port and user plane node management information exchange'
+  original: '######## Annex K (normative): Port and user plane node management information
+    exchange'
+  replacement: '# Annex K (normative): Port and user plane node management information
+    exchange'
 - spec: TS 23.501
   line: 24356
   type: normalize-heading-level
@@ -2401,8 +2520,10 @@ full_extension_2026_07:
 - spec: TS 23.501
   line: 27069
   type: normalize-heading-level
-  original: '# K.2 Port and user plane node management information exchange for time synchronization'
-  replacement: '## K.2 Port and user plane node management information exchange for time synchronization'
+  original: '# K.2 Port and user plane node management information exchange for time
+    synchronization'
+  replacement: '## K.2 Port and user plane node management information exchange for
+    time synchronization'
 - spec: TS 23.501
   line: 27071
   type: normalize-heading-level
@@ -2451,8 +2572,10 @@ full_extension_2026_07:
 - spec: TS 23.501
   line: 27235
   type: normalize-heading-level
-  original: '######## Annex M (normative): Interworking with TSN deployed in the Transport Network'
-  replacement: '# Annex M (normative): Interworking with TSN deployed in the Transport Network'
+  original: '######## Annex M (normative): Interworking with TSN deployed in the Transport
+    Network'
+  replacement: '# Annex M (normative): Interworking with TSN deployed in the Transport
+    Network'
 - spec: TS 23.501
   line: 27237
   type: normalize-heading-level
@@ -2487,7 +2610,8 @@ full_extension_2026_07:
   line: 27589
   type: normalize-heading-level
   original: '## N.2.2 Configuration of network to provide access to Localized Services'
-  replacement: '### N.2.2 Configuration of network to provide access to Localized Services'
+  replacement: '### N.2.2 Configuration of network to provide access to Localized
+    Services'
 - spec: TS 23.501
   line: 27593
   type: normalize-heading-level
@@ -2507,17 +2631,22 @@ full_extension_2026_07:
   line: 27617
   type: normalize-heading-level
   original: '# N.5 Support for leaving network that provides access to Localized Services'
-  replacement: '## N.5 Support for leaving network that provides access to Localized Services'
+  replacement: '## N.5 Support for leaving network that provides access to Localized
+    Services'
 - spec: TS 23.501
   line: 27649
   type: normalize-heading-level
-  original: '# N.6 Configuration of Credentials Holder for determining SNPN selection information'
-  replacement: '## N.6 Configuration of Credentials Holder for determining SNPN selection information'
+  original: '# N.6 Configuration of Credentials Holder for determining SNPN selection
+    information'
+  replacement: '## N.6 Configuration of Credentials Holder for determining SNPN selection
+    information'
 - spec: TS 23.501
   line: 27665
   type: normalize-heading-level
-  original: '######## Annex O (informative): Allowing UE to simultaneously send data to different groups with different QoS policy'
-  replacement: '# Annex O (informative): Allowing UE to simultaneously send data to different groups with different QoS policy'
+  original: '######## Annex O (informative): Allowing UE to simultaneously send data
+    to different groups with different QoS policy'
+  replacement: '# Annex O (informative): Allowing UE to simultaneously send data to
+    different groups with different QoS policy'
 - spec: TS 23.501
   line: 27669
   type: normalize-heading-level
@@ -2532,7 +2661,8 @@ full_extension_2026_07:
   line: 27725
   type: normalize-heading-level
   original: '# O.3 A PDU Session targeting a predefined group formed of multiple sub-groups'
-  replacement: '## O.3 A PDU Session targeting a predefined group formed of multiple sub-groups'
+  replacement: '## O.3 A PDU Session targeting a predefined group formed of multiple
+    sub-groups'
 - spec: TS 23.501
   line: 27757
   type: normalize-heading-level
@@ -2586,13 +2716,17 @@ full_extension_2026_07:
 - spec: TS 23.502
   line: 5477
   type: normalize-heading-level
-  original: '##### 4.2.11.5.2.3 VPLMN with HPLMN assistance NSAC Admission mode for number of Registered UEs'
-  replacement: '###### 4.2.11.5.2.3 VPLMN with HPLMN assistance NSAC Admission mode for number of Registered UEs'
+  original: '##### 4.2.11.5.2.3 VPLMN with HPLMN assistance NSAC Admission mode for
+    number of Registered UEs'
+  replacement: '###### 4.2.11.5.2.3 VPLMN with HPLMN assistance NSAC Admission mode
+    for number of Registered UEs'
 - spec: TS 23.502
   line: 5521
   type: normalize-heading-level
-  original: '##### 4.2.11.5.2.4 VPLMN with HPLMN assistance NSAC Admission mode for number of LBO PDU Sessions'
-  replacement: '###### 4.2.11.5.2.4 VPLMN with HPLMN assistance NSAC Admission mode for number of LBO PDU Sessions'
+  original: '##### 4.2.11.5.2.4 VPLMN with HPLMN assistance NSAC Admission mode for
+    number of LBO PDU Sessions'
+  replacement: '###### 4.2.11.5.2.4 VPLMN with HPLMN assistance NSAC Admission mode
+    for number of LBO PDU Sessions'
 - spec: TS 23.502
   line: 5555
   type: normalize-heading-level
@@ -2641,8 +2775,10 @@ full_extension_2026_07:
 - spec: TS 23.502
   line: 10936
   type: normalize-heading-level
-  original: '##### 4.11.1.5.4.3 Dedicated Bearer Activation, Bearer Modification and Bearer Deactivation'
-  replacement: '###### 4.11.1.5.4.3 Dedicated Bearer Activation, Bearer Modification and Bearer Deactivation'
+  original: '##### 4.11.1.5.4.3 Dedicated Bearer Activation, Bearer Modification and
+    Bearer Deactivation'
+  replacement: '###### 4.11.1.5.4.3 Dedicated Bearer Activation, Bearer Modification
+    and Bearer Deactivation'
 - spec: TS 23.502
   line: 11258
   type: normalize-heading-level
@@ -2661,7 +2797,8 @@ full_extension_2026_07:
 - spec: TS 23.502
   line: 32594
   type: normalize-heading-level
-  original: '########  Annex A (informative): Drafting rules and conventions for NF services'
+  original: '########  Annex A (informative): Drafting rules and conventions for NF
+    services'
   replacement: '# Annex A (informative): Drafting rules and conventions for NF services'
 - spec: TS 23.502
   line: 32596
@@ -2726,8 +2863,10 @@ full_extension_2026_07:
 - spec: TS 23.502
   line: 32720
   type: normalize-heading-level
-  original: '########  Annex C (informative): Generating EPS PDN Connection parameters from 5G PDU Session parameters'
-  replacement: '# Annex C (informative): Generating EPS PDN Connection parameters from 5G PDU Session parameters'
+  original: '########  Annex C (informative): Generating EPS PDN Connection parameters
+    from 5G PDU Session parameters'
+  replacement: '# Annex C (informative): Generating EPS PDN Connection parameters
+    from 5G PDU Session parameters'
 - spec: TS 23.502
   line: 32744
   type: normalize-heading-level
@@ -2746,8 +2885,10 @@ full_extension_2026_07:
 - spec: TS 23.502
   line: 32818
   type: normalize-heading-level
-  original: '########  Annex E (normative): Delegated SMF and PCF discovery in the Home Routed and specific SMF Service Areas scenarios'
-  replacement: '# Annex E (normative): Delegated SMF and PCF discovery in the Home Routed and specific SMF Service Areas scenarios'
+  original: '########  Annex E (normative): Delegated SMF and PCF discovery in the
+    Home Routed and specific SMF Service Areas scenarios'
+  replacement: '# Annex E (normative): Delegated SMF and PCF discovery in the Home
+    Routed and specific SMF Service Areas scenarios'
 - spec: TS 23.502
   line: 32820
   type: normalize-heading-level
@@ -2771,8 +2912,10 @@ full_extension_2026_07:
 - spec: TS 23.502
   line: 32942
   type: normalize-heading-level
-  original: '######## Annex F (informative): Information flows for 5GS integration with TSN or with Deterministic Networking'
-  replacement: '# Annex F (informative): Information flows for 5GS integration with TSN or with Deterministic Networking'
+  original: '######## Annex F (informative): Information flows for 5GS integration
+    with TSN or with Deterministic Networking'
+  replacement: '# Annex F (informative): Information flows for 5GS integration with
+    TSN or with Deterministic Networking'
 - spec: TS 23.502
   line: 32948
   type: normalize-heading-level
@@ -2811,8 +2954,10 @@ full_extension_2026_07:
 - spec: TS 23.502
   line: 33202
   type: normalize-heading-level
-  original: '######## Annex H (normative): Support of EAP-based secondary authentication and authorization by DN-AAA over EPC'
-  replacement: '# Annex H (normative): Support of EAP-based secondary authentication and authorization by DN-AAA over EPC'
+  original: '######## Annex H (normative): Support of EAP-based secondary authentication
+    and authorization by DN-AAA over EPC'
+  replacement: '# Annex H (normative): Support of EAP-based secondary authentication
+    and authorization by DN-AAA over EPC'
 - spec: TS 23.502
   line: 33204
   type: normalize-heading-level
@@ -2826,13 +2971,17 @@ full_extension_2026_07:
 - spec: TS 23.502
   line: 33224
   type: normalize-heading-level
-  original: '## H.2.1 Secondary authentication and authorization by DN-AAA at PDN Connection Establishment'
-  replacement: '### H.2.1 Secondary authentication and authorization by DN-AAA at PDN Connection Establishment'
+  original: '## H.2.1 Secondary authentication and authorization by DN-AAA at PDN
+    Connection Establishment'
+  replacement: '### H.2.1 Secondary authentication and authorization by DN-AAA at
+    PDN Connection Establishment'
 - spec: TS 23.502
   line: 33276
   type: normalize-heading-level
-  original: '######## Annex I (informative): Member UE selection without the NEF assistance at the AF'
-  replacement: '# Annex I (informative): Member UE selection without the NEF assistance at the AF'
+  original: '######## Annex I (informative): Member UE selection without the NEF assistance
+    at the AF'
+  replacement: '# Annex I (informative): Member UE selection without the NEF assistance
+    at the AF'
 - spec: TS 23.502
   line: 33302
   type: normalize-heading-level
@@ -2945,8 +3094,10 @@ full_extension_2026_07:
 - spec: TS 29.575
   line: 1116
   type: normalize-heading-level
-  original: '##### 4.2.2.8.3 Notification about data or analytics that are about to be deleted '
-  replacement: '##### 4.2.2.8.3 Notification about data or analytics that are about to be deleted'
+  original: '##### 4.2.2.8.3 Notification about data or analytics that are about to
+    be deleted '
+  replacement: '##### 4.2.2.8.3 Notification about data or analytics that are about
+    to be deleted'
 - spec: TS 29.575
   line: 1496
   type: normalize-heading-level

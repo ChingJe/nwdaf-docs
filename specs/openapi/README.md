@@ -49,6 +49,7 @@ These files are copied byte-for-byte from the supplied Release 18 specification 
 - [TS29520_Nnwdaf_MLModelTraining.yaml](TS29520_Nnwdaf_MLModelTraining.yaml) — 3GPP TS 29.520 V18.14.0; 5G System; Network Data Analytics Services.
 - [TS29520_Nnwdaf_RoamingAnalytics.yaml](TS29520_Nnwdaf_RoamingAnalytics.yaml) — 3GPP TS 29.520 V18.13.0; 5G System; Network Data Analytics Services.
 - [TS29520_Nnwdaf_RoamingData.yaml](TS29520_Nnwdaf_RoamingData.yaml) — 3GPP TS 29.520 V18.13.0; 5G System; Network Data Analytics Services.
+- [TS29523_Npcf_EventExposure.yaml](TS29523_Npcf_EventExposure.yaml) — 3GPP TS 29.523 V18.5.0; 5G System; Policy Control Event Exposure Service; Stage 3.
 - [TS29554_Npcf_BDTPolicyControl.yaml](TS29554_Npcf_BDTPolicyControl.yaml) — 3GPP TS 29.554 V18.3.0; 5G System; Background Data Transfer Policy Control Service.
 
 - [TS29564_Nupf_EventExposure.yaml](TS29564_Nupf_EventExposure.yaml) — 3GPP TS 29.564 V18.6.0; 5G System; User Plane Function Services; Stage 3.
@@ -63,8 +64,8 @@ These files are copied byte-for-byte from the supplied Release 18 specification 
 
 ## Dependency status
 
-- Included official YAML files: 55
-- External YAML filenames referenced but not included: 20
+- Included official YAML files: 56
+- External YAML filenames referenced but not included: 21
 
 The unresolved references belong to other NF APIs not supplied in this corpus. They are listed for dependency tracking and are not automatically filled from another Release:
 
@@ -79,9 +80,10 @@ The unresolved references belong to other NF APIs not supplied in this corpus. T
 - `TS29517_Naf_EventExposure.yaml`
 - `TS29519_Policy_Data.yaml`
 - `TS29522_AMPolicyAuthorization.yaml`
+- `TS29522_ServiceParameter.yaml`
 - `TS29522_TrafficInfluence.yaml`
-- `TS29523_Npcf_EventExposure.yaml`
 - `TS29531_Nnssf_NSSelection.yaml`
+- `TS29534_Npcf_AMPolicyAuthorization.yaml`
 - `TS29536_Nnsacf_SliceEventExposure.yaml`
 - `TS29562_Nhss_imsUEAU.yaml`
 - `TS29565_Ntsctsf_QoSandTSCAssistance.yaml`

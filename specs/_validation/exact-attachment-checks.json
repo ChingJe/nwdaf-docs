@@ -1,5 +1,195 @@
 [
   {
+    "zip": "29122-ia0.zip",
+    "file": "TS29122_AsSessionWithQoS.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29122-ia0.zip",
+    "file": "TS29122_ChargeableParty.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29122-ia0.zip",
+    "file": "TS29122_CommonData.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29122-ia0.zip",
+    "file": "TS29122_CpProvisioning.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29122-ia0.zip",
+    "file": "TS29122_DeviceTriggering.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29122-ia0.zip",
+    "file": "TS29122_ECRControl.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29122-ia0.zip",
+    "file": "TS29122_GMDviaMBMSbyMB2.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29122-ia0.zip",
+    "file": "TS29122_GMDviaMBMSbyxMB.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29122-ia0.zip",
+    "file": "TS29122_MonitoringEvent.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29122-ia0.zip",
+    "file": "TS29122_MsisdnLessMoSms.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29122-ia0.zip",
+    "file": "TS29122_NIDD.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29122-ia0.zip",
+    "file": "TS29122_NpConfiguration.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29122-ia0.zip",
+    "file": "TS29122_PfdManagement.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29122-ia0.zip",
+    "file": "TS29122_RacsParameterProvisioning.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29122-ia0.zip",
+    "file": "TS29122_ReportingNetworkStatus.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29122-ia0.zip",
+    "file": "TS29122_ResourceManagementOfBdt.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29500-ia0.zip",
+    "file": "TS29500_CustomHeaders.abnf",
+    "byte_identical": true
+  },
+  {
+    "zip": "29503-id0.zip",
+    "file": "TS29503_Nudm_EE.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29503-id0.zip",
+    "file": "TS29503_Nudm_MT.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29503-id0.zip",
+    "file": "TS29503_Nudm_NIDDAU.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29503-id0.zip",
+    "file": "TS29503_Nudm_PP.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29503-id0.zip",
+    "file": "TS29503_Nudm_RSDS.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29503-id0.zip",
+    "file": "TS29503_Nudm_SDM.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29503-id0.zip",
+    "file": "TS29503_Nudm_SSAU.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29503-id0.zip",
+    "file": "TS29503_Nudm_UEAU.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29503-id0.zip",
+    "file": "TS29503_Nudm_UECM.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29503-id0.zip",
+    "file": "TS29503_Nudm_UEID.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29508-ib0.zip",
+    "file": "TS29508_Nsmf_EventExposure.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29510-ib0.zip",
+    "file": "TS29510_Nnrf_AccessToken.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29510-ib0.zip",
+    "file": "TS29510_Nnrf_Bootstrapping.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29510-ib0.zip",
+    "file": "TS29510_Nnrf_NFDiscovery.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29510-ib0.zip",
+    "file": "TS29510_Nnrf_NFManagement.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29518-ie0.zip",
+    "file": "TS29518_Namf_Communication.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29518-ie0.zip",
+    "file": "TS29518_Namf_EventExposure.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29518-ie0.zip",
+    "file": "TS29518_Namf_Location.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29518-ie0.zip",
+    "file": "TS29518_Namf_MBSBroadcast.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29518-ie0.zip",
+    "file": "TS29518_Namf_MBSCommunication.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29518-ie0.zip",
+    "file": "TS29518_Namf_MT.yaml",
+    "byte_identical": true
+  },
+  {
     "zip": "29520-ie0.zip",
     "file": "TS29520_Nnwdaf_AnalyticsInfo.yaml",
     "byte_identical": true
@@ -40,33 +230,8 @@
     "byte_identical": true
   },
   {
-    "zip": "29510-ib0.zip",
-    "file": "TS29510_Nnrf_AccessToken.yaml",
-    "byte_identical": true
-  },
-  {
-    "zip": "29510-ib0.zip",
-    "file": "TS29510_Nnrf_Bootstrapping.yaml",
-    "byte_identical": true
-  },
-  {
-    "zip": "29510-ib0.zip",
-    "file": "TS29510_Nnrf_NFDiscovery.yaml",
-    "byte_identical": true
-  },
-  {
-    "zip": "29510-ib0.zip",
-    "file": "TS29510_Nnrf_NFManagement.yaml",
-    "byte_identical": true
-  },
-  {
-    "zip": "29571-ic0.zip",
-    "file": "TS29571_CommonData.yaml",
-    "byte_identical": true
-  },
-  {
-    "zip": "29508-ib0.zip",
-    "file": "TS29508_Nsmf_EventExposure.yaml",
+    "zip": "29554-i30.zip",
+    "file": "TS29554_Npcf_BDTPolicyControl.yaml",
     "byte_identical": true
   },
   {
@@ -80,6 +245,21 @@
     "byte_identical": true
   },
   {
+    "zip": "29571-ic0.zip",
+    "file": "TS29571_CommonData.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29574-ic0.zip",
+    "file": "TS29574_Ndccf_ContextManagement.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29574-ic0.zip",
+    "file": "TS29574_Ndccf_DataManagement.yaml",
+    "byte_identical": true
+  },
+  {
     "zip": "29575-ib0(1).zip",
     "file": "TS29575_Nadrf_DataManagement.yaml",
     "byte_identical": true
@@ -90,8 +270,18 @@
     "byte_identical": true
   },
   {
-    "zip": "29500-ia0.zip",
-    "file": "TS29500_CustomHeaders.abnf",
+    "zip": "29576-i80.zip",
+    "file": "TS29576_Nmfaf_3caDataManagement.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29576-i80.zip",
+    "file": "TS29576_Nmfaf_3daDataManagement.yaml",
+    "byte_identical": true
+  },
+  {
+    "zip": "29523-i70.zip",
+    "file": "TS29523_Npcf_EventExposure.yaml",
     "byte_identical": true
   }
 ]

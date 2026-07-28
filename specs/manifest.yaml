@@ -22,7 +22,8 @@ specifications:
   spec: TS 23.502
   version: 18.14.0
   scope: full
-  purpose: 5GS Stage 2 procedures, including full registration, session, exposure and policy flows
+  purpose: 5GS Stage 2 procedures, including full registration, session, exposure
+    and policy flows
   index: TS 23.502/README.md
   manifest: TS 23.502/manifest.yaml
   source_archive: 23502-ie0.zip
@@ -31,7 +32,8 @@ specifications:
   spec: TS 29.122
   version: 18.10.0
   scope: full
-  purpose: T8 northbound APIs and shared schemas reused by NWDAF, NRF, SMF and ADRF OpenAPI definitions
+  purpose: T8 northbound APIs and shared schemas reused by NWDAF, NRF, SMF and ADRF
+    OpenAPI definitions
   index: TS 29.122/README.md
   manifest: TS 29.122/manifest.yaml
   source_archive: 29122-ia0.zip
@@ -49,7 +51,8 @@ specifications:
   spec: TS 29.503
   version: 18.13.0
   scope: full
-  purpose: UDM subscriber data, UE context, event exposure, authentication and identifier services
+  purpose: UDM subscriber data, UE context, event exposure, authentication and identifier
+    services
   index: TS 29.503/README.md
   manifest: TS 29.503/manifest.yaml
   source_archive: 29503-id0.zip
@@ -90,11 +93,21 @@ specifications:
   manifest: TS 29.520/manifest.yaml
   source_archive: 29520-ie0.zip
   source_archive_sha256: 4937d4ffcdc8760cac3dd990b10d5c0beb722f9eab26d94ce4b1f296287057c1
+- id: TS-29.523
+  spec: TS 29.523
+  version: 18.7.0
+  scope: full
+  purpose: PCF policy-control event subscriptions, notifications and event data models
+  index: TS 29.523/README.md
+  manifest: TS 29.523/manifest.yaml
+  source_archive: 29523-i70.zip
+  source_archive_sha256: 5cd859d1209362653dc38885359730445b9477dac772b9b67bc95f3bbe64cdf0
 - id: TS-29.552
   spec: TS 29.552
   version: 18.7.0
   scope: full
-  purpose: NWDAF Stage 3 signalling flows across analytics, data collection, ML, ADRF, DCCF and MFAF procedures
+  purpose: NWDAF Stage 3 signalling flows across analytics, data collection, ML, ADRF,
+    DCCF and MFAF procedures
   index: TS 29.552/README.md
   manifest: TS 29.552/manifest.yaml
   source_archive: 29552-i70.zip
@@ -130,7 +143,8 @@ specifications:
   spec: TS 29.574
   version: 18.12.0
   scope: full
-  purpose: DCCF data subscription, notification, fetch, transfer and data-collection-profile APIs
+  purpose: DCCF data subscription, notification, fetch, transfer and data-collection-profile
+    APIs
   index: TS 29.574/README.md
   manifest: TS 29.574/manifest.yaml
   source_archive: 29574-ic0.zip
@@ -148,7 +162,8 @@ specifications:
   spec: TS 29.576
   version: 18.8.0
   scope: full
-  purpose: MFAF configuration, fetch and notification services for messaging-framework-based data delivery
+  purpose: MFAF configuration, fetch and notification services for messaging-framework-based
+    data delivery
   index: TS 29.576/README.md
   manifest: TS 29.576/manifest.yaml
   source_archive: 29576-i80.zip

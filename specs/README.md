@@ -16,6 +16,7 @@ This corpus is organized for progressive loading by development agents. All list
 | [TS 29.510](TS%2029.510/README.md) | 18.11.0 | Full | NRF management, discovery, access token and bootstrapping APIs |
 | [TS 29.518](TS%2029.518/README.md) | 18.14.0 | Full | AMF communication, event exposure, location, mobility and messaging services |
 | [TS 29.520](TS%2029.520/README.md) | 18.14.0 | Full | NWDAF Stage 3 APIs and data models |
+| [TS 29.523](TS%2029.523/README.md) | 18.7.0 | Full | PCF policy-control event subscriptions, notifications and event data models |
 | [TS 29.552](TS%2029.552/README.md) | 18.7.0 | Full | NWDAF Stage 3 signalling flows across analytics, data collection, ML, ADRF, DCCF and MFAF procedures |
 | [TS 29.554](TS%2029.554/README.md) | 18.3.0 | Full | PCF background-data-transfer policy control API and shared BDT policy types |
 | [TS 29.564](TS%2029.564/README.md) | 18.7.0 | Full | UPF Event Exposure and UE private IP/identifier APIs |
@@ -49,6 +50,15 @@ This corpus is organized for progressive loading by development agents. All list
 3. Use TS 29.518 and Namf_EventExposure for AMF mobility, reachability and location-related events.
 4. Use TS 29.503 and Nudm_SDM/Nudm_UECM/Nudm_EE for subscriber data, UE context and UDM event exposure.
 5. Use TS 29.510 to discover AMF/UDM instances and service endpoints.
+
+## Common workflow: PCF event exposure
+
+1. Use TS 23.288 to identify analytics and policy-related data requirements.
+2. Use TS 23.501 and TS 23.502 for PCF architecture, policy framework and event-exposure procedure context.
+3. Use TS 29.510 to discover a PCF instance and its `npcf-eventexposure` service endpoint.
+4. Use TS 29.523 and `TS29523_Npcf_EventExposure.yaml` for subscriptions, modifications, notifications and exact data models.
+5. Use TS 29.554 when background-data-transfer policy control is part of the workflow.
+6. Use TS 29.500 and TS 29.571 for common HTTP behaviour and shared schemas.
 
 ## Common workflow: ADRF and messaging-framework integration
 
