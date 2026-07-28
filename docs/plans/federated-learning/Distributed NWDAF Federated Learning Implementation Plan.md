@@ -2,7 +2,8 @@
 
 日期：2026-07-28
 
-狀態：Phase 0 contract foundation 已完成；Phase 1 詳細計畫已完成，待實作
+狀態：Phase 0 contract foundation 與 Phase 1 role／NRF foundation 已完成；
+下一步為 Phase 2 詳細設計
 
 相關文件：
 
@@ -1843,7 +1844,8 @@ Exemplar alignment：
 
 每一個 Phase 仍要拆成可獨立驗收的 vertical slice：
 
-1. 先確認 owner、external／private contract、acceptance tests；
+1. 先確認 owner、external／private contract、package placement、
+   acceptance tests；
 2. characterization／contract test 優先；
 3. 完成一個 slice 後先跑 focused verification；
 4. 再跑該 repo required full verification；
@@ -1853,6 +1855,33 @@ Exemplar alignment：
 8. docs commits 可以使用 plan／phase 名稱；
 9. review 只 admission current-slice confirmed defects；
 10. follow-up review 只檢查 remediation diff 與 direct dependencies。
+
+### 18.1 Package 與 directory gate
+
+本計畫所有 Go repository均遵守
+`development_policy.md` 的 New Go Package Gate：
+
+1. 新增 package前必須記錄 owner、callers、transport boundary、
+   dependency direction，以及適用的 free5GC exemplar；
+2. 預設在既有 owner package新增檔案；共用 parser／validator、標準
+   schema名稱或避免重複，不足以單獨成立新 package；
+3. 使用標準欄位名稱、標準-shaped representation或
+   `ProblemDetails`的 Go–Python private API依然是 backend boundary，
+   不因此歸入 `internal/sbi`；
+4. `internal/sbi/consumer`只承擔 Go向其他 NF發出的標準 SBI client、
+   transport、OAuth、serialization與cache；
+5. `internal/sbi/processor`只承擔 Go public SBI進入後的 processor
+   flow；
+6. Go–AnLF／MTLF共用的 private contract與validation由既有
+   `internal/backend` owner承擔，除非後續計畫先證明需要不同的
+   stable package ownership；
+7. detailed plan與review必須逐一列出新增 package及其必要性；測試通過
+   不能替代 package placement review。
+
+Phase 1 checkpoint套用此約束：backend呼叫 Go的 NRF discovery query
+contract／parser不應形成 `internal/sbi/nfdiscovery` package。該 private
+boundary應由 `internal/backend`擁有；真正的 Go→NRF discovery
+transport與cache保留在 `internal/sbi/consumer`。
 
 Repository commit 彼此獨立：
 

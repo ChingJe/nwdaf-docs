@@ -87,6 +87,38 @@ during review.
 - When introducing a new internal contract or state machine, document its
   owner, lifecycle, failure boundary, and restart behavior.
 
+### 2.1 New Go Package Gate
+
+Creating a new Go package or directory is an architecture decision, not a
+default response to shared code.
+
+Before adding one:
+
+1. Identify the behavior owner, callers, transport boundary, state/lifecycle
+   owner, and intended dependency direction.
+2. Inspect the target repository for an existing owner package that can
+   reasonably contain the behavior.
+3. Inspect the specifically applicable free5GC exemplar and record which
+   package shape and boundary it demonstrates.
+4. Prefer adding a file to the existing owner package. A shared parser,
+   validator, schema name, protocol name, or desire to avoid duplication is
+   not by itself sufficient reason for a new package.
+5. Create a package only when it has a distinct, stable responsibility that
+   cannot be placed in an existing owner without reversing dependencies,
+   creating an import cycle, or mixing unrelated lifecycles.
+6. Classify by the actual owner and transport boundary, not by payload shape.
+   A private Go-backend API that reuses standard field names or
+   `ProblemDetails` is still a private backend boundary; it does not become
+   external SBI and must not be placed under `internal/sbi` for that reason
+   alone.
+7. If the proposed package has no clear repository precedent or applicable
+   free5GC exemplar, record the proposed ownership in the active plan and
+   discuss it before implementation.
+
+Review must enumerate every newly added package and verify its necessity,
+dependency direction, and exemplar. Passing tests demonstrate behavior, not
+package-placement correctness.
+
 ## 3. Standard Boundary Levels
 
 ### 3.1 External SBI
