@@ -2,7 +2,7 @@
 
 日期：2026-07-28
 
-狀態：Phase 0 contract foundation 已實作並完成重新驗證
+狀態：Phase 0 contract foundation 已完成；Phase 1 詳細計畫已完成，待實作
 
 相關文件：
 
@@ -188,7 +188,7 @@ UDM，必須使用獨立且獲授權的 repository／branch，不得直接在
 
 | Area | Current state | Required target |
 | --- | --- | --- |
-| NWDAF role profile | service advertisement 主要由 backend enable 推導 | A/B/C 顯式 role、TAI、FL capability 與 service profile |
+| NWDAF capability config | service advertisement 主要由 backend enable 推導 | 以 `serviceNameList`、標準 `nwdafInfo`、TAI 與 FL capability 建立 A/B/C profile |
 | OpenAPI contract | pinned free5GC models 主要為 Release 17 | 沿用可用的 R17 generated models，缺少／不完整的 Release 18 Training 與 FL capability 以隔離 compatibility types 補齊 |
 | NRF gateway | 只接受 SMF Event Exposure／ADRF Data Management query | NWDAF model／FL、exact instance、UDM、完整 cache key |
 | NRF implementation | 無 `ml-analytics-info-list` matching，R17 typed profile 會丟 FL 欄位 | 保存與篩選 Release 18 `MlAnalyticsInfo` |
@@ -209,6 +209,25 @@ UDM，必須使用獨立且獲授權的 repository／branch，不得直接在
 | ADRF model | 初步實作仍有 contract gaps | Release 18 store/retrieve、capability、Location、ACL |
 | E2E | single NWDAF portable flow | three NWDAFs、NRF、ADRF、two Clients、multi-round |
 
+### 3.3 Branch strategy
+
+本 federated-learning workstream 不依 Phase 建立短期 implementation
+branch。各 repository 使用下列長期 branch：
+
+| Repository | Branch |
+| --- | --- |
+| `NWDAF/` | `feat/r18-federated-learning` |
+| `PyAnLF/` | `feat/r18-federated-learning` |
+| `PyMTLF/` | `feat/r18-federated-learning` |
+| `nwdaf-resources/` | `feat/r18-federated-learning` |
+| `nrf/` | `feat/r18-nwdaf-discovery` |
+| `nwdaf-docs/` | `main` |
+
+不建立 `contract-foundation`、`phase1` 等額外 implementation branch。
+各 repository 仍獨立 commit、獨立驗證；implementation commit 不使用
+Phase、review iteration 或 finding ID 作 summary。`resources/` 內的
+reference mirrors 保持 read-only。
+
 ---
 
 ## 4. 標準邊界與證據
@@ -216,6 +235,12 @@ UDM，必須使用獨立且獲授權的 repository／branch，不得直接在
 OpenAPI 決定 path、method、request／response schema、required fields、
 success status、`Location` 與 operation-specific error；TS text 用來判斷
 procedure intent 與角色責任。
+
+Go 與 PyAnLF／PyMTLF 的 internal HTTP path可以由專案定義，但只要承載
+標準業務資料，query parameter、JSON property、nested structure、enum
+value、success body與 `ProblemDetails`都必須沿用對應 OpenAPI名稱及
+形狀。不得建立縮寫、alias、flattened form或 project-specific wrapper；
+語言內部命名差異只能由 serializer tags隔離，不得出現在 wire contract。
 
 ### 4.1 NRF
 
@@ -595,7 +620,7 @@ NRF candidate 不等於正式 participant。
 
 | Component | Owns |
 | --- | --- |
-| Go NWDAF | NF identity、role profile、NRF registration/discovery/cache、public standard SBI、outbound Training／Provision／Monitor／ADRF clients、callback relay、peer resource mirror、backend sync |
+| Go NWDAF | NF identity、service/capability profile、NRF registration/discovery/cache、public standard SBI、outbound Training／Provision／Monitor／ADRF clients、callback relay、peer resource mirror、backend sync |
 | PyAnLF | analytics/model demand、provider selection policy、model activation、monitor registration、WAPE measurement、collection descriptors、ADRF raw data write |
 | PyMTLF on A/B | FL Client Training producer resource、preparation、ADRF snapshot、shared-scaler local trainer、`ROUND_LOCAL` training／accuracy-check bundles |
 | PyMTLF on C | FL Server model catalog、degradation intent、Client selection、FL process/round、FedAvg、global promotion、ADRF final-model publication |
@@ -653,7 +678,7 @@ flowchart TD
 | Phase | Primary repositories | Deliverable | Depends on |
 | --- | --- | --- | --- |
 | 0 | `NWDAF`, `PyAnLF`, `PyMTLF`, `nwdaf-resources` | R18 compatibility contracts、artifact roles、catalog/journal schema | none |
-| 1 | `NWDAF`, `PyAnLF`, `PyMTLF`, NRF fork, `nwdaf-resources` | A/B/C roles、registration、generic discovery | Phase 0, G1 |
+| 1 | `NWDAF`, `PyAnLF`, `PyMTLF`, NRF fork, `nwdaf-resources` | A/B/C roles、registration、NRF discovery relay | Phase 0；editable NRF fork |
 | 2 | `NWDAF`, `PyAnLF`, `PyMTLF`, `nwdaf-resources` | peer routes、remote seed provision、two-scope monitoring | Phase 1 |
 | 3 | `NWDAF`, `PyMTLF`, `nwdaf-resources` | bidirectional Training transport、one-Client preparation/round | Phase 2 |
 | 4 | `PyMTLF`, `NWDAF`, `nwdaf-resources` | two-Client orchestration、shared-scaler local training、FedAvg | Phase 3 |
@@ -863,19 +888,24 @@ base 複製，否則拒絕該 result。不得放寬 completed-bundle validator �
 
 ## 9. Phase 1：Role-aware deployment and NRF foundation
 
-### 9.1 Slice 1A：Explicit NWDAF roles
+狀態：詳細計畫已完成，待實作。
 
-在 `NWDAF/pkg/factory` 與 config 增加顯式 capability：
+詳細實作計畫：
 
-- analytics provider；
-- model provision provider；
-- model monitor provider／consumer capability；
-- FL Server；
-- FL Client；
-- supported Analytics IDs；
-- TAI／tracking area；
-- model interoperability；
-- local training data NF types。
+- [Phase 1 Role-Aware Deployment And NRF Foundation Detailed Plan](./Phase%201%20Role-Aware%20Deployment%20And%20NRF%20Foundation%20Detailed%20Plan.md)
+
+### 9.1 Slice 1A：Explicit NWDAF services and capabilities
+
+對齊其他 free5GC NF 的 config 慣例，在 `NWDAF/pkg/factory` 與 config
+增加：
+
+- `serviceNameList`：決定實際掛載並註冊到 NRF 的標準 SBI services；
+- `nwdafInfo.nwdafEvents`：描述可提供的 Analytics Events；
+- `nwdafInfo.mlAnalyticsList`：描述 Model Provision／FL 對應的
+  Analytics ID、TAI、model interoperability、`flCapabilityType` 與
+  local training data NF types；
+- `anlfBackend`／`mtlfBackend`：只描述本地 backend dependency，不作為
+  對外 capability 的唯一來源。
 
 同一 binary 用不同 config 建立：
 
@@ -883,9 +913,10 @@ base 複製，否則拒絕該 result。不得放寬 completed-bundle validator �
 - B profile；
 - C profile。
 
-不得再只以「backend enabled」推導所有外部 capability。backend enable
-仍決定 local dependency 是否存在；role config 決定本 instance 預期提供
-哪些標準服務。
+`NWDAF/config/` 保留既有 `nwdafcfg.yaml`，並新增 A／B／C 三份可直接
+啟動的 deployment config。不得再只以「backend enabled」推導所有外部
+capability；profile config決定本 instance提供哪些標準服務，backend
+enable只用來驗證對應 operation是否有本地 owner。
 
 同一 Slice 也完成 backend execution-mode migration：
 
@@ -903,24 +934,33 @@ base 複製，否則拒絕該 result。不得放寬 completed-bundle validator �
   ADRF request／fetch watchdog < Client PyMTLF preparation timeout <
   A/B Go backend timeout < C Go peer timeout < C PyMTLF auxiliary／process
   timeout，並保留 safety margin；
-- Go config validation 要求 analytics provider 具 AnLF backend，
-  FL Client／Server 與 model provider 具 MTLF backend，並區分 C 的
-  monitor-registration side 與 A/B 的 monitor-subscription side。
+- Go config validation依 `serviceNameList`與 `nwdafInfo`檢查必要 backend：
+  Events Subscription須有 AnLF，Model Provision須有 MTLF，FL
+  Client／Server capability須有 MTLF；Monitor service則接受 A/B
+  由 AnLF承接 subscription、C由 MTLF承接 registration。
+  NRF只能在 service granularity廣告 `nnwdaf-mlmodelmonitor`，不能分別
+  宣告 registration／subscription operation；第一版允許未配置 owner的
+  非預期方向依標準已宣告的 `503`與既有 availability policy回應，不為
+  C額外啟動 PyAnLF。
 
 ### 9.2 Slice 1B：NF Profile
 
 Tasks：
 
-- A/B 註冊 Events Subscription、Model Monitor、Model Training；
+- A/B 註冊 Events Subscription、Model Monitor；
 - A/B 宣告 `FL_CLIENT` 與各自 TAI；
 - C 註冊 Model Provision、Model Monitor；
 - C 宣告 `FL_SERVER`；
 - C 不註冊 Events Subscription；
-- profile create／replace／heartbeat 保留 existing lifecycle；
+- Phase 1 不先廣告尚未建立 public route 的 Model Training service；
+  Phase 3 完成 Training handler／processor／backend routing 後才將
+  `nnwdaf-mlmodeltraining` 加入 A/B profile；
+- profile create／replace與 shutdown deregistration保留 existing
+  lifecycle；本 Phase不宣稱新增目前不存在的 periodic heartbeat worker；
 - backend 尚未 usable 時，configured service request 依 existing
   availability policy 回 `503`，不得由 Go 臨時執行 Python business logic。
 
-### 9.3 Slice 1C：Generic discovery query
+### 9.3 Slice 1C：NRF discovery relay
 
 擴充 Go shared NRF service 與兩個 backend auxiliary edges：
 
@@ -933,6 +973,14 @@ Tasks：
 - `ml-analytics-info-list`；
 - `internal-group-identity`；
 - ADRF storage capability filters。
+
+Internal path可自訂，但上述 query names、`ml-analytics-info-list` JSON
+properties、enum values、`SearchResult`與 `ProblemDetails`必須原樣沿用
+TS 29.510 OpenAPI；不得建立 project-specific alias或 wrapper。
+
+Phase 1 發現 FL Client 時只要求 `FL_CLIENT` capability；Phase 3
+Training route 可用後，才同時要求 registered
+`nnwdaf-mlmodeltraining` service，避免 profile 廣告尚不可呼叫的能力。
 
 TAI／S-NSSAI／FL capability／data-source NF type 必須編入同一個
 `ml-analytics-info-list` entry，不建立非標準 top-level query。
@@ -1826,7 +1874,8 @@ Repository commit 彼此獨立：
 `resources/` 是 read-only。開始 Phase 1／5／6 對應的 external workstream
 前，需要確認實際要提交的 editable repositories／branches：
 
-- NRF fork；
+- NRF fork：已滿足。使用 workspace `nrf/`，
+  branch `feat/r18-nwdaf-discovery`；
 - ADRF team repository；
 - UDM／UDR；
 - team SMF／UPF。
@@ -1840,8 +1889,9 @@ repository，因此 G1 不阻擋 Phase 0；各 external workstream 開始前再�
 需要在部署 config 選一個 NWDAF-C numeric model ID 起始區間與 data
 directory。這是實驗部署值，不改變上述 architecture。
 
-第一版 product behavior 已足以開始 Phase 0；Phase 1 的 NRF workstream
-開始前需滿足 G1，Phase 5 promotion 前需滿足 G2。
+第一版 product behavior 已足以開始 Phase 0；Phase 1 的 NRF prerequisite
+已滿足，Phase 5／6 對應 external workstream 開始前仍需確認其 repository，
+Phase 5 promotion 前需滿足 G2。
 
 ---
 
