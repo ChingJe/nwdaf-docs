@@ -889,7 +889,7 @@ base 複製，否則拒絕該 result。不得放寬 completed-bundle validator �
 
 ## 9. Phase 1：Role-aware deployment and NRF foundation
 
-狀態：詳細計畫已完成，待實作。
+狀態：已實作完成。
 
 詳細實作計畫：
 
