@@ -2,7 +2,7 @@
 
 日期：2026-07-29
 
-狀態：待實作
+狀態：實作與驗證完成
 
 上層計畫：
 
@@ -879,13 +879,19 @@ model_provider:
   mode: configured
   configured_target:
     nf_instance_id: "<uuid>"
-    nf_service_instance_id: "<stable-id>"
-    api_root: "http://..."
+    provision:
+      nf_service_instance_id: "<provision-service-id>"
+      api_root: "http://..."
+    monitor:
+      nf_service_instance_id: "<monitor-service-id>"
+      api_root: "http://..."
 ```
 
 規則：
 
-- 三個欄位 required；
+- provider NF identity與兩個service entry required；
+- Provision與Monitor必須使用各自真實的service instance identity；
+- 兩個service可以共用origin，但不可以假裝是同一個service instance；
 - 不再使用 `"configured-model-provider"` placeholder；
 - configured mode 不要求該 peer 已在 NRF；
 - endpoint 或 identity 寫錯視為實驗 config 錯誤；
@@ -1864,3 +1870,104 @@ Phase 5；package cleanup 與 final documentation由 Phase 6 處理。
 - 必須依賴 SMF／UPF／ADRF 才能完成 acceptance；
 - peer redirect 需要引入尚未同意的 TLS／OAuth identity policy；
 - Go restart recovery 被提升為 requirement。
+
+---
+
+## 24. Implementation result
+
+狀態：實作、code review remediation 與最終驗證皆已完成
+（2026-07-29）。
+
+Canonical review ledger：
+
+- [Phase 2 Code Review Findings And Remediation Plan](./code-reviews/Phase%202%20Code%20Review%20Findings%20And%20Remediation%20Plan.md)
+
+Canonical ledger 的registration owner identity、failed compensation、
+callback ownership、configured service identity、完整WAPE E2E、
+redirect persistence及accuracy scheduling findings皆已關閉。
+
+### 24.1 完成範圍
+
+- `NWDAF/` 建立跨 NWDAF Model Provision、Model Monitor registration、
+  Model Monitor subscription 與 callback relay；Go 產生本地 UUIDv4，
+  保存 selected target、peer `Location`、callback correlation、
+  lifecycle 與 backend process generation。
+- Go auxiliary edge 只以 private headers 傳遞 `SelectedTarget`，標準 peer
+  body 沒有加入 routing 欄位；NRF source 會對照尚未過期的 Go discovery
+  cache，configured source則使用 backend 已驗證的 stable identity。
+- Go 對 create response 驗證 status、body、media type及 `Location`，
+  replace／delete 使用完整 peer `Location`；create response contract
+  失敗時嘗試 immediate compensation delete。Compensation 失敗時保留
+  cleanup-only `PENDING_CLEANUP` route，由bounded retry reconciliation
+  在peer回`204`或`404`後移除。
+- 舊的Release 17 generated Model Provision consumer確認沒有production
+  caller後已移除；跨NWDAF Provision與Monitor只保留
+  `ml_model_peer_service.go`這一條lossless peer transport。
+- Go public callback 以 local route ID接收 peer notification，驗證
+  outbound direction、active lifecycle、selected target、backend process
+  generation、correlation與model identity後才轉交正確backend；private
+  routing headers不會送往peer。
+- backend sync依local／remote resource與initiator建立乾淨projection：
+  remote AnLF Provision／registration不會送入local PyMTLF，remote MTLF
+  Monitor也不會送入local PyAnLF；route generation只由真正承載local
+  resource或發起remote relationship的backend重建。Monitor owner在寫入
+  route前一律normalize為Go registration route ID。
+- `PyAnLF/` 依 Analytics ID、Model Provision service及 capability從NRF
+  選出C，亦保留configured target模式；沒有可用模型時建立remote
+  Model Provision demand，下載、驗證、啟用M1後才以自己的
+  `nfInstanceId`作`consumerId`向C registration。
+- `PyMTLF/` 由seed catalog提供M1；C對每個registration使用
+  `consumerId`做exact NRF discovery，分別向A、B建立Model Monitor
+  subscription，保存獨立registration、correlation與WAPE scope。
+- Model Provision URL通知只在Feature 4完成協商時使用；未協商extension
+  不會偷偷傳URL。
+- `nwdaf-resources/` distributed runner現可啟動temporary MongoDB、team
+  NRF、support-only fake SMF、三個Go NWDAF、PyAnLF-A/B及PyMTLF-A/B/C，
+  建立同group、不同TAI的兩條analytics subscription，透過PyAnLF
+  production UPF callback注入deterministic observation，並驗證完整
+  prediction、ground-truth、WAPE與A/B到C的callback path。
+- PyAnLF在有效WAPE尚未到monitor period時保留該measurement；下一個
+  due period優先送WAPE而不是insufficient-data liveness，避免有效WAPE
+  被週期性飢餓。
+
+### 24.2 Final E2E 已證明的行為
+
+1. A、B、C以不同`nfInstanceId`註冊NRF。
+2. A、B經NRF找到C的Model Provision service。
+3. A、B從C取得並啟用同一seed M1。
+4. A、B分別向C建立registration。
+5. C以各registration的`consumerId`exact discover A、B。
+6. C建立兩條獨立monitor subscription與correlation。
+7. runner以support fake SMF建立collection binding，再向PyAnLF-A/B
+   production callback注入UPF-shaped observation。
+8. A/B各自完成prediction／ground-truth pairing並產生`deviation` WAPE，
+   經Go-A/B、Go-C送達PyMTLF-C的獨立scope。
+9. PyMTLF-C意外重啟後由Go snapshot恢復，未重複建立peer resource；
+   owner registration與subscription使用同一Go identity namespace。
+10. PyAnLF-A意外重啟後重新啟用既有M1，
+   未觀察到重複建立remote Provision、registration或monitor
+   relationship。
+11. 刪除A analytics subscription只移除A monitor route；A舊UPF callback
+    回`404`，B仍可由新observation產生並回報WAPE。
+12. Go停止後三個NWDAF profile皆從NRF deregister。
+
+此runner使用support-only fake SMF，不啟動production SMF、UPF、UDM或
+ADRF，也不宣稱驗證真實data-plane collection或FL training。
+
+### 24.3 驗證紀錄
+
+| Repository | Verification | Result |
+| --- | --- | --- |
+| `NWDAF/` | `go test ./...` | pass |
+| `NWDAF/` | `go vet ./...` | pass |
+| `NWDAF/` | `golangci-lint v2.11.4 run ./...` | pass, 0 issues |
+| `PyAnLF/` | full `pytest` | pass, 253 passed／1 skipped |
+| `PyAnLF/` | `ruff check src tests run.py` | pass |
+| `PyMTLF/` | full `pytest` | pass, 143 passed |
+| `PyMTLF/` | `ruff check src tests` | pass |
+| `nwdaf-resources/` | Phase 2 preflight及distributed deployment ruff | pass |
+| `nwdaf-resources/` | isolated A/B/C multi-process E2E | pass |
+
+原本的`golangci-lint v2.8.0` binary是以Go 1.25建置，無法分析要求
+Go 1.26的NWDAF module。本次已升級為以Go 1.26.2建置的
+`golangci-lint v2.11.4`，修正其findings後以0 issues通過。

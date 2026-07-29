@@ -2,8 +2,9 @@
 
 日期：2026-07-28
 
-狀態：Phase 0 contract foundation 與 Phase 1 role／NRF foundation 已完成；
-下一步為 Phase 2 詳細設計
+狀態：Phase 0 contract foundation、Phase 1 role／NRF foundation及
+Phase 2 cross-NWDAF model provision／monitoring皆已完成實作、review
+remediation與驗證；下一步進入Phase 3 FL Client Training service
 
 相關文件：
 
@@ -1032,11 +1033,12 @@ service name。Go cache 仍不進 sync。
 
 ## 10. Phase 2：Cross-NWDAF model provision and monitoring
 
-狀態：詳細計畫已完成，待實作。
+狀態：實作、review remediation與最終驗證完成。
 
 詳細實作計畫：
 
 - [Phase 2 Cross-NWDAF Model Provision And Monitoring Detailed Plan](./Phase%202%20Cross-NWDAF%20Model%20Provision%20And%20Monitoring%20Detailed%20Plan.md)
+- [Phase 2 Code Review Findings And Remediation Plan](./code-reviews/Phase%202%20Code%20Review%20Findings%20And%20Remediation%20Plan.md)
 
 ### 10.1 Slice 2A：Peer-resource route foundation
 

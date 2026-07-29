@@ -1,6 +1,6 @@
 # NWDAF AnLF／MTLF Current Feature Architecture
 
-Date: 2026-07-26
+Date: 2026-07-29
 
 Status: Implemented baseline
 
@@ -405,12 +405,17 @@ polling與sync，而不是只在Go啟動時做一次handshake。
 | `mlModelMonitorRegistrations` | `registrationId`、representation、initiator |
 | `mlModelMonitorSubscriptions` | `subscriptionId`、representation、destination、private `ownerRegistrationId` |
 
-AnLF sync與MTLF sync使用相同top-level schema，但Go依owner/destination投影不同resource：
+AnLF sync與MTLF sync使用相同top-level schema，但Go依local／remote
+resource及control initiator投影不同resource：
 
-- AnLF收到自己initiated的Model Provision及Monitor registration state，以及送往AnLF或需由AnLF恢復的monitor
-  subscriptions。
-- MTLF收到所有與其model catalog/provision producer相關的provision state、registration state，以及
-  destination為MTLF的monitor subscription projection。
+- AnLF收到自己initiated的Model Provision與Monitor registration；只有
+  `selectedTarget`不存在、實際承載於local PyAnLF的Monitor
+  subscription才進入AnLF snapshot。
+- MTLF只收到`selectedTarget`不存在、實際承載於local PyMTLF的Model
+  Provision與Monitor registration；另外收到destination為MTLF的local
+  或remote Monitor subscription control intent。
+- remote AnLF Provision／registration不會進入local PyMTLF snapshot；
+  remote MTLF Monitor不會進入local PyAnLF snapshot。
 - Events Subscription與SMF resource snapshots同時提供給兩者：PyAnLF用來恢復analytics/collection；
   PyMTLF用來把monitor scope解析成training data subscription。
 - `internalCallbackBaseUri`對PyAnLF為Go `:8090` edge，對PyMTLF為Go `:8091` edge。
@@ -531,8 +536,8 @@ Accuracy monitor 的即時 WAPE baseline 不在 snapshot 內；backend process
 
 | Restart | Current behavior |
 |---|---|
-| PyAnLF restart | Go重新sync accepted subscriptions、SMF peers與model resources；PyAnLF重建runtime並背景收斂collection／monitor state |
-| PyMTLF restart | Go重新sync provision／monitor control intent與datasource；WAPE baseline、dataset job與training job從空狀態開始 |
+| PyAnLF restart | Go只sync AnLF initiated control intent及local AnLF resources；PyAnLF重建runtime並背景收斂collection／monitor state，不重新建立既有remote relationship |
+| PyMTLF restart | Go只sync local MTLF resources及MTLF monitor control intent；WAPE baseline、dataset job與training job從空狀態開始，不重新建立既有remote relationship |
 | Go restart | process-local mirrors消失；目前實驗環境視為重新開始一次run，不承諾durable recovery |
 
 ### 4.6 Go Startup、NRF Advertisement與Backend Availability
@@ -949,11 +954,11 @@ Provision OpenAPI與Go standard compatibility model並沒有定義這個欄位�
 Provision subscription。現有單NWDAF流程以private catalog把numeric
 `modelUniqueId`對回FamilyKey。
 
-分散式remote-provider identity與route migration不屬於本current-state
-文件；其目標設計見
-[Distributed NWDAF Federated Learning Implementation Plan](../plans/federated-learning/Distributed%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)，
-其中改用NRF選出的`nfInstanceId`、service/API root與subscription
-`Location`，不再依賴非標準`modelProviderId`欄位。
+分散式部署以NRF選出的`nfInstanceId`、NF service instance與API root
+識別remote provider；Go另存peer subscription `Location`。這些資訊是
+private route metadata，不加入標準Model Provision body，也不依賴
+非標準`modelProviderId`欄位。configured provider模式必須提供同樣完整
+且穩定的identity。
 
 ### 9.2 Demand與reuse
 
@@ -973,11 +978,14 @@ PyMTLF以seed catalog的applicability descriptor解析demand。`immRep=true`且�
 sequenceDiagram
     participant A as PyAnLF
     participant G as Go
-    participant M as PyMTLF
+    participant GC as Go NWDAF-C
+    participant M as PyMTLF-C
 
     A->>G: Model Provision subscription
-    G->>M: same Release 18-shaped resource
-    M-->>G: modelUniqueId + immutable model URL
+    G->>GC: standard Model Provision create
+    GC->>M: same Release 18-shaped resource
+    M-->>GC: modelUniqueId + immutable model URL
+    GC-->>G: standard representation / callback
     G-->>A: accepted representation or notification
     A->>M: direct GET artifact
     A->>A: size, archive, digest and manifest validation
@@ -1062,6 +1070,11 @@ MLModelAccuracyInfo.deviation = WAPE error ratio
 資料不足仍送合法periodic liveness notification，但省略`deviation`。不把WAPE偽裝成percentage
 `mlModelAcc`。
 
+若有效WAPE在該monitor resource的`repPeriod`尚未到時形成，PyAnLF會
+暫存最新有效measurement；下一個due period優先送出該WAPE，再考慮
+no-`deviation` liveness。這可維持periodic限制，同時避免liveness與
+有效window交錯時讓WAPE持續被略過。
+
 ### 10.4 PyMTLF policy
 
 PyMTLF只使用`deviation`，只保留degradation path：
@@ -1091,9 +1104,13 @@ training進行期間同family的新degradation不重複建立另一個job。
 - PyAnLF內部發起的Model Provision與registration，以及PyMTLF內部發起的monitor subscription，使用相同Go
   processors與route mirrors，只是initiator／destination標為backend。
 
-current Model Monitor registration reconciliation只針對同一個containing NWDAF的PyAnLF。雖然public
-registration可由external caller建立，PyMTLF尚未根據`consumerId`做跨NWDAF discovery並把monitor
-subscription送到remote AnLF；multiple NWDAF topology屬於後續範圍。
+在分散式部署中，A、B的PyAnLF於模型啟用後，以各自containing
+NWDAF的`nfInstanceId`作registration `consumerId`並送到provider C。
+C的PyMTLF分別讀取`consumerId`，經C Go對NRF做exact instance
+discovery，驗證目標的registered `nnwdaf-mlmodelmonitor` service，再向
+A、B各建立一條標準Model Monitor subscription。C保存兩條獨立
+registration、peer `Location`、callback correlation與WAPE scope；刪除
+A的analytics demand不會移除B的monitor relationship。
 
 規格對照：Model Monitor registration、subscription與notification使用
 `TS29520_Nnwdaf_MLModelMonitor.yaml`及TS 29.520 clause 4.7。private owner header、stable scope key、WAPE-only
@@ -1460,6 +1477,12 @@ flowchart LR
 - PyAnLF SMF resource association full snapshot。
 - `Target-Api-Root`指定backend已選定的SMF／ADRF。
 - `X-NWDAF-Monitor-Registration-Id`傳遞無法由standard monitor subscription body表達的owner correlation。
+- `X-NWDAF-Target-Nf-Instance-Id`、
+  `X-NWDAF-Target-Nf-Service-Instance-Id`、
+  `X-NWDAF-Target-Api-Root`及
+  `X-NWDAF-Target-Selection-Source`傳遞backend已選定的remote peer；
+  Go在NRF模式對照尚未過期的discovery cache，且不把這些headers轉送
+  external peer。
 - sync內的`ownerRegistrationId`與`trainingDataSource`。
 
 ### 17.3 State ownership
