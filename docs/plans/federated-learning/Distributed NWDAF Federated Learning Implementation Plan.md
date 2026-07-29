@@ -1032,6 +1032,12 @@ service name。Go cache 仍不進 sync。
 
 ## 10. Phase 2：Cross-NWDAF model provision and monitoring
 
+狀態：詳細計畫已完成，待實作。
+
+詳細實作計畫：
+
+- [Phase 2 Cross-NWDAF Model Provision And Monitoring Detailed Plan](./Phase%202%20Cross-NWDAF%20Model%20Provision%20And%20Monitoring%20Detailed%20Plan.md)
+
 ### 10.1 Slice 2A：Peer-resource route foundation
 
 先 characterization 現有 local route behavior，再建立所有 remote
