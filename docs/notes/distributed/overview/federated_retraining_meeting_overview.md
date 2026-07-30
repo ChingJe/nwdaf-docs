@@ -156,14 +156,16 @@ sequenceDiagram
     Note over C,NRF: Include TAI1, TAI2 and FL_CLIENT capability
     NRF-->>C: Client-1, Client-2
 
-    C->>A: Model Training preparation
-    C->>B: Model Training preparation
+    C->>A: Model Training preparation<br/>maxResTime + callback
+    C->>B: Model Training preparation<br/>maxResTime + callback
+    A-->>C: 201 Created + Location
+    B-->>C: 201 Created + Location
     A->>ADRF: Retrieve TAI1 records<br/>(dataSub + timePeriod)
     B->>ADRF: Retrieve TAI2 records<br/>(dataSub + timePeriod)
     ADRF-->>A: TAI1 training records
     ADRF-->>B: TAI2 training records
-    A-->>C: Join with TAI1 snapshot ready
-    B-->>C: Join with TAI2 snapshot ready
+    A-->>C: Preparation status callback<br/>TAI1 snapshot ready
+    B-->>C: Preparation status callback<br/>TAI2 snapshot ready
     C->>C: Fix Client-1 and Client-2 as participants
 ```
 
@@ -172,6 +174,9 @@ sequenceDiagram
   找到候選者。
 - NRF 宣告的是能力；Client 是否真的有足夠資料，仍由 preparation 中的
   ADRF retrieval 與 snapshot validation 確認。
+- `201` 只建立 preparation resource；Client 在背景準備 snapshot，再以
+  callback 回報完成。無法在 `maxResTime` 內完成時，Client 可先回 delay，
+  由 C 決定是否 PATCH 新期限。
 - 目前主要實驗固定使用 Client-1 與 Client-2，分別對應 TAI1、TAI2
   兩條 path。
 - Participant set 在本次 FL process 啟動後保持固定，不在 round 中途增減。
@@ -204,7 +209,7 @@ sequenceDiagram
 - 所有 Clients 使用 C 提供的同一個 global model。
 - 本情境假設 ADRF 永遠存在；各 Client 在 preparation 期間以自己的
   `dataSub + timePeriod` 取得資料並固定一份 process dataset snapshot，
-  snapshot ready 後才回覆可參與，不使用 MongoDB fallback。
+  snapshot ready 後以 callback 回報可參與，不使用 MongoDB fallback。
 - 同一份 snapshot 在所有 rounds 重複使用，不會每輪重新向 ADRF取資料。
 - Clients 只回傳 local model，不向 C 傳送 raw training data。
 - FedAvg 權重使用各 Client 實際使用的 training sample count。

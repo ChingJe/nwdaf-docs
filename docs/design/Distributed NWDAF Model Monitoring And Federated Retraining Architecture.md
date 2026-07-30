@@ -621,11 +621,18 @@ availability 表示 Client 能從 ADRF 取得符合自己 training scope 與時�
 範圍的 records，不要求 raw data 已經保存在 Client process 的本地磁碟，
 也不表示 C 可以集中讀取所有 Clients 的 raw data。
 
-第一版只有在 Client 已成功取回 required records、完成基本驗證並凍結
-dataset snapshot 後，preparation POST 才回覆 `201 Created`。標準
-Training notification 沒有自訂 `READY` 欄位；因此 C 以成功的 preparation
-response 判斷可參與，固定 participant set 時已經知道所有被選 Clients
-都有一份可供本次 process 使用的固定 snapshot。
+Client 對 preparation POST 完成同步 schema、capability 與 admission
+validation 後即建立 resource，回覆 `201 Created + Location`。耗時的
+ADRF retrieval、record validation 與 dataset snapshot freeze 在背景執行，
+不阻塞建立 subscription 的 HTTP request。`201` 只表示 Client 接受建立及
+處理 preparation resource，不表示 dataset 已經準備完成。
+
+Client 完成 snapshot 後，透過標準 `NwdafMLModelTrainNotif` callback
+回傳 `statusReport`；若需要更多時間則先回 `delayEventNotif`，若建立後
+才確定無法完成則回 `termTrainReq`。Training notification 沒有自訂
+`READY` 欄位，因此 C 以 resource expected stage、`notifCorreId`、
+`mlCorreId` 與 notification 類型判讀 preparation 結果。只有所有 required
+Clients 都送達成功的 preparation callback 後，C 才固定 participant set。
 
 候選 FL Client 不需要先有 Consumer analytics subscription、正在執行
 inference、取得 C 的正式模型或建立 Model Monitor registration。latest
@@ -652,11 +659,14 @@ sampling、replacement 與每 round 重新 preparation policy。
 第一版固定採用同步、sample-count-weighted FedAvg。初始拓撲的
 participants 是 A、B；若後續有 TAI3 等 eligible Client，流程相同：
 
-1. 各 Client 在 preparation 期間將 training scope 解析成 ADRF
+1. C 對各 Client 建立 preparation resource；Client 完成同步 admission
+   validation 後回 `201 Created + Location`，並在背景將 training scope
+   解析成 ADRF
    `dataSub` 與固定 `timePeriod`，從 ADRF 建立 dataset snapshot，沿既有
    temporal split／purge gap 凍結 training 與 validation subsets；
-2. 所有 required Clients 都回覆 preparation `201 Created` 後，C 固定
-   participant set，並更新既有 Model Training resources；
+2. 各 Client 完成 snapshot 後，以 `statusReport` callback 回報
+   preparation completed；所有 required Clients 的成功 callback 都到齊
+   後，C 固定 participant set，並更新既有 Model Training resources；
 3. C 提供 initial／current global model、round identity、training
    requirement 與 maximum response time；
 4. 各 Client 在所有 rounds 使用自己的同一份固定 snapshot 進行 local
@@ -719,7 +729,7 @@ digest。
 ADRF 是本情境唯一的 training data source，不設計 MongoDB fallback。
 PyAnLF 在正常 collection 過程中，已將原始標準形狀 `dataSub` 與
 `dataNotif` records 保存至 ADRF。Client 的 PyMTLF 在 preparation
-期間、回覆 `201 Created` 以前執行：
+resource 回覆 `201 Created` 後，以背景 worker 執行：
 
 ```text
 training scope
@@ -730,6 +740,7 @@ training scope
   -> retrieve records directly from ADRF
   -> validate and transform records
   -> freeze training and validation subsets for the FL process
+  -> notify preparation result to the Server callback
 ```
 
 對 raw NF event data，Client 使用
@@ -776,6 +787,21 @@ global model 而重新 retrieval。若 required records 不存在、取回失敗
 無法形成有效 snapshot，Client 不得宣告 training data ready。依目前固定
 participant policy，該 process 應在開始前停止，或在已開始後標記失敗，
 不得把缺資料的 Client 靜默排除。
+
+Preparation request 提供 `mLTrainRepInfo.maxResTime`。Client 使用比
+Server deadline 更短的 effective deadline，預留 notification 傳輸、
+callback retry 與延期 PATCH 的 safety margin。若預期無法準時完成，
+Client 在 effective deadline 前送 `delayEventNotif` 與
+`expCompTime`；C 回 `204` 後決定是否 PATCH 同一 resource，提供新的
+`maxResTime`。Client 不得在收到成功 PATCH 前自行假設延期成立。C 對
+preparation 與每個正式 round 都使用 bounded extension policy；沒有任何
+callback、延長被拒絕或超過總等待上限時，required Client timeout 使本次
+process 失敗。
+
+TS 29.552 §5.10.2.1 step 4c 明確規定正式 training 的 delay／new maximum
+response time 流程。Preparation 使用相同標準 schema 是本架構的一致
+orchestration policy；規格沒有另行定義 preparation-specific READY 或
+deadline-extension 欄位。
 
 #### 5.6.2 Training sample count contract
 
@@ -1154,9 +1180,11 @@ sequenceDiagram
     S->>S: Detect one degraded path
     S->>NRF: Discover UE communication FL Clients
     NRF-->>S: NWDAF-A and NWDAF-B
-    S->>L1: FL preparation
-    S->>L2: FL preparation
-    Note over L1,ADRF: Each Client builds its snapshot before accepting preparation
+    S->>L1: POST FL preparation<br/>maxResTime + Server callback
+    S->>L2: POST FL preparation<br/>maxResTime + Server callback
+    L1-->>S: 201 Created + Location
+    L2-->>S: 201 Created + Location
+    Note over L1,ADRF: Each Client builds its snapshot asynchronously
     L1->>ADRF: Create retrieval subscription<br/>(scope-A dataSub + timePeriod)
     L2->>ADRF: Create retrieval subscription<br/>(scope-B dataSub + timePeriod)
     ADRF-->>L1: Fetch instructions
@@ -1165,8 +1193,13 @@ sequenceDiagram
     L2->>ADRF: Retrieve matching records
     ADRF-->>L1: Scope-A raw records
     ADRF-->>L2: Scope-B raw records
-    L1-->>S: 201 Created<br/>preparation accepted
-    L2-->>S: 201 Created<br/>preparation accepted
+    opt A needs more time
+        L1-->>S: delayEventNotif + expCompTime
+        S->>L1: PATCH new maxResTime
+    end
+    L1-->>S: Preparation statusReport callback
+    L2-->>S: Preparation statusReport callback
+    Note over S: Freeze participant set after<br/>both successful callbacks
 
     S->>L1: Train round with temporary global model URL
     S->>L2: Train round with temporary global model URL

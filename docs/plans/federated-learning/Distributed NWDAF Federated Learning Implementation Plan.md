@@ -1,10 +1,12 @@
 # Distributed NWDAF Federated Learning Implementation Plan
 
-日期：2026-07-28
+日期：2026-07-29
 
 狀態：Phase 0 contract foundation、Phase 1 role／NRF foundation及
 Phase 2 cross-NWDAF model provision／monitoring皆已完成實作、review
-remediation與驗證；下一步進入Phase 3 FL Client Training service
+remediation與驗證；Phase 3 FL Client Training與Phase 4 FL Server
+orchestration／FedAvg將依同一份整合詳細計畫連續實作，並保留兩個獨立
+驗收 gate
 
 相關文件：
 
@@ -12,6 +14,7 @@ remediation與驗證；下一步進入Phase 3 FL Client Training service
 - [NWDAF AnLF／MTLF Current Feature Architecture](../../design/Current%20AnLF%20MTLF%20Feature%20Architecture.md)
 - [NWDAF Federated Learning Release 18 規格解讀](../../specification-guides/NWDAF%20Federated%20Learning%20Release%2018%20規格解讀.md)
 - [NWDAF Development Policy](../../development_policy.md)
+- [Phase 3 And 4 Federated Training Execution Detailed Plan](Phase%203%20And%204%20Federated%20Training%20Execution%20Detailed%20Plan.md)
 
 ---
 
@@ -311,7 +314,8 @@ Monitor notification 只使用 `modelId + deviation` 表達 observation；
 
 ```text
 POST preparation
-  -> 201 preparation accepted + Location
+  -> 201 resource created + Location
+  -> asynchronous preparation status／delay／termination callback
 PUT/PATCH round 1
   -> local model callback
 PUT/PATCH round 2
@@ -320,6 +324,13 @@ PUT/PATCH final validation
   -> ROUND_LOCAL accuracy-check callback
 DELETE
 ```
+
+TS 29.552 §5.10.2.1 step 4c 明確定義正式 training 在
+`maxResTime` 前無法完成時，由 Client 送 delay notification、Server
+決定是否以 update 提供新的 maximum response time。Preparation 使用
+相同 `mLTrainRepInfo`、notification 與 PATCH schema 是本專案的
+standards-shaped orchestration policy；規格沒有另定 preparation-specific
+READY 或 deadline-extension 欄位。
 
 final validation 是獨立的 validation-only round。Server 提供 final
 candidate，並同時設定：
@@ -337,9 +348,10 @@ candidate，並同時設定：
 
 Training notification 不含 subscription ID。Go 先以必填
 `notifCorreId` 找到 local route／peer resource，再由 PyMTLF 驗證 FL
-request 必須存在的 `mlCorreId` 與該 state 預期的 `roundInd`。PUT body
-可驗證 `mlCorreId` 不變；PATCH schema 沒有 `mlCorreId`，必須從 path
-對應的 existing resource state 取得。
+request 必須存在的 `mlCorreId` 與 expected stage。Preparation callback
+通常省略 `roundInd`；正式 training／accuracy-check callback 才驗證該
+state 預期的 `roundInd`。PUT body可驗證 `mlCorreId` 不變；PATCH schema
+沒有 `mlCorreId`，必須從 path 對應的 existing resource state 取得。
 
 除 OpenAPI required fields 外，validator 也必須實作 TS table 的條件：
 
@@ -347,8 +359,10 @@ request 必須存在的 `mlCorreId` 與該 state 預期的 `roundInd`。PUT body
 - `mLPreFlag=true` 時，每個 `MLModelTrainInfo` 同時提供
   `dataAvReq` 與 `timeAvReq`；
 - Training 的 `MLEventSubscription` 提供 `modelInterInfo`；
-- notification 至少提供 `delayEventNotif`、`mLModelInfos`、
-  `termTrainReq` 之一，並遵守互斥條件。
+- notification 除必填 correlation 外，至少提供 `delayEventNotif`、
+  `mLModelInfos`、`statusReport`、`termTrainReq` 之一，並遵守互斥
+  條件；preparation completion 可使用 `statusReport`，不得要求虛構
+  local model。
 
 服務特定錯誤至少包含：
 
@@ -688,6 +702,11 @@ flowchart TD
 | 6 | `NWDAF`, `PyAnLF`, `PyMTLF`, UDM/UDR, SMF/UPF, AMF profile | group→SUPI→serving-SMF→AoI collection、descriptor retention | Phase 1, G1 |
 | 7 | `nwdaf-resources`, all integrated repos, `nwdaf-docs` | portable and full-collection E2E、runbook、claim closure | Phase 5; Phase 6 for full profile |
 
+Phase 3與Phase 4在實作排程上是一個連續work unit，共用一份
+[整合詳細計畫](Phase%203%20And%204%20Federated%20Training%20Execution%20Detailed%20Plan.md)；
+表格仍分列，是因為one-Client resource與two-Client orchestration有不同
+驗收gate。
+
 第一個 vertical milestone 是 Phase 1 + Phase 2：
 
 ```text
@@ -932,10 +951,11 @@ enable只用來驗證對應 operation是否有本地 owner。
 - PyAnLF／PyMTLF config 明確設定 remote artifact allowed origins、
   download timeout、workspace root／TTL 與可跨 instance 存取的 public
   base URI；
-- preparation deadline budget 使用可驗證的由內而外順序：
-  ADRF request／fetch watchdog < Client PyMTLF preparation timeout <
-  A/B Go backend timeout < C Go peer timeout < C PyMTLF auxiliary／process
-  timeout，並保留 safety margin；
+- preparation 建立 request timeout 只涵蓋 schema validation、admission
+  與 resource creation，不涵蓋 ADRF retrieval；背景 preparation 的 ADRF
+  watchdog、callback retry 與 Server process watchdog 以
+  `mLTrainRepInfo.maxResTime` 協調，Client effective deadline 扣除
+  safety margin，並支援 bounded delay extension；
 - Go config validation依 `serviceNameList`與 `nwdafInfo`檢查必要 backend：
   Events Subscription須有 AnLF，Model Provision須有 MTLF，FL
   Client／Server capability須有 MTLF；Monitor service則接受 A/B
@@ -1145,6 +1165,12 @@ PyMTLF-C reconciler：
 
 ## 11. Phase 3：FL Client Training service
 
+Phase 3與Phase 4共用Training resource、identity、callback與artifact contract，
+因此採連續實作；詳細順序與共同failure semantics見
+[Phase 3 And 4 Federated Training Execution Detailed Plan](Phase%203%20And%204%20Federated%20Training%20Execution%20Detailed%20Plan.md)。
+Phase 3仍以「C對A完成preparation與一個local round」作為獨立gate；
+該gate未通過前不得進入two-client FedAvg。
+
 ### 11.1 Slice 3A：Go public service
 
 `NWDAF/internal/sbi` 增加：
@@ -1210,30 +1236,43 @@ PyMTLF-C
 PyMTLF-A/B：
 
 - `mLPreFlag=true` 時只做 requirements／willingness check，不執行 fitting；
-- 第一版採同步 preparation decision：HTTP handler 只做 validation，再等待
-  processor 在 configured `preparation_timeout` 內完成 preflight；
+- HTTP handler 與 processor 只完成 schema、capability、capacity、
+  correlation 與 basic admission validation，建立 resource 後立即回
+  `201 + Location + representation`；
 - 使用 active `dataSub` projection；historical inventory 需等 Phase 6D，
   portable E2E 可使用明確標示的 descriptor fixture；
-- 透過 Go ADRF Data Management auxiliary 建立 retrieval subscription，
-  固定 `consTrigNotif=true`；
+- resource 建立後由背景 worker 透過 Go ADRF Data Management auxiliary
+  建立 retrieval subscription，固定 `consTrigNotif=true`；
 - 經 Go callback 收到 fetch instruction；
 - PyMTLF 直接 GET ADRF records；
 - validate、transform，沿 existing temporal split／purge gap 凍結
   training 與 validation subsets；
-- 成功後才回 `201 + Location + representation`；標準沒有自訂
-  `READY` callback；
+- 成功後以標準 `NwdafMLModelTrainNotif.statusReport` callback 回報；
+  resource expected stage 是 `PREPARATION_RESULT` 時，C 將沒有
+  delay／termination 的有效 status report 判讀為完成，不新增 `READY`
+  欄位；
+- request 帶 `mLTrainRepInfo.maxResTime`；Client 在扣除 safety margin
+  的 effective deadline 前回 success、`delayEventNotif` 或
+  `termTrainReq`；
+- delay 不自動延長；C 回 `204` 後依 bounded policy PATCH 新
+  `maxResTime`，Client 收到成功 update 前不得假設延期成立；
+- C 從收到 create／update success response 後啟動 Server watchdog；
+  Client 從接受 create／update 後使用本地 monotonic timer，safety
+  margin 必須涵蓋 callback transport、retry 與 `204 + PATCH + 200/204`
+  的往返；
 - 不符合 requirements 時回
-  `403 ML_MODEL_TRAINING_REQS_NOT_MET`；temporary dependency failure
-  使用對應標準 HTTP error，並清除未公開的 provisional state；
+  `403 ML_MODEL_TRAINING_REQS_NOT_MET`，但只限建立前已可確定的 failure；
+  建立後的 temporary dependency delay 或 permanent failure 分別以
+  `delayEventNotif`／`termTrainReq` 回報；
 - requirements-not-met 的 `ProblemDetails.invalidParams` 列出實際未滿足
   的 attribute，例如 `dataAvReq.minNumSamples`、`timeAvReq` 或
   `modelInterInfo`；
-- C 以成功 `201` 作 preparation acceptance，收到 A、B 全部成功 response
-  後才固定 participant set；
+- C 以成功 `201` 記錄 resource 已建立，以 A、B 全部成功的 preparation
+  callbacks 作為 participant freeze gate；
 - preparation resource 後續持續沿用同一 frozen snapshot；
-- 任一層 timeout／cancellation 必須向內取消 work，刪除 provisional ADRF
-  retrieval resource 並清理未公開 state；config tests 驗證 §9.1 的
-  deadline ordering。
+- 任一層 timeout／cancellation 必須向內取消 work，刪除 ADRF retrieval
+  resource 並清理 partial snapshot；config tests 驗證 callback、ADRF
+  watchdog、safety margin 與 bounded extension ordering。
 
 ### 11.5 Slice 3E：Round executor
 
@@ -1243,7 +1282,8 @@ PyMTLF-A/B：
 - PUT 驗證 body `mlCorreId` 與 resource 不變；PATCH 從 resource state
   取得 process identity；
 - 驗證 `roundInd`、expected stage、deadline；
-- 下載 C 的 `ROUND_GLOBAL` artifact；
+- 下載 C 的 round input；round 0 使用 current completed base model，
+  後續 round 使用上一輪的 `ROUND_GLOBAL` artifact；
 - 驗證 weights、tensor contract、preprocessing contract；
 - 使用凍結 training subset 執行 FL-specific local training；
 - 沿用 global bundle scaler，禁止 per-client refit；既有 `local` trainer
@@ -1273,8 +1313,10 @@ PyMTLF-A/B：
 ### 11.7 Acceptance
 
 - 一個 remote C 可對 A 建立 preparation resource；
-- A 從 ADRF freeze train／validation subsets 後回 `201`，不發 custom
-  READY callback；
+- A 先回 `201 + Location`，再從 ADRF freeze train／validation subsets，
+  最後以標準 `statusReport` callback 宣告 preparation completed；
+- preparation deadline 內可回 delay，C 可 PATCH 一次 bounded
+  extension；沒有 notification 時可重現 timeout；
 - C 對同一 resource 發 round 1；
 - A 產生一個包含正確 sample count 的 local artifact；
 - Client local scaler 與 global scaler 相同；
@@ -1286,6 +1328,10 @@ PyMTLF-A/B：
 ---
 
 ## 12. Phase 4：FL Server orchestration and FedAvg
+
+Phase 4沿用Phase 3已驗證的long-lived Training resource，不另建round或
+aggregation wire API。其獨立gate為「C協調A、B完成至少兩輪、使用不相等
+sample count的weighted FedAvg」，並只產生尚未promotion的final candidate。
 
 ### 12.1 Slice 4A：Retrain intent
 
@@ -1307,11 +1353,13 @@ C：
 - Analytics ID、TAI、interoperability、local data NF type 相容；
 - union／dedupe by `nfInstanceId`；
 - deterministic ordering；
-- 建立 `ParticipantAssignment`：selected NF/service + one-or-more
+- 建立 `ParticipantAssignment`：selected NF/service + 第一版單一
   `TrainingScopeDescriptor`；
-- 每個 required scope 恰好指派給一個 selected Client；同一 Client 若
-  覆蓋多個 scope，可在同一 Training resource 的 `mLEventSubscs` 帶入
-  多個 descriptor；
+- 每個 required scope 恰好指派給一個 selected Client；
+- 第一版要求A/B兩個required scopes指派給兩個distinct Clients；
+- 一個Client承擔多個scope雖可由標準Training body表達，但目前
+  `ROUND_LOCAL` contract只有一個`scope_digest`，因此延後到artifact
+  contract明確擴充後再支援；
 - 第一個 profile 驗證結果必須是兩個 distinct Clients、分別覆蓋 A/B
   scopes，但不 hardcode NF identity。
 
@@ -1323,10 +1371,14 @@ C：
 - 依 assignment 將標準 `mLEventSubscs` 送入該 Client，Go lossless
   pass-through，不解讀 training scope；
 - 使用共同 `mlCorreId`、不同 `notifCorreId`；
-- 等待 preparation `201` response，不等待不存在的 READY callback；
+- 收到 `201` 後保存各 remote resource 並等待 preparation notification；
+- 以 expected stage + correlation + `statusReport` 判讀 completion，不
+  新增非標準 READY property；
+- Client delay 時由 C 決定是否 PATCH 新 `maxResTime`，不得自動延長；
 - 第一版 required A/B 任一 requirements-not-met 或失敗即取消 process；
 - future optional candidate 才可因 preparation 失敗而排除；
-- A/B 全部成功後固定 participant set 並進 `READY`；
+- A/B 的成功 preparation callbacks 全部到齊後固定 participant set並進
+  `READY`；
 - 正式 rounds 開始後 participant set immutable；
 - process 中途不加入新 NRF candidate；
 - selected Client 離開、timeout 或 invalid result 使 process 失敗。
@@ -1337,7 +1389,8 @@ C：
 FL execution:
 
 CREATED
-  -> PREPARING
+  -> PREPARATION_CREATING
+  -> PREPARATION_WAITING
   -> READY
   -> ROUND_DISPATCH
   -> ROUND_WAITING
@@ -1771,7 +1824,8 @@ Exemplar alignment：
 
 - role config：`local`／`fl_server`／`fl_client`；
 - Training resource CRUD／PATCH；
-- preparation synchronous acceptance／failure；
+- preparation resource admission、background completion callback、delay
+  extension／termination；
 - standard Training fields → scope descriptor mapping；
 - participant assignment and per-scope counts；
 - ADRF frozen train／validation subsets；

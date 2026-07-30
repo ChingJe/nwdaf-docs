@@ -876,7 +876,9 @@ Preparation 與 execution 共用 `NwdafMLModelTrainSubsc`，所以 request
 為降低實作歧義，純 preparation request 建議：
 
 - 必須明確送 `mLPreFlag=true`；省略時預設為 `false`；
-- 省略 `roundInd`、`skipFlInd` 與正式 round deadline；
+- 省略 `roundInd`、`skipFlInd` 與正式 round-specific command；若採非同步
+  preparation，可用 `mLTrainRepInfo.maxResTime` 約束 preparation result
+  回報時間；
 - 若只是參與能力檢查，省略 `mLAccChkFlg` 或設為 `false`；
 - 只有需要確認模型可取得及互通時才提供 `mLModelInfos`；
 - Client 的 dispatcher 必須先判斷 `mLPreFlag`，再決定進
@@ -889,10 +891,11 @@ training data 計算 global model accuracy，屬於實際 evaluation workload。
 
 正式開始第一輪時，Server 再對同一 resource 做 `PUT/PATCH`，明確改成
 `mLPreFlag=false`，並帶 `roundInd=1`、global/initial model 與正式
-reporting deadline。這次狀態轉換才是 Client 啟動資料取得與訓練工作的
-execution trigger。
+reporting deadline。這次狀態轉換才是 Client 啟動 local fitting 的
+execution trigger；若專案已在 preparation 凍結 dataset，正式 round
+重用該 snapshot，不必重新取得資料。
 
-#### 7.5.2 Preparation request／response schema
+#### 7.5.2 Preparation request／response／callback schema
 
 Preparation 的核心語意不是交換一份完整的 Client capability object，而是：
 
@@ -939,7 +942,8 @@ Content-Type: application/json
   "mlCorreId": "fl-process-001",
   "mLPreFlag": true,
   "eventReq": {
-    "immRep": true
+    "immRep": false,
+    "notifMethod": "ON_EVENT_DETECTION"
   },
   "tgtRepUe": {
     "intGroupIds": [
@@ -964,7 +968,10 @@ Content-Type: application/json
       },
       "timeAvReq": "PT10M"
     }
-  ]
+  ],
+  "mLTrainRepInfo": {
+    "maxResTime": 120
+  }
 }
 ```
 
@@ -981,7 +988,8 @@ Content-Type: application/json
 | `timeAvReq` | Client 需要能配合的 FL availability time |
 | `mlCorreId` | 將各 Client 的 preparation resource 關聯到同一 FL process |
 | `notifUri`、`notifCorreId` | 非同步結果的 callback contract |
-| `eventReq.immRep` | 結果當下可用時，要求隨 create response 立即回報 |
+| `eventReq` | 本例要求以 callback 非同步回報；若改成 `immRep=true`，結果已可用時可在 response 立即回報 |
+| `mLTrainRepInfo.maxResTime` | Server 要求 Client 在此秒數內回報 preparation 結果、delay 或 termination |
 
 若 Server 還要確認 Client 能否下載及解析共同 base model，可另外提供
 `mLModelInfos`。只想確認 capability 與 data availability 時則可省略，
@@ -1026,42 +1034,77 @@ immediate reporting 且結果已可用，response 還可在 `immReport` 中包�
   "mlCorreId": "fl-process-001",
   "mLPreFlag": true,
   "eventReq": {
-    "immRep": true
+    "immRep": false,
+    "notifMethod": "ON_EVENT_DETECTION"
   },
-  "immReport": {
-    "notifCorreId": "prep-client-1",
-    "mlCorreId": "fl-process-001",
-    "statusReport": {
-      "trainInDataInfo": {
-        "areaInfo": {
-          "tais": [
-            {
-              "plmnId": {
-                "mcc": "466",
-                "mnc": "92"
-              },
-              "tac": "000001"
-            }
-          ]
-        },
-        "samplRatio": 100
-      }
+  "mLTrainRepInfo": {
+    "maxResTime": 120
+  }
+}
+```
+
+這個 `201` 只確認 Client 已接受建立 preparation subscription resource，
+並願意開始處理 preparation；它不代表 ADRF retrieval、dataset snapshot
+或其他耗時檢查已經完成。Client 在背景完成檢查後，對 request 的
+`notifUri` 發送：
+
+```http
+POST /training/preparation-callback
+Content-Type: application/json
+```
+
+```json
+{
+  "notifCorreId": "prep-client-1",
+  "mlCorreId": "fl-process-001",
+  "statusReport": {
+    "trainInDataInfo": {
+      "areaInfo": {
+        "tais": [
+          {
+            "plmnId": {
+              "mcc": "466",
+              "mnc": "92"
+            },
+            "tac": "000001"
+          }
+        ]
+      },
+      "samplRatio": 100
     }
   }
 }
 ```
 
+Server 接受 notification 後回 `204 No Content`。若 request 使用
+`immRep=true` 且相同結果在建立 resource 時已經可用，Client 才可把這份
+`NwdafMLModelTrainNotif` 放進 create response 的 `immReport`，不必再送
+相同 callback。
+
 `NwdafMLModelTrainSubsc` 與 `NwdafMLModelTrainNotif` 都沒有標準
-`join: true/false` 欄位。對單一 event 的簡化判讀為：
+`ready` 或 `join: true/false` 欄位。因此使用 callback 的實作必須以
+resource 所在的 expected stage 解讀 notification：
 
 ```text
 201 Created
-  -> Client 接受 preparation，表示目前能且願意加入候選集合
+  -> preparation resource 已建立，背景檢查可以開始
+
+statusReport callback while waiting for PREPARATION_RESULT
+  -> preparation completed
+  -> Client 成為可供 Server 選擇的候選者
   -> 不代表 Server 已將它選入最終 participant set
 
-403 / 500
-  -> Client 無法接受本次 preparation
+403 / 500 before resource creation
+  -> Client 已能立即判定無法接受本次 preparation
+
+termTrainReq after resource creation
+  -> Client 在非同步準備期間判定無法完成
 ```
+
+其中「在 `PREPARATION_RESULT` stage 收到有效 `statusReport` 且沒有
+`delayEventNotif`／`termTrainReq`，即視為 preparation completed」是使用
+標準 schema 建立的 orchestration rule；規格沒有另外定義 `READY` 欄位。
+這個規則不得以新增非標準 SBI property 表達。
 
 若 Client 無法滿足 training requirements，可回：
 
@@ -1089,14 +1132,68 @@ Preparation response 也不是完整的資源盤點介面：
 - `TrainDataInfo` 可回報 area、sampling ratio 及資料各維度 min/max；
 - 它沒有 exact available sample count；
 - 它沒有 GPU、RAM、CPU、頻寬或其他通用 compute capability schema；
-- `minNumSamples` 是 Server 的需求，Client 接受 request 代表它判斷可滿足，
-  不等於 response 直接回傳精確數量；
+- `minNumSamples` 是 Server 的需求；Client 成功完成 preparation 代表它
+  判斷可滿足，不等於 `201` 或 callback 直接回傳精確數量；
 - 真正用於 sample-weighted FedAvg 的 exact training sample count，仍需
   由每輪 local model artifact agreement 提供。
 
-因此 `201` 可解讀為 Client 接受 preparation，`403/500` 則代表拒絕或
-無法滿足要求。Client 是否因此進入正式 participant set，仍由 FL Server
-的 client selection policy 決定，標準未固定該 policy。
+因此 `201` 表示 Client 接受建立及處理 preparation resource；
+preparation 是否完成由 immediate report 或後續 notification 表達。
+Client 是否進入正式 participant set，仍由 FL Server 的 selection policy
+決定，標準未固定該 policy。
+
+#### 7.5.3 Preparation deadline 與延期
+
+Server 可在 preparation subscription 提供
+`mLTrainRepInfo.maxResTime`，要求 Client 在該秒數內回報完成、delay 或
+termination。Client 若預期無法準時完成，可在 deadline 前送：
+
+```json
+{
+  "notifCorreId": "prep-client-1",
+  "mlCorreId": "fl-process-001",
+  "delayEventNotif": {
+    "delayEventInd": true,
+    "delayCause": "NEED_MORE_TIME",
+    "expCompTime": 60
+  }
+}
+```
+
+Server 回 `204 No Content` 後，再決定是否對同一 `Location` 做 PATCH：
+
+```json
+{
+  "mLTrainRepInfo": {
+    "maxResTime": 90
+  }
+}
+```
+
+Client 不得因為送出 delay notification 就自行假設延期已成立；只有收到
+Server 的成功 update 後，新的 response window 才生效。Preparation
+notification 通常省略 `roundInd`。
+
+TS 29.552 §5.10.2.1 step 4c 明確規定正式 training 可使用 delay
+notification 與新的 maximum response time。Preparation procedure 沒有
+同等明確地逐步描述延期，但 TS 29.520 的同一 subscription／patch／notify
+schema 沒有限制 `mLPreFlag=true` 時使用上述欄位。因此 preparation
+沿用相同機制是 standards-shaped orchestration policy，不應誤稱為規格
+定義的獨立 preparation deadline procedure。
+
+`maxResTime` 是 duration，不是絕對 timestamp。為避免 callback 正在傳輸
+時 Server 已 timeout，Client 應使用較短的 effective deadline：
+
+```text
+client effective deadline
+  = accepted time + maxResTime - safety margin
+```
+
+safety margin 應涵蓋 callback request、可能的 retry，以及 delay
+notification 後 `204 + PATCH + 200/204` 的往返時間。Server 從成功收到
+create／update response 後開始自己的 watchdog；Client 從接受該工作後
+開始本地 monotonic timer。Client 應在 effective deadline 前回報成功、
+delay 或 termination，Server 也應限制 extension 次數或總等待時間。
 
 ### 7.6 每輪 execution
 
@@ -1319,6 +1416,17 @@ Server 可：
 - 用 `skipFlInd` 要求跳過該輪；
 - 終止 client 的 training subscription；
 - 在下一輪重新選擇 participants。
+
+TS 29.552 §5.10.2.1 step 4c 明確描述：Client 通知無法在原
+maximum response time 內完成後，Server 可提供新的 maximum response
+time，否則可要求該 Client 跳過本 iteration。Client 送出 delay 只是提出
+狀態與預估，不會自行延長 deadline；新的期限要等 Server 成功更新同一
+resource 才生效。
+
+實作時 Client 不應把 `maxResTime` 的最後一秒當成本地送出時間。Client
+應扣除可配置 safety margin，預留 notification 傳輸、retry 與 Server
+回送 PATCH 的時間。Server 則以收到 create／update success response
+為 watchdog 起點，並以實際收到 callback 的時間判斷是否逾期。
 
 Client 也可以因 overload 或 availability change 主動離開。Server
 可以透過 NRF 的 NF status 變化重新發現、加入或移除 clients。
@@ -1992,12 +2100,25 @@ sequenceDiagram
     Note over S,C2: 2. Discovery and optional preparation
     S->>NRF: GET NF discovery<br/>FL_CLIENT + Analytics/data/area criteria
     NRF-->>S: 200 OK + candidate profiles + validityPeriod
-    S->>C1: POST Training subscriptions<br/>mLPreFlag=true + server callback
-    C1->>C1: Check requirements and optional model download only
-    C1-->>S: 201 Created + Client-A Location<br/>or 403 requirements not met
-    S->>C2: POST Training subscriptions<br/>mLPreFlag=true + server callback
-    C2->>C2: Check requirements and optional model download only
-    C2-->>S: 201 Created + Client-B Location<br/>or 403 requirements not met
+    S->>C1: POST Training subscriptions<br/>mLPreFlag=true + maxResTime + server callback
+    C1-->>S: 201 Created + Client-A Location<br/>or immediate 403
+    S->>C2: POST Training subscriptions<br/>mLPreFlag=true + maxResTime + server callback
+    C2-->>S: 201 Created + Client-B Location<br/>or immediate 403
+    par Asynchronous preparation
+        C1->>C1: Check requirements and prepare local data
+        C2->>C2: Check requirements and prepare local data
+    end
+    opt Client needs more time
+        C1->>S: POST server callback<br/>delayEventNotif + expCompTime
+        S-->>C1: 204 No Content
+        S->>C1: PATCH Client-A resource<br/>new maxResTime
+        C1-->>S: 204 No Content
+    end
+    C1->>S: POST server callback<br/>preparation statusReport
+    S-->>C1: 204 No Content
+    C2->>S: POST server callback<br/>preparation statusReport
+    S-->>C2: 204 No Content
+    Note over S: Freeze participant set only after<br/>required preparation results
 
     Note over S,ADRF: 3. Prepare initial/global model
     S->>ADRF: POST model store record<br/>model URL or inline model content
@@ -2012,6 +2133,13 @@ Server–Client training resources 並於後續 `PUT/PATCH` 更新會更自然�
 只有在這是獨立 one-time 查詢、後面不會接正式 training 時，Server 才
 應在取得唯一結果後 `DELETE` 該 resource；本流程會繼續使用它，因此把
 刪除留到 13.4 的整個 FL 結束階段。
+
+在上圖的長期 subscription 模式中，`201` 只建立 resource。一般路徑由
+後續 `statusReport` callback 表示 preparation 完成；若 Client 無法在
+`maxResTime` 內完成，可先送 `delayEventNotif`，由 Server 決定是否
+PATCH 新期限。若 Client 建立後才確定無法完成，則以 `termTrainReq`
+終止。規格沒有 `READY` property，Server 依 resource expected stage、
+correlation 與 notification 類型解讀結果。
 
 ### 13.3 第一輪：下載模型、取得資料、訓練與 callback
 
