@@ -1104,6 +1104,12 @@ training進行期間同family的新degradation不重複建立另一個job。
 - PyAnLF內部發起的Model Provision與registration，以及PyMTLF內部發起的monitor subscription，使用相同Go
   processors與route mirrors，只是initiator／destination標為backend。
 
+正常CRUD的結果由目的backend先建立或拒絕resource，再由各層Go保留
+status、`Location`與representation逐級回傳發起端。sync只在backend
+restart後恢復Go-owned route mirror與backend resource snapshot，不作為
+normal-path resource acknowledgement，也不替backend判定模型或監控是否
+READY。
+
 在分散式部署中，A、B的PyAnLF於模型啟用後，以各自containing
 NWDAF的`nfInstanceId`作registration `consumerId`並送到provider C。
 C的PyMTLF分別讀取`consumerId`，經C Go對NRF做exact instance

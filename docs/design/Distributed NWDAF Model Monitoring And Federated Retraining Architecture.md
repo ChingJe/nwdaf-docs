@@ -1043,13 +1043,18 @@ C 完成 aggregation 後：
 10. Clients 下載並驗證新 artifact；下載或驗證失敗時繼續使用舊模型，
    不變更任何舊 monitoring relationship；
 11. 驗證成功後，Clients 原子切換 active model，並立即以新 `modelId`
-   向 C 建立新的 Model Monitor registration；
-12. C 為新模型建立新的 monitor subscriptions／correlations；新模型在
+   向 C 建立新的 Model Monitor registration；目的 PyMTLF 建立 resource
+   後，`201 + Location + representation` 逐級回到發起的 PyAnLF；
+12. C 為新模型建立新的 monitor subscriptions／correlations；目的
+   PyAnLF 只有在同一 model ID 與 scope 已綁定到 READY runtime，且
+   accuracy monitoring 已啟用時回 `201 + Location + representation`；
+   該回應逐級回到 C 後，C 才把對應 scope 視為 adopted；新模型在
     累積到足夠 prediction／ground-truth window 前保持 warm-up，不送出
     虛假的 WAPE；
-13. 新 registration 與 monitor subscription 都建立成功後，C 才刪除位於
-    Clients 的舊模型 monitor subscriptions，Clients 再向 C deregister
-    舊模型 usage registrations；
+13. 新 registration 與 monitor subscription 都建立成功後，C 才逐級刪除
+    位於 Clients 的舊模型 monitor subscriptions；Client 完成刪除並回
+    `204` 後，再逐級向 C deregister 舊模型 usage registration；目的
+    PyMTLF 完成刪除後同樣回 `204`；
 14. 若新 monitoring relationship 無法在 cutover timeout 內建立，Client
     保留舊模型與舊監控，並可依本地政策 rollback，而不是先清除舊世代。
 
@@ -1075,6 +1080,10 @@ analytics resource 對 Consumer 提供結果，只替換內部使用的模型。
 以及 MTLF 對 monitor subscription 的 Subscribe／Delete；上述
 「new-before-old」切換順序、timeout 與 rollback grace period 是本情境
 為避免監控空窗所採用的本地政策。
+
+正常 resource creation 的成功語意由上述同步 HTTP response chain 逐級
+傳回。Containing NWDAF 的 sync 僅供 backend restart 後恢復 route mirror
+與 resource snapshot，不是模型啟用或監控切換的 acknowledgement。
 
 ---
 

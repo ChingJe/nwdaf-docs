@@ -15,6 +15,7 @@ validation／publication／cutover 尚未開始
 - [NWDAF Federated Learning Release 18 規格解讀](../../specification-guides/NWDAF%20Federated%20Learning%20Release%2018%20規格解讀.md)
 - [NWDAF Development Policy](../../development_policy.md)
 - [Phase 3 And 4 Federated Training Execution Detailed Plan](Phase%203%20And%204%20Federated%20Training%20Execution%20Detailed%20Plan.md)
+- [Phase 5 Final Validation ADRF Publication And Reprovision Detailed Plan](Phase%205%20Final%20Validation%20ADRF%20Publication%20And%20Reprovision%20Detailed%20Plan.md)
 
 ---
 
@@ -1485,6 +1486,9 @@ C 下載全部 `ROUND_LOCAL` bundles 後：
 
 ## 13. Phase 5：Final validation, ADRF publication and reprovision
 
+詳細實作順序、durable state、failure recovery、標準契約與驗收矩陣見
+[Phase 5 Final Validation ADRF Publication And Reprovision Detailed Plan](Phase%205%20Final%20Validation%20ADRF%20Publication%20And%20Reprovision%20Detailed%20Plan.md)。
+
 ### 13.1 Slice 5A：Client-side final validation
 
 - C 對 A/B 發 final validation-only update：
@@ -1506,6 +1510,7 @@ C 下載全部 `ROUND_LOCAL` bundles 後：
   - `true`：沿用既有 triggering-scope improvement、aggregate
     improvement 與 non-triggering scope maximum-regression 規則；
   - `false`：仍計算及保存結果，但技術檢查通過即可繼續；
+- Phase 5 experiment config 預設為 `false`，優先驗證完整流程；
 - 只有一個 global yes／no gate，不做 per-TAI promotion；
 - 收齊並驗證全部 evaluation callbacks 後，C 將 workflow hand off 給
   durable publication job，並 bounded DELETE 所有 Client Training
@@ -1552,11 +1557,13 @@ C：
 6. 提供 `mlStorageSize`；
 7. `allowConsumerList` 包含 A、B、C `nfInstanceId`；
 8. 驗證 `201 + Location + representation`；
-9. 只從 `Location` 解析 `storeTransId`；
+9. 正常成功路徑只從 `Location` 解析 `storeTransId`；
 10. 驗證 `modelStoreResult`；必要時 retrieval probe；
 11. journal 記錄 ADRF identity、Location 與 store success；
 12. Model Provision durable reference 映射為
-    `mLModelAdrf.{adrfId, storTransId}`。
+    `mLModelAdrf.adrfId`；正常路徑同時提供 `storTransId`，若 ambiguous
+    recovery 只能用 `modelUniqueId` 證明保存成功，則不得自行發明
+    transaction ID。
 
 ADRF storage 失敗：
 
@@ -1585,8 +1592,10 @@ tombstone，且不更動 latest。
 6. ADRF store success and journal updated；
 7. completed revision append；
 8. atomic update latest pointer；
-9. clear pending journal；
-10. enqueue Model Provision desired notifications。
+9. durable 記錄 required A/B cutover scopes；
+10. enqueue Model Provision desired notifications；
+11. required cutovers 完成後才將 journal 標記 complete 並依 retention
+    policy compact。
 
 任一步驟失敗維持原 latest。
 
@@ -1599,7 +1608,8 @@ PyAnLF-A/B：
 - NRF mode 對該 ID 做 exact target discovery；
 - fixed-endpoint mode 驗證 configured ADRF `nfInstanceId` 等於該 ID，
   不得靜默改用另一個 endpoint；
-- 以 `storeTransId` 取 record；
+- 有 `storeTransId` 時以 transaction ID 取 record；否則以 top-level
+  `modelUniqueId` 取 record；
 - 從 record 的 ADRF-hosted file address 下載 artifact；
 - 保留 allowlist、size、digest、archive 與 bundle validation；
 - retrieval 或 activation 失敗時繼續使用 old model。
@@ -1610,10 +1620,21 @@ PyAnLF-A/B：
 - A/B candidate-first activate；
 - A/B register new model use；
 - C 建立 new monitor subscriptions／correlations；
-- new scopes warm up；
-- 確認新 relationship 後才 delete old monitor／deregister old use；
+- registration 與 subscription 的正常建立皆以目的 backend 建立 resource
+  後回傳的 `201 + Location + representation` 逐級確認，不以 sync 作為
+  operational acknowledgement；
+- A/B 的 PyAnLF 只有在新 model runtime READY 且 monitoring 已綁定後，
+  才成功建立 new monitor subscription；C 收到該 `201` 後才標記該 scope
+  adopted；
+- 確認新 relationship 後，由 C 逐級 delete old monitor subscription；
+  A/B 完成並回 `204` 後，再逐級 deregister old model use；
+- new scopes 依既有 stable-reporting 規則 warm up；
 - old report 只能進 retired history；
 - Consumer analytics subscriptions 不重建。
+
+Go sync 僅在 backend restart 後恢復 Go-owned route mirror 與 backend
+resource snapshot；正常 reprovision／monitor cutover 不透過 sync 傳遞
+成功語意。
 
 ### 13.7 Acceptance
 
@@ -1975,7 +1996,8 @@ Repository commit 彼此獨立：
 
 - NRF fork：已滿足。使用 workspace `nrf/`，
   branch `feat/r18-nwdaf-discovery`；
-- ADRF team repository；
+- ADRF team repository：已滿足。使用 workspace `adrf/`，
+  branch `feat/r18-federated-learning`；
 - UDM／UDR；
 - team SMF／UPF。
 
@@ -1983,14 +2005,18 @@ Phase 0 的 NWDAF／Python compatibility contract 不依賴上述 external
 repository，因此 G1 不阻擋 Phase 0；各 external workstream 開始前再確認
 對應 repository 即可。
 
-### Gate G2：Model ID range
+### Gate G2：Model identity and durable directories
 
-需要在部署 config 選一個 NWDAF-C numeric model ID 起始區間與 data
-directory。這是實驗部署值，不改變上述 architecture。
+已滿足：
+
+- `modelUniqueId` 使用
+  `max(currentUnixMilliseconds, lastAllocatedModelId + 1)`；
+- durable model state 使用 `data/model-state/`；
+- publication artifacts 使用 `data/publications/`。
 
 第一版 product behavior 已足以開始 Phase 0；Phase 1 的 NRF prerequisite
-已滿足，Phase 5／6 對應 external workstream 開始前仍需確認其 repository，
-Phase 5 promotion 前需滿足 G2。
+與 Phase 5 的 ADRF repository 已滿足。Phase 6 對應 external workstream
+開始前仍需確認其 repository。
 
 ---
 
