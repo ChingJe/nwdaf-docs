@@ -573,20 +573,21 @@ degradation policy：
 WAPE、window size、minimum samples、threshold 與 degradation 判斷方式是
 本地實作政策，不是 3GPP 固定演算法。
 
-### 5.5 Stage 4：任一路徑 degradation 觸發 eligible Clients FL
+### 5.5 Stage 4：任一路徑 degradation 觸發 monitored owners FL
 
 本情境採用以下策略：
 
 ```text
 scope-A degraded OR scope-B degraded
   -> latest model requires retraining
-  -> discover and prepare all eligible Clients for this intent
+  -> validate and prepare the monitored scope owners for this intent
 ```
 
 這表示觸發來源與 training dataset 範圍是兩件事。即使只有 path-A
-degraded，也可讓同一 training intent 下的 A、B 與後續新增的 eligible
-Clients 各自使用可用的本地資料參與訓練，不把未 degraded 的 path 固定
-當成 validation-only dataset。
+degraded，第一版仍讓當下兩個 active monitoring scopes 的 owners A、B
+各自使用可用的本地資料參與訓練，不把未 degraded 的 path 固定當成
+validation-only dataset。尚未建立 Model Monitor relationship 的其他
+FL Client 不會被這次 process 自動加入。
 
 C 向 NRF 查詢候選 FL Clients：
 
@@ -595,6 +596,7 @@ GET {nrfApiRoot}/nnrf-disc/v1/nf-instances
     ?target-nf-type=NWDAF
     &requester-nf-type=NWDAF
     &requester-nf-instance-id={nwdafCInstanceId}
+    &target-nf-instance-id={scopeConsumerId}
     &service-names=nnwdaf-mlmodeltraining
     &ml-analytics-info-list=[
       {
@@ -604,17 +606,24 @@ GET {nrfApiRoot}/nnrf-disc/v1/nf-instances
     ]
 ```
 
-C 先用發生 degradation 的 Model Monitor relationship 決定需要 retrain，
-並固定以當時的 latest model 作為 base，再另外選擇 FL participants：
+C 先用 Model Monitor relationships 決定需要 retrain、required scopes 與
+各 scope 的 participant identity，並固定以當時的 latest model 作為 base：
 
 - Model Monitor registration 證明某個正在使用的模型 scope 發生
-  degradation，負責觸發 retraining；
-- NRF 證明候選 NWDAF 目前宣告 FL Client capability，並提供 Training
+  degradation，`consumerId` 同時指出該 scope 的 NWDAF owner；
+- C 對每個 required scope 使用其 `consumerId` 作為
+  `target-nf-instance-id` 查 NRF；
+- NRF 證明該 exact owner 目前宣告 FL Client capability，並提供 Training
   endpoint；
-- training scope 與 model interoperability 證明候選者和本次 retraining
-  intent 相容；
+- training scope 與 model interoperability 證明該 owner 和本次
+  retraining intent 相容；
 - Model Training preparation 最後確認其 ADRF dataset snapshot
   availability、availability time、能力與參與意願。
+
+NRF discovery 在此不是任意 participant pool。若 owner 找不到、未宣告
+相容 FL capability，或沒有可用 Training service，本次 process 失敗；
+C 不會用另一個同 TAI 的 NWDAF 代替。更一般化的 candidate expansion、
+substitution 或未受監控 Client 加入留待後續 participant-selection policy。
 
 本情境假設 ADRF 永遠存在且可被各 Client 使用。這裡的 local data
 availability 表示 Client 能從 ADRF 取得符合自己 training scope 與時間
@@ -634,13 +643,9 @@ Client 完成 snapshot 後，透過標準 `NwdafMLModelTrainNotif` callback
 `mlCorreId` 與 notification 類型判讀 preparation 結果。只有所有 required
 Clients 都送達成功的 preparation callback 後，C 才固定 participant set。
 
-候選 FL Client 不需要先有 Consumer analytics subscription、正在執行
-inference、取得 C 的正式模型或建立 Model Monitor registration。latest
-base model 也不必已經是該 Client 的 inference model。
-
-目前的初始實驗拓撲只會發現 A、B，但 participants 不硬編碼為這兩個
-identity。C 先從 NRF candidates 與 training scope compatibility 篩選同一
-training intent 的候選者，再使用 Model Training preparation 確認：
+第一版 required FL Clients 必須是 active Model Monitor scopes 的 owners。
+participants 不硬編碼在 FL config，而是由 registration `consumerId`
+取得 A、B identities。C 再使用 NRF 與 Model Training preparation 確認：
 
 - model interoperability；
 - ADRF dataset snapshot availability；
@@ -648,8 +653,8 @@ training intent 的候選者，再使用 Model Training preparation 確認：
 - 計算與通訊能力；
 - 是否願意加入本輪 FL。
 
-第一版將所有通過上述條件的 eligible clients 納入 process，並在正式
-rounds 開始前固定 participant set。已被選入者只要任一方 preparation
+第一版將所有通過上述條件的 required monitor owners 納入 process，並在
+正式 rounds 開始前固定 participant set。已被選入者只要任一方 preparation
 失敗或後續離開，本次 process 就保持未啟動或標記失敗；不在執行中縮小、
 擴大或替換 participant set。後續可再擴充 minimum participant、client
 sampling、replacement 與每 round 重新 preparation policy。
@@ -657,7 +662,8 @@ sampling、replacement 與每 round 重新 preparation policy。
 ### 5.6 Stage 5：Client ADRF retrieval、local training 與 C aggregation
 
 第一版固定採用同步、sample-count-weighted FedAvg。初始拓撲的
-participants 是 A、B；若後續有 TAI3 等 eligible Client，流程相同：
+participants 是 A、B；若後續 TAI3 Client 也成為 active monitored scope
+owner，下一次 process 可用相同流程把它列為 required participant：
 
 1. C 對各 Client 建立 preparation resource；Client 完成同步 admission
    validation 後回 `201 Created + Location`，並在背景將 training scope
@@ -1178,8 +1184,10 @@ sequenceDiagram
 
     Note over S,L2: Federated retraining
     S->>S: Detect one degraded path
-    S->>NRF: Discover UE communication FL Clients
-    NRF-->>S: NWDAF-A and NWDAF-B
+    S->>NRF: Verify consumerId A as compatible FL Client
+    NRF-->>S: Exact NWDAF-A Training service
+    S->>NRF: Verify consumerId B as compatible FL Client
+    NRF-->>S: Exact NWDAF-B Training service
     S->>L1: POST FL preparation<br/>maxResTime + Server callback
     S->>L2: POST FL preparation<br/>maxResTime + Server callback
     L1-->>S: 201 Created + Location
@@ -1361,11 +1369,12 @@ identity。
 任一 scope degradation 觸發 retraining 時：
 
 1. 讀取當時的 `latestModelId` 作為本次共同 base model；
-2. C 透過 NRF discovery 取得宣告相容 FL Client capability 的候選
-   NWDAFs；
-3. C 再以 Model Training preparation 確認各候選者的 model
+2. C 從 active Model Monitor registrations 取得 required scope owners，
+   再以各自 `consumerId` 查 NRF，確認 exact owner 宣告相容 FL Client
+   capability 與 Training endpoint；
+3. C 再以 Model Training preparation 確認各 required owners 的 model
    interoperability、local data、availability 與參與意願；
-4. 本次 process 納入所有符合本次訓練目的的 eligible clients，並在
+4. 本次 process 納入所有 required monitor owners，並在
    preparation 成功、正式 training rounds 開始前固定 participant set；
 5. 所有 participants 都取得同一個 base/global model，使用自己的本地
    資料訓練；
@@ -1380,10 +1389,10 @@ identity。
    `modelUniqueId`、保存 ADRF reference，並原子更新 `latestModelId`；
 9. C 透過現有 Model Provision subscriptions 向 A、B 發送相同新版本。
 
-NRF discovery 只提供候選者及 endpoint；completed revision list、
-`latestModelId`、validation summary 與參與者選擇都是 C 的 PyMTLF 本地
-責任。process 啟動後才出現的新 Client 留到下一次 retraining，不在執行
-中替換 participant。
+NRF discovery 只驗證 required owner 的 capability 及 endpoint；completed
+revision list、`latestModelId`、validation summary 與 monitored-scope
+selection 都是 C 的 PyMTLF 本地責任。process 啟動後才出現的新 monitor
+scope 留到下一次 retraining，不在執行中替換 participant。
 
 ### 7.5 M1–M3 線性範例
 
@@ -1472,15 +1481,15 @@ application-level relationship。
   Model Provision 永遠提供同一個 `latestModelId`；
 - accuracy policy 第一版只使用 WAPE degradation；
 - 任一 scope degraded 就以當時 latest model 作為共同 retraining base；
-- C 以 Model Monitor relationship 決定 degradation trigger，再經 NRF
-  discovery、training scope compatibility 與 preparation 選出 eligible
-  Clients，並在 preparation 成功、正式 rounds 開始前固定 participant
-  set；
-- Client eligibility 不要求 Consumer analytics subscription、現行
-  inference model 或 active Model Monitor registration；NRF capability、
-  training scope compatibility 與 preparation 成功即可參與；
-- 初始情境通常會選到 A、B；未來 TAI3 等符合條件的 Client 也可在下一個
-  process 一併參與；
+- C 以 Model Monitor relationship 決定 degradation trigger、required
+  scopes 與各 scope owner，再經 exact NRF discovery、training scope
+  compatibility 與 preparation 驗證 owners，並在 preparation 成功、
+  正式 rounds 開始前固定 participant set；
+- 第一版 Client eligibility 要求 active Model Monitor registration；
+  `consumerId` 是不可替換的 participant identity，NRF capability、
+  training scope compatibility 與 preparation 是後續驗證條件；
+- 初始情境因此固定選到 A、B；未來 TAI3 Client 只有在成為 active
+  monitored scope owner 後，才可於下一個 process 一併參與；
 - 各 Client 使用自己的全部符合條件資料，不固定將其中一條 path 當
   validation-only dataset；
 - ADRF 在本情境中永遠存在，所有 Clients 在 preparation 期間、回覆可

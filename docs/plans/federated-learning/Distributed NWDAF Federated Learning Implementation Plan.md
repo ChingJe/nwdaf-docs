@@ -2,11 +2,11 @@
 
 日期：2026-07-29
 
-狀態：Phase 0 contract foundation、Phase 1 role／NRF foundation及
-Phase 2 cross-NWDAF model provision／monitoring皆已完成實作、review
-remediation與驗證；Phase 3 FL Client Training與Phase 4 FL Server
-orchestration／FedAvg將依同一份整合詳細計畫連續實作，並保留兩個獨立
-驗收 gate
+狀態：Phase 0 contract foundation、Phase 1 role／NRF foundation、
+Phase 2 cross-NWDAF model provision／monitoring、Phase 3 FL Client
+Training及Phase 4 FL Server orchestration／FedAvg皆已完成實作、review
+remediation與驗證；目前產出停在 unpromoted final candidate，Phase 5
+validation／publication／cutover 尚未開始
 
 相關文件：
 
@@ -585,30 +585,32 @@ allocation policy；不在第一版。
 C 對每一個 required training scope 分別 discovery：
 
 ```text
-discover compatible FL Clients for scope-A
-discover compatible FL Clients for scope-B
-union results
-deduplicate by nfInstanceId
-verify service and capability
+read monitor owner consumerId for scope-A
+discover that exact NF instance and verify service/capability
+read monitor owner consumerId for scope-B
+discover that exact NF instance and verify service/capability
 run preparation
 ```
 
 只有同一個 `MlAnalyticsInfo` entry 內的條件共同匹配才算一個候選。
-NRF candidate 不等於正式 participant。
+NRF response 不會改變 owner identity；它只驗證該 owner 是否能成為正式
+participant。另一個同 TAI 的 compatible Client 不得替代 required owner。
 
-### 5.6 沒有 active analytics subscription 的候選者
+### 5.6 沒有 active Model Monitor relationship 的 Client
 
-標準不要求 FL Client 當下必須有 Consumer analytics subscription，但它
-仍必須能解析 training scope 並找到既有 ADRF records。
+標準本身不要求 FL Client 當下必須有 Consumer analytics subscription；
+但本計畫第一版只從 active Model Monitor relationships 建立 required
+training scopes，因此未受 C 監控的 Client 不會加入本次 process。
 
-- Phase 3 最初只保證 active descriptor projection；第一個完整實驗中
-  A、B 都有 active analytics subscriptions；
+- 第一個完整實驗中 A、B 都有 active analytics subscriptions、active
+  monitor registrations 與 matching descriptor projection；
 - Phase 6D 完成 descriptor inventory／retention bridge 後，具有
-  historical `dataSub` descriptor 與 matching ADRF records 的 idle
-  Client 才可 preparation 成功；
+  historical `dataSub` descriptor 與 matching ADRF records 的 idle scope
+  owner 才可能 preparation 成功；
 - 沒有 descriptor、沒有 records 或樣本不足：
   preparation 回標準 requirements-not-met；
-- 不為了宣稱「任何 idle Client 都能加入」而虛構 dataset。
+- 更一般化的未受監控 Client expansion 留給後續 selection policy，不為了
+  宣稱「任何 idle Client 都能加入」而虛構 dataset。
 
 ### 5.7 Backend restart 與 FL process
 
@@ -1341,6 +1343,8 @@ PyMTLF-C 沿用 existing WAPE policy：
 - training in flight 時忽略同 family 的重複 trigger，但保留 observation；
 - intent 固定 base latest model、trigger scope，並把 A/B 兩個相容 active
   scopes 都列為第一版 required training scopes；
+- 每個 required scope 同時保存 Model Monitor registration 的
+  `consumerId`，作為不可替換的 participant NF identity；
 - model demand 消失或 base stale 時取消。
 
 ### 12.2 Slice 4B：Candidate discovery
@@ -1348,20 +1352,24 @@ PyMTLF-C 沿用 existing WAPE policy：
 C：
 
 - 依 required scopes 分別查 NRF；
+- 每次查詢帶該 scope `consumerId` 作為 `target-nf-instance-id`；
 - candidate 必須宣告 `FL_CLIENT`；
 - candidate 必須有 registered Training service；
 - Analytics ID、TAI、interoperability、local data NF type 相容；
-- union／dedupe by `nfInstanceId`；
-- deterministic ordering；
+- SearchResult 的 `nfInstanceId` 必須等於該 scope 的 `consumerId`；
 - 建立 `ParticipantAssignment`：selected NF/service + 第一版單一
   `TrainingScopeDescriptor`；
-- 每個 required scope 恰好指派給一個 selected Client；
+- 每個 required scope 恰好綁定其受監控 owner；
 - 第一版要求A/B兩個required scopes指派給兩個distinct Clients；
 - 一個Client承擔多個scope雖可由標準Training body表達，但目前
   `ROUND_LOCAL` contract只有一個`scope_digest`，因此延後到artifact
   contract明確擴充後再支援；
-- 第一個 profile 驗證結果必須是兩個 distinct Clients、分別覆蓋 A/B
-  scopes，但不 hardcode NF identity。
+- 第一個 profile 驗證結果必須是兩個 distinct monitor owners、分別覆蓋
+  A/B scopes；identity 來自 registration `consumerId`，不 hardcode 在 FL
+  config；
+- owner 找不到、沒有 registered Training service、未宣告相容
+  `FL_CLIENT`、TAI／Analytics ID／interoperability 不相容時，process
+  失敗，不得改選另一個 same-TAI NWDAF。
 
 ### 12.3 Slice 4C：Preparation and participant freeze
 

@@ -2,7 +2,7 @@
 
 日期：2026-07-29
 
-狀態：設計完成，待實作
+狀態：實作、完整 code review remediation 與整合驗證完成
 
 上層計畫：
 
@@ -1098,13 +1098,16 @@ PyMTLF-C reuses existing accuracy policy unchanged：
 - one family can have at most one retrain in flight；
 - additional reports are stored as observations but do not start another process；
 - retrain intent fixes the current latest base model digest；
-- A/B compatible active monitoring scopes become required training scopes。
+- A/B compatible active monitoring scopes become required training scopes；
+- each required scope retains its Model Monitor `consumerId` as the required
+  participant NF identity。
 
 ### 16.2 Discovery query
 
 For each required scope, C asks containing Go to query NRF with：
 
 - target/requester NF type `NWDAF`；
+- `target-nf-instance-id` equal to that scope's Model Monitor `consumerId`；
 - service name `nnwdaf-mlmodeltraining`；
 - `ml-analytics-info-list` including：
   - `mlAnalyticsIds=["UE_COMMUNICATION"]`；
@@ -1112,7 +1115,8 @@ For each required scope, C asks containing Go to query NRF with：
   - required `trackingAreaList`；
   - model interoperability where represented by the profile。
 
-PyMTLF parses complete SearchResult and selects an exact registered service。
+PyMTLF parses complete SearchResult and verifies that the returned profile is
+the exact scope owner before selecting its registered service。
 Selected target is returned to Go as private headers；Go validates it against
 its unexpired NRF cache。
 
@@ -1120,6 +1124,7 @@ its unexpired NRF cache。
 
 Candidate must：
 
+- have `nfInstanceId` exactly equal to the required scope's `consumerId`；
 - NF status `REGISTERED`；
 - service status `REGISTERED`；
 - support `FL_CLIENT` or `FL_SERVER_AND_CLIENT`；
@@ -1134,15 +1139,18 @@ Candidate must：
 
 Algorithm：
 
-1. canonicalize each required scope；
-2. discover candidates per scope；
-3. sort by `nfInstanceId`, service ID, API root；
-4. assign each scope to the first eligible candidate；
-5. require one distinct Client per required scope in the first profile；
-6. require two distinct Clients in the first experiment profile；
-7. fail if any required scope has no distinct assignment。
+1. canonicalize each required scope and read its non-empty `consumerId`；
+2. query NRF for that exact NF instance；
+3. validate the owner's status, Training service, FL capability, Analytics ID,
+   TAI and model interoperability；
+4. bind the scope to that exact owner；
+5. require one distinct monitor owner per required scope in the first profile；
+6. require two distinct owners in the first experiment profile；
+7. fail if any required owner is absent, unavailable or incompatible。
 
-No priority／capacity scoring in this version。
+NRF is therefore a capability／endpoint validation step, not a pool from which
+the Server may substitute another same-TAI Client。No priority／capacity scoring
+or substitute participant selection exists in this version。
 
 Release 18可讓一個Training resource帶多個`mLEventSubscs`，但Phase 0的
 第一版`ROUND_LOCAL` manifest只保存一個`scope_digest`。為避免把多個
@@ -1694,7 +1702,10 @@ B training samples = 8
 Assert at least：
 
 - two preparation resources；
-- two fixed participants；
+- two fixed participants equal to the two Model Monitor `consumerId` owners；
+- an otherwise compatible same-TAI decoy Client is not selected；
+- a required owner without FL Client capability causes failure and no global
+  model；
 - at least two rounds；
 - expected weighted tensor result；
 - validation rows excluded from counts；
@@ -1735,7 +1746,8 @@ Assert at least：
 ### 25.3 FL Server gate
 
 - degradation starts one process；
-- NRF discovery selects two eligible Clients without hardcoded IDs；
+- NRF discovery validates the two monitor-owner Client identities carried by
+  `consumerId`, without hardcoded deployment IDs；
 - required A/B preparation is all-or-nothing；
 - participant freeze waits for both preparation completion callbacks, not only
   both `201` responses；
@@ -1847,3 +1859,104 @@ Required review questions：
 Only deterministic findings that violate this plan or acceptance criteria block
 completion。Future dynamic membership、selection scoring、secure transport and
 publication remain later work。
+
+---
+
+## 28. Implementation result
+
+本工作單元已完成下列行為：
+
+- `NWDAF` 提供 Release 18-shaped Nnwdaf ML Model Training
+  `POST`／`PUT`／`PATCH`／`DELETE` 與 callback routes；
+- Go 保存 inbound／outbound Training route、local route ID、peer
+  `Location`、selected target、correlation、expected round 與 backend process
+  generation，並經 sync snapshot 處理 backend restart；
+- Go 對 public SBI、peer NWDAF 與 MTLF backend 僅做 contract validation、
+  routing、callback relay 與標準 HTTP response preservation；
+- PyMTLF FL Client 在 `201 + Location` 後以背景工作下載 completed base
+  model、向 ADRF 準備並凍結 dataset，再以標準 `statusReport` callback
+  宣告 preparation completed；
+- PyMTLF FL Client 在同一 long-lived resource 接受 round PATCH，以 frozen
+  training subset 產生 immutable `ROUND_LOCAL` artifact，並在 callback
+  未取得 `204` 時重送相同 payload，不重新訓練；
+- PyMTLF FL Server 由 WAPE degradation intent 啟動，經 Go／NRF 依
+  registration `consumerId` 找到兩個 monitored scope owners，再依
+  Analytics ID、TAI、FL capability 與 model interoperability 驗證兩者；
+- Server 等待兩個 preparation callbacks 後固定 participants，完成兩輪
+  synchronous full-model training，並以 artifact 中的 exact positive
+  training sample count 執行 weighted FedAvg；
+- 每輪 local/global artifact 均驗證 process、participant、scope、round、
+  model contract、preprocessing contract、input/output weights digest 與
+  sample count；
+- terminal cleanup 使用 bounded retry；backend restart 不嘗試以遺失的
+  dataset／workspace 恢復 process；
+- 最終狀態停在 `CANDIDATE_READY`，不配置正式 `modelUniqueId`，也不進行
+  ADRF model store、catalog promotion 或 Model Provision cutover。
+
+完整 review 另外確認並修正：
+
+- standard `ProblemDetails.invalidParams` 會列出 requirements failure 的實際
+  attribute；
+- preparation 明確攜帶 URL-addressed completed base model，Client 不依賴
+  自己持有 seed catalog；
+- 未明確提供 `modelInterInfo` 的一般 Model Provision demand 不會被錯誤
+  視為 incompatibility，但明確不相容的 demand 仍會拒絕；
+- FL Server shutdown、final candidate transition、restored outbound route
+  cleanup 與 concurrent process capacity 均具有 bounded lifecycle；
+- delay callback 以 per-stage digest 去重；`204` 遺失造成的相同 callback
+  retry 不會重複消耗 extension，也不會在 stage 前進後誤判 process 失敗；
+- participant assignment 嚴格綁定 Model Monitor `consumerId`；NRF 中另有
+  same-TAI compatible Client 時不會被當成替代者。
+- Training Workspace 在載入與執行 `model.py` 前，先驗證 archive 的 exact
+  file set、每個 component digest、completed／round artifact role 與
+  manifest contract；
+- model contract 納入實際 `model.py` digest，preprocessing contract 納入
+  實際 `scaler.pkl` digest；round artifact 原封不動保存 base scaler bytes，
+  避免相同 scaler 因重新序列化而產生假性 incompatibility；
+- Client preparation 以 transform／windowing 後真正可訓練的 sample count
+  判斷 `minNumSamples`，並把實際 bundle 的 analytics event 與
+  `modelInterInfo` 一併納入 compatibility check；
+- Server 聚合前會把每個 local artifact 宣告的 model／preprocessing
+  contract digest 與當輪 input global artifact 比對，不只驗證 process、
+  participant 與 weights identity；
+- Go 在 Training `PATCH` 下游回 `200` 時保存並轉送下游實際
+  representation，只還原 caller-visible callback URI；下游回 `204` 時才
+  使用本地套用 patch 的 representation；
+- current profile 不支援 `consumerSetId` resolution，因此在建立 monitor
+  registration 時同步回 `503 SERVICE_NOT_AVAILABLE`，不建立一個必然在
+  reconciliation 永久失敗的 resource；
+- project profile 對 `timeAvReq` 執行 positive ISO 8601 day/time duration
+  驗證；這是本實驗 profile 的 business constraint，不宣稱 OpenAPI
+  `string` 本身規定該格式；
+- PyMTLF 經 NRF exact discovery 得到 containing NWDAF 自身時，Go 直接把
+  Model Monitor subscription route 到本地 PyAnLF，不再經 public SBI
+  self-call 而與同一把 model-route lock 形成 deadlock；
+- Go sync snapshot 依 backend process generation 投影 resource identity：
+  同一 process 保留 backend resource ID，restart 才以穩定 Go route ID
+  重建；Model Monitor owner 使用同一 identity namespace，避免 recurring
+  sync 把有效 subscription 誤判為 orphan。
+
+### 28.1 Verification evidence
+
+2026-07-30 完成：
+
+- `PyMTLF`: `uv run ruff check .`；
+- `PyMTLF`: `uv run pytest -q`，171 tests passed；
+- `NWDAF`: `make lint`，0 issues；
+- `NWDAF`: `make test`；
+- `NWDAF`: `make build`；
+- `nwdaf-resources`: distributed FL preflight；
+- `nwdaf-resources`: NRF role／capability／discovery assertions；
+- `nwdaf-resources`: isolated three-NWDAF E2E，驗證 Model Provision、
+  Model Monitor、ADRF retrieval、monitor-owner binding、same-TAI decoy
+  exclusion、兩個 FL Clients、兩輪 weighted FedAvg 與 unpromoted final
+  candidate；
+- `nwdaf-resources`: legacy process-level initial Model Provision／Monitor
+  restart round trip；
+- `nwdaf-resources`: MongoDB-backed local retraining／model replacement round
+  trip。
+
+E2E 的 observation 是 deterministic UPF-shaped fixture，經 production
+PyAnLF callback、ADRF storage／retrieval、Go routes 與 PyMTLF training
+flow 執行；support SMF 只建立 standard-shaped collection relationship，
+因此此結果不宣稱 live SMF／UPF data-plane verification。
