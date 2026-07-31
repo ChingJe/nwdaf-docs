@@ -4,9 +4,10 @@
 
 狀態：Phase 0 contract foundation、Phase 1 role／NRF foundation、
 Phase 2 cross-NWDAF model provision／monitoring、Phase 3 FL Client
-Training及Phase 4 FL Server orchestration／FedAvg皆已完成實作、review
-remediation與驗證；目前產出停在 unpromoted final candidate，Phase 5
-validation／publication／cutover 尚未開始
+Training、Phase 4 FL Server orchestration／FedAvg 與 Phase 5 final
+validation／ADRF publication／reprovision／monitor cutover 皆已完成實作、
+review remediation 與跨 process 驗證；下一個未完成範圍為 Phase 6
+standard collection prerequisites
 
 相關文件：
 
@@ -140,7 +141,7 @@ M1 seed -> M2 -> M3 -> ...
 | `PyAnLF/` | `694e3d8` |
 | `PyMTLF/` | `11b3199` |
 | `nwdaf-resources/` | `4937b20` |
-| team ADRF reference branch | `with-mlmodelmanagement` at `7f947db` |
+| team ADRF reference branch | `with-mlmodelmanagement` at `b656b08` |
 
 計畫撰寫時，上述四個主要 repository worktree 均為 clean。`resources/`
 仍是 read-only reference tree；後續若需修改 NRF、ADRF、SMF、UPF 或
@@ -396,12 +397,30 @@ DELETE retrieval subscription
   -> 204
 ```
 
+`FetchInstruction.fetchUri` 雖為通知中的 mandatory 欄位，但
+[TS 29.575 §4.2.2.8](../../../specs/TS%2029.575/4%20Services%20offered%20by%20the%20ADRF/4.2%20Nadrf_DataManagement%20Service/4.2.2%20Service%20Operations/4.2.2.8%20Nadrf_DataManagement_RetrievalNotify%20service%20operation.md)
+明確說明 ADRF retrieval 中 consumer 實際不需要依賴該 URI。PyMTLF
+以已選定的 ADRF `apiRoot` 組合標準
+`/nadrf-datamanagement/v1/data-store-records` resource，並以
+`fetch-correlation-ids` 取回資料；不把 team ADRF 額外提供的 snapshot
+download URI 當成標準資料格式。
+
 Request 使用完整 `dataSub` 與 `timePeriod`，不是只傳 SMF subscription ID。
 本 profile 還必須提供 `notifCorrId`、`notificationURI`，並在
 `dataSub`／`anaSub`／`dataSetId` 中恰好選一個。第一版固定
 `dataSub`，且設定 `consTrigNotif=true`，因此 callback 預期為
 `fetchInstruct`；若未協商此 profile，Client 必須同時支援
 `dataNotif`／`anaNotifications`。
+
+「傳送完整 `dataSub`」是 retrieval request contract，不表示 team ADRF
+V0 會用其所有欄位查詢。V0 目前只從 `dataSub.smfDataSub.supi` 取出
+SUPI，搭配 `timePeriod` 與建立訂閱時的 snapshot cutoff 篩選 records；
+`notifId`、`notifUri` 與完整 `eventSubs` 不是目前的 MongoDB query key。
+ADRF callback 可以一次攜帶多個 `fetchCorrIds`，但目前 interoperability
+profile 由 PyMTLF 逐 ID 發送 collection GET，每個 request 只帶一個
+`fetch-correlation-ids` 值並接收單一 `NadrfDataStoreRecord`。OpenAPI
+允許 query parameter 表達多個 ID；逐筆取回是 team ADRF V0 的刻意限制，
+不是 3GPP cardinality 限制。
 
 Final model storage：
 
@@ -1485,6 +1504,8 @@ C 下載全部 `ROUND_LOCAL` bundles 後：
 ---
 
 ## 13. Phase 5：Final validation, ADRF publication and reprovision
+
+狀態：已完成實作、review remediation 與 isolated cross-process E2E。
 
 詳細實作順序、durable state、failure recovery、標準契約與驗收矩陣見
 [Phase 5 Final Validation ADRF Publication And Reprovision Detailed Plan](Phase%205%20Final%20Validation%20ADRF%20Publication%20And%20Reprovision%20Detailed%20Plan.md)。

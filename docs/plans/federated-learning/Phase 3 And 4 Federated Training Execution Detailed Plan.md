@@ -863,8 +863,19 @@ descriptors。若 group 內多個 SUPI 分別有 SMF data subscription：
 - 以 record identity 去重；
 - 合併後再做 transform and split。
 
-ADRF query 使用完整 `dataSub`，不只使用 SMF subscription ID，也不以
-`scopeDigest` 當 ADRF standard key。
+Client 在建立 ADRF retrieval subscription 時送出完整 `dataSub` 與
+requested time window，不只傳 SMF subscription ID，也不以
+`scopeDigest` 當 ADRF standard key。這描述的是 request contract，不代表
+目前 team ADRF V0 會以 `dataSub` 的每個欄位做結構比對。V0 實際從
+`dataSub.smfDataSub.supi` 取出 SUPI，搭配 `timePeriod` 與 subscription
+建立時的 snapshot cutoff 篩選 records；`notifId`、`notifUri` 與完整
+`eventSubs` 目前不是 V0 MongoDB query key。
+
+ADRF callback 可在一個 `fetchInstruct` 中提供多個 `fetchCorrIds`。目前
+ADRF／PyMTLF interoperability profile 逐 ID 發送 collection GET：每次
+`GET /data-store-records` 只帶一個 `fetch-correlation-ids` 值，成功時
+取得一個 `NadrfDataStoreRecord`。這是第一版 profile 的實作限制，不是
+Release 18 OpenAPI 對 query cardinality 的限制。
 
 Phase 3 只依 active sync projection；沒有 matching descriptor 時回
 requirements not met。Portable E2E 可用明確 fixture descriptor，但

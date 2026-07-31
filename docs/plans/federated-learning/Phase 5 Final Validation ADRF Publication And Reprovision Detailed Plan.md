@@ -2,7 +2,7 @@
 
 日期：2026-07-30
 
-狀態：詳細設計完成；尚未開始實作
+狀態：已完成實作、code review remediation 與跨 process E2E 驗證
 
 上層計畫：
 
@@ -72,7 +72,7 @@ subscription 與 cutover 仍由 NWDAF-C／PyMTLF 管理。
 | `PyAnLF/` | `feat/r18-federated-learning` | `8f20f0a` |
 | `PyMTLF/` | `feat/r18-federated-learning` | `84081fd` |
 | `nwdaf-resources/` | `feat/r18-federated-learning` | `e84c5bd` |
-| `adrf/` | `feat/r18-federated-learning` | `7f947db` |
+| `adrf/` | `feat/r18-federated-learning` | `b656b08` |
 | `nwdaf-docs/` | `main` | `3cd2e60` |
 
 Team ADRF 的 editable repository 已 clone 至 workspace `adrf/`。它從最新
@@ -1410,7 +1410,7 @@ Phase 5 完成必須同時滿足：
 
 - repository：workspace `adrf/`；
 - branch：`feat/r18-federated-learning`；
-- baseline：`7f947db`；
+- baseline：`b656b08`；
 - source branch：`origin/with-mlmodelmanagement`。
 
 ### G2：Durable state location
@@ -1444,3 +1444,98 @@ AND old relationships are retired only afterward
 
 任何較早的狀態都必須能在 restart 後辨認、恢復或明確失敗，不得用
 in-memory success log 代替 durable completion。
+
+---
+
+## 20. 實作結果（2026-07-31）
+
+### 20.1 Repository results
+
+`PyMTLF/` 已完成：
+
+- A/B validation-only round、frozen validation evidence 與 global gate；
+- numeric timestamp-based model ID、completed revision 與 atomic durable
+  model-state snapshot；
+- `FINAL_MODEL` bundle、participant sample counts、lineage 與 validation
+  metadata；
+- ADRF store request、probe-first ambiguous recovery、response owner／size／
+  allowlist validation；
+- publication retry journal、terminal tombstone、startup reconciliation；
+- ADRF success 後才進行 stale-base guarded catalog commit；
+- durable `CUTOVER_PENDING`／`COMPLETE` adoption tracking；
+- restart 後重新建立 generation in-flight 與 provision desired state。
+
+`PyAnLF/` 已完成：
+
+- `mLModelAdrf` exact ADRF resolution；
+- 有 `storTransId` 時以 transaction ID retrieval，沒有時以
+  `modelUniqueId` retrieval；
+- record owner、allowed consumer、model ID、successful store result 與
+  ADRF-hosted URL origin validation；
+- bundle 下載、既有 archive／digest／runtime validation；
+- new runtime、new registration、new monitor subscription 成功後才移除
+  old relationship；
+- retrieval／activation failure 保留 old runtime；
+- callback queue consumption 與 monitor delete ordering 的 E2E 衍生問題
+  已修正並加入 regression tests。
+
+`NWDAF/` 已完成：
+
+- Release 18 ADRF ML Model Management compat types；
+- PyMTLF store／retrieve 與 PyAnLF retrieve auxiliary routes；
+- `Target-Api-Root`、standard query name、request shape 與 response
+  `Location`／status／body preservation；
+- Go 僅做標準 SBI validation／forwarding，不代理 model bytes，也不承擔
+  publication decision。
+
+Team `adrf/` 已完成本 Phase 的 single-model vertical：
+
+- NRF profile 同時廣告 Data Management 與 ML Model Management；
+- URL-backed model download、size check、immutable local file 與 Mongo
+  record；
+- numeric model ID、allowed-consumer metadata、`201 + Location +
+  modelStoreResult`；
+- collection GET by transaction ID 或 model ID；
+- source 404 回 `404/ML_MODEL_FILE_ADDRESS_NOT_FOUND`；
+- transport／下載／size failure 回
+  `500/ML_MODEL_FILE_DOWNLOAD_FAILED`；
+- failure 不建立可 retrieval 的 record；
+- model ID unique index 防止 ambiguous duplicate。
+
+`nwdaf-resources/` 已擴充 isolated distributed FL runner，實際驗證：
+
+1. A/B/C role 與 NRF discovery；
+2. two-client fixed-round weighted FedAvg；
+3. A/B final validation-only results；
+4. C 建立正式 model ID 與 final bundle；
+5. ADRF 保存 record 與 bytes；
+6. C latest catalog commit；
+7. A/B 由 ADRF reference 下載並啟用相同模型；
+8. new monitor relationship 成立；
+9. old routes／relationships 之後才退休。
+
+Runner 使用 temporary MongoDB、model-state、publication、artifact 與 ADRF
+model directory；測試結束不在任一 repository 留下 runtime data。
+
+### 20.2 Verification evidence
+
+已通過：
+
+- `NWDAF/`: `go test ./...`
+- `adrf/`: `go test ./...`
+- `PyAnLF/`: full Ruff check 與 full pytest
+- `PyMTLF/`: full Ruff format check、Ruff check 與 full pytest
+- `nwdaf-resources/`: distributed FL Ruff check、preflight、role/discovery
+  verifier 與完整 cross-process E2E
+- 所有 affected repositories：`git diff --check`
+
+Cross-process 最終結果：
+
+```text
+Published model <timestamp-model-id> stored in ADRF and adopted by A/B
+PASS: isolated distributed NWDAF control plane, federated training,
+final validation, ADRF publication, and model cutover verified
+```
+
+本結果證明 Phase 5 profile，不宣稱 Phase 6 的 UDM／AMF／SMF／UPF
+standard collection prerequisites 或 Phase 7 full-core E2E 已完成。
