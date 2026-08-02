@@ -1,19 +1,18 @@
 {
-  "corpus": "NWDAF implementation-related 3GPP Release 18 specifications",
-  "specification_count": 18,
-  "added": [
-    "TS 29.523 V18.7.0"
-  ],
-  "file_count": 6020,
-  "markdown_files": 3173,
-  "manifest_entries": 8849,
-  "local_links_checked": 3294,
-  "image_references_checked": 985,
-  "openapi_yaml_files": 56,
-  "unresolved_openapi_dependencies": 21,
-  "passed": true,
-  "issues": [],
-  "official_attachments_checked": 57,
-  "official_attachments_byte_identical": 57,
-  "openapi_yaml_valid": 56
+  "release": "18",
+  "specifications": 21,
+  "files": 6745,
+  "markdown_files": 3587,
+  "manifest_entries": 9897,
+  "local_links_checked": 3716,
+  "image_references_checked": 1087,
+  "openapi_yaml_files": 60,
+  "official_attachments_checked": 62,
+  "unresolved_external_dependencies": 24,
+  "validation_passed": true,
+  "latest_extension": [
+    "TS 23.003 V18.8.0",
+    "TS 29.502 V18.11.0",
+    "TS 29.504 V18.13.0"
+  ]
 }

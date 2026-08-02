@@ -1,0 +1,944 @@
+spec: TS 29.504
+version: 18.13.0
+release: '18'
+source_archive: 29504-id0.zip
+source_document: 29504-id0.docx
+source_archive_sha256: 08eb3fe98bf504d4516fefd5b25d7d85d32137d58050b96e05c110afd341706b
+source_document_sha256: 819017105e6641a94e926626c4b8c28c960eff13fd1c084dc9c76b2ef745ba6a
+max_source_words_per_semantic_file_target: 4200
+clauses:
+- clause: document-information
+  title: Document information
+  path: 00 Document information.md
+  source_words: 259
+  kind: source-file
+- clause: contents
+  title: Contents
+  path: 01 Original contents.md
+  source_words: 1226
+  kind: source-file
+- clause: foreword
+  title: Foreword
+  path: 02 Foreword.md
+  source_words: 492
+  kind: source-file
+- clause: '1'
+  title: 1 Scope
+  path: 1 Scope.md
+  source_words: 148
+  kind: source-file
+- clause: '2'
+  title: 2 References
+  path: 2 References.md
+  source_words: 364
+  kind: source-file
+- clause: '3'
+  title: 3 Definitions and abbreviations
+  path: 3 Definitions and abbreviations.md
+  source_words: 121
+  kind: source-file
+- clause: '3.1'
+  title: 3.1 Definitions
+  path: 3 Definitions and abbreviations.md
+  source_words: 47
+  kind: embedded-clause
+- clause: '3.2'
+  title: 3.2 Abbreviations
+  path: 3 Definitions and abbreviations.md
+  source_words: 70
+  kind: embedded-clause
+- clause: '4'
+  title: 4 Overview
+  path: 4 Overview.md
+  source_words: 178
+  kind: source-file
+- clause: '5'
+  title: 5 Services offered by the UDR
+  path: 5 Services offered by the UDR/README.md
+  source_words: 5238
+  kind: navigation-directory
+- clause: '5.1'
+  title: 5.1 Introduction
+  path: 5 Services offered by the UDR/5.1 Introduction.md
+  source_words: 101
+  kind: source-file
+- clause: '5.2'
+  title: 5.2 Nudr_DataRepository Service
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 3790
+  kind: source-file
+- clause: 5.2.1
+  title: 5.2.1 Service Description
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 304
+  kind: embedded-clause
+- clause: 5.2.1.1
+  title: 5.2.1.1 Service and operation description
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 111
+  kind: embedded-clause
+- clause: 5.2.1.2
+  title: 5.2.1.2 Service operation and data access authorization
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 188
+  kind: embedded-clause
+- clause: 5.2.2
+  title: 5.2.2 Service Operations
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 3481
+  kind: embedded-clause
+- clause: 5.2.2.1
+  title: 5.2.2.1 Introduction
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 327
+  kind: embedded-clause
+- clause: 5.2.2.2
+  title: 5.2.2.2 Query
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 606
+  kind: embedded-clause
+- clause: 5.2.2.2.1
+  title: 5.2.2.2.1 General
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 91
+  kind: embedded-clause
+- clause: 5.2.2.2.2
+  title: 5.2.2.2.2 Data retrieval
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 233
+  kind: embedded-clause
+- clause: 5.2.2.2.3
+  title: 5.2.2.2.3 Retrieval of subset of a resource
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 277
+  kind: embedded-clause
+- clause: 5.2.2.3
+  title: 5.2.2.3 Create
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 390
+  kind: embedded-clause
+- clause: 5.2.2.3.1
+  title: 5.2.2.3.1 General
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 45
+  kind: embedded-clause
+- clause: 5.2.2.3.2
+  title: 5.2.2.3.2 Data Creation using PUT
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 150
+  kind: embedded-clause
+- clause: 5.2.2.3.3
+  title: 5.2.2.3.3 Data Creation using POST
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 190
+  kind: embedded-clause
+- clause: 5.2.2.4
+  title: 5.2.2.4 Delete
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 152
+  kind: embedded-clause
+- clause: 5.2.2.4.1
+  title: 5.2.2.4.1 General
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 45
+  kind: embedded-clause
+- clause: 5.2.2.4.2
+  title: 5.2.2.4.2 Deleting Data
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 102
+  kind: embedded-clause
+- clause: 5.2.2.5
+  title: 5.2.2.5 Update
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 313
+  kind: embedded-clause
+- clause: 5.2.2.5.1
+  title: 5.2.2.5.1 General
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 96
+  kind: embedded-clause
+- clause: 5.2.2.5.2
+  title: 5.2.2.5.2 Data Update using PATCH
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 106
+  kind: embedded-clause
+- clause: 5.2.2.5.3
+  title: 5.2.2.5.3 Data Update using PUT
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 106
+  kind: embedded-clause
+- clause: 5.2.2.6
+  title: 5.2.2.6 Subscribe
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 983
+  kind: embedded-clause
+- clause: 5.2.2.6.1
+  title: 5.2.2.6.1 General
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 143
+  kind: embedded-clause
+- clause: 5.2.2.6.2
+  title: 5.2.2.6.2 NF service consumer subscribes to notifications to UDR
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 406
+  kind: embedded-clause
+- clause: 5.2.2.6.3
+  title: 5.2.2.6.3 Stateless UDM subscribes to notifications to UDR
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 429
+  kind: embedded-clause
+- clause: 5.2.2.7
+  title: 5.2.2.7 Unsubscribe
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 142
+  kind: embedded-clause
+- clause: 5.2.2.7.1
+  title: 5.2.2.7.1 General
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 27
+  kind: embedded-clause
+- clause: 5.2.2.7.2
+  title: 5.2.2.7.2 Unsubscribe service operation
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 110
+  kind: embedded-clause
+- clause: 5.2.2.8
+  title: 5.2.2.8 Notify
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 332
+  kind: embedded-clause
+- clause: 5.2.2.8.1
+  title: 5.2.2.8.1 General
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 27
+  kind: embedded-clause
+- clause: 5.2.2.8.2
+  title: 5.2.2.8.2 Notification to NF service consumer on data change
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 113
+  kind: embedded-clause
+- clause: 5.2.2.8.3
+  title: 5.2.2.8.3 Notification to stateless UDM on data change
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 187
+  kind: embedded-clause
+- clause: 5.2.2.9
+  title: 5.2.2.9 DataRestorationNotification
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 231
+  kind: embedded-clause
+- clause: 5.2.2.9.1
+  title: 5.2.2.9.1 General
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 37
+  kind: embedded-clause
+- clause: 5.2.2.9.2
+  title: 5.2.2.9.2 Notification on Data Restoration
+  path: 5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md
+  source_words: 189
+  kind: embedded-clause
+- clause: '5.3'
+  title: 5.3 Nudr_GroupIDmap Service
+  path: 5 Services offered by the UDR/5.3 Nudr_GroupIDmap Service.md
+  source_words: 1341
+  kind: source-file
+- clause: 5.3.1
+  title: 5.3.1 Service Description
+  path: 5 Services offered by the UDR/5.3 Nudr_GroupIDmap Service.md
+  source_words: 166
+  kind: embedded-clause
+- clause: 5.3.1.1
+  title: 5.3.1.1 Service and operation description
+  path: 5 Services offered by the UDR/5.3 Nudr_GroupIDmap Service.md
+  source_words: 161
+  kind: embedded-clause
+- clause: 5.3.2
+  title: 5.3.2 Service Operations
+  path: 5 Services offered by the UDR/5.3 Nudr_GroupIDmap Service.md
+  source_words: 1170
+  kind: embedded-clause
+- clause: 5.3.2.1
+  title: 5.3.2.1 Introduction
+  path: 5 Services offered by the UDR/5.3 Nudr_GroupIDmap Service.md
+  source_words: 40
+  kind: embedded-clause
+- clause: 5.3.2.2
+  title: 5.3.2.2 Query
+  path: 5 Services offered by the UDR/5.3 Nudr_GroupIDmap Service.md
+  source_words: 156
+  kind: embedded-clause
+- clause: 5.3.2.2.1
+  title: 5.3.2.2.1 General
+  path: 5 Services offered by the UDR/5.3 Nudr_GroupIDmap Service.md
+  source_words: 19
+  kind: embedded-clause
+- clause: 5.3.2.2.2
+  title: 5.3.2.2.2 NF Group ID retrieval
+  path: 5 Services offered by the UDR/5.3 Nudr_GroupIDmap Service.md
+  source_words: 132
+  kind: embedded-clause
+- clause: 5.3.2.3
+  title: 5.3.2.3 QueryRID
+  path: 5 Services offered by the UDR/5.3 Nudr_GroupIDmap Service.md
+  source_words: 157
+  kind: embedded-clause
+- clause: 5.3.2.3.1
+  title: 5.3.2.3.1 General
+  path: 5 Services offered by the UDR/5.3 Nudr_GroupIDmap Service.md
+  source_words: 19
+  kind: embedded-clause
+- clause: 5.3.2.3.2
+  title: 5.3.2.3.2 Routing IDs retrieval
+  path: 5 Services offered by the UDR/5.3 Nudr_GroupIDmap Service.md
+  source_words: 133
+  kind: embedded-clause
+- clause: 5.3.2.4
+  title: 5.3.2.4 Subscribe
+  path: 5 Services offered by the UDR/5.3 Nudr_GroupIDmap Service.md
+  source_words: 412
+  kind: embedded-clause
+- clause: 5.3.2.4.1
+  title: 5.3.2.4.1 General
+  path: 5 Services offered by the UDR/5.3 Nudr_GroupIDmap Service.md
+  source_words: 41
+  kind: embedded-clause
+- clause: 5.3.2.4.2
+  title: 5.3.2.4.2 NF service consumer subscribes to notifications to UDR
+  path: 5 Services offered by the UDR/5.3 Nudr_GroupIDmap Service.md
+  source_words: 366
+  kind: embedded-clause
+- clause: 5.3.2.5
+  title: 5.3.2.5 Unsubscribe
+  path: 5 Services offered by the UDR/5.3 Nudr_GroupIDmap Service.md
+  source_words: 143
+  kind: embedded-clause
+- clause: 5.3.2.5.1
+  title: 5.3.2.5.1 General
+  path: 5 Services offered by the UDR/5.3 Nudr_GroupIDmap Service.md
+  source_words: 28
+  kind: embedded-clause
+- clause: 5.3.2.5.2
+  title: 5.3.2.5.2 Unsubscribe service operation
+  path: 5 Services offered by the UDR/5.3 Nudr_GroupIDmap Service.md
+  source_words: 110
+  kind: embedded-clause
+- clause: 5.3.2.6
+  title: 5.3.2.6 Notify
+  path: 5 Services offered by the UDR/5.3 Nudr_GroupIDmap Service.md
+  source_words: 257
+  kind: embedded-clause
+- clause: 5.3.2.6.1
+  title: 5.3.2.6.1 General
+  path: 5 Services offered by the UDR/5.3 Nudr_GroupIDmap Service.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 5.3.2.6.2
+  title: 5.3.2.6.2 Notification to NF service consumer on data change
+  path: 5 Services offered by the UDR/5.3 Nudr_GroupIDmap Service.md
+  source_words: 223
+  kind: embedded-clause
+- clause: '6'
+  title: 6 API Definitions
+  path: 6 API Definitions/README.md
+  source_words: 9836
+  kind: navigation-directory
+- clause: '6.1'
+  title: 6.1 Nudr_DataRepository Service API
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/README.md
+  source_words: 5886
+  kind: navigation-directory
+- clause: 6.1.1
+  title: 6.1.1 API URI
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.1 API URI.md
+  source_words: 82
+  kind: source-file
+- clause: 6.1.2
+  title: 6.1.2 Usage of HTTP
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.2 Usage of HTTP.md
+  source_words: 968
+  kind: source-file
+- clause: 6.1.2.1
+  title: 6.1.2.1 General
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.2 Usage of HTTP.md
+  source_words: 28
+  kind: embedded-clause
+- clause: 6.1.2.2
+  title: 6.1.2.2 HTTP standard headers
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.2 Usage of HTTP.md
+  source_words: 618
+  kind: embedded-clause
+- clause: 6.1.2.2.1
+  title: 6.1.2.2.1 General
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.2 Usage of HTTP.md
+  source_words: 30
+  kind: embedded-clause
+- clause: 6.1.2.2.2
+  title: 6.1.2.2.2 Content type
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.2 Usage of HTTP.md
+  source_words: 138
+  kind: embedded-clause
+- clause: 6.1.2.2.3
+  title: 6.1.2.2.3 Cache-Control
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.2 Usage of HTTP.md
+  source_words: 68
+  kind: embedded-clause
+- clause: 6.1.2.2.4
+  title: 6.1.2.2.4 ETag
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.2 Usage of HTTP.md
+  source_words: 103
+  kind: embedded-clause
+- clause: 6.1.2.2.5
+  title: 6.1.2.2.5 If-None-Match
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.2 Usage of HTTP.md
+  source_words: 50
+  kind: embedded-clause
+- clause: 6.1.2.2
+  title: 6.1.2.2.5a If-Match
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.2 Usage of HTTP.md
+  source_words: 51
+  kind: embedded-clause
+- clause: 6.1.2.2.6
+  title: 6.1.2.2.6 Last-Modified
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.2 Usage of HTTP.md
+  source_words: 47
+  kind: embedded-clause
+- clause: 6.1.2.2.7
+  title: 6.1.2.2.7 If-Modified-Since
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.2 Usage of HTTP.md
+  source_words: 35
+  kind: embedded-clause
+- clause: 6.1.2.2.8
+  title: 6.1.2.2.8 When to Use Entity-Tags and Last-Modified Dates
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.2 Usage of HTTP.md
+  source_words: 89
+  kind: embedded-clause
+- clause: 6.1.2.3
+  title: 6.1.2.3 HTTP custom headers
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.2 Usage of HTTP.md
+  source_words: 316
+  kind: embedded-clause
+- clause: 6.1.2.3.1
+  title: 6.1.2.3.1 General
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.2 Usage of HTTP.md
+  source_words: 20
+  kind: embedded-clause
+- clause: 6.1.2.3.2
+  title: 6.1.2.3.2 3gpp-Sbi-Message-Priority
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.2 Usage of HTTP.md
+  source_words: 36
+  kind: embedded-clause
+- clause: 6.1.2.3.3
+  title: 6.1.2.3.3 3gpp-Sbi-Notification-Correlation
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.2 Usage of HTTP.md
+  source_words: 124
+  kind: embedded-clause
+- clause: 6.1.2.3.4
+  title: 6.1.2.3.4 3gpp-Sbi-Etags
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.2 Usage of HTTP.md
+  source_words: 129
+  kind: embedded-clause
+- clause: 6.1.3
+  title: 6.1.3 Resources
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.3 Resources.md
+  source_words: 393
+  kind: source-file
+- clause: 6.1.3.1
+  title: 6.1.3.1 Overview
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.3 Resources.md
+  source_words: 128
+  kind: embedded-clause
+- clause: 6.1.3.2
+  title: 6.1.3.2 SubscriptionData
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.3 Resources.md
+  source_words: 10
+  kind: embedded-clause
+- clause: 6.1.3.3
+  title: 6.1.3.3 PolicyData
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.3 Resources.md
+  source_words: 10
+  kind: embedded-clause
+- clause: 6.1.3.4
+  title: 6.1.3.4 StructuredDataForExposure
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.3 Resources.md
+  source_words: 10
+  kind: embedded-clause
+- clause: 6.1.3.5
+  title: 6.1.3.5 ApplicationData
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.3 Resources.md
+  source_words: 10
+  kind: embedded-clause
+- clause: 6.1.3.6
+  title: '6.1.3.6 Resource: DataRestorationEvents'
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.3 Resources.md
+  source_words: 221
+  kind: embedded-clause
+- clause: 6.1.3.6.1
+  title: 6.1.3.6.1 Description
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.3 Resources.md
+  source_words: 6
+  kind: embedded-clause
+- clause: 6.1.3.6.2
+  title: 6.1.3.6.2 Resource Definition
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.3 Resources.md
+  source_words: 58
+  kind: embedded-clause
+- clause: 6.1.3.6.3
+  title: 6.1.3.6.3 Resource Standard Methods
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.3 Resources.md
+  source_words: 151
+  kind: embedded-clause
+- clause: 6.1.3.6.3.1
+  title: 6.1.3.6.3.1 POST
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.3 Resources.md
+  source_words: 143
+  kind: embedded-clause
+- clause: 6.1.4
+  title: 6.1.4 Custom Operations without associated resources
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.4 Custom Operations without associated resources.md
+  source_words: 27
+  kind: source-file
+- clause: 6.1.5
+  title: 6.1.5 Notifications
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.5 Notifications.md
+  source_words: 634
+  kind: source-file
+- clause: 6.1.5.1
+  title: 6.1.5.1 General
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.5 Notifications.md
+  source_words: 50
+  kind: embedded-clause
+- clause: 6.1.5.2
+  title: 6.1.5.2 Data Change Notification
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.5 Notifications.md
+  source_words: 60
+  kind: embedded-clause
+- clause: 6.1.5.3
+  title: 6.1.5.3 Data Restoration Notification
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.5 Notifications.md
+  source_words: 520
+  kind: embedded-clause
+- clause: '6.1'
+  title: 6.1.5a Data Model
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.5a Data Model.md
+  source_words: 444
+  kind: source-file
+- clause: '6.1'
+  title: 6.1.5a.1 General
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.5a Data Model.md
+  source_words: 162
+  kind: embedded-clause
+- clause: '6.1'
+  title: 6.1.5a.2 Structured data types
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.5a Data Model.md
+  source_words: 277
+  kind: embedded-clause
+- clause: '6.1'
+  title: 6.1.5a.2.1 Introduction
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.5a Data Model.md
+  source_words: 17
+  kind: embedded-clause
+- clause: '6.1'
+  title: '6.1.5a.2.2 Type: DataRestorationNotification'
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.5a Data Model.md
+  source_words: 253
+  kind: embedded-clause
+- clause: 6.1.6
+  title: 6.1.6 Error Handling
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.6 Error Handling.md
+  source_words: 440
+  kind: source-file
+- clause: 6.1.7
+  title: 6.1.7 Security
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.7 Security.md
+  source_words: 1010
+  kind: source-file
+- clause: 6.1.8
+  title: 6.1.8 Feature negotiation
+  path: 6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.8 Feature negotiation.md
+  source_words: 1882
+  kind: source-file
+- clause: '6.2'
+  title: 6.2 Nudr_GroupIDmap Service API
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 3947
+  kind: source-file
+- clause: 6.2.1
+  title: 6.2.1 API URI
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 51
+  kind: embedded-clause
+- clause: 6.2.2
+  title: 6.2.2 Usage of HTTP
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 619
+  kind: embedded-clause
+- clause: 6.2.2.1
+  title: 6.2.2.1 General
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 63
+  kind: embedded-clause
+- clause: 6.2.2.2
+  title: 6.2.2.2 HTTP standard headers
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 499
+  kind: embedded-clause
+- clause: 6.2.2.2.1
+  title: 6.2.2.2.1 General
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 30
+  kind: embedded-clause
+- clause: 6.2.2.2.2
+  title: 6.2.2.2.2 Content type
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 108
+  kind: embedded-clause
+- clause: 6.2.2.2.3
+  title: 6.2.2.2.3 Cache-Control
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 65
+  kind: embedded-clause
+- clause: 6.2.2.2.4
+  title: 6.2.2.2.4 ETag
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 83
+  kind: embedded-clause
+- clause: 6.2.2.2.5
+  title: 6.2.2.2.5 If-None-Match
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 50
+  kind: embedded-clause
+- clause: 6.2.2.2.6
+  title: 6.2.2.2.6 Last-Modified
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 48
+  kind: embedded-clause
+- clause: 6.2.2.2.7
+  title: 6.2.2.2.7 If-Modified-Since
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 36
+  kind: embedded-clause
+- clause: 6.2.2.2.8
+  title: 6.2.2.2.8 When to Use Entity-Tags and Last-Modified Dates
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 72
+  kind: embedded-clause
+- clause: 6.2.2.3
+  title: 6.2.2.3 HTTP custom headers
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 51
+  kind: embedded-clause
+- clause: 6.2.2.3.1
+  title: 6.2.2.3.1 General
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 44
+  kind: embedded-clause
+- clause: 6.2.3
+  title: 6.2.3 Resources
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 1826
+  kind: embedded-clause
+- clause: 6.2.3.1
+  title: 6.2.3.1 Overview
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 102
+  kind: embedded-clause
+- clause: 6.2.3.2
+  title: 6.2.3.2 Resource NfGroupIds
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 435
+  kind: embedded-clause
+- clause: 6.2.3.2.1
+  title: 6.2.3.2.1 Description
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 36
+  kind: embedded-clause
+- clause: 6.2.3.2.2
+  title: 6.2.3.2.2 Resource Definition
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 48
+  kind: embedded-clause
+- clause: 6.2.3.2.3
+  title: 6.2.3.2.3 Resource Standard Methods
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 345
+  kind: embedded-clause
+- clause: 6.2.3.2.3.1
+  title: 6.2.3.2.3.1 GET
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 337
+  kind: embedded-clause
+- clause: 6.2.3.3
+  title: 6.2.3.3 Resource RoutingIds
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 277
+  kind: embedded-clause
+- clause: 6.2.3.3.1
+  title: 6.2.3.3.1 Description
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 6.2.3.3.2
+  title: 6.2.3.3.2 Resource Definition
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 48
+  kind: embedded-clause
+- clause: 6.2.3.3.3
+  title: 6.2.3.3.3 Resource Standard Methods
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 206
+  kind: embedded-clause
+- clause: 6.2.3.3.3.1
+  title: 6.2.3.3.3.1 GET
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 198
+  kind: embedded-clause
+- clause: 6.2.3.4
+  title: 6.2.3.4 Resource Subscriptions
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 287
+  kind: embedded-clause
+- clause: 6.2.3.4.1
+  title: 6.2.3.4.1 Description
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 23
+  kind: embedded-clause
+- clause: 6.2.3.4.2
+  title: 6.2.3.4.2 Resource Definition
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 49
+  kind: embedded-clause
+- clause: 6.2.3.4.3
+  title: 6.2.3.4.3 Resource Standard Methods
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 209
+  kind: embedded-clause
+- clause: 6.2.3.4.3.1
+  title: 6.2.3.4.3.1 POST
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 201
+  kind: embedded-clause
+- clause: 6.2.3.5
+  title: 6.2.3.5 Resource IndividualSubscription
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 721
+  kind: embedded-clause
+- clause: 6.2.3.5.1
+  title: 6.2.3.5.1 Description
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 24
+  kind: embedded-clause
+- clause: 6.2.3.5.2
+  title: 6.2.3.5.2 Resource Definition
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 71
+  kind: embedded-clause
+- clause: 6.2.3.5.3
+  title: 6.2.3.5.3 Resource Standard Methods
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 620
+  kind: embedded-clause
+- clause: 6.2.3.5.3.1
+  title: 6.2.3.5.3.1 GET
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 176
+  kind: embedded-clause
+- clause: 6.2.3.5.3.2
+  title: 6.2.3.5.3.2 PATCH
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 261
+  kind: embedded-clause
+- clause: 6.2.3.5.3.3
+  title: 6.2.3.5.3.3 DELETE
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 175
+  kind: embedded-clause
+- clause: 6.2.4
+  title: 6.2.4 Custom Operations without associated resources
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 27
+  kind: embedded-clause
+- clause: 6.2.5
+  title: 6.2.5 Notifications
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 230
+  kind: embedded-clause
+- clause: 6.2.5.1
+  title: 6.2.5.1 General
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 32
+  kind: embedded-clause
+- clause: 6.2.5.2
+  title: 6.2.5.2 Data Change Notification
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 194
+  kind: embedded-clause
+- clause: 6.2.6
+  title: 6.2.6 Data Model
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 836
+  kind: embedded-clause
+- clause: 6.2.6.1
+  title: 6.2.6.1 General
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 230
+  kind: embedded-clause
+- clause: 6.2.6.2
+  title: 6.2.6.2 Structured data types
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 510
+  kind: embedded-clause
+- clause: 6.2.6.2.1
+  title: 6.2.6.2.1 Introduction
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 6.2.6.2.2
+  title: 6.2.6.2.2 void
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 6
+  kind: embedded-clause
+- clause: 6.2.6.2.3
+  title: '6.2.6.2.3 Type: RoutingIdResult'
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 42
+  kind: embedded-clause
+- clause: 6.2.6.2.4
+  title: '6.2.6.2.4 Type: SubscriptionData'
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 208
+  kind: embedded-clause
+- clause: 6.2.6.2.5
+  title: '6.2.6.2.5 Type: GroupIdMapNotify'
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 230
+  kind: embedded-clause
+- clause: 6.2.6.3
+  title: 6.2.6.3 Simple data types and enumerations
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 91
+  kind: embedded-clause
+- clause: 6.2.6.3.1
+  title: 6.2.6.3.1 Introduction
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 26
+  kind: embedded-clause
+- clause: 6.2.6.3.2
+  title: 6.2.6.3.2 Simple data types
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 56
+  kind: embedded-clause
+- clause: 6.2.7
+  title: 6.2.7 Error Handling
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 129
+  kind: embedded-clause
+- clause: 6.2.7.1
+  title: 6.2.7.1 General
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 23
+  kind: embedded-clause
+- clause: 6.2.7.2
+  title: 6.2.7.2 Protocol Errors
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 24
+  kind: embedded-clause
+- clause: 6.2.7.3
+  title: 6.2.7.3 Application Errors
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 77
+  kind: embedded-clause
+- clause: 6.2.8
+  title: 6.2.8 Security
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 174
+  kind: embedded-clause
+- clause: 6.2.9
+  title: 6.2.9 Feature Negotiation
+  path: 6 API Definitions/6.2 Nudr_GroupIDmap Service API.md
+  source_words: 49
+  kind: embedded-clause
+- clause: Annex A
+  title: 'Annex A (normative): OpenAPI specification'
+  path: Annex A (normative)_ OpenAPI specification/README.md
+  source_words: 4721
+  kind: navigation-directory
+- clause: A.1
+  title: A.1 General
+  path: Annex A (normative)_ OpenAPI specification/README.md
+  source_words: 159
+  kind: source-file
+- clause: A.2
+  title: A.2 Nudr_DataRepository API
+  path: ../openapi/TS29504_Nudr_DR.yaml
+  source_words: 3142
+  kind: exact-attachment
+- clause: A.3
+  title: A.3 Nudr_GroupIDmap API
+  path: ../openapi/TS29504_Nudr_GroupIDmap.yaml
+  source_words: 1415
+  kind: exact-attachment
+- clause: Annex B
+  title: 'Annex B (Normative): ABNF grammar for 3GPP SBI HTTP custom headers'
+  path: Annex B (Normative)_ ABNF grammar for 3GPP SBI HTTP custom headers.md
+  source_words: 249
+  kind: source-file
+- clause: B.1
+  title: B.1 General
+  path: Annex B (Normative)_ ABNF grammar for 3GPP SBI HTTP custom headers.md
+  source_words: 56
+  kind: embedded-clause
+- clause: B.2
+  title: 'B.2 ABNF definitions (Filename: "TS29504_CustomHeaders.abnf")'
+  path: Annex B (Normative)_ ABNF grammar for 3GPP SBI HTTP custom headers.md
+  source_words: 182
+  kind: embedded-clause
+- clause: Annex C
+  title: 'Annex C (informative): Change history'
+  path: Annex C (informative)_ Change history/README.md
+  source_words: 3251
+  kind: navigation-directory
+- clause: Annex C-2018
+  title: 'Annex C (informative): Change history — 2018'
+  path: Annex C (informative)_ Change history/2018.md
+  source_words: 351
+  kind: source-file
+- clause: Annex C-2019
+  title: 'Annex C (informative): Change history — 2019'
+  path: Annex C (informative)_ Change history/2019.md
+  source_words: 548
+  kind: source-file
+- clause: Annex C-2020
+  title: 'Annex C (informative): Change history — 2020'
+  path: Annex C (informative)_ Change history/2020.md
+  source_words: 433
+  kind: source-file
+- clause: Annex C-2021
+  title: 'Annex C (informative): Change history — 2021'
+  path: Annex C (informative)_ Change history/2021.md
+  source_words: 526
+  kind: source-file
+- clause: Annex C-2022
+  title: 'Annex C (informative): Change history — 2022'
+  path: Annex C (informative)_ Change history/2022.md
+  source_words: 391
+  kind: source-file
+- clause: Annex C-2023
+  title: 'Annex C (informative): Change history — 2023'
+  path: Annex C (informative)_ Change history/2023.md
+  source_words: 678
+  kind: source-file
+- clause: Annex C-2024
+  title: 'Annex C (informative): Change history — 2024'
+  path: Annex C (informative)_ Change history/2024.md
+  source_words: 285
+  kind: source-file
+- clause: Annex C-2025
+  title: 'Annex C (informative): Change history — 2025'
+  path: Annex C (informative)_ Change history/2025.md
+  source_words: 103
+  kind: source-file
+- clause: Annex C-2026
+  title: 'Annex C (informative): Change history — 2026'
+  path: Annex C (informative)_ Change history/2026.md
+  source_words: 27
+  kind: source-file

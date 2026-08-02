@@ -634,5 +634,104 @@
       "must not": 0
     },
     "modal_and_marker_counts_match": true
+  },
+  "TS 23.003": {
+    "pandoc_tokens": 75981,
+    "independent_tokens": 74417,
+    "independent_method": "docx2txt-original-docx",
+    "token_multiset_overlap": 0.997299,
+    "twelve_token_sequence_overlap": 0.905265,
+    "modal_and_marker_counts_pandoc": {
+      "shall": 886,
+      "shall_not": 39,
+      "should": 57,
+      "should_not": 6,
+      "may": 100,
+      "may_not": 1,
+      "must": 5,
+      "must_not": 1,
+      "note": 100,
+      "example": 66
+    },
+    "modal_and_marker_counts_independent": {
+      "shall": 886,
+      "shall_not": 39,
+      "should": 57,
+      "should_not": 6,
+      "may": 100,
+      "may_not": 1,
+      "must": 5,
+      "must_not": 1,
+      "note": 100,
+      "example": 66
+    },
+    "modal_and_marker_counts_match": true,
+    "note": "Native DOCX independent extraction."
+  },
+  "TS 29.502": {
+    "pandoc_tokens": 181495,
+    "independent_tokens": 153285,
+    "independent_method": "docx2txt-original-docx",
+    "token_multiset_overlap": 0.999954,
+    "twelve_token_sequence_overlap": 0.758501,
+    "modal_and_marker_counts_pandoc": {
+      "shall": 2395,
+      "shall_not": 54,
+      "should": 63,
+      "should_not": 8,
+      "may": 350,
+      "may_not": 8,
+      "must": 2,
+      "must_not": 1,
+      "note": 159,
+      "example": 9
+    },
+    "modal_and_marker_counts_independent": {
+      "shall": 2395,
+      "shall_not": 54,
+      "should": 63,
+      "should_not": 8,
+      "may": 350,
+      "may_not": 8,
+      "must": 2,
+      "must_not": 1,
+      "note": 159,
+      "example": 9
+    },
+    "modal_and_marker_counts_match": true,
+    "note": "Native DOCX independent extraction."
+  },
+  "TS 29.504": {
+    "pandoc_tokens": 28550,
+    "independent_tokens": 26110,
+    "independent_method": "docx2txt-original-docx",
+    "token_multiset_overlap": 0.999694,
+    "twelve_token_sequence_overlap": 0.855671,
+    "modal_and_marker_counts_pandoc": {
+      "shall": 174,
+      "shall_not": 10,
+      "should": 26,
+      "should_not": 1,
+      "may": 41,
+      "may_not": 1,
+      "must": 2,
+      "must_not": 1,
+      "note": 24,
+      "example": 5
+    },
+    "modal_and_marker_counts_independent": {
+      "shall": 174,
+      "shall_not": 10,
+      "should": 26,
+      "should_not": 1,
+      "may": 41,
+      "may_not": 1,
+      "must": 2,
+      "must_not": 1,
+      "note": 24,
+      "example": 5
+    },
+    "modal_and_marker_counts_match": true,
+    "note": "Native DOCX independent extraction."
   }
 }

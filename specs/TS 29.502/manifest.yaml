@@ -1,0 +1,1969 @@
+spec: TS 29.502
+version: 18.11.0
+release: '18'
+source_archive: 29502-ib0.zip
+source_document: 29502-ib0.docx
+source_archive_sha256: c9132a7cf5493d033470dbbfe714121e0707138e99674c8aaf12bdab4841b264
+source_document_sha256: 261580abdd73406068efdbaa9682cbdc3dbd5d31d88244d50c06d6a69c12945c
+max_source_words_per_semantic_file_target: 4200
+clauses:
+- clause: document-information
+  title: Document information
+  path: 00 Document information.md
+  source_words: 258
+  kind: source-file
+- clause: contents
+  title: Contents
+  path: 01 Original contents.md
+  source_words: 3739
+  kind: source-file
+- clause: foreword
+  title: Foreword
+  path: 02 Foreword.md
+  source_words: 492
+  kind: source-file
+- clause: '1'
+  title: 1 Scope
+  path: 1 Scope.md
+  source_words: 139
+  kind: source-file
+- clause: '2'
+  title: 2 References
+  path: 2 References.md
+  source_words: 706
+  kind: source-file
+- clause: '3'
+  title: 3 Definitions and abbreviations
+  path: 3 Definitions and abbreviations.md
+  source_words: 252
+  kind: source-file
+- clause: '3.1'
+  title: 3.1 Definitions
+  path: 3 Definitions and abbreviations.md
+  source_words: 86
+  kind: embedded-clause
+- clause: '3.2'
+  title: 3.2 Abbreviations
+  path: 3 Definitions and abbreviations.md
+  source_words: 162
+  kind: embedded-clause
+- clause: '4'
+  title: 4 Overview
+  path: 4 Overview.md
+  source_words: 121
+  kind: source-file
+- clause: '4.1'
+  title: 4.1 Introduction
+  path: 4 Overview.md
+  source_words: 119
+  kind: embedded-clause
+- clause: '5'
+  title: 5 Services offered by the SMF
+  path: 5 Services offered by the SMF/README.md
+  source_words: 46154
+  kind: navigation-directory
+- clause: '5.1'
+  title: 5.1 Introduction
+  path: 5 Services offered by the SMF/5.1 Introduction.md
+  source_words: 128
+  kind: source-file
+- clause: '5.2'
+  title: 5.2 Nsmf_PDUSession Service
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/README.md
+  source_words: 46020
+  kind: navigation-directory
+- clause: 5.2.1
+  title: 5.2.1 Service Description
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.1 Service Description.md
+  source_words: 774
+  kind: source-file
+- clause: 5.2.2
+  title: 5.2.2 Service Operations
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/README.md
+  source_words: 43785
+  kind: navigation-directory
+- clause: 5.2.2.1
+  title: 5.2.2.1 Introduction
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.1 Introduction.md
+  source_words: 23
+  kind: source-file
+- clause: 5.2.2.2
+  title: 5.2.2.2 Create SM Context service operation
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.2 Create SM Context service operation/README.md
+  source_words: 7375
+  kind: navigation-directory
+- clause: 5.2.2.2.1
+  title: 5.2.2.2.1 General
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.2 Create SM Context service operation/5.2.2.2.1 General.md
+  source_words: 3099
+  kind: source-file
+- clause: 5.2.2.2.2
+  title: 5.2.2.2.2 EPS to 5GS Idle mode mobility using N26 interface (with or without data forwarding)
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.2 Create SM Context service operation/5.2.2.2.2 EPS to 5GS Idle mode mobility using N26 interface (with or without data forwarding).md
+  source_words: 857
+  kind: source-file
+- clause: 5.2.2.2.3
+  title: 5.2.2.2.3 EPS to 5GS Handover Preparation using N26 interface
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.2 Create SM Context service operation/5.2.2.2.3 EPS to 5GS Handover Preparation using N26 interface.md
+  source_words: 658
+  kind: source-file
+- clause: 5.2.2.2.4
+  title: 5.2.2.2.4 I-SMF Insertion, Change or Removal during Xn based Handover
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.2 Create SM Context service operation/5.2.2.2.4 I-SMF Insertion, Change or Removal during Xn based Handover.md
+  source_words: 312
+  kind: source-file
+- clause: 5.2.2.2.5
+  title: 5.2.2.2.5 I-SMF Insertion, Change or Removal during N2 based Handover
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.2 Create SM Context service operation/5.2.2.2.5 I-SMF Insertion, Change or Removal during N2 based Handover.md
+  source_words: 292
+  kind: source-file
+- clause: 5.2.2.2.6
+  title: 5.2.2.2.6 Service Request with I-SMF insertion/change/removal or with V-SMF change
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.2 Create SM Context service operation/5.2.2.2.6 Service Request with I-SMF insertion-change-removal or with V-SMF change.md
+  source_words: 419
+  kind: source-file
+- clause: 5.2.2.2.7
+  title: 5.2.2.2.7 Registration procedure for a UE with a PDU session with I-SMF or V-SMF insertion, change and removal
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.2 Create SM Context service operation/5.2.2.2.7 Registration procedure for a UE with a PDU session with I-SMF or V-SMF insertion, change and removal.md
+  source_words: 596
+  kind: source-file
+- clause: 5.2.2.2.8
+  title: 5.2.2.2.8 SMF Context Transfer procedure, LBO or no Roaming, no I-SMF
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.2 Create SM Context service operation/5.2.2.2.8 SMF Context Transfer procedure, LBO or no Roaming, no I-SMF.md
+  source_words: 150
+  kind: source-file
+- clause: 5.2.2.2.9
+  title: 5.2.2.2.9 I-SMF Context Transfer procedure
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.2 Create SM Context service operation/5.2.2.2.9 I-SMF Context Transfer procedure.md
+  source_words: 137
+  kind: source-file
+- clause: 5.2.2.2.10
+  title: 5.2.2.2.10 Handover between 3GPP and non-3GPP accesses with I-SMF insertion/removal or V-SMF change
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.2 Create SM Context service operation/5.2.2.2.10 Handover between 3GPP and non-3GPP accesses with I-SMF insertion-removal or V-SMF change.md
+  source_words: 300
+  kind: source-file
+- clause: 5.2.2.2.11
+  title: 5.2.2.2.11 Void
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.2 Create SM Context service operation/5.2.2.2.11 Void.md
+  source_words: 6
+  kind: source-file
+- clause: 5.2.2.2.12
+  title: 5.2.2.2.12 SMF triggered I-SMF selection/removal or V-SMF selection
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.2 Create SM Context service operation/5.2.2.2.12 SMF triggered I-SMF selection-removal or V-SMF selection.md
+  source_words: 540
+  kind: source-file
+- clause: 5.2.2.3
+  title: 5.2.2.3 Update SM Context service operation
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/README.md
+  source_words: 12502
+  kind: navigation-directory
+- clause: 5.2.2.3.1
+  title: 5.2.2.3.1 General
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.1 General.md
+  source_words: 1724
+  kind: source-file
+- clause: 5.2.2.3.2
+  title: 5.2.2.3.2 Activation and Deactivation of the User Plane connection of a PDU session
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.2 Activation and Deactivation of the User Plane connection of a PDU session.md
+  source_words: 2113
+  kind: source-file
+- clause: 5.2.2.3.2.1
+  title: 5.2.2.3.2.1 General
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.2 Activation and Deactivation of the User Plane connection of a PDU session.md
+  source_words: 412
+  kind: embedded-clause
+- clause: 5.2.2.3.2.2
+  title: 5.2.2.3.2.2 Activation of User Plane connectivity of a PDU session
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.2 Activation and Deactivation of the User Plane connection of a PDU session.md
+  source_words: 961
+  kind: embedded-clause
+- clause: 5.2.2.3.2.3
+  title: 5.2.2.3.2.3 Deactivation of User Plane connectivity of a PDU session
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.2 Activation and Deactivation of the User Plane connection of a PDU session.md
+  source_words: 381
+  kind: embedded-clause
+- clause: 5.2.2.3.2.4
+  title: 5.2.2.3.2.4 Changing the access type of a PDU session from non-3GPP access to 3GPP access during a Service Request procedure
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.2 Activation and Deactivation of the User Plane connection of a PDU session.md
+  source_words: 342
+  kind: embedded-clause
+- clause: 5.2.2.3.3
+  title: 5.2.2.3.3 Xn Handover
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.3 Xn Handover.md
+  source_words: 670
+  kind: source-file
+- clause: 5.2.2.3.4
+  title: 5.2.2.3.4 N2 Handover
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.4 N2 Handover.md
+  source_words: 1981
+  kind: source-file
+- clause: 5.2.2.3.4.1
+  title: 5.2.2.3.4.1 General
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.4 N2 Handover.md
+  source_words: 119
+  kind: embedded-clause
+- clause: 5.2.2.3.4.2
+  title: 5.2.2.3.4.2 N2 Handover Preparation
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.4 N2 Handover.md
+  source_words: 996
+  kind: embedded-clause
+- clause: 5.2.2.3.4.3
+  title: 5.2.2.3.4.3 N2 Handover Execution
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.4 N2 Handover.md
+  source_words: 648
+  kind: embedded-clause
+- clause: 5.2.2.3.4.4
+  title: 5.2.2.3.4.4 N2 Handover Cancellation
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.4 N2 Handover.md
+  source_words: 211
+  kind: embedded-clause
+- clause: 5.2.2.3.5
+  title: 5.2.2.3.5 Handover between 3GPP and untrusted non-3GPP access procedures
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.5 Handover between 3GPP and untrusted non-3GPP access procedures.md
+  source_words: 429
+  kind: source-file
+- clause: 5.2.2.3.5.1
+  title: 5.2.2.3.5.1 General
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.5 Handover between 3GPP and untrusted non-3GPP access procedures.md
+  source_words: 166
+  kind: embedded-clause
+- clause: 5.2.2.3.5.2
+  title: 5.2.2.3.5.2 Handover of a PDU session without AMF change or with target AMF in same PLMN
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.5 Handover between 3GPP and untrusted non-3GPP access procedures.md
+  source_words: 250
+  kind: embedded-clause
+- clause: 5.2.2.3.6
+  title: 5.2.2.3.6 Inter-AMF change or mobility
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.6 Inter-AMF change or mobility.md
+  source_words: 359
+  kind: source-file
+- clause: 5.2.2.3.7
+  title: 5.2.2.3.7 RAN Initiated QoS Flow Mobility
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.7 RAN Initiated QoS Flow Mobility.md
+  source_words: 282
+  kind: source-file
+- clause: 5.2.2.3.8
+  title: 5.2.2.3.8 EPS to 5GS Handover using N26 interface
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.8 EPS to 5GS Handover using N26 interface.md
+  source_words: 692
+  kind: source-file
+- clause: 5.2.2.3.8.1
+  title: 5.2.2.3.8.1 General
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.8 EPS to 5GS Handover using N26 interface.md
+  source_words: 53
+  kind: embedded-clause
+- clause: 5.2.2.3.8.2
+  title: 5.2.2.3.8.2 EPS to 5GS Handover Preparation
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.8 EPS to 5GS Handover using N26 interface.md
+  source_words: 205
+  kind: embedded-clause
+- clause: 5.2.2.3.8.3
+  title: 5.2.2.3.8.3 EPS to 5GS Handover Execution
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.8 EPS to 5GS Handover using N26 interface.md
+  source_words: 230
+  kind: embedded-clause
+- clause: 5.2.2.3.8.4
+  title: 5.2.2.3.8.4 EPS to 5GS Handover Cancellation
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.8 EPS to 5GS Handover using N26 interface.md
+  source_words: 80
+  kind: embedded-clause
+- clause: 5.2.2.3.8.5
+  title: 5.2.2.3.8.5 EPS to 5GS Handover Failure
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.8 EPS to 5GS Handover using N26 interface.md
+  source_words: 112
+  kind: embedded-clause
+- clause: 5.2.2.3.9
+  title: 5.2.2.3.9 5GS to EPS Handover using N26 interface
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.9 5GS to EPS Handover using N26 interface.md
+  source_words: 742
+  kind: source-file
+- clause: 5.2.2.3.9.1
+  title: 5.2.2.3.9.1 General
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.9 5GS to EPS Handover using N26 interface.md
+  source_words: 86
+  kind: embedded-clause
+- clause: 5.2.2.3.9.2
+  title: 5.2.2.3.9.2 Data forwarding tunnels setup during 5GS to EPS handover
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.9 5GS to EPS Handover using N26 interface.md
+  source_words: 455
+  kind: embedded-clause
+- clause: 5.2.2.3.9.3
+  title: 5.2.2.3.9.3 Indirect data forwarding tunnels removal for 5GS to EPS handover cancellation or failure
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.9 5GS to EPS Handover using N26 interface.md
+  source_words: 189
+  kind: embedded-clause
+- clause: 5.2.2.3.10
+  title: 5.2.2.3.10 P-CSCF Restoration Procedure via AMF
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.10 P-CSCF Restoration Procedure via AMF.md
+  source_words: 62
+  kind: source-file
+- clause: 5.2.2.3.11
+  title: 5.2.2.3.11 AMF requested PDU Session Release due to duplicated PDU Session Id
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.11 AMF requested PDU Session Release due to duplicated PDU Session Id.md
+  source_words: 233
+  kind: source-file
+- clause: 5.2.2.3.12
+  title: 5.2.2.3.12 AMF requested PDU Session Release due to slice not available
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.12 AMF requested PDU Session Release due to slice not available.md
+  source_words: 206
+  kind: source-file
+- clause: 5.2.2.3.13
+  title: 5.2.2.3.13 Indirect Data Forwarding Tunnel establishment during N2 based Handover with I-SMF
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.13 Indirect Data Forwarding Tunnel establishment during N2 based Handover with I-SMF.md
+  source_words: 255
+  kind: source-file
+- clause: 5.2.2.3.13A
+  title: 5.2.2.3.13A Indirect Data Forwarding Tunnel removal during N2 based Handover with I-SMF
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.13A Indirect Data Forwarding Tunnel removal during N2 based Handover with I-SMF.md
+  source_words: 169
+  kind: source-file
+- clause: 5.2.2.3.14
+  title: 5.2.2.3.14 Request to forward buffered downlink data packets at I-UPF
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.14 Request to forward buffered downlink data packets at I-UPF.md
+  source_words: 165
+  kind: source-file
+- clause: 5.2.2.3.15
+  title: 5.2.2.3.15 Connection Suspend procedure
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.15 Connection Suspend procedure.md
+  source_words: 277
+  kind: source-file
+- clause: 5.2.2.3.16
+  title: 5.2.2.3.16 Connection Resume in CM-IDLE with Suspend procedure
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.16 Connection Resume in CM-IDLE with Suspend procedure.md
+  source_words: 387
+  kind: source-file
+- clause: 5.2.2.3.17
+  title: 5.2.2.3.17 AMF requested PDU Session Release due to Network Slice-Specific Authentication and Authorization failure or revocation
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.17 AMF requested PDU Session Release due to Network Slice-Specific Authentication and Authorization failure or revocation.md
+  source_words: 74
+  kind: source-file
+- clause: 5.2.2.3.18
+  title: 5.2.2.3.18 5GS to EPS Idle mode mobility using N26 interface with data forwarding
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.18 5GS to EPS Idle mode mobility using N26 interface with data forwarding.md
+  source_words: 177
+  kind: source-file
+- clause: 5.2.2.3.19
+  title: 5.2.2.3.19 AMF requested PDU Session Release due to Control Plane Only indication associated with PDU Session is not applicable any longer
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.19 AMF requested PDU Session Release due to Control Plane Only indication associated with PDU Session is not applicable any longer.md
+  source_words: 80
+  kind: source-file
+- clause: 5.2.2.3.20
+  title: 5.2.2.3.20 AMF requested PDU Session Release due to ODB changes
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.20 AMF requested PDU Session Release due to ODB changes.md
+  source_words: 67
+  kind: source-file
+- clause: 5.2.2.3.21
+  title: 5.2.2.3.21 N9 Forwarding Tunnel establishment between Branching Points or UL CLs controlled by different I-SMFs
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.21 N9 Forwarding Tunnel establishment between Branching Points or UL CLs controlled by different I-SMFs.md
+  source_words: 238
+  kind: source-file
+- clause: 5.2.2.3.22
+  title: 5.2.2.3.22 Remote UE Report during 5G ProSe Communication via 5G ProSe Layer-3 UE-to-Network Relay without N3IWF procedure
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.22 Remote UE Report during 5G ProSe Communication via 5G ProSe Layer-3 UE-to-Network Relay without N3IWF procedure.md
+  source_words: 133
+  kind: source-file
+- clause: 5.2.2.3.23
+  title: 5.2.2.3.23 AMF requested PDU Session Release due to V/I-SMF failure
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.23 AMF requested PDU Session Release due to V-I-SMF failure.md
+  source_words: 135
+  kind: source-file
+- clause: 5.2.2.3.24
+  title: 5.2.2.3.24 Connection Inactive procedure with CN based MT communication handling
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.24 Connection Inactive procedure with CN based MT communication handling.md
+  source_words: 276
+  kind: source-file
+- clause: 5.2.2.3.25
+  title: 5.2.2.3.25 UE Triggered Connection Resume in RRC Inactive procedure
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.25 UE Triggered Connection Resume in RRC Inactive procedure.md
+  source_words: 427
+  kind: source-file
+- clause: 5.2.2.3.26
+  title: 5.2.2.3.26 AMF requested PDU Session Release due to Network Slice instance not available
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.26 AMF requested PDU Session Release due to Network Slice instance not available.md
+  source_words: 71
+  kind: source-file
+- clause: 5.2.2.3.27
+  title: 5.2.2.3.27 AMF requested PDU Session Release due to MBSR not authorized
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.27 AMF requested PDU Session Release due to MBSR not authorized.md
+  source_words: 69
+  kind: source-file
+- clause: 5.2.2.4
+  title: 5.2.2.4 Release SM Context service operation
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.4 Release SM Context service operation.md
+  source_words: 1308
+  kind: source-file
+- clause: 5.2.2.4.1
+  title: 5.2.2.4.1 General
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.4 Release SM Context service operation.md
+  source_words: 1299
+  kind: embedded-clause
+- clause: 5.2.2.5
+  title: 5.2.2.5 Notify SM Context Status service operation
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.5 Notify SM Context Status service operation.md
+  source_words: 2527
+  kind: source-file
+- clause: 5.2.2.5.1
+  title: 5.2.2.5.1 General
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.5 Notify SM Context Status service operation.md
+  source_words: 2517
+  kind: embedded-clause
+- clause: 5.2.2.6
+  title: 5.2.2.6 Retrieve SM Context service operation
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.6 Retrieve SM Context service operation.md
+  source_words: 1865
+  kind: source-file
+- clause: 5.2.2.6.1
+  title: 5.2.2.6.1 General
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.6 Retrieve SM Context service operation.md
+  source_words: 1856
+  kind: embedded-clause
+- clause: 5.2.2.7
+  title: 5.2.2.7 Create service operation
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.7 Create service operation.md
+  source_words: 3828
+  kind: source-file
+- clause: 5.2.2.7.1
+  title: 5.2.2.7.1 General
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.7 Create service operation.md
+  source_words: 2578
+  kind: embedded-clause
+- clause: 5.2.2.7.2
+  title: 5.2.2.7.2 EPS to 5GS Idle mode mobility
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.7 Create service operation.md
+  source_words: 429
+  kind: embedded-clause
+- clause: 5.2.2.7.3
+  title: 5.2.2.7.3 EPS to 5GS Handover Preparation
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.7 Create service operation.md
+  source_words: 388
+  kind: embedded-clause
+- clause: 5.2.2.7.4
+  title: 5.2.2.7.4 N2 Handover Preparation with I-SMF Insertion
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.7 Create service operation.md
+  source_words: 118
+  kind: embedded-clause
+- clause: 5.2.2.7.5
+  title: 5.2.2.7.5 Xn Handover with I-SMF Insertion
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.7 Create service operation.md
+  source_words: 139
+  kind: embedded-clause
+- clause: 5.2.2.7.6
+  title: 5.2.2.7.6 UE Triggered Service Request with I-SMF Insertion
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.7 Create service operation.md
+  source_words: 169
+  kind: embedded-clause
+- clause: 5.2.2.8
+  title: 5.2.2.8 Update service operation
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/README.md
+  source_words: 10976
+  kind: navigation-directory
+- clause: 5.2.2.8.1
+  title: 5.2.2.8.1 General
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.1 General.md
+  source_words: 1082
+  kind: source-file
+- clause: 5.2.2.8.2
+  title: 5.2.2.8.2 Update service operation towards H-SMF or SMF
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.2 Update service operation towards H-SMF or SMF/README.md
+  source_words: 5954
+  kind: navigation-directory
+- clause: 5.2.2.8.2.1
+  title: 5.2.2.8.2.1 General
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.2 Update service operation towards H-SMF or SMF/5.2.2.8.2.1 General.md
+  source_words: 654
+  kind: source-file
+- clause: 5.2.2.8.2.2
+  title: 5.2.2.8.2.2 UE or network (e.g. AMF, V-SMF, I-SMF) requested PDU session modification
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.2 Update service operation towards H-SMF or SMF/5.2.2.8.2.2 UE or network (e.g. AMF, V-SMF, I-SMF) requested PDU session modification.md
+  source_words: 416
+  kind: source-file
+- clause: 5.2.2.8.2.3
+  title: 5.2.2.8.2.3 UE requested PDU session release
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.2 Update service operation towards H-SMF or SMF/5.2.2.8.2.3 UE requested PDU session release.md
+  source_words: 58
+  kind: source-file
+- clause: 5.2.2.8.2.4
+  title: 5.2.2.8.2.4 EPS to 5GS Handover Execution
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.2 Update service operation towards H-SMF or SMF/5.2.2.8.2.4 EPS to 5GS Handover Execution.md
+  source_words: 450
+  kind: source-file
+- clause: 5.2.2.8.2.5
+  title: 5.2.2.8.2.5 Handover between 3GPP access and untrusted or trusted non-3GPP access
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.2 Update service operation towards H-SMF or SMF/5.2.2.8.2.5 Handover between 3GPP access and untrusted or trusted non-3GPP access.md
+  source_words: 544
+  kind: source-file
+- clause: 5.2.2.8.2.6
+  title: 5.2.2.8.2.6 P-CSCF Restoration Procedure via AMF
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.2 Update service operation towards H-SMF or SMF/5.2.2.8.2.6 P-CSCF Restoration Procedure via AMF.md
+  source_words: 68
+  kind: source-file
+- clause: 5.2.2.8.2.7
+  title: 5.2.2.8.2.7 Addition of PSA and BP or UL CL controlled by I-SMF
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.2 Update service operation towards H-SMF or SMF/5.2.2.8.2.7 Addition of PSA and BP or UL CL controlled by I-SMF.md
+  source_words: 216
+  kind: source-file
+- clause: 5.2.2.8.2.8
+  title: 5.2.2.8.2.8 Removal of PSA and BP or UL CL controlled by I-SMF
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.2 Update service operation towards H-SMF or SMF/5.2.2.8.2.8 Removal of PSA and BP or UL CL controlled by I-SMF.md
+  source_words: 174
+  kind: source-file
+- clause: 5.2.2.8.2.9
+  title: 5.2.2.8.2.9 Change of PSA for IPv6 multi-homing or UL CL controlled by I-SMF
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.2 Update service operation towards H-SMF or SMF/5.2.2.8.2.9 Change of PSA for IPv6 multi-homing or UL CL controlled by I-SMF.md
+  source_words: 192
+  kind: source-file
+- clause: 5.2.2.8.2.10
+  title: 5.2.2.8.2.10 PDU Session modification with I-SMF or V-SMF change
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.2 Update service operation towards H-SMF or SMF/5.2.2.8.2.10 PDU Session modification with I-SMF or V-SMF change.md
+  source_words: 347
+  kind: source-file
+- clause: 5.2.2.8.2.11
+  title: 5.2.2.8.2.11 Sending by I-SMF of N4 notifications related with traffic usage reporting
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.2 Update service operation towards H-SMF or SMF/5.2.2.8.2.11 Sending by I-SMF of N4 notifications related with traffic usage reporting.md
+  source_words: 189
+  kind: source-file
+- clause: 5.2.2.8.2.12
+  title: 5.2.2.8.2.12 N2 Handover Execution with I-SMF Insertion
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.2 Update service operation towards H-SMF or SMF/5.2.2.8.2.12 N2 Handover Execution with I-SMF Insertion.md
+  source_words: 385
+  kind: source-file
+- clause: 5.2.2.8.2.13
+  title: 5.2.2.8.2.13 N2 Handover Cancellation with I-SMF Insertion
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.2 Update service operation towards H-SMF or SMF/5.2.2.8.2.13 N2 Handover Cancellation with I-SMF Insertion.md
+  source_words: 120
+  kind: source-file
+- clause: 5.2.2.8.2.14
+  title: 5.2.2.8.2.14 EPS to 5GS Handover Cancellation
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.2 Update service operation towards H-SMF or SMF/5.2.2.8.2.14 EPS to 5GS Handover Cancellation.md
+  source_words: 146
+  kind: source-file
+- clause: 5.2.2.8.2.15
+  title: 5.2.2.8.2.15 5G-AN requested PDU session resource release
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.2 Update service operation towards H-SMF or SMF/5.2.2.8.2.15 5G-AN requested PDU session resource release.md
+  source_words: 185
+  kind: source-file
+- clause: 5.2.2.8.2.16
+  title: 5.2.2.8.2.16 Xn Handover with or without I-SMF or V-SMF Change
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.2 Update service operation towards H-SMF or SMF/5.2.2.8.2.16 Xn Handover with or without I-SMF or V-SMF Change.md
+  source_words: 229
+  kind: source-file
+- clause: 5.2.2.8.2.17
+  title: 5.2.2.8.2.17 EPS to 5GS Handover Failure
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.2 Update service operation towards H-SMF or SMF/5.2.2.8.2.17 EPS to 5GS Handover Failure.md
+  source_words: 155
+  kind: source-file
+- clause: 5.2.2.8.2.18
+  title: 5.2.2.8.2.18 EPS Bearer ID revocation
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.2 Update service operation towards H-SMF or SMF/5.2.2.8.2.18 EPS Bearer ID revocation.md
+  source_words: 110
+  kind: source-file
+- clause: 5.2.2.8.2.19
+  title: 5.2.2.8.2.19 Network requested PDU session release
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.2 Update service operation towards H-SMF or SMF/5.2.2.8.2.19 Network requested PDU session release.md
+  source_words: 58
+  kind: source-file
+- clause: 5.2.2.8.2.20
+  title: 5.2.2.8.2.20 N2 Handover Execution with or without I-SMF or V-SMF Change
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.2 Update service operation towards H-SMF or SMF/5.2.2.8.2.20 N2 Handover Execution with or without I-SMF or V-SMF Change.md
+  source_words: 154
+  kind: source-file
+- clause: 5.2.2.8.2.21
+  title: 5.2.2.8.2.21 Reporting of satellite backhaul change to (H-)SMF
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.2 Update service operation towards H-SMF or SMF/5.2.2.8.2.21 Reporting of satellite backhaul change to (H-)SMF.md
+  source_words: 259
+  kind: source-file
+- clause: 5.2.2.8.2.22
+  title: 5.2.2.8.2.22 Simultaneous change of PSA and BP or UL CL controlled by I-SMF
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.2 Update service operation towards H-SMF or SMF/5.2.2.8.2.22 Simultaneous change of PSA and BP or UL CL controlled by I-SMF.md
+  source_words: 364
+  kind: source-file
+- clause: 5.2.2.8.2.23
+  title: 5.2.2.8.2.23 Service Request without I-SMF/V-SMF Change or with I-SMF/V-SMF Change or with I-SMF Insertion
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.2 Update service operation towards H-SMF or SMF/5.2.2.8.2.23 Service Request without I-SMF-V-SMF Change or with I-SMF-V-SMF Change or with I-SMF Insertion.md
+  source_words: 394
+  kind: source-file
+- clause: 5.2.2.8.2.24
+  title: 5.2.2.8.2.24 Remote UE Report during 5G ProSe Communication via 5G ProSe Layer-3 UE-to-Network Relay without N3IWF
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.2 Update service operation towards H-SMF or SMF/5.2.2.8.2.24 Remote UE Report during 5G ProSe Communication via 5G ProSe Layer-3 UE-to-Network Relay without N3IWF.md
+  source_words: 75
+  kind: source-file
+- clause: 5.2.2.8.3
+  title: 5.2.2.8.3 Update service operation towards V-SMF or I-SMF
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.3 Update service operation towards V-SMF or I-SMF.md
+  source_words: 3933
+  kind: source-file
+- clause: 5.2.2.8.3.1
+  title: 5.2.2.8.3.1 General
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.3 Update service operation towards V-SMF or I-SMF.md
+  source_words: 665
+  kind: embedded-clause
+- clause: 5.2.2.8.3.2
+  title: 5.2.2.8.3.2 Network (e.g. H-SMF, SMF) requested PDU session modification
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.3 Update service operation towards V-SMF or I-SMF.md
+  source_words: 866
+  kind: embedded-clause
+- clause: 5.2.2.8.3.3
+  title: 5.2.2.8.3.3 Network (e.g. H-SMF, SMF) or UE requested PDU session release
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.3 Update service operation towards V-SMF or I-SMF.md
+  source_words: 189
+  kind: embedded-clause
+- clause: 5.2.2.8.3.4
+  title: 5.2.2.8.3.4 Handover between 3GPP and untrusted non-3GPP access, from 5GC-N3IWF to EPS or from 5GS to EPC/ePDG
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.3 Update service operation towards V-SMF or I-SMF.md
+  source_words: 293
+  kind: embedded-clause
+- clause: 5.2.2.8.3.5
+  title: 5.2.2.8.3.5 EPS Bearer ID assignment
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.3 Update service operation towards V-SMF or I-SMF.md
+  source_words: 328
+  kind: embedded-clause
+- clause: 5.2.2.8.3.6
+  title: 5.2.2.8.3.6 Addition of PSA and BP or UL CL controlled by I-SMF
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.3 Update service operation towards V-SMF or I-SMF.md
+  source_words: 339
+  kind: embedded-clause
+- clause: 5.2.2.8.3.7
+  title: 5.2.2.8.3.7 Removal of PSA and BP or UL CL controlled by I-SMF
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.3 Update service operation towards V-SMF or I-SMF.md
+  source_words: 195
+  kind: embedded-clause
+- clause: 5.2.2.8.3.8
+  title: 5.2.2.8.3.8 Change of PSA for IPv6 multi-homing or UL CL controlled by I-SMF
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.3 Update service operation towards V-SMF or I-SMF.md
+  source_words: 244
+  kind: embedded-clause
+- clause: 5.2.2.8.3.9
+  title: 5.2.2.8.3.9 Policy update procedures with an I-SMF
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.3 Update service operation towards V-SMF or I-SMF.md
+  source_words: 207
+  kind: embedded-clause
+- clause: 5.2.2.8.3.10
+  title: 5.2.2.8.3.10 Simultaneous change of PSA and BP or UL CL controlled by I-SMF
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.3 Update service operation towards V-SMF or I-SMF.md
+  source_words: 431
+  kind: embedded-clause
+- clause: 5.2.2.8.3.11
+  title: 5.2.2.8.3.11 Network (e.g. AMF) triggered network slice replacement with PDU session retained
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.8 Update service operation/5.2.2.8.3 Update service operation towards V-SMF or I-SMF.md
+  source_words: 164
+  kind: embedded-clause
+- clause: 5.2.2.9
+  title: 5.2.2.9 Release service operation
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.9 Release service operation.md
+  source_words: 684
+  kind: source-file
+- clause: 5.2.2.9.1
+  title: 5.2.2.9.1 General
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.9 Release service operation.md
+  source_words: 677
+  kind: embedded-clause
+- clause: 5.2.2.10
+  title: 5.2.2.10 Notify Status service operation
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.10 Notify Status service operation.md
+  source_words: 1414
+  kind: source-file
+- clause: 5.2.2.10.1
+  title: 5.2.2.10.1 General
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.10 Notify Status service operation.md
+  source_words: 1406
+  kind: embedded-clause
+- clause: 5.2.2.11
+  title: 5.2.2.11 Send MO Data service operation
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.11 Send MO Data service operation.md
+  source_words: 345
+  kind: source-file
+- clause: 5.2.2.11.1
+  title: 5.2.2.11.1 General
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.11 Send MO Data service operation.md
+  source_words: 336
+  kind: embedded-clause
+- clause: 5.2.2.12
+  title: 5.2.2.12 Transfer MO Data service operation
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.12 Transfer MO Data service operation.md
+  source_words: 238
+  kind: source-file
+- clause: 5.2.2.12.1
+  title: 5.2.2.12.1 General
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.12 Transfer MO Data service operation.md
+  source_words: 229
+  kind: embedded-clause
+- clause: 5.2.2.13
+  title: 5.2.2.13 Transfer MT Data service operation
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.13 Transfer MT Data service operation.md
+  source_words: 307
+  kind: source-file
+- clause: 5.2.2.13.1
+  title: 5.2.2.13.1 General
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.13 Transfer MT Data service operation.md
+  source_words: 298
+  kind: embedded-clause
+- clause: 5.2.2.14
+  title: 5.2.2.14 Retrieve service operation
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.14 Retrieve service operation.md
+  source_words: 388
+  kind: source-file
+- clause: 5.2.2.14.1
+  title: 5.2.2.14.1 General
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.14 Retrieve service operation.md
+  source_words: 381
+  kind: embedded-clause
+- clause: 5.2.3
+  title: 5.2.3 General procedures
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.3 General procedures.md
+  source_words: 1456
+  kind: source-file
+- clause: 5.2.3.1
+  title: 5.2.3.1 Transfer of NAS SM information between UE and H-SMF for Home Routed PDU sessions
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.3 General procedures.md
+  source_words: 752
+  kind: embedded-clause
+- clause: 5.2.3.1.1
+  title: 5.2.3.1.1 General
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.3 General procedures.md
+  source_words: 183
+  kind: embedded-clause
+- clause: 5.2.3.1.2
+  title: 5.2.3.1.2 V-SMF Behaviour
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.3 General procedures.md
+  source_words: 357
+  kind: embedded-clause
+- clause: 5.2.3.1.3
+  title: 5.2.3.1.3 H-SMF Behaviour
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.3 General procedures.md
+  source_words: 194
+  kind: embedded-clause
+- clause: 5.2.3.2
+  title: 5.2.3.2 Transfer of NAS SM information between UE and SMF for PDU sessions with an I-SMF
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.3 General procedures.md
+  source_words: 71
+  kind: embedded-clause
+- clause: 5.2.3.2.1
+  title: 5.2.3.2.1 General
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.3 General procedures.md
+  source_words: 52
+  kind: embedded-clause
+- clause: 5.2.3.3
+  title: 5.2.3.3 Detection and handling of late arriving requests
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.3 General procedures.md
+  source_words: 498
+  kind: embedded-clause
+- clause: 5.2.3.3.1
+  title: 5.2.3.3.1 Handling of requests which collide with an existing SM context or PDU session context
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.3 General procedures.md
+  source_words: 334
+  kind: embedded-clause
+- clause: 5.2.3.3.1.1
+  title: 5.2.3.3.1.1 General
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.3 General procedures.md
+  source_words: 72
+  kind: embedded-clause
+- clause: 5.2.3.3.1.2
+  title: 5.2.3.3.1.2 Principles
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.3 General procedures.md
+  source_words: 243
+  kind: embedded-clause
+- clause: 5.2.3.3.2
+  title: 5.2.3.3.2 Detection and handling of requests which have timed out at the HTTP client
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.3 General procedures.md
+  source_words: 153
+  kind: embedded-clause
+- clause: 5.2.3.3.2.1
+  title: 5.2.3.3.2.1 General
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.3 General procedures.md
+  source_words: 135
+  kind: embedded-clause
+- clause: 5.2.3.4
+  title: 5.2.3.4 UE Location Information
+  path: 5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.3 General procedures.md
+  source_words: 130
+  kind: embedded-clause
+- clause: '6'
+  title: 6 API Definitions
+  path: 6 API Definitions/README.md
+  source_words: 75431
+  kind: navigation-directory
+- clause: '6.1'
+  title: 6.1 Nsmf_PDUSession Service API
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/README.md
+  source_words: 75428
+  kind: navigation-directory
+- clause: 6.1.1
+  title: 6.1.1 API URI
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.1 API URI.md
+  source_words: 100
+  kind: source-file
+- clause: 6.1.2
+  title: 6.1.2 Usage of HTTP
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.2 Usage of HTTP.md
+  source_words: 1255
+  kind: source-file
+- clause: 6.1.2.1
+  title: 6.1.2.1 General
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.2 Usage of HTTP.md
+  source_words: 65
+  kind: embedded-clause
+- clause: 6.1.2.2
+  title: 6.1.2.2 HTTP standard headers
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.2 Usage of HTTP.md
+  source_words: 365
+  kind: embedded-clause
+- clause: 6.1.2.2.1
+  title: 6.1.2.2.1 General
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.2 Usage of HTTP.md
+  source_words: 28
+  kind: embedded-clause
+- clause: 6.1.2.2.2
+  title: 6.1.2.2.2 Content type
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.2 Usage of HTTP.md
+  source_words: 330
+  kind: embedded-clause
+- clause: 6.1.2.3
+  title: 6.1.2.3 HTTP custom headers
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.2 Usage of HTTP.md
+  source_words: 163
+  kind: embedded-clause
+- clause: 6.1.2.3.1
+  title: 6.1.2.3.1 General
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.2 Usage of HTTP.md
+  source_words: 45
+  kind: embedded-clause
+- clause: 6.1.2.3.2
+  title: 6.1.2.3.2 3gpp-Sbi-Origination-Timestamp
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.2 Usage of HTTP.md
+  source_words: 111
+  kind: embedded-clause
+- clause: 6.1.2.4
+  title: 6.1.2.4 HTTP multipart messages
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.2 Usage of HTTP.md
+  source_words: 327
+  kind: embedded-clause
+- clause: 6.1.2.5
+  title: 6.1.2.5 HTTP/2 request retries
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.2 Usage of HTTP.md
+  source_words: 329
+  kind: embedded-clause
+- clause: 6.1.3
+  title: 6.1.3 Resources
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/README.md
+  source_words: 10283
+  kind: navigation-directory
+- clause: 6.1.3.1
+  title: 6.1.3.1 Overview
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.1 Overview.md
+  source_words: 267
+  kind: source-file
+- clause: 6.1.3.2
+  title: '6.1.3.2 Resource: SM contexts collection'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.2 Resource_ SM contexts collection.md
+  source_words: 1190
+  kind: source-file
+- clause: 6.1.3.2.1
+  title: 6.1.3.2.1 Description
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.2 Resource_ SM contexts collection.md
+  source_words: 39
+  kind: embedded-clause
+- clause: 6.1.3.2.2
+  title: 6.1.3.2.2 Resource Definition
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.2 Resource_ SM contexts collection.md
+  source_words: 51
+  kind: embedded-clause
+- clause: 6.1.3.2.3
+  title: 6.1.3.2.3 Resource Standard Methods
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.2 Resource_ SM contexts collection.md
+  source_words: 1083
+  kind: embedded-clause
+- clause: 6.1.3.2.3.1
+  title: 6.1.3.2.3.1 POST
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.2 Resource_ SM contexts collection.md
+  source_words: 1075
+  kind: embedded-clause
+- clause: 6.1.3.2.4
+  title: 6.1.3.2.4 Resource Custom Operations
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.2 Resource_ SM contexts collection.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 6.1.3.3
+  title: '6.1.3.3 Resource: Individual SM context'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.3 Resource_ Individual SM context.md
+  source_words: 2759
+  kind: source-file
+- clause: 6.1.3.3.1
+  title: 6.1.3.3.1 Description
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.3 Resource_ Individual SM context.md
+  source_words: 36
+  kind: embedded-clause
+- clause: 6.1.3.3.2
+  title: 6.1.3.3.2 Resource Definition
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.3 Resource_ Individual SM context.md
+  source_words: 68
+  kind: embedded-clause
+- clause: 6.1.3.3.3
+  title: 6.1.3.3.3 Resource Standard Methods
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.3 Resource_ Individual SM context.md
+  source_words: 9
+  kind: embedded-clause
+- clause: 6.1.3.3.4
+  title: 6.1.3.3.4 Resource Custom Operations
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.3 Resource_ Individual SM context.md
+  source_words: 2638
+  kind: embedded-clause
+- clause: 6.1.3.3.4.1
+  title: 6.1.3.3.4.1 Overview
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.3 Resource_ Individual SM context.md
+  source_words: 61
+  kind: embedded-clause
+- clause: 6.1.3.3.4.2
+  title: '6.1.3.3.4.2 Operation: modify'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.3 Resource_ Individual SM context.md
+  source_words: 8
+  kind: embedded-clause
+- clause: 6.1.3.3.4.2.1
+  title: 6.1.3.3.4.2.1 Description
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.3 Resource_ Individual SM context.md
+  source_words: 8
+  kind: embedded-clause
+- clause: 6.1.3.3.4.2.2
+  title: 6.1.3.3.4.2.2 Operation Definition
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.3 Resource_ Individual SM context.md
+  source_words: 1016
+  kind: embedded-clause
+- clause: 6.1.3.3.4.3
+  title: '6.1.3.3.4.3 Operation: release'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.3 Resource_ Individual SM context.md
+  source_words: 8
+  kind: embedded-clause
+- clause: 6.1.3.3.4.3.1
+  title: 6.1.3.3.4.3.1 Description
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.3 Resource_ Individual SM context.md
+  source_words: 8
+  kind: embedded-clause
+- clause: 6.1.3.3.4.3.2
+  title: 6.1.3.3.4.3.2 Operation Definition
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.3 Resource_ Individual SM context.md
+  source_words: 471
+  kind: embedded-clause
+- clause: 6.1.3.3.4.4
+  title: '6.1.3.3.4.4 Operation: retrieve'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.3 Resource_ Individual SM context.md
+  source_words: 8
+  kind: embedded-clause
+- clause: 6.1.3.3.4.4.1
+  title: 6.1.3.3.4.4.1 Description
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.3 Resource_ Individual SM context.md
+  source_words: 8
+  kind: embedded-clause
+- clause: 6.1.3.3.4.4.2
+  title: 6.1.3.3.4.4.2 Operation Definition
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.3 Resource_ Individual SM context.md
+  source_words: 513
+  kind: embedded-clause
+- clause: 6.1.3.3.4.5
+  title: '6.1.3.3.4.5 Operation: send-mo-data'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.3 Resource_ Individual SM context.md
+  source_words: 8
+  kind: embedded-clause
+- clause: 6.1.3.3.4.5.1
+  title: 6.1.3.3.4.5.1 Description
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.3 Resource_ Individual SM context.md
+  source_words: 8
+  kind: embedded-clause
+- clause: 6.1.3.3.4.5.2
+  title: 6.1.3.3.4.5.2 Operation Definition
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.3 Resource_ Individual SM context.md
+  source_words: 505
+  kind: embedded-clause
+- clause: 6.1.3.4
+  title: 6.1.3.4 Void
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.4 Void.md
+  source_words: 5
+  kind: source-file
+- clause: 6.1.3.5
+  title: '6.1.3.5 Resource: PDU sessions collection (H-SMF or SMF)'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.5 Resource_ PDU sessions collection (H-SMF or SMF).md
+  source_words: 1203
+  kind: source-file
+- clause: 6.1.3.5.1
+  title: 6.1.3.5.1 Description
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.5 Resource_ PDU sessions collection (H-SMF or SMF).md
+  source_words: 53
+  kind: embedded-clause
+- clause: 6.1.3.5.2
+  title: 6.1.3.5.2 Resource Definition
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.5 Resource_ PDU sessions collection (H-SMF or SMF).md
+  source_words: 51
+  kind: embedded-clause
+- clause: 6.1.3.5.3
+  title: 6.1.3.5.3 Resource Standard Methods
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.5 Resource_ PDU sessions collection (H-SMF or SMF).md
+  source_words: 1055
+  kind: embedded-clause
+- clause: 6.1.3.5.3.1
+  title: 6.1.3.5.3.1 POST
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.5 Resource_ PDU sessions collection (H-SMF or SMF).md
+  source_words: 1047
+  kind: embedded-clause
+- clause: 6.1.3.5.4
+  title: 6.1.3.5.4 Resource Custom Operations
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.5 Resource_ PDU sessions collection (H-SMF or SMF).md
+  source_words: 33
+  kind: embedded-clause
+- clause: 6.1.3.5.4.1
+  title: 6.1.3.5.4.1 Overview
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.5 Resource_ PDU sessions collection (H-SMF or SMF).md
+  source_words: 25
+  kind: embedded-clause
+- clause: 6.1.3.6
+  title: '6.1.3.6 Resource: Individual PDU session (H-SMF or SMF)'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.6 Resource_ Individual PDU session (H-SMF or SMF).md
+  source_words: 2603
+  kind: source-file
+- clause: 6.1.3.6.1
+  title: 6.1.3.6.1 Description
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.6 Resource_ Individual PDU session (H-SMF or SMF).md
+  source_words: 52
+  kind: embedded-clause
+- clause: 6.1.3.6.2
+  title: 6.1.3.6.2 Resource Definition
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.6 Resource_ Individual PDU session (H-SMF or SMF).md
+  source_words: 68
+  kind: embedded-clause
+- clause: 6.1.3.6.3
+  title: 6.1.3.6.3 Resource Standard Methods
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.6 Resource_ Individual PDU session (H-SMF or SMF).md
+  source_words: 9
+  kind: embedded-clause
+- clause: 6.1.3.6.4
+  title: 6.1.3.6.4 Resource Custom Operations
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.6 Resource_ Individual PDU session (H-SMF or SMF).md
+  source_words: 2463
+  kind: embedded-clause
+- clause: 6.1.3.6.4.1
+  title: 6.1.3.6.4.1 Overview
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.6 Resource_ Individual PDU session (H-SMF or SMF).md
+  source_words: 55
+  kind: embedded-clause
+- clause: 6.1.3.6.4.2
+  title: '6.1.3.6.4.2 Operation: modify'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.6 Resource_ Individual PDU session (H-SMF or SMF).md
+  source_words: 8
+  kind: embedded-clause
+- clause: 6.1.3.6.4.2.1
+  title: 6.1.3.6.4.2.1 Description
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.6 Resource_ Individual PDU session (H-SMF or SMF).md
+  source_words: 8
+  kind: embedded-clause
+- clause: 6.1.3.6.4.2.2
+  title: 6.1.3.6.4.2.2 Operation Definition
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.6 Resource_ Individual PDU session (H-SMF or SMF).md
+  source_words: 927
+  kind: embedded-clause
+- clause: 6.1.3.6.4.3
+  title: '6.1.3.6.4.3 Operation: release'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.6 Resource_ Individual PDU session (H-SMF or SMF).md
+  source_words: 8
+  kind: embedded-clause
+- clause: 6.1.3.6.4.3.1
+  title: 6.1.3.6.4.3.1 Description
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.6 Resource_ Individual PDU session (H-SMF or SMF).md
+  source_words: 8
+  kind: embedded-clause
+- clause: 6.1.3.6.4.3.2
+  title: 6.1.3.6.4.3.2 Operation Definition
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.6 Resource_ Individual PDU session (H-SMF or SMF).md
+  source_words: 489
+  kind: embedded-clause
+- clause: 6.1.3.6.4.4
+  title: '6.1.3.6.4.4 Operation: transfer-mo-data'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.6 Resource_ Individual PDU session (H-SMF or SMF).md
+  source_words: 8
+  kind: embedded-clause
+- clause: 6.1.3.6.4.4.1
+  title: 6.1.3.6.4.4.1 Description
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.6 Resource_ Individual PDU session (H-SMF or SMF).md
+  source_words: 8
+  kind: embedded-clause
+- clause: 6.1.3.6.4.4.2
+  title: 6.1.3.6.4.4.2 Operation Definition
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.6 Resource_ Individual PDU session (H-SMF or SMF).md
+  source_words: 443
+  kind: embedded-clause
+- clause: 6.1.3.6.4.5
+  title: '6.1.3.6.4.5 Operation: retrieve'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.6 Resource_ Individual PDU session (H-SMF or SMF).md
+  source_words: 8
+  kind: embedded-clause
+- clause: 6.1.3.6.4.5.1
+  title: 6.1.3.6.4.5.1 Description
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.6 Resource_ Individual PDU session (H-SMF or SMF).md
+  source_words: 8
+  kind: embedded-clause
+- clause: 6.1.3.6.4.5.2
+  title: 6.1.3.6.4.5.2 Operation Definition
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.6 Resource_ Individual PDU session (H-SMF or SMF).md
+  source_words: 477
+  kind: embedded-clause
+- clause: 6.1.3.7
+  title: '6.1.3.7 Resource: Individual PDU session (V-SMF or I-SMF)'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.7 Resource_ Individual PDU session (V-SMF or I-SMF).md
+  source_words: 2252
+  kind: source-file
+- clause: 6.1.3.7.1
+  title: 6.1.3.7.1 Description
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.7 Resource_ Individual PDU session (V-SMF or I-SMF).md
+  source_words: 52
+  kind: embedded-clause
+- clause: 6.1.3.7.2
+  title: 6.1.3.7.2 Resource Definition
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.7 Resource_ Individual PDU session (V-SMF or I-SMF).md
+  source_words: 72
+  kind: embedded-clause
+- clause: 6.1.3.7.3
+  title: 6.1.3.7.3 Resource Standard Methods
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.7 Resource_ Individual PDU session (V-SMF or I-SMF).md
+  source_words: 459
+  kind: embedded-clause
+- clause: 6.1.3.7.3.1
+  title: 6.1.3.7.3.1 POST
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.7 Resource_ Individual PDU session (V-SMF or I-SMF).md
+  source_words: 451
+  kind: embedded-clause
+- clause: 6.1.3.7.4
+  title: 6.1.3.7.4 Resource Custom Operations
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.7 Resource_ Individual PDU session (V-SMF or I-SMF).md
+  source_words: 1658
+  kind: embedded-clause
+- clause: 6.1.3.7.4.1
+  title: 6.1.3.7.4.1 Overview
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.7 Resource_ Individual PDU session (V-SMF or I-SMF).md
+  source_words: 52
+  kind: embedded-clause
+- clause: 6.1.3.7.4.2
+  title: '6.1.3.7.4.2 Operation: modify'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.7 Resource_ Individual PDU session (V-SMF or I-SMF).md
+  source_words: 8
+  kind: embedded-clause
+- clause: 6.1.3.7.4.2.1
+  title: 6.1.3.7.4.2.1 Description
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.7 Resource_ Individual PDU session (V-SMF or I-SMF).md
+  source_words: 8
+  kind: embedded-clause
+- clause: 6.1.3.7.4.2.2
+  title: 6.1.3.7.4.2.2 Operation Definition
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.7 Resource_ Individual PDU session (V-SMF or I-SMF).md
+  source_words: 1069
+  kind: embedded-clause
+- clause: 6.1.3.7.4.3
+  title: '6.1.3.7.4.3 Operation: transfer-mt-data'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.7 Resource_ Individual PDU session (V-SMF or I-SMF).md
+  source_words: 8
+  kind: embedded-clause
+- clause: 6.1.3.7.4.3.1
+  title: 6.1.3.7.4.3.1 Description
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.7 Resource_ Individual PDU session (V-SMF or I-SMF).md
+  source_words: 42
+  kind: embedded-clause
+- clause: 6.1.3.7.4.3.2
+  title: 6.1.3.7.4.3.2 Operation Definition
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.7 Resource_ Individual PDU session (V-SMF or I-SMF).md
+  source_words: 463
+  kind: embedded-clause
+- clause: 6.1.4
+  title: 6.1.4 Custom Operations without associated resources
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.4 Custom Operations without associated resources.md
+  source_words: 9
+  kind: source-file
+- clause: 6.1.5
+  title: 6.1.5 Notifications
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.5 Notifications.md
+  source_words: 575
+  kind: source-file
+- clause: 6.1.5.1
+  title: 6.1.5.1 General
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.5 Notifications.md
+  source_words: 72
+  kind: embedded-clause
+- clause: 6.1.5.2
+  title: 6.1.5.2 SM Context Status Notification
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.5 Notifications.md
+  source_words: 499
+  kind: embedded-clause
+- clause: 6.1.5.2.1
+  title: 6.1.5.2.1 Description
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.5 Notifications.md
+  source_words: 44
+  kind: embedded-clause
+- clause: 6.1.5.2.2
+  title: 6.1.5.2.2 Notification Definition
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.5 Notifications.md
+  source_words: 447
+  kind: embedded-clause
+- clause: 6.1.6
+  title: 6.1.6 Data Model
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/README.md
+  source_words: 58458
+  kind: navigation-directory
+- clause: 6.1.6.1
+  title: 6.1.6.1 General
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.1 General.md
+  source_words: 2320
+  kind: source-file
+- clause: 6.1.6.2
+  title: 6.1.6.2 Structured data types
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/README.md
+  source_words: 49300
+  kind: navigation-directory
+- clause: 6.1.6.2.1
+  title: 6.1.6.2.1 Introduction
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.1 Introduction.md
+  source_words: 17
+  kind: source-file
+- clause: 6.1.6.2.2
+  title: '6.1.6.2.2 Type: SmContextCreateData'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.2 Type_ SmContextCreateData.md
+  source_words: 6869
+  kind: source-file
+- clause: 6.1.6.2.3
+  title: '6.1.6.2.3 Type: SmContextCreatedData'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.3 Type_ SmContextCreatedData.md
+  source_words: 1236
+  kind: source-file
+- clause: 6.1.6.2.4
+  title: '6.1.6.2.4 Type: SmContextUpdateData'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.4 Type_ SmContextUpdateData.md
+  source_words: 4404
+  kind: source-file
+- clause: 6.1.6.2.5
+  title: '6.1.6.2.5 Type: SmContextUpdatedData'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.5 Type_ SmContextUpdatedData.md
+  source_words: 1234
+  kind: source-file
+- clause: 6.1.6.2.6
+  title: '6.1.6.2.6 Type: SmContextReleaseData'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.6 Type_ SmContextReleaseData.md
+  source_words: 576
+  kind: source-file
+- clause: 6.1.6.2.7
+  title: '6.1.6.2.7 Type: SmContextRetrieveData'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.7 Type_ SmContextRetrieveData.md
+  source_words: 518
+  kind: source-file
+- clause: 6.1.6.2.8
+  title: '6.1.6.2.8 Type: SmContextStatusNotification'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.8 Type_ SmContextStatusNotification.md
+  source_words: 945
+  kind: source-file
+- clause: 6.1.6.2.9
+  title: '6.1.6.2.9 Type: PduSessionCreateData'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.9 Type_ PduSessionCreateData.md
+  source_words: 4354
+  kind: source-file
+- clause: 6.1.6.2.10
+  title: '6.1.6.2.10 Type: PduSessionCreatedData'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.10 Type_ PduSessionCreatedData.md
+  source_words: 2981
+  kind: source-file
+- clause: 6.1.6.2.11
+  title: '6.1.6.2.11 Type: HsmfUpdateData'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.11 Type_ HsmfUpdateData.md
+  source_words: 4684
+  kind: source-file
+- clause: 6.1.6.2.12
+  title: '6.1.6.2.12 Type: HsmfUpdatedData'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.12 Type_ HsmfUpdatedData.md
+  source_words: 1442
+  kind: source-file
+- clause: 6.1.6.2.13
+  title: '6.1.6.2.13 Type: ReleaseData'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.13 Type_ ReleaseData.md
+  source_words: 457
+  kind: source-file
+- clause: 6.1.6.2.14
+  title: '6.1.6.2.14 Type: HsmfUpdateError'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.14 Type_ HsmfUpdateError.md
+  source_words: 349
+  kind: source-file
+- clause: 6.1.6.2.15
+  title: '6.1.6.2.15 Type: VsmfUpdateData'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.15 Type_ VsmfUpdateData.md
+  source_words: 1965
+  kind: source-file
+- clause: 6.1.6.2.16
+  title: '6.1.6.2.16 Type: VsmfUpdatedData'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.16 Type_ VsmfUpdatedData.md
+  source_words: 1087
+  kind: source-file
+- clause: 6.1.6.2.17
+  title: '6.1.6.2.17 Type: StatusNotification'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.17 Type_ StatusNotification.md
+  source_words: 498
+  kind: source-file
+- clause: 6.1.6.2.18
+  title: '6.1.6.2.18 Type: QosFlowItem'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.18 Type_ QosFlowItem.md
+  source_words: 177
+  kind: source-file
+- clause: 6.1.6.2.19
+  title: '6.1.6.2.19 Type: QosFlowSetupItem'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.19 Type_ QosFlowSetupItem.md
+  source_words: 438
+  kind: source-file
+- clause: 6.1.6.2.20
+  title: '6.1.6.2.20 Type: QosFlowAddModifyRequestItem'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.20 Type_ QosFlowAddModifyRequestItem.md
+  source_words: 383
+  kind: source-file
+- clause: 6.1.6.2.21
+  title: '6.1.6.2.21 Type: QosFlowReleaseRequestItem'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.21 Type_ QosFlowReleaseRequestItem.md
+  source_words: 149
+  kind: source-file
+- clause: 6.1.6.2.22
+  title: '6.1.6.2.22 Type: QosFlowProfile'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.22 Type_ QosFlowProfile.md
+  source_words: 509
+  kind: source-file
+- clause: 6.1.6.2.23
+  title: '6.1.6.2.23 Type: GbrQosFlowInformation'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.23 Type_ GbrQosFlowInformation.md
+  source_words: 252
+  kind: source-file
+- clause: 6.1.6.2.24
+  title: '6.1.6.2.24 Type: QosFlowNotifyItem'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.24 Type_ QosFlowNotifyItem.md
+  source_words: 109
+  kind: source-file
+- clause: 6.1.6.2.25
+  title: '6.1.6.2.25 Type: Void'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.25 Type_ Void.md
+  source_words: 7
+  kind: source-file
+- clause: 6.1.6.2.26
+  title: '6.1.6.2.26 Type: Void'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.26 Type_ Void.md
+  source_words: 7
+  kind: source-file
+- clause: 6.1.6.2.27
+  title: '6.1.6.2.27 Type: SmContextRetrievedData'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.27 Type_ SmContextRetrievedData.md
+  source_words: 413
+  kind: source-file
+- clause: 6.1.6.2.28
+  title: '6.1.6.2.28 Type: TunnelInfo'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.28 Type_ TunnelInfo.md
+  source_words: 145
+  kind: source-file
+- clause: 6.1.6.2.29
+  title: '6.1.6.2.29 Type: StatusInfo'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.29 Type_ StatusInfo.md
+  source_words: 238
+  kind: source-file
+- clause: 6.1.6.2.30
+  title: '6.1.6.2.30 Type: VsmfUpdateError'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.30 Type_ VsmfUpdateError.md
+  source_words: 662
+  kind: source-file
+- clause: 6.1.6.2.31
+  title: '6.1.6.2.31 Type: EpsPdnCnxInfo'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.31 Type_ EpsPdnCnxInfo.md
+  source_words: 163
+  kind: source-file
+- clause: 6.1.6.2.32
+  title: '6.1.6.2.32 Type: EpsBearerInfo'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.32 Type_ EpsBearerInfo.md
+  source_words: 88
+  kind: source-file
+- clause: 6.1.6.2.33
+  title: '6.1.6.2.33 Type: PduSessionNotifyItem'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.33 Type_ PduSessionNotifyItem.md
+  source_words: 28
+  kind: source-file
+- clause: 6.1.6.2.34
+  title: '6.1.6.2.34 Type: EbiArpMapping'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.34 Type_ EbiArpMapping.md
+  source_words: 50
+  kind: source-file
+- clause: 6.1.6.2.35
+  title: '6.1.6.2.35 Type: SmContextCreateError'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.35 Type_ SmContextCreateError.md
+  source_words: 210
+  kind: source-file
+- clause: 6.1.6.2.36
+  title: '6.1.6.2.36 Type: SmContextUpdateError'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.36 Type_ SmContextUpdateError.md
+  source_words: 238
+  kind: source-file
+- clause: 6.1.6.2.37
+  title: '6.1.6.2.37 Type: PduSessionCreateError'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.37 Type_ PduSessionCreateError.md
+  source_words: 322
+  kind: source-file
+- clause: 6.1.6.2.38
+  title: '6.1.6.2.38 Type: MmeCapabilities'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.38 Type_ MmeCapabilities.md
+  source_words: 211
+  kind: source-file
+- clause: 6.1.6.2.39
+  title: '6.1.6.2.39 Type: SmContext'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.39 Type_ SmContext.md
+  source_words: 3921
+  kind: source-file
+- clause: 6.1.6.2.40
+  title: '6.1.6.2.40 Type: ExemptionInd'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.40 Type_ ExemptionInd.md
+  source_words: 170
+  kind: source-file
+- clause: 6.1.6.2.41
+  title: '6.1.6.2.41 Type: PsaInformation'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.41 Type_ PsaInformation.md
+  source_words: 140
+  kind: source-file
+- clause: 6.1.6.2.42
+  title: '6.1.6.2.42 Type: DnaiInformation'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.42 Type_ DnaiInformation.md
+  source_words: 126
+  kind: source-file
+- clause: 6.1.6.2.43
+  title: '6.1.6.2.43 Type: N4Information'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.43 Type_ N4Information.md
+  source_words: 298
+  kind: source-file
+- clause: 6.1.6.2.44
+  title: '6.1.6.2.44 Type: IndirectDataForwardingTunnelInfo'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.44 Type_ IndirectDataForwardingTunnelInfo.md
+  source_words: 285
+  kind: source-file
+- clause: 6.1.6.2.45
+  title: '6.1.6.2.45 Type: SmContextReleasedData'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.45 Type_ SmContextReleasedData.md
+  source_words: 124
+  kind: source-file
+- clause: 6.1.6.2.46
+  title: '6.1.6.2.46 Type: ReleasedData'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.46 Type_ ReleasedData.md
+  source_words: 240
+  kind: source-file
+- clause: 6.1.6.2.47
+  title: '6.1.6.2.47 Type: SendMoDataReqData'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.47 Type_ SendMoDataReqData.md
+  source_words: 170
+  kind: source-file
+- clause: 6.1.6.2.48
+  title: '6.1.6.2.48 Type: CnAssistedRanPara'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.48 Type_ CnAssistedRanPara.md
+  source_words: 251
+  kind: source-file
+- clause: 6.1.6.2.49
+  title: '6.1.6.2.49 Type: UlclBpInformation'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.49 Type_ UlclBpInformation.md
+  source_words: 65
+  kind: source-file
+- clause: 6.1.6.2.50
+  title: '6.1.6.2.50 Type: TransferMoDataReqData'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.50 Type_ TransferMoDataReqData.md
+  source_words: 86
+  kind: source-file
+- clause: 6.1.6.2.51
+  title: '6.1.6.2.51 Type: TransferMtDataReqData'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.51 Type_ TransferMtDataReqData.md
+  source_words: 45
+  kind: source-file
+- clause: 6.1.6.2.52
+  title: '6.1.6.2.52 Type: TransferMtDataError'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.52 Type_ TransferMtDataError.md
+  source_words: 48
+  kind: source-file
+- clause: 6.1.6.2.53
+  title: '6.1.6.2.53 Type: TransferMtDataAddInfo'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.53 Type_ TransferMtDataAddInfo.md
+  source_words: 59
+  kind: source-file
+- clause: 6.1.6.2.54
+  title: '6.1.6.2.54 Type: VplmnQos'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.54 Type_ VplmnQos.md
+  source_words: 364
+  kind: source-file
+- clause: 6.1.6.2.55
+  title: '6.1.6.2.55 Type: DdnFailureSubs'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.55 Type_ DdnFailureSubs.md
+  source_words: 76
+  kind: source-file
+- clause: 6.1.6.2.56
+  title: '6.1.6.2.56 Type: RetrieveData'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.56 Type_ RetrieveData.md
+  source_words: 141
+  kind: source-file
+- clause: 6.1.6.2.57
+  title: '6.1.6.2.57 Type: RetrievedData'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.57 Type_ RetrievedData.md
+  source_words: 96
+  kind: source-file
+- clause: 6.1.6.2.58
+  title: '6.1.6.2.58 Type: SecurityResult'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.58 Type_ SecurityResult.md
+  source_words: 83
+  kind: source-file
+- clause: 6.1.6.2.59
+  title: '6.1.6.2.59 Type: UpSecurityInfo'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.59 Type_ UpSecurityInfo.md
+  source_words: 194
+  kind: source-file
+- clause: 6.1.6.2.60
+  title: '6.1.6.2.60 Type: DdnFailureSubInfo'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.60 Type_ DdnFailureSubInfo.md
+  source_words: 128
+  kind: source-file
+- clause: 6.1.6.2.61
+  title: '6.1.6.2.61 Type: AlternativeQosProfile'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.61 Type_ AlternativeQosProfile.md
+  source_words: 217
+  kind: source-file
+- clause: 6.1.6.2.62
+  title: '6.1.6.2.62 Type: ProblemDetailsAddInfo'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.62 Type_ ProblemDetailsAddInfo.md
+  source_words: 156
+  kind: source-file
+- clause: 6.1.6.2.63
+  title: '6.1.6.2.63 Type: ExtProblemDetails'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.63 Type_ ExtProblemDetails.md
+  source_words: 48
+  kind: source-file
+- clause: 6.1.6.2.64
+  title: '6.1.6.2.64 Type: QosMonitoringInfo'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.64 Type_ QosMonitoringInfo.md
+  source_words: 167
+  kind: source-file
+- clause: 6.1.6.2.65
+  title: '6.1.6.2.65 Type: IpAddress'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.65 Type_ IpAddress.md
+  source_words: 61
+  kind: source-file
+- clause: 6.1.6.2.66
+  title: '6.1.6.2.66 Type: RedundantPduSessionInformation'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.66 Type_ RedundantPduSessionInformation.md
+  source_words: 38
+  kind: source-file
+- clause: 6.1.6.2.67
+  title: '6.1.6.2.67 Type: QosFlowTunnel'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.67 Type_ QosFlowTunnel.md
+  source_words: 52
+  kind: source-file
+- clause: 6.1.6.2.68
+  title: '6.1.6.2.68 Type: TargetDnaiInfo'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.68 Type_ TargetDnaiInfo.md
+  source_words: 109
+  kind: source-file
+- clause: 6.1.6.2.69
+  title: '6.1.6.2.69 Type: AfCoordinationInfo'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.69 Type_ AfCoordinationInfo.md
+  source_words: 139
+  kind: source-file
+- clause: 6.1.6.2.70
+  title: '6.1.6.2.70 Type: NotificationInfo'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.70 Type_ NotificationInfo.md
+  source_words: 82
+  kind: source-file
+- clause: 6.1.6.2.71
+  title: '6.1.6.2.71 Type: AnchorSmfFeatures'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.71 Type_ AnchorSmfFeatures.md
+  source_words: 105
+  kind: source-file
+- clause: 6.1.6.2.72
+  title: '6.1.6.2.72 Type: HrsboInfoFromVplmn'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.72 Type_ HrsboInfoFromVplmn.md
+  source_words: 591
+  kind: source-file
+- clause: 6.1.6.2.73
+  title: '6.1.6.2.73 Type: HrsboInfoFromHplmn'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.73 Type_ HrsboInfoFromHplmn.md
+  source_words: 1017
+  kind: source-file
+- clause: 6.1.6.2.74
+  title: '6.1.6.2.74 Type: EasInfoToRefresh'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.74 Type_ EasInfoToRefresh.md
+  source_words: 132
+  kind: source-file
+- clause: 6.1.6.2.75
+  title: '6.1.6.2.75 Type: EcnMarkingCongestionInfoReq'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.75 Type_ EcnMarkingCongestionInfoReq.md
+  source_words: 211
+  kind: source-file
+- clause: 6.1.6.2.76
+  title: '6.1.6.2.76 Type: EcnMarkingCongestionInfoStatus'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.76 Type_ EcnMarkingCongestionInfoStatus.md
+  source_words: 74
+  kind: source-file
+- clause: 6.1.6.2.77
+  title: '6.1.6.2.77 Type: TscAssistanceInformation'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.77 Type_ TscAssistanceInformation.md
+  source_words: 69
+  kind: source-file
+- clause: 6.1.6.2.78
+  title: '6.1.6.2.78 Type: N6JitterInformation'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.78 Type_ N6JitterInformation.md
+  source_words: 187
+  kind: source-file
+- clause: 6.1.6.2.79
+  title: '6.1.6.2.79 Type: TrafficInfluenceInfo'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.79 Type_ TrafficInfluenceInfo.md
+  source_words: 152
+  kind: source-file
+- clause: 6.1.6.2.80
+  title: '6.1.6.2.80 Type: TrafficInfluenceData'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.2 Structured data types/6.1.6.2.80 Type_ TrafficInfluenceData.md
+  source_words: 161
+  kind: source-file
+- clause: 6.1.6.3
+  title: 6.1.6.3 Simple data types and enumerations
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/README.md
+  source_words: 4798
+  kind: navigation-directory
+- clause: 6.1.6.3.1
+  title: 6.1.6.3.1 Introduction
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/6.1.6.3.1 Introduction.md
+  source_words: 26
+  kind: source-file
+- clause: 6.1.6.3.2
+  title: 6.1.6.3.2 Simple data types
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/6.1.6.3.2 Simple data types.md
+  source_words: 689
+  kind: source-file
+- clause: 6.1.6.3.3
+  title: '6.1.6.3.3 Enumeration: UpCnxState'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/6.1.6.3.3 Enumeration_ UpCnxState.md
+  source_words: 97
+  kind: source-file
+- clause: 6.1.6.3.4
+  title: '6.1.6.3.4 Enumeration: HoState'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/6.1.6.3.4 Enumeration_ HoState.md
+  source_words: 98
+  kind: source-file
+- clause: 6.1.6.3.5
+  title: '6.1.6.3.5 Enumeration: RequestType'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/6.1.6.3.5 Enumeration_ RequestType.md
+  source_words: 149
+  kind: source-file
+- clause: 6.1.6.3.6
+  title: '6.1.6.3.6 Enumeration: RequestIndication'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/6.1.6.3.6 Enumeration_ RequestIndication.md
+  source_words: 197
+  kind: source-file
+- clause: 6.1.6.3.7
+  title: '6.1.6.3.7 Enumeration: NotificationCause'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/6.1.6.3.7 Enumeration_ NotificationCause.md
+  source_words: 109
+  kind: source-file
+- clause: 6.1.6.3.8
+  title: '6.1.6.3.8 Enumeration: Cause'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/6.1.6.3.8 Enumeration_ Cause.md
+  source_words: 1370
+  kind: source-file
+- clause: 6.1.6.3.9
+  title: '6.1.6.3.9 Enumeration: ResourceStatus'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/6.1.6.3.9 Enumeration_ ResourceStatus.md
+  source_words: 225
+  kind: source-file
+- clause: 6.1.6.3.10
+  title: '6.1.6.3.10 Enumeration: DnnSelectionMode'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/6.1.6.3.10 Enumeration_ DnnSelectionMode.md
+  source_words: 109
+  kind: source-file
+- clause: 6.1.6.3.11
+  title: '6.1.6.3.11 Enumeration: EpsInterworkingIndication'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/6.1.6.3.11 Enumeration_ EpsInterworkingIndication.md
+  source_words: 232
+  kind: source-file
+- clause: 6.1.6.3.12
+  title: '6.1.6.3.12 Enumeration: N2SmInfoType'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/6.1.6.3.12 Enumeration_ N2SmInfoType.md
+  source_words: 252
+  kind: source-file
+- clause: 6.1.6.3.13
+  title: '6.1.6.3.13 Enumeration: MaxIntegrityProtectedDataRate'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/6.1.6.3.13 Enumeration_ MaxIntegrityProtectedDataRate.md
+  source_words: 28
+  kind: source-file
+- clause: 6.1.6.3.14
+  title: '6.1.6.3.14 Enumeration: MaReleaseIndication'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/6.1.6.3.14 Enumeration_ MaReleaseIndication.md
+  source_words: 74
+  kind: source-file
+- clause: 6.1.6.3.15
+  title: '6.1.6.3.15 Enumeration: SmContextType'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/6.1.6.3.15 Enumeration_ SmContextType.md
+  source_words: 86
+  kind: source-file
+- clause: 6.1.6.3.16
+  title: '6.1.6.3.16 Enumeration: PsaIndication'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/6.1.6.3.16 Enumeration_ PsaIndication.md
+  source_words: 156
+  kind: source-file
+- clause: 6.1.6.3.17
+  title: '6.1.6.3.17 Enumeration: N4MessageType'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/6.1.6.3.17 Enumeration_ N4MessageType.md
+  source_words: 110
+  kind: source-file
+- clause: 6.1.6.3.18
+  title: '6.1.6.3.18 Enumeration: QosFlowAccessType'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/6.1.6.3.18 Enumeration_ QosFlowAccessType.md
+  source_words: 69
+  kind: source-file
+- clause: 6.1.6.3.19
+  title: '6.1.6.3.19 Enumeration: UnavailableAccessIndication'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/6.1.6.3.19 Enumeration_ UnavailableAccessIndication.md
+  source_words: 57
+  kind: source-file
+- clause: 6.1.6.3.20
+  title: '6.1.6.3.20 Enumeration: ProtectionResult'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/6.1.6.3.20 Enumeration_ ProtectionResult.md
+  source_words: 53
+  kind: source-file
+- clause: 6.1.6.3.21
+  title: '6.1.6.3.21 Enumeration: QosMonitoringReq'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/6.1.6.3.21 Enumeration_ QosMonitoringReq.md
+  source_words: 73
+  kind: source-file
+- clause: 6.1.6.3.22
+  title: '6.1.6.3.22 Enumeration: Rsn'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/6.1.6.3.22 Enumeration_ Rsn.md
+  source_words: 86
+  kind: source-file
+- clause: 6.1.6.3.23
+  title: '6.1.6.3.23 Enumeration: SmfSelectionType'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/6.1.6.3.23 Enumeration_ SmfSelectionType.md
+  source_words: 92
+  kind: source-file
+- clause: 6.1.6.3.24
+  title: '6.1.6.3.24 Enumeration: PduSessionContextType'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/6.1.6.3.24 Enumeration_ PduSessionContextType.md
+  source_words: 54
+  kind: source-file
+- clause: 6.1.6.3.25
+  title: '6.1.6.3.25 Enumeration: PendingUpdateInfo'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/6.1.6.3.25 Enumeration_ PendingUpdateInfo.md
+  source_words: 53
+  kind: source-file
+- clause: 6.1.6.3.26
+  title: '6.1.6.3.26 Enumeration: EstablishmentRejectionCause'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/6.1.6.3.26 Enumeration_ EstablishmentRejectionCause.md
+  source_words: 45
+  kind: source-file
+- clause: 6.1.6.3.27
+  title: '6.1.6.3.27 Enumeration: EcnMarkingReq'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/6.1.6.3.27 Enumeration_ EcnMarkingReq.md
+  source_words: 52
+  kind: source-file
+- clause: 6.1.6.3.28
+  title: '6.1.6.3.28 Enumeration: CongestionInfoReq'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/6.1.6.3.28 Enumeration_ CongestionInfoReq.md
+  source_words: 83
+  kind: source-file
+- clause: 6.1.6.3.29
+  title: '6.1.6.3.29 Enumeration: ActivationStatus'
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.3 Simple data types and enumerations/6.1.6.3.29 Enumeration_ ActivationStatus.md
+  source_words: 65
+  kind: source-file
+- clause: 6.1.6.4
+  title: 6.1.6.4 Binary data
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.4 Binary data.md
+  source_words: 2035
+  kind: source-file
+- clause: 6.1.6.4.1
+  title: 6.1.6.4.1 Introduction
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.4 Binary data.md
+  source_words: 112
+  kind: embedded-clause
+- clause: 6.1.6.4.2
+  title: 6.1.6.4.2 N1 SM Message
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.4 Binary data.md
+  source_words: 213
+  kind: embedded-clause
+- clause: 6.1.6.4.3
+  title: 6.1.6.4.3 N2 SM Information
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.4 Binary data.md
+  source_words: 457
+  kind: embedded-clause
+- clause: 6.1.6.4.4
+  title: 6.1.6.4.4 n1SmInfoFromUe, n1SmInfoToUe, unknownN1SmInfo
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.4 Binary data.md
+  source_words: 1005
+  kind: embedded-clause
+- clause: 6.1.6.4.5
+  title: 6.1.6.4.5 N4 Message Payload
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.4 Binary data.md
+  source_words: 33
+  kind: embedded-clause
+- clause: 6.1.6.4.6
+  title: 6.1.6.4.6 Mobile Originated Data
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.4 Binary data.md
+  source_words: 124
+  kind: embedded-clause
+- clause: 6.1.6.4.7
+  title: 6.1.6.4.7 Mobile Terminated Data
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.6 Data Model/6.1.6.4 Binary data.md
+  source_words: 85
+  kind: embedded-clause
+- clause: 6.1.7
+  title: 6.1.7 Error Handling
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.7 Error Handling.md
+  source_words: 1662
+  kind: source-file
+- clause: 6.1.7.1
+  title: 6.1.7.1 General
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.7 Error Handling.md
+  source_words: 253
+  kind: embedded-clause
+- clause: 6.1.7.2
+  title: 6.1.7.2 Protocol Errors
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.7 Error Handling.md
+  source_words: 25
+  kind: embedded-clause
+- clause: 6.1.7.3
+  title: 6.1.7.3 Application Errors
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.7 Error Handling.md
+  source_words: 1379
+  kind: embedded-clause
+- clause: 6.1.8
+  title: 6.1.8 Feature Negotiation
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.8 Feature Negotiation.md
+  source_words: 2593
+  kind: source-file
+- clause: 6.1.9
+  title: 6.1.9 Security
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.9 Security.md
+  source_words: 203
+  kind: source-file
+- clause: 6.1.10
+  title: 6.1.10 HTTP redirection
+  path: 6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.10 HTTP redirection.md
+  source_words: 284
+  kind: source-file
+- clause: Annex A
+  title: 'Annex A (normative): OpenAPI specification'
+  path: Annex A (normative)_ OpenAPI specification/README.md
+  source_words: 15461
+  kind: navigation-directory
+- clause: A.1
+  title: A.1 General
+  path: Annex A (normative)_ OpenAPI specification/README.md
+  source_words: 134
+  kind: source-file
+- clause: A.2
+  title: A.2 Nsmf_PDUSession API
+  path: ../openapi/TS29502_Nsmf_PDUSession.yaml
+  source_words: 15322
+  kind: exact-attachment
+- clause: Annex B
+  title: 'Annex B (Informative): HTTP Multipart Messages'
+  path: Annex B (Informative)_ HTTP Multipart Messages.md
+  source_words: 138
+  kind: source-file
+- clause: B.1
+  title: B.1 Example of HTTP multipart message
+  path: Annex B (Informative)_ HTTP Multipart Messages.md
+  source_words: 132
+  kind: embedded-clause
+- clause: B.1.1
+  title: B.1.1 General
+  path: Annex B (Informative)_ HTTP Multipart Messages.md
+  source_words: 60
+  kind: embedded-clause
+- clause: B.1.2
+  title: B.1.2 Example HTTP multipart message with N1 SM Message binary data
+  path: Annex B (Informative)_ HTTP Multipart Messages.md
+  source_words: 65
+  kind: embedded-clause
+- clause: Annex C
+  title: 'Annex C (Normative): ABNF grammar for 3GPP SBI HTTP custom headers'
+  path: Annex C (Normative)_ ABNF grammar for 3GPP SBI HTTP custom headers.md
+  source_words: 244
+  kind: source-file
+- clause: C.1
+  title: C.1 General
+  path: Annex C (Normative)_ ABNF grammar for 3GPP SBI HTTP custom headers.md
+  source_words: 56
+  kind: embedded-clause
+- clause: C.2
+  title: 'C.2 ABNF definitions (Filename: "TS29502_CustomHeaders.abnf")'
+  path: Annex C (Normative)_ ABNF grammar for 3GPP SBI HTTP custom headers.md
+  source_words: 177
+  kind: embedded-clause
+- clause: Annex D
+  title: 'Annex D (Informative): Charging Identifier Handling'
+  path: Annex D (Informative)_ Charging Identifier Handling.md
+  source_words: 596
+  kind: source-file
+- clause: D.1
+  title: D.1 Usage of Charging ID and SMF Charging ID
+  path: Annex D (Informative)_ Charging Identifier Handling.md
+  source_words: 590
+  kind: embedded-clause
+- clause: D.1.1
+  title: D.1.1 General
+  path: Annex D (Informative)_ Charging Identifier Handling.md
+  source_words: 136
+  kind: embedded-clause
+- clause: D.1.2
+  title: D.1.2 HPLMN supporting the SMF Charging ID
+  path: Annex D (Informative)_ Charging Identifier Handling.md
+  source_words: 162
+  kind: embedded-clause
+- clause: D.1.3
+  title: D.1.3 HPLMN not supporting the SMF Charging ID
+  path: Annex D (Informative)_ Charging Identifier Handling.md
+  source_words: 57
+  kind: embedded-clause
+- clause: D.1.4
+  title: D.1.4 Transfer of (SMF) Charging ID between SMFs
+  path: Annex D (Informative)_ Charging Identifier Handling.md
+  source_words: 225
+  kind: embedded-clause
+- clause: Annex E
+  title: 'Annex E (informative): Change history'
+  path: Annex E (informative)_ Change history/README.md
+  source_words: 9514
+  kind: navigation-directory
+- clause: Annex E-2017
+  title: 'Annex E (informative): Change history — 2017'
+  path: Annex E (informative)_ Change history/2017.md
+  source_words: 49
+  kind: source-file
+- clause: Annex E-2018
+  title: 'Annex E (informative): Change history — 2018'
+  path: Annex E (informative)_ Change history/2018.md
+  source_words: 1166
+  kind: source-file
+- clause: Annex E-2019
+  title: 'Annex E (informative): Change history — 2019'
+  path: Annex E (informative)_ Change history/2019.md
+  source_words: 2088
+  kind: source-file
+- clause: Annex E-2020
+  title: 'Annex E (informative): Change history — 2020'
+  path: Annex E (informative)_ Change history/2020.md
+  source_words: 1883
+  kind: source-file
+- clause: Annex E-2021
+  title: 'Annex E (informative): Change history — 2021'
+  path: Annex E (informative)_ Change history/2021.md
+  source_words: 1222
+  kind: source-file
+- clause: Annex E-2022
+  title: 'Annex E (informative): Change history — 2022'
+  path: Annex E (informative)_ Change history/2022.md
+  source_words: 946
+  kind: source-file
+- clause: Annex E-2023
+  title: 'Annex E (informative): Change history — 2023'
+  path: Annex E (informative)_ Change history/2023.md
+  source_words: 1290
+  kind: source-file
+- clause: Annex E-2024
+  title: 'Annex E (informative): Change history — 2024'
+  path: Annex E (informative)_ Change history/2024.md
+  source_words: 859
+  kind: source-file
+- clause: Annex E-2025
+  title: 'Annex E (informative): Change history — 2025'
+  path: Annex E (informative)_ Change history/2025.md
+  source_words: 102
+  kind: source-file

@@ -1,0 +1,22 @@
+{
+  "method": "Risk-based preview inspection; not page-by-page source document certification.",
+  "TS 23.003": {
+    "original_media": 34,
+    "png_previews": 28,
+    "original_only_wmf": 6,
+    "contact_sheet": "internal QA only",
+    "result": "Readable identifier diagrams inspected; six original WMF objects retained without reliable PNG preview."
+  },
+  "TS 29.502": {
+    "original_media": 44,
+    "png_previews": 44,
+    "sample": "image15.png",
+    "result": "Sequence diagram text and arrows rendered legibly."
+  },
+  "TS 29.504": {
+    "original_media": 22,
+    "png_previews": 22,
+    "sample": "image10.png",
+    "result": "UDR resource and sequence diagrams rendered legibly."
+  }
+}

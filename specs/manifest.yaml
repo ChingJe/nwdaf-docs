@@ -1,5 +1,14 @@
 release: '18'
 specifications:
+- id: TS-23.003
+  spec: TS 23.003
+  version: 18.8.0
+  scope: full
+  purpose: Common numbering, addressing and identifier semantics for SUPI, SUCI, GPSI, PEI, PLMN, DNN and 5GS identifiers
+  index: TS 23.003/README.md
+  manifest: TS 23.003/manifest.yaml
+  source_archive: 23003-i80.zip
+  source_archive_sha256: 41b3214bc0a5303937bdd33f0fb0a77a33885610b99b5b3b3d662eaafddd59d4
 - id: TS-23.288
   spec: TS 23.288
   version: 18.13.0
@@ -22,8 +31,7 @@ specifications:
   spec: TS 23.502
   version: 18.14.0
   scope: full
-  purpose: 5GS Stage 2 procedures, including full registration, session, exposure
-    and policy flows
+  purpose: 5GS Stage 2 procedures, including full registration, session, exposure and policy flows
   index: TS 23.502/README.md
   manifest: TS 23.502/manifest.yaml
   source_archive: 23502-ie0.zip
@@ -32,8 +40,7 @@ specifications:
   spec: TS 29.122
   version: 18.10.0
   scope: full
-  purpose: T8 northbound APIs and shared schemas reused by NWDAF, NRF, SMF and ADRF
-    OpenAPI definitions
+  purpose: T8 northbound APIs and shared schemas reused by NWDAF, NRF, SMF and ADRF OpenAPI definitions
   index: TS 29.122/README.md
   manifest: TS 29.122/manifest.yaml
   source_archive: 29122-ia0.zip
@@ -47,16 +54,33 @@ specifications:
   manifest: TS 29.500/manifest.yaml
   source_archive: 29500-ia0.zip
   source_archive_sha256: 3e0cbb6bc6ceec4dabb597410fb4b55ba03ae82e9b242972f441cd926971f5f2
+- id: TS-29.502
+  spec: TS 29.502
+  version: 18.11.0
+  scope: full
+  purpose: SMF PDU Session and SM Context lifecycle APIs, procedures, multipart messages and data models
+  index: TS 29.502/README.md
+  manifest: TS 29.502/manifest.yaml
+  source_archive: 29502-ib0.zip
+  source_archive_sha256: c9132a7cf5493d033470dbbfe714121e0707138e99674c8aaf12bdab4841b264
 - id: TS-29.503
   spec: TS 29.503
   version: 18.13.0
   scope: full
-  purpose: UDM subscriber data, UE context, event exposure, authentication and identifier
-    services
+  purpose: UDM subscriber data, UE context, event exposure, authentication and identifier services
   index: TS 29.503/README.md
   manifest: TS 29.503/manifest.yaml
   source_archive: 29503-id0.zip
   source_archive_sha256: 4c773b0d93af7d82fab12329d4c7d06807cc92271da897e23ee94e89a7112afa
+- id: TS-29.504
+  spec: TS 29.504
+  version: 18.13.0
+  scope: full
+  purpose: UDR data repository and group-ID mapping services for subscription, policy, exposure and application data
+  index: TS 29.504/README.md
+  manifest: TS 29.504/manifest.yaml
+  source_archive: 29504-id0.zip
+  source_archive_sha256: 08eb3fe98bf504d4516fefd5b25d7d85d32137d58050b96e05c110afd341706b
 - id: TS-29.508
   spec: TS 29.508
   version: 18.11.0
@@ -106,8 +130,7 @@ specifications:
   spec: TS 29.552
   version: 18.7.0
   scope: full
-  purpose: NWDAF Stage 3 signalling flows across analytics, data collection, ML, ADRF,
-    DCCF and MFAF procedures
+  purpose: NWDAF Stage 3 signalling flows across analytics, data collection, ML, ADRF, DCCF and MFAF procedures
   index: TS 29.552/README.md
   manifest: TS 29.552/manifest.yaml
   source_archive: 29552-i70.zip
@@ -143,8 +166,7 @@ specifications:
   spec: TS 29.574
   version: 18.12.0
   scope: full
-  purpose: DCCF data subscription, notification, fetch, transfer and data-collection-profile
-    APIs
+  purpose: DCCF data subscription, notification, fetch, transfer and data-collection-profile APIs
   index: TS 29.574/README.md
   manifest: TS 29.574/manifest.yaml
   source_archive: 29574-ic0.zip
@@ -162,8 +184,7 @@ specifications:
   spec: TS 29.576
   version: 18.8.0
   scope: full
-  purpose: MFAF configuration, fetch and notification services for messaging-framework-based
-    data delivery
+  purpose: MFAF configuration, fetch and notification services for messaging-framework-based data delivery
   index: TS 29.576/README.md
   manifest: TS 29.576/manifest.yaml
   source_archive: 29576-i80.zip

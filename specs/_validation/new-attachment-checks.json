@@ -1,0 +1,32 @@
+[
+  {
+    "file": "TS29502_Nsmf_PDUSession.yaml",
+    "source_sha256": "f26eefe61ef0ede054e8cdf06a4b69663f34a43378d9ab8429920fdaa256cf41",
+    "output_sha256": "f26eefe61ef0ede054e8cdf06a4b69663f34a43378d9ab8429920fdaa256cf41",
+    "byte_identical": true
+  },
+  {
+    "file": "TS29502_CustomHeaders.abnf",
+    "source_sha256": "d7dd8593ad17a19907fc0fc56d3e5b15b6bb3aa82b015f9250df352082bae97f",
+    "output_sha256": "d7dd8593ad17a19907fc0fc56d3e5b15b6bb3aa82b015f9250df352082bae97f",
+    "byte_identical": true
+  },
+  {
+    "file": "TS29504_Nudr_DR.yaml",
+    "source_sha256": "811e37089daab8fdbec367cb0a9939d682bf879bdd96384149200fded9dd8637",
+    "output_sha256": "811e37089daab8fdbec367cb0a9939d682bf879bdd96384149200fded9dd8637",
+    "byte_identical": true
+  },
+  {
+    "file": "TS29504_Nudr_GroupIDmap.yaml",
+    "source_sha256": "eed9d1f1d3a6829210565f388baab189db40f916a6a99ebf46aaace348609954",
+    "output_sha256": "eed9d1f1d3a6829210565f388baab189db40f916a6a99ebf46aaace348609954",
+    "byte_identical": true
+  },
+  {
+    "file": "TS29504_CustomHeaders.abnf",
+    "source_sha256": "725a904c26118ec44006400b1f6cad925ae16712bce1bed2dd0f98ef38d9ba1b",
+    "output_sha256": "725a904c26118ec44006400b1f6cad925ae16712bce1bed2dd0f98ef38d9ba1b",
+    "byte_identical": true
+  }
+]

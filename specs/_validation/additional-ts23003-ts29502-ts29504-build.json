@@ -1,0 +1,666 @@
+{
+  "added_specs": [
+    "TS 23.003",
+    "TS 29.502",
+    "TS 29.504"
+  ],
+  "results": [
+    {
+      "archive_sha256": "41b3214bc0a5303937bdd33f0fb0a77a33885610b99b5b3b3d662eaafddd59d4",
+      "document_sha256": "cea584d8dfd003d4d25119f1353107486ccbaacfe27cedcdeb3674b2ec06bd30",
+      "tree_hash_match": true,
+      "assets": {
+        "media_count": 34,
+        "embedded_count": 31,
+        "rendered_png_count": 28,
+        "preview_results": [
+          {
+            "source": "image1.emf",
+            "rendered": "image1.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image10.wmf",
+            "rendered": "image10.wmf",
+            "success": false,
+            "note": "empty preview"
+          },
+          {
+            "source": "image11.png",
+            "rendered": "image11.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image12.wmf",
+            "rendered": "image12.png",
+            "success": true,
+            "note": "imagemagick-fallback"
+          },
+          {
+            "source": "image13.png",
+            "rendered": "image13.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image14.png",
+            "rendered": "image14.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image15.wmf",
+            "rendered": "image15.png",
+            "success": true,
+            "note": "imagemagick-fallback"
+          },
+          {
+            "source": "image16.wmf",
+            "rendered": "image16.wmf",
+            "success": false,
+            "note": "empty preview"
+          },
+          {
+            "source": "image17.wmf",
+            "rendered": "image17.png",
+            "success": true,
+            "note": "imagemagick-fallback"
+          },
+          {
+            "source": "image18.emf",
+            "rendered": "image18.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image19.emf",
+            "rendered": "image19.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image2.png",
+            "rendered": "image2.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image20.wmf",
+            "rendered": "image20.png",
+            "success": true,
+            "note": "imagemagick-fallback"
+          },
+          {
+            "source": "image21.wmf",
+            "rendered": "image21.wmf",
+            "success": false,
+            "note": "empty preview"
+          },
+          {
+            "source": "image22.emf",
+            "rendered": "image22.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image23.emf",
+            "rendered": "image23.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image24.wmf",
+            "rendered": "image24.png",
+            "success": true,
+            "note": "imagemagick-fallback"
+          },
+          {
+            "source": "image25.emf",
+            "rendered": "image25.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image26.emf",
+            "rendered": "image26.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image27.emf",
+            "rendered": "image27.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image28.wmf",
+            "rendered": "image28.png",
+            "success": true,
+            "note": "imagemagick-fallback"
+          },
+          {
+            "source": "image29.wmf",
+            "rendered": "image29.png",
+            "success": true,
+            "note": "imagemagick-fallback"
+          },
+          {
+            "source": "image3.wmf",
+            "rendered": "image3.wmf",
+            "success": false,
+            "note": "empty preview"
+          },
+          {
+            "source": "image30.emf",
+            "rendered": "image30.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image31.emf",
+            "rendered": "image31.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image32.wmf",
+            "rendered": "image32.png",
+            "success": true,
+            "note": "imagemagick-fallback"
+          },
+          {
+            "source": "image33.emf",
+            "rendered": "image33.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image34.wmf",
+            "rendered": "image34.png",
+            "success": true,
+            "note": "imagemagick-fallback"
+          },
+          {
+            "source": "image4.wmf",
+            "rendered": "image4.wmf",
+            "success": false,
+            "note": "empty preview"
+          },
+          {
+            "source": "image5.emf",
+            "rendered": "image5.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image6.wmf",
+            "rendered": "image6.png",
+            "success": true,
+            "note": "imagemagick-fallback"
+          },
+          {
+            "source": "image7.wmf",
+            "rendered": "image7.png",
+            "success": true,
+            "note": "imagemagick-fallback"
+          },
+          {
+            "source": "image8.wmf",
+            "rendered": "image8.wmf",
+            "success": false,
+            "note": "empty preview"
+          },
+          {
+            "source": "image9.emf",
+            "rendered": "image9.png",
+            "success": true,
+            "note": null
+          }
+        ]
+      },
+      "manifest_entries": 469,
+      "root_nodes": 39,
+      "preprocessed_sha256": "eccd16fa6d0e8d08841ca3780e08014ffc12123bd3057ebfe5b074892278bab3",
+      "reassembled_sha256": "eccd16fa6d0e8d08841ca3780e08014ffc12123bd3057ebfe5b074892278bab3",
+      "spec": "TS 23.003",
+      "version": "18.8.0",
+      "correction_count": 30
+    },
+    {
+      "archive_sha256": "c9132a7cf5493d033470dbbfe714121e0707138e99674c8aaf12bdab4841b264",
+      "document_sha256": "261580abdd73406068efdbaa9682cbdc3dbd5d31d88244d50c06d6a69c12945c",
+      "tree_hash_match": true,
+      "assets": {
+        "media_count": 44,
+        "embedded_count": 45,
+        "rendered_png_count": 44,
+        "preview_results": [
+          {
+            "source": "image1.emf",
+            "rendered": "image1.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image10.emf",
+            "rendered": "image10.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image11.emf",
+            "rendered": "image11.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image12.emf",
+            "rendered": "image12.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image13.emf",
+            "rendered": "image13.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image14.emf",
+            "rendered": "image14.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image15.emf",
+            "rendered": "image15.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image16.emf",
+            "rendered": "image16.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image17.emf",
+            "rendered": "image17.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image18.emf",
+            "rendered": "image18.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image19.emf",
+            "rendered": "image19.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image2.emf",
+            "rendered": "image2.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image20.emf",
+            "rendered": "image20.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image21.emf",
+            "rendered": "image21.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image22.emf",
+            "rendered": "image22.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image23.emf",
+            "rendered": "image23.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image24.emf",
+            "rendered": "image24.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image25.emf",
+            "rendered": "image25.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image26.emf",
+            "rendered": "image26.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image27.emf",
+            "rendered": "image27.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image28.emf",
+            "rendered": "image28.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image29.emf",
+            "rendered": "image29.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image3.emf",
+            "rendered": "image3.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image30.emf",
+            "rendered": "image30.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image31.emf",
+            "rendered": "image31.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image32.emf",
+            "rendered": "image32.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image33.emf",
+            "rendered": "image33.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image34.emf",
+            "rendered": "image34.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image35.emf",
+            "rendered": "image35.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image36.emf",
+            "rendered": "image36.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image37.emf",
+            "rendered": "image37.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image38.emf",
+            "rendered": "image38.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image39.emf",
+            "rendered": "image39.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image4.emf",
+            "rendered": "image4.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image40.emf",
+            "rendered": "image40.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image41.emf",
+            "rendered": "image41.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image42.emf",
+            "rendered": "image42.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image43.emf",
+            "rendered": "image43.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image44.emf",
+            "rendered": "image44.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image5.emf",
+            "rendered": "image5.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image6.emf",
+            "rendered": "image6.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image7.emf",
+            "rendered": "image7.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image8.emf",
+            "rendered": "image8.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image9.emf",
+            "rendered": "image9.png",
+            "success": true,
+            "note": null
+          }
+        ]
+      },
+      "manifest_entries": 392,
+      "root_nodes": 13,
+      "preprocessed_sha256": "bad396748243fbdaec9b31baf350fed59f8fca2dae72813de0125293af5ecf35",
+      "reassembled_sha256": "bad396748243fbdaec9b31baf350fed59f8fca2dae72813de0125293af5ecf35",
+      "spec": "TS 29.502",
+      "version": "18.11.0",
+      "correction_count": 39
+    },
+    {
+      "archive_sha256": "08eb3fe98bf504d4516fefd5b25d7d85d32137d58050b96e05c110afd341706b",
+      "document_sha256": "819017105e6641a94e926626c4b8c28c960eff13fd1c084dc9c76b2ef745ba6a",
+      "tree_hash_match": true,
+      "assets": {
+        "media_count": 22,
+        "embedded_count": 22,
+        "rendered_png_count": 22,
+        "preview_results": [
+          {
+            "source": "image1.emf",
+            "rendered": "image1.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image10.emf",
+            "rendered": "image10.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image11.emf",
+            "rendered": "image11.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image12.emf",
+            "rendered": "image12.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image13.emf",
+            "rendered": "image13.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image14.emf",
+            "rendered": "image14.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image15.emf",
+            "rendered": "image15.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image16.emf",
+            "rendered": "image16.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image17.emf",
+            "rendered": "image17.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image18.emf",
+            "rendered": "image18.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image19.emf",
+            "rendered": "image19.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image2.emf",
+            "rendered": "image2.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image20.emf",
+            "rendered": "image20.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image21.emf",
+            "rendered": "image21.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image22.emf",
+            "rendered": "image22.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image3.emf",
+            "rendered": "image3.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image4.emf",
+            "rendered": "image4.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image5.emf",
+            "rendered": "image5.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image6.emf",
+            "rendered": "image6.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image7.emf",
+            "rendered": "image7.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image8.emf",
+            "rendered": "image8.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image9.emf",
+            "rendered": "image9.png",
+            "success": true,
+            "note": null
+          }
+        ]
+      },
+      "manifest_entries": 187,
+      "root_nodes": 11,
+      "preprocessed_sha256": "8e8224ea74e5e1b3f54102ce51bdeba3693a4f1cf9c6294ce5c96813a0d27591",
+      "reassembled_sha256": "8e8224ea74e5e1b3f54102ce51bdeba3693a4f1cf9c6294ce5c96813a0d27591",
+      "spec": "TS 29.504",
+      "version": "18.13.0",
+      "correction_count": 16
+    }
+  ]
+}

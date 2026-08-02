@@ -1,0 +1,119 @@
+[
+  {
+    "spec": "TS 23.003",
+    "query": "Subscription Permanent Identifier (SUPI)",
+    "matches": [
+      "TS 23.003/01 Original contents.md",
+      "TS 23.003/2 Identification of mobile subscribers/2.2A Subscription Permanent Identifier (SUPI).md",
+      "TS 23.003/2 Identification of mobile subscribers/README.md"
+    ],
+    "passed": true
+  },
+  {
+    "spec": "TS 23.003",
+    "query": "Definition of Data Network Name",
+    "matches": [
+      "TS 23.003/01 Original contents.md",
+      "TS 23.003/README.md",
+      "TS 23.003/9A Definition of Data Network Name.md"
+    ],
+    "passed": true
+  },
+  {
+    "spec": "TS 23.003",
+    "query": "NF FQDN Format for Inter PLMN Routing",
+    "matches": [
+      "TS 23.003/01 Original contents.md",
+      "TS 23.003/28 Numbering, addressing and identification for 5G System (5GS)/28.5 NF FQDN Format for Inter PLMN Routing.md",
+      "TS 23.003/28 Numbering, addressing and identification for 5G System (5GS)/README.md"
+    ],
+    "passed": true
+  },
+  {
+    "spec": "TS 29.502",
+    "query": "Create SM Context service operation",
+    "matches": [
+      "TS 29.502/01 Original contents.md",
+      "TS 29.502/Annex E (informative)_ Change history/2019.md",
+      "TS 29.502/Annex E (informative)_ Change history/2022.md",
+      "TS 29.502/5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/README.md",
+      "TS 29.502/5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.2 Create SM Context service operation/5.2.2.2.1 General.md",
+      "TS 29.502/5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.2 Create SM Context service operation/README.md",
+      "TS 29.502/5 Services offered by the SMF/5.2 Nsmf_PDUSession Service/5.2.2 Service Operations/5.2.2.3 Update SM Context service operation/5.2.2.3.5 Handover between 3GPP and untrusted non-3GPP access procedures.md",
+      "TS 29.502/6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.8 Feature Negotiation.md",
+      "TS 29.502/6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.3 Resources/6.1.3.3 Resource_ Individual SM context.md"
+    ],
+    "passed": true
+  },
+  {
+    "spec": "TS 29.502",
+    "query": "Nsmf_PDUSession",
+    "matches": [
+      "TS 29.502/01 Original contents.md",
+      "TS 29.502/README.md",
+      "TS 29.502/Annex A (normative)_ OpenAPI specification/README.md",
+      "TS 29.502/6 API Definitions/README.md",
+      "TS 29.502/Annex E (informative)_ Change history/2019.md",
+      "TS 29.502/Annex E (informative)_ Change history/2024.md",
+      "TS 29.502/Annex E (informative)_ Change history/2018.md",
+      "TS 29.502/Annex E (informative)_ Change history/2021.md",
+      "TS 29.502/Annex E (informative)_ Change history/2020.md",
+      "TS 29.502/5 Services offered by the SMF/5.1 Introduction.md"
+    ],
+    "passed": true
+  },
+  {
+    "spec": "TS 29.502",
+    "query": "HTTP Multipart Messages",
+    "matches": [
+      "TS 29.502/Annex B (Informative)_ HTTP Multipart Messages.md",
+      "TS 29.502/01 Original contents.md",
+      "TS 29.502/README.md",
+      "TS 29.502/6 API Definitions/6.1 Nsmf_PDUSession Service API/6.1.2 Usage of HTTP.md"
+    ],
+    "passed": true
+  },
+  {
+    "spec": "TS 29.504",
+    "query": "Nudr_DataRepository Service",
+    "matches": [
+      "TS 29.504/01 Original contents.md",
+      "TS 29.504/README.md",
+      "TS 29.504/Annex A (normative)_ OpenAPI specification/README.md",
+      "TS 29.504/5 Services offered by the UDR/5.1 Introduction.md",
+      "TS 29.504/5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md",
+      "TS 29.504/5 Services offered by the UDR/README.md",
+      "TS 29.504/6 API Definitions/README.md",
+      "TS 29.504/Annex C (informative)_ Change history/2018.md",
+      "TS 29.504/6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.7 Security.md",
+      "TS 29.504/6 API Definitions/6.1 Nudr_DataRepository Service API/6.1.5a Data Model.md"
+    ],
+    "passed": true
+  },
+  {
+    "spec": "TS 29.504",
+    "query": "Nudr_GroupIDmap",
+    "matches": [
+      "TS 29.504/01 Original contents.md",
+      "TS 29.504/README.md",
+      "TS 29.504/Annex A (normative)_ OpenAPI specification/README.md",
+      "TS 29.504/5 Services offered by the UDR/5.3 Nudr_GroupIDmap Service.md",
+      "TS 29.504/5 Services offered by the UDR/5.1 Introduction.md",
+      "TS 29.504/5 Services offered by the UDR/README.md",
+      "TS 29.504/6 API Definitions/6.2 Nudr_GroupIDmap Service API.md",
+      "TS 29.504/6 API Definitions/README.md",
+      "TS 29.504/Annex C (informative)_ Change history/2019.md"
+    ],
+    "passed": true
+  },
+  {
+    "spec": "TS 29.504",
+    "query": "Data retrieval",
+    "matches": [
+      "TS 29.504/01 Original contents.md",
+      "TS 29.504/5 Services offered by the UDR/5.2 Nudr_DataRepository Service.md",
+      "TS 29.504/Annex C (informative)_ Change history/2020.md"
+    ],
+    "passed": true
+  }
+]
