@@ -359,6 +359,10 @@ subscriptions 才能向 C 要模型。
 
 #### 5.2.1 Group、serving SMF 與 AoI collection resolution
 
+完整的 UDM／UDR 角色邊界、Release 18 HTTP schema 與 status
+semantics 參見 [Internal Group Resolution And Serving SMF Release 18
+規格解讀](../specification-guides/Internal%20Group%20Resolution%20And%20Serving%20SMF%20Release%2018%20規格解讀.md)。
+
 Consumer 不需要先把 Internal Group ID 展開成 SUPI，也不需要知道各 UE
 由哪一個 SMF 服務。這些是收到 subscription 的 NWDAF-A／B 各自執行的
 資料蒐集準備：
@@ -383,6 +387,15 @@ Consumer 不需要先把 Internal Group ID 展開成 SUPI，也不需要知道�
 7. SMF 只在 UE 位於該 AoI 時啟用下游 UPF subscription，UE 離開 AoI
    時停止。因此 A、B 即使找到同一個 SMF，分別帶 TAI-A、TAI-B 後仍可
    收到不同 path 的資料。
+
+NWDAF 的標準 peer 是 UDM，不是 UDR。若部署使用
+stateless UDM，UDM 可在處理上述兩種 request 時從 UDR 取得
+membership 和 SMF registration records。其底層路徑分別為
+`/nudr-dr/v2/subscription-data/group-data/group-identifiers` 與
+`/nudr-dr/v2/subscription-data/{ueId}/context-data/smf-registrations`。
+UDR 的 `SmfRegList` 是陣列；UDM 對 NWDAF 的
+`SmfRegistrationInfo` 是含 `smfRegistrationList` 的 wrapper，因此
+UDM 不是將 UDR response 原封不動轉發。
 
 SMF 判斷 UE 所在 TAI 不以額外的 AMF Event Exposure subscription
 作為唯一前提。TS 23.288 §6.2.2.1 明確區分下列情況：
@@ -1643,8 +1656,10 @@ proximal transmission、FedAsync 或 secure aggregation。後續若加入：
 | `UE_COMMUNICATION` Stage 3 target validation | [TS 29.520 Events Subscription](../../specs/TS%2029.520/4%20Services%20offered%20by%20the%20NWDAF/4.2%20Nnwdaf_EventsSubscription%20Service/4.2.2%20Service%20Operations/4.2.2.2%20Nnwdaf_EventsSubscription_Subscribe%20service%20operation/4.2.2.2.2%20Subscription%20for%20event%20notifications.md) |
 | Group-to-SUPI and per-SUPI serving-SMF procedure | [TS 23.502 §4.15.4.5](../../specs/TS%2023.502/4%20System%20procedures/4.15%20Network%20Exposure/4.15.4%20Core%20Network%20Internal%20Event%20Exposure/4.15.4.5%20Exposure%20of%20Events%20from%20UPF%20for%20UPF%20Data%20Collection.md) |
 | Group identifier mapping API | [TS 29.503 Nudm_SDM OpenAPI](../../specs/openapi/TS29503_Nudm_SDM.yaml) |
+| Group membership and serving-SMF specification guide | [Internal Group Resolution And Serving SMF Release 18 規格解讀](../specification-guides/Internal%20Group%20Resolution%20And%20Serving%20SMF%20Release%2018%20規格解讀.md) |
 | Internal Group ID wire format | [TS 29.571 Common Data OpenAPI](../../specs/openapi/TS29571_CommonData.yaml) |
 | SMF registration lookup API | [TS 29.503 Nudm_UECM OpenAPI](../../specs/openapi/TS29503_Nudm_UECM.yaml) |
+| UDR subscription-data resources | [TS 29.505 Subscription Data OpenAPI](../../specs/openapi/TS29505_Subscription_Data.yaml) |
 | SMF direct PDU-session-to-AoI mapping and AMF-assisted fallback | [TS 23.288 §6.2.2.1](../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2%20Procedures%20for%20Data%20Collection/6.2.2%20Data%20Collection%20from%20NFs/6.2.2.1%20General.md) |
 | AMF–SMF UE Location exchange | [TS 23.502 §5.2.8.2](../../specs/TS%2023.502/5%20Network%20Function%20Service%20procedures/5.2%20Network%20Function%20services/5.2.8%20SMF%20Services/5.2.8.2%20Nsmf_PDUSession%20Service/README.md) |
 | Service Request carrying UE location to SMF | [TS 23.502 §4.2.3.2](../../specs/TS%2023.502/4%20System%20procedures/4.2%20Connection%2C%20Registration%20and%20Mobility%20Management%20procedures/4.2.3%20Service%20Request%20procedures/4.2.3.2%20UE%20Triggered%20Service%20Request.md) |

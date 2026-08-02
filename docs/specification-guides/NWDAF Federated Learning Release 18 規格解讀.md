@@ -1562,6 +1562,11 @@ Client 的 local dataset 可來自：
 資料，標準流程仍可能涉及 user consent；實驗環境如何簡化是後續設計決策，
 不是 FL API 自動免除的條件。
 
+當 dataset 來自「Internal Group ID + AoI 所對應的 UPF events」時，
+group membership 與 per-SUPI serving-SMF resolution 是獨立的標準前置
+流程，參見 [Internal Group Resolution And Serving SMF Release 18
+規格解讀](Internal%20Group%20Resolution%20And%20Serving%20SMF%20Release%2018%20規格解讀.md)。
+
 ### 9.2 FL 的資料隔離邊界
 
 「可用 DataManagement 取得資料」與「FL 不交換 local datasets」並不矛盾：

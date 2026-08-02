@@ -96,14 +96,22 @@ sequenceDiagram
 
 - A、B 取得的是同一份完整 group-G membership，不是各自維護一半
   SUPIs。
+- Internal Group ID 只是 group identity，它本身不含 SUPI list。A、B
+  都要以 `ue-id-ind=true` 向 UDM 要求完整成員清單。
 - UDM 告知每個 SUPI／PDU session 由哪個 SMF instance 服務；不能把每個
   SUPI 向所有 SMFs 都訂閱。
+- NWDAF 只對 UDM 使用 `Nudm_SDM` 與 `Nudm_UECM`。free5GC
+  部署中 UDM 可再從 UDR 取得 membership 與 registrations，但
+  這是 UDM 後方的儲存實作，不改變 NWDAF 的標準呼叫對象。
 - A、B 對同一個 SMF 分別帶 TAI1、TAI2；SMF 依 UE 是否位於該 AoI
   啟停下游 UPF subscription，因此資料自然分成兩條 path。
 - SMF 接受的 subscription 會隨 raw records 存入 ADRF。之後 FL Client
   以這份 `smfDataSub + timePeriod` 取回自己的訓練資料。
 - UDM 尚未導入實驗環境時，可暫時使用完整 group fixture 與固定 SMF
   endpoint；TAI 分流仍不能靠不同的 partial group fixtures 模擬。
+
+更完整的標準 schema 與 UDM／UDR 分層參見
+[Internal Group Resolution And Serving SMF Release 18 規格解讀](../../../specification-guides/Internal%20Group%20Resolution%20And%20Serving%20SMF%20Release%2018%20規格解讀.md)。
 
 ---
 

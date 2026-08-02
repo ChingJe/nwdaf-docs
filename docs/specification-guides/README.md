@@ -14,3 +14,4 @@
 ## 文件
 
 - [NWDAF Federated Learning Release 18 規格解讀](NWDAF%20Federated%20Learning%20Release%2018%20規格解讀.md)
+- [Internal Group Resolution And Serving SMF Release 18 規格解讀](Internal%20Group%20Resolution%20And%20Serving%20SMF%20Release%2018%20規格解讀.md)

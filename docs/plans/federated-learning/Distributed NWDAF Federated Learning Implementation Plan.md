@@ -1763,28 +1763,81 @@ Phase 2–5 平行；它不阻擋使用預先存入 ADRF 的 FL-first E2E，但�
 
 - [TS 29.503 Nudm SDM OpenAPI](../../../specs/openapi/TS29503_Nudm_SDM.yaml)
 - [TS 29.503 Nudm UECM OpenAPI](../../../specs/openapi/TS29503_Nudm_UECM.yaml)
+- [TS 29.504 Nudr Data Repository OpenAPI](../../../specs/openapi/TS29504_Nudr_DR.yaml)
+- [TS 29.505 Subscription Data OpenAPI](../../../specs/openapi/TS29505_Subscription_Data.yaml)
 - [TS 29.508 Nsmf Event Exposure OpenAPI](../../../specs/openapi/TS29508_Nsmf_EventExposure.yaml)
 - [TS 23.288 §6.2.2.1](../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2%20Procedures%20for%20Data%20Collection/6.2.2%20Data%20Collection%20from%20NFs/6.2.2.1%20General.md)
 - [TS 23.502 §4.15.4.5](../../../specs/TS%2023.502/4%20System%20procedures/4.15%20Network%20Exposure/4.15.4%20Core%20Network%20Internal%20Event%20Exposure/4.15.4.5%20Exposure%20of%20Events%20from%20UPF%20for%20UPF%20Data%20Collection.md)
+- [Internal Group Resolution And Serving SMF Release 18 規格解讀](../../specification-guides/Internal%20Group%20Resolution%20And%20Serving%20SMF%20Release%2018%20規格解讀.md)
+
+### 14.0 Current implementation gap
+
+本 Phase 開始前，參考 free5GC UDM／UDR 與 Release 18 contract 之間
+存在下列明確落差：
+
+1. UDM 已註冊 `GET /group-data/group-identifiers` route，但
+   `HandleGetGroupIdentifiers` 仍回傳 `501 Not Implemented`。
+2. UDM 已註冊 `GET /{ueId}/registrations/smf-registrations` route，但
+   `HandleGetSmfRegistration` 仍回傳 `501 Not Implemented`。
+3. UDM 已有一部分 UDR client 與 SMF registration list retrieval plumbing，
+   但這不等於上述兩條 NWDAF-facing operations 已完成。
+4. 參考 UDR 沒有 Release 18
+   `/subscription-data/group-data/group-identifiers` resource。
+5. 參考 UDR 的 SMF registration route 仍是較舊的
+   `/subscription-data/{ueId}/{servingPlmnId}/smf-registrations`，與
+   TS 29.505 規定的
+   `/subscription-data/{ueId}/context-data/smf-registrations` 不同。
+6. TS 29.505 的 UDR `SmfRegList` 是 array；TS 29.503 的 UDM
+   `SmfRegistrationInfo` 是含 `smfRegistrationList` 的 object。實作必須
+   在 UDM 邊界進行明確轉換。
+7. workspace 目前沒有可編輯的 UDM／UDR repositories；開始此
+   external workstream 前必須先滿足 Gate G1。
+
+本 Phase 不全面重寫 UDM／UDR。只補齊這條實驗流程需要的
+GroupIdentifiers 和 SmfRegistrations resources，並保留現有 free5GC
+handler／processor／consumer／persistence 分層。Release 17 generated package
+沒有的 Release 18 schema 依既有 policy 放入手寫 compatibility
+boundary，不要為此強制專案改用未公開的 OpenAPI fork。
 
 ### 14.1 Slice 6A：UDM discovery and group membership
 
 - Go NWDAF 新增 Nudm SDM outbound consumer 與 AnLF auxiliary route；
 - PyAnLF 新增 group resolver、cache、refresh 與 config；
 - NWDAF 依 `internal-group-identity` 發現 serving UDM；
-- 經 Go 呼叫 group identifiers 取得完整 SUPI list；
+- UDM NF Profile 宣告適用的 `internalGroupIdentifiersRanges` 與
+  `nudm-sdm` service；
+- 經 Go 呼叫
+  `GET /nudm-sdm/v2/group-data/group-identifiers?int-group-id=...&ue-id-ind=true`
+  取得完整 SUPI list；
+- UDM 可經過
+  `GET /nudr-dr/v2/subscription-data/group-data/group-identifiers`
+  從 UDR 取得 `GroupIdentifiers`；
+- UDR 新增上述 Release 18 resource、query validation、MongoDB
+  lookup 與 `200`/`404` response semantics；
+- UDM 不透傳 UDR-only `allowedAfIds`，只以 Nudm
+  `GroupIdentifiers` 對 NWDAF 回應；
 - 使用 legitimate 3GPP Group ID wire value；
 - A、B 取得相同完整 membership；
 - cache／refresh 使用 UDM response semantics；
 - fixture profile 仍可保留，但必須標記 non-standard transition。
 
-現有 free5GC UDM route 回 `501`；需獨立 UDM／UDR implementation task。
+本 Slice 的 NWDAF-facing `404` 需保留
+`GROUP_IDENTIFIER_NOT_FOUND`／`DATA_NOT_FOUND` 等規格語意，不用
+`200` + empty body 代替。
 
 ### 14.2 Slice 6B：Serving SMF registration
 
 - Go NWDAF 新增 Nudm UECM outbound consumer 與 AnLF auxiliary route；
-- PyAnLF 對每個 SUPI 查 UECM SMF registrations；
+- PyAnLF 對每個 SUPI 呼叫
+  `GET /nudm-uecm/v1/{supi}/registrations/smf-registrations`
+  查 UECM SMF registrations；
 - 以 PDU session、DNN、S-NSSAI 篩選；
+- UDM 對 UDR 使用 Release 18
+  `/subscription-data/{ueId}/context-data/smf-registrations` 路徑；
+- UDR 回傳 `SmfRegList` array，UDM 篩選 DNN／S-NSSAI 後轉成
+  `SmfRegistrationInfo` wrapper；
+- UDR 的空 array `200 OK` 在 UDM 邊界轉換為 Nudm 規定的
+  `404 Not Found`；
 - 取得 exact `smfInstanceId`；
 - 以 NRF `target-nf-instance-id` 解析該 SMF Event Exposure endpoint；
 - 不做 SUPI × all discovered SMFs Cartesian product；
@@ -1837,7 +1890,11 @@ PyAnLF descriptor snapshot/delta
 ### 14.5 Acceptance
 
 - 一個合法 group 經 UDM 展開成 SUPIs；
+- stateless UDM 可從 UDR 取得 group membership，而 NWDAF 不直接
+  呼叫 UDR；
 - 每個 SUPI 只向實際 serving SMF/PDU resource 訂閱；
+- UDR array 與 UDM wrapper 的 contract 轉換及 empty-list status 語意有
+  contract tests；
 - A/B 使用同一 membership、不同 AoI；
 - team SMF 只啟動 matching TAI 的 UPF data；
 - ADRF records 可由相同 `dataSub + timePeriod` 取回；
