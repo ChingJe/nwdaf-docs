@@ -1,100 +1,111 @@
 # 3GPP Word 規格轉換為 Agent-readable Markdown 的可複現流程
 
-> 適用案例：將 3GPP TS 23.288、TS 29.520 等 Word 規格轉成可逐層載入的 `specs/` 文件庫，同時維持規格文字精確度、保留 OpenAPI 與原始圖資，並產生可追溯的驗證紀錄。  
-> 本文件記錄 2026 年 7 月實際處理下列輸入時採用的流程：
+**版本：2.0**  
+**更新日期：2026-08-03**
+
+> 適用案例：將 3GPP `.docx`、legacy `.doc` 與其官方 OpenAPI／ABNF／圖資附件，轉換成可由 coding agent 分層查閱的 `specs/` corpus。  
+> 核心要求是保留規格文字精確度、結構語意、附件原貌與完整可追溯性，而不是讓 LLM 重寫規格。
 >
-> - TS 23.288 V18.13.0：`23288-id0.zip`
-> - TS 29.520 V18.14.0：`29520-ie0.zip`
->
-> 本流程不直接修改 GitHub repository；所有輸出先在獨立工作目錄生成，驗證後再交付 ZIP。
+> 本流程已在 21 份 Release 18 規格、原生 DOCX、legacy DOC、數千個 clause、數百張 EMF／WMF／Visio 圖與數十份 OpenAPI YAML 的多輪增量整合中實際使用與修正。
 
 ---
 
-## 1. 目標與非目標
+## 0. 核心結論
 
-### 1.1 目標
-
-此流程的目標不是單純將 Word「另存為 Markdown」，而是建立一套適合 coding agent 查閱的規格 corpus：
+整個流程可濃縮為：
 
 ```text
-specs/README.md
+官方 ZIP
     ↓
-TS xx.xxx/README.md
+來源盤點、版本確認、SHA-256
     ↓
-大型 clause/README.md
+依來源格式選擇 DOCX / legacy DOC adapter
     ↓
-最小可用的 clause Markdown
+Pandoc 結構抽取 + 獨立文字抽取
+    ↓
+deterministic correction
+    ↓
+heading tree + reassembly hash
+    ↓
+progressive-disclosure 拆檔
+    ↓
+原始附件、rendered preview、embedded objects
+    ↓
+README、manifest、OpenAPI dependency inventory
+    ↓
+文字、結構、連結、附件與視覺驗證
+    ↓
+clean-build ZIP + SHA-256
 ```
 
-輸出需同時滿足：
+最重要的邊界：
 
-1. 規格正文不經摘要、翻譯或改寫。
-2. `shall`、`should`、`may`、否定條件、例外條件及表格欄位不得被語意重寫。
-3. 大型 clause 採 progressive disclosure，避免 agent 一次讀取整份規格。
-4. 每個輸出檔可追溯到來源 ZIP、來源文件、版本與 SHA-256。
-5. 原始 OpenAPI YAML 原封不動保存。
-6. 圖片提供可閱讀的 PNG preview，同時保留 EMF、WMF、Visio、OLE 等原始物件。
-7. 產生 machine-readable manifest 與 validation report。
-8. 不在未確認版本相容性的情況下，自動補入其他 Release 的 schema dependency。
+```text
+規格正文
+    只能由 deterministic extraction 產生
 
-### 1.2 非目標
+OpenAPI / ABNF / XML 等官方附件
+    必須逐位元組保存
+
+LLM
+    只能協助檢查、導航與異常定位
+    不得改寫、補寫或解釋後重新輸出 normative text
+```
+
+---
+
+# 1. 目標、非目標與信任邊界
+
+## 1.1 目標
+
+輸出 corpus 應滿足：
+
+1. 規格正文不摘要、不翻譯、不潤飾。
+2. `shall`、`shall not`、`should`、`may`、條件、否定與例外不得被改寫。
+3. 表格 cell、NOTE、EXAMPLE、figure caption 與 clause 編號不得被語意重組。
+4. 每個檔案可追溯到來源 ZIP、來源 Word、版本與 SHA-256。
+5. 大型規格透過 progressive disclosure 分層，不要求 agent 一次載入全文件。
+6. OpenAPI、ABNF 與其他官方附件原封不動保存。
+7. EMF、WMF、OLE、Visio 等原始物件保留，同時盡量產生 PNG preview。
+8. 產生 machine-readable manifest、dependency inventory 與 validation report。
+9. 每次交付可由 clean build 重現。
+10. 不對 GitHub repository 做任何寫入，除非使用者另行明確要求。
+
+## 1.2 非目標
 
 本流程不保證：
 
-- Markdown 與 Word 的頁面外觀完全一致。
-- 保留 Word 分頁、浮動 anchor、字型、頁首頁尾與所有視覺排版。
+- Markdown 與 Word 的排版視覺完全一致。
+- 保留 Word 的字型、頁邊距、分頁、頁首頁尾與浮動 anchor。
 - 自動解釋規格意義。
-- 自動補齊所有跨 TS 引用的規格。
-- 以 LLM 猜測或修正文句。
+- 自動補齊整個 5GC 的所有跨規格依賴。
+- 將所有複雜表格轉成 pipe table。
+- 每份大型規格都能順利全文 export PDF。
+- 未經原始來源確認，自動修正疑似錯字或文法。
 
-此流程優先保證的是：
+## 1.3 信任順序
+
+重要規範判定時，證據優先順序應為：
 
 ```text
-文字忠實度
-→ 結構忠實度
-→ 導航效率
-→ 視覺近似
+原始 3GPP Word / 官方出版物
+    ↓
+同一 package 的官方 OpenAPI / ABNF / XML 附件
+    ↓
+本流程產生的 Markdown
+    ↓
+repository-generated README / manifest / topic metadata
+    ↓
+LLM 產生的解釋
 ```
+
+Markdown 是檢索與閱讀介面，不是 3GPP 官方出版格式的替代品。
 
 ---
 
-## 2. 本次輸入與輸出基準
+# 2. 輸出 corpus 架構
 
-### 2.1 來源檔案
-
-| 規格 | 來源 ZIP | 來源文件 | Release / Version |
-|---|---|---|---|
-| TS 23.288 | `23288-id0.zip` | `23288-id0.docx` | Release 18 / V18.13.0 |
-| TS 29.520 | `29520-ie0.zip` | `29520-ie0.doc` | Release 18 / V18.14.0 |
-
-TS 29.520 ZIP 另附 8 份 OpenAPI YAML：
-
-```text
-TS29520_Nnwdaf_AnalyticsInfo.yaml
-TS29520_Nnwdaf_DataManagement.yaml
-TS29520_Nnwdaf_EventsSubscription.yaml
-TS29520_Nnwdaf_MLModelMonitor.yaml
-TS29520_Nnwdaf_MLModelProvision.yaml
-TS29520_Nnwdaf_MLModelTraining.yaml
-TS29520_Nnwdaf_RoamingAnalytics.yaml
-TS29520_Nnwdaf_RoamingData.yaml
-```
-
-### 2.2 SHA-256
-
-```text
-7116a1f4123dcf949818ab56feb6b242eda8819877346ab045654e1d0d8c36aa  23288-id0.zip
-4937d4ffcdc8760cac3dd990b10d5c0beb722f9eab26d94ce4b1f296287057c1  29520-ie0.zip
-```
-
-本次最終交付 ZIP：
-
-```text
-78aa204449f5571d18fe9f939e42722c99c5232a1f0ccdeec28394546ddfecc0
-nwdaf-specs-r18-ts23288-v18.13.0-ts29520-v18.14.0.zip
-```
-
-### 2.3 最終輸出結構
+推薦結構：
 
 ```text
 specs/
@@ -113,402 +124,448 @@ specs/
 │   ├── manifest.yaml
 │   ├── clause files/directories
 │   └── assets/
-│       ├── original/
-│       ├── rendered/
-│       └── embedded/
+├── ...
 ├── openapi/
 │   ├── README.md
 │   ├── manifest.yaml
 │   └── official YAML files
+├── attachments/
+│   └── optional shared official attachments
 └── _validation/
     ├── README.md
+    ├── build.json
+    ├── environment.json
+    ├── source-inventory.json
+    ├── commands.log
     ├── SHA256SUMS.txt
     ├── report.json
     ├── final-checks.json
     ├── text-cross-check.json
     ├── visual-sampling.json
-    └── deterministic-corrections.yaml
+    ├── dependency-report.json
+    ├── deterministic-corrections.yaml
+    └── CONVERSION_WORKFLOW.md
+```
+
+導覽模式：
+
+```text
+specs/README.md
+    ↓
+TS xx.xxx/README.md
+    ↓
+大型 clause/README.md
+    ↓
+atomic clause Markdown
+```
+
+各層責任：
+
+| 層級 | 責任 |
+|---|---|
+| `specs/README.md` | 整體規格地圖、常見開發路徑、信任邊界 |
+| `TS xx.xxx/README.md` | 該規格用途、版本、章節地圖、相關規格 |
+| clause directory `README.md` | immediate children 導航 |
+| clause Markdown | 規格原文 |
+| `manifest.yaml` | 精確機器定位 |
+| `_validation/` | 來源、工具、修正、驗證與限制 |
+
+---
+
+# 3. Build model：每次都要 clean build
+
+## 3.1 禁止不可追蹤的就地累積修改
+
+多輪增量加入規格時，最安全方式是：
+
+```text
+上一版已驗證 ZIP
+    ↓ 解壓成唯讀 parent corpus
+建立新的空 output directory
+    ↓
+複製 parent corpus
+    ↓
+加入新規格
+    ↓
+重新生成所有受影響的全域檔案
+    ↓
+重新跑全 corpus 驗證
+    ↓
+產生新的 ZIP
+```
+
+不應直接在上一版 output directory 中持續手動修補，否則容易產生：
+
+- 重複 correction。
+- 舊 manifest 殘留。
+- orphan files。
+- dependency inventory 不同步。
+- validation report 混用不同 build 的結果。
+- 已刪規格仍留在全域索引。
+
+## 3.2 Build identity
+
+每次 build 應產生唯一身份：
+
+```yaml
+build:
+  schema_version: 1
+  build_id: r18-corpus-20260803-001
+  created_at: "2026-08-03T00:00:00+08:00"
+  parent_archive:
+    file: previous-corpus.zip
+    sha256: ...
+  output_archive:
+    file: new-corpus.zip
+    sha256: ...
+```
+
+## 3.3 Source provenance
+
+```yaml
+source_archives:
+  - file: 23288-id0.zip
+    sha256: ...
+    spec: TS 23.288
+    version: 18.13.0
+    release: 18
+    source_document: 23288-id0.docx
+    source_format: docx
+
+  - file: 29520-ie0.zip
+    sha256: ...
+    spec: TS 29.520
+    version: 18.14.0
+    release: 18
+    source_document: 29520-ie0.doc
+    source_format: doc
+```
+
+每個 build 都要記錄實際加入的所有 ZIP，不只列最新一批。
+
+---
+
+# 4. 工具鏈與環境固定
+
+## 4.1 主要工具
+
+| 工具 | 用途 |
+|---|---|
+| Python | tree parsing、拆檔、manifest、驗證、封裝 |
+| Pandoc | DOCX → Markdown、media extraction |
+| LibreOffice | legacy DOC → DOCX/TXT/PDF |
+| `docx2txt` | DOCX 獨立全文抽取 |
+| `antiword` | legacy DOC 獨立全文抽取 |
+| Inkscape | EMF／WMF → PNG |
+| ImageMagick | 圖片轉換 fallback |
+| Poppler `pdftoppm` | PDF page → PNG |
+| PyYAML | YAML parse 與 manifest |
+| `zip` / `unzip` | 解包與交付 |
+| SHA-256 | 來源與輸出完整性 |
+
+## 4.2 必須記錄實際版本
+
+```json
+{
+  "python": "3.13.5",
+  "pandoc": "3.1.11.1",
+  "libreoffice": "25.2.3.2",
+  "inkscape": "1.4",
+  "imagemagick": "7.1.2-1",
+  "poppler": "25.06.0",
+  "pyyaml": "6.0.3"
+}
+```
+
+工具升級可能改變：
+
+- heading style mapping。
+- HTML table 輸出。
+- 圖片 relationship。
+- DOC → DOCX 結果。
+- soft hyphen 與 spacing。
+- 圖片轉換成功率。
+
+## 4.3 建議容器化
+
+正式化後應以 Dockerfile 或 devcontainer 固定版本。至少提供：
+
+```text
+Dockerfile
+requirements.txt
+tool-versions.txt
 ```
 
 ---
 
-## 3. 核心設計原則
+# 5. 工作目錄
 
-## 3.1 正文只由 deterministic parser 產生
-
-正文不交給 LLM 重新輸出。處理方式是：
-
-```text
-Word source
-    ↓
-Pandoc / OOXML / legacy DOC conversion
-    ↓
-Markdown 中間結果
-    ↓
-規則式 heading tree
-    ↓
-規則式拆檔
-    ↓
-Markdown corpus
-```
-
-LLM 僅可用於：
-
-- 視覺抽查時指出疑似排版錯位。
-- 協助人工理解異常。
-- 未來產生額外的 topic/navigation metadata。
-- 檢查 README 是否足以讓 agent 找到相關 clause。
-
-LLM 不可用於：
-
-- 改寫 normative text。
-- 自行修正文法。
-- 猜測遺失文字。
-- 改寫表格內容。
-- 改動 modal verbs。
-- 依「合理意思」補完原文。
-
-## 3.2 OpenAPI 不由 Annex Markdown 反向重建
-
-TS 29.520 Annex A 內也包含 API definition，但 ZIP 已提供官方 YAML。處理原則：
-
-```text
-ZIP 中的 YAML = API source of truth
-```
-
-因此：
-
-- YAML 使用 byte-for-byte copy。
-- 不重新格式化。
-- 不改版號。
-- 不將所有 YAML 都強制標記為 package 的最新 point release。
-- Annex A 的 Markdown 只保留導覽與一般說明，API body 連到官方 YAML。
-- 解析 `$ref`，但不自動混入其他 Release 的 dependency。
-
-## 3.3 先建樹，再拆檔
-
-不可直接以固定 heading level 切檔。正確順序：
-
-1. 將完整 Markdown 解析成 heading tree。
-2. 計算每個 node 本身與 subtree 的字數。
-3. 依語意 clause 與大小決定是：
-   - 單一 Markdown；
-   - 目錄加 `README.md`；
-   - 特殊大表格拆分。
-4. 任何子 clause 都必須保留在 manifest 中，即使它沒有獨立檔案。
-
-本次大小門檻：
-
-```python
-MAX_WORDS = 4200
-```
-
-規則：
-
-```text
-subtree <= 4200 words
-    → 一個 Markdown，內含其子 clause
-
-subtree > 4200 words 且存在子 clause
-    → 建立資料夾 README，只列 immediate children
-
-沒有合理子 clause 可拆，但仍超過 4200
-    → 保持完整 atomic clause，不在任意段落位置強拆
-```
-
----
-
-## 4. 使用工具與版本
-
-本次實際環境：
-
-| 工具 | 用途 | 版本 |
-|---|---|---|
-| Python | tree parsing、拆檔、manifest、驗證 | 3.13.5 |
-| PyYAML | YAML parse 與 manifest 輸出 | 6.0.3 |
-| Pandoc | DOCX → Markdown，保留 heading/table/media | 3.1.11.1 |
-| LibreOffice | legacy DOC → intermediate DOCX/TXT/PDF | 25.2.3.2 |
-| `docx2txt` | TS 23.288 獨立文字抽取 | Python CLI |
-| `antiword` | TS 29.520 legacy DOC 獨立文字抽取 | 系統工具 |
-| Inkscape | EMF/WMF → PNG preview | 1.4 |
-| ImageMagick | 圖片轉換 fallback | 7.1.2-1 |
-| Poppler `pdftoppm` | PDF page → image，供視覺抽查 | 25.06.0 |
-| `zip` / `unzip` | 來源解包與交付封裝 | 系統工具 |
-| SHA-256 | 來源與輸出完整性 | `sha256sum` / Python `hashlib` |
-
-建議將版本寫入 validation report，因為 Pandoc 或 LibreOffice 升級後可能改變：
-
-- heading style mapping；
-- HTML table 產生方式；
-- 圖片 anchor；
-- legacy DOC 轉換結果。
-
----
-
-## 5. 工作目錄配置
-
-推薦使用以下工作區，不直接在 repository 內執行：
+建議：
 
 ```text
 work/
+├── parent/
 ├── source/
-│   ├── 23288/
-│   └── 29520/
+│   ├── TS_23.288/
+│   └── TS_29.520/
 ├── intermediate/
-│   └── 29520_docx/
-├── pandoc/
-│   ├── 23288.md
-│   ├── 23288_media/
-│   ├── 29520.md
-│   └── 29520_media/
-├── validation_raw/
-├── rendered_source/
-├── page_samples/
-├── build_specs.py
-└── final_validate.py
-
-output/
-└── specs/
+│   ├── docx/
+│   ├── markdown/
+│   ├── media/
+│   └── plain-text/
+├── rendered-source/
+├── qa/
+├── logs/
+├── build/
+│   └── specs/
+└── scripts/
 ```
 
-此次環境使用：
+輸出只能寫入新的 `work/build/specs/`。
 
-```text
-/mnt/data/spec_work/
-/mnt/data/NWDAF_3GPP_R18_specs/
-```
-
-腳本不應硬編碼這些路徑；正式重做時應改為 CLI arguments 或 config YAML。
+來源與 parent corpus 應視為唯讀。
 
 ---
 
-## 6. 完整轉換流程
+# 6. Phase 0：來源盤點
 
-# Phase 0：來源確認與唯讀盤點
-
-## 6.1 檢查 ZIP
+## 6.1 ZIP inventory
 
 ```bash
-unzip -l 23288-id0.zip
-unzip -l 29520-ie0.zip
-sha256sum 23288-id0.zip 29520-ie0.zip
+unzip -l SPEC.zip
+sha256sum SPEC.zip
 ```
 
-確認：
+檢查：
 
-- 檔名版本碼。
-- Word 格式是 `.docx` 還是 `.doc`。
-- 是否包含 YAML、圖片或其他附件。
-- 是否有意外的多層 ZIP。
-- 檔案日期與規格文件內頁首版本是否一致。
+- Word 是 `.docx` 還是 `.doc`。
+- 是否有 YAML、ABNF、XML、JSON 或其他附件。
+- 是否有重複 package。
+- 文件頁首版本是否與 ZIP filename code 一致。
+- 附件的 `externalDocs` 版本是否較早。
+- ZIP 是否另含多層 ZIP。
 
-注意：3GPP 網頁 archive 索引可能晚於實際收到的檔案。應以：
+## 6.2 版本確認順序
 
-1. 上傳 ZIP；
-2. ZIP 中 Word 文件頁首；
-3. 文件 properties；
-4. 附件內容；
+外部 archive index 可能落後。以以下順序判斷：
 
-共同判斷，不應只信外部列表。
+1. 使用者提供的 ZIP。
+2. Word 文件內頁首／封面。
+3. Word properties。
+4. 附件內 `externalDocs`。
+5. 3GPP／ETSI archive 頁面。
 
-## 6.2 解壓
+package version 與附件 declared version 要分開記錄，不可強制統一。
 
-```bash
-mkdir -p work/source/23288 work/source/29520
+## 6.3 Source inventory
 
-unzip -q 23288-id0.zip -d work/source/23288
-unzip -q 29520-ie0.zip -d work/source/29520
+產生：
+
+```json
+{
+  "archive": "29520-ie0.zip",
+  "archive_sha256": "...",
+  "members": [
+    {
+      "path": "29520-ie0.doc",
+      "size": 12345678,
+      "sha256": "..."
+    },
+    {
+      "path": "TS29520_Nnwdaf_EventsSubscription.yaml",
+      "size": 123456,
+      "sha256": "..."
+    }
+  ]
+}
 ```
-
-不要修改 source 目錄中的檔案。
 
 ---
 
-# Phase 1：建立可解析的 Word 來源
+# 7. Phase 1：依來源格式選擇 adapter
 
-## 6.3 TS 23.288：直接使用 DOCX
+原生 DOCX 與 legacy DOC 必須視為兩種 pipeline。
 
-來源：
-
-```text
-work/source/23288/23288-id0.docx
-```
-
-DOCX 是 ZIP-based OOXML，可直接：
-
-- 由 Pandoc 解析；
-- 由 `docx2txt` 抽取；
-- 解開 `word/media/`；
-- 解開 `word/embeddings/`；
-- 讀取 styles、numbering、relationships。
-
-## 6.4 TS 29.520：legacy DOC 先產生 intermediate DOCX
-
-來源是 binary `.doc`：
+## 7.1 Native DOCX adapter
 
 ```text
-work/source/29520/29520-ie0.doc
+DOCX
+├── Pandoc → raw Markdown
+├── docx2txt → independent plain text
+├── OOXML direct inspection
+├── word/media extraction
+└── word/embeddings extraction
 ```
 
-Pandoc 無法可靠直接處理所有舊式 Word 結構，因此先用 LibreOffice 轉成中間 DOCX：
+DOCX 是 ZIP-based OOXML，可直接檢查：
+
+```text
+word/document.xml
+word/styles.xml
+word/numbering.xml
+word/_rels/document.xml.rels
+word/media/*
+word/embeddings/*
+```
+
+## 7.2 Legacy DOC adapter
+
+```text
+原始 DOC
+├── antiword → independent text evidence
+├── LibreOffice TXT → second text evidence
+├── LibreOffice DOCX → structural intermediate
+├── Pandoc intermediate DOCX → Markdown
+└── 原始 DOC → PDF，若可行
+```
+
+命令：
 
 ```bash
-mkdir -p work/intermediate/29520_docx
-
 libreoffice \
   --headless \
   --convert-to docx \
-  --outdir work/intermediate/29520_docx \
-  work/source/29520/29520-ie0.doc
+  --outdir work/intermediate/docx \
+  source.doc
 ```
 
-重要原則：
+重要：
 
 ```text
-intermediate DOCX 是結構解析介面，不是 source of truth。
-原始 DOC 仍須保留並作獨立文字比對。
+intermediate DOCX 不是 source of truth。
 ```
 
-原因：
+原始 DOC 必須保留，因為 DOC → DOCX 可能改變：
 
-- DOC → DOCX 可能改變 heading styles。
-- text box 可能改變順序。
-- merged cells 可能被重新表示。
-- floating objects / OLE anchor 可能變動。
-- 字詞可能因版面斷行而被拆開。
+- heading styles。
+- text box 順序。
+- merged-cell 表示。
+- floating objects。
+- list numbering。
+- 字詞的 layout-driven 分割。
 
 ---
 
-# Phase 2：Pandoc 結構抽取
+# 8. Phase 2：Pandoc 結構抽取
 
-## 6.5 DOCX → Markdown
-
-本次保留的工作結果顯示 Pandoc 使用了獨立 media extraction 目錄。可用下列命令重現同類結果：
+## 8.1 建議命令
 
 ```bash
-mkdir -p work/pandoc/23288_media work/pandoc/29520_media
-
 pandoc \
-  work/source/23288/23288-id0.docx \
+  source.docx \
   --from=docx \
   --to=gfm \
   --wrap=none \
-  --extract-media=work/pandoc/23288_media \
-  --output=work/pandoc/23288.md
-
-pandoc \
-  work/intermediate/29520_docx/29520-ie0.docx \
-  --from=docx \
-  --to=gfm \
-  --wrap=none \
-  --extract-media=work/pandoc/29520_media \
-  --output=work/pandoc/29520.md
+  --extract-media=work/intermediate/media/SPEC \
+  --output=work/intermediate/markdown/SPEC.md
 ```
 
-> 可重現性註記：本次原始 shell command 沒有被獨立保存，但輸出路徑、Pandoc 版本、media 目錄及產生結果均保留。上列命令是與本次結果一致的重建方式。後續正式 pipeline 應將所有命令寫入 Makefile、shell script 或 CI log。
+legacy DOC 使用中介 DOCX。
 
-## 6.6 為何使用 GFM，但保留 HTML table
+## 8.2 保存命令紀錄
 
-GitHub-Flavored Markdown 無法完整表達：
+每個 subprocess 都應寫入 `commands.log`：
 
-- rowspan；
-- colspan；
-- nested table；
-- 複雜 cell block；
-- 多段落 cell。
+```json
+{
+  "command": ["pandoc", "..."],
+  "started_at": "...",
+  "ended_at": "...",
+  "exit_code": 0,
+  "timeout_seconds": 1800,
+  "stdout_log": "...",
+  "stderr_log": "...",
+  "inputs": {"source.docx": "sha256"},
+  "outputs": {"SPEC.md": "sha256"}
+}
+```
 
-Pandoc 在這些情況會輸出 HTML `<table>`。不要強制將所有 HTML table 改寫成 pipe table，否則容易破壞語意。
+不要只在最終文件中寫「曾經執行 Pandoc」，要保留 exact command。
+
+## 8.3 複雜表格
+
+GFM 無法完整表示：
+
+- rowspan。
+- colspan。
+- nested table。
+- cell 內多段落。
+- cell 內 list 或圖片。
 
 原則：
 
 ```text
 簡單表格
-→ Markdown table 可接受
+→ Markdown pipe table
 
-合併儲存格或複雜內容
+複雜／合併表格
 → 保留 Pandoc HTML table
 ```
 
+不可為了「純 Markdown」強制重寫 HTML table。
+
 ---
 
-# Phase 3：獨立文字抽取
+# 9. Phase 3：獨立文字抽取
 
-單一路徑轉換不能證明文字正確。至少保留第二條 extractor。
-
-## 6.7 TS 23.288
+## 9.1 DOCX
 
 ```bash
-docx2txt \
-  work/source/23288/23288-id0.docx \
-  work/validation_raw/23288_docx2txt.txt
+docx2txt source.docx > independent.txt
+pandoc raw.md --to=plain --output=pandoc.txt
 ```
 
-另外可直接由 OOXML 讀取 `word/document.xml`，作第三條路徑。
+也可直接解析 `word/document.xml` 作第三路徑。
 
-Pandoc 版本輸出另轉為 plain text：
-
-```bash
-pandoc work/pandoc/23288.md --to=plain \
-  --output=work/validation_raw/23288_pandoc.txt
-```
-
-## 6.8 TS 29.520
-
-原始 DOC 使用兩條額外路徑：
+## 9.2 Legacy DOC
 
 ```bash
-antiword work/source/29520/29520-ie0.doc \
-  > work/validation_raw/29520_antiword.txt
-```
-
-以及 LibreOffice text export：
-
-```bash
-mkdir -p work/validation_raw/lo_txt
+antiword source.doc > antiword.txt
 
 libreoffice \
   --headless \
   --convert-to txt:Text \
-  --outdir work/validation_raw/lo_txt \
-  work/source/29520/29520-ie0.doc
+  --outdir work/intermediate/plain-text \
+  source.doc
 ```
 
-Pandoc 中間結果再輸出 plain text：
+## 9.3 Normalization
 
-```bash
-pandoc work/pandoc/29520.md --to=plain \
-  --output=work/validation_raw/29520_pandoc.txt
-```
+不同 extractor 會出現：
 
-### 6.9 為何不能要求全文 byte-equal
+- soft hyphen。
+- non-breaking space。
+- header/footer。
+- table serialization。
+- TOC。
+- hidden fields。
+- `Cardinality` → `Cardinal ity`。
 
-不同 extractor 會有合理差異：
-
-- soft hyphen；
-- non-breaking space；
-- layout-driven line break；
-- header/footer；
-- table serialization；
-- `Cardinality` 被拆成 `Cardinal ity`；
-- TOC 重複文字；
-- hidden Word fields。
-
-因此比對前需正規化：
+建議 normalization：
 
 ```python
 text = text.replace("\u00ad", "")
 text = text.replace("\u00a0", " ")
-tokens = re.findall(r"[A-Za-z0-9]+(?:[-'][A-Za-z0-9]+)*", text.lower())
+text = unicodedata.normalize("NFKC", text)
+tokens = re.findall(
+    r"[A-Za-z0-9]+(?:[-'][A-Za-z0-9]+)*",
+    text.lower(),
+)
 ```
 
-採用：
+## 9.4 比對指標
 
-1. token count；
-2. 12-token shingles；
-3. token multiset overlap；
-4. modal verb 與 marker 精確計數。
+至少計算：
 
-高敏感詞：
+1. normalized token count。
+2. token multiset overlap。
+3. 12-token shingle overlap。
+4. normative marker count。
+5. NOTE／EXAMPLE count。
+6. 章節標題集合。
+7. 表格／圖片／OLE 數量。
+
+Normative markers：
 
 ```text
 shall
@@ -518,204 +575,275 @@ should not
 may
 may not
 must
+must not
 NOTE
 EXAMPLE
 ```
 
 ---
 
-# Phase 4：Markdown 預處理與 deterministic correction
+# 10. Legacy DOC 差異分類
 
-## 6.10 只校正結構，不校正文句
+legacy DOC 不可只用「是否完全相同」判斷成功。
 
-本次發現的 deterministic corrections：
+差異需分類：
 
-### TS 23.288
+| 類型 | 處理 |
+|---|---|
+| 正文 token 缺失或新增 | Fail，必須回查來源 |
+| normative marker 差異 | 高風險，逐 block 回查 |
+| 表格 cell serialization 差異 | 回查來源表格，可接受但需記錄 |
+| header/footer 差異 | 通常可接受 |
+| soft hyphen / spacing | 正規化後可接受 |
+| list numbering 變化 | 回查結構 |
+| text box 順序差異 | 高風險，視覺或 OOXML 檢查 |
+| TOC 重複／缺失 | 通常不影響正文 |
 
-- Pandoc 將 Annex A、Annex B 映射成 H8。
-- Annex 子節被誤成 H1。
+範例：
 
-修正：
-
-```text
-######## Annex A ...
-→ # Annex A ...
-
-# A.1 ...
-→ ## A.1 ...
+```yaml
+legacy_doc_differences:
+  - block: table-87
+    category: table-serialization
+    antiword_missing_marker: shall
+    source_page_reviewed: true
+    accepted: true
+    note: antiword omitted one merged cell; Pandoc output matches Word table
 ```
 
-### TS 29.520
+不能因 `antiword` 少一個 `shall` 就直接宣稱 Pandoc 錯誤，也不能直接忽略。
 
-- 出現一個空白 H1。
-- Annex A / Annex B 被映射成 H8。
-- A.2～A.8 被映射成錯誤層級。
-- `A.9 Nnwdaf_RoamingAnalytics API` 在 DOC → DOCX 時失去 heading style。
+---
 
-修正：
+# 11. Phase 4：Deterministic correction
+
+## 11.1 只修結構，不修句子
+
+允許：
+
+- Annex heading level correction。
+- 空白 heading 移除。
+- 遺失 heading style 的恢復。
+- TOC link 轉成 visible text。
+- figure path normalization。
+- 切檔後的 local navigation link 更新。
+
+禁止：
+
+- 文法修正。
+- 拼字修正。
+- 句子重寫。
+- 表格內容猜測。
+- normative wording 修改。
+
+## 11.2 Annex 通用規則
+
+不能只硬編碼 Annex A。
+
+通用規則：
 
 ```text
-# [blank]
-→ 移除 formatting artifact
+Annex [A-Z] 主標題
+→ root-level specification child
 
-A.9 Nnwdaf_RoamingAnalytics API
-→ ## A.9 Nnwdaf_RoamingAnalytics API
+[A-Z].1
+→ Annex 的第一層子節
+
+[A-Z].1.1
+→ 下一層
 ```
 
-每個 correction 必須寫入：
+需考慮：
 
-```text
-specs/_validation/deterministic-corrections.yaml
+- Annex A～K 或更多。
+- Annex heading 被轉成 H8。
+- Annex 子節被轉成 H1。
+- change history 沒有一般 clause 子節。
+- 某一個 Annex heading style 遺失。
+
+## 11.3 空白 heading
+
+只在確認 source 沒有 visible text 時移除。
+
+不得單憑：
+
+```markdown
+#
 ```
 
-格式：
+就刪除前後內容。
+
+## 11.4 Per-spec correction registry
 
 ```yaml
 corrections:
   - spec: TS 29.520
-    line: 40525
+    source_line: 40525
     type: restore-heading
     original: A.9 Nnwdaf_RoamingAnalytics API
     replacement: "## A.9 Nnwdaf_RoamingAnalytics API"
+    evidence:
+      source_page: 432
+      source_style: lost-during-doc-conversion
 ```
 
-不可在沒有 source-page 證據時猜測 heading。
+每次 clean build 都從 registry 重新套用，不直接在輸出檔手改。
 
 ---
 
-# Phase 5：建立 heading tree
+# 12. Phase 5：建立 heading tree
 
-## 6.11 Node 資料結構
-
-使用 Python 將 `#`～`######` 解析成樹：
+## 12.1 Node 結構
 
 ```python
 @dataclass
 class Node:
     level: int
     title: str
+    clause: str | None
     content: list[str]
     children: list["Node"]
     parent: "Node | None"
     word_count: int
     subtree_words: int
+    source_start_line: int
+    source_end_line: int
 ```
 
-Clause number 從 title 提取：
+Clause regex 需支援：
 
 ```text
-6
-6.2
+4
+4.2
 6.2A
 6.2C.2.1
+A.1
 Annex A
 ```
 
-推薦 regex：
+範例：
 
 ```python
 r"^((?:\d+[A-Z]?|[A-Z])(?:\.\d+[A-Z]?)*)(?:\s+|$)"
 ```
 
-## 6.12 完整性 hash
+## 12.2 Reassembly hash
 
-建立 tree 後，將 tree 重新組回 Markdown，對 preprocessed Markdown 算 SHA-256：
+tree 建立後，必須重新組回原 Markdown：
 
 ```text
-preprocessed Markdown hash
-tree reassembled Markdown hash
+preprocessed Markdown SHA-256
+tree-reassembled Markdown SHA-256
 ```
 
-必須相同。
+兩者必須相同。
 
-這能證明：
+這證明：
 
-- parse tree 沒有漏掉 paragraph；
-- 沒有改變順序；
-- 拆檔前資料完整存在。
+- 沒漏段落。
+- 沒改順序。
+- 沒因 parser tree 丟失表格或圖片。
+- 拆檔前資料完整。
+
+若 hash 不同，不可繼續拆檔。
 
 ---
 
-# Phase 6：Progressive disclosure 拆檔
+# 13. Phase 6：Progressive-disclosure 拆檔
 
-## 6.13 一般規則
+## 13.1 預設門檻
 
 ```python
 MAX_WORDS = 4200
 ```
 
-### Leaf file
+這不是絕對限制，而是導航門檻。
 
-當 subtree 不超過門檻，輸出：
+## 13.2 Leaf file
+
+subtree 小於門檻：
 
 ```text
 6.2A Procedure for ML Model Provisioning.md
 ```
 
-該檔可包含較小的子 clause。
+可內含較小的子 clause。
 
-### Directory
+## 13.3 Directory
 
-當 subtree 超過門檻且有子節：
+subtree 超過門檻且有子節：
 
 ```text
-6 Procedures to Support Network Data Analytics/
+6 Procedures/
 ├── README.md
 ├── 6.1 ...md
-├── 6.2 .../
-│   ├── README.md
-│   └── ...
-└── ...
+└── 6.2 .../
+    ├── README.md
+    └── ...
 ```
 
-Directory README 只列 immediate children，避免一次載入全部 descendants。
+Directory README 只列 immediate children，不列所有 descendants。
 
-若該父 clause 在第一個子 clause 前已有規格正文，README 中另放：
+## 13.4 父 clause 的前置正文
+
+若父 clause 在第一個子節前有正文：
 
 ```markdown
 ## Specification text before child clauses
 ```
 
-並明確標記導航文字不是 3GPP 原文。
+此 heading 是 generated navigation，必須在 front matter 標記。
 
-## 6.14 Change history 特例
+## 13.5 Oversized atomic clause
 
-Change history 是大型單一表格，通常沒有可用的 clause children。任意切 paragraph 會破壞 table。
+若沒有安全語意邊界，不可任意切：
 
-本次按 calendar year 拆分：
+- 單一大型 data type table。
+- 單一 service operation。
+- 複雜 merged table。
+- 大型 API schema table。
+
+保留完整並列入：
+
+```json
+{
+  "oversized_atomic_files": [
+    {
+      "spec": "TS 29.xxx",
+      "clause": "6.1.6.3",
+      "words": 8200,
+      "reason": "single complex normative table"
+    }
+  ]
+}
+```
+
+## 13.6 Change history
+
+Change history 常是單一大型 HTML table。
+
+可依年度拆分：
 
 ```text
-Annex B Change history/
+Annex Change history/
 ├── README.md
 ├── 2022.md
 ├── 2023.md
-├── 2024.md
-├── 2025.md
-└── 2026.md
+└── ...
 ```
 
 規則：
 
-- table header 複製到每個年度檔。
-- row 本身不改寫。
-- continuation row 與前一年度維持在一起。
-- README 說明這是 progressive loading，不是原始規格的新章節。
-
-## 6.15 不強制拆開 atomic clause
-
-有些 clause 超過 4,200 words，但沒有安全的語意子節，例如：
-
-- 單一大型 data type table；
-- 單一 service operation；
-- 合併儲存格密集的表格。
-
-這類檔案保留完整，並在 `final-checks.json` 中列為 oversized exception。
+- table header 可重複。
+- row 內容不改寫。
+- continuation row 不拆錯年度。
+- README 說明這是 loading optimization，不是新增規範章節。
 
 ---
 
-# Phase 7：Front matter 與 manifest
+# 14. Front matter 與 manifest
 
-## 6.16 Clause file front matter
+## 14.1 Clause front matter
 
 ```yaml
 ---
@@ -730,60 +858,85 @@ source_archive_sha256: ...
 source_document_sha256: ...
 content_origin: 3gpp-source
 conversion: deterministic-pandoc-structure
+build_id: r18-corpus-20260803-001
 ---
 ```
 
-對 navigation README：
+Generated README：
 
 ```yaml
 content_origin: generated-navigation-and-3gpp-source
 ```
 
-## 6.17 Manifest
+## 14.2 Per-spec manifest
 
-每份規格有：
-
-```text
-TS xx.xxx/manifest.yaml
-```
-
-每個 heading 都登錄，即使它只是某個大檔案內的 embedded clause：
+每個 heading 都要登錄，即使沒有獨立檔案：
 
 ```yaml
 clauses:
   - clause: "6.2A"
     title: Procedure for ML Model Provisioning
     path: "6 Procedures/.../6.2A Procedure for ML Model Provisioning.md"
-    source_words: 2340
     kind: source-file
+    source_words: 2340
 
   - clause: "6.2A.2"
     title: Procedure
     path: "6 Procedures/.../6.2A Procedure for ML Model Provisioning.md"
-    source_words: 1810
     kind: embedded-clause
+    source_words: 1810
 ```
 
-如此 agent 可透過 manifest 直接定位，不必掃描所有檔案。
+## 14.3 全域 manifest
+
+```yaml
+specifications:
+  - spec: TS 23.288
+    version: 18.13.0
+    path: TS 23.288/
+    complete: true
+    source_archive: 23288-id0.zip
+
+  - spec: TS 23.502
+    version: 18.14.0
+    path: TS 23.502/
+    complete: true
+```
+
+需雙向驗證：
+
+```text
+manifest 中的規格
+↔ 實體規格目錄
+```
 
 ---
 
-# Phase 8：圖片、Visio 與 OLE
+# 15. 圖片、Visio 與 OLE
 
-## 6.18 資產分類
-
-每份規格：
+## 15.1 資產分類
 
 ```text
 assets/
-├── original/   # Pandoc 抽出的 EMF/WMF/PNG/JPG
-├── rendered/   # PNG reading preview
-└── embedded/   # word/embeddings 中的 Visio/OLE/Word object
+├── original/
+├── rendered/
+└── embedded/
 ```
 
-## 6.19 原始物件抽取
+定義：
 
-DOCX 可直接當 ZIP 開啟：
+```text
+original
+    source of truth
+
+embedded
+    可編輯／原生 OLE、Visio、embedded Word
+
+rendered
+    agent-friendly preview，不是來源真相
+```
+
+## 15.2 Embedded extraction
 
 ```python
 with zipfile.ZipFile(source_docx) as z:
@@ -792,37 +945,25 @@ with zipfile.ZipFile(source_docx) as z:
             ...
 ```
 
-TS 29.520 使用 LibreOffice 生成的 intermediate DOCX 抽取 embeddings，但仍保留原始 `.doc` 作來源。
-
-本次結果：
-
-| 規格 | media | embedded |
-|---|---:|---:|
-| TS 23.288 | 94 | 94 |
-| TS 29.520 | 54 | 20 |
-
-TS 23.288 embeddings 包含：
+保留：
 
 - `.vsd`
 - `.vsdx`
-- embedded `.doc`
-- embedded `.docx`
+- `.doc`
+- `.docx`
 - `oleObject*.bin`
 
-## 6.20 PNG preview 轉換
+## 15.3 Preview rendering
 
 優先順序：
 
-1. PNG 直接 copy。
-2. EMF/WMF 嘗試 Inkscape。
-3. 失敗時 ImageMagick fallback。
-4. 每張設 timeout，避免單張 vector 卡死整批。
-5. 已存在且非空的 PNG 直接 skip。
-6. 原始 vector 永遠保留，即使 preview 失敗。
+1. PNG/JPEG 直接 copy。
+2. Inkscape 處理 EMF／WMF。
+3. 將可疑 WMF 暫時複製為 `.emf` 再試。
+4. ImageMagick fallback。
+5. 失敗時不建立假的空白 PNG。
 
-核心邏輯：
-
-```python
+```bash
 inkscape source.emf \
   --export-type=png \
   --export-filename=target.png \
@@ -835,370 +976,539 @@ Fallback：
 magick -density 180 source.emf -trim +repage target.png
 ```
 
-實際問題：
+## 15.4 必備穩定性措施
 
-- TS 29.520 某些 `.wmf` 內容實際可由 EMF parser 處理。
-- 直接以 `.wmf` extension 呼叫工具可能卡住。
-- 解法是複製到 temporary `.emf` 再交給 Inkscape。
-- 設定 20 秒 Inkscape timeout、30 秒 ImageMagick timeout。
-- 使用最多 4 worker，避免向量轉檔過度併發。
+```text
+per-image timeout
+bounded concurrency
+resume existing non-empty output
+temporary extension override
+failure manifest
+```
 
-Markdown 只連到 `assets/rendered/*.png`，但 `assets/original/` 是追溯來源。
+推薦：
+
+```text
+Inkscape timeout：20 秒
+ImageMagick timeout：30 秒
+workers：最多 4
+```
+
+## 15.5 Preview failure policy
+
+PNG preview 失敗不一定使 corpus fail，只要：
+
+- 原始 vector 存在。
+- 引用指向實際存在的原始或 rendered asset。
+- 失敗清單記錄。
+- 沒有 placeholder 假裝成功。
 
 ---
 
-# Phase 9：TS 29.520 Annex A 與 OpenAPI
+# 16. 官方 OpenAPI、ABNF 與其他附件
 
-## 6.21 Byte-for-byte copy
-
-```python
-shutil.copy2(source_yaml, output_yaml)
-```
-
-驗證：
-
-```text
-source SHA-256 == output SHA-256
-```
-
-本次 8/8 byte-identical，8/8 YAML parse success。
-
-## 6.22 `$ref` dependency inventory
-
-掃描：
+## 16.1 Byte-for-byte copy
 
 ```python
-r"\$ref:\s*['\"]?([^'\"\s]+)"
+shutil.copy2(source, destination)
+assert sha256(source) == sha256(destination)
 ```
 
-分成：
+禁止：
 
-- internal ref：`#/components/...`
-- external file ref：`TS29571_CommonData.yaml#/...`
+- 自動格式化。
+- 排序 key。
+- 改縮排。
+- 統一版本字串。
+- 修正 schema。
+- 由 Annex Markdown 反向生成 YAML。
 
-若 external file 不在本次 ZIP：
-
-- 寫入 `openapi/manifest.yaml`；
-- 寫入 `openapi/README.md`；
-- 不自動下載其他版本。
-
-本次缺少 17 個 shared schema 檔，例如：
-
-```text
-TS29510_Nnrf_NFManagement.yaml
-TS29571_CommonData.yaml
-TS29575_Nadrf_DataManagement.yaml
-...
-```
-
-## 6.23 Package version 與 file-declared version 分開
-
-TS 29.520 package 是 V18.14.0，但 8 份 YAML 中只有 MLModelTraining 宣告 V18.14.0，其餘宣告 V18.13.0。
-
-不可批次改寫。應保留：
+## 16.2 Package version 與附件 declared version
 
 ```yaml
-package_version: 18.14.0
-external_docs_description: 3GPP TS 29.520 V18.13.0 ...
+package:
+  spec: TS 29.518
+  version: 18.14.0
+
+attachments:
+  - file: TS29518_Namf_EventExposure.yaml
+    declared_spec_version: 18.13.0
+    sha256: ...
+    byte_identical_to_source: true
 ```
+
+附件較早版本通常代表自前一 point release 後未修改，不是錯誤。
+
+## 16.3 Annex API handling
+
+若 Word Annex 重複提供完整 API transcription，而 ZIP 有官方 YAML：
+
+- 正文可保留 Annex 一般說明。
+- API body 不需再建第二份手動維護的 YAML。
+- Markdown 應導向 exact official attachment。
 
 ---
 
-# Phase 10：視覺驗證
+# 17. OpenAPI dependency policy
 
-## 6.24 原始 Word 渲染
+## 17.1 不追求無限制歸零
 
-用 LibreOffice 將原始 Word 轉 PDF：
-
-```bash
-libreoffice \
-  --headless \
-  --convert-to pdf \
-  --outdir work/rendered_source \
-  source.docx
-```
-
-legacy DOC 同理直接由原始 `.doc` 轉 PDF，不要只渲染 intermediate DOCX。
-
-## 6.25 抽取高風險頁面
-
-```bash
-pdftoppm \
-  -f START_PAGE \
-  -l END_PAGE \
-  -png \
-  source.pdf \
-  work/page_samples/sample
-```
-
-本次抽查：
-
-| 規格 | 頁面 | 風險 |
-|---|---|---|
-| TS 23.288 | 30–35 | clause hierarchy、numbered procedure、sequence diagram |
-| TS 23.288 | 200–203 | complex analytics table、Table 6.8.3-1、notes |
-| TS 29.520 | 26–35 | nested list、NOTE numbering、clause boundaries |
-| TS 29.520 | 100–104 | API resource/data-model tables |
-| TS 29.520 | 343–345 | MLModelMonitor URI figure、method table |
-
-抽查重點：
-
-- paragraph 是否落在正確 clause。
-- list numbering 是否正確。
-- NOTE 是否包含完整範圍。
-- table cell 是否錯位。
-- caption 與 figure 是否相鄰。
-- 圖片 preview 是否和 source 一致。
-- heading style correction 是否有 source-page 證據。
-
-視覺抽查結果寫入：
+OpenAPI dependency 會跨：
 
 ```text
-_validation/visual-sampling.json
+NWDAF
+→ DCCF / MFAF / ADRF
+→ AMF / UDM / SMF / PCF / NEF / LMF / NSSF
+→ policy / charging / location / security schemas
 ```
 
-此步驟是 risk-based sampling，不是逐頁認證。
+若以「任何 unresolved `$ref` 都要補」為目標，corpus 會無限擴張。
+
+## 17.2 依賴分級
+
+```yaml
+dependencies:
+  required_for_current_project:
+    - TS29510_Nnrf_NFManagement.yaml
+
+  required_for_included_primary_apis:
+    - TS29571_CommonData.yaml
+
+  optional_feature_dependencies:
+    - TS29572_Nlmf_Location.yaml
+
+  unresolved_external_dependencies:
+    - TS32291_Nchf_ConvergedCharging.yaml
+```
+
+## 17.3 Closure 驗收標準
+
+問題不是：
+
+> 是否完全沒有 unresolved `$ref`？
+
+而是：
+
+> 目前專案會實際 bundle／generate／呼叫的 API 是否閉合？
+
+例如：
+
+```text
+NWDAF → NRF → SMF / UPF / ADRF
+    應閉合
+
+尚未實作的 LMF / NEF / NSSF feature
+    可保留 unresolved
+```
+
+## 17.4 Dependency scan
+
+```python
+pattern = r"\$ref:\s*['\"]?([^'\"\s]+)"
+```
+
+分類：
+
+- internal `#/...`
+- local external file
+- missing external file
+- remote URL
+- circular reference
+
+產生：
+
+```text
+openapi/manifest.yaml
+_validation/dependency-report.json
+```
 
 ---
 
-# Phase 11：自動驗證
+# 18. README 與 agent navigation
 
-## 6.26 文字交叉驗證
+## 18.1 根 README
 
-### TS 23.288
+應包含：
 
-本次結果：
+- 規格列表。
+- 版本與 Release。
+- Stage 2／Stage 3／OpenAPI 關係。
+- 常見開發路徑。
+- dependency 與 source integrity 說明。
+- 如何引用 clause。
 
-- Pandoc normalized tokens：152,389
-- `docx2txt` normalized tokens：152,392
-- 12-token sequence overlap：約 99.34%
-- token multiset overlap：>99.98%
-- modal/NOTE/EXAMPLE count 完全一致
+範例：
 
-### TS 29.520
+```text
+NWDAF registration
+TS 23.288 → TS 23.502 → TS 29.510 → OpenAPI
 
-只比較 normative main body：
+SMF event exposure
+TS 23.502 → TS 29.508 → OpenAPI
 
-- Pandoc normalized tokens：113,481
-- LibreOffice text normalized tokens：113,470
-- modal/NOTE/EXAMPLE count 完全一致
-- `antiword` 作第三路徑，主要差異是 layout-induced word split
+ADRF
+TS 23.288 / TS 23.501 → TS 29.575 → OpenAPI
+```
 
-## 6.27 Link 與檔案檢查
+## 18.2 Per-spec README
 
-檢查：
+應包含：
 
-- Markdown local links。
-- Markdown image links。
-- HTML `<img src>`。
-- manifest path。
-- H7 以上 heading。
-- blank heading。
-- `/mnt/data/`、`/tmp/` 等工作路徑是否洩漏。
+- 規格定位。
+- 何時讀取。
+- clause map。
+- 相關規格。
+- 完整／scoped 狀態。
+- OpenAPI 附件入口。
+
+## 18.3 Navigation 與正文隔離
+
+README 可包含 generated 說明，但必須明確標記：
+
+```text
+Generated navigation is not 3GPP normative text.
+```
+
+---
+
+# 19. Markdown-aware validation
+
+後續經驗證明，簡單 regex 會誤判：
+
+- 規格中的 regex。
+- inline code。
+- code fence。
+- 範例路徑。
+- validation 文件中的 H8 範例。
+- `(foo/bar)` 類型文字。
+
+## 19.1 不要用單一 regex 掃全部
+
+優先使用：
+
+- Markdown AST。
+- HTML parser。
+- fenced-code-aware scanner。
+
+至少要先排除：
+
+```text
+fenced code blocks
+inline code
+HTML comments
+literal examples
+```
+
+## 19.2 驗證範圍分類
+
+不同檔案類型使用不同規則：
+
+| 檔案 | 驗證 |
+|---|---|
+| clause Markdown | heading、link、image、source text |
+| README | link、navigation、generated metadata |
+| validation docs | 不以範例文字觸發 corpus failure |
+| YAML | YAML parse、`$ref` scan、byte identity |
+| ABNF | byte identity |
+| code fence | 不做 Markdown link／heading 判斷 |
+
+## 19.3 Absolute path 檢查
+
+應檢查輸出是否意外包含：
+
+```text
+/mnt/data/
+/tmp/
+C:\Users\
+```
+
+但要排除流程文件中刻意展示的 code examples。
+
+---
+
+# 20. 視覺驗證分級
+
+大型文件不一定能成功全文 PDF export。不可把完整 PDF export 當硬性必要條件。
+
+## 20.1 Level A：完整視覺驗證
+
+- 原始 Word → PDF 成功。
+- 逐頁或廣泛 contact sheet。
+- 抽查所有高風險頁面。
+
+## 20.2 Level B：Risk-based visual sampling
+
+全文 export 過慢或失敗時：
+
+- 選複雜表格頁。
+- 選 sequence diagram。
+- 選 Annex。
+- 選 text box。
+- 選 heading correction 頁。
+- 選 OpenAPI resource figure。
+
+## 20.3 Level C：結構與文字最低保證
+
+至少完成：
+
+- tree reassembly hash。
+- independent text extraction。
+- heading count。
+- table count。
+- image/OLE count。
+- manifest verification。
+- source asset preservation。
+
+## 20.4 報告必須明確標示層級
+
+```json
+{
+  "visual_validation": {
+    "level": "B",
+    "full_pdf_export": false,
+    "sampled_pages": [30, 31, 102, 103],
+    "reason": "LibreOffice full export exceeded timeout"
+  }
+}
+```
+
+不可籠統寫「視覺驗證已通過」而不說明範圍。
+
+---
+
+# 21. 自動驗證
+
+## 21.1 必查項目
+
+- local links。
+- image links。
+- HTML image refs。
+- manifest paths。
+- global manifest ↔ directory。
+- blank headings。
+- H7+ headings。
+- absolute temp paths。
 - YAML parse。
-- YAML byte identity。
-- oversized files。
+- attachment byte identity。
+- `$ref` inventory。
+- source/output asset counts。
+- oversized atomic files。
+- orphan files。
+- duplicate paths。
+- duplicate clause IDs。
 
-驗證失敗時腳本應 non-zero exit，不可仍然封裝：
+## 21.2 驗證器失敗時
 
 ```python
 if failures:
     raise SystemExit("Final validation has failures")
 ```
 
-本次結果：
+不能在已知 fail 的情況下封裝並宣稱完成。
 
-```text
-files: 803
-Markdown files: 375
-local links checked: 390
-broken local links: 0
-image references checked: 157
-broken image references: 0
-manifest entries: 389 + 746
-missing manifest paths: 0
-H7-or-deeper headings: 0
-blank headings: 0
-absolute work paths: 0
-OpenAPI byte-identical: 8/8
-OpenAPI YAML valid: 8/8
-```
+## 21.3 驗證 false positive
+
+若 validator 攔下內容：
+
+1. 先判斷是 corpus error 還是 validator bug。
+2. 修 validator。
+3. 從 clean parent corpus 重建。
+4. 不在現有 output 上連續手工修補。
+5. 將 validator 變更寫入 build log。
 
 ---
 
-# Phase 12：封裝
+# 22. 失敗分類與接受政策
 
-驗證通過後才封裝：
+## 22.1 Hard failure
 
-```bash
-cd output-parent
-zip -r \
-  nwdaf-specs-r18-ts23288-v18.13.0-ts29520-v18.14.0.zip \
-  specs/
-```
+以下不得交付：
 
-測試 ZIP：
+- tree reassembly hash 不同。
+- clause 正文遺失。
+- normative wording 被改動。
+- broken manifest path。
+- broken local links。
+- OpenAPI YAML 被改寫。
+- source attachment 缺失。
+- ZIP integrity failure。
+- 無法解釋的正文 token 大量差異。
+- correction 未記錄。
 
-```bash
-unzip -t \
-  nwdaf-specs-r18-ts23288-v18.13.0-ts29520-v18.14.0.zip
-```
+## 22.2 Soft limitation
 
-產生 SHA-256：
+可交付但需明確列出：
 
-```bash
-sha256sum \
-  nwdaf-specs-r18-ts23288-v18.13.0-ts29520-v18.14.0.zip
-```
+- 部分 PNG preview 失敗。
+- 大型文件未完成全文 PDF export。
+- 未使用功能的 external `$ref` 缺失。
+- oversized atomic clause。
+- legacy DOC table serialization mismatch。
+- 部分 OLE 無法直接預覽。
 
-在使用者明確要求前，不：
+## 22.3 Review required
 
-- push；
-- commit；
-- create branch；
-- create PR；
-- 刪除或覆寫 repository 的 `specs/`。
-
----
-
-## 7. 本次遇到的主要問題與處理方式
-
-| 問題 | 風險 | 處理方式 |
-|---|---|---|
-| 外部 3GPP archive 索引落後 | 選到較舊版本 | 以使用者 ZIP 與文件內版本為準 |
-| TS 29.520 是 legacy DOC | heading/table/text box 轉換失真 | LibreOffice intermediate DOCX + original DOC independent checks |
-| Annex headings 被映射成 H8 | tree 層級錯誤 | deterministic heading promotion |
-| TS 29.520 A.9 heading style 遺失 | clause 被併入前一節 | 依原始頁面恢復 heading，記錄 correction |
-| 空白 heading | 產生無名 clause | 移除 formatting artifact，記錄 correction |
-| TOC anchor 在拆檔後失效 | 大量 broken links | 將原 TOC internal links轉成 visible text |
-| merged-cell table | pipe table 破壞語意 | 保留 HTML table |
-| Change history 過大 | agent 一次讀太多 | 依年度拆 row，文字不改寫 |
-| 某些 atomic clause 仍過大 | 強拆會破壞語意 | 列為 oversized exception |
-| WMF/EMF 轉 PNG 卡住 | build 無限等待 | per-image timeout、temporary `.emf`、fallback |
-| OLE/Visio 無法完整呈現在 Markdown | 圖資遺失 | 原始 embedded object 與 preview 同時保留 |
-| Annex A 與 YAML 重複 | 兩份 API source 可能漂移 | Markdown 不重抄 API body，改連 exact YAML |
-| OpenAPI 缺 shared schemas | schema 無法完全 resolve | 列出 17 個 dependency，不跨版本自動補入 |
-| YAML package/file version 不一致 | 錯誤統一版本 | 原樣保留 individual declaration |
-| 單一路徑文字看似正常但可能漏字 | 隱性 normative error | independent extractors + modal count + shingle comparison |
+- normative marker count 差異。
+- heading style 遺失。
+- text box 順序差異。
+- merged table cell 差異。
+- figure 與 caption 不相鄰。
+- Annex tree 不合理。
 
 ---
 
-## 8. LLM 在流程中的允許範圍
+# 23. LLM 使用邊界
 
-### 8.1 可以使用
+## 23.1 允許
 
-- 觀看 source page 與 Markdown render，標記可疑位置。
-- 解釋 parser 為何可能誤判。
-- 建議需要人工抽查的高風險頁面。
-- 產生 corpus 根 README 的一般使用說明。
-- 在不混入正文的前提下，未來建立 `Read when` 或 topic index。
+- 比較 source page 與 Markdown render。
+- 標記疑似 misplaced paragraph。
+- 建議高風險頁面。
+- 協助解讀 parser error。
+- 產生非規範性 README 導航。
+- 產生 topic tags，但必須與正文隔離。
+- 幫助使用者查找 clause。
 
-### 8.2 不可使用
+## 23.2 禁止
 
-- 讓模型讀一整章後重新輸出 Markdown 正文。
-- 讓模型「修順」英文。
-- 用模型補回 parser 沒讀到的句子。
-- 依語意推測表格 cell。
-- 修改 `shall`、`may` 等 normative wording。
-- 直接以模型輸出取代原始 YAML。
-- 在沒有原始頁面證據時更正 clause boundary。
+- 讓 LLM 讀整章後重新輸出正文。
+- 讓 LLM「修順」英文。
+- 用 LLM 補 parser 漏字。
+- 猜表格 cell。
+- 修改 modal verbs。
+- 自行建立官方 YAML。
+- 在沒有原始來源證據時恢復 heading。
+- 將 LLM summary 混入 clause source file。
 
-正確校正流程：
+正確流程：
 
 ```text
 LLM / validator 發現疑點
     ↓
-回查原始 Word / PDF 頁面
+回查 source Word / PDF / OOXML
     ↓
-確認 exact source text 與結構
+確認 exact text 與結構
     ↓
-修改 deterministic rule
+新增 deterministic rule
     ↓
-重新 build
+clean rebuild
     ↓
 重新驗證
 ```
 
 ---
 
-## 9. 驗收標準
+# 24. 增量加入新規格的完整流程
 
-新的規格在交付前至少要達成：
+假設已存在一個已驗證 corpus ZIP，需要加入新規格。
 
-### 必須通過
+## 24.1 Input
 
-- [ ] 來源 ZIP 與文件 SHA-256 已記錄。
-- [ ] 規格版本已由文件本身確認。
-- [ ] parser tree reassembly hash 完全一致。
-- [ ] 沒有 broken local link。
-- [ ] 沒有 broken image reference。
-- [ ] manifest path 全部存在。
-- [ ] OpenAPI YAML 與來源 byte-identical。
-- [ ] YAML 全部 parse success。
-- [ ] `shall/should/may` 等關鍵詞獨立抽取計數一致。
-- [ ] NOTE 與 EXAMPLE 計數一致。
-- [ ] 沒有空 heading 或 H7+ 殘留。
-- [ ] 沒有 temporary absolute path。
-- [ ] 複雜表格與圖至少完成 risk-based visual sampling。
-- [ ] 所有 deterministic correction 都有紀錄。
-- [ ] ZIP `unzip -t` 通過。
-
-### 需列入限制說明
-
-- [ ] oversized atomic files。
-- [ ] missing external OpenAPI schemas。
-- [ ] failed image previews。
-- [ ] legacy DOC text box / floating object 風險。
-- [ ] 未逐頁人工認證的事實。
-
----
-
-## 10. 重跑清單
-
-下一次對其他 3GPP 規格執行時：
-
-1. 收到官方 ZIP。
-2. 不修改 repo。
-3. `unzip -l` 與 SHA-256。
-4. 確認 `.doc` / `.docx`。
-5. 盤點附帶 YAML、XML、圖片及其他附件。
-6. legacy DOC 轉 intermediate DOCX。
-7. Pandoc 產生 raw Markdown 與 media。
-8. 產生至少一條獨立文字抽取。
-9. 建立 preprocessor correction list。
-10. 建立 heading tree。
-11. reassembly hash check。
-12. 依 4,200 words 與 clause hierarchy 拆檔。
-13. 產生 front matter 與 manifest。
-14. 抽出 original/rendered/embedded assets。
-15. OpenAPI byte copy 與 dependency scan。
-16. text cross-check。
-17. link、manifest、heading、path 檢查。
-18. risk-based visual sampling。
-19. 產生 `_validation/`。
-20. 所有檢查通過後封裝 ZIP。
-21. 將 ZIP 與 SHA-256 交付。
-22. 除非使用者另行要求，不做任何 GitHub write action。
-
----
-
-## 11. 建議未來改進
-
-本次流程已可重現，但仍可工程化：
-
-### 11.1 將臨時腳本改成正式 CLI
-
-```bash
-python convert_3gpp_spec.py \
-  --archive 23288-id0.zip \
-  --spec TS-23.288 \
-  --version 18.13.0 \
-  --output output/specs
+```text
+parent-corpus.zip
+new-spec-1.zip
+new-spec-2.zip
 ```
 
-### 11.2 使用 config YAML
+## 24.2 Steps
+
+1. 驗證 parent corpus ZIP。
+2. 記錄 parent SHA-256。
+3. 解壓 parent 到唯讀目錄。
+4. 建立新的空 build directory。
+5. 複製 parent corpus。
+6. 對每個新 ZIP 做 inventory。
+7. 依 DOCX／DOC adapter 轉換。
+8. 建立 independent text evidence。
+9. 套用 correction registry。
+10. 建 heading tree。
+11. 驗證 reassembly hash。
+12. 拆檔。
+13. 產生 per-spec README／manifest。
+14. 複製官方附件。
+15. 抽取 original／rendered／embedded assets。
+16. 更新全域 README。
+17. 重建全域 manifest。
+18. 重算所有 OpenAPI dependencies。
+19. 更新 validation records。
+20. 跑全 corpus validation。
+21. 產生 ZIP。
+22. `unzip -t`。
+23. 產生 SHA-256。
+24. 交付 ZIP 與驗證摘要。
+25. 不修改 repository。
+
+## 24.3 防止 orphan file
+
+新 build 完成後檢查：
+
+```text
+所有 TS 目錄都在 global manifest
+所有 global manifest 規格都有目錄
+所有附件都在 attachment inventory
+所有 clause file 都至少被一個 manifest entry 引用
+```
+
+---
+
+# 25. Command logging
+
+真正可重現不能只靠流程文字。
+
+每次 build 至少產生：
+
+```text
+_validation/commands.log
+_validation/environment.json
+_validation/source-inventory.json
+_validation/build.json
+_validation/tool-versions.txt
+```
+
+建議 command wrapper：
+
+```python
+def run_logged(
+    command: list[str],
+    *,
+    timeout: int,
+    cwd: Path,
+    log_dir: Path,
+) -> subprocess.CompletedProcess:
+    ...
+```
+
+記錄：
+
+- exact argv。
+- cwd。
+- environment overrides。
+- start/end。
+- duration。
+- timeout。
+- exit code。
+- stdout/stderr。
+- input/output hashes。
+
+---
+
+# 26. Suggested config format
 
 ```yaml
+build:
+  build_id: r18-corpus-20260803-001
+  parent_archive: previous-corpus.zip
+  output_archive: new-corpus.zip
+
+split:
+  max_words: 4200
+
+render:
+  dpi: 150
+  inkscape_timeout: 20
+  imagemagick_timeout: 30
+  workers: 4
+
 specs:
   - spec: TS 23.288
     version: 18.13.0
@@ -1214,101 +1524,224 @@ specs:
     exact_attachments:
       - "*.yaml"
 
-split:
-  max_words: 4200
+validation:
+  require_tree_hash_match: true
+  require_zero_broken_links: true
+  require_attachment_byte_identity: true
+  dependency_policy: project-required
 ```
-
-### 11.3 容器化
-
-固定：
-
-- Pandoc；
-- LibreOffice；
-- Inkscape；
-- ImageMagick；
-- Poppler；
-- Python dependencies。
-
-否則工具升級可能使輸出產生非語意差異。
-
-### 11.4 產生 diff-friendly stable IDs
-
-未來可為每個 source block 建立：
-
-```yaml
-source_block_id: paragraph-1842
-source_xml_path: word/document.xml
-```
-
-如此新版規格可做 clause-level diff。
-
-### 11.5 新增 automated page risk scoring
-
-高風險頁面可依下列訊號自動選出：
-
-- table 數量；
-- merged cell；
-- OLE；
-- text box；
-- floating image；
-- 多層 numbering；
-- Annex；
-- code/YAML；
-- heading style mismatch。
 
 ---
 
-## 12. 可直接交給下一個對話的工作指示
+# 27. 建議的正式 CLI
+
+```bash
+python convert_3gpp_corpus.py build \
+  --config corpus.yaml \
+  --workdir work \
+  --output output/specs
+```
+
+子命令：
+
+```text
+inventory
+convert
+validate-text
+render-assets
+build-tree
+split
+build-manifests
+scan-dependencies
+validate
+package
+```
+
+每個 phase 可重跑，但最終 build 必須從乾淨狀態開始。
+
+---
+
+# 28. Validation report 建議格式
+
+```json
+{
+  "build_id": "r18-corpus-20260803-001",
+  "specifications": 21,
+  "files": 6745,
+  "markdown_files": 3587,
+  "manifest_entries": 9897,
+  "local_links": {
+    "checked": 3716,
+    "broken": 0
+  },
+  "image_references": {
+    "checked": 1087,
+    "broken": 0
+  },
+  "openapi": {
+    "yaml_files": 60,
+    "parse_success": 60,
+    "byte_identical": 60
+  },
+  "official_non_yaml_attachments": {
+    "files": 2,
+    "byte_identical": 2
+  },
+  "visual_validation": {
+    "level": "B"
+  },
+  "limitations": []
+}
+```
+
+數字應由實際 build 自動產生，不可手寫。
+
+---
+
+# 29. 更新後的驗收清單
+
+## 29.1 Source and build
+
+- [ ] 每個 source ZIP 已記錄 SHA-256。
+- [ ] 文件內版本已確認。
+- [ ] package version 與 attachment declared version 分開記錄。
+- [ ] parent corpus ZIP 已記錄 SHA-256。
+- [ ] build 有唯一 build ID。
+- [ ] exact tool versions 已記錄。
+- [ ] exact commands 已記錄。
+
+## 29.2 Text and structure
+
+- [ ] tree reassembly hash 完全一致。
+- [ ] independent text extraction 已完成。
+- [ ] normative markers 已比對。
+- [ ] NOTE／EXAMPLE 已比對。
+- [ ] Annex tree 合理。
+- [ ] blank heading 為 0。
+- [ ] H7+ unintended headings 為 0。
+- [ ] 所有 correction 均有 registry 紀錄。
+- [ ] legacy DOC 差異已分類。
+
+## 29.3 Navigation
+
+- [ ] per-spec README 存在。
+- [ ] per-spec manifest 存在。
+- [ ] global manifest 與目錄一致。
+- [ ] embedded clauses 也有 manifest entry。
+- [ ] common entry paths 可定位主要功能。
+- [ ] generated navigation 與 normative text 有明確區隔。
+
+## 29.4 Attachments and assets
+
+- [ ] 官方 YAML／ABNF／XML 與來源 byte-identical。
+- [ ] YAML parse success。
+- [ ] original vector assets 完整。
+- [ ] embedded OLE／Visio 完整。
+- [ ] preview failures 已列出。
+- [ ] 沒有空白 placeholder 假裝轉換成功。
+
+## 29.5 Dependency
+
+- [ ] 所有 `$ref` 已掃描。
+- [ ] project-required dependencies 已閉合。
+- [ ] optional dependencies 已分類。
+- [ ] unresolved dependencies 有來源檔與引用者。
+- [ ] 不為追求零依賴而無限加入規格。
+
+## 29.6 Global validation
+
+- [ ] broken local links 為 0。
+- [ ] broken image refs 為 0。
+- [ ] missing manifest paths 為 0。
+- [ ] 沒有 orphan files。
+- [ ] 沒有不應存在的 absolute work paths。
+- [ ] validator 排除 code fence／inline code。
+- [ ] 視覺驗證層級已標示。
+- [ ] ZIP `unzip -t` 通過。
+- [ ] 最終 ZIP SHA-256 已提供。
+
+---
+
+# 30. 可直接交給下一個對話的指示
 
 ```text
 請依照附上的
-「3GPP Word 規格轉換為 Agent-readable Markdown 的可複現流程」
+「3GPP Word 規格轉換為 Agent-readable Markdown 的可複現流程 v2」
 處理我提供的 3GPP ZIP。
 
 要求：
 
 1. 不修改任何 GitHub repository。
-2. 先盤點 ZIP、版本、Word 格式、附件與 SHA-256。
-3. 規格正文必須 deterministic extraction，不可用 LLM 重寫。
-4. legacy DOC 需建立 intermediate DOCX，但原始 DOC 必須作獨立文字驗證。
-5. 使用 Pandoc 保留 heading、table、list、caption 與 media。
-6. 建立 heading tree，先驗證 reassembly hash，再拆檔。
-7. 採 progressive disclosure；預設約 4,200 words 為拆分門檻。
-8. 複雜 merged tables 保留 HTML table。
-9. OpenAPI/config 附件必須 byte-for-byte 保存。
-10. 不自動加入其他 Release 的 schema dependency。
-11. 保留 original vector、rendered PNG 與 embedded OLE/Visio。
-12. 使用至少兩條獨立文字抽取路徑，檢查 modal verbs、NOTE、EXAMPLE 與 token overlap。
-13. 對高風險表格、圖、text box 與 heading correction 做 source-page 視覺抽查。
-14. 所有修正必須是 deterministic correction，並寫入 validation report。
-15. 驗證 local links、image links、manifest paths、YAML、absolute paths 及 ZIP 完整性。
-16. 最後提供頂層為 specs/ 的 ZIP 與 SHA-256。
+2. 以上一版已驗證 corpus ZIP 為 parent，執行 clean build。
+3. 記錄 parent ZIP、每個 source ZIP 與最終 ZIP 的 SHA-256。
+4. 產生唯一 build ID，記錄所有工具版本與 exact command log。
+5. 先盤點 ZIP、文件版本、Word 格式、附件與 declared attachment versions。
+6. 規格正文必須 deterministic extraction，不可用 LLM 重寫。
+7. DOCX 使用 Pandoc、docx2txt 與 OOXML；legacy DOC 使用 antiword、LibreOffice TXT、LibreOffice DOCX 與 Pandoc。
+8. legacy DOC 的差異要分類，不可只用全文相等判斷。
+9. 建立 heading tree，reassembly hash 一致後才可拆檔。
+10. 預設以約 4,200 words 與 clause hierarchy 做 progressive disclosure。
+11. 不可任意拆開單一大型 normative table 或 atomic clause。
+12. 複雜 merged table 保留 HTML table。
+13. 所有 heading correction 必須 deterministic 並寫入 correction registry。
+14. 官方 OpenAPI／ABNF／XML 必須 byte-for-byte 保存。
+15. package version 與附件 declared version 分開記錄。
+16. 保留 original vector、rendered preview 與 embedded OLE／Visio。
+17. preview 失敗可接受，但原始圖資不得遺失，且需列入報告。
+18. OpenAPI dependency 依 current-project、primary、optional、unresolved 分級。
+19. 不為追求所有 `$ref` 歸零而無限加入其他規格。
+20. 使用 Markdown-aware validator，排除 code fence、inline code 與範例文字。
+21. 驗證 local links、image links、manifest paths、YAML、附件、absolute paths、orphan files 與 ZIP 完整性。
+22. 對高風險表格、圖、text box、Annex 與 heading correction 做視覺抽查。
+23. 清楚標示視覺驗證 Level A、B 或 C，不得誇大。
+24. 全 corpus 驗證失敗時不得封裝交付。
+25. 最終提供頂層為 specs/ 的完整 ZIP、SHA-256 與驗證摘要。
 ```
 
 ---
 
-## 13. 最重要的精確度界線
+# 31. 最重要的精確度原則
 
-此 corpus 是方便 agent 檢索的衍生格式，不是 3GPP 官方出版格式。
-
-遇到高風險標準解讀時，引用順序應為：
+最終 corpus 應遵守：
 
 ```text
-原始 3GPP Word / 官方出版物
-    ↓
-同版本官方 OpenAPI attachment
-    ↓
-本流程產生的 Markdown
-    ↓
-repository-generated navigation / summaries
+正文精確度
+    優先於格式美觀
+
+結構可追溯性
+    優先於檔案數量最少
+
+官方附件原貌
+    優先於本地格式一致
+
+可重建性
+    優先於手動快速修補
+
+project-required dependency closure
+    優先於整個 5GC dependency 歸零
+
+原始圖資
+    優先於 PNG preview 成功率
 ```
 
-Markdown 的價值是：
+若有任何衝突，回到原始 3GPP 文件確認，不得由 LLM 或 parser 猜測。
 
-- 快速定位；
-- progressive loading；
-- repository search；
-- agent context control；
-- clause-level version control。
+---
 
-它不能取代在重要規範判定時回查原始版本。
+# 32. 版本 2.0 相較 1.0 的主要更新
+
+1. 新增 clean-build 與 parent corpus 策略。
+2. 新增 build ID、provenance 與 exact command logging。
+3. 將 DOCX 與 legacy DOC 正式拆成兩種 adapter。
+4. 新增 legacy DOC 差異分類與接受政策。
+5. 泛化 Annex heading correction。
+6. 明確定義原始圖資、embedded object 與 preview 的信任層級。
+7. 新增 preview timeout、resume 與 failure manifest。
+8. 將視覺驗證分成 Level A／B／C。
+9. 新增 Markdown-aware validation，避免 regex false positive。
+10. 新增 dependency 分級，不追求無限制 `$ref` 歸零。
+11. 新增 package version 與 attachment declared version 分離。
+12. 新增 orphan file 與 manifest 雙向一致性檢查。
+13. 新增 hard failure、soft limitation 與 review-required 分類。
+14. 增量整合改為每輪完整重建與全 corpus 驗證。
+15. 驗收標準擴充為可直接工程化的 checklist。

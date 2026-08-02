@@ -119,230 +119,192 @@ clauses:
   kind: embedded-clause
 - clause: 5.2.4
   title: 5.2.4 Structured Data Types
-  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md
   source_words: 3056
   kind: source-file
 - clause: 5.2.4.1
   title: '5.2.4.1 Type: ProblemDetails'
-  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md
   source_words: 513
   kind: embedded-clause
 - clause: 5.2.4.2
   title: '5.2.4.2 Type: Link'
-  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md
   source_words: 28
   kind: embedded-clause
 - clause: 5.2.4.3
   title: 5.2.4.3 Type PatchItem
-  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md
   source_words: 179
   kind: embedded-clause
 - clause: 5.2.4.4
   title: '5.2.4.4 Type: LinksValueSchema'
-  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md
   source_words: 30
   kind: embedded-clause
 - clause: 5.2.4.5
   title: '5.2.4.5 Type: SelfLink'
-  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md
   source_words: 28
   kind: embedded-clause
 - clause: 5.2.4.6
   title: '5.2.4.6 Type: InvalidParam'
-  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md
   source_words: 236
   kind: embedded-clause
 - clause: 5.2.4.7
   title: '5.2.4.7 Type: LinkRm'
-  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md
   source_words: 21
   kind: embedded-clause
 - clause: 5.2.4.8
   title: 5.2.4.8 Type ChangeItem
-  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md
   source_words: 283
   kind: embedded-clause
 - clause: 5.2.4.9
   title: 5.2.4.9 Type NotifyItem
-  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md
   source_words: 163
   kind: embedded-clause
 - clause: 5.2.4.10
   title: '5.2.4.10 Type: ComplexQuery'
-  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md
   source_words: 68
   kind: embedded-clause
 - clause: 5.2.4.11
   title: '5.2.4.11 Type: Cnf'
-  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md
   source_words: 44
   kind: embedded-clause
 - clause: 5.2.4.12
   title: '5.2.4.12 Type: Dnf'
-  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md
   source_words: 44
   kind: embedded-clause
 - clause: 5.2.4.13
   title: '5.2.4.13 Type: CnfUnit'
-  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md
   source_words: 44
   kind: embedded-clause
 - clause: 5.2.4.14
   title: '5.2.4.14 Type: DnfUnit'
-  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md
   source_words: 44
   kind: embedded-clause
 - clause: 5.2.4.15
   title: '5.2.4.15 Type: Atom'
-  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md
   source_words: 67
   kind: embedded-clause
 - clause: 5.2.4.16
   title: 5.2.4.16 Void
-  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md
   source_words: 0
   kind: embedded-clause
 - clause: 5.2.4.17
   title: '5.2.4.17 Type: PatchResult'
-  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md
   source_words: 39
   kind: embedded-clause
 - clause: 5.2.4.18
   title: '5.2.4.18 Type: ReportItem'
-  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md
   source_words: 100
   kind: embedded-clause
 - clause: 5.2.4.19
   title: '5.2.4.19 Type: HalTemplate'
-  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md
   source_words: 142
   kind: embedded-clause
 - clause: 5.2.4.20
   title: '5.2.4.20 Type: Property'
-  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md
   source_words: 77
   kind: embedded-clause
 - clause: 5.2.4.21
   title: '5.2.4.21 Type: RedirectResponse'
-  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md
   source_words: 172
   kind: embedded-clause
 - clause: 5.2.4.22
   title: '5.2.4.22 Type: TunnelAddress'
-  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md
   source_words: 49
   kind: embedded-clause
 - clause: 5.2.4.23
   title: '5.2.4.23 Type: FqdnPatternMatchingRule'
-  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md
   source_words: 183
   kind: embedded-clause
 - clause: 5.2.4.24
   title: '5.2.4.24 Type: StringMatchingRule'
-  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md
   source_words: 48
   kind: embedded-clause
 - clause: 5.2.4.25
   title: '5.2.4.25 Type: StringMatchingCondition'
-  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md
   source_words: 50
   kind: embedded-clause
 - clause: 5.2.4.26
   title: '5.2.4.26 Type: Ipv4AddressRange'
-  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md
   source_words: 44
   kind: embedded-clause
 - clause: 5.2.4.27
   title: '5.2.4.27 Type: Ipv6AddressRange'
-  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md
   source_words: 44
   kind: embedded-clause
 - clause: 5.2.4.28
   title: '5.2.4.28 Type: Ipv6PrefixRange'
-  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.2 Data Types for Generic Usage/5.2.4 Structured Data Types.md
   source_words: 143
   kind: embedded-clause
 - clause: '5.3'
   title: 5.3 Data Types related to Subscription, Identification and Numbering
-  path: 5 Common Data Types/5.3 Data Types related to Subscription, Identification
-    and Numbering.md
+  path: 5 Common Data Types/5.3 Data Types related to Subscription, Identification and Numbering.md
   source_words: 1519
   kind: source-file
 - clause: 5.3.1
   title: 5.3.1 Introduction
-  path: 5 Common Data Types/5.3 Data Types related to Subscription, Identification
-    and Numbering.md
+  path: 5 Common Data Types/5.3 Data Types related to Subscription, Identification and Numbering.md
   source_words: 13
   kind: embedded-clause
 - clause: 5.3.2
   title: 5.3.2 Simple Data Types
-  path: 5 Common Data Types/5.3 Data Types related to Subscription, Identification
-    and Numbering.md
+  path: 5 Common Data Types/5.3 Data Types related to Subscription, Identification and Numbering.md
   source_words: 1263
   kind: embedded-clause
 - clause: 5.3.3
   title: 5.3.3 Enumerations
-  path: 5 Common Data Types/5.3 Data Types related to Subscription, Identification
-    and Numbering.md
+  path: 5 Common Data Types/5.3 Data Types related to Subscription, Identification and Numbering.md
   source_words: 0
   kind: embedded-clause
 - clause: 5.3.3.1
   title: '5.3.3.1 Enumeration: GroupServiceId'
-  path: 5 Common Data Types/5.3 Data Types related to Subscription, Identification
-    and Numbering.md
+  path: 5 Common Data Types/5.3 Data Types related to Subscription, Identification and Numbering.md
   source_words: 95
   kind: embedded-clause
 - clause: 5.3.4
   title: 5.3.4 Structured Data Types
-  path: 5 Common Data Types/5.3 Data Types related to Subscription, Identification
-    and Numbering.md
+  path: 5 Common Data Types/5.3 Data Types related to Subscription, Identification and Numbering.md
   source_words: 0
   kind: embedded-clause
 - clause: 5.3.4.1
   title: '5.3.4.1 Type: Guami'
-  path: 5 Common Data Types/5.3 Data Types related to Subscription, Identification
-    and Numbering.md
+  path: 5 Common Data Types/5.3 Data Types related to Subscription, Identification and Numbering.md
   source_words: 31
   kind: embedded-clause
 - clause: 5.3.4.2
   title: '5.3.4.2 Type: NetworkId'
-  path: 5 Common Data Types/5.3 Data Types related to Subscription, Identification
-    and Numbering.md
+  path: 5 Common Data Types/5.3 Data Types related to Subscription, Identification and Numbering.md
   source_words: 42
   kind: embedded-clause
 - clause: 5.3.4.3
   title: '5.3.4.3 Type: GuamiRm'
-  path: 5 Common Data Types/5.3 Data Types related to Subscription, Identification
-    and Numbering.md
+  path: 5 Common Data Types/5.3 Data Types related to Subscription, Identification and Numbering.md
   source_words: 21
   kind: embedded-clause
 - clause: '5.4'
@@ -357,8 +319,7 @@ clauses:
   kind: source-file
 - clause: 5.4.2
   title: 5.4.2 Simple Data Types
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.2 Simple Data
-    Types.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.2 Simple Data Types.md
   source_words: 2710
   kind: source-file
 - clause: 5.4.3
@@ -583,603 +544,502 @@ clauses:
   kind: embedded-clause
 - clause: 5.4.4
   title: 5.4.4 Structured Data Types
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/README.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/README.md
   source_words: 11531
   kind: navigation-directory
 - clause: 5.4.4.1
   title: '5.4.4.1 Type: SubscribedDefaultQos'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.1 Type SubscribedDefaultQos.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.1 Type SubscribedDefaultQos.md
   source_words: 91
   kind: source-file
 - clause: 5.4.4.2
   title: '5.4.4.2 Type: Snssai'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.2 Type Snssai.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.2 Type Snssai.md
   source_words: 275
   kind: source-file
 - clause: 5.4.4.3
   title: '5.4.4.3 Type: PlmnId'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.3 Type PlmnId.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.3 Type PlmnId.md
   source_words: 86
   kind: source-file
 - clause: 5.4.4.4
   title: '5.4.4.4 Type: Tai'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.4 Type Tai.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.4 Type Tai.md
   source_words: 115
   kind: source-file
 - clause: 5.4.4.5
   title: '5.4.4.5 Type: Ecgi'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.5 Type Ecgi.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.5 Type Ecgi.md
   source_words: 92
   kind: source-file
 - clause: 5.4.4.6
   title: '5.4.4.6 Type: Ncgi'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.6 Type Ncgi.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.6 Type Ncgi.md
   source_words: 116
   kind: source-file
 - clause: 5.4.4.7
   title: '5.4.4.7 Type: UserLocation'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.7 Type UserLocation.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.7 Type UserLocation.md
   source_words: 95
   kind: source-file
 - clause: 5.4.4.8
   title: '5.4.4.8 Type: EutraLocation'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.8 Type EutraLocation.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.8 Type EutraLocation.md
   source_words: 407
   kind: source-file
 - clause: 5.4.4.9
   title: '5.4.4.9 Type: NrLocation'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.9 Type NrLocation.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.9 Type NrLocation.md
   source_words: 391
   kind: source-file
 - clause: 5.4.4.10
   title: '5.4.4.10 Type: N3gaLocation'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.10 Type N3gaLocation.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.10 Type N3gaLocation.md
   source_words: 698
   kind: source-file
 - clause: 5.4.4.11
   title: '5.4.4.11 Type: UpSecurity'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.11 Type UpSecurity.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.11 Type UpSecurity.md
   source_words: 74
   kind: source-file
 - clause: 5.4.4.12
   title: '5.4.4.12 Type: NgApCause'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.12 Type NgApCause.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.12 Type NgApCause.md
   source_words: 122
   kind: source-file
 - clause: 5.4.4.13
   title: '5.4.4.13 Type: BackupAmfInfo'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.13 Type BackupAmfInfo.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.13 Type BackupAmfInfo.md
   source_words: 110
   kind: source-file
 - clause: 5.4.4.14
   title: '5.4.4.14 Type: RefToBinaryData'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.14 Type RefToBinaryData.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.14 Type RefToBinaryData.md
   source_words: 42
   kind: source-file
 - clause: 5.4.4.15
   title: 5.4.4.15 Type RouteToLocation
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.15 Type RouteToLocation.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.15 Type RouteToLocation.md
   source_words: 72
   kind: source-file
 - clause: 5.4.4.16
   title: 5.4.4.16 Type RouteInformation
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.16 Type RouteInformation.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.16 Type RouteInformation.md
   source_words: 89
   kind: source-file
 - clause: 5.4.4.17
   title: '5.4.4.17 Type: Area'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.17 Type Area.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.17 Type Area.md
   source_words: 58
   kind: source-file
 - clause: 5.4.4.18
   title: '5.4.4.18 Type: ServiceAreaRestriction'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.18 Type ServiceAreaRestriction.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.18 Type ServiceAreaRestriction.md
   source_words: 140
   kind: source-file
 - clause: 5.4.4.19
   title: '5.4.4.19 Type: PlmnIdRm'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.19 Type PlmnIdRm.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.19 Type PlmnIdRm.md
   source_words: 27
   kind: source-file
 - clause: 5.4.4.20
   title: '5.4.4.20 Type: TaiRm'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.20 Type TaiRm.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.20 Type TaiRm.md
   source_words: 27
   kind: source-file
 - clause: 5.4.4.21
   title: '5.4.4.21 Type: EcgiRm'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.21 Type EcgiRm.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.21 Type EcgiRm.md
   source_words: 27
   kind: source-file
 - clause: 5.4.4.22
   title: '5.4.4.22 Type: NcgiRm'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.22 Type NcgiRm.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.22 Type NcgiRm.md
   source_words: 27
   kind: source-file
 - clause: 5.4.4.23
   title: '5.4.4.23 Type: EutraLocationRm'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.23 Type EutraLocationRm.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.23 Type EutraLocationRm.md
   source_words: 27
   kind: source-file
 - clause: 5.4.4.24
   title: '5.4.4.24 Type: NrLocationRm'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.24 Type NrLocationRm.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.24 Type NrLocationRm.md
   source_words: 27
   kind: source-file
 - clause: 5.4.4.25
   title: '5.4.4.25 Type: UpSecurityRm'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.25 Type UpSecurityRm.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.25 Type UpSecurityRm.md
   source_words: 27
   kind: source-file
 - clause: 5.4.4.26
   title: '5.4.4.26 Type: RefToBinaryDataRm'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.26 Type RefToBinaryDataRm.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.26 Type RefToBinaryDataRm.md
   source_words: 27
   kind: source-file
 - clause: 5.4.4.27
   title: '5.4.4.27 Type: PresenceInfo'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.27 Type PresenceInfo.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.27 Type PresenceInfo.md
   source_words: 466
   kind: source-file
 - clause: 5.4.4.28
   title: '5.4.4.28 Type: GlobalRanNodeId'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.28 Type GlobalRanNodeId.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.28 Type GlobalRanNodeId.md
   source_words: 291
   kind: source-file
 - clause: 5.4.4.29
   title: '5.4.4.29 Type: GNbId'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.29 Type GNbId.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.29 Type GNbId.md
   source_words: 195
   kind: source-file
 - clause: 5.4.4.30
   title: '5.4.4.30 Type: PresenceInfoRm'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.30 Type PresenceInfoRm.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.30 Type PresenceInfoRm.md
   source_words: 27
   kind: source-file
 - clause: 5.4.4.31
   title: 5.4.4.31 Void
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.31 Void.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.31 Void.md
   source_words: 5
   kind: source-file
 - clause: 5.4.4.32
   title: '5.4.4.32 Type: AtsssCapability'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.32 Type AtsssCapability.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.32 Type AtsssCapability.md
   source_words: 202
   kind: source-file
 - clause: 5.4.4.33
   title: '5.4.4.33 Type: PlmnIdNid'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.33 Type PlmnIdNid.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.33 Type PlmnIdNid.md
   source_words: 137
   kind: source-file
 - clause: 5.4.4.34
   title: '5.4.4.34 Type: PlmnIdNidRm'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.34 Type PlmnIdNidRm.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.34 Type PlmnIdNidRm.md
   source_words: 27
   kind: source-file
 - clause: 5.4.4.35
   title: '5.4.4.35 Type: SmallDataRateStatus'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.35 Type SmallDataRateStatus.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.35 Type SmallDataRateStatus.md
   source_words: 263
   kind: source-file
 - clause: 5.4.4.36
   title: '5.4.4.36 Type: HfcNodeId'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.36 Type HfcNodeId.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.36 Type HfcNodeId.md
   source_words: 30
   kind: source-file
 - clause: 5.4.4.37
   title: '5.4.4.37 Type: HfcNodeIdRm'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.37 Type HfcNodeIdRm.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.37 Type HfcNodeIdRm.md
   source_words: 27
   kind: source-file
 - clause: 5.4.4.38
   title: '5.4.4.38 Type: WirelineArea'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.38 Type WirelineArea.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.38 Type WirelineArea.md
   source_words: 163
   kind: source-file
 - clause: 5.4.4.39
   title: '5.4.4.39 Type: WirelineServiceAreaRestriction'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.39 Type WirelineServiceAreaRestriction.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.39 Type WirelineServiceAreaRestriction.md
   source_words: 92
   kind: source-file
 - clause: 5.4.4.40
   title: '5.4.4.40 Type: ApnRateStatus'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.40 Type ApnRateStatus.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.40 Type ApnRateStatus.md
   source_words: 290
   kind: source-file
 - clause: 5.4.4.41
   title: '5.4.4.41 Type: ScheduledCommunicationTime'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.41 Type ScheduledCommunicationTime.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.41 Type ScheduledCommunicationTime.md
   source_words: 68
   kind: source-file
 - clause: 5.4.4.42
   title: '5.4.4.42 Type: ScheduledCommunicationTimeRm'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.42 Type ScheduledCommunicationTimeRm.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.42 Type ScheduledCommunicationTimeRm.md
   source_words: 27
   kind: source-file
 - clause: 5.4.4.43
   title: '5.4.4.43 Type: BatteryIndication'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.43 Type BatteryIndication.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.43 Type BatteryIndication.md
   source_words: 151
   kind: source-file
 - clause: 5.4.4.44
   title: '5.4.4.44 Type: BatteryIndicationRm'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.44 Type BatteryIndicationRm.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.44 Type BatteryIndicationRm.md
   source_words: 27
   kind: source-file
 - clause: 5.4.4.45
   title: '5.4.4.45 Type: AcsInfo'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.45 Type AcsInfo.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.45 Type AcsInfo.md
   source_words: 104
   kind: source-file
 - clause: 5.4.4.46
   title: '5.4.4.46 Type: AcsInfoRm'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.46 Type AcsInfoRm.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.46 Type AcsInfoRm.md
   source_words: 27
   kind: source-file
 - clause: 5.4.4.47
   title: '5.4.4.47 Type: NrV2xAuth'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.47 Type NrV2xAuth.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.47 Type NrV2xAuth.md
   source_words: 72
   kind: source-file
 - clause: 5.4.4.48
   title: '5.4.4.48 Type: LteV2xAuth'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.48 Type LteV2xAuth.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.48 Type LteV2xAuth.md
   source_words: 72
   kind: source-file
 - clause: 5.4.4.49
   title: '5.4.4.49 Type: Pc5QoSPara'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.49 Type Pc5QoSPara.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.49 Type Pc5QoSPara.md
   source_words: 78
   kind: source-file
 - clause: 5.4.4.50
   title: '5.4.4.50 Type: Pc5QosFlowItem'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.50 Type Pc5QosFlowItem.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.50 Type Pc5QosFlowItem.md
   source_words: 110
   kind: source-file
 - clause: 5.4.4.51
   title: '5.4.4.51 Type: Pc5FlowBitRates'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.51 Type Pc5FlowBitRates.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.51 Type Pc5FlowBitRates.md
   source_words: 74
   kind: source-file
 - clause: 5.4.4.52
   title: '5.4.4.52 Type: UtraLocation'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.52 Type UtraLocation.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.52 Type UtraLocation.md
   source_words: 287
   kind: source-file
 - clause: 5.4.4.53
   title: '5.4.4.53 Type: GeraLocation'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.53 Type GeraLocation.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.53 Type GeraLocation.md
   source_words: 335
   kind: source-file
 - clause: 5.4.4.54
   title: '5.4.4.54 Type: CellGlobalId'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.54 Type CellGlobalId.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.54 Type CellGlobalId.md
   source_words: 47
   kind: source-file
 - clause: 5.4.4.55
   title: '5.4.4.55 Type: ServiceAreaId'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.55 Type ServiceAreaId.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.55 Type ServiceAreaId.md
   source_words: 48
   kind: source-file
 - clause: 5.4.4.56
   title: '5.4.4.56 Type: LocationAreaId'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.56 Type LocationAreaId.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.56 Type LocationAreaId.md
   source_words: 38
   kind: source-file
 - clause: 5.4.4.57
   title: '5.4.4.57 Type: RoutingAreaId'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.57 Type RoutingAreaId.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.57 Type RoutingAreaId.md
   source_words: 48
   kind: source-file
 - clause: 5.4.4.58
   title: '5.4.4.58 Type: DddTrafficDescriptor'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.58 Type DddTrafficDescriptor.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.58 Type DddTrafficDescriptor.md
   source_words: 93
   kind: source-file
 - clause: 5.4.4.59
   title: '5.4.4.59 Type: MoExpDataCounter'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.59 Type MoExpDataCounter.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.59 Type MoExpDataCounter.md
   source_words: 67
   kind: source-file
 - clause: 5.4.4.60
   title: '5.4.4.60 Type: NssaaStatus'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.60 Type NssaaStatus.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.60 Type NssaaStatus.md
   source_words: 45
   kind: source-file
 - clause: 5.4.4.61
   title: '5.4.4.61 Type: NssaaStatusRm'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.61 Type NssaaStatusRm.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.61 Type NssaaStatusRm.md
   source_words: 27
   kind: source-file
 - clause: 5.4.4.62
   title: '5.4.4.62 Type: TnapId'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.62 Type TnapId.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.62 Type TnapId.md
   source_words: 209
   kind: source-file
 - clause: 5.4.4.63
   title: '5.4.4.63 Type: TnapIdRm'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.63 Type TnapIdRm.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.63 Type TnapIdRm.md
   source_words: 27
   kind: source-file
 - clause: 5.4.4.64
   title: '5.4.4.64 Type: TwapId'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.64 Type TwapId.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.64 Type TwapId.md
   source_words: 144
   kind: source-file
 - clause: 5.4.4.65
   title: '5.4.4.65 Type: TwapIdRm'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.65 Type TwapIdRm.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.65 Type TwapIdRm.md
   source_words: 27
   kind: source-file
 - clause: 5.4.4.66
   title: '5.4.4.66 Type: SnssaiExtension'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.66 Type SnssaiExtension.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.66 Type SnssaiExtension.md
   source_words: 173
   kind: source-file
 - clause: 5.4.4.67
   title: '5.4.4.67 Type: SdRange'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.67 Type SdRange.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.67 Type SdRange.md
   source_words: 105
   kind: source-file
 - clause: 5.4.4.68
   title: '5.4.4.68 Type: ProseServiceAuth'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.68 Type ProseServiceAuth.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.68 Type ProseServiceAuth.md
   source_words: 360
   kind: source-file
 - clause: 5.4.4.69
   title: '5.4.4.69 Type: EcsServerAddr'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.69 Type EcsServerAddr.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.69 Type EcsServerAddr.md
   source_words: 133
   kind: source-file
 - clause: 5.4.4.70
   title: '5.4.4.70 Type: EcsServerAddrRm'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.70 Type EcsServerAddrRm.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.70 Type EcsServerAddrRm.md
   source_words: 27
   kind: source-file
 - clause: 5.4.4.71
   title: '5.4.4.71 Type: IpAddr'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.71 Type IpAddr.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.71 Type IpAddr.md
   source_words: 71
   kind: source-file
 - clause: 5.4.4.72
   title: '5.4.4.72 Type: SACInfo'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.72 Type SACInfo.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.72 Type SACInfo.md
   source_words: 730
   kind: source-file
 - clause: 5.4.4.73
   title: '5.4.4.73 Type: SACEventStatus'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.73 Type SACEventStatus.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.73 Type SACEventStatus.md
   source_words: 124
   kind: source-file
 - clause: 5.4.4.74
   title: '5.4.4.74 Type: SpatialValidityCond'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.74 Type SpatialValidityCond.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.74 Type SpatialValidityCond.md
   source_words: 81
   kind: source-file
 - clause: 5.4.4.75
   title: '5.4.4.75 Type: SpatialValidityCondRm'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.75 Type SpatialValidityCondRm.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.75 Type SpatialValidityCondRm.md
   source_words: 27
   kind: source-file
 - clause: 5.4.4.76
   title: '5.4.4.76 Type: ServerAddressingInfo'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.76 Type ServerAddressingInfo.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.76 Type ServerAddressingInfo.md
   source_words: 100
   kind: source-file
 - clause: 5.4.4.77
   title: 5.4.4.77 Type PcfUeCallbackInfo
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.77 Type PcfUeCallbackInfo.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.77 Type PcfUeCallbackInfo.md
   source_words: 119
   kind: source-file
 - clause: 5.4.4.78
   title: 5.4.4.78 Type PduSessionInfo
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.78 Type PduSessionInfo.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.78 Type PduSessionInfo.md
   source_words: 77
   kind: source-file
 - clause: 5.4.4.79
   title: 5.4.4.79 Type EasIpReplacementInfo
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.79 Type EasIpReplacementInfo.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.79 Type EasIpReplacementInfo.md
   source_words: 77
   kind: source-file
 - clause: 5.4.4.80
   title: 5.4.4.80 Type EasServerAddress
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.80 Type EasServerAddress.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.80 Type EasServerAddress.md
   source_words: 37
   kind: source-file
 - clause: 5.4.4.81
   title: 5.4.4.81 Type RoamingRestrictions
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.81 Type RoamingRestrictions.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.81 Type RoamingRestrictions.md
   source_words: 68
   kind: source-file
 - clause: 5.4.4.82
   title: '5.4.4.82 Type: GeoServiceArea'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.82 Type GeoServiceArea.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.82 Type GeoServiceArea.md
   source_words: 50
   kind: source-file
 - clause: 5.4.4.83
   title: '5.4.4.83 Type: MutingExceptionInstructions'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.83 Type MutingExceptionInstructions.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.83 Type MutingExceptionInstructions.md
   source_words: 93
   kind: source-file
 - clause: 5.4.4.84
   title: '5.4.4.84 Type: MutingNotificationsSettings'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.84 Type MutingNotificationsSettings.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.84 Type MutingNotificationsSettings.md
   source_words: 58
   kind: source-file
 - clause: 5.4.4.85
   title: '5.4.4.85 Type: VplmnOffloadingInfo'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.85 Type VplmnOffloadingInfo.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.85 Type VplmnOffloadingInfo.md
   source_words: 330
   kind: source-file
 - clause: 5.4.4.86
   title: '5.4.4.86 Type: PartiallyAllowedSnssai'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.86 Type PartiallyAllowedSnssai.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.86 Type PartiallyAllowedSnssai.md
   source_words: 65
   kind: source-file
 - clause: 5.4.4.87
   title: '5.4.4.87 Type: VarRepPeriod'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.87 Type VarRepPeriod.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.87 Type VarRepPeriod.md
   source_words: 132
   kind: source-file
 - clause: 5.4.4.88
   title: '5.4.4.88 Type: RangingSlPosAuth'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.88 Type RangingSlPosAuth.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.88 Type RangingSlPosAuth.md
   source_words: 136
   kind: source-file
 - clause: 5.4.4.89
   title: '5.4.4.89 Type: NrA2xAuth'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.89 Type NrA2xAuth.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.89 Type NrA2xAuth.md
   source_words: 47
   kind: source-file
 - clause: 5.4.4.90
   title: '5.4.4.90 Type: LteA2xAuth'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.90 Type LteA2xAuth.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.90 Type LteA2xAuth.md
   source_words: 47
   kind: source-file
 - clause: 5.4.4.91
   title: '5.4.4.91 Type: SliceUsageControlInfo'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.91 Type SliceUsageControlInfo.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.91 Type SliceUsageControlInfo.md
   source_words: 99
   kind: source-file
 - clause: 5.4.4.92
   title: '5.4.4.92 Type: CombGciAndHfcNIds'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.92 Type CombGciAndHfcNIds.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.92 Type CombGciAndHfcNIds.md
   source_words: 66
   kind: source-file
 - clause: 5.4.4.93
   title: '5.4.4.93 Type: SnssaiDnnItem'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.93 Type SnssaiDnnItem.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.93 Type SnssaiDnnItem.md
   source_words: 104
   kind: source-file
 - clause: 5.4.4.94
   title: '5.4.4.94 Type: NtnTaiInfo'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.94 Type NtnTaiInfo.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.94 Type NtnTaiInfo.md
   source_words: 67
   kind: source-file
 - clause: 5.4.4.95
   title: '5.4.4.95 Type: MitigationInfo'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.95 Type MitigationInfo.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.95 Type MitigationInfo.md
   source_words: 104
   kind: source-file
 - clause: 5.4.4.96
   title: '5.4.4.96 Type: VplmnDlAmbr'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured
-    Data Types/5.4.4.96 Type VplmnDlAmbr.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.4 Structured Data Types/5.4.4.96 Type VplmnDlAmbr.md
   source_words: 62
   kind: source-file
 - clause: 5.4.5
-  title: 5.4.5 Data types describing alternative data types or combinations of data
-    types
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.5 Data types
-    describing alternative data types or combinations of data types.md
+  title: 5.4.5 Data types describing alternative data types or combinations of data types
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.5 Data types describing alternative data types or combinations of data types.md
   source_words: 399
   kind: source-file
 - clause: 5.4.5.1
   title: '5.4.5.1 Type: ExtSnssai'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.5 Data types
-    describing alternative data types or combinations of data types.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.5 Data types describing alternative data types or combinations of data types.md
   source_words: 105
   kind: embedded-clause
 - clause: 5.4.5.2
   title: '5.4.5.2 Type: SnssaiReplaceInfo'
-  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.5 Data types
-    describing alternative data types or combinations of data types.md
+  path: 5 Common Data Types/5.4 Data Types related to 5G Network/5.4.5 Data types describing alternative data types or combinations of data types.md
   source_words: 268
   kind: embedded-clause
 - clause: '5.5'
@@ -1314,116 +1174,97 @@ clauses:
   kind: embedded-clause
 - clause: 5.5.4
   title: 5.5.4 Structured Data Types
-  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data Types.md
   source_words: 2755
   kind: source-file
 - clause: 5.5.4.1
   title: '5.5.4.1 Type: Arp'
-  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data Types.md
   source_words: 84
   kind: embedded-clause
 - clause: 5.5.4.2
   title: '5.5.4.2 Type: Ambr'
-  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data Types.md
   source_words: 30
   kind: embedded-clause
 - clause: 5.5.4.3
   title: '5.5.4.3 Type: Dynamic5Qi'
-  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data Types.md
   source_words: 410
   kind: embedded-clause
 - clause: 5.5.4.4
   title: '5.5.4.4 Type: NonDynamic5Qi'
-  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data Types.md
   source_words: 377
   kind: embedded-clause
 - clause: 5.5.4.5
   title: '5.5.4.5 Type: ArpRm'
-  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data Types.md
   source_words: 21
   kind: embedded-clause
 - clause: 5.5.4.6
   title: '5.5.4.6 Type: AmbrRm'
-  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data Types.md
   source_words: 21
   kind: embedded-clause
 - clause: 5.5.4.7
   title: 5.5.4.7 Void
-  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data Types.md
   source_words: 0
   kind: embedded-clause
 - clause: 5.5.4.8
   title: 5.5.4.8 Void
-  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data Types.md
   source_words: 0
   kind: embedded-clause
 - clause: 5.5.4.9
   title: '5.5.4.9 Type: SliceMbr'
-  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data Types.md
   source_words: 30
   kind: embedded-clause
 - clause: 5.5.4.10
   title: '5.5.4.10 Type: SliceMbrRm'
-  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data Types.md
   source_words: 21
   kind: embedded-clause
 - clause: 5.5.4.11
   title: '5.5.4.11 Type: PduSetQosPara'
-  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data Types.md
   source_words: 114
   kind: embedded-clause
 - clause: 5.5.4.12
   title: '5.5.4.12 Type: PduSetQosParaRm'
-  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data Types.md
   source_words: 251
   kind: embedded-clause
 - clause: 5.5.4.13
   title: 5.5.4.13 Type ProtocolDescription
-  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data Types.md
   source_words: 400
   kind: embedded-clause
 - clause: 5.5.4.13A
   title: 5.5.4.13A Type ProtocolDescriptionRm
-  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data Types.md
   source_words: 157
   kind: embedded-clause
 - clause: 5.5.4.14
   title: 5.5.4.14 Type RtpHeaderExtInfo
-  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data Types.md
   source_words: 237
   kind: embedded-clause
 - clause: 5.5.4.14A
   title: 5.5.4.14A Type RtpHeaderExtInfoRm
-  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data Types.md
   source_words: 229
   kind: embedded-clause
 - clause: 5.5.4.15
   title: 5.5.4.15 Type RtpPayloadInfo
-  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data Types.md
   source_words: 113
   kind: embedded-clause
 - clause: 5.5.4.16
   title: 5.5.4.16 Type RtpPayloadInfoRm
-  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.5 Data Types related to 5G QoS/5.5.4 Structured Data Types.md
   source_words: 148
   kind: embedded-clause
 - clause: '5.6'
@@ -1563,104 +1404,87 @@ clauses:
   kind: embedded-clause
 - clause: 5.6.4
   title: 5.6.4 Structured Data Types
-  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data Types.md
   source_words: 3673
   kind: source-file
 - clause: 5.6.4.1
   title: '5.6.4.1 Type: TraceData'
-  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data Types.md
   source_words: 548
   kind: embedded-clause
 - clause: 5.6.4.2
   title: '5.6.4.2 Type: MdtConfiguration'
-  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data Types.md
   source_words: 1735
   kind: embedded-clause
 - clause: 5.6.4.3
   title: '5.6.4.3 Type: AreaScope'
-  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data Types.md
   source_words: 263
   kind: embedded-clause
 - clause: 5.6.4.4
   title: '5.6.4.4 Type: TacInfo'
-  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data Types.md
   source_words: 33
   kind: embedded-clause
 - clause: 5.6.4.5
   title: '5.6.4.5 Type: MbsfnArea'
-  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data Types.md
   source_words: 118
   kind: embedded-clause
 - clause: 5.6.4.6
   title: '5.6.4.6 Type: InterFreqTargetInfo'
-  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data Types.md
   source_words: 77
   kind: embedded-clause
 - clause: 5.6.4.7
   title: '5.6.4.7 Type: QmcConfigInfo'
-  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data Types.md
   source_words: 306
   kind: embedded-clause
 - clause: 5.6.4.8
   title: '5.6.4.8 Type: QmcAreaScope'
-  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data Types.md
   source_words: 112
   kind: embedded-clause
 - clause: 5.6.4.9
   title: '5.6.4.9 Type: QoeTarget'
-  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data Types.md
   source_words: 72
   kind: embedded-clause
 - clause: 5.6.4.10
   title: '5.6.4.10 Type: CagInfo'
-  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data Types.md
   source_words: 32
   kind: embedded-clause
 - clause: 5.6.4.11
   title: '5.6.4.11 Type: NidInfo'
-  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data Types.md
   source_words: 31
   kind: embedded-clause
 - clause: 5.6.4.12
   title: '5.6.4.12 Type: UeLevelMeasurementsConfiguration'
-  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data Types.md
   source_words: 96
   kind: embedded-clause
 - clause: 5.6.4.13
   title: '5.6.4.13 Type: CellIdNidInfo'
-  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data Types.md
   source_words: 35
   kind: embedded-clause
 - clause: 5.6.4.14
   title: '5.6.4.14 Type: CellIdNid'
-  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data Types.md
   source_words: 39
   kind: embedded-clause
 - clause: 5.6.4.15
   title: '5.6.4.15 Type: TacNidInfo'
-  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data Types.md
   source_words: 35
   kind: embedded-clause
 - clause: 5.6.4.16
   title: '5.6.4.16 Type: TacNid'
-  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data
-    Types.md
+  path: 5 Common Data Types/5.6 Data Types related to 5G Trace/5.6.4 Structured Data Types.md
   source_words: 39
   kind: embedded-clause
 - clause: '5.7'
@@ -1899,8 +1723,7 @@ clauses:
   source_words: 57
   kind: embedded-clause
 - clause: 5.9.4.21
-  title: 5.9.4.21 Data types describing alternative data types or combinations of
-    data types
+  title: 5.9.4.21 Data types describing alternative data types or combinations of data types
   path: 5 Common Data Types/5.9 Data Types related to MBS.md
   source_words: 0
   kind: embedded-clause

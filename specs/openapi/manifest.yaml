@@ -274,6 +274,23 @@ files:
   - TS29510_Nnrf_NFManagement.yaml
   - TS29571_CommonData.yaml
   yaml_valid: true
+- file: TS29505_Subscription_Data.yaml
+  sha256: 1e9e01de79b8b3a9736e74d9a3c9b0bc7eb017aef981442b28130bbaadae2b81
+  title: Unified Data Repository Service API file for subscription data
+  external_docs_description: 3GPP TS 29.505 V18.7.0; 5G System; Usage of the Unified Data Repository Service for subscription data; Stage 3
+  external_refs:
+  - TS29503_Nudm_EE.yaml
+  - TS29503_Nudm_NIDDAU.yaml
+  - TS29503_Nudm_PP.yaml
+  - TS29503_Nudm_SDM.yaml
+  - TS29503_Nudm_SSAU.yaml
+  - TS29503_Nudm_UEAU.yaml
+  - TS29503_Nudm_UECM.yaml
+  - TS29509_Nausf_SoRProtection.yaml
+  - TS29509_Nausf_UPUProtection.yaml
+  - TS29510_Nnrf_NFManagement.yaml
+  - TS29571_CommonData.yaml
+  yaml_valid: true
 - file: TS29508_Nsmf_EventExposure.yaml
   sha256: a57c417f14c025ec081bb4befeb25e591d179713b1c43193cd23c56cc614d638
   title: Nsmf_EventExposure
@@ -637,13 +654,12 @@ files:
   - TS29574_Ndccf_DataManagement.yaml
   yaml_valid: true
 - file: manifest.yaml
-  sha256: 8b3209aae1cce978d41132572f4dce8b994c9eb70b495697ae6aaa1bea99d046
+  sha256: 3f3716e61f7243605c7e426058caade2a0c7164e066e646904b1d34bb965f963
   title: ''
   external_docs_description: ''
   external_refs: []
   yaml_valid: true
 unresolved_external_dependencies:
-- TS29505_Subscription_Data.yaml
 - TS29507_Npcf_AMPolicyControl.yaml
 - TS29509_Nausf_SoRProtection.yaml
 - TS29509_Nausf_UEAuthentication.yaml

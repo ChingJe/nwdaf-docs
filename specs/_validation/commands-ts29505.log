@@ -1,0 +1,6 @@
+unzip -q parent-corpus.zip -d work/base
+unzip -q 29505-i80.zip -d work/src/29505
+pandoc 29505-i80.docx --from=docx --to=gfm --wrap=none --extract-media=work/pandoc/29505_media --output=work/pandoc/29505.md
+python docx2txt extraction using docx2txt.process(29505-i80.docx)
+python deterministic heading-tree build, reassembly hash check, progressive split, manifest generation and asset rendering
+python Markdown-aware global validation and package generation

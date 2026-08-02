@@ -203,6 +203,13 @@
     "byte_identical": true
   },
   {
+    "file": "openapi/TS29505_Subscription_Data.yaml",
+    "output_sha256": "1e9e01de79b8b3a9736e74d9a3c9b0bc7eb017aef981442b28130bbaadae2b81",
+    "source_archive": "29505-i80.zip",
+    "source_sha256": "1e9e01de79b8b3a9736e74d9a3c9b0bc7eb017aef981442b28130bbaadae2b81",
+    "byte_identical": true
+  },
+  {
     "file": "openapi/TS29508_Nsmf_EventExposure.yaml",
     "output_sha256": "a57c417f14c025ec081bb4befeb25e591d179713b1c43193cd23c56cc614d638",
     "source_archive": "29508-ib0.zip",

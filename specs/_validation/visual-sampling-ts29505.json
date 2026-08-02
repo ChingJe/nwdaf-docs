@@ -1,0 +1,9 @@
+{
+  "spec": "TS 29.505",
+  "method": "Level B risk-based preview inspection; not full page-by-page Word certification.",
+  "source_media": 5,
+  "rendered_png_previews": 5,
+  "embedded_objects": 5,
+  "contact_sheet": "internal QA only",
+  "result": "All five package diagrams rendered legibly; resource-tree paths and labels are visible."
+}

@@ -1,0 +1,56 @@
+{
+  "added_specs": [
+    "TS 29.505"
+  ],
+  "results": [
+    {
+      "archive_sha256": "b432c3d6d7a211f0d1eeb72da4364d32ba1d9a3ae51c03df8cab38d2700b777e",
+      "document_sha256": "46edda85efed924d08a4f02c12acb7970b710feae119f61edd880bb6a2db96a3",
+      "tree_hash_match": true,
+      "assets": {
+        "media_count": 5,
+        "embedded_count": 5,
+        "rendered_png_count": 5,
+        "preview_results": [
+          {
+            "source": "image1.emf",
+            "rendered": "image1.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image2.emf",
+            "rendered": "image2.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image3.emf",
+            "rendered": "image3.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image4.emf",
+            "rendered": "image4.png",
+            "success": true,
+            "note": null
+          },
+          {
+            "source": "image5.emf",
+            "rendered": "image5.png",
+            "success": true,
+            "note": null
+          }
+        ]
+      },
+      "manifest_entries": 579,
+      "root_nodes": 9,
+      "preprocessed_sha256": "1c21f816b8a6442958fbde7a81877f56d11a4c93c001c961749e274ba832665d",
+      "reassembled_sha256": "1c21f816b8a6442958fbde7a81877f56d11a4c93c001c961749e274ba832665d",
+      "spec": "TS 29.505",
+      "version": "18.8.0",
+      "correction_count": 6
+    }
+  ]
+}

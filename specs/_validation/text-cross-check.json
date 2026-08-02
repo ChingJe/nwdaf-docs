@@ -733,5 +733,38 @@
     },
     "modal_and_marker_counts_match": true,
     "note": "Native DOCX independent extraction."
+  },
+  "TS 29.505": {
+    "pandoc_tokens": 123315,
+    "independent_tokens": 101106,
+    "independent_method": "docx2txt-original-docx",
+    "token_multiset_overlap": 0.999891,
+    "twelve_token_sequence_overlap": 0.740404,
+    "modal_and_marker_counts_pandoc": {
+      "shall": 854,
+      "shall_not": 8,
+      "should": 11,
+      "should_not": 1,
+      "may": 78,
+      "may_not": 1,
+      "must": 4,
+      "must_not": 1,
+      "note": 203,
+      "example": 2
+    },
+    "modal_and_marker_counts_independent": {
+      "shall": 854,
+      "shall_not": 8,
+      "should": 11,
+      "should_not": 1,
+      "may": 78,
+      "may_not": 1,
+      "must": 4,
+      "must_not": 1,
+      "note": 203,
+      "example": 2
+    },
+    "modal_and_marker_counts_match": true,
+    "note": "Native DOCX independent extraction."
   }
 }

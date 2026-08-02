@@ -2528,3 +2528,33 @@ corrections:
   type: normalize-heading-level-or-spacing
   original: '######## Annex C (informative): Change history'
   replacement: '# Annex C (informative): Change history'
+- spec: TS 29.505
+  line: 72
+  type: normalize-heading-level-or-spacing
+  original: '#  Contents'
+  replacement: '# Contents'
+- spec: TS 29.505
+  line: 1212
+  type: normalize-heading-level-or-spacing
+  original: '#  Foreword'
+  replacement: '# Foreword'
+- spec: TS 29.505
+  line: 17247
+  type: normalize-heading-level-or-spacing
+  original: '######## Annex A (normative): OpenAPI specification'
+  replacement: '# Annex A (normative): OpenAPI specification'
+- spec: TS 29.505
+  line: 17249
+  type: normalize-heading-level-or-spacing
+  original: '# A.1 General'
+  replacement: '## A.1 General'
+- spec: TS 29.505
+  line: 17259
+  type: normalize-heading-level-or-spacing
+  original: '# A.2 Nudr_DataRepository API for Subscription Data'
+  replacement: '## A.2 Nudr_DataRepository API for Subscription Data'
+- spec: TS 29.505
+  line: 39293
+  type: normalize-heading-level-or-spacing
+  original: '########  Annex B (informative): Change history'
+  replacement: '# Annex B (informative): Change history'

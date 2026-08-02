@@ -109,134 +109,112 @@ clauses:
   kind: source-file
 - clause: 4.2.2.2
   title: 4.2.2.2 Ndccf_DataManagement_Subscribe service operation
-  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.2 Ndccf_DataManagement_Subscribe
-    service operation/README.md
+  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.2 Ndccf_DataManagement_Subscribe service operation/README.md
   source_words: 4776
   kind: navigation-directory
 - clause: 4.2.2.2.1
   title: 4.2.2.2.1 General
-  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.2 Ndccf_DataManagement_Subscribe
-    service operation/4.2.2.2.1 General.md
+  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.2 Ndccf_DataManagement_Subscribe service operation/4.2.2.2.1 General.md
   source_words: 27
   kind: source-file
 - clause: 4.2.2.2.2
   title: 4.2.2.2.2 Subscription for analytics notifications
-  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.2 Ndccf_DataManagement_Subscribe
-    service operation/4.2.2.2.2 Subscription for analytics notifications.md
+  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.2 Ndccf_DataManagement_Subscribe service operation/4.2.2.2.2 Subscription for analytics notifications.md
   source_words: 1254
   kind: source-file
 - clause: 4.2.2.2.3
   title: 4.2.2.2.3 Update subscription for analytic notifications
-  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.2 Ndccf_DataManagement_Subscribe
-    service operation/4.2.2.2.3 Update subscription for analytic notifications.md
+  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.2 Ndccf_DataManagement_Subscribe service operation/4.2.2.2.3 Update subscription for analytic notifications.md
   source_words: 999
   kind: source-file
 - clause: 4.2.2.2.4
   title: 4.2.2.2.4 Subscription for data notifications
-  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.2 Ndccf_DataManagement_Subscribe
-    service operation/4.2.2.2.4 Subscription for data notifications.md
+  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.2 Ndccf_DataManagement_Subscribe service operation/4.2.2.2.4 Subscription for data notifications.md
   source_words: 1345
   kind: source-file
 - clause: 4.2.2.2.5
   title: 4.2.2.2.5 Update subscription for data notifications
-  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.2 Ndccf_DataManagement_Subscribe
-    service operation/4.2.2.2.5 Update subscription for data notifications.md
+  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.2 Ndccf_DataManagement_Subscribe service operation/4.2.2.2.5 Update subscription for data notifications.md
   source_words: 1151
   kind: source-file
 - clause: 4.2.2.3
   title: 4.2.2.3 Ndccf_DataManagement_Unsubscribe service operation
-  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.3 Ndccf_DataManagement_Unsubscribe
-    service operation.md
+  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.3 Ndccf_DataManagement_Unsubscribe service operation.md
   source_words: 510
   kind: source-file
 - clause: 4.2.2.3.1
   title: 4.2.2.3.1 General
-  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.3 Ndccf_DataManagement_Unsubscribe
-    service operation.md
+  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.3 Ndccf_DataManagement_Unsubscribe service operation.md
   source_words: 25
   kind: embedded-clause
 - clause: 4.2.2.3.2
   title: 4.2.2.3.2 Unsubscribe from analytics notifications
-  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.3 Ndccf_DataManagement_Unsubscribe
-    service operation.md
+  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.3 Ndccf_DataManagement_Unsubscribe service operation.md
   source_words: 216
   kind: embedded-clause
 - clause: 4.2.2.3.3
   title: 4.2.2.3.3 Unsubscribe from data notifications
-  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.3 Ndccf_DataManagement_Unsubscribe
-    service operation.md
+  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.3 Ndccf_DataManagement_Unsubscribe service operation.md
   source_words: 269
   kind: embedded-clause
 - clause: 4.2.2.4
   title: 4.2.2.4 Ndccf_DataManagement_Notify service operation
-  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.4 Ndccf_DataManagement_Notify
-    service operation.md
+  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.4 Ndccf_DataManagement_Notify service operation.md
   source_words: 1194
   kind: source-file
 - clause: 4.2.2.4.1
   title: 4.2.2.4.1 General
-  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.4 Ndccf_DataManagement_Notify
-    service operation.md
+  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.4 Ndccf_DataManagement_Notify service operation.md
   source_words: 34
   kind: embedded-clause
 - clause: 4.2.2.4.2
   title: 4.2.2.4.2 Notification about subscribed analytics
-  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.4 Ndccf_DataManagement_Notify
-    service operation.md
+  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.4 Ndccf_DataManagement_Notify service operation.md
   source_words: 524
   kind: embedded-clause
 - clause: 4.2.2.4.3
   title: 4.2.2.4.3 Notification about subscribed data event
-  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.4 Ndccf_DataManagement_Notify
-    service operation.md
+  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.4 Ndccf_DataManagement_Notify service operation.md
   source_words: 636
   kind: embedded-clause
 - clause: 4.2.2.5
   title: 4.2.2.5 Ndccf_DataManagement_Fetch service operation
-  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.5 Ndccf_DataManagement_Fetch
-    service operation.md
+  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.5 Ndccf_DataManagement_Fetch service operation.md
   source_words: 369
   kind: source-file
 - clause: 4.2.2.5.1
   title: 4.2.2.5.1 General
-  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.5 Ndccf_DataManagement_Fetch
-    service operation.md
+  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.5 Ndccf_DataManagement_Fetch service operation.md
   source_words: 26
   kind: embedded-clause
 - clause: 4.2.2.5.2
   title: 4.2.2.5.2 Retrieve notified analytics and data
-  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.5 Ndccf_DataManagement_Fetch
-    service operation.md
+  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.5 Ndccf_DataManagement_Fetch service operation.md
   source_words: 343
   kind: embedded-clause
 - clause: 4.2.2.6
   title: 4.2.2.6 Ndccf_DataManagement_Transfer service operation
-  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.6 Ndccf_DataManagement_Transfer
-    service operation.md
+  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.6 Ndccf_DataManagement_Transfer service operation.md
   source_words: 354
   kind: source-file
 - clause: 4.2.2.6.1
   title: 4.2.2.6.1 General
-  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.6 Ndccf_DataManagement_Transfer
-    service operation.md
+  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.6 Ndccf_DataManagement_Transfer service operation.md
   source_words: 25
   kind: embedded-clause
 - clause: 4.2.2.6.2
   title: 4.2.2.6.2 Request for UE data subscription context transfer
-  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.6 Ndccf_DataManagement_Transfer
-    service operation.md
+  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.6 Ndccf_DataManagement_Transfer service operation.md
   source_words: 329
   kind: embedded-clause
 - clause: 4.2.2.6.3
   title: 4.2.2.6.3 Void
-  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.6 Ndccf_DataManagement_Transfer
-    service operation.md
+  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.6 Ndccf_DataManagement_Transfer service operation.md
   source_words: 0
   kind: embedded-clause
 - clause: 4.2.2.6.4
   title: 4.2.2.6.4 Void
-  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.6 Ndccf_DataManagement_Transfer
-    service operation.md
+  path: 4 Services offered by the DCCF/4.2 Ndccf_DataManagement Service/4.2.2 Service Operations/4.2.2.6 Ndccf_DataManagement_Transfer service operation.md
   source_words: 0
   kind: embedded-clause
 - clause: '4.3'
@@ -781,8 +759,7 @@ clauses:
   kind: embedded-clause
 - clause: 5.1.6.4
   title: 5.1.6.4 Data types describing alternative data types or combinations of data types
-  path: 5 API Definitions/5.1 Ndccf_DataManagement Service API/5.1.6 Data Model/5.1.6.4 Data types describing alternative
-    data types or combinations of data types.md
+  path: 5 API Definitions/5.1 Ndccf_DataManagement Service API/5.1.6 Data Model/5.1.6.4 Data types describing alternative data types or combinations of data types.md
   source_words: 7
   kind: source-file
 - clause: 5.1.6.5

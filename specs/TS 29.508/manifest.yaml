@@ -144,20 +144,17 @@ clauses:
   kind: embedded-clause
 - clause: 4.2.5
   title: 4.2.5 Nsmf_EventExposure_AppRelocationInfo Service Operation
-  path: 4 Session Management Event Exposure Service/4.2 Service Operations/4.2.5 Nsmf_EventExposure_AppRelocationInfo Service
-    Operation.md
+  path: 4 Session Management Event Exposure Service/4.2 Service Operations/4.2.5 Nsmf_EventExposure_AppRelocationInfo Service Operation.md
   source_words: 454
   kind: source-file
 - clause: 4.2.5.1
   title: 4.2.5.1 General
-  path: 4 Session Management Event Exposure Service/4.2 Service Operations/4.2.5 Nsmf_EventExposure_AppRelocationInfo Service
-    Operation.md
+  path: 4 Session Management Event Exposure Service/4.2 Service Operations/4.2.5 Nsmf_EventExposure_AppRelocationInfo Service Operation.md
   source_words: 49
   kind: embedded-clause
 - clause: 4.2.5.2
   title: 4.2.5.2 Acknowledgement of Notification about subscribed events
-  path: 4 Session Management Event Exposure Service/4.2 Service Operations/4.2.5 Nsmf_EventExposure_AppRelocationInfo Service
-    Operation.md
+  path: 4 Session Management Event Exposure Service/4.2 Service Operations/4.2.5 Nsmf_EventExposure_AppRelocationInfo Service Operation.md
   source_words: 397
   kind: embedded-clause
 - clause: '5'
@@ -525,3 +522,53 @@ clauses:
   path: Annex B (informative) Change history/README.md
   source_words: 3536
   kind: navigation-directory
+- clause: change-history-2025
+  title: 'Annex B (informative): Change history — 2025'
+  path: Annex B (informative) Change history/2025.md
+  source_words: 244
+  kind: generated-year-partition
+- clause: change-history-2023
+  title: 'Annex B (informative): Change history — 2023'
+  path: Annex B (informative) Change history/2023.md
+  source_words: 1525
+  kind: generated-year-partition
+- clause: change-history-2026
+  title: 'Annex B (informative): Change history — 2026'
+  path: Annex B (informative) Change history/2026.md
+  source_words: 178
+  kind: generated-year-partition
+- clause: change-history-2019
+  title: 'Annex B (informative): Change history — 2019'
+  path: Annex B (informative) Change history/2019.md
+  source_words: 1066
+  kind: generated-year-partition
+- clause: change-history-2024
+  title: 'Annex B (informative): Change history — 2024'
+  path: Annex B (informative) Change history/2024.md
+  source_words: 1210
+  kind: generated-year-partition
+- clause: change-history-2018
+  title: 'Annex B (informative): Change history — 2018'
+  path: Annex B (informative) Change history/2018.md
+  source_words: 1287
+  kind: generated-year-partition
+- clause: change-history-2021
+  title: 'Annex B (informative): Change history — 2021'
+  path: Annex B (informative) Change history/2021.md
+  source_words: 1247
+  kind: generated-year-partition
+- clause: change-history-2020
+  title: 'Annex B (informative): Change history — 2020'
+  path: Annex B (informative) Change history/2020.md
+  source_words: 1309
+  kind: generated-year-partition
+- clause: change-history-2022
+  title: 'Annex B (informative): Change history — 2022'
+  path: Annex B (informative) Change history/2022.md
+  source_words: 1206
+  kind: generated-year-partition
+- clause: change-history-2017
+  title: 'Annex B (informative): Change history — 2017'
+  path: Annex B (informative) Change history/2017.md
+  source_words: 241
+  kind: generated-year-partition

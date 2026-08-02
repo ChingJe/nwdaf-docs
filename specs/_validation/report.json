@@ -1,18 +1,17 @@
 {
+  "build_id": "r18-corpus-20260803-ts29505",
   "release": "18",
-  "specifications": 21,
-  "files": 6745,
-  "markdown_files": 3587,
-  "manifest_entries": 9897,
-  "local_links_checked": 3716,
-  "image_references_checked": 1087,
-  "openapi_yaml_files": 60,
-  "official_attachments_checked": 62,
-  "unresolved_external_dependencies": 24,
+  "specifications": 22,
+  "files": 6927,
+  "markdown_files": 3746,
+  "manifest_entries": 10531,
+  "local_links_checked": 3876,
+  "image_references_checked": 1092,
+  "openapi_yaml_files": 61,
+  "official_attachments_checked": 63,
+  "unresolved_external_dependencies": 23,
   "validation_passed": true,
   "latest_extension": [
-    "TS 23.003 V18.8.0",
-    "TS 29.502 V18.11.0",
-    "TS 29.504 V18.13.0"
+    "TS 29.505 V18.8.0"
   ]
 }

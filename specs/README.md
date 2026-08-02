@@ -15,6 +15,7 @@ This corpus is organized for progressive loading by development agents. All list
 | [TS 29.502](TS%2029.502/README.md) | 18.11.0 | Full | SMF PDU Session and SM Context lifecycle APIs, procedures, multipart messages and data models |
 | [TS 29.503](TS%2029.503/README.md) | 18.13.0 | Full | UDM subscriber data, UE context, event exposure, authentication and identifier services |
 | [TS 29.504](TS%2029.504/README.md) | 18.13.0 | Full | UDR data repository and group-ID mapping services for subscription, policy, exposure and application data |
+| [TS 29.505](TS%2029.505/README.md) | 18.8.0 | Full | Subscription-data resource usage and data models carried through the Nudr_DataRepository service |
 | [TS 29.508](TS%2029.508/README.md) | 18.11.0 | Full | SMF Session Management Event Exposure API |
 | [TS 29.510](TS%2029.510/README.md) | 18.11.0 | Full | NRF management, discovery, access token and bootstrapping APIs |
 | [TS 29.518](TS%2029.518/README.md) | 18.14.0 | Full | AMF communication, event exposure, location, mobility and messaging services |
@@ -55,8 +56,9 @@ This corpus is organized for progressive loading by development agents. All list
 
 1. Use TS 29.503 for UDM subscriber-data, UE-context and event-exposure services.
 2. Use TS 29.504 and its exact YAML attachments for the UDR data repository and group-ID mapping APIs.
-3. Use TS 23.502 for the surrounding subscriber-data and NF interaction procedures.
-4. Use TS 23.003 for identifier semantics and TS 29.571 for shared API representations.
+3. Use TS 29.505 and TS29505_Subscription_Data.yaml for subscription-data resource semantics and schemas.
+4. Use TS 23.502 for the surrounding subscriber-data and NF interaction procedures.
+5. Use TS 23.003 for identifier semantics and TS 29.571 for shared API representations.
 
 ## Common workflow: ADRF, DCCF and messaging-framework integration
 

@@ -4962,3 +4962,53 @@ clauses:
   path: Annex C (informative) Change history/README.md
   source_words: 10896
   kind: navigation-directory
+- clause: change-history-2025
+  title: 'Annex C (informative): Change history — 2025'
+  path: Annex C (informative) Change history/2025.md
+  source_words: 90
+  kind: generated-year-partition
+- clause: change-history-2023
+  title: 'Annex C (informative): Change history — 2023'
+  path: Annex C (informative) Change history/2023.md
+  source_words: 1741
+  kind: generated-year-partition
+- clause: change-history-2026
+  title: 'Annex C (informative): Change history — 2026'
+  path: Annex C (informative) Change history/2026.md
+  source_words: 161
+  kind: generated-year-partition
+- clause: change-history-2019
+  title: 'Annex C (informative): Change history — 2019'
+  path: Annex C (informative) Change history/2019.md
+  source_words: 867
+  kind: generated-year-partition
+- clause: change-history-2024
+  title: 'Annex C (informative): Change history — 2024'
+  path: Annex C (informative) Change history/2024.md
+  source_words: 1086
+  kind: generated-year-partition
+- clause: change-history-2018
+  title: 'Annex C (informative): Change history — 2018'
+  path: Annex C (informative) Change history/2018.md
+  source_words: 2229
+  kind: generated-year-partition
+- clause: change-history-2021
+  title: 'Annex C (informative): Change history — 2021'
+  path: Annex C (informative) Change history/2021.md
+  source_words: 2744
+  kind: generated-year-partition
+- clause: change-history-2020
+  title: 'Annex C (informative): Change history — 2020'
+  path: Annex C (informative) Change history/2020.md
+  source_words: 1104
+  kind: generated-year-partition
+- clause: change-history-2022
+  title: 'Annex C (informative): Change history — 2022'
+  path: Annex C (informative) Change history/2022.md
+  source_words: 1243
+  kind: generated-year-partition
+- clause: change-history-2017
+  title: 'Annex C (informative): Change history — 2017'
+  path: Annex C (informative) Change history/2017.md
+  source_words: 209
+  kind: generated-year-partition

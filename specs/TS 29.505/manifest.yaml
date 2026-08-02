@@ -1,0 +1,2904 @@
+spec: TS 29.505
+version: 18.8.0
+release: '18'
+source_archive: 29505-i80.zip
+source_document: 29505-i80.docx
+source_archive_sha256: b432c3d6d7a211f0d1eeb72da4364d32ba1d9a3ae51c03df8cab38d2700b777e
+source_document_sha256: 46edda85efed924d08a4f02c12acb7970b710feae119f61edd880bb6a2db96a3
+max_source_words_per_semantic_file_target: 4200
+clauses:
+- clause: document-information
+  title: Document information
+  path: 00 Document information.md
+  source_words: 265
+  kind: source-file
+- clause: contents
+  title: Contents
+  path: 01 Original contents.md
+  source_words: 3843
+  kind: source-file
+- clause: foreword
+  title: Foreword
+  path: 02 Foreword.md
+  source_words: 492
+  kind: source-file
+- clause: '1'
+  title: 1 Scope
+  path: 1 Scope.md
+  source_words: 89
+  kind: source-file
+- clause: '2'
+  title: 2 References
+  path: 2 References.md
+  source_words: 398
+  kind: source-file
+- clause: '3'
+  title: 3 Definitions and abbreviations
+  path: 3 Definitions and abbreviations.md
+  source_words: 194
+  kind: source-file
+- clause: '3.1'
+  title: 3.1 Definitions
+  path: 3 Definitions and abbreviations.md
+  source_words: 98
+  kind: embedded-clause
+- clause: '3.2'
+  title: 3.2 Abbreviations
+  path: 3 Definitions and abbreviations.md
+  source_words: 92
+  kind: embedded-clause
+- clause: '4'
+  title: 4 Overview
+  path: 4 Overview.md
+  source_words: 40
+  kind: source-file
+- clause: '5'
+  title: 5 Usage of Nudr_DataRepository Service
+  path: 5 Usage of Nudr_DataRepository Service/README.md
+  source_words: 57545
+  kind: navigation-directory
+- clause: '5.1'
+  title: 5.1 Introduction
+  path: 5 Usage of Nudr_DataRepository Service/5.1 Introduction.md
+  source_words: 35
+  kind: source-file
+- clause: '5.2'
+  title: 5.2 Resources
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/README.md
+  source_words: 48543
+  kind: navigation-directory
+- clause: 5.2.1
+  title: 5.2.1 Overview
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.1 Overview.md
+  source_words: 1978
+  kind: source-file
+- clause: 5.2.2
+  title: '5.2.2 Resource: AuthenticationSubscription'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.2 Resource_ AuthenticationSubscription.md
+  source_words: 757
+  kind: source-file
+- clause: 5.2.2.1
+  title: 5.2.2.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.2 Resource_ AuthenticationSubscription.md
+  source_words: 120
+  kind: embedded-clause
+- clause: 5.2.2.2
+  title: 5.2.2.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.2 Resource_ AuthenticationSubscription.md
+  source_words: 120
+  kind: embedded-clause
+- clause: 5.2.2.3
+  title: 5.2.2.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.2 Resource_ AuthenticationSubscription.md
+  source_words: 512
+  kind: embedded-clause
+- clause: 5.2.2.3.1
+  title: 5.2.2.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.2 Resource_ AuthenticationSubscription.md
+  source_words: 169
+  kind: embedded-clause
+- clause: 5.2.2.3.2
+  title: 5.2.2.3.2 PATCH
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.2 Resource_ AuthenticationSubscription.md
+  source_words: 336
+  kind: embedded-clause
+- clause: 5.2.3
+  title: '5.2.3 Resource: AccessAndMobilitySubscriptionData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.3 Resource_ AccessAndMobilitySubscriptionData.md
+  source_words: 449
+  kind: source-file
+- clause: 5.2.3.1
+  title: 5.2.3.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.3 Resource_ AccessAndMobilitySubscriptionData.md
+  source_words: 50
+  kind: embedded-clause
+- clause: 5.2.3.2
+  title: 5.2.3.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.3 Resource_ AccessAndMobilitySubscriptionData.md
+  source_words: 120
+  kind: embedded-clause
+- clause: 5.2.3.3
+  title: 5.2.3.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.3 Resource_ AccessAndMobilitySubscriptionData.md
+  source_words: 274
+  kind: embedded-clause
+- clause: 5.2.3.3.1
+  title: 5.2.3.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.3 Resource_ AccessAndMobilitySubscriptionData.md
+  source_words: 267
+  kind: embedded-clause
+- clause: 5.2.4
+  title: '5.2.4 Resource: SmfSelectionSubscriptionData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.4 Resource_ SmfSelectionSubscriptionData.md
+  source_words: 390
+  kind: source-file
+- clause: 5.2.4.1
+  title: 5.2.4.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.4 Resource_ SmfSelectionSubscriptionData.md
+  source_words: 45
+  kind: embedded-clause
+- clause: 5.2.4.2
+  title: 5.2.4.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.4 Resource_ SmfSelectionSubscriptionData.md
+  source_words: 120
+  kind: embedded-clause
+- clause: 5.2.4.3
+  title: 5.2.4.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.4 Resource_ SmfSelectionSubscriptionData.md
+  source_words: 220
+  kind: embedded-clause
+- clause: 5.2.4.3.1
+  title: 5.2.4.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.4 Resource_ SmfSelectionSubscriptionData.md
+  source_words: 213
+  kind: embedded-clause
+- clause: 5.2.5
+  title: '5.2.5 Resource: SessionManagementSubscriptionData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.5 Resource_ SessionManagementSubscriptionData.md
+  source_words: 542
+  kind: source-file
+- clause: 5.2.5.1
+  title: 5.2.5.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.5 Resource_ SessionManagementSubscriptionData.md
+  source_words: 61
+  kind: embedded-clause
+- clause: 5.2.5.2
+  title: 5.2.5.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.5 Resource_ SessionManagementSubscriptionData.md
+  source_words: 120
+  kind: embedded-clause
+- clause: 5.2.5.3
+  title: 5.2.5.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.5 Resource_ SessionManagementSubscriptionData.md
+  source_words: 356
+  kind: embedded-clause
+- clause: 5.2.5.3.1
+  title: 5.2.5.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.5 Resource_ SessionManagementSubscriptionData.md
+  source_words: 349
+  kind: embedded-clause
+- clause: 5.2.6
+  title: '5.2.6 Resource: Amf3GppAccessRegistration'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.6 Resource_ Amf3GppAccessRegistration.md
+  source_words: 870
+  kind: source-file
+- clause: 5.2.6.1
+  title: 5.2.6.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.6 Resource_ Amf3GppAccessRegistration.md
+  source_words: 41
+  kind: embedded-clause
+- clause: 5.2.6.2
+  title: 5.2.6.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.6 Resource_ Amf3GppAccessRegistration.md
+  source_words: 82
+  kind: embedded-clause
+- clause: 5.2.6.3
+  title: 5.2.6.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.6 Resource_ Amf3GppAccessRegistration.md
+  source_words: 742
+  kind: embedded-clause
+- clause: 5.2.6.3.1
+  title: 5.2.6.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.6 Resource_ Amf3GppAccessRegistration.md
+  source_words: 190
+  kind: embedded-clause
+- clause: 5.2.6.3.2
+  title: 5.2.6.3.2 PATCH
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.6 Resource_ Amf3GppAccessRegistration.md
+  source_words: 338
+  kind: embedded-clause
+- clause: 5.2.6.3.3
+  title: 5.2.6.3.3 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.6 Resource_ Amf3GppAccessRegistration.md
+  source_words: 207
+  kind: embedded-clause
+- clause: 5.2.7
+  title: '5.2.7 Resource: AmfNon3GppAccessRegistration'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.7 Resource_ AmfNon3GppAccessRegistration.md
+  source_words: 867
+  kind: source-file
+- clause: 5.2.7.1
+  title: 5.2.7.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.7 Resource_ AmfNon3GppAccessRegistration.md
+  source_words: 38
+  kind: embedded-clause
+- clause: 5.2.7.2
+  title: 5.2.7.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.7 Resource_ AmfNon3GppAccessRegistration.md
+  source_words: 82
+  kind: embedded-clause
+- clause: 5.2.7.3
+  title: 5.2.7.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.7 Resource_ AmfNon3GppAccessRegistration.md
+  source_words: 742
+  kind: embedded-clause
+- clause: 5.2.7.3.1
+  title: 5.2.7.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.7 Resource_ AmfNon3GppAccessRegistration.md
+  source_words: 191
+  kind: embedded-clause
+- clause: 5.2.7.3.2
+  title: 5.2.7.3.2 PATCH
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.7 Resource_ AmfNon3GppAccessRegistration.md
+  source_words: 337
+  kind: embedded-clause
+- clause: 5.2.7.3.3
+  title: 5.2.7.3.3 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.7 Resource_ AmfNon3GppAccessRegistration.md
+  source_words: 207
+  kind: embedded-clause
+- clause: 5.2.8
+  title: '5.2.8 Resource: SmfRegistrations'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.8 Resource_ SmfRegistrations.md
+  source_words: 306
+  kind: source-file
+- clause: 5.2.8.1
+  title: 5.2.8.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.8 Resource_ SmfRegistrations.md
+  source_words: 38
+  kind: embedded-clause
+- clause: 5.2.8.2
+  title: 5.2.8.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.8 Resource_ SmfRegistrations.md
+  source_words: 78
+  kind: embedded-clause
+- clause: 5.2.8.3
+  title: 5.2.8.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.8 Resource_ SmfRegistrations.md
+  source_words: 185
+  kind: embedded-clause
+- clause: 5.2.8.3.1
+  title: 5.2.8.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.8 Resource_ SmfRegistrations.md
+  source_words: 178
+  kind: embedded-clause
+- clause: 5.2.9
+  title: '5.2.9 Resource: IndividualSmfRegistration'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.9 Resource_ IndividualSmfRegistration.md
+  source_words: 1015
+  kind: source-file
+- clause: 5.2.9.1
+  title: 5.2.9.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.9 Resource_ IndividualSmfRegistration.md
+  source_words: 41
+  kind: embedded-clause
+- clause: 5.2.9.2
+  title: 5.2.9.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.9 Resource_ IndividualSmfRegistration.md
+  source_words: 86
+  kind: embedded-clause
+- clause: 5.2.9.3
+  title: 5.2.9.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.9 Resource_ IndividualSmfRegistration.md
+  source_words: 883
+  kind: embedded-clause
+- clause: 5.2.9.3.1
+  title: 5.2.9.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.9 Resource_ IndividualSmfRegistration.md
+  source_words: 185
+  kind: embedded-clause
+- clause: 5.2.9.3.2
+  title: 5.2.9.3.2 DELETE
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.9 Resource_ IndividualSmfRegistration.md
+  source_words: 155
+  kind: embedded-clause
+- clause: 5.2.9.3.3
+  title: 5.2.9.3.3 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.9 Resource_ IndividualSmfRegistration.md
+  source_words: 204
+  kind: embedded-clause
+- clause: 5.2.9.3.4
+  title: 5.2.9.3.4 PATCH
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.9 Resource_ IndividualSmfRegistration.md
+  source_words: 332
+  kind: embedded-clause
+- clause: 5.2.10
+  title: '5.2.10 Resource: OperatorSpecificData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.10 Resource_ OperatorSpecificData.md
+  source_words: 1122
+  kind: source-file
+- clause: 5.2.10.1
+  title: 5.2.10.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.10 Resource_ OperatorSpecificData.md
+  source_words: 32
+  kind: embedded-clause
+- clause: 5.2.10.2
+  title: 5.2.10.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.10 Resource_ OperatorSpecificData.md
+  source_words: 93
+  kind: embedded-clause
+- clause: 5.2.10.3
+  title: 5.2.10.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.10 Resource_ OperatorSpecificData.md
+  source_words: 992
+  kind: embedded-clause
+- clause: 5.2.10.3.1
+  title: 5.2.10.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.10 Resource_ OperatorSpecificData.md
+  source_words: 274
+  kind: embedded-clause
+- clause: 5.2.10.3.2
+  title: 5.2.10.3.2 PATCH
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.10 Resource_ OperatorSpecificData.md
+  source_words: 332
+  kind: embedded-clause
+- clause: 5.2.10.3.3
+  title: 5.2.10.3.3 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.10 Resource_ OperatorSpecificData.md
+  source_words: 224
+  kind: embedded-clause
+- clause: 5.2.10.3.4
+  title: 5.2.10.3.4 DELETE
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.10 Resource_ OperatorSpecificData.md
+  source_words: 155
+  kind: embedded-clause
+- clause: 5.2.11
+  title: '5.2.11 Resource: Smsf3GppAccessRegistration'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.11 Resource_ Smsf3GppAccessRegistration.md
+  source_words: 719
+  kind: source-file
+- clause: 5.2.11.1
+  title: 5.2.11.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.11 Resource_ Smsf3GppAccessRegistration.md
+  source_words: 32
+  kind: embedded-clause
+- clause: 5.2.11.2
+  title: 5.2.11.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.11 Resource_ Smsf3GppAccessRegistration.md
+  source_words: 82
+  kind: embedded-clause
+- clause: 5.2.11.3
+  title: 5.2.11.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.11 Resource_ Smsf3GppAccessRegistration.md
+  source_words: 600
+  kind: embedded-clause
+- clause: 5.2.11.3.1
+  title: 5.2.11.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.11 Resource_ Smsf3GppAccessRegistration.md
+  source_words: 220
+  kind: embedded-clause
+- clause: 5.2.11.3.2
+  title: 5.2.11.3.2 DELETE
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.11 Resource_ Smsf3GppAccessRegistration.md
+  source_words: 161
+  kind: embedded-clause
+- clause: 5.2.11.3.4
+  title: 5.2.11.3.4 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.11 Resource_ Smsf3GppAccessRegistration.md
+  source_words: 212
+  kind: embedded-clause
+- clause: 5.2.12
+  title: '5.2.12 Resource: SmsfNon3GppAccessRegistration'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.12 Resource_ SmsfNon3GppAccessRegistration.md
+  source_words: 724
+  kind: source-file
+- clause: 5.2.12.1
+  title: 5.2.12.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.12 Resource_ SmsfNon3GppAccessRegistration.md
+  source_words: 33
+  kind: embedded-clause
+- clause: 5.2.12.2
+  title: 5.2.12.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.12 Resource_ SmsfNon3GppAccessRegistration.md
+  source_words: 82
+  kind: embedded-clause
+- clause: 5.2.12.3
+  title: 5.2.12.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.12 Resource_ SmsfNon3GppAccessRegistration.md
+  source_words: 604
+  kind: embedded-clause
+- clause: 5.2.12.3.1
+  title: 5.2.12.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.12 Resource_ SmsfNon3GppAccessRegistration.md
+  source_words: 223
+  kind: embedded-clause
+- clause: 5.2.12.3.2
+  title: 5.2.12.3.2 DELETE
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.12 Resource_ SmsfNon3GppAccessRegistration.md
+  source_words: 161
+  kind: embedded-clause
+- clause: 5.2.12.3.4
+  title: 5.2.12.3.4 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.12 Resource_ SmsfNon3GppAccessRegistration.md
+  source_words: 213
+  kind: embedded-clause
+- clause: 5.2.12A
+  title: '5.2.12A Resource: IpSmGwRegistration'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.12A Resource_ IpSmGwRegistration.md
+  source_words: 987
+  kind: source-file
+- clause: 5.2.12A.1
+  title: 5.2.12A.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.12A Resource_ IpSmGwRegistration.md
+  source_words: 30
+  kind: embedded-clause
+- clause: 5.2.12A.2
+  title: 5.2.12A.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.12A Resource_ IpSmGwRegistration.md
+  source_words: 82
+  kind: embedded-clause
+- clause: 5.2.12A.3
+  title: 5.2.12A.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.12A Resource_ IpSmGwRegistration.md
+  source_words: 870
+  kind: embedded-clause
+- clause: 5.2.12A.3.1
+  title: 5.2.12A.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.12A Resource_ IpSmGwRegistration.md
+  source_words: 167
+  kind: embedded-clause
+- clause: 5.2.12A.3.2
+  title: 5.2.12A.3.2 DELETE
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.12A Resource_ IpSmGwRegistration.md
+  source_words: 161
+  kind: embedded-clause
+- clause: 5.2.12A.3.3
+  title: 5.2.12A.3.3 PATCH
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.12A Resource_ IpSmGwRegistration.md
+  source_words: 326
+  kind: embedded-clause
+- clause: 5.2.12A.3.4
+  title: 5.2.12A.3.4 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.12A Resource_ IpSmGwRegistration.md
+  source_words: 209
+  kind: embedded-clause
+- clause: 5.2.12B
+  title: '5.2.12B Resource: MessageWaitingData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.12B Resource_ MessageWaitingData.md
+  source_words: 1027
+  kind: source-file
+- clause: 5.2.12B.1
+  title: 5.2.12B.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.12B Resource_ MessageWaitingData.md
+  source_words: 36
+  kind: embedded-clause
+- clause: 5.2.12B.2
+  title: 5.2.12B.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.12B Resource_ MessageWaitingData.md
+  source_words: 82
+  kind: embedded-clause
+- clause: 5.2.12B.3
+  title: 5.2.12B.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.12B Resource_ MessageWaitingData.md
+  source_words: 904
+  kind: embedded-clause
+- clause: 5.2.12B.3.1
+  title: 5.2.12B.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.12B Resource_ MessageWaitingData.md
+  source_words: 201
+  kind: embedded-clause
+- clause: 5.2.12B.3.2
+  title: 5.2.12B.3.2 DELETE
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.12B Resource_ MessageWaitingData.md
+  source_words: 161
+  kind: embedded-clause
+- clause: 5.2.12B.3.3
+  title: 5.2.12B.3.3 PATCH
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.12B Resource_ MessageWaitingData.md
+  source_words: 326
+  kind: embedded-clause
+- clause: 5.2.12B.3.4
+  title: 5.2.12B.3.4 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.12B Resource_ MessageWaitingData.md
+  source_words: 209
+  kind: embedded-clause
+- clause: 5.2.13
+  title: '5.2.13 Resource: SMSManagementSubscriptionData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.13 Resource_ SMSManagementSubscriptionData.md
+  source_words: 354
+  kind: source-file
+- clause: 5.2.13.1
+  title: 5.2.13.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.13 Resource_ SMSManagementSubscriptionData.md
+  source_words: 50
+  kind: embedded-clause
+- clause: 5.2.13.2
+  title: 5.2.13.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.13 Resource_ SMSManagementSubscriptionData.md
+  source_words: 120
+  kind: embedded-clause
+- clause: 5.2.13.3
+  title: 5.2.13.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.13 Resource_ SMSManagementSubscriptionData.md
+  source_words: 179
+  kind: embedded-clause
+- clause: 5.2.13.3.1
+  title: 5.2.13.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.13 Resource_ SMSManagementSubscriptionData.md
+  source_words: 172
+  kind: embedded-clause
+- clause: 5.2.14
+  title: '5.2.14 Resource: ProvisionedParamenterData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.14 Resource_ ProvisionedParamenterData.md
+  source_words: 646
+  kind: source-file
+- clause: 5.2.14.1
+  title: 5.2.14.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.14 Resource_ ProvisionedParamenterData.md
+  source_words: 51
+  kind: embedded-clause
+- clause: 5.2.14.2
+  title: 5.2.14.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.14 Resource_ ProvisionedParamenterData.md
+  source_words: 81
+  kind: embedded-clause
+- clause: 5.2.14.3
+  title: 5.2.14.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.14 Resource_ ProvisionedParamenterData.md
+  source_words: 509
+  kind: embedded-clause
+- clause: 5.2.14.3.1
+  title: 5.2.14.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.14 Resource_ ProvisionedParamenterData.md
+  source_words: 168
+  kind: embedded-clause
+- clause: 5.2.14.3.2
+  title: 5.2.14.3.2 PATCH
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.14 Resource_ ProvisionedParamenterData.md
+  source_words: 334
+  kind: embedded-clause
+- clause: 5.2.14A
+  title: '5.2.14A Resource: PpProfileData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.14A Resource_ PpProfileData.md
+  source_words: 305
+  kind: source-file
+- clause: 5.2.14A.1
+  title: 5.2.14A.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.14A Resource_ PpProfileData.md
+  source_words: 42
+  kind: embedded-clause
+- clause: 5.2.14A.2
+  title: 5.2.14A.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.14A Resource_ PpProfileData.md
+  source_words: 77
+  kind: embedded-clause
+- clause: 5.2.14A.3
+  title: 5.2.14A.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.14A Resource_ PpProfileData.md
+  source_words: 181
+  kind: embedded-clause
+- clause: 5.2.14A.3.1
+  title: 5.2.14A.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.14A Resource_ PpProfileData.md
+  source_words: 174
+  kind: embedded-clause
+- clause: 5.2.14B
+  title: '5.2.14B Resource: ProvisionedParameterDataEntry'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.14B Resource_ ProvisionedParameterDataEntry.md
+  source_words: 792
+  kind: source-file
+- clause: 5.2.14B.1
+  title: 5.2.14B.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.14B Resource_ ProvisionedParameterDataEntry.md
+  source_words: 59
+  kind: embedded-clause
+- clause: 5.2.14B.2
+  title: 5.2.14B.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.14B Resource_ ProvisionedParameterDataEntry.md
+  source_words: 132
+  kind: embedded-clause
+- clause: 5.2.14B.3
+  title: 5.2.14B.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.14B Resource_ ProvisionedParameterDataEntry.md
+  source_words: 596
+  kind: embedded-clause
+- clause: 5.2.14B.3.1
+  title: 5.2.14B.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.14B Resource_ ProvisionedParameterDataEntry.md
+  source_words: 233
+  kind: embedded-clause
+- clause: 5.2.14B.3.2
+  title: 5.2.14B.3.2 DELETE
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.14B Resource_ ProvisionedParameterDataEntry.md
+  source_words: 187
+  kind: embedded-clause
+- clause: 5.2.14B.3.3
+  title: 5.2.14B.3.3 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.14B Resource_ ProvisionedParameterDataEntry.md
+  source_words: 169
+  kind: embedded-clause
+- clause: 5.2.14C
+  title: '5.2.14C Resource: ProvisionedParameterDataEntries'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.14C Resource_ ProvisionedParameterDataEntries.md
+  source_words: 358
+  kind: source-file
+- clause: 5.2.14C.1
+  title: 5.2.14C.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.14C Resource_ ProvisionedParameterDataEntries.md
+  source_words: 60
+  kind: embedded-clause
+- clause: 5.2.14C.2
+  title: 5.2.14C.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.14C Resource_ ProvisionedParameterDataEntries.md
+  source_words: 293
+  kind: embedded-clause
+- clause: 5.2.14C.3.1
+  title: 5.2.14C.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.14C Resource_ ProvisionedParameterDataEntries.md
+  source_words: 169
+  kind: embedded-clause
+- clause: 5.2.15
+  title: '5.2.15 Resource: SMSSubscriptionData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.15 Resource_ SMSSubscriptionData.md
+  source_words: 356
+  kind: source-file
+- clause: 5.2.15.1
+  title: 5.2.15.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.15 Resource_ SMSSubscriptionData.md
+  source_words: 52
+  kind: embedded-clause
+- clause: 5.2.15.2
+  title: 5.2.15.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.15 Resource_ SMSSubscriptionData.md
+  source_words: 120
+  kind: embedded-clause
+- clause: 5.2.15.3
+  title: 5.2.15.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.15 Resource_ SMSSubscriptionData.md
+  source_words: 179
+  kind: embedded-clause
+- clause: 5.2.15.3.1
+  title: 5.2.15.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.15 Resource_ SMSSubscriptionData.md
+  source_words: 172
+  kind: embedded-clause
+- clause: 5.2.16
+  title: '5.2.16 Resource: SdmSubscriptions'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.16 Resource_ SdmSubscriptions.md
+  source_words: 589
+  kind: source-file
+- clause: 5.2.16.1
+  title: 5.2.16.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.16 Resource_ SdmSubscriptions.md
+  source_words: 35
+  kind: embedded-clause
+- clause: 5.2.16.2
+  title: 5.2.16.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.16 Resource_ SdmSubscriptions.md
+  source_words: 82
+  kind: embedded-clause
+- clause: 5.2.16.3
+  title: 5.2.16.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.16 Resource_ SdmSubscriptions.md
+  source_words: 467
+  kind: embedded-clause
+- clause: 5.2.16.3.1
+  title: 5.2.16.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.16 Resource_ SdmSubscriptions.md
+  source_words: 173
+  kind: embedded-clause
+- clause: 5.2.16.3.2
+  title: 5.2.16.3.2 POST
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.16 Resource_ SdmSubscriptions.md
+  source_words: 287
+  kind: embedded-clause
+- clause: 5.2.17
+  title: '5.2.17 Resource: IndividualSdmSubscription'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.17 Resource_ IndividualSdmSubscription.md
+  source_words: 990
+  kind: source-file
+- clause: 5.2.17.1
+  title: 5.2.17.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.17 Resource_ IndividualSdmSubscription.md
+  source_words: 34
+  kind: embedded-clause
+- clause: 5.2.17.2
+  title: 5.2.17.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.17 Resource_ IndividualSdmSubscription.md
+  source_words: 93
+  kind: embedded-clause
+- clause: 5.2.17.3
+  title: 5.2.17.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.17 Resource_ IndividualSdmSubscription.md
+  source_words: 858
+  kind: embedded-clause
+- clause: 5.2.17.3.1
+  title: 5.2.17.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.17 Resource_ IndividualSdmSubscription.md
+  source_words: 188
+  kind: embedded-clause
+- clause: 5.2.17.3.2
+  title: 5.2.17.3.2 DELETE
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.17 Resource_ IndividualSdmSubscription.md
+  source_words: 182
+  kind: embedded-clause
+- clause: 5.2.17.3.3
+  title: 5.2.17.3.3 PATCH
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.17 Resource_ IndividualSdmSubscription.md
+  source_words: 322
+  kind: embedded-clause
+- clause: 5.2.17.3.4
+  title: 5.2.17.3.4 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.17 Resource_ IndividualSdmSubscription.md
+  source_words: 159
+  kind: embedded-clause
+- clause: 5.2.17A
+  title: '5.2.17A Resource: HssSdmSubscriptionInfo'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.17A Resource_ HssSdmSubscriptionInfo.md
+  source_words: 985
+  kind: source-file
+- clause: 5.2.17A.1
+  title: 5.2.17A.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.17A Resource_ HssSdmSubscriptionInfo.md
+  source_words: 84
+  kind: embedded-clause
+- clause: 5.2.17A.2
+  title: 5.2.17A.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.17A Resource_ HssSdmSubscriptionInfo.md
+  source_words: 94
+  kind: embedded-clause
+- clause: 5.2.17A.3
+  title: 5.2.17A.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.17A Resource_ HssSdmSubscriptionInfo.md
+  source_words: 802
+  kind: embedded-clause
+- clause: 5.2.17A.3.1
+  title: 5.2.17A.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.17A Resource_ HssSdmSubscriptionInfo.md
+  source_words: 160
+  kind: embedded-clause
+- clause: 5.2.17A.3.2
+  title: 5.2.17A.3.2 DELETE
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.17A Resource_ HssSdmSubscriptionInfo.md
+  source_words: 155
+  kind: embedded-clause
+- clause: 5.2.17A.3.3
+  title: 5.2.17A.3.3 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.17A Resource_ HssSdmSubscriptionInfo.md
+  source_words: 159
+  kind: embedded-clause
+- clause: 5.2.17A.3.4
+  title: 5.2.17A.3.4 PATCH
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.17A Resource_ HssSdmSubscriptionInfo.md
+  source_words: 321
+  kind: embedded-clause
+- clause: 5.2.18
+  title: '5.2.18 Resource: EeSubscriptions'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.18 Resource_ EeSubscriptions.md
+  source_words: 569
+  kind: source-file
+- clause: 5.2.18.1
+  title: 5.2.18.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.18 Resource_ EeSubscriptions.md
+  source_words: 35
+  kind: embedded-clause
+- clause: 5.2.18.2
+  title: 5.2.18.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.18 Resource_ EeSubscriptions.md
+  source_words: 82
+  kind: embedded-clause
+- clause: 5.2.18.3
+  title: 5.2.18.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.18 Resource_ EeSubscriptions.md
+  source_words: 447
+  kind: embedded-clause
+- clause: 5.2.18.3.1
+  title: 5.2.18.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.18 Resource_ EeSubscriptions.md
+  source_words: 247
+  kind: embedded-clause
+- clause: 5.2.18.3.2
+  title: 5.2.18.3.2 POST
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.18 Resource_ EeSubscriptions.md
+  source_words: 193
+  kind: embedded-clause
+- clause: 5.2.19
+  title: '5.2.19 Resource: IndividualEeSubscription'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19 Resource_ IndividualEeSubscription.md
+  source_words: 962
+  kind: source-file
+- clause: 5.2.19.1
+  title: 5.2.19.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19 Resource_ IndividualEeSubscription.md
+  source_words: 34
+  kind: embedded-clause
+- clause: 5.2.19.2
+  title: 5.2.19.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19 Resource_ IndividualEeSubscription.md
+  source_words: 92
+  kind: embedded-clause
+- clause: 5.2.19.3
+  title: 5.2.19.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19 Resource_ IndividualEeSubscription.md
+  source_words: 831
+  kind: embedded-clause
+- clause: 5.2.19.3.1
+  title: 5.2.19.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19 Resource_ IndividualEeSubscription.md
+  source_words: 188
+  kind: embedded-clause
+- clause: 5.2.19.3.2
+  title: 5.2.19.3.2 DELETE
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19 Resource_ IndividualEeSubscription.md
+  source_words: 155
+  kind: embedded-clause
+- clause: 5.2.19.3.3
+  title: 5.2.19.3.3 PATCH
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19 Resource_ IndividualEeSubscription.md
+  source_words: 322
+  kind: embedded-clause
+- clause: 5.2.19.3.4
+  title: 5.2.19.3.4 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19 Resource_ IndividualEeSubscription.md
+  source_words: 159
+  kind: embedded-clause
+- clause: 5.2.19A
+  title: '5.2.19A Resource: IndividualEeGroupSubscription'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19A Resource_ IndividualEeGroupSubscription.md
+  source_words: 978
+  kind: source-file
+- clause: 5.2.19A.1
+  title: 5.2.19A.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19A Resource_ IndividualEeGroupSubscription.md
+  source_words: 43
+  kind: embedded-clause
+- clause: 5.2.19A.2
+  title: 5.2.19A.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19A Resource_ IndividualEeGroupSubscription.md
+  source_words: 88
+  kind: embedded-clause
+- clause: 5.2.19A.3
+  title: 5.2.19A.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19A Resource_ IndividualEeGroupSubscription.md
+  source_words: 842
+  kind: embedded-clause
+- clause: 5.2.19A.3.1
+  title: 5.2.19A.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19A Resource_ IndividualEeGroupSubscription.md
+  source_words: 193
+  kind: embedded-clause
+- clause: 5.2.19A.3.2
+  title: 5.2.19A.3.2 DELETE
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19A Resource_ IndividualEeGroupSubscription.md
+  source_words: 155
+  kind: embedded-clause
+- clause: 5.2.19A.3.3
+  title: 5.2.19A.3.3 PATCH
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19A Resource_ IndividualEeGroupSubscription.md
+  source_words: 323
+  kind: embedded-clause
+- clause: 5.2.19A.3.4
+  title: 5.2.19A.3.4 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19A Resource_ IndividualEeGroupSubscription.md
+  source_words: 164
+  kind: embedded-clause
+- clause: 5.2.19B
+  title: '5.2.19B Resource: EeGroupProfileData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19B Resource_ EeGroupProfileData.md
+  source_words: 307
+  kind: source-file
+- clause: 5.2.19B.1
+  title: 5.2.19B.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19B Resource_ EeGroupProfileData.md
+  source_words: 39
+  kind: embedded-clause
+- clause: 5.2.19B.2
+  title: 5.2.19B.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19B Resource_ EeGroupProfileData.md
+  source_words: 76
+  kind: embedded-clause
+- clause: 5.2.19B.3
+  title: 5.2.19B.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19B Resource_ EeGroupProfileData.md
+  source_words: 187
+  kind: embedded-clause
+- clause: 5.2.19B.3.1
+  title: 5.2.19B.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19B Resource_ EeGroupProfileData.md
+  source_words: 180
+  kind: embedded-clause
+- clause: 5.2.19C
+  title: '5.2.19C Resource: AmfGroupSubscriptionInfo'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19C Resource_ AmfGroupSubscriptionInfo.md
+  source_words: 1051
+  kind: source-file
+- clause: 5.2.19C.1
+  title: 5.2.19C.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19C Resource_ AmfGroupSubscriptionInfo.md
+  source_words: 97
+  kind: embedded-clause
+- clause: 5.2.19C.2
+  title: 5.2.19C.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19C Resource_ AmfGroupSubscriptionInfo.md
+  source_words: 90
+  kind: embedded-clause
+- clause: 5.2.19C.3
+  title: 5.2.19C.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19C Resource_ AmfGroupSubscriptionInfo.md
+  source_words: 859
+  kind: embedded-clause
+- clause: 5.2.19C.3.1
+  title: 5.2.19C.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19C Resource_ AmfGroupSubscriptionInfo.md
+  source_words: 203
+  kind: embedded-clause
+- clause: 5.2.19C.3.2
+  title: 5.2.19C.3.2 DELETE
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19C Resource_ AmfGroupSubscriptionInfo.md
+  source_words: 155
+  kind: embedded-clause
+- clause: 5.2.19C.3.3
+  title: 5.2.19C.3.3 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19C Resource_ AmfGroupSubscriptionInfo.md
+  source_words: 160
+  kind: embedded-clause
+- clause: 5.2.31.3.4
+  title: 5.2.31.3.4 PATCH
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19C Resource_ AmfGroupSubscriptionInfo.md
+  source_words: 334
+  kind: embedded-clause
+- clause: 5.2.19D
+  title: '5.2.19D Resource: SmfGroupSubscriptionInfo'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19D Resource_ SmfGroupSubscriptionInfo.md
+  source_words: 1036
+  kind: source-file
+- clause: 5.2.19D.1
+  title: 5.2.19D.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19D Resource_ SmfGroupSubscriptionInfo.md
+  source_words: 97
+  kind: embedded-clause
+- clause: 5.2.19D.2
+  title: 5.2.19D.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19D Resource_ SmfGroupSubscriptionInfo.md
+  source_words: 89
+  kind: embedded-clause
+- clause: 5.2.19D.3
+  title: 5.2.19D.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19D Resource_ SmfGroupSubscriptionInfo.md
+  source_words: 845
+  kind: embedded-clause
+- clause: 5.2.19D.3.1
+  title: 5.2.19D.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19D Resource_ SmfGroupSubscriptionInfo.md
+  source_words: 191
+  kind: embedded-clause
+- clause: 5.2.19D.3.2
+  title: 5.2.19D.3.2 DELETE
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19D Resource_ SmfGroupSubscriptionInfo.md
+  source_words: 155
+  kind: embedded-clause
+- clause: 5.2.19D.3.3
+  title: 5.2.19D.3.3 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19D Resource_ SmfGroupSubscriptionInfo.md
+  source_words: 158
+  kind: embedded-clause
+- clause: 5.2.19D.3.4
+  title: 5.2.19D.3.4 PATCH
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19D Resource_ SmfGroupSubscriptionInfo.md
+  source_words: 334
+  kind: embedded-clause
+- clause: 5.2.19E
+  title: '5.2.19E Resource: HssGroupSubscriptionInfo'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19E Resource_ HssGroupSubscriptionInfo.md
+  source_words: 1025
+  kind: source-file
+- clause: 5.2.19E.1
+  title: 5.2.19E.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19E Resource_ HssGroupSubscriptionInfo.md
+  source_words: 94
+  kind: embedded-clause
+- clause: 5.2.19E.2
+  title: 5.2.19E.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19E Resource_ HssGroupSubscriptionInfo.md
+  source_words: 85
+  kind: embedded-clause
+- clause: 5.2.19E.3
+  title: 5.2.19E.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19E Resource_ HssGroupSubscriptionInfo.md
+  source_words: 841
+  kind: embedded-clause
+- clause: 5.2.19E.3.1
+  title: 5.2.19E.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19E Resource_ HssGroupSubscriptionInfo.md
+  source_words: 187
+  kind: embedded-clause
+- clause: 5.2.19E.3.2
+  title: 5.2.19E.3.2 DELETE
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19E Resource_ HssGroupSubscriptionInfo.md
+  source_words: 155
+  kind: embedded-clause
+- clause: 5.2.19E.3.3
+  title: 5.2.19E.3.3 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19E Resource_ HssGroupSubscriptionInfo.md
+  source_words: 158
+  kind: embedded-clause
+- clause: 5.2.19E.3.4
+  title: 5.2.19E.3.4 PATCH
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.19E Resource_ HssGroupSubscriptionInfo.md
+  source_words: 334
+  kind: embedded-clause
+- clause: 5.2.20
+  title: '5.2.20 Resource: SubscriptionDataSubscriptions'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.20 Resource_ SubscriptionDataSubscriptions.md
+  source_words: 1038
+  kind: source-file
+- clause: 5.2.20.1
+  title: 5.2.20.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.20 Resource_ SubscriptionDataSubscriptions.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 5.2.20.2
+  title: 5.2.20.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.20 Resource_ SubscriptionDataSubscriptions.md
+  source_words: 51
+  kind: embedded-clause
+- clause: 5.2.20.3
+  title: 5.2.20.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.20 Resource_ SubscriptionDataSubscriptions.md
+  source_words: 965
+  kind: embedded-clause
+- clause: 5.2.20.3.1
+  title: 5.2.20.3.1 POST
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.20 Resource_ SubscriptionDataSubscriptions.md
+  source_words: 386
+  kind: embedded-clause
+- clause: 5.2.20.3.2
+  title: 5.2.20.3.2 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.20 Resource_ SubscriptionDataSubscriptions.md
+  source_words: 204
+  kind: embedded-clause
+- clause: 5.2.20.3.3
+  title: 5.2.20.3.3 DELETE
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.20 Resource_ SubscriptionDataSubscriptions.md
+  source_words: 368
+  kind: embedded-clause
+- clause: 5.2.21
+  title: '5.2.21 Resource: IndividualSubscriptionDataSubscription'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.21 Resource_ IndividualSubscriptionDataSubscription.md
+  source_words: 869
+  kind: source-file
+- clause: 5.2.21.1
+  title: 5.2.21.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.21 Resource_ IndividualSubscriptionDataSubscription.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 5.2.21.2
+  title: 5.2.21.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.21 Resource_ IndividualSubscriptionDataSubscription.md
+  source_words: 74
+  kind: embedded-clause
+- clause: 5.2.21.3
+  title: 5.2.21.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.21 Resource_ IndividualSubscriptionDataSubscription.md
+  source_words: 772
+  kind: embedded-clause
+- clause: 5.2.21.3.1
+  title: 5.2.21.3.1 DELETE
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.21 Resource_ IndividualSubscriptionDataSubscription.md
+  source_words: 161
+  kind: embedded-clause
+- clause: 5.2.21.3.2
+  title: 5.2.21.3.2 PATCH
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.21 Resource_ IndividualSubscriptionDataSubscription.md
+  source_words: 440
+  kind: embedded-clause
+- clause: 5.2.21.3.3
+  title: 5.2.21.3.3 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.21 Resource_ IndividualSubscriptionDataSubscription.md
+  source_words: 164
+  kind: embedded-clause
+- clause: 5.2.22
+  title: '5.2.22 Resource: TraceData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.22 Resource_ TraceData.md
+  source_words: 348
+  kind: source-file
+- clause: 5.2.22.1
+  title: 5.2.22.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.22 Resource_ TraceData.md
+  source_words: 51
+  kind: embedded-clause
+- clause: 5.2.22.2
+  title: 5.2.22.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.22 Resource_ TraceData.md
+  source_words: 120
+  kind: embedded-clause
+- clause: 5.2.22.3
+  title: 5.2.22.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.22 Resource_ TraceData.md
+  source_words: 172
+  kind: embedded-clause
+- clause: 5.2.22.3.1
+  title: 5.2.22.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.22 Resource_ TraceData.md
+  source_words: 165
+  kind: embedded-clause
+- clause: 5.2.23
+  title: '5.2.23 Resource: IdentityData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.23 Resource_ IdentityData.md
+  source_words: 329
+  kind: source-file
+- clause: 5.2.23.1
+  title: 5.2.23.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.23 Resource_ IdentityData.md
+  source_words: 21
+  kind: embedded-clause
+- clause: 5.2.23.2
+  title: 5.2.23.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.23 Resource_ IdentityData.md
+  source_words: 76
+  kind: embedded-clause
+- clause: 5.2.23.3
+  title: 5.2.23.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.23 Resource_ IdentityData.md
+  source_words: 227
+  kind: embedded-clause
+- clause: 5.2.23.3.1
+  title: 5.2.23.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.23 Resource_ IdentityData.md
+  source_words: 220
+  kind: embedded-clause
+- clause: 5.2.24
+  title: '5.2.24 Resource: AuthenticationStatus'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.24 Resource_ AuthenticationStatus.md
+  source_words: 643
+  kind: source-file
+- clause: 5.2.24.1
+  title: 5.2.24.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.24 Resource_ AuthenticationStatus.md
+  source_words: 24
+  kind: embedded-clause
+- clause: 5.2.24.2
+  title: 5.2.24.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.24 Resource_ AuthenticationStatus.md
+  source_words: 81
+  kind: embedded-clause
+- clause: 5.2.24.3
+  title: 5.2.24.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.24 Resource_ AuthenticationStatus.md
+  source_words: 533
+  kind: embedded-clause
+- clause: 5.2.24.3.1
+  title: 5.2.24.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.24 Resource_ AuthenticationStatus.md
+  source_words: 164
+  kind: embedded-clause
+- clause: 5.2.24.3.2
+  title: 5.2.24.3.2 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.24 Resource_ AuthenticationStatus.md
+  source_words: 207
+  kind: embedded-clause
+- clause: 5.2.24.3.3
+  title: 5.2.24.3.3 DELETE
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.24 Resource_ AuthenticationStatus.md
+  source_words: 155
+  kind: embedded-clause
+- clause: 5.2.24A
+  title: '5.2.24A Resource: IndividualAuthenticationStatus'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.24A Resource_ IndividualAuthenticationStatus.md
+  source_words: 672
+  kind: source-file
+- clause: 5.2.24A.1
+  title: 5.2.24A.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.24A Resource_ IndividualAuthenticationStatus.md
+  source_words: 39
+  kind: embedded-clause
+- clause: 5.2.24A.2
+  title: 5.2.24A.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.24A Resource_ IndividualAuthenticationStatus.md
+  source_words: 95
+  kind: embedded-clause
+- clause: 5.2.24A.3
+  title: 5.2.24A.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.24A Resource_ IndividualAuthenticationStatus.md
+  source_words: 533
+  kind: embedded-clause
+- clause: 5.2.24A.3.1
+  title: 5.2.24A.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.24A Resource_ IndividualAuthenticationStatus.md
+  source_words: 164
+  kind: embedded-clause
+- clause: 5.2.24A.3.2
+  title: 5.2.24A.3.2 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.24A Resource_ IndividualAuthenticationStatus.md
+  source_words: 207
+  kind: embedded-clause
+- clause: 5.2.24A.3.3
+  title: 5.2.24A.3.3 DELETE
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.24A Resource_ IndividualAuthenticationStatus.md
+  source_words: 155
+  kind: embedded-clause
+- clause: 5.2.25
+  title: '5.2.25 Resource: AuthenticationSoR'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.25 Resource_ AuthenticationSoR.md
+  source_words: 795
+  kind: source-file
+- clause: 5.2.25.1
+  title: 5.2.25.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.25 Resource_ AuthenticationSoR.md
+  source_words: 24
+  kind: embedded-clause
+- clause: 5.2.25.2
+  title: 5.2.25.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.25 Resource_ AuthenticationSoR.md
+  source_words: 81
+  kind: embedded-clause
+- clause: 5.2.25.3
+  title: 5.2.25.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.25 Resource_ AuthenticationSoR.md
+  source_words: 685
+  kind: embedded-clause
+- clause: 5.2.25.3.1
+  title: 5.2.25.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.25 Resource_ AuthenticationSoR.md
+  source_words: 164
+  kind: embedded-clause
+- clause: 5.2.25.3.2
+  title: 5.2.25.3.2 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.25 Resource_ AuthenticationSoR.md
+  source_words: 169
+  kind: embedded-clause
+- clause: 5.2.25.3.3
+  title: 5.2.25.3.3 PATCH
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.25 Resource_ AuthenticationSoR.md
+  source_words: 345
+  kind: embedded-clause
+- clause: 5.2.25A
+  title: '5.2.25A Resource: AuthenticationUPU'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.25A Resource_ AuthenticationUPU.md
+  source_words: 450
+  kind: source-file
+- clause: 5.2.25A.1
+  title: 5.2.25A.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.25A Resource_ AuthenticationUPU.md
+  source_words: 24
+  kind: embedded-clause
+- clause: 5.2.25A.2
+  title: 5.2.25A.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.25A Resource_ AuthenticationUPU.md
+  source_words: 81
+  kind: embedded-clause
+- clause: 5.2.25A.3
+  title: 5.2.25A.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.25A Resource_ AuthenticationUPU.md
+  source_words: 340
+  kind: embedded-clause
+- clause: 5.2.25A.3.1
+  title: 5.2.25A.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.25A Resource_ AuthenticationUPU.md
+  source_words: 164
+  kind: embedded-clause
+- clause: 5.2.25A.3.2
+  title: 5.2.25A.3.2 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.25A Resource_ AuthenticationUPU.md
+  source_words: 169
+  kind: embedded-clause
+- clause: 5.2.25B
+  title: '5.2.25B Resource: SubscribedSNSSAIs'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.25B Resource_ SubscribedSNSSAIs.md
+  source_words: 452
+  kind: source-file
+- clause: 5.2.25B.1
+  title: 5.2.25B.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.25B Resource_ SubscribedSNSSAIs.md
+  source_words: 24
+  kind: embedded-clause
+- clause: 5.2.25B.2
+  title: 5.2.25B.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.25B Resource_ SubscribedSNSSAIs.md
+  source_words: 81
+  kind: embedded-clause
+- clause: 5.2.25B.3
+  title: 5.2.25B.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.25B Resource_ SubscribedSNSSAIs.md
+  source_words: 342
+  kind: embedded-clause
+- clause: 5.2.25B.3.1
+  title: 5.2.25B.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.25B Resource_ SubscribedSNSSAIs.md
+  source_words: 166
+  kind: embedded-clause
+- clause: 5.2.25B.3.2
+  title: 5.2.25B.3.2 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.25B Resource_ SubscribedSNSSAIs.md
+  source_words: 169
+  kind: embedded-clause
+- clause: 5.2.25C
+  title: '5.2.25C Resource: SubscribedCAG'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.25C Resource_ SubscribedCAG.md
+  source_words: 451
+  kind: source-file
+- clause: 5.2.25C.1
+  title: 5.2.25C.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.25C Resource_ SubscribedCAG.md
+  source_words: 24
+  kind: embedded-clause
+- clause: 5.2.25C.2
+  title: 5.2.25C.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.25C Resource_ SubscribedCAG.md
+  source_words: 81
+  kind: embedded-clause
+- clause: 5.2.25C.3
+  title: 5.2.25C.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.25C Resource_ SubscribedCAG.md
+  source_words: 341
+  kind: embedded-clause
+- clause: 5.2.25C.3.1
+  title: 5.2.25C.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.25C Resource_ SubscribedCAG.md
+  source_words: 165
+  kind: embedded-clause
+- clause: 5.2.25C.3.2
+  title: 5.2.25C.3.2 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.25C Resource_ SubscribedCAG.md
+  source_words: 169
+  kind: embedded-clause
+- clause: 5.2.26
+  title: '5.2.26 Resource: ProvisionedData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.26 Resource_ ProvisionedData.md
+  source_words: 601
+  kind: source-file
+- clause: 5.2.26.1
+  title: 5.2.26.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.26 Resource_ ProvisionedData.md
+  source_words: 40
+  kind: embedded-clause
+- clause: 5.2.26.2
+  title: 5.2.26.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.26 Resource_ ProvisionedData.md
+  source_words: 120
+  kind: embedded-clause
+- clause: 5.2.26.3
+  title: 5.2.26.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.26 Resource_ ProvisionedData.md
+  source_words: 436
+  kind: embedded-clause
+- clause: 5.2.26.3.1
+  title: 5.2.26.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.26 Resource_ ProvisionedData.md
+  source_words: 429
+  kind: embedded-clause
+- clause: 5.2.27
+  title: '5.2.27 Resource: OperatorDeterminedBarringData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.27 Resource_ OperatorDeterminedBarringData.md
+  source_words: 295
+  kind: source-file
+- clause: 5.2.27.1
+  title: 5.2.27.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.27 Resource_ OperatorDeterminedBarringData.md
+  source_words: 41
+  kind: embedded-clause
+- clause: 5.2.27.2
+  title: 5.2.27.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.27 Resource_ OperatorDeterminedBarringData.md
+  source_words: 82
+  kind: embedded-clause
+- clause: 5.2.27.3
+  title: 5.2.27.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.27 Resource_ OperatorDeterminedBarringData.md
+  source_words: 167
+  kind: embedded-clause
+- clause: 5.2.27.3.1
+  title: 5.2.27.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.27 Resource_ OperatorDeterminedBarringData.md
+  source_words: 160
+  kind: embedded-clause
+- clause: 5.2.28
+  title: '5.2.28 Resource: EeProfileData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.28 Resource_ EeProfileData.md
+  source_words: 328
+  kind: source-file
+- clause: 5.2.28.1
+  title: 5.2.28.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.28 Resource_ EeProfileData.md
+  source_words: 27
+  kind: embedded-clause
+- clause: 5.2.28.2
+  title: 5.2.28.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.28 Resource_ EeProfileData.md
+  source_words: 77
+  kind: embedded-clause
+- clause: 5.2.28.3
+  title: 5.2.28.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.28 Resource_ EeProfileData.md
+  source_words: 219
+  kind: embedded-clause
+- clause: 5.2.28.3.1
+  title: 5.2.28.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.28 Resource_ EeProfileData.md
+  source_words: 212
+  kind: embedded-clause
+- clause: 5.2.29
+  title: '5.2.29 Resource: EeGroupSubscriptions'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.29 Resource_ EeGroupSubscriptions.md
+  source_words: 503
+  kind: source-file
+- clause: 5.2.29.1
+  title: 5.2.29.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.29 Resource_ EeGroupSubscriptions.md
+  source_words: 44
+  kind: embedded-clause
+- clause: 5.2.29.2
+  title: 5.2.29.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.29 Resource_ EeGroupSubscriptions.md
+  source_words: 78
+  kind: embedded-clause
+- clause: 5.2.29.3
+  title: 5.2.29.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.29 Resource_ EeGroupSubscriptions.md
+  source_words: 376
+  kind: embedded-clause
+- clause: 5.2.29.3.1
+  title: 5.2.29.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.29 Resource_ EeGroupSubscriptions.md
+  source_words: 178
+  kind: embedded-clause
+- clause: 5.2.29.3.2
+  title: 5.2.29.3.2 POST
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.29 Resource_ EeGroupSubscriptions.md
+  source_words: 191
+  kind: embedded-clause
+- clause: 5.2.30
+  title: '5.2.30 Resource: SharedData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.30 Resource_ SharedData.md
+  source_words: 261
+  kind: source-file
+- clause: 5.2.30.1
+  title: 5.2.30.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.30 Resource_ SharedData.md
+  source_words: 19
+  kind: embedded-clause
+- clause: 5.2.30.2
+  title: 5.2.30.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.30 Resource_ SharedData.md
+  source_words: 51
+  kind: embedded-clause
+- clause: 5.2.30.3
+  title: 5.2.30.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.30 Resource_ SharedData.md
+  source_words: 186
+  kind: embedded-clause
+- clause: 5.2.30.3.1
+  title: 5.2.30.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.30 Resource_ SharedData.md
+  source_words: 179
+  kind: embedded-clause
+- clause: 5.2.30A
+  title: '5.2.30A Resource: IndividualSharedData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.30A Resource_ IndividualSharedData.md
+  source_words: 263
+  kind: source-file
+- clause: 5.2.30A.1
+  title: 5.2.30A.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.30A Resource_ IndividualSharedData.md
+  source_words: 12
+  kind: embedded-clause
+- clause: 5.2.30A.2
+  title: 5.2.30A.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.30A Resource_ IndividualSharedData.md
+  source_words: 59
+  kind: embedded-clause
+- clause: 5.2.30A.3
+  title: 5.2.30A.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.30A Resource_ IndividualSharedData.md
+  source_words: 187
+  kind: embedded-clause
+- clause: 5.2.30A.3.1
+  title: 5.2.30A.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.30A Resource_ IndividualSharedData.md
+  source_words: 180
+  kind: embedded-clause
+- clause: 5.2.31
+  title: '5.2.31 Resource: AmfSubscriptionInfo'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.31 Resource_ AmfSubscriptionInfo.md
+  source_words: 1051
+  kind: source-file
+- clause: 5.2.31.1
+  title: 5.2.31.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.31 Resource_ AmfSubscriptionInfo.md
+  source_words: 92
+  kind: embedded-clause
+- clause: 5.2.31.2
+  title: 5.2.31.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.31 Resource_ AmfSubscriptionInfo.md
+  source_words: 95
+  kind: embedded-clause
+- clause: 5.2.31.3
+  title: 5.2.31.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.31 Resource_ AmfSubscriptionInfo.md
+  source_words: 859
+  kind: embedded-clause
+- clause: 5.2.31.3.1
+  title: 5.2.31.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.31 Resource_ AmfSubscriptionInfo.md
+  source_words: 203
+  kind: embedded-clause
+- clause: 5.2.31.3.2
+  title: 5.2.31.3.2 DELETE
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.31 Resource_ AmfSubscriptionInfo.md
+  source_words: 155
+  kind: embedded-clause
+- clause: 5.2.31.3.3
+  title: 5.2.31.3.3 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.31 Resource_ AmfSubscriptionInfo.md
+  source_words: 160
+  kind: embedded-clause
+- clause: 5.2.31.3.4
+  title: 5.2.31.3.4 PATCH
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.31 Resource_ AmfSubscriptionInfo.md
+  source_words: 334
+  kind: embedded-clause
+- clause: 5.2.31A
+  title: '5.2.31A Resource: SmfSubscriptionInfo'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.31A Resource_ SmfSubscriptionInfo.md
+  source_words: 1036
+  kind: source-file
+- clause: 5.2.31A.1
+  title: 5.2.31A.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.31A Resource_ SmfSubscriptionInfo.md
+  source_words: 92
+  kind: embedded-clause
+- clause: 5.2.31A.2
+  title: 5.2.31A.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.31A Resource_ SmfSubscriptionInfo.md
+  source_words: 94
+  kind: embedded-clause
+- clause: 5.2.31A.3
+  title: 5.2.31A.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.31A Resource_ SmfSubscriptionInfo.md
+  source_words: 845
+  kind: embedded-clause
+- clause: 5.2.31A.3.1
+  title: 5.2.31A.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.31A Resource_ SmfSubscriptionInfo.md
+  source_words: 191
+  kind: embedded-clause
+- clause: 5.2.31A.3.2
+  title: 5.2.31A.3.2 DELETE
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.31A Resource_ SmfSubscriptionInfo.md
+  source_words: 155
+  kind: embedded-clause
+- clause: 5.2.31A.3.3
+  title: 5.2.31A.3.3 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.31A Resource_ SmfSubscriptionInfo.md
+  source_words: 158
+  kind: embedded-clause
+- clause: 5.2.31A.3.4
+  title: 5.2.31A.3.4 PATCH
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.31A Resource_ SmfSubscriptionInfo.md
+  source_words: 334
+  kind: embedded-clause
+- clause: 5.2.31B
+  title: '5.2.31B Resource: HssSubscriptionInfo'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.31B Resource_ HssSubscriptionInfo.md
+  source_words: 1032
+  kind: source-file
+- clause: 5.2.31B.1
+  title: 5.2.31B.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.31B Resource_ HssSubscriptionInfo.md
+  source_words: 92
+  kind: embedded-clause
+- clause: 5.2.31B.2
+  title: 5.2.31B.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.31B Resource_ HssSubscriptionInfo.md
+  source_words: 94
+  kind: embedded-clause
+- clause: 5.2.31B.3
+  title: 5.2.31B.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.31B Resource_ HssSubscriptionInfo.md
+  source_words: 841
+  kind: embedded-clause
+- clause: 5.2.31B.3.1
+  title: 5.2.31B.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.31B Resource_ HssSubscriptionInfo.md
+  source_words: 187
+  kind: embedded-clause
+- clause: 5.2.31B.3.2
+  title: 5.2.31B.3.2 DELETE
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.31B Resource_ HssSubscriptionInfo.md
+  source_words: 155
+  kind: embedded-clause
+- clause: 5.2.31B.3.3
+  title: 5.2.31B.3.3 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.31B Resource_ HssSubscriptionInfo.md
+  source_words: 158
+  kind: embedded-clause
+- clause: 5.2.31B.3.4
+  title: 5.2.31B.3.4 PATCH
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.31B Resource_ HssSubscriptionInfo.md
+  source_words: 334
+  kind: embedded-clause
+- clause: 5.2.32
+  title: '5.2.32 Resource: ContextData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.32 Resource_ ContextData.md
+  source_words: 339
+  kind: source-file
+- clause: 5.2.32.1
+  title: 5.2.32.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.32 Resource_ ContextData.md
+  source_words: 33
+  kind: embedded-clause
+- clause: 5.2.32.2
+  title: 5.2.32.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.32 Resource_ ContextData.md
+  source_words: 82
+  kind: embedded-clause
+- clause: 5.2.32.3
+  title: 5.2.32.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.32 Resource_ ContextData.md
+  source_words: 219
+  kind: embedded-clause
+- clause: 5.2.32.3.1
+  title: 5.2.32.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.32 Resource_ ContextData.md
+  source_words: 212
+  kind: embedded-clause
+- clause: 5.2.33
+  title: '5.2.33 Resource: GroupIdentifiers'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.33 Resource_ GroupIdentifiers.md
+  source_words: 370
+  kind: source-file
+- clause: 5.2.33.1
+  title: 5.2.33.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.33 Resource_ GroupIdentifiers.md
+  source_words: 19
+  kind: embedded-clause
+- clause: 5.2.33.2
+  title: 5.2.33.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.33 Resource_ GroupIdentifiers.md
+  source_words: 52
+  kind: embedded-clause
+- clause: 5.2.33.3
+  title: 5.2.33.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.33 Resource_ GroupIdentifiers.md
+  source_words: 294
+  kind: embedded-clause
+- clause: 5.2.33.3.1
+  title: 5.2.33.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.33 Resource_ GroupIdentifiers.md
+  source_words: 287
+  kind: embedded-clause
+- clause: 5.2.34
+  title: '5.2.34 Resource: 5GVnGroups'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.34 Resource_ 5GVnGroups.md
+  source_words: 294
+  kind: source-file
+- clause: 5.2.34.1
+  title: 5.2.34.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.34 Resource_ 5GVnGroups.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 5.2.34.2
+  title: 5.2.34.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.34 Resource_ 5GVnGroups.md
+  source_words: 52
+  kind: embedded-clause
+- clause: 5.2.34.3
+  title: 5.2.34.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.34 Resource_ 5GVnGroups.md
+  source_words: 222
+  kind: embedded-clause
+- clause: 5.2.34.3.1
+  title: 5.2.34.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.34 Resource_ 5GVnGroups.md
+  source_words: 215
+  kind: embedded-clause
+- clause: 5.2.35
+  title: '5.2.35 Resource: Individual5GVnGroup'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.35 Resource_ Individual5GVnGroup.md
+  source_words: 1152
+  kind: source-file
+- clause: 5.2.35.1
+  title: 5.2.35.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.35 Resource_ Individual5GVnGroup.md
+  source_words: 32
+  kind: embedded-clause
+- clause: 5.2.35.2
+  title: 5.2.35.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.35 Resource_ Individual5GVnGroup.md
+  source_words: 61
+  kind: embedded-clause
+- clause: 5.2.35.3
+  title: 5.2.35.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.35 Resource_ Individual5GVnGroup.md
+  source_words: 1054
+  kind: embedded-clause
+- clause: 5.2.35.3.1
+  title: 5.2.35.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.35 Resource_ Individual5GVnGroup.md
+  source_words: 369
+  kind: embedded-clause
+- clause: 5.2.35.3.2
+  title: 5.2.35.3.2 DELETE
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.35 Resource_ Individual5GVnGroup.md
+  source_words: 155
+  kind: embedded-clause
+- clause: 5.2.35.3.3
+  title: 5.2.35.3.3 PATCH
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.35 Resource_ Individual5GVnGroup.md
+  source_words: 347
+  kind: embedded-clause
+- clause: 5.2.35.3.4
+  title: 5.2.35.3.4 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.35 Resource_ Individual5GVnGroup.md
+  source_words: 176
+  kind: embedded-clause
+- clause: 5.2.36
+  title: '5.2.36 Resource: LcsPrivacySubscriptionData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.36 Resource_ LcsPrivacySubscriptionData.md
+  source_words: 348
+  kind: source-file
+- clause: 5.2.36.1
+  title: 5.2.36.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.36 Resource_ LcsPrivacySubscriptionData.md
+  source_words: 44
+  kind: embedded-clause
+- clause: 5.2.36.2
+  title: 5.2.36.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.36 Resource_ LcsPrivacySubscriptionData.md
+  source_words: 82
+  kind: embedded-clause
+- clause: 5.2.36.3
+  title: 5.2.36.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.36 Resource_ LcsPrivacySubscriptionData.md
+  source_words: 217
+  kind: embedded-clause
+- clause: 5.2.36.3.1
+  title: 5.2.36.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.36 Resource_ LcsPrivacySubscriptionData.md
+  source_words: 210
+  kind: embedded-clause
+- clause: 5.2.37
+  title: '5.2.37 Resource: LcsMobileOriginatedSubscriptionData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.37 Resource_ LcsMobileOriginatedSubscriptionData.md
+  source_words: 348
+  kind: source-file
+- clause: 5.2.37.1
+  title: 5.2.37.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.37 Resource_ LcsMobileOriginatedSubscriptionData.md
+  source_words: 44
+  kind: embedded-clause
+- clause: 5.2.37.2
+  title: 5.2.37.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.37 Resource_ LcsMobileOriginatedSubscriptionData.md
+  source_words: 81
+  kind: embedded-clause
+- clause: 5.2.37.3
+  title: 5.2.37.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.37 Resource_ LcsMobileOriginatedSubscriptionData.md
+  source_words: 218
+  kind: embedded-clause
+- clause: 5.2.37.3.1
+  title: 5.2.37.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.37 Resource_ LcsMobileOriginatedSubscriptionData.md
+  source_words: 211
+  kind: embedded-clause
+- clause: 5.2.38
+  title: '5.2.38 Resource: NiddAuthorizationData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.38 Resource_ NiddAuthorizationData.md
+  source_words: 427
+  kind: source-file
+- clause: 5.2.38.1
+  title: 5.2.38.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.38 Resource_ NiddAuthorizationData.md
+  source_words: 50
+  kind: embedded-clause
+- clause: 5.2.38.2
+  title: 5.2.38.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.38 Resource_ NiddAuthorizationData.md
+  source_words: 76
+  kind: embedded-clause
+- clause: 5.2.38.3
+  title: 5.2.38.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.38 Resource_ NiddAuthorizationData.md
+  source_words: 296
+  kind: embedded-clause
+- clause: 5.2.38.3.1
+  title: 5.2.38.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.38 Resource_ NiddAuthorizationData.md
+  source_words: 289
+  kind: embedded-clause
+- clause: 5.2.39
+  title: '5.2.39 Resource: CoverageRestrictionData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.39 Resource_ CoverageRestrictionData.md
+  source_words: 306
+  kind: source-file
+- clause: 5.2.39.1
+  title: 5.2.39.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.39 Resource_ CoverageRestrictionData.md
+  source_words: 49
+  kind: embedded-clause
+- clause: 5.2.39.2
+  title: 5.2.39.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.39 Resource_ CoverageRestrictionData.md
+  source_words: 75
+  kind: embedded-clause
+- clause: 5.2.39.3
+  title: 5.2.39.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.39 Resource_ CoverageRestrictionData.md
+  source_words: 177
+  kind: embedded-clause
+- clause: 5.2.39.3.1
+  title: 5.2.39.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.39 Resource_ CoverageRestrictionData.md
+  source_words: 170
+  kind: embedded-clause
+- clause: 5.2.40
+  title: '5.2.40 Resource: Location'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.40 Resource_ Location.md
+  source_words: 303
+  kind: source-file
+- clause: 5.2.40.1
+  title: 5.2.40.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.40 Resource_ Location.md
+  source_words: 39
+  kind: embedded-clause
+- clause: 5.2.40.2
+  title: 5.2.40.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.40 Resource_ Location.md
+  source_words: 83
+  kind: embedded-clause
+- clause: 5.2.40.3
+  title: 5.2.40.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.40 Resource_ Location.md
+  source_words: 176
+  kind: embedded-clause
+- clause: 5.2.40.3.1
+  title: 5.2.40.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.40 Resource_ Location.md
+  source_words: 169
+  kind: embedded-clause
+- clause: 5.2.41
+  title: '5.2.41 Resource: V2xSubscriptionData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.41 Resource_ V2xSubscriptionData.md
+  source_words: 322
+  kind: source-file
+- clause: 5.2.41.1
+  title: 5.2.41.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.41 Resource_ V2xSubscriptionData.md
+  source_words: 46
+  kind: embedded-clause
+- clause: 5.2.41.2
+  title: 5.2.41.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.41 Resource_ V2xSubscriptionData.md
+  source_words: 96
+  kind: embedded-clause
+- clause: 5.2.41.3
+  title: 5.2.41.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.41 Resource_ V2xSubscriptionData.md
+  source_words: 175
+  kind: embedded-clause
+- clause: 5.2.41.3.1
+  title: 5.2.41.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.41 Resource_ V2xSubscriptionData.md
+  source_words: 168
+  kind: embedded-clause
+- clause: 5.2.41A
+  title: '5.2.41A Resource: ProseSubscriptionData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.41A Resource_ ProseSubscriptionData.md
+  source_words: 325
+  kind: source-file
+- clause: 5.2.41A.1
+  title: 5.2.41A.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.41A Resource_ ProseSubscriptionData.md
+  source_words: 48
+  kind: embedded-clause
+- clause: 5.2.41A.2
+  title: 5.2.41A.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.41A Resource_ ProseSubscriptionData.md
+  source_words: 96
+  kind: embedded-clause
+- clause: 5.2.41A.3
+  title: 5.2.41A.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.41A Resource_ ProseSubscriptionData.md
+  source_words: 176
+  kind: embedded-clause
+- clause: 5.2.41A.3.1
+  title: 5.2.41A.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.41A Resource_ ProseSubscriptionData.md
+  source_words: 169
+  kind: embedded-clause
+- clause: 5.2.42
+  title: '5.2.42 Resource: LcsBroadcastAssistanceSubscriptionData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.42 Resource_ LcsBroadcastAssistanceSubscriptionData.md
+  source_words: 361
+  kind: source-file
+- clause: 5.2.42.1
+  title: 5.2.42.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.42 Resource_ LcsBroadcastAssistanceSubscriptionData.md
+  source_words: 51
+  kind: embedded-clause
+- clause: 5.2.42.2
+  title: 5.2.42.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.42 Resource_ LcsBroadcastAssistanceSubscriptionData.md
+  source_words: 124
+  kind: embedded-clause
+- clause: 5.2.42.3
+  title: 5.2.42.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.42 Resource_ LcsBroadcastAssistanceSubscriptionData.md
+  source_words: 181
+  kind: embedded-clause
+- clause: 5.2.42.3.1
+  title: 5.2.42.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.42 Resource_ LcsBroadcastAssistanceSubscriptionData.md
+  source_words: 174
+  kind: embedded-clause
+- clause: 5.2.43
+  title: '5.2.43 Resource: 5GVnGroupsInternal'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.43 Resource_ 5GVnGroupsInternal.md
+  source_words: 317
+  kind: source-file
+- clause: 5.2.43.1
+  title: 5.2.43.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.43 Resource_ 5GVnGroupsInternal.md
+  source_words: 49
+  kind: embedded-clause
+- clause: 5.2.43.2
+  title: 5.2.43.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.43 Resource_ 5GVnGroupsInternal.md
+  source_words: 53
+  kind: embedded-clause
+- clause: 5.2.43.3
+  title: 5.2.43.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.43 Resource_ 5GVnGroupsInternal.md
+  source_words: 210
+  kind: embedded-clause
+- clause: 5.2.43.3.1
+  title: 5.2.43.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.43 Resource_ 5GVnGroupsInternal.md
+  source_words: 203
+  kind: embedded-clause
+- clause: 5.2.44
+  title: '5.2.44 Resource: Pp5gVnGroupProfileData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.44 Resource_ Pp5gVnGroupProfileData.md
+  source_words: 280
+  kind: source-file
+- clause: 5.2.44.1
+  title: 5.2.44.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.44 Resource_ Pp5gVnGroupProfileData.md
+  source_words: 24
+  kind: embedded-clause
+- clause: 5.2.44.2
+  title: 5.2.44.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.44 Resource_ Pp5gVnGroupProfileData.md
+  source_words: 48
+  kind: embedded-clause
+- clause: 5.2.44.3
+  title: 5.2.44.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.44 Resource_ Pp5gVnGroupProfileData.md
+  source_words: 203
+  kind: embedded-clause
+- clause: 5.2.44.3.1
+  title: 5.2.44.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.44 Resource_ Pp5gVnGroupProfileData.md
+  source_words: 196
+  kind: embedded-clause
+- clause: 5.2.45
+  title: '5.2.45 Resource: NiddAuthorizations'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.45 Resource_ NiddAuthorizations.md
+  source_words: 1004
+  kind: source-file
+- clause: 5.2.45.1
+  title: 5.2.45.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.45 Resource_ NiddAuthorizations.md
+  source_words: 68
+  kind: embedded-clause
+- clause: 5.2.45.2
+  title: 5.2.45.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.45 Resource_ NiddAuthorizations.md
+  source_words: 83
+  kind: embedded-clause
+- clause: 5.2.45.3
+  title: 5.2.45.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.45 Resource_ NiddAuthorizations.md
+  source_words: 848
+  kind: embedded-clause
+- clause: 5.2.45.3.1
+  title: 5.2.45.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.45 Resource_ NiddAuthorizations.md
+  source_words: 194
+  kind: embedded-clause
+- clause: 5.2.45.3.2
+  title: 5.2.45.3.2 DELETE
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.45 Resource_ NiddAuthorizations.md
+  source_words: 155
+  kind: embedded-clause
+- clause: 5.2.45.3.3
+  title: 5.2.45.3.3 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.45 Resource_ NiddAuthorizations.md
+  source_words: 158
+  kind: embedded-clause
+- clause: 5.2.45.3.4
+  title: 5.2.45.3.4 PATCH
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.45 Resource_ NiddAuthorizations.md
+  source_words: 334
+  kind: embedded-clause
+- clause: 5.2.46
+  title: '5.2.46 Resource: 5MBSSubscriptionData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.46 Resource_ 5MBSSubscriptionData.md
+  source_words: 283
+  kind: source-file
+- clause: 5.2.46.1
+  title: 5.2.46.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.46 Resource_ 5MBSSubscriptionData.md
+  source_words: 21
+  kind: embedded-clause
+- clause: 5.2.46.2
+  title: 5.2.46.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.46 Resource_ 5MBSSubscriptionData.md
+  source_words: 79
+  kind: embedded-clause
+- clause: 5.2.46.3
+  title: 5.2.46.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.46 Resource_ 5MBSSubscriptionData.md
+  source_words: 178
+  kind: embedded-clause
+- clause: 5.2.46.3.1
+  title: 5.2.46.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.46 Resource_ 5MBSSubscriptionData.md
+  source_words: 171
+  kind: embedded-clause
+- clause: 5.2.47
+  title: '5.2.47 Resource: UeSubscriptionData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.47 Resource_ UeSubscriptionData.md
+  source_words: 664
+  kind: source-file
+- clause: 5.2.47.1
+  title: 5.2.47.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.47 Resource_ UeSubscriptionData.md
+  source_words: 34
+  kind: embedded-clause
+- clause: 5.2.47.2
+  title: 5.2.47.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.47 Resource_ UeSubscriptionData.md
+  source_words: 81
+  kind: embedded-clause
+- clause: 5.2.47.3
+  title: 5.2.47.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.47 Resource_ UeSubscriptionData.md
+  source_words: 544
+  kind: embedded-clause
+- clause: 5.2.47.3.1
+  title: 5.2.47.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.47 Resource_ UeSubscriptionData.md
+  source_words: 537
+  kind: embedded-clause
+- clause: 5.2.48
+  title: '5.2.48 Resource: ServiceSpecificAuthorizationData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.48 Resource_ ServiceSpecificAuthorizationData.md
+  source_words: 437
+  kind: source-file
+- clause: 5.2.48.1
+  title: 5.2.48.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.48 Resource_ ServiceSpecificAuthorizationData.md
+  source_words: 56
+  kind: embedded-clause
+- clause: 5.2.48.2
+  title: 5.2.48.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.48 Resource_ ServiceSpecificAuthorizationData.md
+  source_words: 95
+  kind: embedded-clause
+- clause: 5.2.48.3
+  title: 5.2.48.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.48 Resource_ ServiceSpecificAuthorizationData.md
+  source_words: 281
+  kind: embedded-clause
+- clause: 5.2.48.3.1
+  title: 5.2.48.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.48 Resource_ ServiceSpecificAuthorizationData.md
+  source_words: 274
+  kind: embedded-clause
+- clause: 5.2.49
+  title: '5.2.49 Resource: SpecificServiceAuthorizations'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.49 Resource_ SpecificServiceAuthorizations.md
+  source_words: 1050
+  kind: source-file
+- clause: 5.2.49.1
+  title: 5.2.49.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.49 Resource_ SpecificServiceAuthorizations.md
+  source_words: 69
+  kind: embedded-clause
+- clause: 5.2.49.2
+  title: 5.2.49.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.49 Resource_ SpecificServiceAuthorizations.md
+  source_words: 102
+  kind: embedded-clause
+- clause: 5.2.49.3
+  title: 5.2.49.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.49 Resource_ SpecificServiceAuthorizations.md
+  source_words: 874
+  kind: embedded-clause
+- clause: 5.2.49.3.1
+  title: 5.2.49.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.49 Resource_ SpecificServiceAuthorizations.md
+  source_words: 199
+  kind: embedded-clause
+- clause: 5.2.49.3.2
+  title: 5.2.49.3.2 DELETE
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.49 Resource_ SpecificServiceAuthorizations.md
+  source_words: 155
+  kind: embedded-clause
+- clause: 5.2.49.3.3
+  title: 5.2.49.3.3 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.49 Resource_ SpecificServiceAuthorizations.md
+  source_words: 170
+  kind: embedded-clause
+- clause: 5.2.49.3.4
+  title: 5.2.49.3.4 PATCH
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.49 Resource_ SpecificServiceAuthorizations.md
+  source_words: 343
+  kind: embedded-clause
+- clause: 5.2.50
+  title: '5.2.50 Resource: RoamingInfo'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.50 Resource_ RoamingInfo.md
+  source_words: 500
+  kind: source-file
+- clause: 5.2.50.1
+  title: 5.2.50.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.50 Resource_ RoamingInfo.md
+  source_words: 50
+  kind: embedded-clause
+- clause: 5.2.50.2
+  title: 5.2.50.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.50 Resource_ RoamingInfo.md
+  source_words: 82
+  kind: embedded-clause
+- clause: 5.2.50.3
+  title: 5.2.50.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.50 Resource_ RoamingInfo.md
+  source_words: 363
+  kind: embedded-clause
+- clause: 5.2.50.3.1
+  title: 5.2.50.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.50 Resource_ RoamingInfo.md
+  source_words: 190
+  kind: embedded-clause
+- clause: 5.2.50.3.2
+  title: 5.2.50.3.2 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.50 Resource_ RoamingInfo.md
+  source_words: 166
+  kind: embedded-clause
+- clause: 5.2.51
+  title: '5.2.51 Resource: UserConsentData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.51 Resource_ UserConsentData.md
+  source_words: 330
+  kind: source-file
+- clause: 5.2.51.1
+  title: 5.2.51.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.51 Resource_ UserConsentData.md
+  source_words: 47
+  kind: embedded-clause
+- clause: 5.2.51.2
+  title: 5.2.51.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.51 Resource_ UserConsentData.md
+  source_words: 80
+  kind: embedded-clause
+- clause: 5.2.51.3
+  title: 5.2.51.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.51 Resource_ UserConsentData.md
+  source_words: 198
+  kind: embedded-clause
+- clause: 5.2.51.3.1
+  title: 5.2.51.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.51 Resource_ UserConsentData.md
+  source_words: 191
+  kind: embedded-clause
+- clause: 5.2.52
+  title: '5.2.52 Resource: PeiInfo'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.52 Resource_ PeiInfo.md
+  source_words: 511
+  kind: source-file
+- clause: 5.2.52.1
+  title: 5.2.52.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.52 Resource_ PeiInfo.md
+  source_words: 48
+  kind: embedded-clause
+- clause: 5.2.52.2
+  title: 5.2.52.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.52 Resource_ PeiInfo.md
+  source_words: 82
+  kind: embedded-clause
+- clause: 5.2.52.3
+  title: 5.2.52.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.52 Resource_ PeiInfo.md
+  source_words: 376
+  kind: embedded-clause
+- clause: 5.2.52.3.1
+  title: 5.2.52.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.52 Resource_ PeiInfo.md
+  source_words: 210
+  kind: embedded-clause
+- clause: 5.2.52.3.2
+  title: 5.2.52.3.2 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.52 Resource_ PeiInfo.md
+  source_words: 159
+  kind: embedded-clause
+- clause: 5.2.53
+  title: '5.2.53 Resource: TimeSyncSubscriptionData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.53 Resource_ TimeSyncSubscriptionData.md
+  source_words: 286
+  kind: source-file
+- clause: 5.2.53.1
+  title: 5.2.53.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.53 Resource_ TimeSyncSubscriptionData.md
+  source_words: 23
+  kind: embedded-clause
+- clause: 5.2.53.2
+  title: 5.2.53.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.53 Resource_ TimeSyncSubscriptionData.md
+  source_words: 79
+  kind: embedded-clause
+- clause: 5.2.53.3
+  title: 5.2.53.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.53 Resource_ TimeSyncSubscriptionData.md
+  source_words: 179
+  kind: embedded-clause
+- clause: 5.2.53.3.1
+  title: 5.2.53.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.53 Resource_ TimeSyncSubscriptionData.md
+  source_words: 172
+  kind: embedded-clause
+- clause: 5.2.54
+  title: '5.2.54 Resource: 5GMbsGroup'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.54 Resource_ 5GMbsGroup.md
+  source_words: 294
+  kind: source-file
+- clause: 5.2.54.1
+  title: 5.2.54.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.54 Resource_ 5GMbsGroup.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 5.2.54.2
+  title: 5.2.54.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.54 Resource_ 5GMbsGroup.md
+  source_words: 52
+  kind: embedded-clause
+- clause: 5.2.54.3
+  title: 5.2.54.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.54 Resource_ 5GMbsGroup.md
+  source_words: 222
+  kind: embedded-clause
+- clause: 5.2.54.3.1
+  title: 5.2.54.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.54 Resource_ 5GMbsGroup.md
+  source_words: 215
+  kind: embedded-clause
+- clause: 5.2.55
+  title: '5.2.55 Resource: Individual5GmbsGroup'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.55 Resource_ Individual5GmbsGroup.md
+  source_words: 967
+  kind: source-file
+- clause: 5.2.55.1
+  title: 5.2.55.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.55 Resource_ Individual5GmbsGroup.md
+  source_words: 32
+  kind: embedded-clause
+- clause: 5.2.55.2
+  title: 5.2.55.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.55 Resource_ Individual5GmbsGroup.md
+  source_words: 61
+  kind: embedded-clause
+- clause: 5.2.55.3
+  title: 5.2.55.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.55 Resource_ Individual5GmbsGroup.md
+  source_words: 869
+  kind: embedded-clause
+- clause: 5.2.55.3.1
+  title: 5.2.55.3.1 PUT
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.55 Resource_ Individual5GmbsGroup.md
+  source_words: 184
+  kind: embedded-clause
+- clause: 5.2.55.3.2
+  title: 5.2.55.3.2 DELETE
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.55 Resource_ Individual5GmbsGroup.md
+  source_words: 155
+  kind: embedded-clause
+- clause: 5.2.55.3.3
+  title: 5.2.55.3.3 PATCH
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.55 Resource_ Individual5GmbsGroup.md
+  source_words: 347
+  kind: embedded-clause
+- clause: 5.2.55.3.4
+  title: 5.2.55.3.4 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.55 Resource_ Individual5GmbsGroup.md
+  source_words: 176
+  kind: embedded-clause
+- clause: 5.2.56
+  title: '5.2.56 Resource: 5GMbsGroupsInternal'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.56 Resource_ 5GMbsGroupsInternal.md
+  source_words: 317
+  kind: source-file
+- clause: 5.2.56.1
+  title: 5.2.56.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.56 Resource_ 5GMbsGroupsInternal.md
+  source_words: 49
+  kind: embedded-clause
+- clause: 5.2.56.2
+  title: 5.2.56.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.56 Resource_ 5GMbsGroupsInternal.md
+  source_words: 53
+  kind: embedded-clause
+- clause: 5.2.56.3
+  title: 5.2.56.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.56 Resource_ 5GMbsGroupsInternal.md
+  source_words: 210
+  kind: embedded-clause
+- clause: 5.2.56.3.1
+  title: 5.2.56.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.56 Resource_ 5GMbsGroupsInternal.md
+  source_words: 203
+  kind: embedded-clause
+- clause: 5.2.57
+  title: '5.2.57 Resource: Pp5gMbsGroupProfileData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.57 Resource_ Pp5gMbsGroupProfileData.md
+  source_words: 280
+  kind: source-file
+- clause: 5.2.57.1
+  title: 5.2.57.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.57 Resource_ Pp5gMbsGroupProfileData.md
+  source_words: 24
+  kind: embedded-clause
+- clause: 5.2.57.2
+  title: 5.2.57.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.57 Resource_ Pp5gMbsGroupProfileData.md
+  source_words: 48
+  kind: embedded-clause
+- clause: 5.2.57.3
+  title: 5.2.57.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.57 Resource_ Pp5gMbsGroupProfileData.md
+  source_words: 203
+  kind: embedded-clause
+- clause: 5.2.57.3.1
+  title: 5.2.57.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.57 Resource_ Pp5gMbsGroupProfileData.md
+  source_words: 196
+  kind: embedded-clause
+- clause: 5.2.58
+  title: '5.2.58 Resource: UeUpdateConfirmation'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.58 Resource_ UeUpdateConfirmation.md
+  source_words: 298
+  kind: source-file
+- clause: 5.2.58.1
+  title: 5.2.58.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.58 Resource_ UeUpdateConfirmation.md
+  source_words: 33
+  kind: embedded-clause
+- clause: 5.2.58.2
+  title: 5.2.58.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.58 Resource_ UeUpdateConfirmation.md
+  source_words: 81
+  kind: embedded-clause
+- clause: 5.2.58.3
+  title: 5.2.58.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.58 Resource_ UeUpdateConfirmation.md
+  source_words: 179
+  kind: embedded-clause
+- clause: 5.2.58.3.1
+  title: 5.2.58.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.58 Resource_ UeUpdateConfirmation.md
+  source_words: 172
+  kind: embedded-clause
+- clause: 5.2.59
+  title: '5.2.59 Resource: LcsSubscriptionData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.59 Resource_ LcsSubscriptionData.md
+  source_words: 350
+  kind: source-file
+- clause: 5.2.59.1
+  title: 5.2.59.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.59 Resource_ LcsSubscriptionData.md
+  source_words: 46
+  kind: embedded-clause
+- clause: 5.2.59.2
+  title: 5.2.59.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.59 Resource_ LcsSubscriptionData.md
+  source_words: 81
+  kind: embedded-clause
+- clause: 5.2.59.3
+  title: 5.2.59.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.59 Resource_ LcsSubscriptionData.md
+  source_words: 218
+  kind: embedded-clause
+- clause: 5.2.59.3.1
+  title: 5.2.59.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.59 Resource_ LcsSubscriptionData.md
+  source_words: 211
+  kind: embedded-clause
+- clause: 5.2.60
+  title: '5.2.60 Resource: RangingSlPosSubscriptionData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.60 Resource_ RangingSlPosSubscriptionData.md
+  source_words: 334
+  kind: source-file
+- clause: 5.2.60.1
+  title: 5.2.60.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.60 Resource_ RangingSlPosSubscriptionData.md
+  source_words: 54
+  kind: embedded-clause
+- clause: 5.2.60.2
+  title: 5.2.60.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.60 Resource_ RangingSlPosSubscriptionData.md
+  source_words: 96
+  kind: embedded-clause
+- clause: 5.2.60.3
+  title: 5.2.60.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.60 Resource_ RangingSlPosSubscriptionData.md
+  source_words: 179
+  kind: embedded-clause
+- clause: 5.2.60.3.1
+  title: 5.2.60.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.60 Resource_ RangingSlPosSubscriptionData.md
+  source_words: 172
+  kind: embedded-clause
+- clause: 5.2.61
+  title: '5.2.61 Resource: A2xSubscriptionData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.61 Resource_ A2xSubscriptionData.md
+  source_words: 322
+  kind: source-file
+- clause: 5.2.61.1
+  title: 5.2.61.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.61 Resource_ A2xSubscriptionData.md
+  source_words: 46
+  kind: embedded-clause
+- clause: 5.2.61.2
+  title: 5.2.61.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.61 Resource_ A2xSubscriptionData.md
+  source_words: 96
+  kind: embedded-clause
+- clause: 5.2.61.3
+  title: 5.2.61.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.61 Resource_ A2xSubscriptionData.md
+  source_words: 175
+  kind: embedded-clause
+- clause: 5.2.62
+  title: '5.2.62 Resource: RangingSlPrivacySubscriptionData'
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.62 Resource_ RangingSlPrivacySubscriptionData.md
+  source_words: 348
+  kind: source-file
+- clause: 5.2.62.1
+  title: 5.2.62.1 Description
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.62 Resource_ RangingSlPrivacySubscriptionData.md
+  source_words: 44
+  kind: embedded-clause
+- clause: 5.2.62.2
+  title: 5.2.62.2 Resource Definition
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.62 Resource_ RangingSlPrivacySubscriptionData.md
+  source_words: 82
+  kind: embedded-clause
+- clause: 5.2.62.3
+  title: 5.2.62.3 Resource Standard Methods
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.62 Resource_ RangingSlPrivacySubscriptionData.md
+  source_words: 217
+  kind: embedded-clause
+- clause: 5.2.62.3.1
+  title: 5.2.62.3.1 GET
+  path: 5 Usage of Nudr_DataRepository Service/5.2 Resources/5.2.62 Resource_ RangingSlPrivacySubscriptionData.md
+  source_words: 210
+  kind: embedded-clause
+- clause: '5.3'
+  title: 5.3 Notifications
+  path: 5 Usage of Nudr_DataRepository Service/5.3 Notifications.md
+  source_words: 949
+  kind: source-file
+- clause: 5.3.1
+  title: 5.3.1 General
+  path: 5 Usage of Nudr_DataRepository Service/5.3 Notifications.md
+  source_words: 41
+  kind: embedded-clause
+- clause: 5.3.2
+  title: 5.3.2 Data Change Notification
+  path: 5 Usage of Nudr_DataRepository Service/5.3 Notifications.md
+  source_words: 443
+  kind: embedded-clause
+- clause: 5.3.3
+  title: 5.3.3 Data Removal Notification
+  path: 5 Usage of Nudr_DataRepository Service/5.3 Notifications.md
+  source_words: 260
+  kind: embedded-clause
+- clause: 5.3.4
+  title: 5.3.4 Stale Check Notification
+  path: 5 Usage of Nudr_DataRepository Service/5.3 Notifications.md
+  source_words: 202
+  kind: embedded-clause
+- clause: '5.4'
+  title: 5.4 Data Model
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/README.md
+  source_words: 7878
+  kind: navigation-directory
+- clause: 5.4.1
+  title: 5.4.1 General
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.1 General.md
+  source_words: 1380
+  kind: source-file
+- clause: 5.4.2
+  title: 5.4.2 Structured data types
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/README.md
+  source_words: 5632
+  kind: navigation-directory
+- clause: 5.4.2.1
+  title: 5.4.2.1 Introduction
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.1 Introduction.md
+  source_words: 16
+  kind: source-file
+- clause: 5.4.2.2
+  title: '5.4.2.2 Type: AuthenticationSubscription'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.2 Type_ AuthenticationSubscription.md
+  source_words: 777
+  kind: source-file
+- clause: 5.4.2.3
+  title: '5.4.2.3 Type: OperatorSpecificDataContainer'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.3 Type_ OperatorSpecificDataContainer.md
+  source_words: 291
+  kind: source-file
+- clause: 5.4.2.4
+  title: '5.4.2.4 Type: SmfRegList'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.4 Type_ SmfRegList.md
+  source_words: 52
+  kind: source-file
+- clause: 5.4.2.5
+  title: '5.4.2.5 Type: SubscriptionDataSubscriptions'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.5 Type_ SubscriptionDataSubscriptions.md
+  source_words: 613
+  kind: source-file
+- clause: 5.4.2.6
+  title: '5.4.2.6 Type: DataChangeNotify'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.6 Type_ DataChangeNotify.md
+  source_words: 255
+  kind: source-file
+- clause: 5.4.2.7
+  title: '5.4.2.7 Type: IdentityData'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.7 Type_ IdentityData.md
+  source_words: 331
+  kind: source-file
+- clause: 5.4.2.8
+  title: '5.4.2.8 Type: ProvisionedDataSets'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.8 Type_ ProvisionedDataSets.md
+  source_words: 215
+  kind: source-file
+- clause: 5.4.2.9
+  title: '5.4.2.9 Type: SorData'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.9 Type_ SorData.md
+  source_words: 238
+  kind: source-file
+- clause: 5.4.2.9A
+  title: '5.4.2.9A Type: UpuData'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.9A Type_ UpuData.md
+  source_words: 94
+  kind: source-file
+- clause: 5.4.2.9B
+  title: '5.4.2.9B Type: NssaiAckData'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.9B Type_ NssaiAckData.md
+  source_words: 41
+  kind: source-file
+- clause: 5.4.2.9C
+  title: '5.4.2.9C Type: CagAckData'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.9C Type_ CagAckData.md
+  source_words: 41
+  kind: source-file
+- clause: 5.4.2.10
+  title: 5.4.2.10 Void
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.10 Void.md
+  source_words: 5
+  kind: source-file
+- clause: 5.4.2.11
+  title: 5.4.2.11 Void
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.11 Void.md
+  source_words: 5
+  kind: source-file
+- clause: 5.4.2.12
+  title: 5.4.2.12 Void
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.12 Void.md
+  source_words: 5
+  kind: source-file
+- clause: 5.4.2.13
+  title: 5.4.2.13 Void
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.13 Void.md
+  source_words: 5
+  kind: source-file
+- clause: 5.4.2.14
+  title: 5.4.2.14 Void
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.14 Void.md
+  source_words: 5
+  kind: source-file
+- clause: 5.4.2.15
+  title: 5.4.2.15 Void
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.15 Void.md
+  source_words: 5
+  kind: source-file
+- clause: 5.4.2.16
+  title: 5.4.2.16 Void
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.16 Void.md
+  source_words: 5
+  kind: source-file
+- clause: 5.4.2.17
+  title: 5.4.2.17 Void
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.17 Void.md
+  source_words: 5
+  kind: source-file
+- clause: 5.4.2.18
+  title: 5.4.2.18 Void
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.18 Void.md
+  source_words: 5
+  kind: source-file
+- clause: 5.4.2.19
+  title: '5.4.2.19 Type: AmfSubscriptionInfo'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.19 Type_ AmfSubscriptionInfo.md
+  source_words: 108
+  kind: source-file
+- clause: 5.4.2.20
+  title: '5.4.2.20 Type: EeProfileData'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.20 Type_ EeProfileData.md
+  source_words: 251
+  kind: source-file
+- clause: 5.4.2.21
+  title: 5.4.2.21 Void
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.21 Void.md
+  source_words: 5
+  kind: source-file
+- clause: 5.4.2.22
+  title: '5.4.2.22 Type: ContextDataSets'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.22 Type_ ContextDataSets.md
+  source_words: 119
+  kind: source-file
+- clause: 5.4.2.23
+  title: '5.4.2.23 Type: SequenceNumber'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.23 Type_ SequenceNumber.md
+  source_words: 311
+  kind: source-file
+- clause: 5.4.2.24
+  title: '5.4.2.24 Type: MessageWaitingData'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.24 Type_ MessageWaitingData.md
+  source_words: 44
+  kind: source-file
+- clause: 5.4.2.25
+  title: '5.4.2.25 Type: SmscData'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.25 Type_ SmscData.md
+  source_words: 79
+  kind: source-file
+- clause: 5.4.2.26
+  title: '5.4.2.26 Type: SmfSubscriptionInfo'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.26 Type_ SmfSubscriptionInfo.md
+  source_words: 32
+  kind: source-file
+- clause: 5.4.2.27
+  title: '5.4.2.27 Type: SmfSubscriptionItem'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.27 Type_ SmfSubscriptionItem.md
+  source_words: 90
+  kind: source-file
+- clause: 5.4.2.28
+  title: '5.4.2.28 Type: MtcProvider'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.28 Type_ MtcProvider.md
+  source_words: 65
+  kind: source-file
+- clause: 5.4.2.29
+  title: '5.4.2.29 Type: HssSubscriptionInfo'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.29 Type_ HssSubscriptionInfo.md
+  source_words: 32
+  kind: source-file
+- clause: 5.4.2.30
+  title: '5.4.2.30 Type: HssSubscriptionItem'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.30 Type_ HssSubscriptionItem.md
+  source_words: 102
+  kind: source-file
+- clause: 5.4.2.31
+  title: '5.4.2.31 Type: EeGroupProfileData'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.31 Type_ EeGroupProfileData.md
+  source_words: 246
+  kind: source-file
+- clause: 5.4.2.32
+  title: '5.4.2.32 Type: Pp5gVnGroupProfileData'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.32 Type_ Pp5gVnGroupProfileData.md
+  source_words: 141
+  kind: source-file
+- clause: 5.4.2.33
+  title: '5.4.2.33 Type: PpProfileData'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.33 Type_ PpProfileData.md
+  source_words: 136
+  kind: source-file
+- clause: 5.4.2.34
+  title: '5.4.2.34 Type: AllowedMtcProviderInfo'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.34 Type_ AllowedMtcProviderInfo.md
+  source_words: 70
+  kind: source-file
+- clause: 5.4.2.35
+  title: '5.4.2.35 Type: GroupIdentifiers'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.35 Type_ GroupIdentifiers.md
+  source_words: 123
+  kind: source-file
+- clause: 5.4.2.36
+  title: '5.4.2.36 Type: AuthorizationData'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.36 Type_ AuthorizationData.md
+  source_words: 129
+  kind: source-file
+- clause: 5.4.2.37
+  title: '5.4.2.37 Type: NiddAuthorizationInfo'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.37 Type_ NiddAuthorizationInfo.md
+  source_words: 32
+  kind: source-file
+- clause: 5.4.2.38
+  title: '5.4.2.38 Type: PpDataEntryList'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.38 Type_ PpDataEntryList.md
+  source_words: 48
+  kind: source-file
+- clause: 5.4.2.39
+  title: '5.4.2.39 Type: UeSubscribedDataSets'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.39 Type_ UeSubscribedDataSets.md
+  source_words: 54
+  kind: source-file
+- clause: 5.4.2.40
+  title: '5.4.2.40 Type: ServiceSpecificAuthorizationInfo'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.40 Type_ ServiceSpecificAuthorizationInfo.md
+  source_words: 48
+  kind: source-file
+- clause: 5.4.2.41
+  title: '5.4.2.41 Type: NfIdentifier'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.41 Type_ NfIdentifier.md
+  source_words: 52
+  kind: source-file
+- clause: 5.4.2.42
+  title: '5.4.2.42 Type: EeSubscriptionExt'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.42 Type_ EeSubscriptionExt.md
+  source_words: 41
+  kind: source-file
+- clause: 5.4.2.43
+  title: '5.4.2.43 Type: AdditionalEeSubsInfo'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.43 Type_ AdditionalEeSubsInfo.md
+  source_words: 79
+  kind: source-file
+- clause: 5.4.2.44
+  title: '5.4.2.44 Type: ImmediateReport'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.44 Type_ ImmediateReport.md
+  source_words: 47
+  kind: source-file
+- clause: 5.4.2.47
+  title: '5.4.2.47 Type: UeUpdConfData'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.47 Type_ UeUpdConfData.md
+  source_words: 67
+  kind: source-file
+- clause: 5.4.2.48
+  title: '5.4.2.48 Type: AdditionalDataRef'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.2 Structured data types/5.4.2.48 Type_ AdditionalDataRef.md
+  source_words: 66
+  kind: source-file
+- clause: 5.4.3
+  title: 5.4.3 Simple data types and enumerations
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.3 Simple data types and enumerations.md
+  source_words: 855
+  kind: source-file
+- clause: 5.4.3.1
+  title: 5.4.3.1 Introduction
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.3 Simple data types and enumerations.md
+  source_words: 25
+  kind: embedded-clause
+- clause: 5.4.3.2
+  title: 5.4.3.2 Simple data types
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.3 Simple data types and enumerations.md
+  source_words: 66
+  kind: embedded-clause
+- clause: 5.4.3.3
+  title: '5.4.3.3 Enumeration: AuthMethod'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.3 Simple data types and enumerations.md
+  source_words: 40
+  kind: embedded-clause
+- clause: 5.4.3.4
+  title: '5.4.3.4 Enumeration: ProvisionedDataSetName'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.3 Simple data types and enumerations.md
+  source_words: 131
+  kind: embedded-clause
+- clause: 5.4.3.5
+  title: 5.4.3.5 Void
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.3 Simple data types and enumerations.md
+  source_words: 5
+  kind: embedded-clause
+- clause: 5.4.3.6
+  title: '5.4.3.6 Enumeration: ContextDataSetName'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.3 Simple data types and enumerations.md
+  source_words: 74
+  kind: embedded-clause
+- clause: 5.4.3.7
+  title: '5.4.3.7 Enumeration: SqnScheme'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.3 Simple data types and enumerations.md
+  source_words: 139
+  kind: embedded-clause
+- clause: 5.4.3.8
+  title: '5.4.3.8 Enumeration: Sign'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.3 Simple data types and enumerations.md
+  source_words: 18
+  kind: embedded-clause
+- clause: 5.4.3.9
+  title: '5.4.3.9 Enumeration: UeUpdateStatus'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.3 Simple data types and enumerations.md
+  source_words: 224
+  kind: embedded-clause
+- clause: 5.4.3.10
+  title: '5.4.3.10 Enumeration: PpDataType'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.3 Simple data types and enumerations.md
+  source_words: 73
+  kind: embedded-clause
+- clause: 5.4.3.11
+  title: '5.4.3.11 Enumeration: UeSubscribedDataSetName'
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.3 Simple data types and enumerations.md
+  source_words: 52
+  kind: embedded-clause
+- clause: 5.4.4
+  title: 5.4.4 Binary data
+  path: 5 Usage of Nudr_DataRepository Service/5.4 Data Model/5.4.4 Binary data.md
+  source_words: 7
+  kind: source-file
+- clause: '5.5'
+  title: 5.5 Error handling
+  path: 5 Usage of Nudr_DataRepository Service/5.5 Error handling.md
+  source_words: 90
+  kind: source-file
+- clause: '5.6'
+  title: 5.6 Feature negotiation
+  path: 5 Usage of Nudr_DataRepository Service/5.6 Feature negotiation.md
+  source_words: 44
+  kind: source-file
+- clause: Annex A
+  title: 'Annex A (normative): OpenAPI specification'
+  path: Annex A (normative)_ OpenAPI specification/README.md
+  source_words: 34276
+  kind: navigation-directory
+- clause: A.1
+  title: A.1 General
+  path: Annex A (normative)_ OpenAPI specification/README.md
+  source_words: 138
+  kind: source-file
+- clause: A.2
+  title: A.2 Nudr_DataRepository API for Subscription Data
+  path: ../openapi/TS29505_Subscription_Data.yaml
+  source_words: 34133
+  kind: exact-attachment
+- clause: Annex B
+  title: 'Annex B (informative): Change history'
+  path: Annex B (informative)_ Change history/README.md
+  source_words: 3862
+  kind: navigation-directory
+- clause: Annex B-2018
+  title: 'Annex B (informative): Change history — 2018'
+  path: Annex B (informative)_ Change history/2018.md
+  source_words: 578
+  kind: source-file
+- clause: Annex B-2019
+  title: 'Annex B (informative): Change history — 2019'
+  path: Annex B (informative)_ Change history/2019.md
+  source_words: 845
+  kind: source-file
+- clause: Annex B-2020
+  title: 'Annex B (informative): Change history — 2020'
+  path: Annex B (informative)_ Change history/2020.md
+  source_words: 559
+  kind: source-file
+- clause: Annex B-2021
+  title: 'Annex B (informative): Change history — 2021'
+  path: Annex B (informative)_ Change history/2021.md
+  source_words: 865
+  kind: source-file
+- clause: Annex B-2022
+  title: 'Annex B (informative): Change history — 2022'
+  path: Annex B (informative)_ Change history/2022.md
+  source_words: 447
+  kind: source-file
+- clause: Annex B-2023
+  title: 'Annex B (informative): Change history — 2023'
+  path: Annex B (informative)_ Change history/2023.md
+  source_words: 380
+  kind: source-file
+- clause: Annex B-2024
+  title: 'Annex B (informative): Change history — 2024'
+  path: Annex B (informative)_ Change history/2024.md
+  source_words: 239
+  kind: source-file
+- clause: Annex B-2025
+  title: 'Annex B (informative): Change history — 2025'
+  path: Annex B (informative)_ Change history/2025.md
+  source_words: 28
+  kind: source-file

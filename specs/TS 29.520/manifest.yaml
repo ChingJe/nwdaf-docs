@@ -64,143 +64,117 @@ clauses:
   kind: navigation-directory
 - clause: 4.2.1
   title: 4.2.1 Service Description
-  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.1
-    Service Description.md
+  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.1 Service Description.md
   source_words: 1745
   kind: source-file
 - clause: 4.2.1.1
   title: 4.2.1.1 Overview
-  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.1
-    Service Description.md
+  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.1 Service Description.md
   source_words: 136
   kind: embedded-clause
 - clause: 4.2.1.2
   title: 4.2.1.2 Service Architecture
-  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.1
-    Service Description.md
+  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.1 Service Description.md
   source_words: 213
   kind: embedded-clause
 - clause: 4.2.1.3
   title: 4.2.1.3 Network Functions
-  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.1
-    Service Description.md
+  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.1 Service Description.md
   source_words: 0
   kind: embedded-clause
 - clause: 4.2.1.3.1
   title: 4.2.1.3.1 Network Data Analytics Function (NWDAF)
-  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.1
-    Service Description.md
+  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.1 Service Description.md
   source_words: 62
   kind: embedded-clause
 - clause: 4.2.1.3.2
   title: 4.2.1.3.2 NF Service Consumers
-  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.1
-    Service Description.md
+  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.1 Service Description.md
   source_words: 1294
   kind: embedded-clause
 - clause: 4.2.2
   title: 4.2.2 Service Operations
-  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2
-    Service Operations/README.md
+  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2 Service Operations/README.md
   source_words: 9846
   kind: navigation-directory
 - clause: 4.2.2.1
   title: 4.2.2.1 Introduction
-  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2
-    Service Operations/4.2.2.1 Introduction.md
+  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2 Service Operations/4.2.2.1 Introduction.md
   source_words: 133
   kind: source-file
 - clause: 4.2.2.2
   title: 4.2.2.2 Nnwdaf_EventsSubscription_Subscribe service operation
-  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2
-    Service Operations/4.2.2.2 Nnwdaf_EventsSubscription_Subscribe service operation/README.md
+  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2 Service Operations/4.2.2.2 Nnwdaf_EventsSubscription_Subscribe service operation/README.md
   source_words: 6496
   kind: navigation-directory
 - clause: 4.2.2.2.1
   title: 4.2.2.2.1 General
-  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2
-    Service Operations/4.2.2.2 Nnwdaf_EventsSubscription_Subscribe service operation/4.2.2.2.1
-    General.md
+  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2 Service Operations/4.2.2.2 Nnwdaf_EventsSubscription_Subscribe service operation/4.2.2.2.1 General.md
   source_words: 28
   kind: source-file
 - clause: 4.2.2.2.2
   title: 4.2.2.2.2 Subscription for event notifications
-  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2
-    Service Operations/4.2.2.2 Nnwdaf_EventsSubscription_Subscribe service operation/4.2.2.2.2
-    Subscription for event notifications.md
+  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2 Service Operations/4.2.2.2 Nnwdaf_EventsSubscription_Subscribe service operation/4.2.2.2.2 Subscription for event notifications.md
   source_words: 5440
   kind: source-file
 - clause: 4.2.2.2.3
   title: 4.2.2.2.3 Update subscription for event notifications
-  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2
-    Service Operations/4.2.2.2 Nnwdaf_EventsSubscription_Subscribe service operation/4.2.2.2.3
-    Update subscription for event notifications.md
+  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2 Service Operations/4.2.2.2 Nnwdaf_EventsSubscription_Subscribe service operation/4.2.2.2.3 Update subscription for event notifications.md
   source_words: 1021
   kind: source-file
 - clause: 4.2.2.3
   title: 4.2.2.3 Nnwdaf_EventsSubscription_Unsubscribe service operation
-  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2
-    Service Operations/4.2.2.3 Nnwdaf_EventsSubscription_Unsubscribe service operation.md
+  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2 Service Operations/4.2.2.3 Nnwdaf_EventsSubscription_Unsubscribe service operation.md
   source_words: 238
   kind: source-file
 - clause: 4.2.2.3.1
   title: 4.2.2.3.1 General
-  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2
-    Service Operations/4.2.2.3 Nnwdaf_EventsSubscription_Unsubscribe service operation.md
+  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2 Service Operations/4.2.2.3 Nnwdaf_EventsSubscription_Unsubscribe service operation.md
   source_words: 16
   kind: embedded-clause
 - clause: 4.2.2.3.2
   title: 4.2.2.3.2 Unsubscribe from event notifications
-  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2
-    Service Operations/4.2.2.3 Nnwdaf_EventsSubscription_Unsubscribe service operation.md
+  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2 Service Operations/4.2.2.3 Nnwdaf_EventsSubscription_Unsubscribe service operation.md
   source_words: 200
   kind: embedded-clause
 - clause: 4.2.2.4
   title: 4.2.2.4 Nnwdaf_EventsSubscription_Notify service operation
-  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2
-    Service Operations/4.2.2.4 Nnwdaf_EventsSubscription_Notify service operation.md
+  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2 Service Operations/4.2.2.4 Nnwdaf_EventsSubscription_Notify service operation.md
   source_words: 1251
   kind: source-file
 - clause: 4.2.2.4.1
   title: 4.2.2.4.1 General
-  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2
-    Service Operations/4.2.2.4 Nnwdaf_EventsSubscription_Notify service operation.md
+  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2 Service Operations/4.2.2.4 Nnwdaf_EventsSubscription_Notify service operation.md
   source_words: 31
   kind: embedded-clause
 - clause: 4.2.2.4.2
   title: 4.2.2.4.2 Notification about subscribed event
-  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2
-    Service Operations/4.2.2.4 Nnwdaf_EventsSubscription_Notify service operation.md
+  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2 Service Operations/4.2.2.4 Nnwdaf_EventsSubscription_Notify service operation.md
   source_words: 1198
   kind: embedded-clause
 - clause: 4.2.2.5
   title: 4.2.2.5 Nnwdaf_EventsSubscription_Transfer service operation
-  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2
-    Service Operations/4.2.2.5 Nnwdaf_EventsSubscription_Transfer service operation.md
+  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2 Service Operations/4.2.2.5 Nnwdaf_EventsSubscription_Transfer service operation.md
   source_words: 1723
   kind: source-file
 - clause: 4.2.2.5.1
   title: 4.2.2.5.1 General
-  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2
-    Service Operations/4.2.2.5 Nnwdaf_EventsSubscription_Transfer service operation.md
+  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2 Service Operations/4.2.2.5 Nnwdaf_EventsSubscription_Transfer service operation.md
   source_words: 162
   kind: embedded-clause
 - clause: 4.2.2.5.2
   title: 4.2.2.5.2 Creation of request for analytics subscription transfer
-  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2
-    Service Operations/4.2.2.5 Nnwdaf_EventsSubscription_Transfer service operation.md
+  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2 Service Operations/4.2.2.5 Nnwdaf_EventsSubscription_Transfer service operation.md
   source_words: 660
   kind: embedded-clause
 - clause: 4.2.2.5.3
   title: 4.2.2.5.3 Update a request for analytics subscription transfer
-  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2
-    Service Operations/4.2.2.5 Nnwdaf_EventsSubscription_Transfer service operation.md
+  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2 Service Operations/4.2.2.5 Nnwdaf_EventsSubscription_Transfer service operation.md
   source_words: 563
   kind: embedded-clause
 - clause: 4.2.2.5.4
   title: 4.2.2.5.4 Cancel a request for analytics subscription transfer
-  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2
-    Service Operations/4.2.2.5 Nnwdaf_EventsSubscription_Transfer service operation.md
+  path: 4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/4.2.2 Service Operations/4.2.2.5 Nnwdaf_EventsSubscription_Transfer service operation.md
   source_words: 289
   kind: embedded-clause
 - clause: '4.3'
@@ -210,87 +184,72 @@ clauses:
   kind: navigation-directory
 - clause: 4.3.1
   title: 4.3.1 Service Description
-  path: 4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.1 Service
-    Description.md
+  path: 4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.1 Service Description.md
   source_words: 1387
   kind: source-file
 - clause: 4.3.1.1
   title: 4.3.1.1 Overview
-  path: 4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.1 Service
-    Description.md
+  path: 4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.1 Service Description.md
   source_words: 117
   kind: embedded-clause
 - clause: 4.3.1.2
   title: 4.3.1.2 Service Architecture
-  path: 4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.1 Service
-    Description.md
+  path: 4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.1 Service Description.md
   source_words: 187
   kind: embedded-clause
 - clause: 4.3.1.3
   title: 4.3.1.3 Network Functions
-  path: 4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.1 Service
-    Description.md
+  path: 4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.1 Service Description.md
   source_words: 0
   kind: embedded-clause
 - clause: 4.3.1.3.1
   title: 4.3.1.3.1 Network Data Analytics Function (NWDAF)
-  path: 4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.1 Service
-    Description.md
+  path: 4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.1 Service Description.md
   source_words: 31
   kind: embedded-clause
 - clause: 4.3.1.3.2
   title: 4.3.1.3.2 NF Service Consumers
-  path: 4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.1 Service
-    Description.md
+  path: 4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.1 Service Description.md
   source_words: 1012
   kind: embedded-clause
 - clause: 4.3.2
   title: 4.3.2 Service Operations
-  path: 4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.2 Service
-    Operations/README.md
+  path: 4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.2 Service Operations/README.md
   source_words: 5511
   kind: navigation-directory
 - clause: 4.3.2.1
   title: 4.3.2.1 Introduction
-  path: 4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.2 Service
-    Operations/4.3.2.1 Introduction.md
+  path: 4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.2 Service Operations/4.3.2.1 Introduction.md
   source_words: 74
   kind: source-file
 - clause: 4.3.2.2
   title: 4.3.2.2 Nnwdaf_AnalyticsInfo_Request service operation
-  path: 4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.2 Service
-    Operations/4.3.2.2 Nnwdaf_AnalyticsInfo_Request service operation/README.md
+  path: 4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.2 Service Operations/4.3.2.2 Nnwdaf_AnalyticsInfo_Request service operation/README.md
   source_words: 4770
   kind: navigation-directory
 - clause: 4.3.2.2.1
   title: 4.3.2.2.1 General
-  path: 4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.2 Service
-    Operations/4.3.2.2 Nnwdaf_AnalyticsInfo_Request service operation/4.3.2.2.1 General.md
+  path: 4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.2 Service Operations/4.3.2.2 Nnwdaf_AnalyticsInfo_Request service operation/4.3.2.2.1 General.md
   source_words: 27
   kind: source-file
 - clause: 4.3.2.2.2
   title: 4.3.2.2.2 Request and get from NWDAF Analytics information
-  path: 4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.2 Service
-    Operations/4.3.2.2 Nnwdaf_AnalyticsInfo_Request service operation/4.3.2.2.2 Request
-    and get from NWDAF Analytics information.md
+  path: 4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.2 Service Operations/4.3.2.2 Nnwdaf_AnalyticsInfo_Request service operation/4.3.2.2.2 Request and get from NWDAF Analytics information.md
   source_words: 4736
   kind: source-file
 - clause: 4.3.2.3
   title: 4.3.2.3 Nnwdaf_AnalyticsInfo_ContextTransfer service operation
-  path: 4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.2 Service
-    Operations/4.3.2.3 Nnwdaf_AnalyticsInfo_ContextTransfer service operation.md
+  path: 4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.2 Service Operations/4.3.2.3 Nnwdaf_AnalyticsInfo_ContextTransfer service operation.md
   source_words: 662
   kind: source-file
 - clause: 4.3.2.3.1
   title: 4.3.2.3.1 General
-  path: 4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.2 Service
-    Operations/4.3.2.3 Nnwdaf_AnalyticsInfo_ContextTransfer service operation.md
+  path: 4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.2 Service Operations/4.3.2.3 Nnwdaf_AnalyticsInfo_ContextTransfer service operation.md
   source_words: 24
   kind: embedded-clause
 - clause: 4.3.2.3.2
   title: 4.3.2.3.2 Request and get from NWDAF context of a subscription
-  path: 4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.2 Service
-    Operations/4.3.2.3 Nnwdaf_AnalyticsInfo_ContextTransfer service operation.md
+  path: 4 Services offered by the NWDAF/4.3 Nnwdaf_AnalyticsInfo Service/4.3.2 Service Operations/4.3.2.3 Nnwdaf_AnalyticsInfo_ContextTransfer service operation.md
   source_words: 611
   kind: embedded-clause
 - clause: '4.4'
@@ -669,8 +628,7 @@ clauses:
   source_words: 26
   kind: embedded-clause
 - clause: 4.7.2.3.2
-  title: 4.7.2.3.2 Deregistering the monitoring of the analytics accuracy of an ML
-    Model
+  title: 4.7.2.3.2 Deregistering the monitoring of the analytics accuracy of an ML Model
   path: 4 Services offered by the NWDAF/4.7 Nnwdaf_MLModelMonitor Service.md
   source_words: 240
   kind: embedded-clause
@@ -731,182 +689,152 @@ clauses:
   kind: navigation-directory
 - clause: 4.8.1
   title: 4.8.1 Service Description
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.1 Service
-    Description.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.1 Service Description.md
   source_words: 332
   kind: source-file
 - clause: 4.8.1.1
   title: 4.8.1.1 Overview
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.1 Service
-    Description.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.1 Service Description.md
   source_words: 88
   kind: embedded-clause
 - clause: 4.8.1.2
   title: 4.8.1.2 Service Architecture
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.1 Service
-    Description.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.1 Service Description.md
   source_words: 118
   kind: embedded-clause
 - clause: 4.8.1.3
   title: 4.8.1.3 Network Functions
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.1 Service
-    Description.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.1 Service Description.md
   source_words: 0
   kind: embedded-clause
 - clause: 4.8.1.3.1
   title: 4.8.1.3.1 Network Data Analytics Function (NWDAF)
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.1 Service
-    Description.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.1 Service Description.md
   source_words: 54
   kind: embedded-clause
 - clause: 4.8.1.3.2
   title: 4.8.1.3.2 NF Service Consumers
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.1 Service
-    Description.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.1 Service Description.md
   source_words: 32
   kind: embedded-clause
 - clause: 4.8.2
   title: 4.8.2 Service Operations
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service
-    Operations.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service Operations.md
   source_words: 1810
   kind: source-file
 - clause: 4.8.2.1
   title: 4.8.2.1 Introduction
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service
-    Operations.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service Operations.md
   source_words: 91
   kind: embedded-clause
 - clause: 4.8.2.2
   title: 4.8.2.2 Nnwdaf_RoamingData_Subscribe service operation
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service
-    Operations.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service Operations.md
   source_words: 0
   kind: embedded-clause
 - clause: 4.8.2.2.1
   title: 4.8.2.2.1 General
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service
-    Operations.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service Operations.md
   source_words: 26
   kind: embedded-clause
 - clause: 4.8.2.2.2
   title: 4.8.2.2.2 Subscription for event notifications
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service
-    Operations.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service Operations.md
   source_words: 465
   kind: embedded-clause
 - clause: 4.8.2.2.3
   title: 4.8.2.2.3 Update of subscription for event notifications
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service
-    Operations.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service Operations.md
   source_words: 311
   kind: embedded-clause
 - clause: 4.8.2.3
   title: 4.8.2.3 Nnwdaf_RoamingData_Unsubscribe service operation
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service
-    Operations.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service Operations.md
   source_words: 0
   kind: embedded-clause
 - clause: 4.8.2.3.1
   title: 4.8.2.3.1 General
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service
-    Operations.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service Operations.md
   source_words: 23
   kind: embedded-clause
 - clause: 4.8.2.3.2
   title: 4.8.2.3.2 Unsubscribe from event notifications
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service
-    Operations.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service Operations.md
   source_words: 188
   kind: embedded-clause
 - clause: 4.8.2.4
   title: 4.8.2.4 Nnwdaf_RoamingData_Notify service operation
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service
-    Operations.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service Operations.md
   source_words: 0
   kind: embedded-clause
 - clause: 4.8.2.4.1
   title: 4.8.2.4.1 General
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service
-    Operations.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service Operations.md
   source_words: 25
   kind: embedded-clause
 - clause: 4.8.2.4.2
   title: 4.8.2.4.2 Notification about subscribed event
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service
-    Operations.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service Operations.md
   source_words: 264
   kind: embedded-clause
 - clause: 4.9.1.2
   title: 4.9.1.2 Service Architecture
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service
-    Operations.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service Operations.md
   source_words: 207
   kind: embedded-clause
 - clause: 4.9.1.3
   title: 4.9.1.3 Network Functions
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service
-    Operations.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service Operations.md
   source_words: 0
   kind: embedded-clause
 - clause: 4.9.1.3.1
   title: 4.9.1.3.1 Network Data Analytics Function (NWDAF)
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service
-    Operations.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service Operations.md
   source_words: 56
   kind: embedded-clause
 - clause: 4.9.1.3.2
   title: 4.9.1.3.2 NF Service Consumers
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service
-    Operations.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.8.2 Service Operations.md
   source_words: 37
   kind: embedded-clause
 - clause: 4.9.2
   title: 4.9.2 Service Operations
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.9.2 Service
-    Operations.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.9.2 Service Operations.md
   source_words: 2268
   kind: source-file
 - clause: 4.9.2.1
   title: 4.9.2.1 Introduction
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.9.2 Service
-    Operations.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.9.2 Service Operations.md
   source_words: 93
   kind: embedded-clause
 - clause: 4.9.2.2
   title: 4.9.2.2 Nnwdaf_RoamingAnalytics_Subscribe service operation
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.9.2 Service
-    Operations.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.9.2 Service Operations.md
   source_words: 0
   kind: embedded-clause
 - clause: 4.9.2.2.1
   title: 4.9.2.2.1 General
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.9.2 Service
-    Operations.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.9.2 Service Operations.md
   source_words: 27
   kind: embedded-clause
 - clause: 4.9.2.2.2
   title: 4.9.2.2.2 Subscription for event notifications
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.9.2 Service
-    Operations.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.9.2 Service Operations.md
   source_words: 1528
   kind: embedded-clause
 - clause: 4.9.2.4
   title: 4.9.2.4 Nnwdaf_RoamingAnalytics_Notify service operation
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.9.2 Service
-    Operations.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.9.2 Service Operations.md
   source_words: 0
   kind: embedded-clause
 - clause: 4.9.2.4.1
   title: 4.9.2.4.1 General
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.9.2 Service
-    Operations.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.9.2 Service Operations.md
   source_words: 21
   kind: embedded-clause
 - clause: 4.9.2.4.2
   title: 4.9.2.4.2 Notification about subscribed event
-  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.9.2 Service
-    Operations.md
+  path: 4 Services offered by the NWDAF/4.8 Nnwdaf_RoamingData Service/4.9.2 Service Operations.md
   source_words: 545
   kind: embedded-clause
 - clause: '5'
@@ -926,38 +854,32 @@ clauses:
   kind: source-file
 - clause: 5.1.2
   title: 5.1.2 Usage of HTTP
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.2 Usage of
-    HTTP.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.2 Usage of HTTP.md
   source_words: 259
   kind: source-file
 - clause: 5.1.2.1
   title: 5.1.2.1 General
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.2 Usage of
-    HTTP.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.2 Usage of HTTP.md
   source_words: 55
   kind: embedded-clause
 - clause: 5.1.2.2
   title: 5.1.2.2 HTTP standard headers
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.2 Usage of
-    HTTP.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.2 Usage of HTTP.md
   source_words: 0
   kind: embedded-clause
 - clause: 5.1.2.2.1
   title: 5.1.2.2.1 General
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.2 Usage of
-    HTTP.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.2 Usage of HTTP.md
   source_words: 18
   kind: embedded-clause
 - clause: 5.1.2.2.2
   title: 5.1.2.2.2 Content type
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.2 Usage of
-    HTTP.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.2 Usage of HTTP.md
   source_words: 84
   kind: embedded-clause
 - clause: 5.1.2.3
   title: 5.1.2.3 HTTP custom headers
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.2 Usage of
-    HTTP.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.2 Usage of HTTP.md
   source_words: 64
   kind: embedded-clause
 - clause: 5.1.3
@@ -1102,8 +1024,7 @@ clauses:
   kind: embedded-clause
 - clause: 5.1.4
   title: 5.1.4 Custom Operations without associated resources
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.4 Custom Operations
-    without associated resources.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.4 Custom Operations without associated resources.md
   source_words: 15
   kind: source-file
 - clause: 5.1.5
@@ -1138,896 +1059,747 @@ clauses:
   kind: navigation-directory
 - clause: 5.1.6.1
   title: 5.1.6.1 General
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.1
-    General.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.1 General.md
   source_words: 2936
   kind: source-file
 - clause: 5.1.6.2
   title: 5.1.6.2 Structured data types
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/README.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/README.md
   source_words: 22788
   kind: navigation-directory
 - clause: 5.1.6.2.1
   title: 5.1.6.2.1 Introduction
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.1 Introduction.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.1 Introduction.md
   source_words: 17
   kind: source-file
 - clause: 5.1.6.2.2
   title: 5.1.6.2.2 Type NnwdafEventsSubscription
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.2 Type NnwdafEventsSubscription.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.2 Type NnwdafEventsSubscription.md
   source_words: 406
   kind: source-file
 - clause: 5.1.6.2.3
   title: 5.1.6.2.3 Type EventSubscription
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.3 Type EventSubscription.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.3 Type EventSubscription.md
   source_words: 2594
   kind: source-file
 - clause: 5.1.6.2.4
   title: 5.1.6.2.4 Type NnwdafEventsSubscriptionNotification
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.4 Type NnwdafEventsSubscriptionNotification.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.4 Type NnwdafEventsSubscriptionNotification.md
   source_words: 256
   kind: source-file
 - clause: 5.1.6.2.5
   title: 5.1.6.2.5 Type EventNotification
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.5 Type EventNotification.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.5 Type EventNotification.md
   source_words: 1108
   kind: source-file
 - clause: 5.1.6.2.6
   title: 5.1.6.2.6 Type SliceLoadLevelInformation
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.6 Type SliceLoadLevelInformation.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.6 Type SliceLoadLevelInformation.md
   source_words: 98
   kind: source-file
 - clause: 5.1.6.2.7
   title: 5.1.6.2.7 Type EventReportingRequirement
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.7 Type EventReportingRequirement.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.7 Type EventReportingRequirement.md
   source_words: 656
   kind: source-file
 - clause: 5.1.6.2.8
   title: 5.1.6.2.8 Type TargetUeInformation
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.8 Type TargetUeInformation.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.8 Type TargetUeInformation.md
   source_words: 241
   kind: source-file
 - clause: 5.1.6.2.9
   title: 5.1.6.2.9 Void
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.9 Void.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.9 Void.md
   source_words: 6
   kind: source-file
 - clause: 5.1.6.2.10
   title: 5.1.6.2.10 Type UeMobility
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.10 Type UeMobility.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.10 Type UeMobility.md
   source_words: 310
   kind: source-file
 - clause: 5.1.6.2.11
   title: 5.1.6.2.11 Type LocationInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.11 Type LocationInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.11 Type LocationInfo.md
   source_words: 339
   kind: source-file
 - clause: 5.1.6.2.12
   title: 5.1.6.2.12 Void
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.12 Void.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.12 Void.md
   source_words: 6
   kind: source-file
 - clause: 5.1.6.2.13
   title: 5.1.6.2.13 Type UeCommunication
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.13 Type UeCommunication.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.13 Type UeCommunication.md
   source_words: 665
   kind: source-file
 - clause: 5.1.6.2.14
   title: 5.1.6.2.14 Type TrafficCharacterization
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.14 Type TrafficCharacterization.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.14 Type TrafficCharacterization.md
   source_words: 297
   kind: source-file
 - clause: 5.1.6.2.15
   title: 5.1.6.2.15 Type AbnormalBehaviour
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.15 Type AbnormalBehaviour.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.15 Type AbnormalBehaviour.md
   source_words: 256
   kind: source-file
 - clause: 5.1.6.2.16
   title: 5.1.6.2.16 Type Exception
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.16 Type Exception.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.16 Type Exception.md
   source_words: 51
   kind: source-file
 - clause: 5.1.6.2.17
   title: 5.1.6.2.17 Type UserDataCongestionInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.17 Type UserDataCongestionInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.17 Type UserDataCongestionInfo.md
   source_words: 74
   kind: source-file
 - clause: 5.1.6.2.18
   title: 5.1.6.2.18 Type CongestionInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.18 Type CongestionInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.18 Type CongestionInfo.md
   source_words: 232
   kind: source-file
 - clause: 5.1.6.2.19
   title: 5.1.6.2.19 Type QosSustainabilityInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.19 Type QosSustainabilityInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.19 Type QosSustainabilityInfo.md
   source_words: 343
   kind: source-file
 - clause: 5.1.6.2.20
   title: 5.1.6.2.20 Type QosRequirement
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.20 Type QosRequirement.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.20 Type QosRequirement.md
   source_words: 166
   kind: source-file
 - clause: 5.1.6.2.21
   title: 5.1.6.2.21 Type RetainabilityThreshold
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.21 Type RetainabilityThreshold.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.21 Type RetainabilityThreshold.md
   source_words: 121
   kind: source-file
 - clause: 5.1.6.2.22
   title: 5.1.6.2.22 Type NetworkPerfRequirement
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.22 Type NetworkPerfRequirement.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.22 Type NetworkPerfRequirement.md
   source_words: 164
   kind: source-file
 - clause: 5.1.6.2.23
   title: 5.1.6.2.23 Type NetworkPerfInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.23 Type NetworkPerfInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.23 Type NetworkPerfInfo.md
   source_words: 301
   kind: source-file
 - clause: 5.1.6.2.24
   title: 5.1.6.2.24 Type ServiceExperienceInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.24 Type ServiceExperienceInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.24 Type ServiceExperienceInfo.md
   source_words: 748
   kind: source-file
 - clause: 5.1.6.2.25
   title: 5.1.6.2.25 Type BwRequirement
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.25 Type BwRequirement.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.25 Type BwRequirement.md
   source_words: 96
   kind: source-file
 - clause: 5.1.6.2.26
   title: 5.1.6.2.26 Type AdditionalMeasurement
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.26 Type AdditionalMeasurement.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.26 Type AdditionalMeasurement.md
   source_words: 181
   kind: source-file
 - clause: 5.1.6.2.27
   title: 5.1.6.2.27 Type IpEthFlowDescription
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.27 Type IpEthFlowDescription.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.27 Type IpEthFlowDescription.md
   source_words: 53
   kind: source-file
 - clause: 5.1.6.2.28
   title: 5.1.6.2.28 Type AddressList
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.28 Type AddressList.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.28 Type AddressList.md
   source_words: 60
   kind: source-file
 - clause: 5.1.6.2.29
   title: 5.1.6.2.29 Type CircumstanceDescription
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.29 Type CircumstanceDescription.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.29 Type CircumstanceDescription.md
   source_words: 100
   kind: source-file
 - clause: 5.1.6.2.30
   title: 5.1.6.2.30 Type ThresholdLevel
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.30 Type ThresholdLevel.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.30 Type ThresholdLevel.md
   source_words: 551
   kind: source-file
 - clause: 5.1.6.2.31
   title: 5.1.6.2.31 Type NfLoadLevelInformation
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.31 Type NfLoadLevelInformation.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.31 Type NfLoadLevelInformation.md
   source_words: 349
   kind: source-file
 - clause: 5.1.6.2.32
   title: 5.1.6.2.32 Type NfStatus
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.32 Type NfStatus.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.32 Type NfStatus.md
   source_words: 99
   kind: source-file
 - clause: 5.1.6.2.33
   title: 5.1.6.2.33 Type NsiIdInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.33 Type NsiIdInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.33 Type NsiIdInfo.md
   source_words: 90
   kind: source-file
 - clause: 5.1.6.2.34
   title: 5.1.6.2.34 Type NsiLoadLevelInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.34 Type NsiLoadLevelInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.34 Type NsiLoadLevelInfo.md
   source_words: 538
   kind: source-file
 - clause: 5.1.6.2.35
   title: 5.1.6.2.35 Type FailureEventInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.35 Type FailureEventInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.35 Type FailureEventInfo.md
   source_words: 41
   kind: source-file
 - clause: 5.1.6.2.36
   title: 5.1.6.2.36 Type AnalyticsMetadataIndication
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.36 Type AnalyticsMetadataIndication.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.36 Type AnalyticsMetadataIndication.md
   source_words: 96
   kind: source-file
 - clause: 5.1.6.2.37
   title: 5.1.6.2.37 Type AnalyticsMetadataInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.37 Type AnalyticsMetadataInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.37 Type AnalyticsMetadataInfo.md
   source_words: 99
   kind: source-file
 - clause: 5.1.6.2.38
   title: 5.1.6.2.38 Type NumberAverage
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.38 Type NumberAverage.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.38 Type NumberAverage.md
   source_words: 47
   kind: source-file
 - clause: 5.1.6.2.39
   title: 5.1.6.2.39 Type TopApplication
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.39 Type TopApplication.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.39 Type TopApplication.md
   source_words: 73
   kind: source-file
 - clause: 5.1.6.2.40
   title: 5.1.6.2.40 Type AnalyticsSubscriptionsTransfer
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.40 Type AnalyticsSubscriptionsTransfer.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.40 Type AnalyticsSubscriptionsTransfer.md
   source_words: 83
   kind: source-file
 - clause: 5.1.6.2.41
   title: 5.1.6.2.41 Type SubscriptionTransferInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.41 Type SubscriptionTransferInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.41 Type SubscriptionTransferInfo.md
   source_words: 199
   kind: source-file
 - clause: 5.1.6.2.42
   title: 5.1.6.2.42 Type ModelInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.42 Type ModelInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.42 Type ModelInfo.md
   source_words: 61
   kind: source-file
 - clause: 5.1.6.2.43
   title: 5.1.6.2.43 Type AnalyticsContextIdentifier
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.43 Type AnalyticsContextIdentifier.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.43 Type AnalyticsContextIdentifier.md
   source_words: 91
   kind: source-file
 - clause: 5.1.6.2.44
   title: 5.1.6.2.44 Type UeAnalyticsContextDescriptor
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.44 Type UeAnalyticsContextDescriptor.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.44 Type UeAnalyticsContextDescriptor.md
   source_words: 59
   kind: source-file
 - clause: 5.1.6.2.45
   title: 5.1.6.2.45 Type DnPerfInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.45 Type DnPerfInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.45 Type DnPerfInfo.md
   source_words: 204
   kind: source-file
 - clause: 5.1.6.2.46
   title: 5.1.6.2.46 Type DnPerf
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.46 Type DnPerf.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.46 Type DnPerf.md
   source_words: 282
   kind: source-file
 - clause: 5.1.6.2.47
   title: 5.1.6.2.47 Type PerfData
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.47 Type PerfData.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.47 Type PerfData.md
   source_words: 368
   kind: source-file
 - clause: 5.1.6.2.48
   title: 5.1.6.2.48 Type ResourceUsage
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.48 Type ResourceUsage.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.48 Type ResourceUsage.md
   source_words: 82
   kind: source-file
 - clause: 5.1.6.2.49
   title: 5.1.6.2.49 Type ConsumerNfInformation
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.49 Type ConsumerNfInformation.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.49 Type ConsumerNfInformation.md
   source_words: 77
   kind: source-file
 - clause: 5.1.6.2.50
   title: 5.1.6.2.50 Type DispersionRequirement
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.50 Type DispersionRequirement.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.50 Type DispersionRequirement.md
   source_words: 133
   kind: source-file
 - clause: 5.1.6.2.51
   title: 5.1.6.2.51 Type ClassCriterion
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.51 Type ClassCriterion.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.51 Type ClassCriterion.md
   source_words: 68
   kind: source-file
 - clause: 5.1.6.2.52
   title: 5.1.6.2.52 Type RankingCriterion
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.52 Type RankingCriterion.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.52 Type RankingCriterion.md
   source_words: 98
   kind: source-file
 - clause: 5.1.6.2.53
   title: 5.1.6.2.53 Type DispersionInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.53 Type DispersionInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.53 Type DispersionInfo.md
   source_words: 113
   kind: source-file
 - clause: 5.1.6.2.54
   title: 5.1.6.2.54 Type DispersionCollection
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.54 Type DispersionCollection.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.54 Type DispersionCollection.md
   source_words: 688
   kind: source-file
 - clause: 5.1.6.2.55
   title: 5.1.6.2.55 Type ApplicationVolume
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.55 Type ApplicationVolume.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.55 Type ApplicationVolume.md
   source_words: 73
   kind: source-file
 - clause: 5.1.6.2.56
   title: 5.1.6.2.56 Type RedundantTransmissionExpReq
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.56 Type RedundantTransmissionExpReq.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.56 Type RedundantTransmissionExpReq.md
   source_words: 100
   kind: source-file
 - clause: 5.1.6.2.57
   title: 5.1.6.2.57 Type RedundantTransmissionExpInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.57 Type RedundantTransmissionExpInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.57 Type RedundantTransmissionExpInfo.md
   source_words: 88
   kind: source-file
 - clause: 5.1.6.2.58
   title: 5.1.6.2.58 Type RedundantTransmissionExpPerTS
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.58 Type RedundantTransmissionExpPerTS.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.58 Type RedundantTransmissionExpPerTS.md
   source_words: 223
   kind: source-file
 - clause: 5.1.6.2.59
   title: 5.1.6.2.59 Type WlanPerformanceReq
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.59 Type WlanPerformanceReq.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.59 Type WlanPerformanceReq.md
   source_words: 100
   kind: source-file
 - clause: 5.1.6.2.60
   title: 5.1.6.2.60 Type WlanPerformanceInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.60 Type WlanPerformanceInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.60 Type WlanPerformanceInfo.md
   source_words: 110
   kind: source-file
 - clause: 5.1.6.2.61
   title: 5.1.6.2.61 Type WlanPerSsIdPerformanceInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.61 Type WlanPerSsIdPerformanceInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.61 Type WlanPerSsIdPerformanceInfo.md
   source_words: 51
   kind: source-file
 - clause: 5.1.6.2.62
   title: 5.1.6.2.62 Type WlanPerTsPerformanceInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.62 Type WlanPerTsPerformanceInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.62 Type WlanPerTsPerformanceInfo.md
   source_words: 326
   kind: source-file
 - clause: 5.1.6.2.63
   title: 5.1.6.2.63 Type TrafficInformation
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.63 Type TrafficInformation.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.63 Type TrafficInformation.md
   source_words: 90
   kind: source-file
 - clause: 5.1.6.2.64
   title: 5.1.6.2.64 Type AppListForUeComm
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.64 Type AppListForUeComm.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.64 Type AppListForUeComm.md
   source_words: 152
   kind: source-file
 - clause: 5.1.6.2.65
   title: 5.1.6.2.65 Type SessInactTimerForUeComm
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.65 Type SessInactTimerForUeComm.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.65 Type SessInactTimerForUeComm.md
   source_words: 47
   kind: source-file
 - clause: 5.1.6.2.66
   title: 5.1.6.2.66 Type DnPerformanceReq
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.66 Type DnPerformanceReq.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.66 Type DnPerformanceReq.md
   source_words: 142
   kind: source-file
 - clause: 5.1.6.2.67
   title: '5.1.6.2.67 Type: RatFreqInformation'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.67 Type RatFreqInformation.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.67 Type RatFreqInformation.md
   source_words: 272
   kind: source-file
 - clause: 5.1.6.2.68
   title: 5.1.6.2.68 Type PrevSubInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.68 Type PrevSubInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.68 Type PrevSubInfo.md
   source_words: 126
   kind: source-file
 - clause: 5.1.6.2.69
   title: 5.1.6.2.69 Type MLModelInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.69 Type MLModelInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.69 Type MLModelInfo.md
   source_words: 118
   kind: source-file
 - clause: 5.1.6.2.70
   title: 5.1.6.2.70 Type ObservedRedundantTransExp
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.70 Type ObservedRedundantTransExp.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.70 Type ObservedRedundantTransExp.md
   source_words: 547
   kind: source-file
 - clause: 5.1.6.2.71
   title: 5.1.6.2.71 Type UeMobilityReq
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.71 Type UeMobilityReq.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.71 Type UeMobilityReq.md
   source_words: 251
   kind: source-file
 - clause: 5.1.6.2.72
   title: 5.1.6.2.72 Type UeCommReq
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.72 Type UeCommReq.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.72 Type UeCommReq.md
   source_words: 75
   kind: source-file
 - clause: 5.1.6.2.73
   title: 5.1.6.2.73 Type PfdDeterminationInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.73 Type PfdDeterminationInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.73 Type PfdDeterminationInfo.md
   source_words: 56
   kind: source-file
 - clause: 5.1.6.2.74
   title: 5.1.6.2.74 Type PduSessionInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.74 Type PduSessionInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.74 Type PduSessionInfo.md
   source_words: 84
   kind: source-file
 - clause: 5.1.6.2.75
   title: 5.1.6.2.75 Type DirectionInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.75 Type DirectionInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.75 Type DirectionInfo.md
   source_words: 159
   kind: source-file
 - clause: 5.1.6.2.76
   title: 5.1.6.2.76 Type GeoDistributionInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.76 Type GeoDistributionInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.76 Type GeoDistributionInfo.md
   source_words: 130
   kind: source-file
 - clause: 5.1.6.2.77
   title: 5.1.6.2.77 Type PduSesTrafficInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.77 Type PduSesTrafficInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.77 Type PduSesTrafficInfo.md
   source_words: 299
   kind: source-file
 - clause: 5.1.6.2.78
   title: 5.1.6.2.78 Type TdTraffic
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.78 Type TdTraffic.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.78 Type TdTraffic.md
   source_words: 121
   kind: source-file
 - clause: 5.1.6.2.79
   title: 5.1.6.2.79 Type PduSesTrafficReq
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.79 Type PduSesTrafficReq.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.79 Type PduSesTrafficReq.md
   source_words: 84
   kind: source-file
 - clause: 5.1.6.2.80
   title: 5.1.6.2.80 Type WlanPerUeIdPerformanceInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.80 Type WlanPerUeIdPerformanceInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.80 Type WlanPerUeIdPerformanceInfo.md
   source_words: 123
   kind: source-file
 - clause: 5.1.6.2.81
   title: 5.1.6.2.81 Type ResourceUsageRequirement
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.81 Type ResourceUsageRequirement.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.81 Type ResourceUsageRequirement.md
   source_words: 69
   kind: source-file
 - clause: 5.1.6.2.82
   title: 5.1.6.2.82 Type E2eDataVolTransTimeReq
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.82 Type E2eDataVolTransTimeReq.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.82 Type E2eDataVolTransTimeReq.md
   source_words: 324
   kind: source-file
 - clause: 5.1.6.2.83
   title: 5.1.6.2.83 Type E2eDataVolTransTimeInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.83 Type E2eDataVolTransTimeInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.83 Type E2eDataVolTransTimeInfo.md
   source_words: 192
   kind: source-file
 - clause: 5.1.6.2.84
   title: 5.1.6.2.84 Type E2eDataVolTransTimePerTS
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.84 Type E2eDataVolTransTimePerTS.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.84 Type E2eDataVolTransTimePerTS.md
   source_words: 70
   kind: source-file
 - clause: 5.1.6.2.85
   title: 5.1.6.2.85 Type DataVolume
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.85 Type DataVolume.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.85 Type DataVolume.md
   source_words: 59
   kind: source-file
 - clause: 5.1.6.2.86
   title: 5.1.6.2.86 Type E2eDataVolTransTimePerUe
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.86 Type E2eDataVolTransTimePerUe.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.86 Type E2eDataVolTransTimePerUe.md
   source_words: 285
   kind: source-file
 - clause: 5.1.6.2.87
   title: 5.1.6.2.87 Type E2eDataVolTransTimeUeList
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.87 Type E2eDataVolTransTimeUeList.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.87 Type E2eDataVolTransTimeUeList.md
   source_words: 313
   kind: source-file
 - clause: 5.1.6.2.88
   title: 5.1.6.2.88 Type AccuracyReq
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.88 Type AccuracyReq.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.88 Type AccuracyReq.md
   source_words: 192
   kind: source-file
 - clause: 5.1.6.2.89
   title: 5.1.6.2.89 Type AccuracyInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.89 Type AccuracyInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.89 Type AccuracyInfo.md
   source_words: 92
   kind: source-file
 - clause: 5.1.6.2.90
   title: 5.1.6.2.90 Type DataVolumeTransferTime
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.90 Type DataVolumeTransferTime.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.90 Type DataVolumeTransferTime.md
   source_words: 111
   kind: source-file
 - clause: 5.1.6.2.91
   title: 5.1.6.2.91 Type MovBehavReq
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.91 Type MovBehavReq.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.91 Type MovBehavReq.md
   source_words: 76
   kind: source-file
 - clause: 5.1.6.2.92
   title: 5.1.6.2.92 Type MovBehavInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.92 Type MovBehavInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.92 Type MovBehavInfo.md
   source_words: 144
   kind: source-file
 - clause: 5.1.6.2.93
   title: 5.1.6.2.93 Type MovBehav
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.93 Type MovBehav.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.93 Type MovBehav.md
   source_words: 229
   kind: source-file
 - clause: 5.1.6.2.94
   title: 5.1.6.2.94 Type SpeedThresholdInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.94 Type SpeedThresholdInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.94 Type SpeedThresholdInfo.md
   source_words: 77
   kind: source-file
 - clause: 5.1.6.2.95
   title: 5.1.6.2.95 Type GeoLocation
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.95 Type GeoLocation.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.95 Type GeoLocation.md
   source_words: 99
   kind: source-file
 - clause: 5.1.6.2.96
   title: 5.1.6.2.96 Type LocAccuracyReq
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.96 Type LocAccuracyReq.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.96 Type LocAccuracyReq.md
   source_words: 227
   kind: source-file
 - clause: 5.1.6.2.97
   title: 5.1.6.2.97 Type LocAccuracyInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.97 Type LocAccuracyInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.97 Type LocAccuracyInfo.md
   source_words: 255
   kind: source-file
 - clause: 5.1.6.2.98
   title: 5.1.6.2.98 Type LocAccuracyPerMethod
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.98 Type LocAccuracyPerMethod.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.98 Type LocAccuracyPerMethod.md
   source_words: 172
   kind: source-file
 - clause: 5.1.6.2.99
   title: 5.1.6.2.99 Type RelProxReq
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.99 Type RelProxReq.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.99 Type RelProxReq.md
   source_words: 76
   kind: source-file
 - clause: 5.1.6.2.100
   title: 5.1.6.2.100 Type RelProxInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.100 Type RelProxInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.100 Type RelProxInfo.md
   source_words: 208
   kind: source-file
 - clause: 5.1.6.2.101
   title: 5.1.6.2.101 Type UeProximity
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.101 Type UeProximity.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.101 Type UeProximity.md
   source_words: 164
   kind: source-file
 - clause: 5.1.6.2.102
   title: 5.1.6.2.102 Type UeTrajectory
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.102 Type UeTrajectory.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.102 Type UeTrajectory.md
   source_words: 89
   kind: source-file
 - clause: 5.1.6.2.103
   title: 5.1.6.2.103 Type TimestampedLocation
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.103 Type TimestampedLocation.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.103 Type TimestampedLocation.md
   source_words: 53
   kind: source-file
 - clause: 5.1.6.2.104
   title: 5.1.6.2.104 Type TimeToCollisionInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.104 Type TimeToCollisionInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.104 Type TimeToCollisionInfo.md
   source_words: 135
   kind: source-file
 - clause: 5.1.6.2.105
   title: 5.1.6.2.105 Type AnalyticsFeedbackInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.105 Type AnalyticsFeedbackInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.105 Type AnalyticsFeedbackInfo.md
   source_words: 170
   kind: source-file
 - clause: 5.1.6.2.106
   title: 5.1.6.2.106 Type RoamingInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.106 Type RoamingInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.106 Type RoamingInfo.md
   source_words: 151
   kind: source-file
 - clause: 5.1.6.2.107
   title: 5.1.6.2.107 Type SuggestedPfdInfo
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2
-    Structured data types/5.1.6.2.107 Type SuggestedPfdInfo.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.2 Structured data types/5.1.6.2.107 Type SuggestedPfdInfo.md
   source_words: 268
   kind: source-file
 - clause: 5.1.6.3
   title: 5.1.6.3 Simple data types and enumerations
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 3634
   kind: source-file
 - clause: 5.1.6.3.1
   title: 5.1.6.3.1 Introduction
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 20
   kind: embedded-clause
 - clause: 5.1.6.3.2
   title: 5.1.6.3.2 Simple data types
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 65
   kind: embedded-clause
 - clause: 5.1.6.3.3
   title: '5.1.6.3.3 Enumeration: NotificationMethod'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 47
   kind: embedded-clause
 - clause: 5.1.6.3.4
   title: '5.1.6.3.4 Enumeration: NwdafEvent'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 274
   kind: embedded-clause
 - clause: 5.1.6.3.5
   title: '5.1.6.3.5 Enumeration: Accuracy'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 26
   kind: embedded-clause
 - clause: 5.1.6.3.6
   title: '5.1.6.3.6 Enumeration: ExceptionId'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 53
   kind: embedded-clause
 - clause: 5.1.6.3.7
   title: '5.1.6.3.7 Enumeration: ExceptionTrend'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 40
   kind: embedded-clause
 - clause: 5.1.6.3.8
   title: '5.1.6.3.8 Enumeration: CongestionType'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 39
   kind: embedded-clause
 - clause: 5.1.6.3.9
   title: '5.1.6.3.9 Enumeration: TimeUnit'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 30
   kind: embedded-clause
 - clause: 5.1.6.3.10
   title: '5.1.6.3.10 Enumeration: NetworkPerfType'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 103
   kind: embedded-clause
 - clause: 5.1.6.3.11
   title: '5.1.6.3.11 Enumeration: ExpectedAnalyticsType'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 48
   kind: embedded-clause
 - clause: 5.1.6.3.12
   title: '5.1.6.3.12 Enumeration: MatchingDirection'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 215
   kind: embedded-clause
 - clause: 5.1.6.3.14
   title: '5.1.6.3.14 Enumeration: AnalyticsMetadata'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 63
   kind: embedded-clause
 - clause: 5.1.6.3.15
   title: '5.1.6.3.15 Enumeration: DatasetStatisticalProperty'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 52
   kind: embedded-clause
 - clause: 5.1.6.3.16
   title: '5.1.6.3.16 Enumeration: OutputStrategy'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 97
   kind: embedded-clause
 - clause: 5.1.6.3.17
   title: '5.1.6.3.17 Enumeration: TransferRequestType'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 34
   kind: embedded-clause
 - clause: 5.1.6.3.18
   title: '5.1.6.3.18 Enumeration: AnalyticsSubset'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 1341
   kind: embedded-clause
 - clause: 5.1.6.3.19
   title: '5.1.6.3.19 Enumeration: DispersionType'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 30
   kind: embedded-clause
 - clause: 5.1.6.3.20
   title: '5.1.6.3.20 Enumeration: DispersionClass'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 135
   kind: embedded-clause
 - clause: 5.1.6.3.21
   title: '5.1.6.3.21 Enumeration: DispersionOrderingCriterion'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 53
   kind: embedded-clause
 - clause: 5.1.6.3.22
   title: '5.1.6.3.22 Enumeration: RedTransExpOrderingCriterion'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 28
   kind: embedded-clause
 - clause: 5.1.6.3.23
   title: '5.1.6.3.23 Enumeration: WlanOrderingCriterion'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 47
   kind: embedded-clause
 - clause: 5.1.6.3.24
   title: '5.1.6.3.24 Enumeration: ServiceExperienceType'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 47
   kind: embedded-clause
 - clause: 5.1.6.3.25
   title: '5.1.6.3.25 Enumeration: DnPerfOrderingCriterion'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 43
   kind: embedded-clause
 - clause: 5.1.6.3.26
   title: '5.1.6.3.26 Enumeration: TermCause'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 35
   kind: embedded-clause
 - clause: 5.1.6.3.27
   title: '5.1.6.3.27 Enumeration: UserDataConOrderCrit'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 30
   kind: embedded-clause
 - clause: 5.1.6.3.28
   title: '5.1.6.3.28 Enumeration: UeMobilityOrderCriterion'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 20
   kind: embedded-clause
 - clause: 5.1.6.3.29
   title: '5.1.6.3.29 Enumeration: UeCommOrderCriterion'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 36
   kind: embedded-clause
 - clause: 5.1.6.3.30
   title: '5.1.6.3.30 Enumeration: NetworkPerfOrderCriterion'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 46
   kind: embedded-clause
 - clause: 5.1.6.3.31
   title: '5.1.6.3.31 Enumeration: DeviceType'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 37
   kind: embedded-clause
 - clause: 5.1.6.3.32
   title: '5.1.6.3.32 Enumeration: LocInfoGranularity'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 35
   kind: embedded-clause
 - clause: 5.1.6.3.33
   title: '5.1.6.3.33 Enumeration: TrafficDirection'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 23
   kind: embedded-clause
 - clause: 5.1.6.3.34
   title: '5.1.6.3.34 Enumeration: ValueExpression'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 26
   kind: embedded-clause
 - clause: 5.1.6.3.35
   title: '5.1.6.3.35 Enumeration: E2eDataVolTransTimeCriterion'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 23
   kind: embedded-clause
 - clause: 5.1.6.3.36
   title: 5.1.6.3.36 Void
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 0
   kind: embedded-clause
 - clause: 5.1.6.3.37
   title: '5.1.6.3.37 Enumeration: AnalyticsAccuracyIndication'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 27
   kind: embedded-clause
 - clause: 5.1.6.3.38
   title: '5.1.6.3.38 Enumeration: LocationOrientation'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 27
   kind: embedded-clause
 - clause: 5.1.6.3.39
   title: '5.1.6.3.39 Enumeration: Direction'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 36
   kind: embedded-clause
 - clause: 5.1.6.3.40
   title: '5.1.6.3.40 Enumeration: ProximityCriterion'
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.6 Data Model/5.1.6.3 Simple data types and enumerations.md
   source_words: 22
   kind: embedded-clause
 - clause: 5.1.7
@@ -2047,8 +1819,7 @@ clauses:
   kind: embedded-clause
 - clause: 5.1.8
   title: 5.1.8 Feature negotiation
-  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.8 Feature
-    negotiation.md
+  path: 5 API Definitions/5.1 Nnwdaf_EventsSubscription Service API/5.1.8 Feature negotiation.md
   source_words: 1385
   kind: source-file
 - clause: 5.1.9
@@ -2163,8 +1934,7 @@ clauses:
   kind: embedded-clause
 - clause: 5.2.4
   title: 5.2.4 Custom Operations without associated resources
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.4 Custom Operations
-    without associated resources.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.4 Custom Operations without associated resources.md
   source_words: 15
   kind: source-file
 - clause: 5.2.5
@@ -2179,183 +1949,152 @@ clauses:
   kind: navigation-directory
 - clause: 5.2.6.1
   title: 5.2.6.1 General
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.1
-    General.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.1 General.md
   source_words: 1491
   kind: source-file
 - clause: 5.2.6.2
   title: 5.2.6.2 Structured data types
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2
-    Structured data types/README.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2 Structured data types/README.md
   source_words: 4978
   kind: navigation-directory
 - clause: 5.2.6.2.1
   title: 5.2.6.2.1 Introduction
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2
-    Structured data types/5.2.6.2.1 Introduction.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2 Structured data types/5.2.6.2.1 Introduction.md
   source_words: 17
   kind: source-file
 - clause: 5.2.6.2.2
   title: 5.2.6.2.2 Type AnalyticsData
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2
-    Structured data types/5.2.6.2.2 Type AnalyticsData.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2 Structured data types/5.2.6.2.2 Type AnalyticsData.md
   source_words: 1010
   kind: source-file
 - clause: 5.2.6.2.3
   title: 5.2.6.2.3 Type EventFilter
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2
-    Structured data types/5.2.6.2.3 Type EventFilter.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2 Structured data types/5.2.6.2.3 Type EventFilter.md
   source_words: 2009
   kind: source-file
 - clause: 5.2.6.2.4
   title: 5.2.6.2.4 Void
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2
-    Structured data types/5.2.6.2.4 Void.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2 Structured data types/5.2.6.2.4 Void.md
   source_words: 6
   kind: source-file
 - clause: 5.2.6.2.5
   title: 5.2.6.2.5 Type AdditionInfoAnalyticsInfoRequest
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2
-    Structured data types/5.2.6.2.5 Type AdditionInfoAnalyticsInfoRequest.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2 Structured data types/5.2.6.2.5 Type AdditionInfoAnalyticsInfoRequest.md
   source_words: 70
   kind: source-file
 - clause: 5.2.6.2.6
   title: 5.2.6.2.6 Type ContextData
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2
-    Structured data types/5.2.6.2.6 Type ContextData.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2 Structured data types/5.2.6.2.6 Type ContextData.md
   source_words: 88
   kind: source-file
 - clause: 5.2.6.2.7
   title: 5.2.6.2.7 Type ContextElement
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2
-    Structured data types/5.2.6.2.7 Type ContextElement.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2 Structured data types/5.2.6.2.7 Type ContextElement.md
   source_words: 483
   kind: source-file
 - clause: 5.2.6.2.8
   title: 5.2.6.2.8 Type ContextIdList
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2
-    Structured data types/5.2.6.2.8 Type ContextIdList.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2 Structured data types/5.2.6.2.8 Type ContextIdList.md
   source_words: 41
   kind: source-file
 - clause: 5.2.6.2.9
   title: 5.2.6.2.9 Type HistoricalData
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2
-    Structured data types/5.2.6.2.9 Type HistoricalData.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2 Structured data types/5.2.6.2.9 Type HistoricalData.md
   source_words: 82
   kind: source-file
 - clause: 5.2.6.2.10
   title: 5.2.6.2.10 Type SpecificAnalyticsSubscription
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2
-    Structured data types/5.2.6.2.10 Type SpecificAnalyticsSubscription.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2 Structured data types/5.2.6.2.10 Type SpecificAnalyticsSubscription.md
   source_words: 94
   kind: source-file
 - clause: 5.2.6.2.11
   title: 5.2.6.2.11 Type RequestedContext
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2
-    Structured data types/5.2.6.2.11 Type RequestedContext.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2 Structured data types/5.2.6.2.11 Type RequestedContext.md
   source_words: 80
   kind: source-file
 - clause: 5.2.6.2.12
   title: 5.2.6.2.12 Type SmcceInfo
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2
-    Structured data types/5.2.6.2.12 Type SmcceInfo.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2 Structured data types/5.2.6.2.12 Type SmcceInfo.md
   source_words: 109
   kind: source-file
 - clause: 5.2.6.2.13
   title: 5.2.6.2.13 Type SmcceUeList
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2
-    Structured data types/5.2.6.2.13 Type SmcceUeList.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2 Structured data types/5.2.6.2.13 Type SmcceUeList.md
   source_words: 200
   kind: source-file
 - clause: 5.2.6.2.14
   title: 5.2.6.2.14 Type SpecificDataSubscription
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2
-    Structured data types/5.2.6.2.14 Type SpecificDataSubscription.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2 Structured data types/5.2.6.2.14 Type SpecificDataSubscription.md
   source_words: 96
   kind: source-file
 - clause: 5.2.6.2.15
   title: 5.2.6.2.15 Type UserDataCongestReq
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2
-    Structured data types/5.2.6.2.15 Type UserDataCongestReq.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2 Structured data types/5.2.6.2.15 Type UserDataCongestReq.md
   source_words: 125
   kind: source-file
 - clause: 5.2.6.2.16
   title: 5.2.6.2.16 Type NetworkPerfReq
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2
-    Structured data types/5.2.6.2.16 Type NetworkPerfReq.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2 Structured data types/5.2.6.2.16 Type NetworkPerfReq.md
   source_words: 75
   kind: source-file
 - clause: 5.2.6.2.17
   title: 5.2.6.2.17 Type ResourceUsageRequPerNwPerfType
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2
-    Structured data types/5.2.6.2.17 Type ResourceUsageRequPerNwPerfType.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2 Structured data types/5.2.6.2.17 Type ResourceUsageRequPerNwPerfType.md
   source_words: 75
   kind: source-file
 - clause: 5.2.6.2.18
   title: 5.2.6.2.18 Type AnalyticsAccuracyInfo
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2
-    Structured data types/5.2.6.2.18 Type AnalyticsAccuracyInfo.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2 Structured data types/5.2.6.2.18 Type AnalyticsAccuracyInfo.md
   source_words: 112
   kind: source-file
 - clause: 5.2.6.2.19
   title: 5.2.6.2.19 Type GroundTruthInfo
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2
-    Structured data types/5.2.6.2.19 Type GroundTruthInfo.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2 Structured data types/5.2.6.2.19 Type GroundTruthInfo.md
   source_words: 114
   kind: source-file
 - clause: 5.2.6.2.20
   title: 5.2.6.2.20 Type MlModelAccuracyInfo
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2
-    Structured data types/5.2.6.2.20 Type MlModelAccuracyInfo.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.2 Structured data types/5.2.6.2.20 Type MlModelAccuracyInfo.md
   source_words: 85
   kind: source-file
 - clause: 5.2.6.3
   title: 5.2.6.3 Simple data types and enumerations
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.3 Simple data types and enumerations.md
   source_words: 455
   kind: source-file
 - clause: 5.2.6.3.1
   title: 5.2.6.3.1 Introduction
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.3 Simple data types and enumerations.md
   source_words: 20
   kind: embedded-clause
 - clause: 5.2.6.3.2
   title: 5.2.6.3.2 Simple data types
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.3 Simple data types and enumerations.md
   source_words: 32
   kind: embedded-clause
 - clause: 5.2.6.3.3
   title: '5.2.6.3.3 Enumeration: EventId'
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.3 Simple data types and enumerations.md
   source_words: 224
   kind: embedded-clause
 - clause: 5.2.6.3.4
   title: '5.2.6.3.4 Enumeration: ContextType'
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.3 Simple data types and enumerations.md
   source_words: 103
   kind: embedded-clause
 - clause: 5.2.6.3.5
   title: '5.2.6.3.5 Enumeration: AdrfDataType'
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.3
-    Simple data types and enumerations.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.3 Simple data types and enumerations.md
   source_words: 32
   kind: embedded-clause
 - clause: 5.2.6.4
-  title: 5.2.6.4 Data types describing alternative data types or combinations of data
-    types
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.4
-    Data types describing alternative data types or combinations of data types.md
+  title: 5.2.6.4 Data types describing alternative data types or combinations of data types
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.4 Data types describing alternative data types or combinations of data types.md
   source_words: 70
   kind: source-file
 - clause: 5.2.6.4.1
   title: 5.2.6.4.1 Type ProblemDetailsAnalyticsInfoRequest
-  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.4
-    Data types describing alternative data types or combinations of data types.md
+  path: 5 API Definitions/5.2 Nnwdaf_AnalyticsInfo Service API/5.2.6 Data Model/5.2.6.4 Data types describing alternative data types or combinations of data types.md
   source_words: 48
   kind: embedded-clause
 - clause: 5.2.7
@@ -2500,8 +2239,7 @@ clauses:
   kind: embedded-clause
 - clause: 5.3.4
   title: 5.3.4 Custom Operations without associated resources
-  path: 5 API Definitions/5.3 Nnwdaf_DataManagement Service API/5.3.4 Custom Operations
-    without associated resources.md
+  path: 5 API Definitions/5.3 Nnwdaf_DataManagement Service API/5.3.4 Custom Operations without associated resources.md
   source_words: 15
   kind: source-file
 - clause: 5.3.5
@@ -2751,8 +2489,7 @@ clauses:
   kind: embedded-clause
 - clause: 5.4.4
   title: 5.4.4 Custom Operations without associated resources
-  path: 5 API Definitions/5.4 Nnwdaf_MLModelProvision Service API/5.4.4 Custom Operations
-    without associated resources.md
+  path: 5 API Definitions/5.4 Nnwdaf_MLModelProvision Service API/5.4.4 Custom Operations without associated resources.md
   source_words: 15
   kind: source-file
 - clause: 5.4.5
@@ -3057,8 +2794,7 @@ clauses:
   kind: embedded-clause
 - clause: 5.5.4
   title: 5.5.4 Custom Operations without associated resources
-  path: 5 API Definitions/5.5 Nnwdaf_MLModelTraining Service API/5.5.4 Custom Operations
-    without associated resources.md
+  path: 5 API Definitions/5.5 Nnwdaf_MLModelTraining Service API/5.5.4 Custom Operations without associated resources.md
   source_words: 15
   kind: source-file
 - clause: 5.5.5
@@ -3398,8 +3134,7 @@ clauses:
   kind: embedded-clause
 - clause: 5.6.4
   title: 5.6.4 Custom Operations without associated resources
-  path: 5 API Definitions/5.6 Nnwdaf_MLModelMonitor Service API/5.6.4 Custom Operations
-    without associated resources.md
+  path: 5 API Definitions/5.6 Nnwdaf_MLModelMonitor Service API/5.6.4 Custom Operations without associated resources.md
   source_words: 15
   kind: source-file
 - clause: 5.6.5

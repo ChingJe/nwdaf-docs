@@ -81,6 +81,15 @@ specifications:
   manifest: TS 29.504/manifest.yaml
   source_archive: 29504-id0.zip
   source_archive_sha256: 08eb3fe98bf504d4516fefd5b25d7d85d32137d58050b96e05c110afd341706b
+- id: TS-29.505
+  spec: TS 29.505
+  version: 18.8.0
+  scope: full
+  purpose: Subscription-data resource usage and data models carried through the Nudr_DataRepository service
+  index: TS 29.505/README.md
+  manifest: TS 29.505/manifest.yaml
+  source_archive: 29505-i80.zip
+  source_archive_sha256: b432c3d6d7a211f0d1eeb72da4364d32ba1d9a3ae51c03df8cab38d2700b777e
 - id: TS-29.508
   spec: TS 29.508
   version: 18.11.0

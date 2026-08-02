@@ -104,68 +104,57 @@ clauses:
   kind: source-file
 - clause: 5.2.2
   title: 5.2.2 Network data analytics Subscribe/Unsubscribe/Notify
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.2 Network data analytics
-    Subscribe Unsubscribe Notify.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.2 Network data analytics Subscribe Unsubscribe Notify.md
   source_words: 923
   kind: source-file
 - clause: 5.2.2.1
   title: 5.2.2.1 Analytics Subscribe/Unsubscribe/Notify initiated by 5GC NFs, OAM or AFs
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.2 Network data analytics
-    Subscribe Unsubscribe Notify.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.2 Network data analytics Subscribe Unsubscribe Notify.md
   source_words: 389
   kind: embedded-clause
 - clause: 5.2.2.2
   title: 5.2.2.2 Analytics Subscribe/Unsubscribe/Notify initiated by AFs via the NEF
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.2 Network data analytics
-    Subscribe Unsubscribe Notify.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.2 Network data analytics Subscribe Unsubscribe Notify.md
   source_words: 534
   kind: embedded-clause
 - clause: 5.2.3
   title: 5.2.3 Network data analytics information request
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.3 Network data analytics
-    information request.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.3 Network data analytics information request.md
   source_words: 340
   kind: source-file
 - clause: 5.2.3.1
   title: 5.2.3.1 Analytics information request initiated by 5GC NFs, OAM or AFs
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.3 Network data analytics
-    information request.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.3 Network data analytics information request.md
   source_words: 142
   kind: embedded-clause
 - clause: 5.2.3.2
   title: 5.2.3.2 Analytics information request initiated by AFs via the NEF
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.3 Network data analytics
-    information request.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.3 Network data analytics information request.md
   source_words: 198
   kind: embedded-clause
 - clause: 5.2.4
   title: 5.2.4 Analytics Exposure via DCCF
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.4 Analytics Exposure
-    via DCCF.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.4 Analytics Exposure via DCCF.md
   source_words: 1772
   kind: source-file
 - clause: 5.2.5
   title: 5.2.5 Analytics Exposure via DCCF and MFAF
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.5 Analytics Exposure
-    via DCCF and MFAF.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.5 Analytics Exposure via DCCF and MFAF.md
   source_words: 2305
   kind: source-file
 - clause: 5.2.6
   title: 5.2.6 Procedure for Analytics Exposure in Roaming Case
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.6 Procedure for
-    Analytics Exposure in Roaming Case.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.6 Procedure for Analytics Exposure in Roaming Case.md
   source_words: 1433
   kind: source-file
 - clause: 5.2.6.1
   title: 5.2.6.1 Analytics Exposure from HPLMN to VPLMN for inbound roaming users
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.6 Procedure for
-    Analytics Exposure in Roaming Case.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.6 Procedure for Analytics Exposure in Roaming Case.md
   source_words: 689
   kind: embedded-clause
 - clause: 5.2.6.2
   title: 5.2.6.2 Analytics Exposure from VPLMN to HPLMN for outbound roaming users
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.6 Procedure for
-    Analytics Exposure in Roaming Case.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.2 Analytics Exposure Procedures/5.2.6 Procedure for Analytics Exposure in Roaming Case.md
   source_words: 744
   kind: embedded-clause
 - clause: '5.3'
@@ -215,14 +204,12 @@ clauses:
   kind: navigation-directory
 - clause: 5.5.1
   title: 5.5.1 Procedure for Data Collection from NFs
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/5.5.1 Procedure for Data Collection
-    from NFs.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/5.5.1 Procedure for Data Collection from NFs.md
   source_words: 861
   kind: source-file
 - clause: 5.5.1.1
   title: 5.5.1.1 Data Collection from NFs
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/5.5.1 Procedure for Data Collection
-    from NFs.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/5.5.1 Procedure for Data Collection from NFs.md
   source_words: 861
   kind: embedded-clause
 - clause: 5.5.2
@@ -232,38 +219,32 @@ clauses:
   kind: source-file
 - clause: 5.5.3
   title: 5.5.3 Procedure for Data Collection using DCCF
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/5.5.3 Procedure for Data Collection
-    using DCCF/README.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/5.5.3 Procedure for Data Collection using DCCF/README.md
   source_words: 5010
   kind: navigation-directory
 - clause: 5.5.3.1
   title: 5.5.3.1 Data Collection via DCCF
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/5.5.3 Procedure for Data Collection
-    using DCCF/5.5.3.1 Data Collection via DCCF.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/5.5.3 Procedure for Data Collection using DCCF/5.5.3.1 Data Collection via DCCF.md
   source_words: 2262
   kind: source-file
 - clause: 5.5.3.2
   title: 5.5.3.2 Data Collection via Messaging Framework
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/5.5.3 Procedure for Data Collection
-    using DCCF/5.5.3.2 Data Collection via Messaging Framework.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/5.5.3 Procedure for Data Collection using DCCF/5.5.3.2 Data Collection via Messaging Framework.md
   source_words: 2748
   kind: source-file
 - clause: 5.5.4
   title: 5.5.4 Procedure for Data Collection in Roaming Case
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/5.5.4 Procedure for Data Collection
-    in Roaming Case.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/5.5.4 Procedure for Data Collection in Roaming Case.md
   source_words: 681
   kind: source-file
 - clause: 5.5.4.1
   title: 5.5.4.1 Data Collection by H-RE-NWDAF from V-RE-NWDAF for outbound roaming users
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/5.5.4 Procedure for Data Collection
-    in Roaming Case.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/5.5.4 Procedure for Data Collection in Roaming Case.md
   source_words: 347
   kind: embedded-clause
 - clause: 5.5.4.2
   title: 5.5.4.2 Data Collection by V-RE-NWDAF from H-RE-NWDAF for inbound roaming users
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/5.5.4 Procedure for Data Collection
-    in Roaming Case.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.5 Data Collection/5.5.4 Procedure for Data Collection in Roaming Case.md
   source_words: 334
   kind: embedded-clause
 - clause: '5.6'
@@ -303,134 +284,112 @@ clauses:
   kind: navigation-directory
 - clause: 5.7.1
   title: 5.7.1 General
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.1
-    General.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.1 General.md
   source_words: 0
   kind: source-file
 - clause: 5.7.2
   title: 5.7.2 Network Slice (Instance) load level Analytics
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.2
-    Network Slice (Instance) load level Analytics.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.2 Network Slice (Instance) load level Analytics.md
   source_words: 944
   kind: source-file
 - clause: 5.7.3
   title: 5.7.3 Observed Service Experience Analytics
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.3
-    Observed Service Experience Analytics.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.3 Observed Service Experience Analytics.md
   source_words: 1233
   kind: source-file
 - clause: 5.7.4
   title: 5.7.4 NF load Analytics
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.4
-    NF load Analytics.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.4 NF load Analytics.md
   source_words: 969
   kind: source-file
 - clause: 5.7.5
   title: 5.7.5 Network Performance Analytics
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.5
-    Network Performance Analytics.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.5 Network Performance Analytics.md
   source_words: 558
   kind: source-file
 - clause: 5.7.6
   title: 5.7.6 UE Mobility Analytics
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.6
-    UE Mobility Analytics.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.6 UE Mobility Analytics.md
   source_words: 737
   kind: source-file
 - clause: 5.7.7
   title: 5.7.7 UE Communication Analytics
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.7
-    UE Communication Analytics.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.7 UE Communication Analytics.md
   source_words: 941
   kind: source-file
 - clause: 5.7.8
   title: 5.7.8 Expected UE behavioural Analytics
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.8
-    Expected UE behavioural Analytics.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.8 Expected UE behavioural Analytics.md
   source_words: 329
   kind: source-file
 - clause: 5.7.9
   title: 5.7.9 Abnormal UE behavioural Analytics
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.9
-    Abnormal UE behavioural Analytics.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.9 Abnormal UE behavioural Analytics.md
   source_words: 408
   kind: source-file
 - clause: 5.7.10
   title: 5.7.10 User Data Congestion Analytics
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.10
-    User Data Congestion Analytics.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.10 User Data Congestion Analytics.md
   source_words: 918
   kind: source-file
 - clause: 5.7.11
   title: 5.7.11 QoS Sustainability Analytics
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.11
-    QoS Sustainability Analytics.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.11 QoS Sustainability Analytics.md
   source_words: 817
   kind: source-file
 - clause: 5.7.12
   title: 5.7.12 Dispersion Analytics
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.12
-    Dispersion Analytics.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.12 Dispersion Analytics.md
   source_words: 912
   kind: source-file
 - clause: 5.7.13
   title: 5.7.13 WLAN Performance Analytics
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.13
-    WLAN Performance Analytics.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.13 WLAN Performance Analytics.md
   source_words: 562
   kind: source-file
 - clause: 5.7.14
   title: 5.7.14 Session Management Congestion Control Experience Analytics
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.14
-    Session Management Congestion Control Experience Analytics.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.14 Session Management Congestion Control Experience Analytics.md
   source_words: 352
   kind: source-file
 - clause: 5.7.15
   title: 5.7.15 Redundant Transmission Experience Analytics
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.15
-    Redundant Transmission Experience Analytics.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.15 Redundant Transmission Experience Analytics.md
   source_words: 1015
   kind: source-file
 - clause: 5.7.16
   title: 5.7.16 DN Performance Analytics
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.16
-    DN Performance Analytics.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.16 DN Performance Analytics.md
   source_words: 675
   kind: source-file
 - clause: 5.7.17
   title: 5.7.17 PFD Determination Analytics
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.17
-    PFD Determination Analytics.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.17 PFD Determination Analytics.md
   source_words: 514
   kind: source-file
 - clause: 5.7.18
   title: 5.7.18 E2E data volume transfer time analytics
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.18
-    E2E data volume transfer time analytics.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.18 E2E data volume transfer time analytics.md
   source_words: 1284
   kind: source-file
 - clause: 5.7.19
   title: 5.7.19 PDU Session Traffic Analytics
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.19
-    PDU Session Traffic Analytics.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.19 PDU Session Traffic Analytics.md
   source_words: 582
   kind: source-file
 - clause: 5.7.20
   title: 5.7.20 Relative Proximity Analytics
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.20
-    Relative Proximity Analytics.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.20 Relative Proximity Analytics.md
   source_words: 828
   kind: source-file
 - clause: 5.7.21
   title: 5.7.21 Movement Behaviour Analytics
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.21
-    Movement Behaviour Analytics.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.21 Movement Behaviour Analytics.md
   source_words: 406
   kind: source-file
 - clause: 5.7.22
   title: 5.7.22 Location Accuracy Analytics
-  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.22
-    Location Accuracy Analytics.md
+  path: 5 Signalling Flows for the Network Data Analytics Framework/5.7 Procedures for Specific Network Data Analytics/5.7.22 Location Accuracy Analytics.md
   source_words: 782
   kind: source-file
 - clause: '5.8'

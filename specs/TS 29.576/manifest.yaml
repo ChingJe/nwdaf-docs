@@ -667,3 +667,33 @@ clauses:
   path: Annex B (informative) Change history/README.md
   source_words: 926
   kind: navigation-directory
+- clause: change-history-2025
+  title: 'Annex B (informative): Change history — 2025'
+  path: Annex B (informative) Change history/2025.md
+  source_words: 181
+  kind: generated-year-partition
+- clause: change-history-2023
+  title: 'Annex B (informative): Change history — 2023'
+  path: Annex B (informative) Change history/2023.md
+  source_words: 405
+  kind: generated-year-partition
+- clause: change-history-2026
+  title: 'Annex B (informative): Change history — 2026'
+  path: Annex B (informative) Change history/2026.md
+  source_words: 215
+  kind: generated-year-partition
+- clause: change-history-2024
+  title: 'Annex B (informative): Change history — 2024'
+  path: Annex B (informative) Change history/2024.md
+  source_words: 456
+  kind: generated-year-partition
+- clause: change-history-2021
+  title: 'Annex B (informative): Change history — 2021'
+  path: Annex B (informative) Change history/2021.md
+  source_words: 300
+  kind: generated-year-partition
+- clause: change-history-2022
+  title: 'Annex B (informative): Change history — 2022'
+  path: Annex B (informative) Change history/2022.md
+  source_words: 1399
+  kind: generated-year-partition

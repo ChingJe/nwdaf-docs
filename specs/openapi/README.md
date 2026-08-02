@@ -33,6 +33,7 @@ These files are copied byte-for-byte from the supplied Release 18 specification 
 - [TS29503_Nudm_UEID.yaml](TS29503_Nudm_UEID.yaml) — 3GPP TS 29.503 Unified Data Management Services, version 17.10.0
 - [TS29504_Nudr_DR.yaml](TS29504_Nudr_DR.yaml) — 3GPP TS 29.504 V18.13.0; 5G System; Unified Data Repository Services; Stage 3
 - [TS29504_Nudr_GroupIDmap.yaml](TS29504_Nudr_GroupIDmap.yaml) — 3GPP TS 29.504 V18.12.0; 5G System; Unified Data Repository Services; Stage 3
+- [TS29505_Subscription_Data.yaml](TS29505_Subscription_Data.yaml) — 3GPP TS 29.505 V18.7.0; 5G System; Usage of the Unified Data Repository Service for subscription data; Stage 3
 - [TS29508_Nsmf_EventExposure.yaml](TS29508_Nsmf_EventExposure.yaml) — 3GPP TS 29.508 V18.9.0; 5G System; Session Management Event Exposure Service.
 - [TS29510_Nnrf_AccessToken.yaml](TS29510_Nnrf_AccessToken.yaml) — 3GPP TS 29.510 V18.8.0; 5G System; Network Function Repository Services; Stage 3
 - [TS29510_Nnrf_Bootstrapping.yaml](TS29510_Nnrf_Bootstrapping.yaml) — 3GPP TS 29.510 V18.7.0; 5G System; Network Function Repository Services; Stage 3
@@ -68,7 +69,6 @@ These files are copied byte-for-byte from the supplied Release 18 specification 
 
 ## Unresolved external dependencies
 
-- `TS29505_Subscription_Data.yaml`
 - `TS29507_Npcf_AMPolicyControl.yaml`
 - `TS29509_Nausf_SoRProtection.yaml`
 - `TS29509_Nausf_UEAuthentication.yaml`

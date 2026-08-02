@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "build_id": "r18-corpus-20260803-ts29505",
+  "generated_at_utc": "2026-08-02T16:22:12.663112+00:00",
+  "parent_archive": {
+    "file": "nwdaf-3gpp-r18-full-specs-with-ts23003-ts29502-ts29504.zip",
+    "sha256": "d8831041d2dc3644254abdd40b9e3f1910ad69e75538f25d02fd71cf616bf725"
+  },
+  "added_source_archives": [
+    {
+      "file": "29505-i80.zip",
+      "sha256": "b432c3d6d7a211f0d1eeb72da4364d32ba1d9a3ae51c03df8cab38d2700b777e"
+    }
+  ],
+  "added_specifications": [
+    "TS 29.505 V18.8.0"
+  ],
+  "validation_passed": true
+}

@@ -1,0 +1,28 @@
+{
+  "parent_corpus": {
+    "file": "nwdaf-3gpp-r18-full-specs-with-ts23003-ts29502-ts29504.zip",
+    "sha256": "d8831041d2dc3644254abdd40b9e3f1910ad69e75538f25d02fd71cf616bf725",
+    "size_bytes": 93176684
+  },
+  "source_archives": [
+    {
+      "file": "29505-i80.zip",
+      "sha256": "b432c3d6d7a211f0d1eeb72da4364d32ba1d9a3ae51c03df8cab38d2700b777e",
+      "size_bytes": 949064,
+      "spec": "TS 29.505",
+      "version": "18.8.0",
+      "members": [
+        {
+          "path": "29505-i80.docx",
+          "size_bytes": 951489,
+          "sha256": "46edda85efed924d08a4f02c12acb7970b710feae119f61edd880bb6a2db96a3"
+        },
+        {
+          "path": "TS29505_Subscription_Data.yaml",
+          "size_bytes": 404020,
+          "sha256": "1e9e01de79b8b3a9736e74d9a3c9b0bc7eb017aef981442b28130bbaadae2b81"
+        }
+      ]
+    }
+  ]
+}

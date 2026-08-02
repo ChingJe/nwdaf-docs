@@ -269,8 +269,7 @@ clauses:
   kind: embedded-clause
 - clause: '5.4'
   title: 5.4 Custom Operations without associated resources
-  path: 5 Npcf_EventExposure Service API/5.4 Custom Operations without associated
-    resources.md
+  path: 5 Npcf_EventExposure Service API/5.4 Custom Operations without associated resources.md
   source_words: 1
   kind: source-file
 - clause: '5.5'
@@ -375,26 +374,22 @@ clauses:
   kind: embedded-clause
 - clause: 5.6.3
   title: 5.6.3 Simple data types and enumerations
-  path: 5 Npcf_EventExposure Service API/5.6 Data Model/5.6.3 Simple data types and
-    enumerations.md
+  path: 5 Npcf_EventExposure Service API/5.6 Data Model/5.6.3 Simple data types and enumerations.md
   source_words: 337
   kind: source-file
 - clause: 5.6.3.1
   title: 5.6.3.1 Introduction
-  path: 5 Npcf_EventExposure Service API/5.6 Data Model/5.6.3 Simple data types and
-    enumerations.md
+  path: 5 Npcf_EventExposure Service API/5.6 Data Model/5.6.3 Simple data types and enumerations.md
   source_words: 20
   kind: embedded-clause
 - clause: 5.6.3.2
   title: 5.6.3.2 Simple data types
-  path: 5 Npcf_EventExposure Service API/5.6 Data Model/5.6.3 Simple data types and
-    enumerations.md
+  path: 5 Npcf_EventExposure Service API/5.6 Data Model/5.6.3 Simple data types and enumerations.md
   source_words: 28
   kind: embedded-clause
 - clause: 5.6.3.3
   title: '5.6.3.3 Enumeration: PcEvent'
-  path: 5 Npcf_EventExposure Service API/5.6 Data Model/5.6.3 Simple data types and
-    enumerations.md
+  path: 5 Npcf_EventExposure Service API/5.6 Data Model/5.6.3 Simple data types and enumerations.md
   source_words: 289
   kind: embedded-clause
 - clause: '5.7'
