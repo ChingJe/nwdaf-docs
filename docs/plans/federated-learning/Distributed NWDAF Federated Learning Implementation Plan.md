@@ -6,8 +6,10 @@
 Phase 2 cross-NWDAF model provision／monitoring、Phase 3 FL Client
 Training、Phase 4 FL Server orchestration／FedAvg 與 Phase 5 final
 validation／ADRF publication／reprovision／monitor cutover 皆已完成實作、
-review remediation 與跨 process 驗證；下一個未完成範圍為 Phase 6
-standard collection prerequisites
+review remediation 與跨 process 驗證；下一個必要 checkpoint 為Python
+backend configuration clarity refactor，完成PyMTLF role-oriented profiles
+與PyAnLF typed annotated config後，再進入Phase 6 standard collection
+prerequisites
 
 相關文件：
 
@@ -17,6 +19,8 @@ standard collection prerequisites
 - [NWDAF Development Policy](../../development_policy.md)
 - [Phase 3 And 4 Federated Training Execution Detailed Plan](Phase%203%20And%204%20Federated%20Training%20Execution%20Detailed%20Plan.md)
 - [Phase 5 Final Validation ADRF Publication And Reprovision Detailed Plan](Phase%205%20Final%20Validation%20ADRF%20Publication%20And%20Reprovision%20Detailed%20Plan.md)
+- [PyMTLF Role-Oriented Configuration Refactor Detailed Plan](PyMTLF%20Role-Oriented%20Configuration%20Refactor%20Detailed%20Plan.md)
+- [PyAnLF Typed Configuration And Annotation Refactor Detailed Plan](PyAnLF%20Typed%20Configuration%20And%20Annotation%20Refactor%20Detailed%20Plan.md)
 
 ---
 
@@ -704,10 +708,11 @@ flowchart TD
     P3["Phase 3<br/>FL Client Training service"]
     P4["Phase 4<br/>FL Server + FedAvg"]
     P5["Phase 5<br/>Final validation + ADRF + reprovision"]
+    CFG["Config checkpoint<br/>Clear Python backend profiles"]
     P6["Phase 6<br/>UDM/SMF/AoI collection closure"]
     P7["Phase 7<br/>Three-NWDAF E2E"]
 
-    P0 --> P1 --> P2 --> P3 --> P4 --> P5 --> P7
+    P0 --> P1 --> P2 --> P3 --> P4 --> P5 --> CFG --> P7
     P1 --> P6 --> P7
 ```
 
@@ -721,8 +726,9 @@ flowchart TD
 | 3 | `NWDAF`, `PyMTLF`, `nwdaf-resources` | bidirectional Training transport、one-Client preparation/round | Phase 2 |
 | 4 | `PyMTLF`, `NWDAF`, `nwdaf-resources` | two-Client orchestration、shared-scaler local training、FedAvg | Phase 3 |
 | 5 | `NWDAF`, `PyAnLF`, `PyMTLF`, ADRF, `nwdaf-resources` | Client validation、durable final publication、reprovision/cutover | Phase 4, G1, G2 |
+| Config checkpoint | `PyAnLF`, `PyMTLF`, `nwdaf-resources`, `nwdaf-docs` | typed Python config、PyMTLF role profiles、annotated YAML、owned asset migration | Phase 5 |
 | 6 | `NWDAF`, `PyAnLF`, `PyMTLF`, UDM/UDR, SMF/UPF, AMF profile | group→SUPI→serving-SMF→AoI collection、descriptor retention | Phase 1, G1 |
-| 7 | `nwdaf-resources`, all integrated repos, `nwdaf-docs` | portable and full-collection E2E、runbook、claim closure | Phase 5; Phase 6 for full profile |
+| 7 | `nwdaf-resources`, all integrated repos, `nwdaf-docs` | portable and full-collection E2E、runbook、claim closure | Config checkpoint; Phase 6 for full profile |
 
 Phase 3與Phase 4在實作排程上是一個連續work unit，共用一份
 [整合詳細計畫](Phase%203%20And%204%20Federated%20Training%20Execution%20Detailed%20Plan.md)；
@@ -1527,7 +1533,7 @@ C 下載全部 `ROUND_LOCAL` bundles 後：
 - C 收集每 scope 的 base／candidate WAPE、absolute-error sum、
   actual-value sum、sample count 與 time window；
 - missing／invalid evaluation 使 promotion gate 失敗；
-- `training.enforce_performance_gate`：
+- `federated_learning.server.final_validation.enforce_performance_gate`：
   - `true`：沿用既有 triggering-scope improvement、aggregate
     improvement 與 non-triggering scope maximum-regression 規則；
   - `false`：仍計算及保存結果，但技術檢查通過即可繼續；
@@ -1668,6 +1674,33 @@ resource snapshot；正常 reprovision／monitor cutover 不透過 sync 傳遞
 - Model Provision 正常 request 只回 latest，不讓 ADRF 承擔選模；
 - `nwdaf-resources` E2E 完成 final evaluation、ADRF publication、
   reprovision 與 new-before-old cutover。
+
+### 13.8 Pre-Phase 6 Python backend configuration checkpoint
+
+Phase 1建立的 execution modes與Phase 3–5完成的role behavior保持不變，
+但已實作的flat config把Server orchestration、Client fitting與local
+training混在`federated_learning`及`training`兩個區段。Phase 6開始前先依
+[PyMTLF Role-Oriented Configuration Refactor Detailed Plan](PyMTLF%20Role-Oriented%20Configuration%20Refactor%20Detailed%20Plan.md)
+完成一次config contract migration：
+
+- repository提供`local.yaml`、`fl-server.yaml`與`fl-client.yaml`；
+- FL Server round／deadline／cleanup／final validation policy集中在
+  `federated_learning.server`；
+- FL Client capacity／fallback deadline／local fitting集中在
+  `federated_learning.client`；
+- standalone fitting與validation移到`local_training`；
+- PyAnLF依
+  [PyAnLF Typed Configuration And Annotation Refactor Detailed Plan](PyAnLF%20Typed%20Configuration%20And%20Annotation%20Refactor%20Detailed%20Plan.md)
+  建立strict typed schema、統一unit／delivery attempt語意，並補齊完整
+  annotated config；
+- PyAnLF只有一種AnLF backend role，不新增與架構不符的Server／Client
+  modes；
+- `nwdaf-resources`現有A／B／C與local Python profiles一次遷移；
+- 不改HTTP contract、runtime role、round state machine、FedAvg、
+  publication或cutover behavior。
+
+這個checkpoint是已完成behavior的configuration clarity correction，
+不是新增另一個FL演算法Phase。
 
 ---
 

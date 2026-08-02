@@ -1170,6 +1170,13 @@ data path，與本 Phase completed-model publication 無關。
 
 具體數值可在實作時以安全 default 落地，但 config 語意先固定。
 
+> **2026-08-02 configuration correction**：本節記錄Phase 5實作時的flat
+> key。Final validation gate仍由FL Server擁有，standalone local gate仍由
+> local trainer擁有；但兩者不再共用`training.*`路徑。新位置分別為
+> `federated_learning.server.final_validation.*`與
+> `local_training.validation.*`，完整mapping見
+> [PyMTLF Role-Oriented Configuration Refactor Detailed Plan](PyMTLF%20Role-Oriented%20Configuration%20Refactor%20Detailed%20Plan.md)。
+
 PyMTLF-C：
 
 ```text

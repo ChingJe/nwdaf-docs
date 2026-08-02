@@ -1445,6 +1445,35 @@ Completed revisions、latest pointer、ADRF reference 與 restart recovery
 綁定單一 JSON 檔、資料庫 schema 或 lifecycle enum。NRF 也不保存上述
 application-level relationship。
 
+### 7.7 Python backend deployment configuration ownership
+
+PyMTLF的deployment config依runtime role分開表達，不把三種角色的設定
+放入同一個可執行profile：
+
+- `local`只配置standalone dataset retrieval、local fitting與candidate
+  validation；
+- `fl_server`配置participant orchestration、preparation／round deadlines、
+  fixed round count、FedAvg後final validation、publication與cutover；
+- `fl_client`配置Training resource capacity、callback safety、ADRF dataset
+  preparation與每個training round的local fitting hyperparameters。
+
+`round_count`由FL Server擁有；`epochs`、`batch_size`與`learning_rate`由各
+FL Client擁有。Server不透過目前的標準Training resource強制Client採用
+特定epochs。第一版A／B實驗profile仍使用相同local fitting設定，以免把
+不同Client policy混入baseline結果。
+
+Workspace、temporary artifact transport與trusted download origins是
+distributed roles共用的模型交換基礎，但不因此讓Server與Client policy
+回到同一個flat namespace。確切YAML path與migration由implementation plan
+管理，本架構只固定上述ownership。
+
+PyAnLF沒有FL Server／Client mode；A、B各自執行同一種AnLF backend
+runtime。因此PyAnLF維持單一feature-oriented profile，但所有設定由strict
+typed schema載入，並清楚分開model provider selection、Model Provision
+demand、model-use monitor registration、accuracy monitor provider、SMF
+collection、ingestion與ADRF／Mongo storage。它不得為了和PyMTLF表面一致
+而建立不存在的role nesting。
+
 ---
 
 ## 8. Standard behavior and scenario policy

@@ -1479,6 +1479,14 @@ failure if delivery cannot be retained。
 
 ## 22. Config changes
 
+> **2026-08-02 configuration correction**：本節以下內容保留Phase 3／4
+> 實作時的config歷史，但「繼續擴充單一flat `federated_learning`」已不再
+> 是canonical config interface。角色欄位、local fitting與final validation
+> 的新位置及完整migration map以
+> [PyMTLF Role-Oriented Configuration Refactor Detailed Plan](PyMTLF%20Role-Oriented%20Configuration%20Refactor%20Detailed%20Plan.md)
+> 為準。Training HTTP schema、runtime behavior、round numbering與FedAvg
+> 不因這次config correction改變。
+
 ### 22.1 PyMTLF common
 
 Extend `federated_learning` without adding another top-level FL config family：

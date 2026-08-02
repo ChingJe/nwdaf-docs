@@ -592,6 +592,14 @@ Defaults：
 
 ### 7.4 PyMTLF
 
+> **2026-08-02 configuration correction**：本節記錄Phase 1當時建立
+> `local`／`fl_server`／`fl_client` lifecycle boundary所使用的初始flat
+> config。三個mode的行為與route ownership仍有效，但下列單一
+> `federated_learning`欄位形狀已由
+> [PyMTLF Role-Oriented Configuration Refactor Detailed Plan](PyMTLF%20Role-Oriented%20Configuration%20Refactor%20Detailed%20Plan.md)
+> 取代。後續實作與部署不得再把Server、Client及local training設定混在
+> 同一份profile。
+
 新增：
 
 ```yaml
@@ -623,6 +631,13 @@ Lifecycle：
 - data directory仍由 `.gitignore` 排除。
 
 ### 7.5 PyAnLF
+
+> **2026-08-02 configuration correction**：本節的model provider behavior
+> 與configured／NRF兩種selection mode仍有效；下列初始dictionary-based
+> config shape將由
+> [PyAnLF Typed Configuration And Annotation Refactor Detailed Plan](PyAnLF%20Typed%20Configuration%20And%20Annotation%20Refactor%20Detailed%20Plan.md)
+> 收斂成strict typed schema與完整annotated reference。這次correction不改
+> provider discovery或remote Model Provision流程。
 
 新增 model provider discovery config：
 
