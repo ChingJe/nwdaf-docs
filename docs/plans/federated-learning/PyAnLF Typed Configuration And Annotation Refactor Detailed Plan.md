@@ -2,8 +2,7 @@
 
 日期：2026-08-02
 
-狀態：待實作；與 PyMTLF role-oriented config refactor 同屬 Phase 6 前的
-Python backend configuration checkpoint
+狀態：typed annotated config與model identity namespace removal均已完成實作與驗證
 
 相關文件：
 
@@ -58,8 +57,10 @@ annotated YAML
 | `nwdaf-resources/` | local與distributed A/B PyAnLF config migration |
 | `nwdaf-docs/` | canonical field semantics與checkpoint integration |
 
-不改`NWDAF/`、PyMTLF、NRF、ADRF、SMF或UPF。Go ↔ PyAnLF HTTP payload、
-standard-shaped schema、routes、status code與sync snapshot都不改。
+Slice A1–A4不改`NWDAF/`、PyMTLF、NRF、ADRF、SMF或UPF，也不改
+Go ↔ PyAnLF HTTP payload、standard-shaped schema、routes、status code與
+sync snapshot。第10節identity cleanup會與PyMTLF同步調整private
+bundle／runtime identity contract，但不改3GPP wire schema。
 
 ### 2.3 Acceptance boundary
 
@@ -102,10 +103,13 @@ src/py_anlf/config.py
 - `load_settings(path)`負責YAML parsing與validation；
 - `run.py`不再直接操作untyped dictionary。
 
-各manager constructor接收其owner-specific settings，而不是root dict。
-如需降低一次改動風險，可以先讓`SBIServer`完成typed composition，再依
-vertical owner逐一更換constructor；checkpoint完成前不得留下production
-manager仍以散落`.get(..., default)`作主要default source。
+`run.py`與`SBIServer`的production startup只接受validated `Settings`，再由
+`Settings.runtime_config()`建立一份完整、legacy-shaped manager projection。
+這個adapter是唯一的rename／attempt-semantics轉換點，所有欄位與defaults
+都由typed schema填滿；既有manager內的`.get()`僅保留給direct unit-test
+fixtures與低風險transition compatibility，不再是production config的default
+source。這避免為config clarity工作同時改動analytics、collection、ingestion
+與accuracy等核心constructor及演算法。
 
 ### 3.3 保留feature-oriented top-level structure
 
@@ -277,17 +281,14 @@ Repository YAML至少完整說明：
 - `run.py`使用`load_settings()`；
 - config validation errors在server startup前回報。
 
-### Slice A2：Owner-specific constructor wiring
+### Slice A2：Typed composition and runtime projection
 
-依序遷移：
-
-1. `SBIServer` composition；
-2. model manager／runtime manager；
-3. model provider／provision／monitor registration；
-4. collection／ingestion／ADRF／Mongo；
-5. accuracy monitor／report delivery／runtime completion。
-
-每個slice保留existing behavior tests，不建立第二套parallel config path。
+- `run.py`載入`Settings`後才建立`SBIServer`；
+- `Settings.runtime_config()`一次產生完整runtime projection；
+- old key只存在於internal projection，不是可接受的YAML interface；
+- direct manager unit tests可繼續使用focused dictionary fixture，不影響
+  production strictness；
+- 不在這個checkpoint改動既有核心manager behavior。
 
 ### Slice A3：Annotated config and README
 
@@ -354,10 +355,111 @@ Repository YAML至少完整說明：
 
 1. PyAnLF所有runtime config由typed schema載入；
 2. repository YAML完整、自我說明且沒有隱藏supported field；
-3. manager不再各自擁有互相可能漂移的default；
+3. production manager取得由typed schema完整填滿的projection，不再依賴
+   各自fallback defaults；
 4. seconds／milliseconds／bytes／steps／entries可由key或註解辨識；
 5. model provider、provision、monitor registration與accuracy provider責任
    能從config section直接理解；
 6. delivery attempt semantics一致且migration前後observable behavior相同；
 7. 所有owned configs完成migration；
 8. full tests與existing portable E2E通過。
+
+---
+
+## 9. Implementation record
+
+- 新增immutable、`extra="forbid"`的typed settings與`load_settings()`；
+- `server.binding_host`、`model_monitor_registration`、nested
+  `analytics.report_delivery`及所有target unit／attempt names已完成migration；
+- analytics `max_attempts=4`仍映射為first send加三次retry，accuracy
+  `max_attempts=3`仍是三次total attempts，runtime completion仍無固定上限；
+- repository YAML已補齊supported sections與purpose／unit／lifecycle註解；
+- `nwdaf-resources`的local及A／B generators已遷移並加入pre-start loader
+  validation；
+- model runtime、artifact cache、accuracy worker與cutover已改以numeric
+  `modelUniqueId`作正式identity；selected provider的完整target則保存在
+  provision binding與applicability route；
+- verification：PyAnLF Ruff與`274 passed, 1 skipped`、PyMTLF Ruff與
+  `187 passed`、resources Go module tests、local model lifecycle E2E及完整
+  distributed FL／ADRF publication／cutover runner均通過。
+
+---
+
+## 10. Model identity namespace removal extension
+
+### 10.1 Target behavior
+
+PyAnLF不再建立`(provider_id, modelUniqueId)`形式的model
+identity，也不在remote provider尚未選出時使用fallback namespace。
+
+```text
+READY model identity = modelUniqueId
+model source route = selected provider NWDAF target
+no provisioned model = no formal ModelIdentity
+```
+
+- `modelUniqueId`是formal model identity；
+- selected provider `nfInstanceId`、NF service identity、API root與peer
+  resource `Location`屬於demand／slot route context；
+- provider route可以影響哪個Model Provision／Monitor peer被操作，但不參與
+  model equality或artifact identity；
+- Model Provision notification仍使用Release 18 schema，不新增provider
+  field。
+
+### 10.2 PyAnLF implementation slice
+
+1. 移除`model_provision.provider_namespace`、`model.default_provider_id`與
+   typed schema對應驗證；
+2. `ModelIdentity`移除`provider_id`，model manager、runtime manager、
+   accuracy monitor與cutover keys改以`modelUniqueId`識別模型世代；
+3. model demand在收到provision result前不合成fallback identity；沒有
+   `modelUniqueId`的transient information不得啟動formal monitor
+   relationship；
+4. active model／applicability slot另存selected provider route，Monitor
+   registration／subscription沿該route或local containing-Go route建立；
+5. bundle validation不再要求`model_identity.provider_id`；formal bundle仍
+   驗證numeric `model_unique_id`與notification一致；
+6. logs、worker names、dedup keys與sync projection移除generic provider
+   namespace；若需顯示remote owner，使用語意明確的selected
+   `nfInstanceId`，且不寫進model identity。
+
+### 10.3 Restart and routing
+
+- remote provider由existing Model Provision demand、selected target與Go route mirror
+  恢復；
+- configured local backend使用containing Go的local route，不需要偽造
+  provider ID；
+- 若restart後只有cached artifact但無法恢復對應的provision／route
+  relationship，不啟動remote monitor，由model demand reconciliation重建關係；
+- sync仍只恢復既有owner邊界內的snapshot，不承擔正常Model
+  Provision／Monitor成功語意。
+
+### 10.4 Integration and verification
+
+- `nwdaf-resources`的PyAnLF configs移除兩個provider fallback fields；
+- bundle fixtures、model activation、accuracy registration／report、cutover、
+  provider rediscovery與restart tests改用分離的model ID與route context；
+- configured provider與NRF-selected provider都能完成provision後monitor
+  registration；
+- PyAnLF lint／full pytest、PyMTLF contract regression與portable cross-process
+  E2E通過；
+- active config、production code與owned fixtures不得殘留
+  `provider_namespace`、fallback `provider_id`或composite model key。
+
+### 10.5 Deferred behavior
+
+multi-provider 5GC-wide numeric `modelUniqueId` allocation仍為future-phase
+handoff。本擴充不改為UUID、不新增中央allocator，也不改Model
+Provision／Monitor標準schema。
+
+### 10.6 Completion record
+
+- `ModelIdentity`現在只接受`model_unique_id`，舊`provider_id`會被strict
+  validation拒絕；
+- provision notification帶來的selected NWDAF target另存於
+  `ProvisionContext`、active model slot及`ModelProvisionBinding`；
+- runtime reuse、artifact cache、accuracy monitor及model cutover不再依賴
+  provider fallback；
+- config、bundle fixtures、unit tests與cross-process generators已移除
+  namespace欄位，且configured與NRF-selected路徑仍完成model provision與
+  monitor lifecycle。

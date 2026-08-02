@@ -4,6 +4,12 @@
 
 狀態：實作與驗證完成
 
+後續取代實作（2026-08-02）：本Phase記錄的`provider_namespace`、
+fallback provider identity與`(provider_id, modelUniqueId)`private key已由
+Pre-Phase 6 Python backend configuration checkpoint移除。正式model identity
+改為numeric `modelUniqueId`；provider NWDAF `nfInstanceId`只保留為
+Model Provision／Monitor route context。本文其餘內容保留當時實作歷史。
+
 上層計畫：
 
 - [Distributed NWDAF Federated Learning Implementation Plan](./Distributed%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)

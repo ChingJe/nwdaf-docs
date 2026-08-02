@@ -932,8 +932,8 @@ PyMTLF是seed model與artifact的owner。PyAnLF repo不保存初始模型，只�
 PyMTLF model catalog使用：
 
 ```text
-FamilyKey       = (provider_namespace, family_id)
-ModelVersionKey = (provider_namespace, modelUniqueId)
+FamilyKey       = familyId
+ModelVersionKey = modelUniqueId
 ArtifactKey     = SHA-256(content)
 ```
 
@@ -942,23 +942,19 @@ ArtifactKey     = SHA-256(content)
 - 每次promotion取得新的`modelUniqueId`。
 - 同一model artifact服務多個scope時，這些scope共用相同ModelVersionKey。
 
-`provider_namespace`是current PyMTLF private model ID namespace，預設為
-`local-mtlf`。目前PyAnLF compatibility model雖可攜帶
-`modelProviderId`，並在欄位缺少時退回本地config，但Release 18 Model
-Provision OpenAPI與Go standard compatibility model並沒有定義這個欄位；
-因此它只是現有local compatibility metadata，不能被當作標準wire identity，
-也不能用來識別remote provider NWDAF。
-
-`provider_namespace`不是另一個analytics event，也不是獨立NF identity。
-`family_id`同樣完全是PyMTLF private catalog key，不出現在Model
-Provision subscription。現有單NWDAF流程以private catalog把numeric
-`modelUniqueId`對回FamilyKey。
+`family_id`是PyMTLF private catalog key，不出現在Model Provision
+subscription。正式completed model與seed bundle只以numeric
+`modelUniqueId`作model identity；artifact hash只識別immutable bytes，不是
+標準model ID。round-local FL exchange bundle不是正式模型，因此不配置
+`modelUniqueId`。
 
 分散式部署以NRF選出的`nfInstanceId`、NF service instance與API root
 識別remote provider；Go另存peer subscription `Location`。這些資訊是
 private route metadata，不加入標準Model Provision body，也不依賴
-非標準`modelProviderId`欄位。configured provider模式必須提供同樣完整
-且穩定的identity。
+非標準`modelProviderId`欄位。PyAnLF將selected target另存於provision
+binding與applicability slot，但不讓provider route參與model equality、artifact
+cache、accuracy worker或cutover identity。configured provider模式必須提供
+同樣完整且穩定的route identity。
 
 ### 9.2 Demand與reuse
 
@@ -1373,8 +1369,8 @@ flowchart LR
 | Model Monitor registration ID | PyMTLF | 一個READY AnLF model-use scope |
 | Model Monitor subscription ID | PyAnLF | PyMTLF建立的measurement request |
 | monitor `notifCorrId` | PyMTLF | accuracy notification到active subscription的correlation |
-| FamilyKey | PyMTLF | `(provider_namespace, family_id)`；跨version的logical model |
-| ModelVersionKey | PyMTLF | `(provider_namespace, modelUniqueId)`；單一promoted artifact version |
+| FamilyKey | PyMTLF | `familyId`；跨version的private logical model |
+| ModelVersionKey | PyMTLF | numeric `modelUniqueId`；單一promoted artifact version |
 | ArtifactKey | PyMTLF | bundle content SHA-256；immutable download identity |
 | applicability slot | PyAnLF | provider/event/filter/target/use-case context；決定runtime model reuse/replacement |
 | stable monitor scope key | both backends | event/filter/target/consumer context；不包含model ID |
@@ -1403,7 +1399,7 @@ flowchart LR
 | PyAnLF ADRF configured／NRF mode | PyAnLF | raw record write target |
 | MongoDB writer settings與ingestion buffers | PyAnLF | fallback storage與callback ingestion |
 | model download allowlist／limits | PyAnLF | runtime artifact acceptance |
-| seed catalog、provider namespace、artifact root／URL | PyMTLF | initial model與family ownership |
+| seed catalog、family ID、artifact root／URL | PyMTLF | initial model與family ownership |
 | PyMTLF ADRF configured／NRF mode | PyMTLF | dataset retrieval target |
 | MongoDB reader settings | PyMTLF | direct fallback dataset retrieval |
 | WAPE degradation thresholds | PyMTLF | retrain policy |

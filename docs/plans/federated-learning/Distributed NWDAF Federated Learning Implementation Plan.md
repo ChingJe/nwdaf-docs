@@ -6,9 +6,10 @@
 Phase 2 cross-NWDAF model provision／monitoring、Phase 3 FL Client
 Training、Phase 4 FL Server orchestration／FedAvg 與 Phase 5 final
 validation／ADRF publication／reprovision／monitor cutover 皆已完成實作、
-review remediation 與跨 process 驗證；下一個必要 checkpoint 為Python
-backend configuration clarity refactor，完成PyMTLF role-oriented profiles
-與PyAnLF typed annotated config後，再進入Phase 6 standard collection
+review remediation 與跨 process 驗證；Python backend configuration clarity
+checkpoint已完成PyMTLF role-oriented profiles、PyAnLF typed annotated
+config及owned integration generators migration，但已新增model identity namespace
+removal收尾項目；完成後再進入Phase 6 standard collection
 prerequisites
 
 相關文件：
@@ -564,9 +565,14 @@ resource route =
   selected `nfInstanceId`、NF service instance／name 與 API root；
 - Go 驗證 target identity、service 與 API root 一致後才建立 route；
   不只接收 `Target-Api-Root`，也不從 URI 反推 NF identity；
-- `provider_namespace` 可留作 PyMTLF private catalog namespace；
+- `provider_namespace`、fallback provider namespace 與 private
+  `modelProviderId` 全部移除；
+- 正式model identity只使用numeric `modelUniqueId`；provider
+  `nfInstanceId`只是route／provenance context，不與model ID組成
+  composite key；
 - 不再把 `modelProviderId` 或 private family ID 放入標準 body；
-- A、B 若選到不同 provider，視為不同 internal model slots；
+- A、B 的applicability slot仍可以依selected provider route分離，但
+  route identity不進入model identity；
 - C 的 containing `nfInstanceId` 從 Go sync 取得。
 
 ### 5.3 Model Provision feature profile
@@ -581,16 +587,35 @@ negotiation。
 - exact feature bit 與 validation 必須由 Phase 0 直接對照 OpenAPI；
 - Training round 暫存模型仍可省略 `modelUniqueId`。
 
-### 5.4 Numeric model identity 與 restart
+### 5.4 Numeric model identity、ownership 與 restart
 
 `modelUniqueId` 是非負整數，且規格要求在 5GC scope 內唯一。Release 18
-沒有中央配號 API。
+沒有中央配號 API。[TS 29.520 §5.4.6](../../../specs/TS%2029.520/5%20API%20Definitions/5.4%20Nnwdaf_MLModelProvision%20Service%20API/5.4.6%20Data%20Model.md)
+明確定義該identifier shall be unique within 5GC scope；ADRF也可只以
+`modelUniqueId`取回模型，因此provider-local duplicate ID不能由private
+namespace合法化。
+
+本checkpoint將identity統一為：
+
+```text
+formal model identity = modelUniqueId
+logical family identity = familyId
+provider route/provenance = selected NWDAF nfInstanceId
+```
+
+- `provider_namespace`不再出現於config、catalog key、bundle manifest、
+  durable state或sync；
+- PyAnLF未取得正式Model Provision結果前不建立虛擬
+  provider identity；
+- provider NWDAF `nfInstanceId`仍由selected target／subscription route
+  保存，供Monitor、restart後rediscovery與provenance使用，但不放入
+  `ModelVersionKey`。
 
 第一版採下列 deployment policy：
 
 - 只有 NWDAF-C 建立本情境的正式 completed models；
-- C 設定一個不與其他實驗 model provider 衝突的 numeric 起始區間；
-- PyMTLF 以持久化 monotonic allocator 配號；
+- PyMTLF沿用`max(currentUnixMilliseconds, lastAllocatedModelId + 1)`
+  的持久化monotonic allocator；
 - seed、completed revisions、latest pointer、下一個 ID 與 ADRF
   references 使用同一份 file-backed catalog；
 - catalog 以 temporary file + atomic rename 更新；
@@ -598,8 +623,9 @@ negotiation。
 - 新實驗若要重新從 seed 開始，必須顯式清除該實驗 data directory 與
   對應 ADRF records。
 
-未來若同一 5GC 有多個正式 model owners，必須另設跨 owner 的 namespace
-allocation policy；不在第一版。
+未來若同一 5GC 有多個正式 model owners，必須另設跨 owner 的
+numeric allocation policy。本checkpoint不處理該唯一性問題，也不把
+`modelUniqueId`改成與`Uinteger`schema不相容的UUID。
 
 ### 5.5 FL Client discovery 的區域語意
 
@@ -1677,6 +1703,9 @@ resource snapshot；正常 reprovision／monitor cutover 不透過 sync 傳遞
 
 ### 13.8 Pre-Phase 6 Python backend configuration checkpoint
 
+狀態：role-oriented／typed config migration與model identity namespace
+removal均已完成實作與驗證。
+
 Phase 1建立的 execution modes與Phase 3–5完成的role behavior保持不變，
 但已實作的flat config把Server orchestration、Client fitting與local
 training混在`federated_learning`及`training`兩個區段。Phase 6開始前先依
@@ -1699,8 +1728,28 @@ training混在`federated_learning`及`training`兩個區段。Phase 6開始前�
 - 不改HTTP contract、runtime role、round state machine、FedAvg、
   publication或cutover behavior。
 
-這個checkpoint是已完成behavior的configuration clarity correction，
-不是新增另一個FL演算法Phase。
+在同一checkpoint收尾時，同步移除容易被誤解為規格要求的
+provider namespace：
+
+- PyMTLF `FamilyKey` 改為`familyId`，`ModelVersionKey`改為
+  `modelUniqueId`；
+- PyMTLF config、bundle manifest、durable state與sync移除
+  `provider_namespace`／`providerNamespace`／private `provider_id`；
+- PyAnLF移除`model_provision.provider_namespace`、
+  `model.default_provider_id`與fallback provider identity；
+- PyAnLF把model source route與model identity分開；actual provider
+  `nfInstanceId`由selected target／subscription relationship保存；
+- `nwdaf-resources`移除舊config、bundle fixture與namespace assertions；
+- 實驗環境不建立舊durable state migration；schema升級後顯式清除
+  舊`data/`狀態再啟動。
+
+這個checkpoint是已完成behavior的configuration clarity與identity
+correction，不是新增另一個FL演算法Phase。
+
+完成驗證包括PyMTLF與PyAnLF full lint／pytest、resources Go module的兩個
+model lifecycle跨process情境，以及三個NWDAF的distributed FL runner；後者
+實際完成final validation、正式模型配號、ADRF publication與A／B model
+cutover。
 
 ---
 

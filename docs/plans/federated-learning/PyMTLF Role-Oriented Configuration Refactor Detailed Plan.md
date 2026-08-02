@@ -2,8 +2,7 @@
 
 日期：2026-08-02
 
-狀態：待實作；與PyAnLF typed config refactor同屬Phase 5完成後、Phase 6
-開始前的必要Python backend configuration checkpoint
+狀態：role-oriented config與model identity namespace removal均已完成實作與驗證
 
 相關文件：
 
@@ -59,8 +58,11 @@ role-specific YAML
 | `nwdaf-resources/` | distributed E2E 的 C Server 與 A/B Client config migration |
 | `nwdaf-docs/` | canonical plan、supersession notes、architecture-level ownership |
 
-`NWDAF/`、`PyAnLF/`、`nrf/` 與 `adrf/` 不改。Go ↔ PyMTLF wire contract、
-NRF profile、public SBI 與 standard-shaped private API 都不因本工作改變。
+Slice C1–C4不改`NWDAF/`、`PyAnLF/`、`nrf/` 與 `adrf/`，也不改
+Go ↔ PyMTLF wire contract、NRF profile、public SBI 與standard-shaped
+private API。第10節的identity cleanup會另外同步修改
+`PyAnLF/`與`nwdaf-resources/`的private bundle／identity contract，但不改
+3GPP wire schema。
 
 ### 2.3 Acceptance boundary
 
@@ -443,7 +445,9 @@ schema並在測試中載入驗證。
 - 不改 NRF capability profile；
 - 不新增 dynamic config reload；
 - 不新增 secrets、TLS或OAuth config；
-- 不重構 dataset、ADRF publication或model catalog實作；
+- Slice C1–C4不重構 dataset、ADRF publication或model catalog實作；
+  第10節僅移除catalog identity中的provider namespace，不改選模、
+  training、publication或cutover business logic；
 - 不為 feature-branch舊 config保留永久 compatibility alias。
 
 ---
@@ -461,3 +465,108 @@ schema並在測試中載入驗證。
 7. Phase 1–5既有behavior與E2E保持通過；
 8. 主計畫與舊 detailed plans清楚記錄supersession，不留下兩個都宣稱
    canonical的config shape。
+
+---
+
+## 9. Implementation record
+
+- repository profile已拆成`config/local.yaml`、`config/fl-server.yaml`與
+  `config/fl-client.yaml`，預設CLI使用local profile；
+- common FL transport／workspace與Server、Client role settings已拆成不同
+  typed models，standalone fitting移至`local_training`；
+- runtime mode會拒絕missing／conflicting role branch，舊`training`與flat
+  FL role keys由`extra="forbid"`拒絕；
+- trainer、dataset builder、local coordinator、FL Client及FL Server改為接收
+  owner-specific settings；
+- `nwdaf-resources`的local與distributed config generator已完成migration，
+  並會在啟動process前呼叫backend loader驗證temporary YAML；
+- model catalog已改用scalar `familyId`與`modelUniqueId`，seed import、bundle、
+  durable state、sync及publication不再保存provider namespace；durable state
+  schema升級為`2.0`；
+- verification：PyMTLF Ruff與`187 passed`、PyAnLF Ruff與
+  `274 passed, 1 skipped`、resources Go module tests、local model lifecycle
+  E2E及完整distributed FL／ADRF publication／cutover runner均通過。
+
+---
+
+## 10. Model identity namespace removal extension
+
+### 10.1 原因與邊界
+
+[TS 29.520 §5.4.6](../../../specs/TS%2029.520/5%20API%20Definitions/5.4%20Nnwdaf_MLModelProvision%20Service%20API/5.4.6%20Data%20Model.md)
+將`modelUniqueId`定義為`Uinteger`，並要求在5GC scope內唯一。
+現有PyMTLF卻同時使用：
+
+```text
+FamilyKey       = (provider_namespace, family_id)
+ModelVersionKey = (provider_namespace, modelUniqueId)
+```
+
+這會讓private namespace看起來像標準模型識別的必要條件，也可能
+掩蓋duplicate `modelUniqueId`本身不符合規格的事實。本擴充只統一
+identity representation，不重新設計multi-provider ID allocator。
+
+### 10.2 Target identity
+
+```text
+FamilyKey       = familyId
+ModelVersionKey = modelUniqueId
+ArtifactKey     = SHA-256(bundle bytes)
+```
+
+- `familyId`仍是PyMTLF private logical family key；
+- `modelUniqueId`是正式模型的唯一canonical identity；
+- provider NWDAF `nfInstanceId`是route／provenance metadata，不放入
+  `FamilyKey`或`ModelVersionKey`；
+- bundle不再用generic `provider_id`建立model identity；本擴充不新增
+  另一個namespace的替代名稱。
+
+### 10.3 PyMTLF implementation slice
+
+1. 移除`ModelProvisionSettings.provider_namespace`與三份role config中的
+   `provider_namespace`；
+2. `FamilyKey`改為單純`familyId`，`ModelVersionKey`改為單純
+   numeric `modelUniqueId`；
+3. catalog、provision resources、accuracy policy、dataset jobs、training jobs、
+   notification delivery與publication依新key串接，不改其狀態機與業務
+   條件；
+4. seed import、seed bundle、completed model bundle與FL artifact contract移除
+   `provider_id`；formal completed artifact仍保存`modelUniqueId`；
+5. durable model state升級schema，移除`providerNamespace`；新版不讀取
+   舊state，實驗啟動前顯式清除舊`data/model-state/`與對應
+   artifacts；
+6. backend sync移除`providerNamespace`，不從containing Go或PyAnLF
+   取得替代namespace。
+
+### 10.4 Allocation assumption and deferral
+
+- 當前情境只有NWDAF-C／PyMTLF-C配發正式model IDs；
+- 沿用`max(currentUnixMilliseconds, lastAllocatedModelId + 1)`與
+  durable non-reuse；
+- 不將`modelUniqueId`改為UUID，因為標準schema是`Uinteger`；
+- multi-provider 5GC-wide uniqueness為future-phase handoff，不阻擋本次
+  namespace removal。
+
+### 10.5 Verification
+
+- config loader拒絕舊`provider_namespace`；
+- catalog、retrain、promotion、restart與notification tests改以單純family／model
+  identity驗證；
+- seed、round／final bundle contract不再含`provider_id`；
+- sync response不再含`providerNamespace`；
+- PyMTLF lint／full pytest、PyAnLF contract regression與portable cross-process
+  E2E通過；
+- `rg` 確認active config、production code與owned fixtures無
+  `provider_namespace`／`providerNamespace`／model identity `provider_id`殘留。
+
+### 10.6 Completion record
+
+- `FamilyKey`與`ModelVersionKey`已分別改為scalar `familyId`與numeric
+  `modelUniqueId`；
+- seed與completed bundle只在`model_identity.model_unique_id`保存正式模型
+  identity；round-local FL bundles仍不建立正式identity；
+- timestamp加durable monotonic allocator保持現狀，沒有加入UUID或新的private
+  namespace；
+- 舊namespace config、CLI option、state schema及owned integration fixture已移除；
+- actual provider `nfInstanceId`只留在selected target與route log，不參與模型
+  equality、cache或monitor worker key。

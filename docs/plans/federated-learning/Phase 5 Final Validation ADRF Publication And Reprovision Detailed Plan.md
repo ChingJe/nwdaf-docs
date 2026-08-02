@@ -4,6 +4,13 @@
 
 狀態：已完成實作、code review remediation 與跨 process E2E 驗證
 
+後續取代實作（2026-08-02）：本Phase實作的
+`providerNamespace`持久化欄位、composite catalog keys與bundle
+`provider_id`已由Pre-Phase 6 Python backend configuration checkpoint移除。
+`modelUniqueId`成為正式模型的canonical identity；現有numeric
+allocator暫時保留，multi-provider 5GC-wide uniqueness延後處理。本文其餘
+內容保留當時實作歷史。
+
 上層計畫：
 
 - [Distributed NWDAF Federated Learning Implementation Plan](Distributed%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)
