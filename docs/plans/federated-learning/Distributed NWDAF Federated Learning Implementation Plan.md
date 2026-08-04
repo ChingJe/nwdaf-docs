@@ -8,9 +8,9 @@ Training、Phase 4 FL Server orchestration／FedAvg 與 Phase 5 final
 validation／ADRF publication／reprovision／monitor cutover 皆已完成實作、
 review remediation 與跨 process 驗證；Python backend configuration clarity
 checkpoint已完成PyMTLF role-oriented profiles、PyAnLF typed annotated
-config及owned integration generators migration，但已新增model identity namespace
-removal收尾項目；完成後再進入Phase 6 standard collection
-prerequisites
+config、owned integration generators migration及model identity namespace
+removal；目前已完成Phase 6 standard collection and full-core data-flow詳細設計，下一步
+進入實作
 
 相關文件：
 
@@ -20,6 +20,7 @@ prerequisites
 - [NWDAF Development Policy](../../development_policy.md)
 - [Phase 3 And 4 Federated Training Execution Detailed Plan](Phase%203%20And%204%20Federated%20Training%20Execution%20Detailed%20Plan.md)
 - [Phase 5 Final Validation ADRF Publication And Reprovision Detailed Plan](Phase%205%20Final%20Validation%20ADRF%20Publication%20And%20Reprovision%20Detailed%20Plan.md)
+- [Phase 6 Standard Collection And Full-Core Data-Flow Detailed Plan](Phase%206%20Standard%20Collection%20Prerequisites%20Detailed%20Plan.md)
 - [PyMTLF Role-Oriented Configuration Refactor Detailed Plan](PyMTLF%20Role-Oriented%20Configuration%20Refactor%20Detailed%20Plan.md)
 - [PyAnLF Typed Configuration And Annotation Refactor Detailed Plan](PyAnLF%20Typed%20Configuration%20And%20Annotation%20Refactor%20Detailed%20Plan.md)
 
@@ -217,7 +218,7 @@ UDM，必須使用獨立且獲授權的 repository／branch，不得直接在
 | Dataset descriptor | PyMTLF 主要依賴 active sync projection | retained descriptor inventory bridge，idle Client 才可復用歷史 ADRF data |
 | Final validation | current local training 可直接讀所有 scope data | distributed Client-side validation，C 不接收 raw data |
 | Group resolution | PyAnLF static config，且目前可能做 SUPI × SMF candidate 配對 | UDM group→SUPI、UECM serving SMF、exact resource |
-| AoI gating | team SMF 尚未接受 `networkArea` 或依 UeLocation 動態控制 | SMF 依 TAI 啟停 downstream UPF subscription |
+| AoI gating | team SMF 尚未接受 `networkArea` 或依 UeLocation gating | Phase 6 以 UERANSIM／AMF／真實 PDU Session 完成 fixed-location initial TAI gate；動態移動另行擴充 |
 | ADRF model | 初步實作仍有 contract gaps | Release 18 store/retrieve、capability、Location、ACL |
 | E2E | single NWDAF portable flow | three NWDAFs、NRF、ADRF、two Clients、multi-round |
 
@@ -735,8 +736,8 @@ flowchart TD
     P4["Phase 4<br/>FL Server + FedAvg"]
     P5["Phase 5<br/>Final validation + ADRF + reprovision"]
     CFG["Config checkpoint<br/>Clear Python backend profiles"]
-    P6["Phase 6<br/>UDM/SMF/AoI collection closure"]
-    P7["Phase 7<br/>Three-NWDAF E2E"]
+    P6["Phase 6<br/>Full-core collection data flow"]
+    P7["Phase 7<br/>Three-NWDAF FL E2E"]
 
     P0 --> P1 --> P2 --> P3 --> P4 --> P5 --> CFG --> P7
     P1 --> P6 --> P7
@@ -753,8 +754,8 @@ flowchart TD
 | 4 | `PyMTLF`, `NWDAF`, `nwdaf-resources` | two-Client orchestration、shared-scaler local training、FedAvg | Phase 3 |
 | 5 | `NWDAF`, `PyAnLF`, `PyMTLF`, ADRF, `nwdaf-resources` | Client validation、durable final publication、reprovision/cutover | Phase 4, G1, G2 |
 | Config checkpoint | `PyAnLF`, `PyMTLF`, `nwdaf-resources`, `nwdaf-docs` | typed Python config、PyMTLF role profiles、annotated YAML、owned asset migration | Phase 5 |
-| 6 | `NWDAF`, `PyAnLF`, `PyMTLF`, UDM/UDR, SMF/UPF, AMF profile | group→SUPI→serving-SMF→AoI collection、descriptor retention | Phase 1, G1 |
-| 7 | `nwdaf-resources`, all integrated repos, `nwdaf-docs` | portable and full-collection E2E、runbook、claim closure | Config checkpoint; Phase 6 for full profile |
+| 6 | `NWDAF`, `PyAnLF`, `PyMTLF`, UDM/UDR, AMF/AUSF/NSSF/PCF, SMF/UPF, UERANSIM | UE registration、group→SUPI→serving-SMF、真實 UeLocation／AoI、UPF→ADRF→PyMTLF data flow | Phase 1, G1 |
+| 7 | `nwdaf-resources`, all integrated repos, `nwdaf-docs` | 以 Phase 6 full-core data flow 驗證 degradation→FL→publication→reprovision 完整 E2E | Config checkpoint; Phase 6 |
 
 Phase 3與Phase 4在實作排程上是一個連續work unit，共用一份
 [整合詳細計畫](Phase%203%20And%204%20Federated%20Training%20Execution%20Detailed%20Plan.md)；
@@ -1753,7 +1754,7 @@ cutover。
 
 ---
 
-## 14. Phase 6：Standard collection prerequisites
+## 14. Phase 6：Standard collection and full-core data flow
 
 本 Phase 依賴 Phase 1 generic NRF discovery foundation，之後可與
 Phase 2–5 平行；它不阻擋使用預先存入 ADRF 的 FL-first E2E，但仍是
@@ -1790,14 +1791,16 @@ Phase 2–5 平行；它不阻擋使用預先存入 ADRF 的 FL-first E2E，但�
 6. TS 29.505 的 UDR `SmfRegList` 是 array；TS 29.503 的 UDM
    `SmfRegistrationInfo` 是含 `smfRegistrationList` 的 object。實作必須
    在 UDM 邊界進行明確轉換。
-7. workspace 目前沒有可編輯的 UDM／UDR repositories；開始此
-   external workstream 前必須先滿足 Gate G1。
+7. editable `udm/`、`udr/`、`smf-nwdaf-ext/` 已在 workspace 建立
+   `feat/r18-federated-learning` local branches；實作與提交必須維持各自的
+   repository boundary。
 
 本 Phase 不全面重寫 UDM／UDR。只補齊這條實驗流程需要的
 GroupIdentifiers 和 SmfRegistrations resources，並保留現有 free5GC
-handler／processor／consumer／persistence 分層。Release 17 generated package
-沒有的 Release 18 schema 依既有 policy 放入手寫 compatibility
-boundary，不要為此強制專案改用未公開的 OpenAPI fork。
+handler／processor／consumer／persistence 分層。目前 pinned generated package
+已包含 `GroupIdentifiers`、`SmfRegistrationInfo`、`NetworkAreaInfo` 等本流程
+需要的型別，應優先直接使用；只有實作時確認缺少精確 Release 18 欄位，才依
+既有 policy 放入最小 compatibility boundary。
 
 ### 14.1 Slice 6A：UDM discovery and group membership
 
@@ -1814,10 +1817,13 @@ boundary，不要為此強制專案改用未公開的 OpenAPI fork。
   從 UDR 取得 `GroupIdentifiers`；
 - UDR 新增上述 Release 18 resource、query validation、MongoDB
   lookup 與 `200`/`404` response semantics；
+- `nwdaf-resources` 提供無 UI 的 group membership fixture script，以
+  `intGroupId` 對 UDR MongoDB 做 idempotent upsert；這是 OAM／實驗準備，
+  不是 NWDAF runtime API；
 - UDM 不透傳 UDR-only `allowedAfIds`，只以 Nudm
   `GroupIdentifiers` 對 NWDAF 回應；
 - 使用 legitimate 3GPP Group ID wire value；
-- A、B 取得相同完整 membership；
+- 新 group 沿用原實驗環境的六個 SUPI；A、B 取得相同完整 membership；
 - cache／refresh 使用 UDM response semantics；
 - fixture profile 仍可保留，但必須標記 non-standard transition。
 
@@ -1843,43 +1849,64 @@ boundary，不要為此強制專案改用未公開的 OpenAPI fork。
 - 不做 SUPI × all discovered SMFs Cartesian product；
 - collection identity 保留 SUPI、PDU、SMF、DNN、S-NSSAI、AoI、events。
 
-### 14.3 Slice 6C：SMF AoI gating
+### 14.3 Slice 6C：SMF location-aware path selection and AoI gating
 
 Team SMF：
 
+- PDU Session path selection 使用 AMF 傳入的 current `UeLocation` / TAI，
+  在多 AN 拓樸中選出對應 path，不得固定取第一個 AN；
+- TAI `000001` 必須選到 UPF-A 及 `10.60.0.0/16`，TAI `000002`
+  必須選到 UPF-B 及 `10.61.0.0/16`；
 - decoder 接受 `eventSubs[].networkArea`；
-- 從 current SM context 的 `UeLocation` 取得 latest TAI；
-- matching TAI 才建立／維持 downstream UPF subscription；
-- UE location update 後重新評估；
-- leave AoI 時停止 downstream subscription；
+- 從 UERANSIM／AMF PDU Session procedure 建立的 current SM context 取得
+  `UeLocation` 與 TAI；
+- matching TAI 才建立 downstream UPF subscription；
+- Phase 6 假設 UE 位置固定，只做 create-time initial gate；
+- outside／unknown location 仍建立 NWDAF→SMF resource，但 downstream 保持
+  waiting；
 - NWDAF→SMF resource 可以繼續存在；
-- first experiment 接受 last-known TAI limitation；
-- AMF Event Exposure assisted profile 延後。
+- 既有 `eventExposure.staticSessionResolution` 只保留 portable regression，
+  Phase 6 不擴充或依賴它；
+- 啟動 AMF、AUSF、NSSF、PCF、兩個 TAI 的 UERANSIM gNB 與六個 UE，讓真實
+  registration／PDU Session 自然產生 `UeLocation` 及 SMF→UDM UECM
+  registration；
+- location transition 與 AMF Event Exposure assisted tracking 不在第一個
+  fixed-location profile 實作。
 
-Full-core profile 必須由 AMF/PDU Session procedure 提供真實
-`UeLocation` 更新。若只將 standard-shaped `UeLocation` fixture 注入 team
-SMF，驗收名稱必須是 collection integration，不得標成 full-core E2E。
+PDU Session 的 UPF path selection 與 NWDAF Event Exposure 的 AoI gate 是兩個
+不同的決策點。前者決定 UE session 實際使用哪個 UPF；後者決定
+已存在的 session 是否建立 downstream UPF Event Exposure subscription。
+2026-08-04 的 full-core baseline 已驗證兩個 UPF 都可關聯，但現行
+SMF 仍將兩個 TAI 的 UE 都選到第一個 UPF；因此這不是 config 或
+PFCP prerequisite，而是本 Slice 必須收掉的 implementation gap。
+
+實驗前仍須以 WebConsole-equivalent script provision 六個 UE 的
+subscription／authentication data，並以另一個 fixture 建立 Internal Group ID
+membership；不得直接寫入 AMF registration、SMF registration、PDU Session
+或 `UeLocation` 等 runtime state。
 
 ### 14.4 Slice 6D：Training data descriptor inventory
 
 PyAnLF 在 ADRF write 成功時保存：
 
-- accepted standard `dataSub`；
-- semantic scope；
+- TS 29.575 `NadrfStoredDataSpec`，包含 accepted standard `dataSub` 與
+  `TimeWindow`；
+- TS 29.520 `MLEventSubscription` analytics scope；
 - containing NWDAF／source NF association；
-- first／last observation time；
 - ADRF identity。
 
-建立明確 private bridge：
+建立明確 private bridge，使用完整 authoritative snapshot，不另外設計 delta
+protocol：
 
 ```text
-PyAnLF descriptor snapshot/delta
+PyAnLF descriptor snapshot
   -> Go mirror
   -> PyMTLF sync projection
 ```
 
-- contract 包含 descriptor identity、retention、ADRF identity、`dataSub`、
-  semantic scope 與 observation time window；
+- private contract 只自行定義 descriptor identity、state、retention 與
+  source association；資料規格和 analytics scope 分別重用
+  `NadrfStoredDataSpec` 與 `MLEventSubscription`；
 - Go 不取得 raw data；
 - PyMTLF 只取得 descriptor；
 - analytics subscription 刪除後，可依 retention policy 保留 historical
@@ -1890,55 +1917,63 @@ PyAnLF descriptor snapshot/delta
 ### 14.5 Acceptance
 
 - 一個合法 group 經 UDM 展開成 SUPIs；
+- subscriber／group fixture scripts 可重複 apply/show/clear，且 clear 只處理
+  fixtures 宣告的六個 SUPI 與 groups；
 - stateless UDM 可從 UDR 取得 group membership，而 NWDAF 不直接
   呼叫 UDR；
+- 六個 UERANSIM UE 經正常 registration／PDU Session procedure 產生
+  `UeLocation` 與 per-SUPI serving-SMF registrations；
+- TAI `000001` / `000002` 的 UE 分別使用 UPF-A / UPF-B 與對應
+  UE address pool，不只驗證兩個 UPF 都與 SMF 關聯；
 - 每個 SUPI 只向實際 serving SMF/PDU resource 訂閱；
 - UDR array 與 UDM wrapper 的 contract 轉換及 empty-list status 語意有
   contract tests；
 - A/B 使用同一 membership、不同 AoI；
 - team SMF 只啟動 matching TAI 的 UPF data；
 - ADRF records 可由相同 `dataSub + timePeriod` 取回；
-- 未完成真實 UDM／UeLocation／AoI 測試前，不宣稱 full-core
-  standards-complete collection。
+- UPF notification 可經 PyAnLF 寫入 ADRF，PyMTLF 可依 descriptor 取回同一段
+  training data；
+- Phase 6 只宣稱 full-core collection data-flow E2E，不宣稱 degradation、FL、
+  final validation、model publication 或 reprovision 已完成。
 
 ---
 
 ## 15. Phase 7：Three-NWDAF E2E and closure
 
-### 15.1 Portable FL profile
+### 15.1 Integrated full-core FL profile
 
-放在 `nwdaf-resources/`：
+Phase 7 不再第一次建立 UE／core data flow，而是直接重用 Phase 6 已驗證的
+full-core collection profile，加入 NWDAF-C／FL Server 與完整業務刺激：
 
-- NRF extension；
-- ADRF；
+- MongoDB、NRF、NSSF、UDR、UDM、AUSF、AMF、PCF、team SMF 與兩個 UPF；
+- 兩個 UERANSIM gNB、兩個 TAI 與六個 UE；
 - NWDAF-A/B/C；
 - PyAnLF-A/B；
 - PyMTLF-A/B/C；
-- static complete group membership fixture；
-- configured SMF／ADRF endpoints where required；
-- pre-seeded or replayed ADRF datasets；
+- ADRF；
+- Phase 6 subscriber／group provisioning 與真實 serving-SMF resolution；
+- Consumer 對 A／B 建立相同 group、不同 AoI 的 analytics subscriptions；
+- A／B 經各自 matching UPF path 蒐集、推論並保存 training data；
 - deterministic A/B inference／ground-truth stimulus：先形成穩定 WAPE，
   再只讓一個 scope degradation 以觸發 retrain；
 - two-client multi-round FL；
 - final ADRF store；
 - updated model activation／monitor cutover。
 
-此 profile 驗證 application-level FL，不宣稱真實 PDU session 或 AoI
-mobility。
+此 profile 才能宣稱從 UE／UPF data collection 到模型更新的完整 FL 業務
+E2E。Phase 6 的 full-core data-flow 結果是其 prerequisite，不以預先塞入 ADRF
+dataset 取代主要驗收路徑。
 
-### 15.2 Full collection profile
+### 15.2 Portable regression and optional mobility extension
 
-在必要外部 workstreams 完成後加入：
+既有 fixture／replay 型 portable FL runner 可保留為快速 regression，但不能取代
+15.1 的完成條件。以下能力可在完整 fixed-location E2E 穩定後另外擴充，不阻擋
+第一版 Phase 7 completion：
 
-- UDM／UDR group and SMF registration；
-- AMF、PDU Session fixture 與真實 `UeLocation` delivery；
-- AMF→SMF UeLocation；
-- team SMF AoI gating；
-- two UPF paths；
-- UPF dataset replay or controlled notifications；
-- A/B raw data store to ADRF；
-- degradation trigger；
-- full FL and reprovision。
+- UE 在 TAI 間移動後的 AMF／SMF location update；
+- leave AoI 時刪除 downstream UPF subscription；
+- enter AoI 時重新建立 downstream UPF subscription；
+- AMF Event Exposure assisted tracking。
 
 ### 15.3 Harness rules
 
@@ -1960,6 +1995,7 @@ mobility。
 | Process integration | 真實 Go／Python HTTP process |
 | Portable FL E2E | three NWDAFs + NRF + ADRF，fixtures／replay |
 | Full collection E2E | AMF/PDU + UDM + SMF AoI + UPF data path |
+| Full FL business E2E | Full collection + degradation + FL + ADRF model + reprovision/cutover |
 
 報告不得把較低 level 描述成較高 level。
 
@@ -2039,8 +2075,9 @@ Exemplar alignment：
 - NRF local Release 18 compatibility profile／matching tests；
 - ADRF Model Management handler／repository／download tests；
 - UDM group／UECM tests；
-- AMF／PDU Session `UeLocation` profile or explicitly labelled injected fixture；
-- SMF networkArea decode、UeLocation gate、dynamic UPF resource tests；
+- Phase 6 UERANSIM registration／PDU Session、AMF-delivered `UeLocation`、
+  UDM serving-SMF registration 與 fixed-location initial gate tests；
+- optional location-transition 與 dynamic UPF resource tests；
 - UPF notification replay。
 
 ### 16.5 Cross-process
@@ -2158,8 +2195,15 @@ Repository commit 彼此獨立：
   branch `feat/r18-nwdaf-discovery`；
 - ADRF team repository：已滿足。使用 workspace `adrf/`，
   branch `feat/r18-federated-learning`；
-- UDM／UDR；
-- team SMF／UPF。
+- UDM fork：已滿足。使用 workspace `udm/`，
+  branch `feat/r18-federated-learning`；
+- UDR fork：已滿足。使用 workspace `udr/`，
+  branch `feat/r18-federated-learning`；
+- team SMF：已滿足。使用 workspace `smf-nwdaf-ext/`，
+  branch `feat/r18-federated-learning`；
+- UPF／UERANSIM：Phase 6 full-core data-flow 開始前固定可重現的 revisions 與
+  build／runtime preflight；只對 team UPF Event Exposure controlled
+  notification／dataset replay 做本情境必要的最小修改。
 
 Phase 0 的 NWDAF／Python compatibility contract 不依賴上述 external
 repository，因此 G1 不阻擋 Phase 0；各 external workstream 開始前再確認
@@ -2174,9 +2218,9 @@ repository，因此 G1 不阻擋 Phase 0；各 external workstream 開始前再�
 - durable model state 使用 `data/model-state/`；
 - publication artifacts 使用 `data/publications/`。
 
-第一版 product behavior 已足以開始 Phase 0；Phase 1 的 NRF prerequisite
-與 Phase 5 的 ADRF repository 已滿足。Phase 6 對應 external workstream
-開始前仍需確認其 repository。
+第一版 product behavior 已足以開始 Phase 0；Phase 1 的 NRF prerequisite、
+Phase 5 的 ADRF repository，以及 Phase 6 的 UDM／UDR／team SMF editable
+repositories 皆已滿足。
 
 ---
 
@@ -2200,8 +2244,8 @@ repository，因此 G1 不阻擋 Phase 0；各 external workstream 開始前再�
 13. A/B 透過 existing Model Provision resources 取得同一 new model；
 14. new-before-old monitor cutover 完成；
 15. completed catalog 與 model allocator 可跨 C PyMTLF restart 恢復；
-16. portable three-NWDAF E2E 通過；
-17. UDM／SMF／AoI profile 未完成時有清楚的 verification label；
+16. Phase 6 full-core collection data-flow E2E 通過；
+17. Phase 7 full FL business E2E 通過；
 18. canonical architecture、API docs、config docs 與 E2E runbook 更新；
 19. 每個 repository required build／lint／test 結果均有記錄；
 20. 未驗證的真實 NRF／UDM／SMF／UPF／ADRF 行為不被誤報為已完成。
