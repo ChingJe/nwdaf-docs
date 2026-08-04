@@ -2,7 +2,7 @@
 
 日期：2026-08-04
 
-狀態：Implemented and verified on 2026-08-04
+狀態：Implemented and verified on 2026-08-05
 
 上層計畫：
 
@@ -67,6 +67,12 @@ reconciliation、queue 與資料轉換邏輯必須保留。
 8. AoI 以 `eventSubs[].networkArea` 傳給 SMF。第一個實驗 profile 支援
    `tais`；不宣稱已完成 `NetworkAreaInfo` 所有 area representation。
 9. SMF 使用真實 PDU Session context 的 last-known `UeLocation` 判斷 TAI。
+   PDU Session 建立時，TAI 用來匹配 UPF service area；實驗設定將
+   `tais` 放在 UPF node，不放在 AN node。`links` 只表達可達的 user-plane
+   topology，再由 SMF 找出通往 matching UPF 的 path。這對齊 TS 23.501
+   clause 3.1 的 UPF Service Area 定義、clause 6.3.3.3 的 UE location／UPF
+   location selection factors，以及 TS 29.510 Release 18 `UpfInfo.taiList`／
+   `taiRangeList` 的標準能力形狀。
    Phase 6 啟動 AMF、AUSF、NSSF、PCF 與 UERANSIM，讓 UE registration／PDU
    Session procedure 自然產生 serving-SMF registration 與 `UeLocation`；不以
    static session fixture 取代這條驗收路徑。第一個 profile 只驗證固定位置下的
@@ -315,6 +321,9 @@ PUT /internal/v1/sync/anlf/training-data-descriptors
 
 ### 5.5 `smf-nwdaf-ext/`
 
+- PDU Session path selection 使用 current `UeLocation`／TAI 篩選具有 matching
+  `tais` service-area mapping 的 UPF，再用 topology `links` 找到可達 path；
+  AN node 不重複宣告 TAI service area。
 - 延伸既有 Release 18 hand-written Event Exposure decoder，接受 generated
   `NetworkAreaInfo`。
 - current experiment 要求 `networkArea.tais`；缺少 `networkArea` 時保持現有
@@ -621,11 +630,13 @@ per-SUPI／PDU／SMF collection resources。
 ### Slice 6D：SMF location-aware path selection and AoI gating
 
 1. 在 PDU Session path selection 階段，以 AMF 傳入並保存在 SM context 的
-   `UeLocation` / TAI 選擇對應 AN node 及 UPF path；不得在多 AN 拓樸中
-   直接取第一個 AN。
+   `UeLocation` / TAI 篩選具有 matching service area 的 UPF，再從 topology
+   `links` 找出通往該 UPF 的 path；不得把 TAI 掛在 AN node 後直接取第一個
+   matching AN。
 2. 驗證 TAI-A 的 UE 選到 UPF-A 及 `10.60.0.0/16`，TAI-B 的 UE
-   選到 UPF-B 及 `10.61.0.0/16`。config 中已有的 AN `anIP` 只是拓樸
-   資料，不能當作 runtime selection 已完成的證據。
+   選到 UPF-B 及 `10.61.0.0/16`。UPF node 的 `tais` 表達 service-area
+   eligibility；AN `anIP` 與 `links` 只提供拓樸及 path reachability，不能取代
+   runtime UPF selection。
 3. Event Exposure decoder 與 repository 支援 `eventSubs[].networkArea`。
 4. Event Exposure create path 使用已選定 PDU Session 的 current TAI，支援
    inside／outside 初始狀態。
@@ -634,9 +645,9 @@ per-SUPI／PDU／SMF collection resources。
 6. delete、PDU release、missing-location、initial failure 與 no-AoI regression
    tests。
 
-完成條件：同一 serving SMF 先依 UE current TAI 建立正確的 PDU Session
-UPF path，再只對位於 NWDAF 指定 TAI 的 UE 維持 downstream UPF Event
-Exposure subscription。這是兩個不同的決策點，不得只驗證後者。
+完成條件：同一 serving SMF 先以 UE current TAI 匹配 UPF service area 並建立
+正確的 PDU Session UPF path，再只對位於 NWDAF 指定 TAI 的 UE 維持
+downstream UPF Event Exposure subscription。這是兩個不同的決策點，不得只驗證後者。
 
 ### Slice 6E：Descriptor inventory
 
@@ -687,9 +698,10 @@ baseline；本節記錄的 SMF path-selection 缺口已由本 Phase 收掉，不
 
 此次同時驗證出現行 SMF 的明確缺口：兩個 UE 皆被選到 UPF-A，
 TAI-B UE 也取得 `10.60.0.0/16` 的地址。原因是 path selection 參數未包含
-current TAI，而 `selectUPPathSource()` 在多 AN 時仍回傳第一個 AN。因此
-Slice 6D 必須先完成 location-aware PDU path selection，之後才能有效驗證
-AoI Event Exposure gating。
+current TAI，而 `selectUPPathSource()` 在多 AN 時仍回傳第一個 AN。Slice 6D
+最初以 AN-side TAI mapping 收掉此缺口；後續檢查確認規格語意應由 UPF
+service area 表達，因此最終設計改為 UPF-side `tais` filtering，再以 `links`
+解析可達 path。AoI Event Exposure gating 仍是獨立步驟。
 
 UERANSIM 的 local TUN 路由需要額外 host privilege；代表 UE 已在 TUN
 建立前完成 core-side PDU Session procedure。Phase 6 的 collection acceptance 不以
@@ -708,7 +720,7 @@ SMF selected UPF、UE pool 與 Event Exposure path 正確。
 - `PyAnLF/`：cache/no-negative-cache、partial progress、no Cartesian product、
   exact PDU/SMF identity、networkArea placement、refcount regression，並驗證
   ADRF 成功寫入才更新 `NadrfStoredDataSpec.timePeriod`。
-- `smf-nwdaf-ext/`：current-TAI-to-AN/UPF path selection、兩個 UE pool、decode、
+- `smf-nwdaf-ext/`：current-TAI-to-UPF-service-area path selection、兩個 UE pool、decode、
   真實 SM context 的 inside/outside/unknown gate、multi-PDU identity、initial
   failure、delete/release 與 no-AoI behavior；既有
   static resolver 只做 regression，不作 Phase 6 acceptance dependency。
@@ -748,9 +760,11 @@ Phase 7 完成。
 
 ### 10.3 Verified implementation result
 
-2026-08-04 已完成 repository tests、lint、strict preflight 與 full-core
-cross-process scenario；strict preflight 為 11 passed、0 pending、0 failed。
-最終實機結果為：
+2026-08-04 已完成初始 repository tests、lint、strict preflight 與 full-core
+cross-process scenario。2026-08-05 將 TAI mapping 從 AN 更正為 UPF service area
+後，再次完成 team SMF `go test ./...`、受影響 package lint、resources Ruff、
+strict preflight 與 full-core scenario；strict preflight 為 11 passed、0 pending、0
+failed。最新實機結果為：
 
 ```json
 {
@@ -760,12 +774,12 @@ cross-process scenario；strict preflight 為 11 passed、0 pending、0 failed�
   "trainingCallbacks": 2,
   "preparationsSucceeded": 2,
   "adrfPathEvidence": {
-    "imsi-466920000000001": ["10.60.0.2"],
-    "imsi-466920000000002": ["10.60.0.1"],
+    "imsi-466920000000001": ["10.60.0.1"],
+    "imsi-466920000000002": ["10.60.0.2"],
     "imsi-466920000000003": ["10.60.0.3"],
     "imsi-466920000000004": ["10.61.0.1"],
-    "imsi-466920000000005": ["10.61.0.2"],
-    "imsi-466920000000006": ["10.61.0.3"]
+    "imsi-466920000000005": ["10.61.0.3"],
+    "imsi-466920000000006": ["10.61.0.2"]
   }
 }
 ```
@@ -886,7 +900,8 @@ downstream subscription。
 
 - Nsmf Event Exposure decoder 支援 `eventSubs[].networkArea`，保留 SUPI、
   PDU Session、DNN、S-NSSAI 與 SMF identity。
-- PDU Session path selection 使用 AMF 傳入的 current `UeLocation`／TAI：
+- PDU Session path selection 使用 AMF 傳入的 current `UeLocation`／TAI，
+  對 UPF node 的 `tais` service-area mapping 做篩選，再依 `links` 建立可達 path：
   TAI-A 選擇 UPF-A 與 `10.60.0.0/16`，TAI-B 選擇 UPF-B 與
   `10.61.0.0/16`。
 - Event Exposure 另外執行 create-time initial AoI gate；matching TAI 才建立
@@ -898,8 +913,9 @@ downstream subscription。
   已建立的 UDM serving-SMF registration，再移除本地 SM context，避免留下
   可被 NWDAF 誤解析為有效 session 的 stale registration。
 - topology serialization 直接走訪完整 node/link graph，以節點名稱輸出並保留
-  所有互不連通的 AN→UPF components；不再只從第一個 AN 遍歷，也不再將 AN
-  當成 PFCP NodeID 反查名稱。
+  所有互不連通的 AN→UPF components；UPF `tais` 決定 service-area
+  eligibility，AN 與 `links` 只決定 reachability，也不再將 AN 當成 PFCP
+  NodeID 反查名稱。
 - 增加 dual-UPF path、location、AoI gate、registration、delete/release 與
   static resolver regression tests。
 
@@ -1021,7 +1037,7 @@ Phase 6 只有在以下條件全部成立時完成：
    `eventSubs[].networkArea`。
 6. 六個 UERANSIM UE 可經正常 registration／PDU Session procedure 建立
    `UeLocation` 與 UDM serving-SMF registrations，不人工注入 runtime state。
-7. SMF 能先依真實 SM context 的 current TAI 選擇正確 AN / UPF path
+7. SMF 能先依真實 SM context 的 current TAI 匹配正確 UPF service area 與 path
    與 UE pool，再依 initial TAI gate 決定建立 downstream UPF resource 或讓
    upstream resource 保持 waiting。
 8. A/B 可用相同 group、不同 AoI 蒐集各自需要的資料。

@@ -11,7 +11,7 @@ checkpoint已完成PyMTLF role-oriented profiles、PyAnLF typed annotated
 config、owned integration generators migration及model identity namespace
 removal；Phase 6 standard collection and full-core data flow 已完成實作、
 repository verification 與 full-core cross-process 驗證；下一步進入 Phase 7
-完整 FL business E2E
+完整 FL business E2E，詳細計畫已完成並可進入實作
 
 相關文件：
 
@@ -22,6 +22,7 @@ repository verification 與 full-core cross-process 驗證；下一步進入 Pha
 - [Phase 3 And 4 Federated Training Execution Detailed Plan](Phase%203%20And%204%20Federated%20Training%20Execution%20Detailed%20Plan.md)
 - [Phase 5 Final Validation ADRF Publication And Reprovision Detailed Plan](Phase%205%20Final%20Validation%20ADRF%20Publication%20And%20Reprovision%20Detailed%20Plan.md)
 - [Phase 6 Standard Collection And Full-Core Data-Flow Detailed Plan](Phase%206%20Standard%20Collection%20Prerequisites%20Detailed%20Plan.md)
+- [Phase 7 Full-Core Federated Learning Business E2E Detailed Plan](Phase%207%20Full-Core%20Federated%20Learning%20Business%20E2E%20Detailed%20Plan.md)
 - [PyMTLF Role-Oriented Configuration Refactor Detailed Plan](PyMTLF%20Role-Oriented%20Configuration%20Refactor%20Detailed%20Plan.md)
 - [PyAnLF Typed Configuration And Annotation Refactor Detailed Plan](PyAnLF%20Typed%20Configuration%20And%20Annotation%20Refactor%20Detailed%20Plan.md)
 
@@ -1858,7 +1859,8 @@ handler／processor／consumer／persistence 分層。目前 pinned generated pa
 Team SMF：
 
 - PDU Session path selection 使用 AMF 傳入的 current `UeLocation` / TAI，
-  在多 AN 拓樸中選出對應 path，不得固定取第一個 AN；
+  匹配 UPF node 宣告的 `tais` service area，再從 `links` 找出可達 path；AN
+  node 不重複保存 TAI mapping，也不得固定取第一個 AN；
 - TAI `000001` 必須選到 UPF-A 及 `10.60.0.0/16`，TAI `000002`
   必須選到 UPF-B 及 `10.61.0.0/16`；
 - decoder 接受 `eventSubs[].networkArea`；
@@ -1880,6 +1882,10 @@ Team SMF：
 PDU Session 的 UPF path selection 與 NWDAF Event Exposure 的 AoI gate 是兩個
 不同的決策點。前者決定 UE session 實際使用哪個 UPF；後者決定
 已存在的 session 是否建立 downstream UPF Event Exposure subscription。
+UPF-side TAI mapping 對齊 TS 23.501 clause 3.1 的 UPF Service Area、clause
+6.3.3.3 的 UE／UPF location selection factors，以及 TS 29.510 Release 18
+`UpfInfo.taiList`／`taiRangeList`；`links` 則維持 team SMF 的 local topology
+representation。
 2026-08-04 的 full-core baseline 已驗證兩個 UPF 都可關聯，但現行
 SMF 仍將兩個 TAI 的 UE 都選到第一個 UPF；因此這不是 config 或
 PFCP prerequisite，而是本 Slice 必須收掉的 implementation gap。
@@ -1958,6 +1964,9 @@ cutover 仍由 Phase 7 串接驗證。
 ---
 
 ## 15. Phase 7：Three-NWDAF E2E and closure
+
+詳細實作與驗收設計見
+[Phase 7 Full-Core Federated Learning Business E2E Detailed Plan](Phase%207%20Full-Core%20Federated%20Learning%20Business%20E2E%20Detailed%20Plan.md)。
 
 ### 15.1 Integrated full-core FL profile
 
