@@ -2,7 +2,7 @@
 
 日期：2026-08-04
 
-狀態：Ready for implementation
+狀態：Implemented and verified on 2026-08-04
 
 上層計畫：
 
@@ -250,7 +250,7 @@ raw training data。
 
 ### 5.1 `udr/`
 
-- 在既有 Data Repository router 增加 Release 18 group identifiers route。
+- 在既有 Data Repository router 增加標準 group identifiers route。
 - 使用既有 handler／processor／Mongo persistence 分層，不建立新 package。
 - collection 使用 `subscriptionData.groupData.groupIdentifiers`。
 - lookup key 為 `intGroupId`；依 `ue-id-ind` 決定是否回傳 `ueIdList`。
@@ -591,11 +591,11 @@ transaction 的 callback 欄位。
 1. 固定 UE subscriber、UERANSIM identity、group membership fixtures 與
    provisioning script contract。
 2. UDR 實作 GroupIdentifiers resource。
-3. UDR 增加 Release 18 SMF registration path，保留 legacy path。
+3. UDR 增加標準 SMF registration collection path，保留 legacy path。
 4. 增加 schema、status、Mongo query 與 idempotent provisioning tests。
 
 完成條件：六個 UE 與 group fixtures 可重複 apply/show/clear；直接呼叫兩條
-UDR Release 18 resource 可取得規格形狀的資料。
+UDR 標準 resource 可取得規格形狀的資料。
 
 ### Slice 6B：UDM operations and profile
 
@@ -669,10 +669,11 @@ full-core data flow。
 
 ## 10. Verification plan
 
-### 10.0 Verified prerequisite baseline
+### 10.0 Historical prerequisite baseline
 
-2026-08-04 的實機 smoke test 已確認以下前置條件，這些是 Phase 6
-實作前的 baseline，不代表 Phase 6 已完成：
+2026-08-04 的實機 smoke test 先確認以下前置條件。這是實作前的歷史
+baseline；本節記錄的 SMF path-selection 缺口已由本 Phase 收掉，不代表目前
+仍存在相同限制：
 
 - strict full-core preflight：10 passed、0 pending、0 failed；
 - patched gtp5g v0.9.16 可在當前 kernel load，IP forwarding 已開啟；
@@ -745,6 +746,239 @@ full-core acceptance。
 rounds、final validation、model publication 與 reprovision；完整業務 E2E 由
 Phase 7 完成。
 
+### 10.3 Verified implementation result
+
+2026-08-04 已完成 repository tests、lint、strict preflight 與 full-core
+cross-process scenario；strict preflight 為 11 passed、0 pending、0 failed。
+最終實機結果為：
+
+```json
+{
+  "smfRegistrations": 6,
+  "adrfRecords": 6,
+  "analyticsCallbacks": 97,
+  "trainingCallbacks": 2,
+  "preparationsSucceeded": 2,
+  "adrfPathEvidence": {
+    "imsi-466920000000001": ["10.60.0.2"],
+    "imsi-466920000000002": ["10.60.0.1"],
+    "imsi-466920000000003": ["10.60.0.3"],
+    "imsi-466920000000004": ["10.61.0.1"],
+    "imsi-466920000000005": ["10.61.0.2"],
+    "imsi-466920000000006": ["10.61.0.3"]
+  }
+}
+```
+
+驗證涵蓋：
+
+- 六個 UE 經 UERANSIM registration／PDU Session procedure 建立六筆 UDM
+  serving-SMF registrations；
+- TAI-A 與 TAI-B 分別使用 UPF-A／UPF-B，A、B NWDAF 使用相同 group、不同
+  AoI；
+- PyAnLF 經 UDM 展開 group，對 exact serving SMF 建立 collection resources；
+- 六筆 UPF 來源資料寫入 ADRF，analytics subscription 刪除後 descriptor 仍保留；
+- runner 逐一驗證每個 SUPI 的 ADRF record 與 UE IP，而非只以總筆數通過：
+  前三個 SUPI 皆來自 UPF-A 的 `10.60.*` pool，後三個皆來自 UPF-B 的
+  `10.61.*` pool；
+- A、B 兩個 `notifCorrId` 都必須出現在 analytics callback inventory，避免只有
+  collection／storage 成功卻沒有實際 analytics delivery 仍被誤判通過；
+- A、B PyMTLF 各自以三筆 retained descriptors 從 ADRF 取回 dataset，兩個
+  preparation subscriptions 均進入 `PREPARED`。
+
+最終 repository verification：PyAnLF `280 passed, 1 skipped` 且 Ruff 通過；
+PyMTLF `188 passed` 且 Ruff 通過；NWDAF、NRF、UDM、UDR 與 team SMF 的
+`go test ./...` 全數通過；`nwdaf-resources` Ruff 與 replay JSON validation
+通過。
+
+UERANSIM 在目前主機沒有建立一般 UE application 所需 TUN route 權限，但 UE
+已完成 core-side registration／PDU Session；controlled UPF replay 負責產生本
+Phase 驗收所需 Event Exposure data。啟動同步期間可能記錄可重試的 stale
+revision／association `409`，teardown 時可能在 Go process 已停止後記錄 cleanup
+`503`；兩者均未造成 acceptance failure，後續正常 snapshot／retry 仍完成上述
+結果。
+
+### 10.4 Repository implementation inventory
+
+#### `NWDAF/`
+
+- 新增 PyAnLF 使用的 UDM collection routes，經 NRF 依
+  `internal-group-identity` 發現 UDM，並代理標準 Nudm SDM group membership
+  與 Nudm UECM serving-SMF registration requests。
+- private Go／backend API 保留標準 query、body、response、status、header 與
+  `ProblemDetails` 形狀；Go 只做必要驗證與 routing，不承擔 group、SMF 或
+  dataset selection 業務決策。
+- generic NRF discovery 支援以 target NF instance ID 解析 exact SMF endpoint。
+- SMF resource association 補足 SUPI、PDU Session、SMF、DNN、S-NSSAI 與
+  collection identity projection。
+- 新增 training-data descriptor mirror 與 sync projection，使 PyAnLF 可提交
+  authoritative inventory、PyMTLF 可接收同一份 descriptor snapshot；Go 不抓取
+  ADRF raw data。
+- 補齊 server、processor、context、service lifecycle wiring，以及 UDM proxy、
+  discovery、association 和 contract tests。
+
+#### `nrf/`
+
+**修改前：** free5GC generated profile 已有 `internalGroupIdentifiersRanges`，
+但 NRF 將 UDM-specific profile 逐欄複製到 persistence representation 時漏掉此
+欄位；UDM 即使註冊自己服務的 group range，後續 discovery response 仍看不到。
+
+**本次新增：**
+
+- 補上 NF Profile persistence mapping，使 UDM 的
+  `internalGroupIdentifiersRanges` 在 registration、MongoDB persistence 與
+  discovery response 間不會遺失。
+- 沿用既有通用 Nnrf discovery API，不新增 Phase-specific discovery endpoint。
+- 增加 profile preservation regression test。
+
+#### `udm/`
+
+**修改前：** UDM 已註冊 group identifiers 與 SMF registrations collection
+routes，但兩個 NWDAF-facing handlers 都只回 `501 Not Implemented`；repository
+內雖已有部分 UDR client plumbing，尚未形成可由 NWDAF 使用的完整操作。
+
+**本次新增：**
+
+- 實作 NWDAF-facing Nudm SDM
+  `GET /group-data/group-identifiers`。
+- 實作 NWDAF-facing Nudm UECM
+  `GET /{supi}/registrations/smf-registrations`。
+- 經 UDR 取得 group membership 與 serving-SMF registrations，將 UDR
+  `SmfRegList` array 明確轉換成 Nudm `SmfRegistrationInfo` object，並支援
+  DNN／S-NSSAI filtering。
+- 移除 UDR-only `allowedAfIds` 後再回覆 Nudm group representation；將 empty
+  list、not-found 與下游 failures 轉成正確 Nudm status／`ProblemDetails`。
+- UDM NF Profile 與 config 宣告 `nudm-sdm`、`nudm-uecm` 及實驗使用的
+  Internal Group ID range，並增加 config、processor 與 consumer tests。
+
+#### `udr/`
+
+**修改前：** UDR 沒有註冊標準 group identifiers route。SMF registration
+documents 已會寫入既有 MongoDB collection，也已有用 UE ID 查詢全部 records
+的 processor，但只掛在需要額外 `servingPlmnId` 的舊 route；該參數實際沒有
+參與查詢。既有 processor 直接回傳 MongoDB raw maps，database error 時還會
+回 `200 OK` 加 `null`，UDM generated client 因 route 不同也無法直接使用。
+
+**本次新增：**
+
+- 新增標準 group identifiers resource，依 Internal Group ID 從
+  `subscriptionData.groupData.groupIdentifiers` 取得 membership，並支援
+  `ue-id-ind`、`200`／`404` 與 query validation。
+- 將既有 SMF registration list lookup 掛到標準 context-data collection route，
+  依 SUPI 回傳所有 PDU Sessions 的 `SmfRegList`，同時保留既有 legacy route。
+- 將 MongoDB documents 明確 decode 成 `[]models.SmfRegistration`；database／
+  decode failure 改回正確 `ProblemDetails`，不再以 `200 + null` 隱藏錯誤。
+- 直接重用 pinned free5GC OpenAPI 已有的 `models.GroupIdentifiers` 與
+  `models.SmfRegistration`；本 Phase 沒有新增缺失的 wire field，因此不建立
+  空泛或重複的 `internal/compat` package。
+- 增加 Mongo lookup、group、SMF registration 與 legacy regression tests。
+
+#### `smf-nwdaf-ext/`
+
+**修改前：** SMF 已從 AMF 收到並保存 `UeLocation`，也已有 UDM registration
+consumer，但正常 PDU Session establishment 沒有呼叫 registration。UPF path
+selection 未使用 current TAI，多 AN topology 會從任一／第一個 AN 開始尋路，
+因此不同 TAI 的 UE 可能都落到同一 UPF。Event Exposure decoder 也沒有保留
+`networkArea`，收到 NWDAF subscription 後一律嘗試向 selected UPF 建立
+downstream subscription。
+
+**本次新增：**
+
+- Nsmf Event Exposure decoder 支援 `eventSubs[].networkArea`，保留 SUPI、
+  PDU Session、DNN、S-NSSAI 與 SMF identity。
+- PDU Session path selection 使用 AMF 傳入的 current `UeLocation`／TAI：
+  TAI-A 選擇 UPF-A 與 `10.60.0.0/16`，TAI-B 選擇 UPF-B 與
+  `10.61.0.0/16`。
+- Event Exposure 另外執行 create-time initial AoI gate；matching TAI 才建立
+  downstream UPF subscription，outside／unknown TAI 保留 upstream SMF
+  resource 但不錯誤訂閱 UPF。
+- PDU Session 建立時經 Nudm UECM 登錄 serving-SMF registration，使 UDM／UDR
+  狀態由正常 5GC procedure 產生，而非測試直接注入。
+- common PDU Session rollback 在 PFCP establishment 等後續步驟失敗時會撤銷
+  已建立的 UDM serving-SMF registration，再移除本地 SM context，避免留下
+  可被 NWDAF 誤解析為有效 session 的 stale registration。
+- topology serialization 直接走訪完整 node/link graph，以節點名稱輸出並保留
+  所有互不連通的 AN→UPF components；不再只從第一個 AN 遍歷，也不再將 AN
+  當成 PFCP NodeID 反查名稱。
+- 增加 dual-UPF path、location、AoI gate、registration、delete/release 與
+  static resolver regression tests。
+
+#### `PyAnLF/`
+
+- standard collection resolution 取代正式流程對 static group／all-SMF
+  Cartesian product 的依賴；依序完成 group → UDM → SUPIs → UECM
+  registrations → exact SMF endpoint。
+- 依 PDU Session、DNN、S-NSSAI 與 AoI 建立 collection identity，並在標準
+  `networkArea` 傳遞 TAI；保留既有 refcount、reconciliation、retry、queue 與
+  notification conversion 行為。
+- ADRF write 成功後才建立 training-data descriptor，從 notification 內容計算
+  最早／最晚 observation time，形成可供 retrieval 的完整 stored window。
+- analytics subscription 刪除後保留 historical descriptor；restart 的第一次
+  sync 可從 Go 恢復 inventory，普通 live sync 不再清除 retained descriptors，
+  也不再覆蓋 PyAnLF-owned ADRF identity、time range 與 source metadata。
+- 多個 analytics subscriptions 共用同一個 SMF collection resource 時，group
+  scope 由目前仍存在的 references 重新計算；移除或改動其中一個 owner 後，
+  descriptor 不再保留已釋放的 group ID。restart restore 尚未收齊 owner scope
+  前則保留既有 aggregate，避免復原過程暫時遺失有效 scope。
+- 增加 group resolution、exact SMF、partial retry、descriptor lifecycle、restart
+  與 ingestion tests。
+
+#### `PyMTLF/`
+
+- sync projection 接收 active／retained training-data descriptors。
+- 依 analytics event、target group、AoI 與 time window 選擇 descriptor，計算
+  preparation request 與 stored data window 的有效交集。
+- 使用 descriptor 內的標準 `NadrfStoredDataSpec` 建立 ADRF retrieval request，
+  接收 fetch instructions 後直接 fetch records，並組成 preparation dataset。
+- 不修改 local training 或 FedAvg 演算法；本 Phase 只補 dataset availability
+  與 retrieval prerequisite。
+- 增加 descriptor selection、time intersection、ADRF request／fetch 與 dataset
+  tests。
+
+#### `nwdaf-resources/`
+
+**修改前：** repository 已有 portable cross-process FL runners 與 subscriber／
+group provisioning prerequisites，但沒有一個 scenario 同時啟動實際 free5GC
+core、雙 TAI UERANSIM、雙 UPF、UDM／UDR collection chain，再驗證 ADRF 到
+PyMTLF preparation。既有 replay 也沒有對應六個 UE／兩條 AoI path 的固定
+profiles。
+
+**本次新增：**
+
+- 新增 full-core collection runner、六個 UE 的 UERANSIM config generator、
+  UPF-A／B replay profiles，並擴充 replay dataset generator、component manifest、
+  dual-TAI／dual-UPF core config generator 與 strict preflight。
+- runner 啟動實際 NRF、NSSF、UDR、UDM、AUSF、PCF、AMF、team SMF、雙 UPF、
+  雙 gNB、六個 UE、ADRF、三個 Go NWDAF 與 Python backends；建立 A／B
+  analytics subscriptions，並等待兩條 analytics callbacks 與六個 SUPI 各自的
+  ADRF path evidence；單純累積到六筆 records 不再足以通過。
+- runner 刪除 analytics subscriptions 後驗證 descriptor retention，再暫時扮演
+  FL Server 對 A／B 發出 preparation subscriptions；兩側各以三筆 retained
+  descriptors 完成 ADRF retrieval 並回覆 `PREPARED`。
+- subscriber／group fixtures 只處理本情境的 scoped data，cleanup 不修改其他
+  MongoDB documents；runner 開始前只清除六個 fixture SUPI 的舊 serving-SMF
+  registrations 與本情境專用 ADRF database，避免 stale state 讓本次 run
+  誤通過；失敗時保留 logs 與 runtime state。
+
+#### `nwdaf-docs/`
+
+- 回填 Phase 6 implementation scope、verification evidence、E2E summary、已知
+  runtime observations 與 Phase 7 handoff boundary。
+- 上層計畫狀態更新為 Phase 6 已完成，下一步為 degradation 到 reprovision 的
+  完整 FL business E2E。
+
+#### Reused repositories without Phase 6 source changes
+
+- `adrf/`：沿用既有 NRF registration、Data Management storage、retrieval
+  subscription、fetch instructions 與 record fetch；runner 使用獨立 experiment
+  database，Phase 6 沒有新增 ADRF source change。
+- `go-upf/`：沿用團隊 Event Exposure pseudodriver／replay；先前本地
+  `dev/federated-learning` commit 只修正 forwarder 遵守 configured GTP interface
+  names，使 UPF-A／B 可同時運行。本 Phase 沒有新的 uncommitted change，且依
+  repository policy 不 push。
+- AMF、AUSF、NSSF、PCF、UERANSIM 與 `resources/` reference trees：只作為
+  build／runtime dependencies，沒有修改其 source。
+
 ## 11. Commit and delivery boundaries
 
 - 每個 repository 獨立 commit，不跨 repository 混合提交。
@@ -779,7 +1013,7 @@ Phase 6 只有在以下條件全部成立時完成：
 
 1. fixture scripts 能安全且冪等地準備六個 UE subscribers 與 UDR group
    membership，且 clear 不影響其他資料。
-2. UDR 與 UDM 提供本情境所需的 Release 18 group／SMF registration resources。
+2. UDR 與 UDM 提供本情境所需的標準 group／SMF registration resources。
 3. UDM profile 可被 Internal Group ID 正確發現。
 4. PyAnLF 不再依 static group 或 all-SMF Cartesian product 才能完成 standard
    collection。

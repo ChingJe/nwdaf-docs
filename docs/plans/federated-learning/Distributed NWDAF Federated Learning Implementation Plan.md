@@ -9,8 +9,9 @@ validation／ADRF publication／reprovision／monitor cutover 皆已完成實作
 review remediation 與跨 process 驗證；Python backend configuration clarity
 checkpoint已完成PyMTLF role-oriented profiles、PyAnLF typed annotated
 config、owned integration generators migration及model identity namespace
-removal；目前已完成Phase 6 standard collection and full-core data-flow詳細設計，下一步
-進入實作
+removal；Phase 6 standard collection and full-core data flow 已完成實作、
+repository verification 與 full-core cross-process 驗證；下一步進入 Phase 7
+完整 FL business E2E
 
 相關文件：
 
@@ -1771,7 +1772,7 @@ Phase 2–5 平行；它不阻擋使用預先存入 ADRF 的 FL-first E2E，但�
 - [TS 23.502 §4.15.4.5](../../../specs/TS%2023.502/4%20System%20procedures/4.15%20Network%20Exposure/4.15.4%20Core%20Network%20Internal%20Event%20Exposure/4.15.4.5%20Exposure%20of%20Events%20from%20UPF%20for%20UPF%20Data%20Collection.md)
 - [Internal Group Resolution And Serving SMF Release 18 規格解讀](../../specification-guides/Internal%20Group%20Resolution%20And%20Serving%20SMF%20Release%2018%20規格解讀.md)
 
-### 14.0 Current implementation gap
+### 14.0 Pre-implementation gap and resolution
 
 本 Phase 開始前，參考 free5GC UDM／UDR 與 Release 18 contract 之間
 存在下列明確落差：
@@ -1782,7 +1783,7 @@ Phase 2–5 平行；它不阻擋使用預先存入 ADRF 的 FL-first E2E，但�
    `HandleGetSmfRegistration` 仍回傳 `501 Not Implemented`。
 3. UDM 已有一部分 UDR client 與 SMF registration list retrieval plumbing，
    但這不等於上述兩條 NWDAF-facing operations 已完成。
-4. 參考 UDR 沒有 Release 18
+4. 參考 UDR implementation 沒有實作標準
    `/subscription-data/group-data/group-identifiers` resource。
 5. 參考 UDR 的 SMF registration route 仍是較舊的
    `/subscription-data/{ueId}/{servingPlmnId}/smf-registrations`，與
@@ -1802,6 +1803,9 @@ handler／processor／consumer／persistence 分層。目前 pinned generated pa
 需要的型別，應優先直接使用；只有實作時確認缺少精確 Release 18 欄位，才依
 既有 policy 放入最小 compatibility boundary。
 
+上述缺口已於 2026-08-04 完成實作與驗證；本節保留作為變更範圍與設計理由，
+不代表目前 repository 仍回傳 `501` 或缺少對應 resource。
+
 ### 14.1 Slice 6A：UDM discovery and group membership
 
 - Go NWDAF 新增 Nudm SDM outbound consumer 與 AnLF auxiliary route；
@@ -1815,7 +1819,7 @@ handler／processor／consumer／persistence 分層。目前 pinned generated pa
 - UDM 可經過
   `GET /nudr-dr/v2/subscription-data/group-data/group-identifiers`
   從 UDR 取得 `GroupIdentifiers`；
-- UDR 新增上述 Release 18 resource、query validation、MongoDB
+- UDR 新增上述標準 resource、query validation、MongoDB
   lookup 與 `200`/`404` response semantics；
 - `nwdaf-resources` 提供無 UI 的 group membership fixture script，以
   `intGroupId` 對 UDR MongoDB 做 idempotent upsert；這是 OAM／實驗準備，
@@ -1935,6 +1939,21 @@ PyAnLF descriptor snapshot
   training data；
 - Phase 6 只宣稱 full-core collection data-flow E2E，不宣稱 degradation、FL、
   final validation、model publication 或 reprovision 已完成。
+
+### 14.6 Implementation status
+
+Phase 6 已完成。六個 UERANSIM UE 經正常 registration／PDU Session 建立六筆
+serving-SMF registrations；TAI-A／TAI-B 分別使用 UPF-A／UPF-B；A、B NWDAF
+以相同 group、不同 AoI 建立標準 collection。最終 cross-process scenario 取得
+六筆 ADRF records、97 次 analytics callbacks，並逐一確認前三個 SUPI 使用
+UPF-A 的 `10.60.*` pool、後三個使用 UPF-B 的 `10.61.*` pool；A、B 兩個
+analytics callback correlation 均實際出現。A、B PyMTLF 各自以三筆 retained
+descriptors 完成 ADRF dataset retrieval，兩個 preparation subscriptions 皆進入
+`PREPARED`。
+
+本結果只關閉 standard collection 與 full-core data-flow prerequisite。degradation、
+multi-round FL、final validation、ADRF model publication、reprovision 與 monitor
+cutover 仍由 Phase 7 串接驗證。
 
 ---
 
