@@ -2,7 +2,7 @@
 
 日期：2026-08-04
 
-狀態：Ready for implementation
+狀態：Verified baseline；validation split follow-up 待重新驗證
 
 上層計畫：
 
@@ -115,6 +115,10 @@ dataset profile 產生，以提供可重複的 stable-to-degraded stimulus。
     最小修正，並保留原有演算法語意。
 16. Go 與 Python 間維持普通 HTTP；TLS、OAuth delegation 與 Python 對外 SBI
     trust 不在本 Phase。
+17. PyMTLF 的 `validation_ratio` 預設為 `0.10`。此比例套用在已建立的
+    chronological sliding-window samples，而不是先切分原始 observations；較早
+    的 retained samples 用於 reference validation，較新的 retained samples
+    用於 fitting，兩者之間保留足以避免 observation overlap 的 boundary purge。
 
 ## 4. 標準證據與 project profile 分界
 
@@ -407,8 +411,14 @@ C 對 A／B 建立 `mLPreFlag=true` 的 training resources：
   ADRF retrieval request；取得 fetch instructions 後，由 PyMTLF 直接向指定
   fetch URI 取回本地資料；
 - preparation 對 descriptor inventory、time window、downloaded records 與
-  train／validation split 建立 process snapshot；之後新寫入 ADRF 的 records
-  不加入正在執行的 process；
+  train／validation split 建立 process snapshot；client 必須先從完整時間序列
+  建立 chronological sliding-window samples，再於 sample boundary 切分，不能
+  先取 10% raw observations 後才嘗試建立 30-step sequence；之後新寫入 ADRF
+  的 records 不加入正在執行的 process；
+- 切分時先保留一段不配置給任何 subset 的 boundary purge，使最後一個
+  validation window 與第一個 training window 不共用 observation；purge 後的
+  retained samples 以較早 10% 作 validation、較新 90% 作 training，兩側都
+  至少保留一個 sample；
 - 完成後 callback C；若預期超過 `maxResTime`，先送 delay notification，C
   依現有 policy PATCH 同一 resource；
 - 兩個 clients 都進入 `PREPARED` 後才固定 participant set 並開始 round 0。
@@ -532,15 +542,42 @@ stable WAPE，之後才讓 A 的資料改變。不可把 breaking time 與 stabl
 Profile validator 至少檢查：
 
 ```text
-floor(breakingTimeSeconds / reportPeriodSeconds) >= modelInputWindow
+floor(breakingTimeSeconds / reportPeriodSeconds) >= minimumPreparationObservations
 (stableBoundarySeconds - breakingTimeSeconds) / reportPeriodSeconds >= 2
 datasetEndSeconds > stableBoundarySeconds
 ```
 
-目前 full-core report period 為 30 秒、M1 input window 為 30 steps；下方
-`1200` 秒 historical segment 可形成至少 40 個 aggregated periods，`90` 秒
-live stable lead-in 可形成三個 periods。Runner 應從 generated config 與 bundle
-manifest 讀取實際值再驗證，不把 `30` 寫死在 assertion code。
+目前 full-core report period 為 30 秒、M1 input window 為 30 steps，output
+window 為 1 step。只滿足一個 input window 仍不足以完成 preparation；client
+必須先建立所有 chronological candidate windows，再在 sample boundary 保留
+`input_window + output_window - 1` 個 window positions 作 purge。剩餘 samples
+至少要能分成一個 validation sample 與一個 training sample，validation 預設占
+retained samples 的 10%，其餘給較新的 training samples。
+
+以目前 30-step input 與 one-step output 計算：raw observations 先形成
+`N - 30` 個 candidate windows，boundary purge 需要 30 個 positions，因此至少
+需要 `N - 30 - 30 >= 2`，也就是 62 個 aggregated observations。這個數字不是
+硬編碼門檻；runner 必須依 bundle 的 input／output window、purge policy 與
+validation ratio 動態計算，並同時驗證兩側 sample count 都為正數。
+
+實作使用下列 deterministic allocation；`R` 是 purge 後可配置的 sample 數：
+
+```text
+C = N - inputWindow - outputWindow + 1
+P = inputWindow + outputWindow - 1
+R = C - P
+V = max(1, floor(R * validationRatio))
+T = R - V
+
+validation = earliest V candidate windows
+purge      = following P candidate windows
+training   = remaining T candidate windows
+```
+
+`R` 必須至少為 2，且 `V`、`T` 都必須為正數。因預設 1800 秒在 30 秒 report
+period 下最多只有約 60 筆，仍低於新的 62 筆理論下限，follow-up 同時把
+`preparation_data_window_seconds` 預設調為 3600 秒；實際 request window 仍可由
+部署 profile 覆寫。
 
 初始可採用以下可讀 profile，再由實作時的 deterministic calibration test 確認
 最小時間；調整時必須保持同一語意，而非只延長任意 sleep：
@@ -548,11 +585,11 @@ manifest 讀取實際值再驗證，不把 `30` 寫死在 assertion code。
 | Setting | A | B |
 | --- | --- | --- |
 | `windowSeconds` | `1` | `1` |
-| `breakingTimeSeconds` | `1200` | `1200` |
-| `stableWindows` | `1290` | `1290` |
+| `breakingTimeSeconds` | `3000` | `3000` |
+| `stableWindows` | `3090` | `3090` |
 | live stable lead-in | `90s` | `90s` |
 | `postBoundaryMode` | `degraded` | `stable` |
-| post-boundary values | changed distribution | same control distribution |
+| post-boundary values | low-volume changed distribution | same control distribution |
 
 Dataset generator 新增可選的 `postBoundaryMode`，合法值只有 `degraded` 與
 `stable`；未填時維持目前的 `degraded` 行為，避免改壞 portable fixtures。
@@ -560,6 +597,12 @@ Dataset generator 新增可選的 `postBoundaryMode`，合法值只有 `degraded
 bytes 設成相同值，因現有 degraded pattern 的 modulo amplitude 也不同。A／B
 都要有足夠長的 Phase 2 尾段，覆蓋 degradation detection、training、
 publication 與 post-cutover WAPE。
+
+A profile 另以可選 `degradedJitterScale` 控制 post-boundary modulo amplitude；
+未提供時維持既有值 `100`。實測曾以高流量值作為「degraded」資料，但 M1 WAPE
+反而由約 `2.43` 降至約 `0.8`，因此沒有觸發 retrain。最終 profile 使用低流量
+changed distribution，使 A WAPE 上升至約 `25.27`；B 維持約 `2.20`。這是以
+production inference 結果校準 stimulus，而不是繞過 policy 注入 degradation。
 
 ### 8.3 不以 wall-clock sleep 判定狀態
 
@@ -639,11 +682,25 @@ substring 或「process 沒掛」宣稱業務成功。
 | --- | --- |
 | `nwdaf-resources/` | shared full-core support、new full FL runner、traffic profiles、preflight、README、runner tests |
 | `nwdaf-docs/` | 本計畫、主計畫進度與最終 verified result |
+| `PyMTLF/` | configurable preparation data window、window-first validation split、預設 `validation_ratio=0.10` 與 focused tests |
 
 以下 repositories 是 runtime dependencies，正常情況不修改：NRF、UDR、UDM、
-team SMF、NWDAF、PyAnLF、PyMTLF 與 ADRF。若 full-core E2E 證明其中有本
+team SMF、NWDAF、PyAnLF 與 ADRF。若 full-core E2E 證明其中有本
 Phase 必須修正的 defect，先把 failure、root cause、affected contract 與最小
 方案記回本文件，再依 repository boundary 修改及驗證。
+
+本次 E2E 先暴露一個 PyMTLF defect：FL Server 固定只在 preparation request
+中要求最近 30 分鐘資料，與當時 raw-observation-first split 所算出的 94 筆下限
+不相容；Client 因而以 `NOT_AVAILABLE_ML_TRAIN` 終止。第一個修正把標準
+`dataAvReq.timeWindows` 的歷史長度改為 server config
+`preparation_data_window_seconds`；基線實作預設為 1800 秒，Phase 7 profile
+明確設為 3600 秒。Slice 7F 會把 PyMTLF 預設一併調為 3600 秒，使預設值與新的
+minimum preparation observations 自洽。
+
+驗證後檢討進一步確認 `validation_ratio=0.65` 只是為了讓舊切分方式在有限資料
+中成立，會不合理地把大部分資料留給 validation。Follow-up 必須把 dataset
+builder 改成 window-first split，預設 ratio 改為 `0.10`，並同步更新動態資料
+下限、tests 與 E2E evidence；FedAvg、callback 與 accuracy policy 語意不變。
 
 `go-upf/` 只作 runtime dependency；沒有使用者明確授權時，不修改、不 commit、
 不 push。`resources/` 維持 read-only。
@@ -806,6 +863,24 @@ M2 identity 達成一致。
 完成條件：三個 runner level 都能被正確區分，且 full FL claim 只來自 Phase 7
 runner。
 
+### Slice 7F：validation split correction and revalidation
+
+1. PyMTLF 先由完整 chronological observations 建立 candidate sliding windows。
+2. 依 model input／output window 保留不共用 observation 的 boundary purge，再將
+   retained samples 的較早 10% 配給 validation、較新 90% 配給 training。
+3. `validation_ratio` 預設與 committed profiles 改為 `0.10`，
+   `preparation_data_window_seconds` 預設改為 3600；validation 必須保證兩側
+   至少各有一個 sample。
+4. `nwdaf-resources` profile preflight 使用相同公式動態計算 minimum raw
+   observations，並將 evidence 欄位命名為 `minimumPreparationObservations`，
+   不保留固定 94 筆或只代表 training 的假設。
+5. 補 PyMTLF dataset-builder unit tests、config tests 與 runner preflight tests，
+   並重跑 portable、Phase 6 regression 及 Phase 7 full business E2E。
+
+完成條件：新的 split 使 validation／training 都非空、沒有跨 boundary 的
+observation overlap，Phase 7 仍由 production degradation 自動完成 FL、final
+validation、ADRF publication 與 model cutover。
+
 ## 13. Verification matrix
 
 ### 13.1 `nwdaf-resources`
@@ -899,3 +974,86 @@ Phase 7 只有在以下條件全部成立時完成：
   summary。
 - 依既有決策，先完成整體實作與 review，再依 repository boundary commit；
   不要求每個 Slice 都 commit。
+
+## 17. Verified baseline result（2026-08-05）
+
+本節保存 `validation_ratio=0.65` 舊切分方式下已完成的基線證據。該結果證明
+full-core orchestration 與業務鏈可運作，但 Slice 7F 改成 window-first、`0.10`
+後必須重新執行 verification；重新驗證完成前，不把本節 sample counts 當成新
+切分策略的最終結果。
+
+### 17.1 實際完成內容
+
+- `nwdaf-resources` 建立 shared full-core support，讓 Phase 6 collection runner
+  與 Phase 7 FL runner 共用 source build、runtime manifest、core launch、fixture、
+  callback、cleanup 與 evidence helpers。
+- 每次 run 直接從 editable NRF、UDR、UDM、SMF、NWDAF、ADRF source 建置
+  binary；pinned core binaries 與 UPF 也保存 SHA-256，避免 stale binary 被誤認
+  為目前 source。
+- A／B profiles 都提供 3000 秒 historical stable data 與 90 秒 live stable
+  lead-in；A 在 boundary 後切換 low-volume pattern，B 持續 control pattern。
+- Phase 7 runner 只建立 consumer analytics subscriptions 並觀察 production
+  state；沒有呼叫 private observation／degradation endpoint，也沒有代替 C 建立
+  Model Training subscriptions。
+- PyMTLF FL Server 新增 `preparation_data_window_seconds`，並以該值填入標準
+  `dataAvReq.timeWindows`；Phase 7 profile 使用 3600 秒。
+- `summary.json` 保存 source/binary manifest、兩段 stable WAPE、真正
+  post-boundary WAPE、process/round identity、exact sample counts、validation
+  evidence、ADRF transaction、M2 identity 與新舊 monitor routes。
+
+### 17.2 E2E 實測證據
+
+最終 full-core FL run 耗時 `191.877` 秒，取得：
+
+| Evidence | Result |
+| --- | --- |
+| serving-SMF registrations | 6 |
+| ADRF data records at assertion time | 30 |
+| TAI-A UE addresses | all `10.60.*` |
+| TAI-B UE addresses | all `10.61.*` |
+| A stable M1 WAPE | `2.4307`, `2.4312` |
+| B stable M1 WAPE | `2.1993`, `2.1996` |
+| A post-boundary M1 WAPE | `25.2742` |
+| B control M1 WAPE | `2.1991` |
+| federated processes | exactly 1 |
+| selected participants | NWDAF-A and NWDAF-B monitor owners only |
+| local/global fitting rounds | 2 per client / 2 global |
+| round sample counts | A=7, B=7, aggregated=14 in both rounds |
+| final validation | 7 samples per client; evidence preserved |
+| performance gate profile | disabled enforcement; `gateWouldAccept=true` in this run |
+| final model | `modelUniqueId=1785914614419` |
+| ADRF publication | `COMPLETE`, with recorded `storeTransId` |
+| post-cutover WAPE | A=`1.7833`, B=`0.4246` |
+| monitor cutover | two new routes active; old route identities absent |
+
+`modelUniqueId` 與 `storeTransId` 是單次 run identity，不是 committed fixture；
+其他 run 會產生不同值。驗收重點是同一 run 中 ADRF、catalog、provision、A／B
+activation 與 monitor routes 對同一 identity 達成一致。
+
+### 17.3 Regression results
+
+- PyMTLF：Ruff passed；`189 passed`。
+- nwdaf-resources focused checks：Ruff passed；`9 passed`。
+- portable distributed FL runner：passed，包含 restart、兩輪 FedAvg、final
+  validation、ADRF publication 與 cutover。
+- Phase 6 full-core collection runner：passed，6 registrations、6 初始 ADRF
+  records、92 analytics callbacks、2 successful preparations。
+- Phase 7 full-core FL runner：passed，完整證據如 17.2。
+
+### 17.4 實測發現與最小修正
+
+1. 高流量 changed profile 並不必然代表模型 degradation；第一次 calibration
+   使 A WAPE 下降，因此 policy 正確地沒有啟動 FL。最終改用能由實際 inference
+   證明 WAPE 上升的 low-volume profile。
+2. 30 分鐘 preparation window 只有約 60 個 observations，無法滿足舊切分的
+   94 observations 下限。修正為可設定的標準 time window，而非放寬 dataset
+   eligibility；Slice 7F 另使其預設值與新切分下限自洽。
+3. portable preflight 過去假設所有 component 都有 `implementationBase`；Phase 6
+   新增的 runtime dependencies 沒有該欄位。現在只在 manifest 提供 base 時做
+   ancestor check。
+4. portable PyAnLF fixture 同時需要 configured SMF endpoint 與 static group
+   resolution；補上明確 `resolution_mode: static`。Full-core runner 仍使用標準
+   UDM／UDR／serving-SMF resolution，兩者沒有混用。
+5. 基線驗證後確認 65% validation 是 raw-observation-first split 所造成的過度
+   配置。後續決策改為 window-first split、10% validation 與 90% recent
+   training；此項列入 Slice 7F，完成後以新的 run evidence 取代本節相關 counts。

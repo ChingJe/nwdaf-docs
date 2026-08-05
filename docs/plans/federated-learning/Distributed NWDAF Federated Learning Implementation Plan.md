@@ -10,8 +10,9 @@ review remediation 與跨 process 驗證；Python backend configuration clarity
 checkpoint已完成PyMTLF role-oriented profiles、PyAnLF typed annotated
 config、owned integration generators migration及model identity namespace
 removal；Phase 6 standard collection and full-core data flow 已完成實作、
-repository verification 與 full-core cross-process 驗證；下一步進入 Phase 7
-完整 FL business E2E，詳細計畫已完成並可進入實作
+repository verification 與 full-core cross-process 驗證；Phase 7 full FL
+business E2E 已完成 baseline verification，目前進行 window-first、10%
+validation split 的收尾修正與重新驗證
 
 相關文件：
 
@@ -2026,6 +2027,36 @@ dataset 取代主要驗收路徑。
 | Full FL business E2E | Full collection + degradation + FL + ADRF model + reprovision/cutover |
 
 報告不得把較低 level 描述成較高 level。
+
+### 15.5 Implementation status
+
+Phase 7 已於 2026-08-05 完成 full FL business E2E。實測以六個 UERANSIM
+UE、兩個 TAI、兩個 UPF、A／B／C 三個 NWDAF 與 ADRF 跑通：
+
+- A／B 先各形成兩筆 M1 stable WAPE；
+- 只有 A 的 production inference WAPE 由約 `2.43` 上升至 `25.27`，B 維持
+  約 `2.20`；
+- C 自動建立一個 FL process，participants 正好是兩個 monitor owners A／B，
+  same-TAI decoy 被排除；
+- A／B 各自從 ADRF 準備資料，完成兩輪 exact-sample-count weighted FedAvg 與
+  final validation；
+- C 將 final model 存入 ADRF 後 promotion，A／B 取得同一新模型並完成
+  new-before-old monitor cutover；
+- A／B 均以新 model generation 繼續產生 finite WAPE。
+
+詳細 counts、identity chain、實測缺陷與 regression 結果記錄於
+[Phase 7 Full-Core Federated Learning Business E2E Detailed Plan](Phase%207%20Full-Core%20Federated%20Learning%20Business%20E2E%20Detailed%20Plan.md#17-verified-baseline-result2026-08-05)。
+
+驗證後的 training-data review 確認原本 `validation_ratio=0.65` 是為了配合
+raw-observation-first split 與 30-step purge 的實驗性設定，會把過多資料留給
+validation。已決策追加一個收尾 Slice：PyMTLF 改為先建立 chronological
+sliding-window samples，再以 boundary purge 隔離兩側，將 retained samples 的
+較早 10% 用於 validation、較新 90% 用於 training。`validation_ratio` 預設改為
+`0.10`，minimum raw observations 依 bundle window 與 purge policy 動態計算；
+`preparation_data_window_seconds` 預設同步改為 3600 秒，使 30 秒採樣的預設
+profile 能超過 62 筆理論下限。完成後必須重新執行 PyMTLF tests、portable
+regression、Phase 6 collection
+regression 與 Phase 7 full business E2E，才更新最終 verified evidence。
 
 ---
 
