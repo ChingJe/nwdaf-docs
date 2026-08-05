@@ -2,7 +2,7 @@
 
 日期：2026-08-04
 
-狀態：Verified baseline；validation split follow-up 待重新驗證
+狀態：Verified
 
 上層計畫：
 
@@ -418,7 +418,9 @@ C 對 A／B 建立 `mLPreFlag=true` 的 training resources：
 - 切分時先保留一段不配置給任何 subset 的 boundary purge，使最後一個
   validation window 與第一個 training window 不共用 observation；purge 後的
   retained samples 以較早 10% 作 validation、較新 90% 作 training，兩側都
-  至少保留一個 sample；
+  至少保留一個 sample；此條件是 triggering scope 的 preparation admission
+  requirement。非 triggering scope 沿用既有語意：若只有 training samples，
+  仍可參與 fitting，但不列入 evaluation scopes，並留下 structured warning；
 - 完成後 callback C；若預期超過 `maxResTime`，先送 delay notification，C
   依現有 policy PATCH 同一 resource；
 - 兩個 clients 都進入 `PREPARED` 後才固定 participant set 並開始 round 0。
@@ -975,12 +977,11 @@ Phase 7 只有在以下條件全部成立時完成：
 - 依既有決策，先完成整體實作與 review，再依 repository boundary commit；
   不要求每個 Slice 都 commit。
 
-## 17. Verified baseline result（2026-08-05）
+## 17. Verified result（2026-08-05）
 
-本節保存 `validation_ratio=0.65` 舊切分方式下已完成的基線證據。該結果證明
-full-core orchestration 與業務鏈可運作，但 Slice 7F 改成 window-first、`0.10`
-後必須重新執行 verification；重新驗證完成前，不把本節 sample counts 當成新
-切分策略的最終結果。
+本節記錄 Slice 7F 完成 window-first、`validation_ratio=0.10` 後重新執行的
+最終證據。先前 `0.65` raw-observation-first run 只保留為問題定位背景，不再作為
+目前 sample counts 或 training-data policy 的驗收結果。
 
 ### 17.1 實際完成內容
 
@@ -996,14 +997,18 @@ full-core orchestration 與業務鏈可運作，但 Slice 7F 改成 window-first
   state；沒有呼叫 private observation／degradation endpoint，也沒有代替 C 建立
   Model Training subscriptions。
 - PyMTLF FL Server 新增 `preparation_data_window_seconds`，並以該值填入標準
-  `dataAvReq.timeWindows`；Phase 7 profile 使用 3600 秒。
+  `dataAvReq.timeWindows`；PyMTLF 預設與 Phase 7 profile 都使用 3600 秒。
+- PyMTLF 先建立完整 chronological sliding-window samples，再以 30 個 window
+  positions 隔離 validation 與 training；purge 後較早 10% 用於 reference
+  validation，較新 90% 用於 fitting。30-step input 與 one-step output 的動態
+  minimum preparation observations 是 62 筆。
 - `summary.json` 保存 source/binary manifest、兩段 stable WAPE、真正
   post-boundary WAPE、process/round identity、exact sample counts、validation
   evidence、ADRF transaction、M2 identity 與新舊 monitor routes。
 
 ### 17.2 E2E 實測證據
 
-最終 full-core FL run 耗時 `191.877` 秒，取得：
+最終 full-core FL run 耗時 `191.769` 秒，取得：
 
 | Evidence | Result |
 | --- | --- |
@@ -1018,12 +1023,12 @@ full-core orchestration 與業務鏈可運作，但 Slice 7F 改成 window-first
 | federated processes | exactly 1 |
 | selected participants | NWDAF-A and NWDAF-B monitor owners only |
 | local/global fitting rounds | 2 per client / 2 global |
-| round sample counts | A=7, B=7, aggregated=14 in both rounds |
-| final validation | 7 samples per client; evidence preserved |
+| round sample counts | A=40, B=40, aggregated=80 in both rounds |
+| final validation | 4 samples per client; evidence preserved |
 | performance gate profile | disabled enforcement; `gateWouldAccept=true` in this run |
-| final model | `modelUniqueId=1785914614419` |
+| final model | `modelUniqueId=1785916531189` |
 | ADRF publication | `COMPLETE`, with recorded `storeTransId` |
-| post-cutover WAPE | A=`1.7833`, B=`0.4246` |
+| post-cutover WAPE | A=`12.4072`, B=`1.2665` |
 | monitor cutover | two new routes active; old route identities absent |
 
 `modelUniqueId` 與 `storeTransId` 是單次 run identity，不是 committed fixture；
@@ -1032,8 +1037,8 @@ activation 與 monitor routes 對同一 identity 達成一致。
 
 ### 17.3 Regression results
 
-- PyMTLF：Ruff passed；`189 passed`。
-- nwdaf-resources focused checks：Ruff passed；`9 passed`。
+- PyMTLF：Ruff passed；`190 passed`。
+- nwdaf-resources focused checks：Ruff passed；`10 passed`。
 - portable distributed FL runner：passed，包含 restart、兩輪 FedAvg、final
   validation、ADRF publication 與 cutover。
 - Phase 6 full-core collection runner：passed，6 registrations、6 初始 ADRF
@@ -1055,5 +1060,6 @@ activation 與 monitor routes 對同一 identity 達成一致。
    resolution；補上明確 `resolution_mode: static`。Full-core runner 仍使用標準
    UDM／UDR／serving-SMF resolution，兩者沒有混用。
 5. 基線驗證後確認 65% validation 是 raw-observation-first split 所造成的過度
-   配置。後續決策改為 window-first split、10% validation 與 90% recent
-   training；此項列入 Slice 7F，完成後以新的 run evidence 取代本節相關 counts。
+   配置。Slice 7F 已改為 window-first split、10% validation 與 90% recent
+   training，並以新的 full-core run 證明每個 client 得到 40 training samples
+   與 4 validation samples；兩側 window 沒有共用 observation。

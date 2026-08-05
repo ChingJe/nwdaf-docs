@@ -11,8 +11,8 @@ checkpoint已完成PyMTLF role-oriented profiles、PyAnLF typed annotated
 config、owned integration generators migration及model identity namespace
 removal；Phase 6 standard collection and full-core data flow 已完成實作、
 repository verification 與 full-core cross-process 驗證；Phase 7 full FL
-business E2E 已完成 baseline verification，目前進行 window-first、10%
-validation split 的收尾修正與重新驗證
+business E2E 與 window-first、10% validation split 收尾修正皆已完成實作及
+重新驗證
 
 相關文件：
 
@@ -2045,18 +2045,19 @@ UE、兩個 TAI、兩個 UPF、A／B／C 三個 NWDAF 與 ADRF 跑通：
 - A／B 均以新 model generation 繼續產生 finite WAPE。
 
 詳細 counts、identity chain、實測缺陷與 regression 結果記錄於
-[Phase 7 Full-Core Federated Learning Business E2E Detailed Plan](Phase%207%20Full-Core%20Federated%20Learning%20Business%20E2E%20Detailed%20Plan.md#17-verified-baseline-result2026-08-05)。
+[Phase 7 Full-Core Federated Learning Business E2E Detailed Plan](Phase%207%20Full-Core%20Federated%20Learning%20Business%20E2E%20Detailed%20Plan.md#17-verified-result2026-08-05)。
 
 驗證後的 training-data review 確認原本 `validation_ratio=0.65` 是為了配合
 raw-observation-first split 與 30-step purge 的實驗性設定，會把過多資料留給
-validation。已決策追加一個收尾 Slice：PyMTLF 改為先建立 chronological
+validation。收尾 Slice 已將 PyMTLF 改為先建立 chronological
 sliding-window samples，再以 boundary purge 隔離兩側，將 retained samples 的
 較早 10% 用於 validation、較新 90% 用於 training。`validation_ratio` 預設改為
 `0.10`，minimum raw observations 依 bundle window 與 purge policy 動態計算；
 `preparation_data_window_seconds` 預設同步改為 3600 秒，使 30 秒採樣的預設
-profile 能超過 62 筆理論下限。完成後必須重新執行 PyMTLF tests、portable
-regression、Phase 6 collection
-regression 與 Phase 7 full business E2E，才更新最終 verified evidence。
+profile 能超過 62 筆理論下限。重新驗證取得每個 client 40 個 training samples、
+4 個 validation samples，兩輪各聚合 80 samples；PyMTLF tests、portable
+regression、Phase 6 collection regression 與 Phase 7 full business E2E 全部
+通過。
 
 ---
 
