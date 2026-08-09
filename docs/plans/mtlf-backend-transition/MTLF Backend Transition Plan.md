@@ -1,8 +1,8 @@
 # MTLF Backend Transition Plan
 
-Date: 2026-07-26
+Date: 2026-08-10
 
-Status: Phase 1 through Phase 7 complete; current feature architecture documented
+Status: Phase 1 through Phase 7 complete; Phase 8 planned
 
 Related records:
 
@@ -14,6 +14,7 @@ Related records:
 - `nwdaf-docs/docs/plans/mtlf-backend-transition/Phase 5 Dataset Selection And Direct Retrieval.md`
 - `nwdaf-docs/docs/plans/mtlf-backend-transition/Phase 6 Local Training And Model Update Reprovision.md`
 - `nwdaf-docs/docs/plans/mtlf-backend-transition/Phase 7 Deployment Integration And Legacy Closure.md`
+- `nwdaf-docs/docs/plans/mtlf-backend-transition/Phase 8 Backend Process Failure And Stateless Reconnection.md`
 - `nwdaf-docs/docs/plans/mtlf-backend-transition/code-reviews/Initial Model Provision And Monitoring Review Ledger.md`
 - `nwdaf-docs/docs/plans/anlf-backend-transition/AnLF Backend Transition Plan.md`
 - `nwdaf-docs/docs/plans/daisy/general_improvement/nwdaf-daisy-improvement-plan.md`
@@ -153,10 +154,10 @@ Go保留：
 - external standard path、method、content type及status response
 - OpenAPI/wire-level parsing與required-field validation
 - external Location與最小resource routing/correlation record
-- process-local Events Subscription與SMF peer Location routing table，供backend reconnect sync使用
+- process-local active resource route，以及backend失效後只供consumer DELETE辨識的最小deletion record
 - NRF registration、generic NF discovery consumer及依`validityPeriod`管理的shared `SearchResult` cache
 - NRF、SMF、ADRF及external consumer的standard client
-- backend availability polling與sync lifecycle
+- backend `/health/ready` polling、process incarnation辨識與失效清理lifecycle
 - standard payload routing及必要的identity/URI injection
 
 Go不再擁有：
@@ -184,9 +185,10 @@ backend path是private deployment path，但只要對應標準operation：
 
 允許的非標準contract限於：
 
-- `GET /health/live`
 - `GET /health/ready`
-- readiness後的backend sync/snapshot
+- readiness中的`processInstanceId`，用來辨識同一backend process是否已被替換
+- 無法由standard operation承載、但仍有production consumer的最小incremental runtime update；這類API不得
+  成為full-state snapshot、restart replay或Python-to-Python state synchronization
 - 無法由standard identifier表達的最小routing correlation
 
 ### 3.4 Plain HTTP Scope
@@ -216,7 +218,7 @@ NWDAF Go ----------------------------------------------+
   - NF identity / NRF registration                     |
   - OpenAPI validation                                 |
   - standard NF consumers / shared NRF discovery cache |
-  - routing and minimal snapshot                       |
+  - routing and process-generation cleanup state       |
       |                                                |
       +--> AnLF backend: analytics policy/runtime      |
       `--> MTLF backend: accuracy/training/model       |
@@ -248,7 +250,7 @@ Python processes不成為external NF，但可以是同一NWDAF內承接資料的
 | Group ID membership/expansion | AnLF backend config/runtime | n/a | PyAnLF preserves original group provenance |
 | SMF event subscription and UPF callback setup | AnLF backend prepares request | Go calls SMF；SMF依procedure設定UPF | SMF或UPF notification直接到AnLF backend |
 | SMF event subscription cleanup | AnLF backend維護refcount並決定last-reference delete | Go依AnLF backend指定的target與resource呼叫SMF DELETE | PyAnLF擁有完整peer identity；Go保留target-aware mirror直到cleanup完成 |
-| Training datasource state | AnLF backend owns ADRF-first/Mongo fallback state | Go relays `trainingDataSource` through sync | MTLF backend follows current source |
+| Training datasource policy | AnLF backend owns write-time ADRF-first/Mongo fallback；MTLF backend independently applies the same retrieval priority | Go does not synchronize current source | each backend uses its own selected endpoint/connection |
 | ADRF discovery and endpoint selection | AnLF and MTLF backends independently choose `configured` or `nrf` | Go calls NRF only for `nrf` mode | each backend stores its selected apiRoot |
 | Local Mongo storage | AnLF backend when ADRF unavailable | n/a | AnLF backend stores ADRF-aligned `dataSub + dataNotif` records |
 | ADRF storage | AnLF backend selects target and prepares record | Go calls selected ADRF | Go receives ADRF response |
@@ -277,7 +279,8 @@ Go -> 201 + Location + representation
 ```
 
 AnLF backend擁有accepted subscription、reporting precedence、runtime、model association及完整standard
-notification shaping。Go只保存external resource routing與backend reconnect所需的最小process-local snapshot。
+notification shaping。Go只保存external resource routing，以及process失效後辨識consumer DELETE所需的最小
+process-local deletion record；這些資料不會重播給新backend。
 
 ### 5.2 Generic NRF Discovery, Shared Cache And Backend Selection
 
@@ -315,7 +318,7 @@ TS 29.510 clause 5.3.2.2.1要求service consumer在送出新查詢前先考慮re
 4. Cache hit回傳result copy，將`validityPeriod`改成原absolute expiry的剩餘整秒並設定相同
    `Cache-Control: max-age`；不得把原始full TTL從backend收到時間重新起算而延長NRF結果。
 5. 相同key的concurrent misses合併為一次outbound query；cache只在Go memory，Go restart即遺失，不持久化也不
-   放進backend sync。
+   傳給backend作restart recovery。
 6. Go只cache完整raw standard result，不選擇peer endpoint。PyAnLF/PyMTLF可各自cache自己的selected candidate，
    因此相同ADRF query可共用Go result但仍保持backend config與selection獨立。
 7. internal path保留standard query parameter name、encoding、response及error shape；Go固定或驗證
@@ -368,7 +371,7 @@ drop-oldest，不因capacity回503；這是明確接受的best-effort新資料�
 structured warning暴露資料遺失。格式、correlation或request-size錯誤仍依對應OpenAPI回應。
 
 PyAnLF保存target apiRoot、peer subscription ID、peer Location、correlation及collection profile。後續
-PUT/DELETE維持原`Target-Api-Root`；Go只保存同一tuple的process-local routing/reconnect mirror，不建立
+PUT/DELETE維持原`Target-Api-Root`；Go只保存同一tuple的process-local routing/cleanup mirror，不建立
 額外route UUID，也不假設peer subId跨SMF全域唯一。
 
 ### 5.4 Consumer Delete Versus Collection Cleanup
@@ -399,9 +402,9 @@ acceptance；只有「要求過去statistics但必要資料不存在」明確要
    SMF/UPF delivery setup作為201的必要條件。
 2. historical request若已知必要資料不存在，依規格回500及`UNAVAILABLE_DATA`。
 3. unsupported event或feature依標準`failEventReports`/error semantics處理。
-4. runtime data source暫時失敗時保留subscription並由AnLF backend重試蒐集；若未來要通知consumer
-   failure/termination，必須先確認已negotiated feature與標準`failNotifyCode`/`termCause`適用條件，
-   不自行發明callback。
+4. runtime data source暫時失敗時保留subscription並由AnLF backend重試蒐集；若AnLF process本身失效，則依
+   Phase 8只對已協商`EneNA`與`StatisticsFailure`的consumer嘗試一次standard
+   `failNotifyCode=UNAVAILABLE_DATA` notification，不使用`termCause`。
 
 ---
 
@@ -413,11 +416,11 @@ AnLF backend直接收到SMF/UPF notification後，依固定ADRF-first政策只�
 
 - ADRF可用：AnLF backend建立標準`NadrfDataStoreRecord`，附上自己選定的`Target-Api-Root`交由Go呼叫ADRF；
   不同時寫MongoDB。
-- ADRF不可用且MongoDB可用：AnLF backend直接寫MongoDB並將`trainingDataSource`切成`mongodb`。
-- 兩者皆不可用：`trainingDataSource = unavailable`，bounded ingestion/storage buffer仍遵守drop-oldest policy。
+- ADRF不可用且MongoDB可用：AnLF backend直接寫MongoDB。
+- 兩者皆不可用：bounded ingestion/storage buffer仍遵守drop-oldest policy並記錄source unavailable。
 
-PyAnLF是`trainingDataSource` owner，因為它最先知道新資料實際寫入哪個sink。ADRF transport、429或5xx等
-availability failure時，同一筆notification嘗試寫入MongoDB；成功後切換source並經Go喚醒PyMTLF sync。
+PyAnLF擁有write-time source state，因為它最先知道新資料實際寫入哪個sink。ADRF transport、429或5xx等
+availability failure時，同一筆notification嘗試寫入MongoDB；這個狀態不再經Go同步給PyMTLF。
 其他semantic 4xx只拒絕該record，不把整個ADRF標為unavailable。第一版不提供跨sink transaction或
 durable delivery保證，也不為正常ADRF可用情況支付dual-write成本。
 
@@ -428,7 +431,7 @@ ADRF recovery分兩種：
 2. 已發現endpoint但連線失敗時，PyAnLF保留該endpoint並以capped backoff重試同一endpoint，不因每次transport
    failure立即重查NRF；discovery validity到期後可重新discovery以取得被替換/更新的endpoint。
 
-PyAnLF只有在一次真實standard storage request成功後才把`trainingDataSource`切回`adrf`；切換前資料繼續只寫
+PyAnLF只有在一次真實standard storage request成功後才把write-time source切回ADRF；切換前資料繼續只寫
 MongoDB。詳細recovery probe不得依賴自創standard NF health API，可使用有新notification時的bounded real
 storage attempt。失敗與切換必須有structured log/metric。
 
@@ -458,55 +461,35 @@ NadrfDataStoreRecord
 
 成功必須處理201、Location及response representation；error使用該API的`ProblemDetails`。
 
-### 6.2 Backend Sync And Training Datasource
+### 6.2 Backend Runtime State And Training Datasource
 
-Phase 2的MTLF-only strict storage handshake被本節取代。兩個backend都採：
+Phase 8移除Phase 2／3建立的full-state backend sync。Go、PyAnLF與PyMTLF不再維護共同snapshot，也不在
+backend restart後重播舊resource。兩個backend只透過`GET /health/ready`回報目前process是否可服務，以及
+本次process的`processInstanceId`；Go使用這個ID辨識process replacement，但不把舊generation的state交給
+新process。
 
-```text
-POLLING -> READY -> SYNCING -> USABLE
-```
+移除full sync不代表移除所有runtime交互：
 
-sync目的不是交換security key，而是讓三個process對目前runtime state有共同認知：
+1. 含標準業務語意的resource仍使用對應的POST／PUT／DELETE與標準payload逐次建立或刪除。
+2. SMF association及training-data descriptor等確有production consumer的資訊保留為incremental update，並從
+   `/internal/v1/sync/...`重新命名到其實際domain；它們不是restart snapshot，也不得觸發全量reconciliation。
+3. containing NWDAF identity、callback base URI及backend自己的ADRF／Mongo設定改由config或stateless lookup取得，
+   不再依賴sync projection注入。
+4. Go只保留external resource routing、peer Location與失效刪除所需的最小process-local record。
 
-- Go目前可執行的standard peer capabilities
-- AnLF backend目前實際寫入的`trainingDataSource`
-- active resource/routing snapshot
+`trainingDataSource`不再由PyAnLF經Go同步給PyMTLF。兩個backend各自依相同的ADRF-first／Mongo-fallback政策與
+自己的configured／NRF discovery設定判斷目前可使用的source：PyAnLF在ADRF可寫時只寫ADRF，ADRF不可用時
+寫Mongo；PyMTLF retrieval時先使用可用ADRF，ADRF不可用時才查Mongo。ADRF合法回覆empty data不等同
+ADRF unavailable，因此不因empty result自動跨source補查。
 
-Go是central sync hub，AnLF與MTLF backend不建立直接sync channel。兩個backend每次process
-啟動都產生新的`processInstanceId` UUID並由health回應回報；Go假如在兩次成功probe之間
-看到UUID變更，仍必須將該backend視為內存已重置的新process並完整resync。
-
-PyAnLF在sync response回報`trainingDataSource = adrf|mongodb|unavailable`；Go只保存這個current
-process-local value並立即喚醒PyMTLF refresh，再於MTLF sync request傳遞。PyMTLF不再做preferred/effective
-source negotiation，而是遵循PyAnLF實際storage落點；若自身無法使用指定source，dataset job暫時不可用或失敗，
-不得自行切換到PyAnLF沒有在寫的alternate。
-
-ADRF endpoint、Mongo URI、backend discovery mode、NRF `SearchResult`及candidate cache都不是sync資料。
-PyAnLF/PyMTLF依各自config解析endpoint；Go shared NRF cache由backend重新呼叫generic route時透明重用。
-每個backend只收到自己有production consumer的typed section，不做Python-to-Python direct sync或盲目廣播
-相同payload。
-initial/reconnect sync在成功前會擋住USABLE；USABLE後的periodic refresh不在每次request期間
-反覆將state切成SYNCING，但refresh失敗會轉UNAVAILABLE。Go-owned snapshot或backend回報的typed
-observation改變時可立即喚醒受影響backend的refresh；只有語意值真正改變才轉發，避免
-AnLF與MTLF更新形成無限循環。
-
-bootstrap規則：
-
-1. PyAnLF先依自己config執行ADRF discovery/configured resolution；ADRF尚不可用時直接使用MongoDB，不進入
-   provisional dual-write。
-2. Go尚未取得PyAnLF回報前使用`trainingDataSource = unavailable`；取得語意值變化後refresh PyMTLF。
-3. backend restart或reconnect後重新sync並由PyAnLF重新回報current source。
-4. sync contract保持小型，只傳current source enum，不傳availability matrix或preference。
-5. Go的routing/snapshot table只存於memory；Go process停止或重啟時所有訂閱與routing state
-   視為遺失，實驗重跑並由consumer重新訂閱，目前不做持久化或雙向authority recovery。
-
-source切換只定義未來資料落點，不保證歷史連續。若ADRF在`T0-T1`不可用、資料存於MongoDB，`T1`恢復後
-`trainingDataSource`切回ADRF，PyMTLF向ADRF查詢跨越`T0-T1`的window可能缺少該段資料；本phase接受遺失，
-不做Mongo-to-ADRF backfill、cross-source merge、time-range routing或因ADRF回合法empty result而回查Mongo。
+source切換仍只影響未來資料，不保證歷史連續。若ADRF在`T0-T1`不可用、資料存於MongoDB，`T1`恢復後
+PyMTLF向ADRF查詢跨越`T0-T1`的window可能缺少該段資料；本計畫接受遺失，不做Mongo-to-ADRF backfill、
+cross-source merge或time-range routing。
 
 ### 6.3 ADRF Retrieval
 
-1. MTLF backend決定資料、時間範圍及query時機，並遵循PyAnLF經sync回報的`trainingDataSource`。
+1. MTLF backend決定資料、時間範圍及query時機，並獨立採ADRF-first／Mongo-fallback retrieval；只有ADRF
+   unavailable才使用Mongo，合法empty result不跨source補查。
 2. MTLF backend建立標準`NadrfDataRetrievalSubscription`並交由Go。
 3. Go呼叫ADRF POST；成功處理201、Location與standard representation。
 4. ADRF向Go-owned callback POST `NadrfDataRetrievalNotification`。
@@ -525,19 +508,32 @@ Go不代理dataset bytes，不做chunking、normalization、backpressure或datas
 
 ## 7. Availability And Failure Boundary
 
-1. Go啟動不要求backend process已存在。
-2. Go對AnLF與MTLF backend分別polling `/health/ready`。
-3. readiness成功後必須sync才usable；兩個backend使用相同lifecycle概念。
-4. backend configured但unavailable時，需要該backend的new operation回該standard API允許的
-   `503 ProblemDetails`。
-5. backend disabled時，不advertise依賴它且已實作的capability。
-6. advertisement依configuration與implemented capability，不因瞬時readiness反覆更新NRF profile。
-7. live backend transport failure將該backend標記unavailable並立即喚醒polling。
-8. MTLF unavailable不應中止AnLF使用既有模型提供analytics；AnLF unavailable也不應阻止獨立的MTLF工作。
-9. backend斷線期間直接送往該backend的SMF/UPF notification可能遺失，第一版接受此限制；backend恢復後
-   依Go snapshot重建未來的data collection。
-10. polling在USABLE後仍持續；process UUID變更、health/probe failure或live transport failure都會導致
-    UNAVAILABLE→READY→SYNCING→USABLE完整循環，不只處理startup ordering。
+1. Go啟動不要求backend process已存在；AnLF-only、MTLF-only與兩者同時啟用都是合法設定。未設定的backend是
+   `DISABLED`，不是runtime failure。
+2. Go只對configured backend週期性polling `GET /health/ready`；`/health/live`與`SYNCING` state移除。
+3. backend lifecycle為`WAITING -> USABLE(G1) -> RESETTING -> WAITING -> USABLE(G2)`；ready回503表示process
+   可達但尚未ready，進入`NOT_READY`並拒絕new operation，不立即判定process遺失。
+4. ready回200且`processInstanceId`未變代表同一generation可用；ID改變立即確認process replacement。連續兩次
+   readiness transport failure確認process loss；一般4xx不改變health，5xx或transport error會立即喚醒probe。
+5. loss/replacement確認後，Go先gating new CRUD、drain當前in-flight operation、收集舊generation routes、執行
+   best-effort standard DELETE、清除route，再回到`WAITING`。新process不接收舊snapshot或自動恢復舊resource。
+6. backend configured但不是USABLE時，需要它的new operation回該standard API允許的`503 ProblemDetails`；
+   advertisement仍依configuration與implemented capability，不因瞬時readiness反覆更新NRF profile。
+7. AnLF失效時停止舊analytics runtime，並對已協商`EneNA`與`StatisticsFailure`的Events subscription各嘗試一次
+   standard failure notification，使用`failNotifyCode=UNAVAILABLE_DATA`，不使用`termCause`、不advertise
+   `TermRequest`、不週期重送。未協商該feature的subscription只清理resource並等待consumer timeout／DELETE。
+8. Go保留最小deletion record，使已知舊subscription的延遲DELETE即使backend不可達或回404仍對consumer回204；
+   從未存在的ID才回404，failed resource的GET／PUT回404。deletion record不保存完整business snapshot，且只存
+   到consumer DELETE或Go restart。
+9. MTLF失效不終止analytics；AnLF繼續使用已載入模型。Model Provision、Model Monitor、accuracy policy、
+   retraining及in-flight FL state失效並清理，但completed model catalog、artifact與ADRF／Mongo資料保留。
+10. Model Provision provider沒有標準termination notification，AnLF以finite `expiryTime`及到期前PUT refresh
+    維護lease；refresh得到404、503或transport failure時清除relation但保留已載入模型，不自動重建舊resource。
+11. Model Monitor採periodic `eventReportReq.repPeriod`；MTLF consumer以`2 * repPeriod + gracePeriod` watchdog
+    判定監控失聯，接著只做一次standard DELETE及local cleanup，不自動resubscribe。event-triggered silence本身
+    不得被當成failure。
+12. backend斷線期間直接送往AnLF的SMF/UPF notification可能遺失；本階段不補資料、不恢復舊subscription，
+    新process可在ready後接受新的resource。Go process停止或重啟時state同樣視為遺失，實驗重新建立。
 
 external HTTP status不得依local convenience決定。每個feature detailed plan要先列OpenAPI response matrix，
 再定義backend unavailable、peer NF error與domain rejection如何映射。
@@ -590,23 +586,22 @@ external HTTP status不得依local convenience決定。每個feature detailed pl
 
 ### Phase 2: Backend Connectivity Foundation
 
-狀態：foundation完成；unified readiness/sync correction已由Phase 3完成；dataset retrieval與final
-`trainingDataSource` cutover仍由Phase 5完成。
+狀態：historical foundation完成；其中full-state sync、restart replay、`SYNCING`與`/health/live`由Phase 8取代。
 
 保留：
 
 - AnLF/MTLF independent polling
 - cached availability
 - backoff、wake-up與shutdown ownership
-- liveness/readiness routes
+- readiness route及`processInstanceId`
 - disabled/configured/unavailable區分
 
 後續phase責任：
 
-- Phase 3已將MTLF-only handshake改成兩個backend都使用的readiness後sync，並移除Go作為future Mongo
-  writer的assumption。
+- Phase 3曾將MTLF-only handshake改成兩個backend都使用的readiness後sync；Phase 8再移除這項容易產生
+  時序競態的restart recovery設計，只保留ready probing與process replacement detection。
 - Phase 5以PyAnLF-owned ADRF-first/Mongo fallback取代`preferredSource` negotiation，並將current
-  `trainingDataSource`同步給PyMTLF。
+  source policy固定為ADRF-first／Mongo fallback；Phase 8移除current source同步，兩個backend各自判斷可用source。
 
 ### Phase 3: Analytics Subscription, Collection And Raw Storage
 
@@ -636,9 +631,9 @@ external HTTP status不得依local convenience決定。每個feature detailed pl
   measurement只降級該欄位
 - PyAnLF direct Mongo ADRF-aligned `dataSub + dataNotif` raw write
 - PyAnLF standard-shaped ADRF storage request經Go送ADRF
-- 現有Mongo/ADRF independent queues及bootstrap dual-write將由Phase 5依single-active
-  `trainingDataSource`政策調整；drop-oldest bounded ingestion/analytics/storage buffers與startup validation保留
-- unified AnLF/MTLF continuous reconnect/sync foundation與process incarnation UUID
+- 現有Mongo/ADRF independent queues及bootstrap dual-write已由Phase 5改成single-active ADRF-first／Mongo
+  fallback政策；drop-oldest bounded ingestion/analytics/storage buffers與startup validation保留
+- unified AnLF/MTLF continuous readiness foundation與process incarnation UUID；其中full-state sync/replay由Phase 8移除
 
 ### Phase 4: Initial Model Provision, ML Model Monitoring And Accuracy Policy
 
@@ -671,7 +666,7 @@ owner；code-review ledger中的current-slice defects及required三process integ
 
 - generic Go NRF discovery proxy與shared validity cache
 - PyAnLF/PyMTLF各自的ADRF `configured`/`nrf` config與endpoint selection
-- PyAnLF-owned ADRF-first/Mongo fallback及`trainingDataSource` sync
+- PyAnLF-owned ADRF-first/Mongo fallback，以及PyMTLF獨立採用的同優先序retrieval
 - consume Phase 4 retrain intent中的triggering scope與active scope inventory；任一scope觸發後收集同一model
   所有active scopes的資料，全部納入training dataset候選集合；trigger只作cause metadata
 - standard ADRF retrieval subscribe/callback/unsubscribe經Go
@@ -738,8 +733,8 @@ NWDAF、PyAnLF、PyMTLF與support-tooling均已按repository及責任scope完成
   `eventNotifyUri/notifyCorrelationId`；不依賴額外OpenAPI fork，也不要求PyAnLF加入Release 19 BERMS欄位
 - 延續AnLF backend transition的domain package慣例：AnLF與MTLF各自保有薄的Go-side auxiliary HTTP
   edge／processor／client，啟用既有`8090`／`8091`server config；共用能力只位於
-  `internal/backend`或`internal/sbi`，不建立neutral mega-gateway；兩個backend的sync分別提供對應
-  internal callback base URI
+  `internal/backend`或`internal/sbi`，不建立neutral mega-gateway；Phase 7建立的sync projection與callback
+  base注入由Phase 8改為backend config／stateless context lookup
 - 依production call graph移除Go legacy MTLF scheduler、dataset/model coordinator、Daisy、fixed ADRF flow、
   obsolete traffic state與custom APIs；同時拆解並移除`internal/anlf/coordinator`，且不為MTLF新增
   coordinator
@@ -755,6 +750,27 @@ NWDAF、PyAnLF、PyMTLF與support-tooling均已按repository及責任scope完成
   configured ADRF endpoint，並保留這項pinned compatibility limitation
 - final build/lint/race/process verification與文件closure
 
+### Phase 8: Backend Process Failure And Stateless Reconnection
+
+詳細計畫：
+
+- `Phase 8 Backend Process Failure And Stateless Reconnection.md`
+
+狀態：planned。
+
+- 移除Go、PyAnLF與PyMTLF的full-state sync endpoint、snapshot replay、restart reconciliation及`SYNCING` state
+- 移除未被production runtime使用的`/health/live`，所有startup、probe與test只使用`/health/ready`
+- 以`processInstanceId`辨識same process、process replacement與generation boundary
+- backend loss/replacement時gating、drain、best-effort cleanup及process-local deletion record
+- AnLF loss時，對已協商Statistics Failure的analytics subscription各嘗試一次standard
+  `UNAVAILABLE_DATA` failure notification；不使用TermRequest或週期重送
+- MTLF loss時保留AnLF已載入模型與analytics，但清除Model Provision／Monitor、accuracy、training及FL runtime
+- Model Provision以finite `expiryTime` refresh處理remote provider loss；Model Monitor以periodic report watchdog處理
+  consumer-side timeout
+- 將仍有production用途的SMF association／training descriptor update移出`/sync`命名，並把immutable backend
+  context改由config或stateless lookup提供
+- 驗證AnLF-only、MTLF-only、兩者啟用、backend restart及in-flight process replacement race
+
 ---
 
 ## 10. Verification Strategy
@@ -764,7 +780,7 @@ NWDAF、PyAnLF、PyMTLF與support-tooling均已按repository及責任scope完成
 1. standard method/path/status matrix
 2. Go與Python對相同OpenAPI payload的round-trip
 3. unsupported Release 18 field不被silent drop
-4. backend unavailable/reconnect/sync
+4. backend unavailable、process replacement、reset cleanup與stateless reconnection
 5. standard peer error與`ProblemDetails` mapping
 6. process-level callback與direct data path
 7. 每個移植feature的`preserve`／`explicitly replace`／`remove as obsolete` behavior inventory
@@ -777,7 +793,7 @@ NWDAF、PyAnLF、PyMTLF與support-tooling均已按repository及責任scope完成
 - identical PyAnLF/PyMTLF ADRF discovery → Go shared valid `SearchResult` → independent backend selection
 - PyAnLF standard SMF request → Go → all selected SMFs
 - SMF/UPF → PyAnLF direct notification → selected ADRF，或ADRF unavailable時Mongo
-- PyAnLF `trainingDataSource` change → Go sync → PyMTLF selected-source retrieval
+- PyAnLF ADRF-first/Mongo fallback storage與PyMTLF獨立的ADRF-first/Mongo fallback retrieval
 - first analytics demand → PyAnLF → Go → PyMTLF seed provision → Go callback → PyAnLF direct download/load
 - same model + different groups → independent monitor notifications and policy scopes
 - ADRF retrieval callback → Go → MTLF → direct ADRF fetch
@@ -787,6 +803,9 @@ NWDAF、PyAnLF、PyMTLF與support-tooling均已按repository及責任scope完成
 - configured endpoint → team SMF static resolution → team go-upf standalone replay
   subscription/notification/delete → PyAnLF
 - optional real NRF SMF discovery → Go shared cache → 同一portable application data path
+- AnLF process loss → one-shot negotiated Events failure notification → delayed consumer DELETE 204
+- MTLF process loss → analytics keeps current model → provision/monitor/training runtime cleanup
+- process UUID replacement → drain/cleanup old generation → new process accepts only new resources
 
 Go verification依`NWDAF/Makefile`執行`make test`、`make lint`、`make build`；Python repositories執行各自
 formatter/linter/test。需要Mongo、NRF、SMF、UPF或ADRF的check必須分開標示unit、process-level及environment
@@ -817,8 +836,10 @@ deferred項目不得被加入目前acceptance criteria，也不得成為目前pl
 
 以下不是已確認架構的翻案點，而是留到有對應feature consumer時才鎖定：
 
-1. runtime data collection持續失敗時，何時使用已negotiated standard failure notification或termination；
-   不支援對應feature時只能維持local retry/observability，不能發明callback。
+1. 是否要在production deployment加入durable Go state、backend resource recovery或跨process delivery；目前明確採
+   process-local state與實驗重建，不得在Phase 8中偷偷恢復full snapshot sync。
+2. 是否要為event-triggered Model Monitor建立額外peer availability signal；目前只有periodic monitor可依
+   `repPeriod` watchdog判斷失聯。
 
 遇到OpenAPI、TS、current generated type或實作假設衝突時，必須先更新計畫並請求決策，不得無聲改回
 Go-owned collection、dataset proxy、strict handshake或custom generation framework。
@@ -845,6 +866,10 @@ Go-owned collection、dataset proxy、strict handshake或custom generation frame
 - Go-owned custom model provision binding/event coordination
 - custom `ModelReady`與generation CAS
 - Go/PyMTLF active-generation reconciliation
+- backend full-state sync、restart snapshot replay及自動重建舊resource
+- `SYNCING` availability state與`GET /health/live`
+- backend replacement後自動重新建立舊Model Provision／Monitor／Events relationship
+- 使用`termCause`或`TermRequest`處理本階段backend process失效
 
 historical detailed plans仍可說明已實作過什麼，但新的implementation與review一律以本文件及最新feature
 detailed plan為準。
