@@ -2,7 +2,7 @@
 
 Date: 2026-08-10
 
-Status: Phase 1 through Phase 7 complete; Phase 8 planned
+Status: Phase 1 through Phase 8 complete
 
 Related records:
 
@@ -756,7 +756,9 @@ NWDAF、PyAnLF、PyMTLF與support-tooling均已按repository及責任scope完成
 
 - `Phase 8 Backend Process Failure And Stateless Reconnection.md`
 
-狀態：planned。
+狀態：completed and verified。full-state sync已由per-backend generation reset、stateless context、incremental
+training-data descriptors、finite provision lease及periodic monitor watchdog取代；process-level restart與完整portable
+application E2E均通過。
 
 - 移除Go、PyAnLF與PyMTLF的full-state sync endpoint、snapshot replay、restart reconciliation及`SYNCING` state
 - 移除未被production runtime使用的`/health/live`，所有startup、probe與test只使用`/health/ready`

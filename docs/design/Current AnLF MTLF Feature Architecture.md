@@ -1,17 +1,14 @@
 # NWDAF AnLF／MTLF Current Feature Architecture
 
-Date: 2026-07-29
+Date: 2026-08-10
 
-Status: Implemented baseline
+Status: Implemented through backend process failure and stateless reconnection
 
-Baseline revisions:
+Implementation repositories:
 
-- NWDAF: `2bdb01e`
-- PyAnLF: `694e3d8`
-- PyMTLF: `11b3199`
-- nwdaf-resources: `4937b20`
-- team SMF local experiment revision: `08c7402`
-- team go-upf local experiment revision: `2a9a004`
+- Go NWDAF, PyAnLF, PyMTLF and nwdaf-resources follow the Phase 1 through Phase 8 design recorded below.
+- team SMF uses the Release 18 federated-learning experiment branch.
+- team go-upf uses `dev/federated-learning` at `c69051b`, including standalone EES replay, Release 18 Event Exposure fields and configured GTP interface handling.
 
 Related documents:
 
@@ -21,6 +18,7 @@ Related documents:
 - `../plans/mtlf-backend-transition/Phase 5 Dataset Selection And Direct Retrieval.md`
 - `../plans/mtlf-backend-transition/Phase 6 Local Training And Model Update Reprovision.md`
 - `../plans/mtlf-backend-transition/Phase 7 Deployment Integration And Legacy Closure.md`
+- `../plans/mtlf-backend-transition/Phase 8 Backend Process Failure And Stateless Reconnection.md`
 - `../plans/anlf-backend-transition/AnLF Backend Transition Plan.md`
 - `../development_policy.md`
 
@@ -34,7 +32,7 @@ Related documents:
 2. 各feature的完整HTTP與background worker行為路徑。
 3. public SBI、standard-shaped private boundary及private lifecycle contract。
 4. request／response schema、header、status與resource correlation。
-5. Go process-local mirror、backend authoritative state及sync snapshot。
+5. Go process-local route ledger、backend process generation及stateless context。
 6. subscription、collection、model、monitor、dataset與training的identity關係。
 7. acknowledgement、failure、concurrency與restart語意。
 
@@ -175,9 +173,7 @@ Go回`503`；unknown local resource回operation對應的`404`。
 
 | Method and path on `:9093` | Body／metadata | Success | Behavior |
 |---|---|---|---|
-| `GET /health/live` | none | `200 {"status":"live"}` | process liveness |
 | `GET /health/ready` | none | `200`或`503`，含`status`與`processInstanceId` | backend readiness |
-| `POST /internal/v1/sync` | `BackendSyncRequest` | `200 BackendSyncResponse` | 原子替換recoverable snapshot |
 | `POST /internal/v1/events-subscriptions` | `NnwdafEventsSubscription` | `201`、`Location`、accepted representation | create analytics resource |
 | `PUT /internal/v1/events-subscriptions/{id}` | same | `200` representation | replace analytics resource |
 | `DELETE /internal/v1/events-subscriptions/{id}` | none | `204` | release analytics resource |
@@ -196,9 +192,7 @@ subscription必須能對應READY runtime的model、event、filter、target、cal
 
 | Method and path on `:9092` | Body／metadata | Success | Behavior |
 |---|---|---|---|
-| `GET /health/live` | none | `200 {"status":"live"}` | process liveness |
 | `GET /health/ready` | none | `200`或`503`，含`processInstanceId` | catalog／artifact readiness |
-| `POST /internal/v1/sync` | `BackendSyncRequest` | `200 BackendSyncResponse` | restore control resources及datasource |
 | `POST /internal/v1/ml-model-provision/subscriptions` | `NwdafMLModelProvSubsc` | `201`、`Location`、representation | create model demand resource |
 | `PUT /internal/v1/ml-model-provision/subscriptions/{id}` | same | `200` representation | replace model demand |
 | `DELETE /internal/v1/ml-model-provision/subscriptions/{id}` | none | `204` | delete model demand |
@@ -207,20 +201,22 @@ subscription必須能對應READY runtime的model、event、filter、target、cal
 | `POST /internal/v1/ml-model-monitor/notifications` | `MLModelMonitorNotify` | `204` | correlate WAPE/liveness report and run policy |
 | `POST /internal/v1/adrf-data-management/retrieval-notifications` | `NadrfDataRetrievalNotification` | `204` | deliver ADRF fetch instruction |
 
-Monitor notification由`notifCorrId`找到Go與PyMTLF保存的subscription projection，再以private
-`ownerRegistrationId`確認active registration owner。這個private field只存在sync projection，不加入standard
-wire body。
+Monitor notification由`notifCorrId`找到Go與PyMTLF保存的subscription projection；Go在建立Monitor
+subscription時以private `X-NWDAF-Monitor-Registration-Id` header關聯active registration owner。這個private
+metadata不加入standard wire body。
 
 ### 3.5 PyAnLF → Go AnLF auxiliary edge
 
 | Method and path on `:8090` | Request | Required metadata | Success |
 |---|---|---|---|
+| `GET /internal/v1/nwdaf-context` | none | none | containing NWDAF `nfInstanceId`、public `apiRoot`及AnLF `internalApiRoot` |
 | `GET /internal/v1/nrf/nf-instances` | standard NF Discovery query | `target-nf-type`、`requester-nf-type`、`service-names` | `200 SearchResult` |
 | `POST /internal/v1/smf-event-exposure/subscriptions` | `NsmfEventExposure` | `Target-Api-Root` | peer `201`、`Location`、representation |
 | `GET /internal/v1/smf-event-exposure/subscriptions/{id}` | none | `Target-Api-Root` | peer `200` representation |
 | `PUT /internal/v1/smf-event-exposure/subscriptions/{id}` | `NsmfEventExposure` | `Target-Api-Root` | peer `200` representation或`204` |
 | `DELETE /internal/v1/smf-event-exposure/subscriptions/{id}` | none | `Target-Api-Root` | peer `204` |
-| `PUT /internal/v1/sync/anlf/smf-resource-associations` | `SmfResourceAssociationUpdate` | body含current `processInstanceId` | `204` |
+| `PUT /internal/v1/anlf/training-data-descriptors/{descriptorId}` | incremental descriptor | standard-shaped `smfDataSub`、scope、source及window | `204` |
+| `DELETE /internal/v1/anlf/training-data-descriptors/{descriptorId}` | none | descriptor identity | `204` |
 | `POST /internal/v1/adrf-data-management/data-store-records` | `NadrfDataStoreRecord` | `Target-Api-Root` | peer `201`及`Location` |
 | `POST /internal/v1/events-subscription-notifications` | `NnwdafEventsSubscriptionNotification[]` | subscription/correlation在body | external consumer接受後`204` |
 | `POST /internal/v1/ml-model-provision/subscriptions` | `NwdafMLModelProvSubsc` | none | PyMTLF `201`、`Location`、representation |
@@ -238,6 +234,7 @@ standard request、保留peer status／`Location`／`ProblemDetails`，並維護
 
 | Method and path on `:8091` | Request | Required metadata | Success |
 |---|---|---|---|
+| `GET /internal/v1/nwdaf-context` | none | none | containing NWDAF `nfInstanceId`、public `apiRoot`及MTLF `internalApiRoot` |
 | `GET /internal/v1/nrf/nf-instances` | standard NF Discovery query | `target-nf-type`、`requester-nf-type`、`service-names` | `200 SearchResult` |
 | `POST /internal/v1/adrf-data-management/data-retrieval-subscriptions` | `NadrfDataRetrievalSubscription` | `Target-Api-Root` | peer `201`、`Location`、representation |
 | `DELETE /internal/v1/adrf-data-management/data-retrieval-subscriptions/{id}` | none | route由Go create時保存 | peer `204` |
@@ -267,14 +264,15 @@ Provision、Model Monitor及accuracy notification都經Go resource mirror與stan
 
 | Mirror key | Stored values | Used by |
 |---|---|---|
-| analytics `subscriptionId` | accepted representation、external notification URI | external analytics callback與backend sync |
-| `(SMF Target-Api-Root, peer subscription ID)` | peer Location、accepted Nsmf resource、correlation、NWDAF references、cleanup state | SMF CRUD與PyAnLF restart sync |
-| Model Provision `subscriptionId` | accepted/backend representation、initiator、destination、callback URI、correlation | notification routing與sync |
-| Model Monitor `registrationId` | accepted/backend representation、initiator | subscription ownership與sync |
-| Model Monitor `subscriptionId` | accepted/backend representation、destination、owner registration、callback correlation | accuracy routing與sync |
+| analytics `subscriptionId` | accepted representation、external notification URI、AnLF process generation | external analytics callback、failure notification與reset cleanup |
+| `(SMF Target-Api-Root, peer subscription ID)` | peer Location、accepted Nsmf resource、correlation、NWDAF references、cleanup state | SMF CRUD與AnLF-loss one-shot cleanup |
+| Model Provision `subscriptionId` | accepted/backend representation、initiator、destination、callback URI、correlation、backend generations | notification routing、lease refresh與reset cleanup |
+| Model Monitor `registrationId` | accepted/backend representation、initiator、backend generations | subscription ownership與reset cleanup |
+| Model Monitor `subscriptionId` | accepted/backend representation、destination、owner registration、callback correlation、backend generations | accuracy routing、watchdog與reset cleanup |
 | ADRF retrieval `subscriptionId` | same-origin peer Location | terminal delete |
 
-這些mirror只存在Go memory。業務state的authoritative owner仍是對應Python backend或peer NF。
+這些ledger只存在Go memory，不是可重播snapshot。backend loss後active entry被移除；需要接受consumer late
+DELETE的resource只保留最小deletion record，不保留完整representation或Python runtime。
 
 ### 3.9 Transport與error contract
 
@@ -285,8 +283,7 @@ Provision、Model Monitor及accuracy notification都經Go resource mirror與stan
 | malformed JSON或schema mismatch | `400 ProblemDetails` |
 | mandatory standard field缺失 | `400 ProblemDetails`，cause依operation為`MANDATORY_IE_MISSING`或`INVALID_REQUEST` |
 | local resource／correlation不存在 | `404 ProblemDetails` |
-| backend尚未sync或currently unavailable | `503 ProblemDetails` |
-| stale backend process association snapshot | `409 ProblemDetails` |
+| backend尚未ready、NOT_READY或RESETTING | `503 ProblemDetails` |
 | peer NF回declared standard error | 保留status與`ProblemDetails`跨Go boundary傳遞 |
 | peer transport failure或invalid success contract | Go回`502`或對應的`503` availability response |
 
@@ -326,7 +323,7 @@ current cache行為：
 - 同一cache key的concurrent miss只向NRF發出一次request。
 - cache最多256 entries；先移除expired entry，滿額時移除最久未使用的entry。
 - 保留NRF完整JSON envelope與Go generated model未識別的欄位，cache hit不會因重新marshal typed model而丟欄位。
-- cache只存在Go process memory，不進backend sync，也不跨Go restart保留。
+- cache只存在Go process memory，不傳給backend，也不跨Go restart保留。
 
 backend仍有自己的candidate cache：PyAnLF與PyMTLF依回傳的剩餘`validityPeriod`保存已解析endpoint。這層cache
 避免backend重複解析與選擇candidate；Go cache則讓兩個backend的identical query共用同一次NRF結果。
@@ -364,9 +361,90 @@ route mirror只解決destination及correlation，不提供durable delivery guara
 
 ---
 
-## 4. 共用 Lifecycle：Health、Sync、Usable
+## 4. 共用 Lifecycle：Ready、Generation Reset與Stateless Reconnection
 
-### 4.1 狀態機
+### 4.1 Current state machine
+
+Go對AnLFBackend與MTLFBackend各自維護獨立狀態：
+
+```text
+DISABLED
+
+WAITING -> USABLE(G1) -> NOT_READY -> USABLE(G1)
+                    \-> RESETTING -> WAITING -> USABLE(G2)
+```
+
+- `GET /health/ready`是唯一probe；200與503都帶本次Python process產生的UUID `processInstanceId`。
+- 200且ID相同維持USABLE；503且ID相同只進NOT_READY並保留old route。
+- ID改變立即確認replacement；第一次純transport failure只進NOT_READY，連續第二次才確認loss。
+- RESETTING先關閉new admission並等待舊generation in-flight request退出，再清理舊route。
+- cleanup完成後回WAITING；G2 ready後只接受new POST，不接收G1 snapshot或重播舊resource。
+- AnLF與MTLF彼此獨立；其中一邊未啟用或失效不會把另一邊一起停止。
+
+business operation的一次5xx或transport error只把backend標成suspect並喚醒ready probe，不單憑該次request立即
+宣告process loss。NOT_READY與RESETTING期間，需要該backend的新operation回503。
+
+### 4.2 Generation cleanup
+
+每筆analytics/model route記錄其所依賴的backend generation。Model Provision與Monitor的本地relationship可能
+同時依賴AnLF consumer與MTLF provider，因此Go另記related backend generation，不能只從notification destination
+推測owner。
+
+backend loss後：
+
+1. AnLF loss對已協商`EneNA`與`StatisticsFailure`的Events resource各嘗試一次
+   `UNAVAILABLE_DATA` notification，然後清除analytics runtime route與SMF collection ledger。
+2. MTLF loss不停止AnLF已載入模型與analytics，但清除provision、registration、monitor、training與FL control
+   route。
+3. backend作為standard consumer建立的peer relationship只送一次best-effort DELETE／Deregister；不建立
+   process-loss retry queue。
+4. provider resource沒有標準termination callback時不發明private termination message。
+5. 清掉的public model／analytics resource保留最小memory deletion record；第一次late DELETE回204並消耗record，
+   從未存在或已消耗的ID回404。
+
+### 4.3 Stateless context與incremental descriptor
+
+兩個backend按需讀取各自Go auxiliary edge的：
+
+```http
+GET /internal/v1/nwdaf-context
+```
+
+response只含containing NWDAF `nfInstanceId`、public `apiRoot`及該edge的`internalApiRoot`。它是immutable context
+lookup，不含subscription、model、datasource或runtime snapshot，也不控制backend readiness。
+
+PyAnLF只有在raw notification成功寫入current sink後，才以
+`PUT /internal/v1/anlf/training-data-descriptors/{descriptorId}`增量發布可訓練scope/window/source；retention結束時
+以DELETE移除。Go只轉送給當下可用的PyMTLF，失敗不做restart replay。PyMTLF依每筆descriptor的source與availability
+直接從ADRF或Mongo取得資料。
+
+### 4.4 Provider lease與monitor watchdog
+
+- PyAnLF Model Provision request帶finite `monDur`，在到期前PUT refresh。200／204延長lease；404、503或transport
+  failure清除舊provision identity及monitor registration identity，但保留已載入模型。同一批既有analytics demand
+  不會隱式重新POST；之後新的或實質改變的model demand才可建立新relationship。
+- PyMTLF對periodic Model Monitor使用`repPeriod * missed_report_threshold + grace` watchdog。任何合法report，即使
+  不含deviation，也重設watchdog但不更新WAPE policy；timeout後只做一次DELETE並清除local monitor/policy state。
+
+### 4.5 Restart與state inventory
+
+| Restart | Current behavior |
+|---|---|
+| PyAnLF restart | 舊analytics、collection、model consumer及monitor provider runtime清空；Go清理G1，G2只接受new resource |
+| PyMTLF restart | active provision/monitor/training/FL state清空；AnLF繼續使用已載入模型；completed model artifacts/catalog可從其durable repository重新載入 |
+| Go restart | 所有route、deletion record及NRF cache消失；目前實驗視為new run，不接管peer orphan |
+
+ADRF與Mongo資料依各自persistence保留，但本階段不做Mongo history回填ADRF或跨source合併。NRF profile仍依configured
+capability廣告，不因backend瞬時NOT_READY反覆更新；public request會再以current backend availability決定是否回503。
+
+---
+
+## Appendix A. Superseded Phase 7 Sync Lifecycle
+
+以下內容只保存Phase 7 full-state sync的歷史設計理由；Phase 8已移除`/health/live`、`/internal/v1/sync`、
+`SYNCING`、snapshot replay及restart reconciliation，不得依本附錄實作current runtime。
+
+### A.1 狀態機
 
 Go分別追蹤AnLF backend與MTLF backend：
 
@@ -391,7 +469,7 @@ USABLE --probe/transport failure or new processInstanceId--> UNAVAILABLE
 Go在`USABLE`後仍會持續polling。backend crash、restart或live operation transport failure都會重新走完整
 polling與sync，而不是只在Go啟動時做一次handshake。
 
-### 4.2 Sync內容
+### A.2 Sync內容
 
 `BackendSyncRequest` top-level shape：
 
@@ -444,7 +522,7 @@ PyMTLF在request中接受該source，response不重新宣告或選擇source。
 PyAnLF與PyMTLF各自從config或NRF重新選擇ADRF。`trainingDataSource`只表示目前raw data實際寫在哪個
 storage，讓PyMTLF選擇相同source；它不代表兩個backend必須共用同一套ADRF discovery config。
 
-### 4.3 完整 Sync 流程
+### A.3 完整 Sync 流程
 
 Go 對兩個 backend 都執行相同的可用性流程。這不是一次性的啟動
 handshake；backend 維持可連線時，Go 目前仍會每 30 秒重新 probe 並送出
@@ -498,7 +576,7 @@ MTLF sync 傳入 PyMTLF，不必等待一般 30 秒週期。
 暫停既有service；backend以transaction／state lock讓snapshot replacement與同時發生的CRUD不會形成partial
 state。PyAnLF若prepare期間subscription state token已改變便拒絕該次snapshot，交由Go下一輪重試。
 
-### 4.4 Backend 如何套用 Snapshot
+### A.4 Backend 如何套用 Snapshot
 
 #### PyAnLF
 
@@ -532,7 +610,7 @@ Accuracy monitor 的即時 WAPE baseline 不在 snapshot 內；backend process
 重啟後會由新的 accuracy reports 重新建立。訓練中的模型工作也不由 Go
 持久化或恢復。
 
-### 4.5 Restart語意
+### A.5 Restart語意
 
 | Restart | Current behavior |
 |---|---|
@@ -540,7 +618,7 @@ Accuracy monitor 的即時 WAPE baseline 不在 snapshot 內；backend process
 | PyMTLF restart | Go只sync local MTLF resources及MTLF monitor control intent；WAPE baseline、dataset job與training job從空狀態開始，不重新建立既有remote relationship |
 | Go restart | process-local mirrors消失；目前實驗環境視為重新開始一次run，不承諾durable recovery |
 
-### 4.6 Go Startup、NRF Advertisement與Backend Availability
+### A.6 Go Startup、NRF Advertisement與Backend Availability
 
 Go startup順序是：
 
@@ -564,7 +642,7 @@ NRF registration disabled時，Go仍可用configured endpoints啟動；generic N
 backend以NRF mode呼叫private discovery route會收到`503`。shutdown時Go先向NRF deregister，再停止MTLF
 auxiliary、AnLF auxiliary及public SBI listener。
 
-### 4.7 Volatile與Durable State Inventory
+### A.7 Volatile與Durable State Inventory
 
 | State | Storage | Restart behavior |
 |---|---|---|
@@ -722,7 +800,7 @@ collection profile重複向同一SMF訂閱。
 
 - `correlationId`／Nsmf `notifId`：UUID。
 - `notifUri`：PyAnLF `/callbacks/upf-event-exposure`。
-- `nfId`：sync取得的containing NWDAF `nfInstanceId`。
+- `nfId`：按需從Go `GET /internal/v1/nwdaf-context`取得的containing NWDAF `nfInstanceId`。
 
 PyAnLF經Go AnLF edge發出`Nsmf_EventExposure` create。Go保存：
 
@@ -736,21 +814,15 @@ PyAnLF經Go AnLF edge發出`Nsmf_EventExposure` create。Go保存：
 
 peer subscription ID不能單獨作全域key，因為不同SMF可能回傳相同ID。
 
-### 6.4 Association mirror
+### 6.4 Go SMF cleanup ledger
 
-PyAnLF是refcount與association的authoritative owner，但Go需要mirror才能：
+PyAnLF仍是collection refcount與active association的authoritative owner。Go不接收association snapshot；它在自己
+轉送standard SMF POST時保存peer `Location`、target API root、accepted representation、correlation及引用該
+resource的NWDAF subscription IDs，後續PUT／DELETE直接更新同一ledger。
 
-- 在backend restart sync時還原已存在的SMF resources。
-- 正確route後續peer read／replace／delete。
-- 知道resource是否等待cleanup。
-
-因此PyAnLF定期以完整replace snapshot送：
-
-```text
-PUT /internal/v1/sync/anlf/smf-resource-associations
-```
-
-snapshot帶`processInstanceId`。Go拒絕舊PyAnLF process送來的更新。
+AnLF generation失效時，Go從ledger移除該generation已失效的NWDAF references；若resource已沒有其他reference，
+只送一次best-effort standard SMF DELETE，無論結果都移除該Go ledger entry。新PyAnLF process不會取得或接管
+舊SMF resource，必須由new Events Subscription重新建立collection。
 
 ### 6.5 Delete語意
 
@@ -833,9 +905,9 @@ try ADRF
           `--> write the same ADRF-aligned envelope to MongoDB
 ```
 
-ADRF可用時不dual-write MongoDB。Mongo fallback成功後，PyAnLF回報
-`trainingDataSource=mongodb`；後續eligible records以bounded backoff探測ADRF。真正有一筆新資料成功寫入ADRF
-後，才把source切回`adrf`。
+ADRF可用時不dual-write MongoDB。Mongo fallback成功後，該筆record對應的incremental training descriptor標示
+`source=mongodb`；後續eligible records以bounded backoff探測ADRF。真正有一筆新資料成功寫入ADRF後，新descriptor
+才重新標示`source=adrf`。
 
 不做：
 
@@ -850,7 +922,8 @@ PyAnLF的`adrf.mode`可為：
 - `configured`：使用`configured_endpoint`。
 - `nrf`：經Go generic discovery edge查詢ADRF Data Management profile，再由PyAnLF選candidate。
 
-選到的origin放入`Target-Api-Root`，standard `NadrfDataStoreRecord`經Go送ADRF。ADRF endpoint不寫入Go sync。
+選到的origin放入`Target-Api-Root`，standard `NadrfDataStoreRecord`經Go送ADRF。ADRF endpoint不寫入Go route ledger
+或stateless context。
 
 current pinned free5GC NRF可接受ADRF registration，但其discovery schema拒絕`target-nf-type=ADRF`；在該版本
 環境必須使用configured mode。
@@ -897,29 +970,27 @@ legacy correlation-only documents。
 ```
 
 送往ADRF時只包含standard `dataSub`與`dataNotif`；`source`、timestamps及top-level `supi`是Mongo local query
-extension。真正將dataset scope對回資料的control identity仍是synced accepted SMF subscription及其SUPI；
+extension。真正將dataset scope對回資料的control identity仍是descriptor所帶standard-shaped `smfDataSub`及其SUPI；
 Mongo top-level `supi`只是讓相同time-window query能有效率執行。
 
-### 8.4 `trainingDataSource`協調
+### 8.4 Per-descriptor datasource
 
-PyAnLF擁有實際write sink，Go只接收其sync response並將current value帶入下一次PyMTLF sync：
+PyAnLF擁有實際write sink。每次成功storage後，它以incremental descriptor發布該批資料的source、retention、
+time window、scope與standard-shaped `smfDataSub`：
 
 ```text
 PyAnLF storage outcome
-    -> PyAnLF sync response trainingDataSource
-    -> Go availability selection
-    -> PyMTLF sync request trainingDataSource
+    -> PUT Go /internal/v1/anlf/training-data-descriptors/{descriptorId}
+    -> Go forwards current descriptor to usable PyMTLF
+    -> PyMTLF records descriptor source and direct retrieval information
 ```
 
-PyMTLF不自行猜測資料在哪裡，也不因ADRF fetch失敗偷偷fallback Mongo；同一dataset job固定使用snapshot時的
-source。
-
-datasource變化不是一筆獨立push event。PyAnLF在新record的storage outcome發生切換後更新local state；Go在
-下一次AnLF probe/sync response才取得新值。一般最晚受30秒success polling週期限制；Go觀察到值改變後會立即
-wake MTLF monitor，使PyMTLF不再多等一個完整週期。
+這不是全環境單一`trainingDataSource`共識，也不需要sync。PyMTLF依觸發retrain時符合scope/window的descriptor選擇
+ADRF或Mongo；同一dataset snapshot固定使用選定descriptor的source，不因單次fetch失敗跨source補資料。PyMTLF
+unavailable時Go回503且不重播舊descriptor；之後只有新的成功storage會發布新的descriptor。
 
 規格對照：ADRF store record使用`TS29575_Nadrf_DataManagement.yaml`。ADRF-first、single-active-sink、
-Mongo fallback及`trainingDataSource`是current deployment policy，不是3GPP欄位。
+Mongo fallback及per-descriptor source是current deployment policy，不是3GPP欄位。
 
 ---
 
@@ -964,6 +1035,10 @@ applicability slot：
 - slot已有compatible READY model：直接reuse。
 - slot沒有READY model：透過Go建立standard Model Provision subscription。
 - 多個compatible analytics demands共用一個provision resource，需求集合改變時replace該resource。
+
+provision event帶finite `monDur`。PyAnLF在到期前PUT同一resource；200／204更新lease，404／503或transport
+failure則忘記舊provision與monitor registration identity，但保留已載入model。同一批既有demands不會觸發替代POST；
+後續新的或實質改變的model demand才可建立新resource。
 
 PyMTLF以seed catalog的applicability descriptor解析demand。`immRep=true`且有matching model時，create response
 直接帶`mLEventNotifs`及artifact URL；否則以standard notification非同步送達。
@@ -1100,11 +1175,9 @@ training進行期間同family的新degradation不重複建立另一個job。
 - PyAnLF內部發起的Model Provision與registration，以及PyMTLF內部發起的monitor subscription，使用相同Go
   processors與route mirrors，只是initiator／destination標為backend。
 
-正常CRUD的結果由目的backend先建立或拒絕resource，再由各層Go保留
-status、`Location`與representation逐級回傳發起端。sync只在backend
-restart後恢復Go-owned route mirror與backend resource snapshot，不作為
-normal-path resource acknowledgement，也不替backend判定模型或監控是否
-READY。
+正常CRUD的結果由目的backend先建立或拒絕resource，再由各層Go保留status、`Location`與representation逐級
+回傳發起端。backend restart不恢復route或resource；old relationship依finite lease、periodic watchdog、標準DELETE
+及Go deletion record收斂，new process只由new POST建立state。
 
 在分散式部署中，A、B的PyAnLF於模型啟用後，以各自containing
 NWDAF的`nfInstanceId`作registration `consumerId`並送到provider C。
@@ -1124,13 +1197,9 @@ degradation及local-AnLF reconciliation是current internal design。
 
 ### 11.1 Scope resolution
 
-dataset coordinator收到retrain intent後，使用Go sync提供的：
-
-- Events Subscription snapshots。
-- SMF resource snapshots。
-- `trainingDataSource`。
-
-它把每個active monitor scope解析回對應的SMF data subscription，固定：
+dataset coordinator收到retrain intent後，使用PyAnLF先前增量發布、目前仍在retention window內的training-data
+descriptors。每筆descriptor包含standard-shaped `smfDataSub`、analytics/model scope、source、time window及
+retention metadata。它把每個active monitor scope解析到符合的descriptor，固定：
 
 - triggering scope。
 - required active scopes。
@@ -1159,7 +1228,7 @@ fetch instruction取回record。
 
 PyMTLF以read-only client直接查Mongo，query語意與ADRF一致：
 
-- 從synced SMF data subscription取得SUPI。
+- 從descriptor的standard-shaped SMF data subscription取得SUPI。
 - 使用snapshot time range。
 - 讀取`dataNotif.upfEventNotifs`。
 
@@ -1183,7 +1252,7 @@ PENDING -> RESOLVING -> RETRIEVING -> READY -> CLAIMED
                                                `-> CANCELLED
 ```
 
-- `RESOLVING`把policy scope對回Events Subscription及accepted SMF resources。
+- `RESOLVING`把policy scope對回eligible incremental training-data descriptors。
 - ADRF mode會為每個resolved SMF data subscription建立一個retrieval subscription；因此一個group展開成三個
   SUPI時，通常建立三個ADRF retrieval resources。
 - fetch instruction中的`fetchCorrIds`去重並受`max_records_per_job`限制。
@@ -1359,8 +1428,8 @@ flowchart LR
 
 | Name | Owner | Lifetime and purpose |
 |---|---|---|
-| NWDAF `nfInstanceId` | Go | containing NWDAF identity；backend透過sync取得 |
-| backend `processInstanceId` | each Python backend | 一次process incarnation；Go用來偵測restart與拒絕stale update |
+| NWDAF `nfInstanceId` | Go | containing NWDAF identity；backend透過stateless `nwdaf-context` lookup取得 |
+| backend `processInstanceId` | each Python backend | 一次process incarnation；Go用來偵測replacement並界定route generation |
 | NWDAF Events `subscriptionId` | PyAnLF | analytics resource UUID；Go保存external route mirror |
 | SMF peer subscription ID | SMF | 只在同一SMF origin內唯一 |
 | `(Target-Api-Root, peer subscription ID)` | Go/PyAnLF | SMF peer resource的完整identity |
@@ -1420,10 +1489,10 @@ flowchart LR
 | public SBI handlers／processors／consumers | `NWDAF/internal/sbi/` |
 | AnLF-originated auxiliary edge | `NWDAF/internal/anlf/` |
 | MTLF-originated auxiliary edge | `NWDAF/internal/mtlf/` |
-| shared backend availability／sync contract | `NWDAF/internal/backend/` |
-| availability polling與snapshot projection | `NWDAF/pkg/service/init.go` |
+| shared backend readiness、generation admission與reset state machine | `NWDAF/internal/backend/` |
+| availability polling、generation cleanup與stateless context wiring | `NWDAF/pkg/service/init.go` |
 | NRF registration、generic discovery與shared cache | `NWDAF/internal/context/context.go`, `NWDAF/internal/sbi/consumer/nrf_service.go` |
-| process-local route mirrors | `NWDAF/internal/context/` |
+| process-local route ledger與deletion records | `NWDAF/internal/context/` |
 | generated-schema gaps | `NWDAF/internal/compat/<service>/` |
 | listener/backend config | `NWDAF/pkg/factory/` and `NWDAF/config/` |
 
@@ -1432,11 +1501,12 @@ flowchart LR
 | Concern | Location |
 |---|---|
 | FastAPI routes／server | `PyAnLF/src/py_anlf/sbi/` |
-| snapshot sync transaction | `sbi/routers/sync.py`, `core/sync_projection.py` |
+| containing NWDAF stateless context | `core/nwdaf_context.py` |
 | Events Subscription policy | `core/subscription_service.py` |
 | analytics runtime／inference | `core/analytics_runtime.py`, `runtime_manager.py`, `predictor.py` |
 | SMF discovery／collection | `core/discovery.py`, `collection.py` |
 | callback ingestion／storage | `core/ingestion.py` |
+| incremental training-data descriptor delivery | `core/ingestion.py`, `core/collection.py` |
 | model demand／download／activation | `core/model_demand.py`, `model_manager.py`, `provision_events.py` |
 | monitor registration／subscription | `core/monitor_registration.py`, `monitor_subscription.py` |
 | WAPE measurement | `core/accuracy/` |
@@ -1447,11 +1517,12 @@ flowchart LR
 | Concern | Location |
 |---|---|
 | FastAPI routes／application wiring | `PyMTLF/src/py_mtlf/api/`, `app.py` |
-| snapshot sync projection | `api/sync.py`, `core/sync_projection.py` |
+| containing NWDAF stateless context | `core/nwdaf_context.py` |
 | model family／seed catalog | `core/seed_catalog.py` |
 | provision resources／delivery | `core/provision_store.py`, `notification_delivery.py` |
 | monitor resources／policy | `core/monitor_store.py`, `monitor_reconciler.py`, `accuracy_policy.py` |
 | dataset resolution／retrieval | `core/dataset.py`, `adrf_discovery.py` |
+| incremental training-data descriptor API | `api/training_data.py`, `core/dataset.py` |
 | feature conversion／eligibility | `core/training_data.py` |
 | local training／job lifecycle | `core/trainer.py`, `training_jobs.py` |
 | candidate bundle／artifact | `core/bundle_builder.py`, `artifacts.py` |
@@ -1474,9 +1545,10 @@ flowchart LR
 
 非標準contract目前限於：
 
-- liveness與readiness。
-- containing NWDAF snapshot sync。
-- PyAnLF SMF resource association full snapshot。
+- readiness與per-process `processInstanceId`。
+- stateless containing-NWDAF context lookup。
+- incremental training-data descriptor delivery；descriptor內嵌standard-shaped `smfDataSub`，但descriptor envelope
+  本身是project-private control metadata。
 - `Target-Api-Root`指定backend已選定的SMF／ADRF。
 - `X-NWDAF-Monitor-Registration-Id`傳遞無法由standard monitor subscription body表達的owner correlation。
 - `X-NWDAF-Target-Nf-Instance-Id`、
@@ -1485,13 +1557,12 @@ flowchart LR
   `X-NWDAF-Target-Selection-Source`傳遞backend已選定的remote peer；
   Go在NRF模式對照尚未過期的discovery cache，且不把這些headers轉送
   external peer。
-- sync內的`ownerRegistrationId`與`trainingDataSource`。
 
 ### 17.3 State ownership
 
 - Go mirror不取代PyAnLF/PyMTLF authoritative business state。
 - PyAnLF的SMF refcount不由Go重新計算。
-- PyAnLF的storage outcome決定`trainingDataSource`；Go只傳播。
+- PyAnLF的每筆storage outcome決定descriptor source；Go只轉送當次incremental descriptor。
 - PyMTLF的accuracy state、dataset state、training state與catalog state不由Go解析。
 - raw storage schema與training feature conversion是不同state boundary。
 - model FamilyKey、version、artifact與monitor scope各自保存不同identity層次。
@@ -1499,7 +1570,7 @@ flowchart LR
 ### 17.4 Temporal與generation isolation
 
 - subscription/runtime revision阻止舊reconcile覆寫新subscription。
-- backend process ID阻止舊process association覆寫current Go mirror。
+- backend process ID與generation admission fence阻止舊process operation在reset後保留route。
 - provision resource revision阻止已刪除或已replace resource送出stale notification。
 - dataset snapshot固定source、scope inventory與time window。
 - catalog promotion驗證expected generation及base artifact。
@@ -1522,10 +1593,11 @@ flowchart LR
 
 Concurrency guards目前包括：
 
-- Events Subscription CRUD與sync transaction serialization。
+- per-backend generation admission、in-flight drain與RESETTING gate。
+- Events Subscription CRUD與AnLF generation reset serialization。
 - subscription/runtime revision防止stale reconcile覆寫新狀態。
 - per-CollectionKey lock與reference set。
-- backend `processInstanceId`防止stale association update。
+- backend `processInstanceId`界定route generation；model relationship另記cross-backend related generation。
 - provision resource revision與latest desired notification coalescing。
 - PyAnLF candidate-first multi-runtime atomic swap。
 - family-level retrain-in-flight。
@@ -1572,6 +1644,11 @@ Consumer
   -> terminal Nsmf/Nupf delete
 ```
 
+另由cross-process lifecycle scenario驗證：Go先啟動而backend延後連線、PyAnLF與PyMTLF各自kill、changed
+`processInstanceId` reset、一次Events failure notification、old SMF/model route cleanup、late DELETE 204、new process
+不接收old state，以及new Events Subscription重新建立完整model/monitor/collection chain。runtime與support tooling均
+不呼叫`/health/live`或`/internal/v1/sync`。
+
 目前限制：
 
 - portable E2E使用SMF static session resolution與go-upf standalone dataset replay，不等於真實PDU session、
@@ -1581,11 +1658,12 @@ Consumer
 - Group ID member retrieval是PyAnLF static config，不是UDM procedure。
 - public Model Monitor registration尚未依`consumerId`發現remote AnLF；current reconciliation固定使用containing
   NWDAF的PyAnLF。
-- Go callback relay沒有durable queue；sender retry與desired-state reconciliation仍是delivery guarantee的一部分。
+- Go callback relay沒有durable queue；normal-path sender retry與feature-specific desired-state worker仍是delivery
+  guarantee的一部分，但backend crash cleanup只嘗試一次且不重播舊resource。
 - 尚未實作AoI-based candidate selection、multiple NWDAF、AGG或federated learning。
 - Go state、model catalog allocator與training job都沒有跨整體實驗restart的durable persistence保證。
 - ADRF／Mongo historical gap不backfill、不merge。
 - current deployment的Python direct／private edges使用plain HTTP，未整合free5GC OAuth、certificate identity或
   credential delegation。
 
-這些限制是current baseline的scope boundary。
+這些限制是current implemented scope boundary。

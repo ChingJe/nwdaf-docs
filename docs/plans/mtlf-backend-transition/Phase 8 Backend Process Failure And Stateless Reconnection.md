@@ -2,7 +2,7 @@
 
 Date: 2026-08-10
 
-Status: Planned
+Status: Completed and verified
 
 Related records:
 
@@ -407,7 +407,8 @@ model_provision:
 | other 4xx | 記錄contract rejection並清除舊relation，不自行改body重試 |
 
 relation清除後不立即自動POST同一舊需求。後續新的analytics model demand可以重新走NRF discovery／configured
-provider selection並建立新的subscription。
+provider selection並建立新的subscription。PyAnLF必須區分「尚未初始建立」與「既有relationship失效」；相同
+demand的重複upsert不得解除阻擋，只有新增或實質改變的model demand才可再次建立resource。
 
 ---
 
@@ -676,3 +677,82 @@ slice是實作與驗證checkpoint，不要求每個slice各自commit；完成全
 - production TLS、OAuth delegation或backend獨立NF identity
 
 上述項目不得成為Phase 8 acceptance blocker，也不得以「未來可能需要」為理由保留full sync。
+
+---
+
+## 17. Implementation Result
+
+### 17.1 Go NWDAF
+
+- availability monitor已改成`DISABLED/WAITING/USABLE/NOT_READY/RESETTING`，只probe `/health/ready`並以
+  `processInstanceId`建立generation admission fence及in-flight drain。
+- 移除full sync request/response、snapshot projection、`SYNCING`、SMF association snapshot endpoint及相關
+  startup wiring。
+- 新增AnLF/MTLF各自的stateless `GET /internal/v1/nwdaf-context`；training-data descriptor改成PyAnLF增量
+  PUT/DELETE，Go只在PyMTLF usable時轉送。
+- AnLF loss依feature negotiation送一次`UNAVAILABLE_DATA`、清除analytics route、建立late-delete tombstone並對
+  無其他reference的SMF resource做一次best-effort DELETE。
+- model route同時記錄primary及related backend generation。reset依resource type與inbound/outbound direction判斷
+  dependency，不再用notification destination猜provider owner；consumer-owned standard relationship只清理一次。
+- Events、Model Provision、Monitor registration/subscription與Model Training已清除resource保留最小memory deletion
+  record；第一次late DELETE回204，unknown或已消耗ID回404。
+- local self-target Model Provision與Monitor不再經public SBI遞迴呼叫自己，而直接route到containing NWDAF的local
+  backend。
+
+### 17.2 PyAnLF
+
+- 移除`/health/live`、`/internal/v1/sync`及`SyncProjection`；ready 200/503都提供本process UUID。
+- containing NWDAF identity/API roots改由stateless context client按需取得；collection直接以Go已保存的standard SMF
+  create/delete結果工作，不重建old association。
+- 每筆raw storage成功後發布incremental training-data descriptor；ADRF與Mongo source保留在descriptor，不再維護
+  global sync datasource。
+- Model Provision加入finite lease。PUT 200/204延長；404/503/transport清除old provision identity與monitor
+  registration identity、保留已載入模型，並阻止同一批既有analytics demand隱式重新POST；後續新增或實質改變的
+  model demand仍可建立新的relationship。
+- monitor registration invalidation加入epoch fence，防止provider-loss與in-flight create交錯後寫回stale ID。
+
+### 17.3 PyMTLF
+
+- 移除`/health/live`、`/internal/v1/sync`及`SyncProjection`；completed model repository仍可在process startup載入，
+  active resource、WAPE baseline、dataset job與FL workspace不恢復。
+- 新增stateless containing-NWDAF context與incremental training-data descriptor API；dataset scope直接由eligible
+  descriptor的standard-shaped `smfDataSub`、source、window及retention解析。
+- periodic Model Monitor watchdog使用`repPeriod * missed_report_threshold + grace`；合法no-deviation report只重設
+  watchdog，不進accuracy policy。timeout只做一次cleanup並移除registration/policy state。
+- containing NWDAF本身被選為Model Monitor target時直接使用stateless context，不需要NRF自我發現。
+
+### 17.4 Support tooling and deployment
+
+- distributed FL runner與support checks不再等待live或assert sync；private context改成stateless lookup。
+- cross-process tests改成驗證backend kill、changed process UUID、old route cleanup、one-shot failure、late DELETE與new
+  generation empty start。
+- portable deployment使用workspace root的team SMF、ADRF與go-upf；go-upf固定為
+  `dev/federated-learning @ c69051b`，包含standalone EES replay、Release 18 `ueIpAddress`/`repPeriod` contract及GTP
+  interface修正。
+- portable runner使用typed backend config loader、configured containing-NWDAF model provider及dynamic promoted
+  `modelUniqueId`，不再假設model ID固定為2/3。
+
+### 17.5 Review corrections included before closure
+
+最終review另外確認並修正：
+
+1. PyAnLF送SMF時移除typed model產生的empty optional fields，避免SMF把`anyUeInd=false`等空值誤判成explicit
+   request。
+2. PyMTLF descriptor target comparison canonicalize absent/empty target fields。
+3. local containing-NWDAF Model Provision與Monitor self-target recursion。
+4. model route primary/related generation ownership與model late-delete records。
+5. SMF loss cleanup後Go ledger entry未移除。
+6. provision lease失效後僅因ID清空便隱式重新POST同一批既有demand。
+
+### 17.6 Verification record
+
+- NWDAF：`go test ./...`、`go test -race ./...`及`golangci-lint run`通過。
+- PyAnLF：263 passed、1 skipped；Ruff通過。
+- PyMTLF：188 passed；Ruff通過。
+- distributed FL support checks：10 passed；support-tool Ruff通過。
+- cross-process initial provision/monitor/backend-loss/stateless restart scenario通過。
+- cross-process Mongo local training/model replacement scenario通過。
+- portable SMF/go-upf/ADRF scenario通過，涵蓋ADRF training、promoted model activation、Mongo fallback training、
+  ADRF future-write recovery及terminal delete。
+- production/support tree掃描沒有`/health/live`、`/internal/v1/sync`、`SyncProjection`或`SYNCING`runtime reference；
+  Python API tests只保留404 assertion，文件只保留明確標示為superseded的Phase 7歷史附錄。
