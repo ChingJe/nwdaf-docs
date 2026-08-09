@@ -24,6 +24,10 @@
   * 存放專案整體的進度報告、里程碑或階段性總結（例如：`project_progress.md`）。
   * **用途**：快速掌握專案目前開發到哪個階段。
 
+* **`proposals/` (提案文件)**
+  * 存放情境、標準與現況落差、候選設計及proposal draft。
+  * **用途**：形成可獨立閱讀的proposal主稿與supporting evidence。
+
 ---
 
 ## 檔案歸檔慣例 (File Hierarchy Convention)
