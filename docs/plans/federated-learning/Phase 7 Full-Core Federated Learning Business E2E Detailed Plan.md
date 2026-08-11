@@ -1085,3 +1085,7 @@ peer subscription 迴避競態。
 完整 root cause、修正邊界、test-first concurrency scenario 與驗收條件記錄於：
 
 - [PyAnLF Collection Runtime Revision Race Remediation Plan](code-reviews/Phase%207%20PyAnLF%20Collection%20Runtime%20Revision%20Race%20Remediation%20Plan.md)
+
+PyAnLF process-internal remediation 已於 2026-08-11 完成，repository-level 結果為
+`282 passed, 2 skipped`且 Ruff通過。Phase 7 full-core FL E2E尚未使用修正版重跑，
+因此完整關閉證據仍以 remediation plan 的 pending verification 記錄為準。

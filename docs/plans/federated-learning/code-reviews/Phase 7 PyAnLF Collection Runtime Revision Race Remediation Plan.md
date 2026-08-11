@@ -2,7 +2,7 @@
 
 Date: 2026-08-11
 
-Status: Ready for implementation
+Status: Implemented; full-core E2E verification pending
 
 Parent documents:
 
@@ -137,8 +137,9 @@ worker 又把所有 exception 都視為一般失敗，所以：
 2. CollectionManager 仍保留 process-local latest-task marker，用於 queue
    coalescing 與 delete invalidation；它不是第二份 runtime revision，也不能單獨
    證明 task 仍有效。
-3. `StaleRuntimeRevisionError` 表示 task 已被較新 runtime 取代，是 terminal
-   cancellation，不是 retryable collection failure。
+3. `StaleRuntimeRevisionError` 表示 task 已被較新 runtime 取代；
+   `SubscriptionRuntimeNotFoundError` 表示 runtime 已被移除。兩者對該 task 都是
+   terminal cancellation，不是 retryable collection failure。
 4. stale task 不得重試相同 revision，也不得只降低 log level 後繼續原邏輯。
 5. 不把舊 task 的 revision 改成最新 revision後重跑。task 內含 deep-copied
    subscription snapshot；若 consumer replace 改變 collection requirements，這會
@@ -211,7 +212,8 @@ marker 已是 N+1但 RuntimeManager 尚未發布 N+1 時，N+1也不得寫入；
 
 ### 7.3 Classify Stale Work Separately
 
-worker 與 synchronous reconcile path 單獨處理 `StaleRuntimeRevisionError`：
+worker 與 synchronous reconcile path 單獨處理 `StaleRuntimeRevisionError` 與
+`SubscriptionRuntimeNotFoundError`：
 
 - 記錄 concise debug／info superseded-task message；
 - 不輸出一般 failure traceback；
@@ -288,8 +290,8 @@ code。測試使用 `threading.Event`／barrier 控制順序，不使用 `sleep(
   收到 N+1 task 時，舊 task也停止；
 - CollectionManager marker 與 RuntimeManager revision 不一致時，兩者任何一方
   都不能單獨授權 binding mutation；
-- check 後、`sync_bindings()` 前才更新 revision 時，atomic fence 被當成
-  superseded cancellation；
+- check 後、`sync_bindings()` 前才更新 revision 或移除 runtime 時，atomic fence
+  被當成 superseded／inactive cancellation；
 - normal retryable SMF failure仍依原 backoff 重試；
 - consumer replace 使用新 snapshot，不把舊 task自動升級；
 - delete／shutdown 正常釋放 peer resource；
@@ -321,7 +323,7 @@ accuracy、seed provision、monitor、FL、publication 與 reprovision 仍完整
 
 本 finding 只有在下列條件全部成立後才能關閉：
 
-1. stale collection task 是 no-retry terminal cancellation；
+1. stale 或 inactive collection task 是 no-retry terminal cancellation；
 2. authoritative runtime revision 與 local latest-task marker 各自履行獨立檢查，
    且 local marker 不被當成 runtime state；
 3. 所有 active runtime revision publication 都有正確 snapshot 的 replacement
@@ -344,3 +346,47 @@ accuracy、seed provision、monitor、FL、publication 與 reprovision 仍完整
 - collection key、SMF discovery、AoI 或 group-to-SUPI resolution redesign；
 - scikit-learn version warning；
 - 跨 process exactly-once 或 durable queue。
+
+## 12. Implementation Record（2026-08-11）
+
+### 12.1 Implemented behavior
+
+PyAnLF 已完成以下修改：
+
+- `SubscriptionRuntimeManager.is_runtime_revision_current()` 成為 active runtime
+  revision 的 lock-protected read-only query，reporting scheduler 與
+  CollectionManager 共用相同語意；
+- CollectionManager `_latest_revisions` 改名為 `_latest_task_revisions`，並以註解
+  固定它只負責 process-local task supersession 與 release invalidation；
+- collection currency 拆成 latest-task marker 與 authoritative runtime revision
+  兩項檢查；release task 仍只依 local invalidation marker；
+- worker 與 synchronous reconcile 將 stale revision及已移除 runtime 視為
+  no-retry terminal cancellation，不再輸出一般 failure traceback；
+- create、replace 與 initial model activation 的既有 replacement reconcile 路徑
+  由測試固定；existing-model generation cutover 仍不增加 runtime revision；
+- collection key、reference、peer create／delete 與 cleanup 演算法沒有改變。
+
+### 12.2 Deterministic evidence
+
+新增的 concurrency coverage 以 `threading.Event` 控制時序，證明：
+
+1. CollectionManager marker 仍為 N、RuntimeManager 已為 N+1 時，N 在 peer side
+   effect 前停止；
+2. stale 或 missing runtime exception 不產生相同 revision retry；
+3. N 已取得一份 SMF collection resource並停在 `sync_bindings(N)` 時，N+1可接手
+   同一 resource；peer POST 維持一次、peer DELETE 為零；
+4. initial provisioned model activation 會排入 revision N+1 的最新 subscription
+   snapshot；
+5. authoritative query 在 apply、replacement 與 release 後回報正確結果。
+
+### 12.3 Verification record
+
+- PyAnLF focused collection tests：`20 passed`；
+- PyAnLF complete suite：`282 passed, 2 skipped`；
+- PyAnLF Ruff：passed；
+- `git diff --check`：passed。
+
+尚未在本次 remediation 中重跑 Phase 6 full-core collection 與 Phase 7 full-core
+FL E2E，因此本 ledger 保持「implementation complete, E2E pending」，不宣稱第10節
+全部完成。完整 E2E 驗收後應補入實際 PyAnLF revision、infrastructure revision、
+resource counts 與 A／B log evidence，再將本文件關閉。
