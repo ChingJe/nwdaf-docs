@@ -17,6 +17,10 @@
 - [NWDAF Federated Learning Release 18 規格解讀](../../specification-guides/NWDAF%20Federated%20Learning%20Release%2018%20規格解讀.md)
 - [NWDAF Development Policy](../../development_policy.md)
 
+後續修正記錄：
+
+- [PyAnLF Collection Runtime Revision Race Remediation Plan](code-reviews/Phase%207%20PyAnLF%20Collection%20Runtime%20Revision%20Race%20Remediation%20Plan.md)
+
 ---
 
 ## 1. 目的與可宣稱的結果
@@ -1063,3 +1067,21 @@ activation 與 monitor routes 對同一 identity 達成一致。
    配置。Slice 7F 已改為 window-first split、10% validation 與 90% recent
    training，並以新的 full-core run 證明每個 client 得到 40 training samples
    與 4 validation samples；兩側 window 沒有共用 observation。
+
+## 18. Follow-up finding（2026-08-11）
+
+在套用 stateless backend lifecycle 後，以 PyAnLF revision
+`5c305c7b69a50e9356bcfca8229f1a3cffd11a9a` 及 infrastructure commit
+`75cae80` 重跑 full-core E2E 時，A／B initial model activation 各出現一次
+`StaleRuntimeRevisionError`。完整 FL 閉環仍成功，因此 17.2 的業務流程結論沒有
+被推翻；但這證明 collection reconcile 與 initial runtime model activation 間有
+可恢復的 process-internal race。
+
+舊 collection task 已取得的 SMF／UPF resource 沒有因此被取消，RuntimeManager
+也在 mutation 前拒絕舊 revision；問題是 stale task 被 generic worker handler
+記成一般 ERROR 並準備重試。修正不得重新加入 external sync，也不得以取消並重建
+peer subscription 迴避競態。
+
+完整 root cause、修正邊界、test-first concurrency scenario 與驗收條件記錄於：
+
+- [PyAnLF Collection Runtime Revision Race Remediation Plan](code-reviews/Phase%207%20PyAnLF%20Collection%20Runtime%20Revision%20Race%20Remediation%20Plan.md)
