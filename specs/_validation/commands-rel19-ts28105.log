@@ -1,0 +1,9 @@
+# Exact commands used for Release 19 TS 28.105 supplemental build
+
+unzip -q nwdaf-3gpp-r18-full-specs-with-ts29505.zip -d <parent-workdir>
+unzip -q 28105-j60.zip -d <source-workdir>
+pandoc 28105-j60.docx --from=docx --to=gfm --wrap=none --extract-media=<media-dir> -o raw.md
+python build_supplemental.py
+python update_validate.py
+HOME=<writable-home> soffice --headless --convert-to pdf --outdir <qa-pdf-dir> 28105-j60.docx
+pdftoppm -f <sample-page> -singlefile -png -r 110 28105-j60.pdf <sample-output>

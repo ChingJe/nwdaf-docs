@@ -29,6 +29,14 @@ This corpus is organized for progressive loading by development agents. All list
 | [TS 29.575](TS%2029.575/README.md) | 18.11.0 | Full | ADRF data/analytics and ML model management APIs |
 | [TS 29.576](TS%2029.576/README.md) | 18.8.0 | Full | MFAF configuration, fetch and notification services for messaging-framework-based data delivery |
 
+## Supplemental cross-release references
+
+| Specification | Version | Status | Primary use |
+|---|---:|---|---|
+| [TS 28.105](%5Fsupplemental/Rel-19/TS%2028.105/README.md) | 19.6.0 | **Release 19 supplemental** | Forward-looking AI/ML management, including federated-learning management, FL roles/client selection and related information models |
+
+> The main corpus above remains Release 18. Supplemental specifications are intentionally isolated and **must not be treated as Release 18 implementation requirements**. Their OpenAPI/NRM dependencies are not automatically resolved against Release 18 schemas.
+
 ## Common workflow: identifiers, NF profiles and API fields
 
 1. Use TS 23.003 for the normative composition and semantics of SUPI, SUCI, GPSI, PEI, PLMN, DNN and 5GS identifiers.
@@ -67,6 +75,13 @@ This corpus is organized for progressive loading by development agents. All list
 3. Use TS 29.575 for ADRF data and ML-model APIs.
 4. Use TS 29.574 for DCCF coordination and TS 29.576 for MFAF delivery.
 5. Use TS 29.552 to trace concrete Stage 3 signalling sequences.
+
+## Common workflow: Release 19 federated-learning management research
+
+1. Use the main Release 18 TS 23.288 / TS 29.520 corpus for Release 18 NWDAF requirements and APIs.
+2. Use [_supplemental/Rel-19/TS 28.105](_supplemental/Rel-19/TS%2028.105/README.md) only when studying Release 19 AI/ML management additions.
+3. For federated learning, start at TS 28.105 clauses 6.2b.2.15, 6.2b.2.15.2.1 and the FL-related data types in clause 7.4.
+4. Do not cite Release 19 TS 28.105 text as evidence of a Release 18 implementation requirement unless explicitly performing a cross-release comparison.
 
 ## Fidelity boundary
 

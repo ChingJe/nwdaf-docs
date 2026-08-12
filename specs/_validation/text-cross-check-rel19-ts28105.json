@@ -1,0 +1,68 @@
+{
+  "spec": "TS 28.105",
+  "version": "19.6.0",
+  "release": "19",
+  "supplemental": true,
+  "pandoc_tokens": 47741,
+  "independent_tokens": 47759,
+  "token_multiset_overlap": 0.9993716093085607,
+  "marker_counts": {
+    "shall": {
+      "pandoc": 93,
+      "independent": 93,
+      "match": true
+    },
+    "should": {
+      "pandoc": 108,
+      "independent": 108,
+      "match": true
+    },
+    "may": {
+      "pandoc": 238,
+      "independent": 238,
+      "match": true
+    },
+    "must": {
+      "pandoc": 4,
+      "independent": 4,
+      "match": true
+    },
+    "note": {
+      "pandoc": 69,
+      "independent": 69,
+      "match": true
+    },
+    "example": {
+      "pandoc": 35,
+      "independent": 35,
+      "match": true
+    }
+  },
+  "negative_marker_counts": [
+    {
+      "phrase": "shall not",
+      "pandoc": 9,
+      "independent": 9,
+      "match": true
+    },
+    {
+      "phrase": "should not",
+      "pandoc": 4,
+      "independent": 4,
+      "match": true
+    },
+    {
+      "phrase": "may not",
+      "pandoc": 9,
+      "independent": 9,
+      "match": true
+    },
+    {
+      "phrase": "must not",
+      "pandoc": 1,
+      "independent": 1,
+      "match": true
+    }
+  ],
+  "marker_counts_match": true
+}

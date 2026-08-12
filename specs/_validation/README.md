@@ -1,65 +1,41 @@
 # Validation records
 
-This directory records deterministic conversion and validation results for the complete Release 18 corpus.
+This directory records deterministic conversion and validation results for the Release 18 main corpus plus isolated cross-release supplemental references.
 
-## Latest extension
+## Latest adjustment
 
-- Added TS 29.505 V18.8.0 in full.
-- Added the official `TS29505_Subscription_Data.yaml` attachment byte-for-byte.
-- Closed the direct `TS29504_Nudr_DR.yaml` → `TS29505_Subscription_Data.yaml` dependency.
+- Main corpus remains **22 complete Release 18 specifications**.
+- TS 28.104 V18.7.0 and TS 28.105 V18.9.0 are not part of this build.
+- Added **TS 28.105 V19.6.0** under `_supplemental/Rel-19/` for forward-looking AI/ML and federated-learning research.
+- The Release 19 NRM YAML is isolated from the Release 18 `openapi/` tree to prevent accidental cross-release bundling.
 
 ## Automated results
 
-- Build ID: `r18-corpus-20260803-ts29505`
-- Specifications: 22
-- Files: 6927
-- Markdown files: 3746
-- Manifest entries: 10531
-- Local links checked: 3876
-- Image references checked: 1092
-- OpenAPI YAML files parsed: 61/61
-- Official YAML/ABNF attachments checked: 63/63
+- Build ID: `r18-core-20260812-rel19-ts28105-supplemental`
+- Main Release 18 specifications: 22
+- Supplemental specifications: 1
+- Files: 7079
+- Markdown files: 3818
+- Manifest entries: 10938
+- Local links checked: 3950; broken: 0
+- Image references checked: 1123; broken: 0
+- Main OpenAPI YAML: 61
+- Supplemental Release 19 YAML: 1
 - Validation passed: True
 
-## TS 29.505 fidelity
+## Release 19 TS 28.105 fidelity
 
 - Heading-tree reassembly hash match: True
 - Independent normative marker counts match: True
-- Token multiset overlap: 0.999891
-- Original media: 5
-- PNG previews: 5
-- Embedded OLE/Visio objects: 5
+- Token multiset overlap: 0.999372
+- Original media: 31
+- PNG previews: 31
+- Embedded OLE/Visio objects: 9
 
-## Fidelity method
+## Cross-release boundary
 
-- Pandoc supplies the primary structured extraction.
-- `docx2txt` supplies an independent text path from the original DOCX.
-- The heading tree is reassembled and SHA-256 checked before file partitioning.
-- Complex merged-cell tables remain HTML when Markdown tables cannot safely represent them.
-- The official YAML is retained byte-for-byte.
-- Original EMF and embedded Visio/OLE payloads are retained with PNG previews.
+The supplemental Release 19 TS 28.105 references `TS28104_MdaNrm.yaml, TS28623_ComDefs.yaml, TS28623_GenericNrm.yaml, TS28623_ThresholdMonitorNrm.yaml, TS29520_Nnwdaf_EventsSubscription.yaml`. These are intentionally not resolved against Release 18 files. In particular, the Release 18 `TS29520_Nnwdaf_EventsSubscription.yaml` may share a filename with a referenced schema, but it is not a same-release dependency for this Release 19 NRM.
 
 ## Visual validation
 
-TS 29.505 used Level B risk-based visual validation. All five extracted diagrams were rendered and inspected. This build does not claim page-by-page visual certification of the complete Word document.
-
-## Known limitations
-
-- Some atomic clauses may exceed the nominal 4,200-word target when a safe semantic split is unavailable.
-- OpenAPI files still reference schemas from specifications outside the current project scope. These are listed in `openapi/manifest.yaml`.
-- The Markdown corpus is a retrieval derivative. High-stakes normative decisions should be checked against the original 3GPP Word document and exact package attachment.
-
-## Detailed records
-
-- `build.json`: clean-build identity and parent corpus.
-- `environment.json`: tool versions.
-- `source-inventory-ts29505.json`: source hashes and members.
-- `commands-ts29505.log`: executed conversion phases.
-- `report.json`: concise corpus summary.
-- `final-checks.json`: complete automated results.
-- `text-cross-check.json`: independent extraction comparisons.
-- `additional-ts29505-build.json`: TS 29.505 tree and asset statistics.
-- `official-attachment-checks.json`: byte-level attachment checks.
-- `visual-sampling-ts29505.json`: visual QA scope.
-- `deterministic-corrections.yaml`: heading and structure corrections.
-- `CONVERSION_WORKFLOW.md`: reproducible conversion process v2.
+Level B risk-based validation was used. The original Rel-19 DOCX was exported fully to a 142-page PDF; pages covering the federated-learning procedure, FL information model/data types and Stage 3 AI/ML management were sampled. This is not page-by-page certification.

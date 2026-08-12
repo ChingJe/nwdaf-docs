@@ -1,19 +1,29 @@
 {
-  "schema_version": 1,
-  "build_id": "r18-corpus-20260803-ts29505",
-  "generated_at_utc": "2026-08-02T16:22:12.663112+00:00",
+  "schema_version": 2,
+  "build_id": "r18-core-20260812-rel19-ts28105-supplemental",
+  "generated_at_utc": "2026-08-12T13:43:32.963988+00:00",
   "parent_archive": {
-    "file": "nwdaf-3gpp-r18-full-specs-with-ts23003-ts29502-ts29504.zip",
-    "sha256": "d8831041d2dc3644254abdd40b9e3f1910ad69e75538f25d02fd71cf616bf725"
+    "file": "nwdaf-3gpp-r18-full-specs-with-ts29505.zip",
+    "sha256": "dcace27382c99498195f0e303a08aa4a4f6f29fb271f548a42f0f8959f24aeb6"
   },
-  "added_source_archives": [
+  "main_release": "18",
+  "main_specifications": 22,
+  "supplemental_source_archives": [
     {
-      "file": "29505-i80.zip",
-      "sha256": "b432c3d6d7a211f0d1eeb72da4364d32ba1d9a3ae51c03df8cab38d2700b777e"
+      "file": "28105-j60.zip",
+      "sha256": "089e1ce07dccc54d8a24698a0bba1a4ce98bbeaf15e0e61591e76cd979363c65",
+      "spec": "TS 28.105",
+      "version": "19.6.0",
+      "release": "19"
     }
   ],
-  "added_specifications": [
-    "TS 29.505 V18.8.0"
+  "removed_from_main_since_previous_management_build": [
+    "TS 28.104 V18.7.0",
+    "TS 28.105 V18.9.0"
   ],
+  "supplemental_specifications": [
+    "TS 28.105 V19.6.0"
+  ],
+  "release_isolation": true,
   "validation_passed": true
 }

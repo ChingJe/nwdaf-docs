@@ -1,0 +1,23 @@
+{
+  "spec": "TS 28.105",
+  "version": "19.6.0",
+  "release": "19",
+  "supplemental": true,
+  "level": "B",
+  "full_pdf_export": true,
+  "pdf_pages": 142,
+  "sampled_pages": [
+    31,
+    61,
+    62,
+    63,
+    125
+  ],
+  "topics": [
+    "Federated learning description and HFL figure",
+    "FL-related information model/data types",
+    "Stage 3 AI/ML management definitions"
+  ],
+  "result": "pass",
+  "note": "Risk-based visual sampling; not page-by-page certification."
+}

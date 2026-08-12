@@ -1,0 +1,12 @@
+release: '19'
+supplemental: true
+specifications:
+- id: TS-28.105
+  spec: TS 28.105
+  version: 19.6.0
+  scope: full
+  purpose: AI/ML management with Release 19 federated-learning management additions
+  index: TS 28.105/README.md
+  manifest: TS 28.105/manifest.yaml
+  source_archive: 28105-j60.zip
+  source_archive_sha256: 089e1ce07dccc54d8a24698a0bba1a4ce98bbeaf15e0e61591e76cd979363c65

@@ -1,0 +1,24 @@
+{
+  "specifications": [
+    {
+      "spec": "TS 28.105",
+      "version": "19.6.0",
+      "release": "19",
+      "supplemental": true,
+      "archive": "28105-j60.zip",
+      "archive_sha256": "089e1ce07dccc54d8a24698a0bba1a4ce98bbeaf15e0e61591e76cd979363c65",
+      "source_document": "28105-j60.docx",
+      "source_document_sha256": "b19d56076f9a7e55838d64c44d15840ebdec46c773546fa3d89d232640897564",
+      "members": [
+        {
+          "path": "28105-j60.docx",
+          "sha256": "b19d56076f9a7e55838d64c44d15840ebdec46c773546fa3d89d232640897564"
+        },
+        {
+          "path": "TS28105_AiMlNrm.yaml",
+          "sha256": "714b2d0bb1ac6c3dbcdaa9e362938c59cfba6c4639ecdd50af9374f49a06238a"
+        }
+      ]
+    }
+  ]
+}

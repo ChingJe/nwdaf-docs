@@ -1,25 +1,22 @@
 {
-  "build_id": "r18-corpus-20260803-ts29505",
-  "files": 6927,
-  "markdown_files": 3746,
-  "specifications": 22,
-  "manifest_entries": 10531,
-  "local_links_checked": 3876,
+  "build_id": "r18-core-20260812-rel19-ts28105-supplemental",
+  "files": 7079,
+  "markdown_files": 3818,
+  "main_release_specifications": 22,
+  "supplemental_specifications": 1,
+  "manifest_entries": 10938,
+  "local_links_checked": 3950,
   "broken_local_links": [],
-  "image_references_checked": 1092,
+  "image_references_checked": 1123,
   "broken_image_references": [],
   "missing_manifest_paths": [],
-  "orphan_clause_markdown": [],
-  "h7_or_deeper_headings": [],
-  "blank_headings": [],
   "absolute_work_paths": [],
-  "manifest_missing_directories": [],
-  "directories_missing_manifest": [],
-  "openapi_yaml_files": 61,
-  "openapi_yaml_valid": 61,
-  "official_attachments_checked": 63,
-  "official_attachments_byte_identical": 63,
-  "unresolved_external_dependencies": [
+  "main_openapi_yaml_files": 61,
+  "supplemental_yaml_files": 1,
+  "yaml_parse_failures": [],
+  "official_attachments_checked": 65,
+  "new_supplemental_attachment_byte_identical": true,
+  "main_unresolved_external_dependencies": [
     "TS29507_Npcf_AMPolicyControl.yaml",
     "TS29509_Nausf_SoRProtection.yaml",
     "TS29509_Nausf_UEAuthentication.yaml",
@@ -44,11 +41,87 @@
     "TS29591_Nnef_EventExposure.yaml",
     "TS32291_Nchf_ConvergedCharging.yaml"
   ],
-  "ts29505_tree_hash_match": true,
-  "ts29505_modal_and_marker_counts_match": true,
-  "ts29505_token_multiset_overlap": 0.999891,
-  "ts29505_media_count": 5,
-  "ts29505_rendered_png_count": 5,
-  "ts29505_embedded_count": 5,
+  "supplemental_unresolved_dependencies": [
+    "TS28104_MdaNrm.yaml",
+    "TS28623_ComDefs.yaml",
+    "TS28623_GenericNrm.yaml",
+    "TS28623_ThresholdMonitorNrm.yaml",
+    "TS29520_Nnwdaf_EventsSubscription.yaml"
+  ],
+  "tree_hash_match_rel19_ts28105": true,
+  "text_cross_check_rel19_ts28105": {
+    "spec": "TS 28.105",
+    "version": "19.6.0",
+    "release": "19",
+    "supplemental": true,
+    "pandoc_tokens": 47741,
+    "independent_tokens": 47759,
+    "token_multiset_overlap": 0.9993716093085607,
+    "marker_counts": {
+      "shall": {
+        "pandoc": 93,
+        "independent": 93,
+        "match": true
+      },
+      "should": {
+        "pandoc": 108,
+        "independent": 108,
+        "match": true
+      },
+      "may": {
+        "pandoc": 238,
+        "independent": 238,
+        "match": true
+      },
+      "must": {
+        "pandoc": 4,
+        "independent": 4,
+        "match": true
+      },
+      "note": {
+        "pandoc": 69,
+        "independent": 69,
+        "match": true
+      },
+      "example": {
+        "pandoc": 35,
+        "independent": 35,
+        "match": true
+      }
+    },
+    "negative_marker_counts": [
+      {
+        "phrase": "shall not",
+        "pandoc": 9,
+        "independent": 9,
+        "match": true
+      },
+      {
+        "phrase": "should not",
+        "pandoc": 4,
+        "independent": 4,
+        "match": true
+      },
+      {
+        "phrase": "may not",
+        "pandoc": 9,
+        "independent": 9,
+        "match": true
+      },
+      {
+        "phrase": "must not",
+        "pandoc": 1,
+        "independent": 1,
+        "match": true
+      }
+    ],
+    "marker_counts_match": true
+  },
+  "new_spec_assets": {
+    "original": 31,
+    "rendered_png": 31,
+    "embedded": 9,
+    "render_failures": []
+  },
   "passed": true
 }

@@ -1,17 +1,20 @@
 {
-  "build_id": "r18-corpus-20260803-ts29505",
-  "release": "18",
-  "specifications": 22,
-  "files": 6927,
-  "markdown_files": 3746,
-  "manifest_entries": 10531,
-  "local_links_checked": 3876,
-  "image_references_checked": 1092,
-  "openapi_yaml_files": 61,
-  "official_attachments_checked": 63,
-  "unresolved_external_dependencies": 23,
-  "validation_passed": true,
-  "latest_extension": [
-    "TS 29.505 V18.8.0"
-  ]
+  "build_id": "r18-core-20260812-rel19-ts28105-supplemental",
+  "main_release": "18",
+  "main_specifications": 22,
+  "supplemental_specifications": 1,
+  "supplemental": [
+    "TS 28.105 V19.6.0"
+  ],
+  "files": 7079,
+  "markdown_files": 3818,
+  "manifest_entries": 10938,
+  "local_links_checked": 3950,
+  "image_references_checked": 1123,
+  "main_openapi_yaml_files": 61,
+  "supplemental_yaml_files": 1,
+  "official_attachments_checked": 65,
+  "main_unresolved_external_dependencies": 23,
+  "supplemental_unresolved_dependencies": 5,
+  "validation_passed": true
 }

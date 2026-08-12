@@ -2,8 +2,10 @@ corrections:
 - spec: TS 23.288
   line: 13865
   type: promote-annex-heading
-  original: '######## Annex A (informative): Methods to handle NAT on IPv4 between UE and AF'
-  replacement: '# Annex A (informative): Methods to handle NAT on IPv4 between UE and AF'
+  original: '######## Annex A (informative): Methods to handle NAT on IPv4 between
+    UE and AF'
+  replacement: '# Annex A (informative): Methods to handle NAT on IPv4 between UE
+    and AF'
 - spec: TS 23.288
   line: 13867
   type: demote-annex-subheading
@@ -76,7 +78,8 @@ corrections:
 - spec: TS 23.502
   line: 32594
   type: promote-annex-heading
-  original: '########  Annex A (informative): Drafting rules and conventions for NF services'
+  original: '########  Annex A (informative): Drafting rules and conventions for NF
+    services'
   replacement: '# Annex A (informative): Drafting rules and conventions for NF services'
 - spec: TS 23.502
   line: 32596
@@ -116,8 +119,10 @@ corrections:
 - spec: TS 23.502
   line: 32720
   type: promote-annex-heading
-  original: '########  Annex C (informative): Generating EPS PDN Connection parameters from 5G PDU Session parameters'
-  replacement: '# Annex C (informative): Generating EPS PDN Connection parameters from 5G PDU Session parameters'
+  original: '########  Annex C (informative): Generating EPS PDN Connection parameters
+    from 5G PDU Session parameters'
+  replacement: '# Annex C (informative): Generating EPS PDN Connection parameters
+    from 5G PDU Session parameters'
 - spec: TS 23.502
   line: 32744
   type: promote-annex-heading
@@ -126,13 +131,17 @@ corrections:
 - spec: TS 23.502
   line: 32818
   type: promote-annex-heading
-  original: '########  Annex E (normative): Delegated SMF and PCF discovery in the Home Routed and specific SMF Service Areas scenarios'
-  replacement: '# Annex E (normative): Delegated SMF and PCF discovery in the Home Routed and specific SMF Service Areas scenarios'
+  original: '########  Annex E (normative): Delegated SMF and PCF discovery in the
+    Home Routed and specific SMF Service Areas scenarios'
+  replacement: '# Annex E (normative): Delegated SMF and PCF discovery in the Home
+    Routed and specific SMF Service Areas scenarios'
 - spec: TS 23.502
   line: 32942
   type: promote-annex-heading
-  original: '######## Annex F (informative): Information flows for 5GS integration with TSN or with Deterministic Networking'
-  replacement: '# Annex F (informative): Information flows for 5GS integration with TSN or with Deterministic Networking'
+  original: '######## Annex F (informative): Information flows for 5GS integration
+    with TSN or with Deterministic Networking'
+  replacement: '# Annex F (informative): Information flows for 5GS integration with
+    TSN or with Deterministic Networking'
 - spec: TS 23.502
   line: 33154
   type: promote-annex-heading
@@ -141,13 +150,17 @@ corrections:
 - spec: TS 23.502
   line: 33202
   type: promote-annex-heading
-  original: '######## Annex H (normative): Support of EAP-based secondary authentication and authorization by DN-AAA over EPC'
-  replacement: '# Annex H (normative): Support of EAP-based secondary authentication and authorization by DN-AAA over EPC'
+  original: '######## Annex H (normative): Support of EAP-based secondary authentication
+    and authorization by DN-AAA over EPC'
+  replacement: '# Annex H (normative): Support of EAP-based secondary authentication
+    and authorization by DN-AAA over EPC'
 - spec: TS 23.502
   line: 33276
   type: promote-annex-heading
-  original: '######## Annex I (informative): Member UE selection without the NEF assistance at the AF'
-  replacement: '# Annex I (informative): Member UE selection without the NEF assistance at the AF'
+  original: '######## Annex I (informative): Member UE selection without the NEF assistance
+    at the AF'
+  replacement: '# Annex I (informative): Member UE selection without the NEF assistance
+    at the AF'
 - spec: TS 23.502
   line: 33302
   type: promote-annex-heading
@@ -161,8 +174,10 @@ corrections:
 - spec: TS 29.500
   line: 6041
   type: promote-annex-heading
-  original: '######## Annex A (informative): Client-side Adaptive Throttling for Overload Control'
-  replacement: '# Annex A (informative): Client-side Adaptive Throttling for Overload Control'
+  original: '######## Annex A (informative): Client-side Adaptive Throttling for Overload
+    Control'
+  replacement: '# Annex A (informative): Client-side Adaptive Throttling for Overload
+    Control'
 - spec: TS 29.500
   line: 6071
   type: promote-annex-heading
@@ -236,18 +251,24 @@ corrections:
 - spec: TS 29.510
   line: 38443
   type: promote-annex-heading
-  original: '########  Annex B (normative): NF Profile changes in NFRegister and NFUpdate responses'
-  replacement: '# Annex B (normative): NF Profile changes in NFRegister and NFUpdate responses'
+  original: '########  Annex B (normative): NF Profile changes in NFRegister and NFUpdate
+    responses'
+  replacement: '# Annex B (normative): NF Profile changes in NFRegister and NFUpdate
+    responses'
 - spec: TS 29.510
   line: 38479
   type: promote-annex-heading
-  original: '######## Annex C (normative): Enhanced Authorization Policy using RuleSets in NF (Service) Profile'
-  replacement: '# Annex C (normative): Enhanced Authorization Policy using RuleSets in NF (Service) Profile'
+  original: '######## Annex C (normative): Enhanced Authorization Policy using RuleSets
+    in NF (Service) Profile'
+  replacement: '# Annex C (normative): Enhanced Authorization Policy using RuleSets
+    in NF (Service) Profile'
 - spec: TS 29.510
   line: 38597
   type: promote-annex-heading
-  original: '######## Annex D (normative): Support of "Canary Release" testing in the NRF'
-  replacement: '# Annex D (normative): Support of "Canary Release" testing in the NRF'
+  original: '######## Annex D (normative): Support of "Canary Release" testing in
+    the NRF'
+  replacement: '# Annex D (normative): Support of "Canary Release" testing in the
+    NRF'
 - spec: TS 29.510
   line: 38809
   type: promote-annex-heading
@@ -256,7 +277,8 @@ corrections:
 - spec: TS 23.502
   line: 32594
   type: promote-annex-heading
-  original: '########  Annex A (informative): Drafting rules and conventions for NF services'
+  original: '########  Annex A (informative): Drafting rules and conventions for NF
+    services'
   replacement: '# Annex A (informative): Drafting rules and conventions for NF services'
 - spec: TS 23.502
   line: 32596
@@ -296,8 +318,10 @@ corrections:
 - spec: TS 23.502
   line: 32720
   type: promote-annex-heading
-  original: '########  Annex C (informative): Generating EPS PDN Connection parameters from 5G PDU Session parameters'
-  replacement: '# Annex C (informative): Generating EPS PDN Connection parameters from 5G PDU Session parameters'
+  original: '########  Annex C (informative): Generating EPS PDN Connection parameters
+    from 5G PDU Session parameters'
+  replacement: '# Annex C (informative): Generating EPS PDN Connection parameters
+    from 5G PDU Session parameters'
 - spec: TS 23.502
   line: 32744
   type: promote-annex-heading
@@ -316,8 +340,10 @@ corrections:
 - spec: TS 23.502
   line: 32818
   type: promote-annex-heading
-  original: '########  Annex E (normative): Delegated SMF and PCF discovery in the Home Routed and specific SMF Service Areas scenarios'
-  replacement: '# Annex E (normative): Delegated SMF and PCF discovery in the Home Routed and specific SMF Service Areas scenarios'
+  original: '########  Annex E (normative): Delegated SMF and PCF discovery in the
+    Home Routed and specific SMF Service Areas scenarios'
+  replacement: '# Annex E (normative): Delegated SMF and PCF discovery in the Home
+    Routed and specific SMF Service Areas scenarios'
 - spec: TS 23.502
   line: 32820
   type: demote-annex-subheading
@@ -341,8 +367,10 @@ corrections:
 - spec: TS 23.502
   line: 32942
   type: promote-annex-heading
-  original: '######## Annex F (informative): Information flows for 5GS integration with TSN or with Deterministic Networking'
-  replacement: '# Annex F (informative): Information flows for 5GS integration with TSN or with Deterministic Networking'
+  original: '######## Annex F (informative): Information flows for 5GS integration
+    with TSN or with Deterministic Networking'
+  replacement: '# Annex F (informative): Information flows for 5GS integration with
+    TSN or with Deterministic Networking'
 - spec: TS 23.502
   line: 32948
   type: demote-annex-subheading
@@ -381,8 +409,10 @@ corrections:
 - spec: TS 23.502
   line: 33202
   type: promote-annex-heading
-  original: '######## Annex H (normative): Support of EAP-based secondary authentication and authorization by DN-AAA over EPC'
-  replacement: '# Annex H (normative): Support of EAP-based secondary authentication and authorization by DN-AAA over EPC'
+  original: '######## Annex H (normative): Support of EAP-based secondary authentication
+    and authorization by DN-AAA over EPC'
+  replacement: '# Annex H (normative): Support of EAP-based secondary authentication
+    and authorization by DN-AAA over EPC'
 - spec: TS 23.502
   line: 33204
   type: demote-annex-subheading
@@ -396,8 +426,10 @@ corrections:
 - spec: TS 23.502
   line: 33276
   type: promote-annex-heading
-  original: '######## Annex I (informative): Member UE selection without the NEF assistance at the AF'
-  replacement: '# Annex I (informative): Member UE selection without the NEF assistance at the AF'
+  original: '######## Annex I (informative): Member UE selection without the NEF assistance
+    at the AF'
+  replacement: '# Annex I (informative): Member UE selection without the NEF assistance
+    at the AF'
 - spec: TS 23.502
   line: 33302
   type: promote-annex-heading
@@ -416,8 +448,10 @@ corrections:
 - spec: TS 29.500
   line: 6041
   type: promote-annex-heading
-  original: '######## Annex A (informative): Client-side Adaptive Throttling for Overload Control'
-  replacement: '# Annex A (informative): Client-side Adaptive Throttling for Overload Control'
+  original: '######## Annex A (informative): Client-side Adaptive Throttling for Overload
+    Control'
+  replacement: '# Annex A (informative): Client-side Adaptive Throttling for Overload
+    Control'
 - spec: TS 29.500
   line: 6071
   type: promote-annex-heading
@@ -501,8 +535,10 @@ corrections:
 - spec: TS 29.510
   line: 38443
   type: promote-annex-heading
-  original: '########  Annex B (normative): NF Profile changes in NFRegister and NFUpdate responses'
-  replacement: '# Annex B (normative): NF Profile changes in NFRegister and NFUpdate responses'
+  original: '########  Annex B (normative): NF Profile changes in NFRegister and NFUpdate
+    responses'
+  replacement: '# Annex B (normative): NF Profile changes in NFRegister and NFUpdate
+    responses'
 - spec: TS 29.510
   line: 38445
   type: demote-annex-subheading
@@ -511,8 +547,10 @@ corrections:
 - spec: TS 29.510
   line: 38479
   type: promote-annex-heading
-  original: '######## Annex C (normative): Enhanced Authorization Policy using RuleSets in NF (Service) Profile'
-  replacement: '# Annex C (normative): Enhanced Authorization Policy using RuleSets in NF (Service) Profile'
+  original: '######## Annex C (normative): Enhanced Authorization Policy using RuleSets
+    in NF (Service) Profile'
+  replacement: '# Annex C (normative): Enhanced Authorization Policy using RuleSets
+    in NF (Service) Profile'
 - spec: TS 29.510
   line: 38481
   type: demote-annex-subheading
@@ -521,13 +559,17 @@ corrections:
 - spec: TS 29.510
   line: 38487
   type: demote-annex-subheading
-  original: '# C.2 Examples of NF-Producer profile only using RuleSets (i.e. without AllowedXXX parameters) in NF (Service) Profile'
-  replacement: '## C.2 Examples of NF-Producer profile only using RuleSets (i.e. without AllowedXXX parameters) in NF (Service) Profile'
+  original: '# C.2 Examples of NF-Producer profile only using RuleSets (i.e. without
+    AllowedXXX parameters) in NF (Service) Profile'
+  replacement: '## C.2 Examples of NF-Producer profile only using RuleSets (i.e. without
+    AllowedXXX parameters) in NF (Service) Profile'
 - spec: TS 29.510
   line: 38539
   type: demote-annex-subheading
-  original: '# C.3 Example of NF-Producer profile using RuleSets and AllowedXXX parameters in NF (Service) Profile'
-  replacement: '## C.3 Example of NF-Producer profile using RuleSets and AllowedXXX parameters in NF (Service) Profile'
+  original: '# C.3 Example of NF-Producer profile using RuleSets and AllowedXXX parameters
+    in NF (Service) Profile'
+  replacement: '## C.3 Example of NF-Producer profile using RuleSets and AllowedXXX
+    parameters in NF (Service) Profile'
 - spec: TS 29.510
   line: 38567
   type: demote-annex-subheading
@@ -536,8 +578,10 @@ corrections:
 - spec: TS 29.510
   line: 38597
   type: promote-annex-heading
-  original: '######## Annex D (normative): Support of "Canary Release" testing in the NRF'
-  replacement: '# Annex D (normative): Support of "Canary Release" testing in the NRF'
+  original: '######## Annex D (normative): Support of "Canary Release" testing in
+    the NRF'
+  replacement: '# Annex D (normative): Support of "Canary Release" testing in the
+    NRF'
 - spec: TS 29.510
   line: 38809
   type: promote-annex-heading
@@ -546,7 +590,8 @@ corrections:
 - spec: TS 23.502
   line: 32594
   type: promote-annex-heading
-  original: '########  Annex A (informative): Drafting rules and conventions for NF services'
+  original: '########  Annex A (informative): Drafting rules and conventions for NF
+    services'
   replacement: '# Annex A (informative): Drafting rules and conventions for NF services'
 - spec: TS 23.502
   line: 32596
@@ -586,8 +631,10 @@ corrections:
 - spec: TS 23.502
   line: 32720
   type: promote-annex-heading
-  original: '########  Annex C (informative): Generating EPS PDN Connection parameters from 5G PDU Session parameters'
-  replacement: '# Annex C (informative): Generating EPS PDN Connection parameters from 5G PDU Session parameters'
+  original: '########  Annex C (informative): Generating EPS PDN Connection parameters
+    from 5G PDU Session parameters'
+  replacement: '# Annex C (informative): Generating EPS PDN Connection parameters
+    from 5G PDU Session parameters'
 - spec: TS 23.502
   line: 32744
   type: promote-annex-heading
@@ -606,8 +653,10 @@ corrections:
 - spec: TS 23.502
   line: 32818
   type: promote-annex-heading
-  original: '########  Annex E (normative): Delegated SMF and PCF discovery in the Home Routed and specific SMF Service Areas scenarios'
-  replacement: '# Annex E (normative): Delegated SMF and PCF discovery in the Home Routed and specific SMF Service Areas scenarios'
+  original: '########  Annex E (normative): Delegated SMF and PCF discovery in the
+    Home Routed and specific SMF Service Areas scenarios'
+  replacement: '# Annex E (normative): Delegated SMF and PCF discovery in the Home
+    Routed and specific SMF Service Areas scenarios'
 - spec: TS 23.502
   line: 32820
   type: demote-annex-subheading
@@ -631,8 +680,10 @@ corrections:
 - spec: TS 23.502
   line: 32942
   type: promote-annex-heading
-  original: '######## Annex F (informative): Information flows for 5GS integration with TSN or with Deterministic Networking'
-  replacement: '# Annex F (informative): Information flows for 5GS integration with TSN or with Deterministic Networking'
+  original: '######## Annex F (informative): Information flows for 5GS integration
+    with TSN or with Deterministic Networking'
+  replacement: '# Annex F (informative): Information flows for 5GS integration with
+    TSN or with Deterministic Networking'
 - spec: TS 23.502
   line: 32948
   type: demote-annex-subheading
@@ -671,8 +722,10 @@ corrections:
 - spec: TS 23.502
   line: 33202
   type: promote-annex-heading
-  original: '######## Annex H (normative): Support of EAP-based secondary authentication and authorization by DN-AAA over EPC'
-  replacement: '# Annex H (normative): Support of EAP-based secondary authentication and authorization by DN-AAA over EPC'
+  original: '######## Annex H (normative): Support of EAP-based secondary authentication
+    and authorization by DN-AAA over EPC'
+  replacement: '# Annex H (normative): Support of EAP-based secondary authentication
+    and authorization by DN-AAA over EPC'
 - spec: TS 23.502
   line: 33204
   type: demote-annex-subheading
@@ -686,8 +739,10 @@ corrections:
 - spec: TS 23.502
   line: 33276
   type: promote-annex-heading
-  original: '######## Annex I (informative): Member UE selection without the NEF assistance at the AF'
-  replacement: '# Annex I (informative): Member UE selection without the NEF assistance at the AF'
+  original: '######## Annex I (informative): Member UE selection without the NEF assistance
+    at the AF'
+  replacement: '# Annex I (informative): Member UE selection without the NEF assistance
+    at the AF'
 - spec: TS 23.502
   line: 33302
   type: promote-annex-heading
@@ -706,8 +761,10 @@ corrections:
 - spec: TS 29.500
   line: 6041
   type: promote-annex-heading
-  original: '######## Annex A (informative): Client-side Adaptive Throttling for Overload Control'
-  replacement: '# Annex A (informative): Client-side Adaptive Throttling for Overload Control'
+  original: '######## Annex A (informative): Client-side Adaptive Throttling for Overload
+    Control'
+  replacement: '# Annex A (informative): Client-side Adaptive Throttling for Overload
+    Control'
 - spec: TS 29.500
   line: 6071
   type: promote-annex-heading
@@ -791,8 +848,10 @@ corrections:
 - spec: TS 29.510
   line: 38443
   type: promote-annex-heading
-  original: '########  Annex B (normative): NF Profile changes in NFRegister and NFUpdate responses'
-  replacement: '# Annex B (normative): NF Profile changes in NFRegister and NFUpdate responses'
+  original: '########  Annex B (normative): NF Profile changes in NFRegister and NFUpdate
+    responses'
+  replacement: '# Annex B (normative): NF Profile changes in NFRegister and NFUpdate
+    responses'
 - spec: TS 29.510
   line: 38445
   type: demote-annex-subheading
@@ -801,8 +860,10 @@ corrections:
 - spec: TS 29.510
   line: 38479
   type: promote-annex-heading
-  original: '######## Annex C (normative): Enhanced Authorization Policy using RuleSets in NF (Service) Profile'
-  replacement: '# Annex C (normative): Enhanced Authorization Policy using RuleSets in NF (Service) Profile'
+  original: '######## Annex C (normative): Enhanced Authorization Policy using RuleSets
+    in NF (Service) Profile'
+  replacement: '# Annex C (normative): Enhanced Authorization Policy using RuleSets
+    in NF (Service) Profile'
 - spec: TS 29.510
   line: 38481
   type: demote-annex-subheading
@@ -811,13 +872,17 @@ corrections:
 - spec: TS 29.510
   line: 38487
   type: demote-annex-subheading
-  original: '# C.2 Examples of NF-Producer profile only using RuleSets (i.e. without AllowedXXX parameters) in NF (Service) Profile'
-  replacement: '## C.2 Examples of NF-Producer profile only using RuleSets (i.e. without AllowedXXX parameters) in NF (Service) Profile'
+  original: '# C.2 Examples of NF-Producer profile only using RuleSets (i.e. without
+    AllowedXXX parameters) in NF (Service) Profile'
+  replacement: '## C.2 Examples of NF-Producer profile only using RuleSets (i.e. without
+    AllowedXXX parameters) in NF (Service) Profile'
 - spec: TS 29.510
   line: 38539
   type: demote-annex-subheading
-  original: '# C.3 Example of NF-Producer profile using RuleSets and AllowedXXX parameters in NF (Service) Profile'
-  replacement: '## C.3 Example of NF-Producer profile using RuleSets and AllowedXXX parameters in NF (Service) Profile'
+  original: '# C.3 Example of NF-Producer profile using RuleSets and AllowedXXX parameters
+    in NF (Service) Profile'
+  replacement: '## C.3 Example of NF-Producer profile using RuleSets and AllowedXXX
+    parameters in NF (Service) Profile'
 - spec: TS 29.510
   line: 38567
   type: demote-annex-subheading
@@ -826,8 +891,10 @@ corrections:
 - spec: TS 29.510
   line: 38597
   type: promote-annex-heading
-  original: '######## Annex D (normative): Support of "Canary Release" testing in the NRF'
-  replacement: '# Annex D (normative): Support of "Canary Release" testing in the NRF'
+  original: '######## Annex D (normative): Support of "Canary Release" testing in
+    the NRF'
+  replacement: '# Annex D (normative): Support of "Canary Release" testing in the
+    NRF'
 - spec: TS 29.510
   line: 38809
   type: promote-annex-heading
@@ -840,8 +907,10 @@ corrections:
 - spec: TS 29.122
   line: 27788
   type: promote-annex-heading
-  original: '######## Annex A (normative): OpenAPI representation for the APIs defined in the present document'
-  replacement: '# Annex A (normative): OpenAPI representation for the APIs defined in the present document'
+  original: '######## Annex A (normative): OpenAPI representation for the APIs defined
+    in the present document'
+  replacement: '# Annex A (normative): OpenAPI representation for the APIs defined
+    in the present document'
 - spec: TS 29.122
   line: 27790
   type: normalize-annex-subheading
@@ -2056,7 +2125,8 @@ corrections:
   line: 40809
   type: normalize-heading-level
   original: '## B.1.2 Example HTTP multipart message with N2 Information binary data'
-  replacement: '### B.1.2 Example HTTP multipart message with N2 Information binary data'
+  replacement: '### B.1.2 Example HTTP multipart message with N2 Information binary
+    data'
 - spec: TS 29.518
   line: 40861
   type: normalize-heading-level
@@ -2136,23 +2206,30 @@ corrections:
 - spec: TS 23.003
   line: 5798
   type: normalize-heading-level-or-spacing
-  original: '##### 28.3.2.2.5.2 Replacement field used in DNS-based Discovery of regulatory requirements for emergency services via N3IWF'
-  replacement: '###### 28.3.2.2.5.2 Replacement field used in DNS-based Discovery of regulatory requirements for emergency services via N3IWF'
+  original: '##### 28.3.2.2.5.2 Replacement field used in DNS-based Discovery of regulatory
+    requirements for emergency services via N3IWF'
+  replacement: '###### 28.3.2.2.5.2 Replacement field used in DNS-based Discovery
+    of regulatory requirements for emergency services via N3IWF'
 - spec: TS 23.003
   line: 5816
   type: normalize-heading-level-or-spacing
-  original: '##### 28.3.2.2.5.3 Replacement field used in DNS-based Discovery of N3IWF supporting Onboarding'
-  replacement: '###### 28.3.2.2.5.3 Replacement field used in DNS-based Discovery of N3IWF supporting Onboarding'
+  original: '##### 28.3.2.2.5.3 Replacement field used in DNS-based Discovery of N3IWF
+    supporting Onboarding'
+  replacement: '###### 28.3.2.2.5.3 Replacement field used in DNS-based Discovery
+    of N3IWF supporting Onboarding'
 - spec: TS 23.003
   line: 5844
   type: normalize-heading-level-or-spacing
-  original: '##### 28.3.2.2.6.1 SNPN Identifier based N3IWF FQDN and Visited Country FQDN for SNPN N3IWF'
-  replacement: '###### 28.3.2.2.6.1 SNPN Identifier based N3IWF FQDN and Visited Country FQDN for SNPN N3IWF'
+  original: '##### 28.3.2.2.6.1 SNPN Identifier based N3IWF FQDN and Visited Country
+    FQDN for SNPN N3IWF'
+  replacement: '###### 28.3.2.2.6.1 SNPN Identifier based N3IWF FQDN and Visited Country
+    FQDN for SNPN N3IWF'
 - spec: TS 23.003
   line: 5894
   type: normalize-heading-level-or-spacing
   original: '##### 28.3.2.2.6.2 Visited Country FQDN for SNPN N3IWF supporting Onboarding'
-  replacement: '###### 28.3.2.2.6.2 Visited Country FQDN for SNPN N3IWF supporting Onboarding'
+  replacement: '###### 28.3.2.2.6.2 Visited Country FQDN for SNPN N3IWF supporting
+    Onboarding'
 - spec: TS 23.003
   line: 5908
   type: normalize-heading-level-or-spacing
@@ -2161,8 +2238,10 @@ corrections:
 - spec: TS 23.003
   line: 5922
   type: normalize-heading-level-or-spacing
-  original: '##### 28.3.2.2.6.4 Replacement field used in DNS-based Discovery of regulatory requirements for emergency services in SNPN'
-  replacement: '###### 28.3.2.2.6.4 Replacement field used in DNS-based Discovery of regulatory requirements for emergency services in SNPN'
+  original: '##### 28.3.2.2.6.4 Replacement field used in DNS-based Discovery of regulatory
+    requirements for emergency services in SNPN'
+  replacement: '###### 28.3.2.2.6.4 Replacement field used in DNS-based Discovery
+    of regulatory requirements for emergency services in SNPN'
 - spec: TS 23.003
   line: 5944
   type: normalize-heading-level-or-spacing
@@ -2171,8 +2250,10 @@ corrections:
 - spec: TS 23.003
   line: 5950
   type: normalize-heading-level-or-spacing
-  original: '##### 28.3.2.2.7.2 Replacement field used in DNS-based Discovery of SNPN N3IWF supporting Onboarding'
-  replacement: '###### 28.3.2.2.7.2 Replacement field used in DNS-based Discovery of SNPN N3IWF supporting Onboarding'
+  original: '##### 28.3.2.2.7.2 Replacement field used in DNS-based Discovery of SNPN
+    N3IWF supporting Onboarding'
+  replacement: '###### 28.3.2.2.7.2 Replacement field used in DNS-based Discovery
+    of SNPN N3IWF supporting Onboarding'
 - spec: TS 23.003
   line: 7078
   type: normalize-heading-level-or-spacing
@@ -2241,8 +2322,10 @@ corrections:
 - spec: TS 23.003
   line: 7411
   type: normalize-heading-level-or-spacing
-  original: '######## Annex D (informative): Applicability and use of the ".3gppnetwork.org" domain name'
-  replacement: '# Annex D (informative): Applicability and use of the ".3gppnetwork.org" domain name'
+  original: '######## Annex D (informative): Applicability and use of the ".3gppnetwork.org"
+    domain name'
+  replacement: '# Annex D (informative): Applicability and use of the ".3gppnetwork.org"
+    domain name'
 - spec: TS 23.003
   line: 7433
   type: normalize-heading-level-or-spacing
@@ -2397,7 +2480,8 @@ corrections:
   line: 29682
   type: normalize-heading-level-or-spacing
   original: '## B.1.2 Example HTTP multipart message with N1 SM Message binary data'
-  replacement: '### B.1.2 Example HTTP multipart message with N1 SM Message binary data'
+  replacement: '### B.1.2 Example HTTP multipart message with N1 SM Message binary
+    data'
 - spec: TS 29.502
   line: 29732
   type: normalize-heading-level-or-spacing
@@ -2511,7 +2595,8 @@ corrections:
 - spec: TS 29.504
   line: 4652
   type: normalize-heading-level-or-spacing
-  original: '########  Annex B (Normative): ABNF grammar for 3GPP SBI HTTP custom headers'
+  original: '########  Annex B (Normative): ABNF grammar for 3GPP SBI HTTP custom
+    headers'
   replacement: '# Annex B (Normative): ABNF grammar for 3GPP SBI HTTP custom headers'
 - spec: TS 29.504
   line: 4654
@@ -2558,3 +2643,191 @@ corrections:
   type: normalize-heading-level-or-spacing
   original: '########  Annex B (informative): Change history'
   replacement: '# Annex B (informative): Change history'
+- spec: TS 28.105
+  release: '19'
+  supplemental: true
+  line: 76
+  type: heading-normalization
+  original: '#  Contents'
+  replacement: '# Contents'
+- spec: TS 28.105
+  release: '19'
+  supplemental: true
+  line: 874
+  type: heading-normalization
+  original: '#  Foreword'
+  replacement: '# Foreword'
+- spec: TS 28.105
+  release: '19'
+  supplemental: true
+  line: 938
+  type: heading-normalization
+  original: '#  1 Scope'
+  replacement: '# 1 Scope'
+- spec: TS 28.105
+  release: '19'
+  supplemental: true
+  line: 6611
+  type: heading-normalization
+  original: '########  Annex A (informative): PlantUML source code for NRM class diagrams'
+  replacement: '# Annex A (informative): PlantUML source code for NRM class diagrams'
+- spec: TS 28.105
+  release: '19'
+  supplemental: true
+  line: 6613
+  type: heading-normalization
+  original: '# A.1 General'
+  replacement: '## A.1 General'
+- spec: TS 28.105
+  release: '19'
+  supplemental: true
+  line: 6617
+  type: heading-normalization
+  original: '# A.2 PlantUML code for Figure 7.3a.1.1.1-1: NRM fragment for ML model
+    training'
+  replacement: '## A.2 PlantUML code for Figure 7.3a.1.1.1-1: NRM fragment for ML
+    model training'
+- spec: TS 28.105
+  release: '19'
+  supplemental: true
+  line: 6699
+  type: heading-normalization
+  original: '# A.3 PlantUML code for Figure 7.3a.1.1.2-1: Inheritance Hierarchy for
+    ML model training related NRMs'
+  replacement: '## A.3 PlantUML code for Figure 7.3a.1.1.2-1: Inheritance Hierarchy
+    for ML model training related NRMs'
+- spec: TS 28.105
+  release: '19'
+  supplemental: true
+  line: 6739
+  type: heading-normalization
+  original: '# A.4 PlantUML code for Figure 7.2a.1.2-1: Inheritance Hierarchy for
+    common information models for AI/ML management'
+  replacement: '## A.4 PlantUML code for Figure 7.2a.1.2-1: Inheritance Hierarchy
+    for common information models for AI/ML management'
+- spec: TS 28.105
+  release: '19'
+  supplemental: true
+  line: 6773
+  type: heading-normalization
+  original: '# A.5 PlantUML code for Figure 7.2a.1.1-1: Relationships for common information
+    models for AI/ML management'
+  replacement: '## A.5 PlantUML code for Figure 7.2a.1.1-1: Relationships for common
+    information models for AI/ML management'
+- spec: TS 28.105
+  release: '19'
+  supplemental: true
+  line: 6821
+  type: heading-normalization
+  original: '# A.6 PlantUML code for Figure 7.3a.1.1.1-2: NRM fragment for ML model
+    testing'
+  replacement: '## A.6 PlantUML code for Figure 7.3a.1.1.1-2: NRM fragment for ML
+    model testing'
+- spec: TS 28.105
+  release: '19'
+  supplemental: true
+  line: 6891
+  type: heading-normalization
+  original: '# A.7 PlantUML code for Figure 7.3a.1.1.2-2: Inheritance Hierarchy for
+    ML model testing related NRMs'
+  replacement: '## A.7 PlantUML code for Figure 7.3a.1.1.2-2: Inheritance Hierarchy
+    for ML model testing related NRMs'
+- spec: TS 28.105
+  release: '19'
+  supplemental: true
+  line: 6927
+  type: heading-normalization
+  original: '# A.8 PlantUML code for Figure 7.3a.4.1.1-1: NRM fragment for ML update'
+  replacement: '## A.8 PlantUML code for Figure 7.3a.4.1.1-1: NRM fragment for ML
+    update'
+- spec: TS 28.105
+  release: '19'
+  supplemental: true
+  line: 6993
+  type: heading-normalization
+  original: '# A.9 PlantUML code for Figure 7.3a.4.1.2-1: Inheritance Hierarchy for
+    ML update related NRMs'
+  replacement: '## A.9 PlantUML code for Figure 7.3a.4.1.2-1: Inheritance Hierarchy
+    for ML update related NRMs'
+- spec: TS 28.105
+  release: '19'
+  supplemental: true
+  line: 7033
+  type: heading-normalization
+  original: '# A.10 PlantUML code for Figure 7.3a.3.1.1-1: NRM fragment for ML model
+    loading'
+  replacement: '## A.10 PlantUML code for Figure 7.3a.3.1.1-1: NRM fragment for ML
+    model loading'
+- spec: TS 28.105
+  release: '19'
+  supplemental: true
+  line: 7079
+  type: heading-normalization
+  original: '# A.11 PlantUML code for Figure 7.3a.3.1.2-1: Inheritance Hierarchy for
+    ML model loading related NRMs'
+  replacement: '## A.11 PlantUML code for Figure 7.3a.3.1.2-1: Inheritance Hierarchy
+    for ML model loading related NRMs'
+- spec: TS 28.105
+  release: '19'
+  supplemental: true
+  line: 7113
+  type: heading-normalization
+  original: '# A.12 PlantUML code for Figure 7.3a.4.1.1-2: NRM fragment for AI/ML
+    inference function'
+  replacement: '## A.12 PlantUML code for Figure 7.3a.4.1.1-2: NRM fragment for AI/ML
+    inference function'
+- spec: TS 28.105
+  release: '19'
+  supplemental: true
+  line: 7187
+  type: heading-normalization
+  original: '# A.13 PlantUML code for Figure 7.3a.4.1.2-2: Inheritance Hierarchy for
+    AI/ML inference function'
+  replacement: '## A.13 PlantUML code for Figure 7.3a.4.1.2-2: Inheritance Hierarchy
+    for AI/ML inference function'
+- spec: TS 28.105
+  release: '19'
+  supplemental: true
+  line: 7217
+  type: heading-normalization
+  original: '# A.14 PlantUML code for Figure 7.3a.2.1.1-1: NRM fragment for AI/ML
+    inference emulation Control'
+  replacement: '## A.14 PlantUML code for Figure 7.3a.2.1.1-1: NRM fragment for AI/ML
+    inference emulation Control'
+- spec: TS 28.105
+  release: '19'
+  supplemental: true
+  line: 7261
+  type: heading-normalization
+  original: '# A.15 PlantUML code for Figure 7.3a.2.1.2-1: AI/ML inference emulation
+    Inheritance Relations'
+  replacement: '## A.15 PlantUML code for Figure 7.3a.2.1.2-1: AI/ML inference emulation
+    Inheritance Relations'
+- spec: TS 28.105
+  release: '19'
+  supplemental: true
+  line: 7287
+  type: heading-normalization
+  original: '########  Annex B (normative): OpenAPI definition of the AI/ML NRM'
+  replacement: '# Annex B (normative): OpenAPI definition of the AI/ML NRM'
+- spec: TS 28.105
+  release: '19'
+  supplemental: true
+  line: 7289
+  type: heading-normalization
+  original: '# B.1 General'
+  replacement: '## B.1 General'
+- spec: TS 28.105
+  release: '19'
+  supplemental: true
+  line: 7297
+  type: heading-normalization
+  original: '# B.2 Solution Set (SS) definitions'
+  replacement: '## B.2 Solution Set (SS) definitions'
+- spec: TS 28.105
+  release: '19'
+  supplemental: true
+  line: 7303
+  type: heading-normalization
+  original: '########  Annex C (informative): Change history'
+  replacement: '# Annex C (informative): Change history'

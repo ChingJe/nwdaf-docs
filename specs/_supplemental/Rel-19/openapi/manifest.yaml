@@ -1,0 +1,22 @@
+release: '19'
+isolation_policy: Do not resolve Release 19 refs against the main Release 18 OpenAPI
+  tree automatically.
+files:
+- file: TS28105_AiMlNrm.yaml
+  sha256: 714b2d0bb1ac6c3dbcdaa9e362938c59cfba6c4639ecdd50af9374f49a06238a
+  title: AI/ML NRM
+  api_info_version: 19.5.0
+  external_dependencies:
+  - TS28104_MdaNrm.yaml
+  - TS28623_ComDefs.yaml
+  - TS28623_GenericNrm.yaml
+  - TS28623_ThresholdMonitorNrm.yaml
+  - TS29520_Nnwdaf_EventsSubscription.yaml
+  available_only_in_main_rel18:
+  - TS29520_Nnwdaf_EventsSubscription.yaml
+  unresolved_in_rel19_supplement:
+  - TS28104_MdaNrm.yaml
+  - TS28623_ComDefs.yaml
+  - TS28623_GenericNrm.yaml
+  - TS28623_ThresholdMonitorNrm.yaml
+  - TS29520_Nnwdaf_EventsSubscription.yaml

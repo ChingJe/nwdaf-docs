@@ -1,0 +1,2366 @@
+spec: TS 28.105
+version: 19.6.0
+release: '19'
+supplemental: true
+applicability: cross-release-reference-not-rel18-requirement
+source_archive: 28105-j60.zip
+source_document: 28105-j60.docx
+source_archive_sha256: 089e1ce07dccc54d8a24698a0bba1a4ce98bbeaf15e0e61591e76cd979363c65
+source_document_sha256: b19d56076f9a7e55838d64c44d15840ebdec46c773546fa3d89d232640897564
+max_source_words_per_semantic_file_target: 4200
+clauses:
+- clause: document-information
+  title: Document information
+  path: 00 Document information.md
+  source_words: 261
+  kind: source-file
+- clause: contents
+  title: Contents
+  path: Contents.md
+  source_words: 3175
+  kind: source-file
+- clause: foreword
+  title: Foreword
+  path: Foreword.md
+  source_words: 491
+  kind: source-file
+- clause: '1'
+  title: 1 Scope
+  path: 1 Scope.md
+  source_words: 59
+  kind: source-file
+- clause: '2'
+  title: 2 References
+  path: 2 References.md
+  source_words: 363
+  kind: source-file
+- clause: '3'
+  title: 3 Definitions of terms, symbols and abbreviations
+  path: 3 Definitions of terms, symbols and abbreviations.md
+  source_words: 969
+  kind: source-file
+- clause: '3.1'
+  title: 3.1 Terms
+  path: 3 Definitions of terms, symbols and abbreviations.md
+  source_words: 903
+  kind: embedded-clause
+- clause: '3.2'
+  title: 3.2 Symbols
+  path: 3 Definitions of terms, symbols and abbreviations.md
+  source_words: 1
+  kind: embedded-clause
+- clause: '3.3'
+  title: 3.3 Abbreviations
+  path: 3 Definitions of terms, symbols and abbreviations.md
+  source_words: 65
+  kind: embedded-clause
+- clause: '4'
+  title: 4 Concepts and overview
+  path: 4 Concepts and overview.md
+  source_words: 579
+  kind: source-file
+- clause: '4.1'
+  title: 4.1 Overview
+  path: 4 Concepts and overview.md
+  source_words: 415
+  kind: embedded-clause
+- clause: '4.2'
+  title: 4.2 Management of AI/ML capabilities for RAN
+  path: 4 Concepts and overview.md
+  source_words: 74
+  kind: embedded-clause
+- clause: '4.3'
+  title: 4.3 Management of AI/ML capabilities for 5GC
+  path: 4 Concepts and overview.md
+  source_words: 45
+  kind: embedded-clause
+- clause: '4.4'
+  title: 4.4 Management of AI/ML capabilities for MDA
+  path: 4 Concepts and overview.md
+  source_words: 45
+  kind: embedded-clause
+- clause: 4a
+  title: 4a AI/ML management functionality and service framework
+  path: 4a AI_ML management functionality and service framework.md
+  source_words: 1168
+  kind: source-file
+- clause: 4a.0
+  title: 4a.0 ML model lifecycle
+  path: 4a AI_ML management functionality and service framework.md
+  source_words: 447
+  kind: embedded-clause
+- clause: 4a.1
+  title: 4a.1 Functionality and service framework for ML model training
+  path: 4a AI_ML management functionality and service framework.md
+  source_words: 211
+  kind: embedded-clause
+- clause: 4a.2
+  title: 4a.2 AI/ML functionalities management scenarios (relation with managed AI/ML
+    features)
+  path: 4a AI_ML management functionality and service framework.md
+  source_words: 510
+  kind: embedded-clause
+- clause: '5'
+  title: 5 Void
+  path: 5 Void.md
+  source_words: 0
+  kind: source-file
+- clause: '6'
+  title: 6 AI/ML management use cases and requirements
+  path: 6 AI_ML management use cases and requirements/README.md
+  source_words: 16417
+  kind: navigation-directory
+- clause: '6.1'
+  title: 6.1 ML model lifecycle management capabilities
+  path: 6 AI_ML management use cases and requirements/6.1 ML model lifecycle management
+    capabilities.md
+  source_words: 398
+  kind: source-file
+- clause: '6.2'
+  title: 6.2 Void
+  path: 6 AI_ML management use cases and requirements/6.2 Void.md
+  source_words: 0
+  kind: source-file
+- clause: 6.2a
+  title: 6.2a Void
+  path: 6 AI_ML management use cases and requirements/6.2a Void.md
+  source_words: 0
+  kind: source-file
+- clause: 6.2b
+  title: 6.2b ML model training
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/README.md
+  source_words: 9385
+  kind: navigation-directory
+- clause: 6.2b.1
+  title: 6.2b.1 Description
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.1
+    Description.md
+  source_words: 103
+  kind: source-file
+- clause: 6.2b.2
+  title: 6.2b.2 Use cases
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/README.md
+  source_words: 6595
+  kind: navigation-directory
+- clause: 6.2b.2.1
+  title: 6.2b.2.1 ML model training requested by consumer
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.1 ML model training requested by consumer.md
+  source_words: 472
+  kind: source-file
+- clause: 6.2b.2.2
+  title: 6.2b.2.2 ML model training initiated by producer
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.2 ML model training initiated by producer.md
+  source_words: 178
+  kind: source-file
+- clause: 6.2b.2.3
+  title: 6.2b.2.3 ML model selection
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.3 ML model selection.md
+  source_words: 305
+  kind: source-file
+- clause: 6.2b.2.4
+  title: 6.2b.2.4 Managing ML model training processes
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.4 Managing ML model training processes.md
+  source_words: 124
+  kind: source-file
+- clause: 6.2b.2.5
+  title: 6.2b.2.5 Handling errors in data and ML decisions
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.5 Handling errors in data and ML decisions.md
+  source_words: 187
+  kind: source-file
+- clause: 6.2b.2.6
+  title: 6.2b.2.6 ML model joint training
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.6 ML model joint training.md
+  source_words: 256
+  kind: source-file
+- clause: 6.2b.2.7
+  title: 6.2b.2.7 ML model validation performance reporting
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.7 ML model validation performance reporting.md
+  source_words: 324
+  kind: source-file
+- clause: 6.2b.2.8
+  title: 6.2b.2.8 Training data effectiveness reporting
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.8 Training data effectiveness reporting.md
+  source_words: 174
+  kind: source-file
+- clause: 6.2b.2.9
+  title: 6.2b.2.9 Performance management for ML model training
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.9 Performance management for ML model training.md
+  source_words: 611
+  kind: source-file
+- clause: 6.2b.2.9.1
+  title: 6.2b.2.9.1 Overview
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.9 Performance management for ML model training.md
+  source_words: 45
+  kind: embedded-clause
+- clause: 6.2b.2.9.2
+  title: 6.2b.2.9.2 Performance indicator selection for MLmodel training
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.9 Performance management for ML model training.md
+  source_words: 214
+  kind: embedded-clause
+- clause: 6.2b.2.9.3
+  title: 6.2b.2.9.3 ML model performance indicators query and selection for ML model
+    training
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.9 Performance management for ML model training.md
+  source_words: 189
+  kind: embedded-clause
+- clause: 6.2b.2.9.4
+  title: 6.2b.2.9.4 MnS consumer policy-based selection of ML model performance indicators
+    for ML model training
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.9 Performance management for ML model training.md
+  source_words: 163
+  kind: embedded-clause
+- clause: 6.2b.2.10
+  title: 6.2b.2.10 ML-Knowledge-based Transfer Learning
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.10 ML-Knowledge-based Transfer Learning.md
+  source_words: 991
+  kind: source-file
+- clause: 6.2b.2.10.1
+  title: 6.2b.2.10.1 Description
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.10 ML-Knowledge-based Transfer Learning.md
+  source_words: 391
+  kind: embedded-clause
+- clause: 6.2b.2.10.2
+  title: 6.2b.2.10.2 Use cases
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.10 ML-Knowledge-based Transfer Learning.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.2b.2.10.2.1
+  title: 6.2b.2.10.2.1 Discovering sharable Knowledge
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.10 ML-Knowledge-based Transfer Learning.md
+  source_words: 119
+  kind: embedded-clause
+- clause: 6.2b.2.10.2.2
+  title: 6.2b.2.10.2.2 Knowledge sharing and transfer learning
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.10 ML-Knowledge-based Transfer Learning.md
+  source_words: 481
+  kind: embedded-clause
+- clause: 6.2b.2.11
+  title: 6.2b.2.11 ML model training for multiple contexts
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.11 ML model training for multiple contexts.md
+  source_words: 292
+  kind: source-file
+- clause: 6.2b.2.12
+  title: 6.2b.2.12 ML Pre-specialised training
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.12 ML Pre-specialised training.md
+  source_words: 159
+  kind: source-file
+- clause: 6.2b.2.13
+  title: 6.2b.2.13 ML Fine-tuning of pre-specialised trained model
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.13 ML Fine-tuning of pre-specialised trained model.md
+  source_words: 148
+  kind: source-file
+- clause: 6.2b.2.14
+  title: 6.2b.2.14 Management of distributed training
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.14 Management of distributed training.md
+  source_words: 449
+  kind: source-file
+- clause: 6.2b.2.15
+  title: 6.2b.2.15 Management of Federated learning
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.15 Management of Federated learning.md
+  source_words: 547
+  kind: source-file
+- clause: 6.2b.2.15.1
+  title: 6.2b.2.15.1 Description
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.15 Management of Federated learning.md
+  source_words: 246
+  kind: embedded-clause
+- clause: 6.2b.2.15.2
+  title: 6.2b.2.15.2 Use cases
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.15 Management of Federated learning.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.2b.2.15.2.1
+  title: 6.2b.2.15.2.1 Management of different roles in Federated learning
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.15 Management of Federated learning.md
+  source_words: 301
+  kind: embedded-clause
+- clause: 6.2b.2.16
+  title: 6.2b.2.16 Management of Reinforcement Learning
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.16 Management of Reinforcement Learning.md
+  source_words: 1154
+  kind: source-file
+- clause: 6.2b.2.16.1
+  title: 6.2b.2.16.1 Description
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.16 Management of Reinforcement Learning.md
+  source_words: 573
+  kind: embedded-clause
+- clause: 6.2b.2.16.2
+  title: 6.2b.2.16.2 Use cases
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.16 Management of Reinforcement Learning.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 6.2b.2.16.2.1
+  title: 6.2b.2.16.2.1 Enabling Reinforcement Learning
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.16 Management of Reinforcement Learning.md
+  source_words: 257
+  kind: embedded-clause
+- clause: 6.2b.2.16.2.2
+  title: 6.2b.2.16.2.2 Exploration in Reinforcement Learning
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.16 Management of Reinforcement Learning.md
+  source_words: 324
+  kind: embedded-clause
+- clause: 6.2b.2.17
+  title: 6.2b.2.17 Training data statistics
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.2
+    Use cases/6.2b.2.17 Training data statistics.md
+  source_words: 224
+  kind: source-file
+- clause: 6.2b.3
+  title: 6.2b.3 Requirements for ML model training
+  path: 6 AI_ML management use cases and requirements/6.2b ML model training/6.2b.3
+    Requirements for ML model training.md
+  source_words: 2687
+  kind: source-file
+- clause: 6.2c
+  title: 6.2c ML model testing
+  path: 6 AI_ML management use cases and requirements/6.2c ML model testing.md
+  source_words: 1083
+  kind: source-file
+- clause: 6.2c.1
+  title: 6.2c.1 Description
+  path: 6 AI_ML management use cases and requirements/6.2c ML model testing.md
+  source_words: 61
+  kind: embedded-clause
+- clause: 6.2c.2
+  title: 6.2c.2 Use cases
+  path: 6 AI_ML management use cases and requirements/6.2c ML model testing.md
+  source_words: 710
+  kind: embedded-clause
+- clause: 6.2c.2.1
+  title: 6.2c.2.1 Consumer-requested ML model testing
+  path: 6 AI_ML management use cases and requirements/6.2c ML model testing.md
+  source_words: 138
+  kind: embedded-clause
+- clause: 6.2c.2.2
+  title: 6.2c.2.2 Producer-initiated ML model testing
+  path: 6 AI_ML management use cases and requirements/6.2c ML model testing.md
+  source_words: 102
+  kind: embedded-clause
+- clause: 6.2c.2.3
+  title: 6.2c.2.3 Joint testing of multiple ML models
+  path: 6 AI_ML management use cases and requirements/6.2c ML model testing.md
+  source_words: 68
+  kind: embedded-clause
+- clause: 6.2c.2.4
+  title: 6.2c.2.4 Performance management for ML model testing
+  path: 6 AI_ML management use cases and requirements/6.2c ML model testing.md
+  source_words: 402
+  kind: embedded-clause
+- clause: 6.2c.2.4.1
+  title: 6.2c.2.4.1 Overview
+  path: 6 AI_ML management use cases and requirements/6.2c ML model testing.md
+  source_words: 44
+  kind: embedded-clause
+- clause: 6.2c.2.4.2
+  title: 6.2c.2.4.2 Performance indicator selection for ML model testing
+  path: 6 AI_ML management use cases and requirements/6.2c ML model testing.md
+  source_words: 196
+  kind: embedded-clause
+- clause: 6.2c.2.4.3
+  title: 6.2c.2.4.3 ML model performance indicators query and selection for ML model
+    testing
+  path: 6 AI_ML management use cases and requirements/6.2c ML model testing.md
+  source_words: 90
+  kind: embedded-clause
+- clause: 6.2c.2.4.4
+  title: 6.2c.2.4.4 MnS consumer policy-based selection of ML model performance indicators
+    for ML model testing
+  path: 6 AI_ML management use cases and requirements/6.2c ML model testing.md
+  source_words: 72
+  kind: embedded-clause
+- clause: 6.2c.3
+  title: 6.2c.3 Requirements for ML model testing
+  path: 6 AI_ML management use cases and requirements/6.2c ML model testing.md
+  source_words: 312
+  kind: embedded-clause
+- clause: '6.3'
+  title: 6.3 AI/ML inference emulation
+  path: 6 AI_ML management use cases and requirements/6.3 AI_ML inference emulation.md
+  source_words: 407
+  kind: source-file
+- clause: 6.3.1
+  title: 6.3.1 Description
+  path: 6 AI_ML management use cases and requirements/6.3 AI_ML inference emulation.md
+  source_words: 51
+  kind: embedded-clause
+- clause: 6.3.2
+  title: 6.3.2 Use cases
+  path: 6 AI_ML management use cases and requirements/6.3 AI_ML inference emulation.md
+  source_words: 227
+  kind: embedded-clause
+- clause: 6.3.2.1
+  title: 6.3.2.1 AI/ML inference emulation
+  path: 6 AI_ML management use cases and requirements/6.3 AI_ML inference emulation.md
+  source_words: 83
+  kind: embedded-clause
+- clause: 6.3.2.2
+  title: 6.3.2.2 ML inference emulation environment selection
+  path: 6 AI_ML management use cases and requirements/6.3 AI_ML inference emulation.md
+  source_words: 144
+  kind: embedded-clause
+- clause: 6.3.3
+  title: 6.3.3 Requirements for Managing AI/ML inference emulation
+  path: 6 AI_ML management use cases and requirements/6.3 AI_ML inference emulation.md
+  source_words: 129
+  kind: embedded-clause
+- clause: '6.4'
+  title: 6.4 ML model deployment
+  path: 6 AI_ML management use cases and requirements/6.4 ML model deployment.md
+  source_words: 767
+  kind: source-file
+- clause: 6.4.1
+  title: 6.4.1 ML model loading
+  path: 6 AI_ML management use cases and requirements/6.4 ML model deployment.md
+  source_words: 767
+  kind: embedded-clause
+- clause: 6.4.1.1
+  title: 6.4.1.1 Description
+  path: 6 AI_ML management use cases and requirements/6.4 ML model deployment.md
+  source_words: 67
+  kind: embedded-clause
+- clause: 6.4.1.2
+  title: 6.4.1.2 Use cases
+  path: 6 AI_ML management use cases and requirements/6.4 ML model deployment.md
+  source_words: 428
+  kind: embedded-clause
+- clause: 6.4.1.2.1
+  title: 6.4.1.2.1 Consumer requested ML model loading
+  path: 6 AI_ML management use cases and requirements/6.4 ML model deployment.md
+  source_words: 135
+  kind: embedded-clause
+- clause: 6.4.1.2.2
+  title: 6.4.1.2.2 Control of producer-initiated ML model loading
+  path: 6 AI_ML management use cases and requirements/6.4 ML model deployment.md
+  source_words: 178
+  kind: embedded-clause
+- clause: 6.4.1.2.3
+  title: 6.4.1.2.3 ML model registration
+  path: 6 AI_ML management use cases and requirements/6.4 ML model deployment.md
+  source_words: 115
+  kind: embedded-clause
+- clause: 6.4.1.3
+  title: 6.4.1.3 Requirements for ML model loading
+  path: 6 AI_ML management use cases and requirements/6.4 ML model deployment.md
+  source_words: 272
+  kind: embedded-clause
+- clause: '6.5'
+  title: 6.5 AI/ML inference
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/README.md
+  source_words: 4377
+  kind: navigation-directory
+- clause: 6.5.1
+  title: 6.5.1 AI/ML inference performance management
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.1 AI_ML
+    inference performance management.md
+  source_words: 1010
+  kind: source-file
+- clause: 6.5.1.1
+  title: 6.5.1.1 Description
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.1 AI_ML
+    inference performance management.md
+  source_words: 54
+  kind: embedded-clause
+- clause: 6.5.1.2
+  title: 6.5.1.2 Use cases
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.1 AI_ML
+    inference performance management.md
+  source_words: 565
+  kind: embedded-clause
+- clause: 6.5.1.2.1
+  title: 6.5.1.2.1 AI/ML inference performance evaluation
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.1 AI_ML
+    inference performance management.md
+  source_words: 358
+  kind: embedded-clause
+- clause: 6.5.1.2.2
+  title: 6.5.1.2.2 AI/ML performance measurements selection based on MnS consumer
+    policy
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.1 AI_ML
+    inference performance management.md
+  source_words: 207
+  kind: embedded-clause
+- clause: 6.5.1.3
+  title: 6.5.1.3 Requirements for AI/ML inference performance management
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.1 AI_ML
+    inference performance management.md
+  source_words: 391
+  kind: embedded-clause
+- clause: 6.5.2
+  title: 6.5.2 AI/ML update control
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.2 AI_ML
+    update control.md
+  source_words: 1021
+  kind: source-file
+- clause: 6.5.2.1
+  title: 6.5.2.1 Description
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.2 AI_ML
+    update control.md
+  source_words: 152
+  kind: embedded-clause
+- clause: 6.5.2.2
+  title: 6.5.2.2 Use cases
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.2 AI_ML
+    update control.md
+  source_words: 424
+  kind: embedded-clause
+- clause: 6.5.2.2.1
+  title: 6.5.2.2.1 Availability of new capabilities or ML models
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.2 AI_ML
+    update control.md
+  source_words: 76
+  kind: embedded-clause
+- clause: 6.5.2.2.2
+  title: 6.5.2.2.2 Triggering ML model update
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.2 AI_ML
+    update control.md
+  source_words: 348
+  kind: embedded-clause
+- clause: 6.5.2.3
+  title: 6.5.2.3 Requirements for AIML update control
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.2 AI_ML
+    update control.md
+  source_words: 445
+  kind: embedded-clause
+- clause: 6.5.3
+  title: 6.5.3 AI/ML inference capabilities management
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.3 AI_ML
+    inference capabilities management.md
+  source_words: 759
+  kind: source-file
+- clause: 6.5.3.1
+  title: 6.5.3.1 Description
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.3 AI_ML
+    inference capabilities management.md
+  source_words: 95
+  kind: embedded-clause
+- clause: 6.5.3.2
+  title: 6.5.3.2 Use cases
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.3 AI_ML
+    inference capabilities management.md
+  source_words: 383
+  kind: embedded-clause
+- clause: 6.5.3.2.1
+  title: 6.5.3.2.1 Identifying capabilities of ML models
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.3 AI_ML
+    inference capabilities management.md
+  source_words: 188
+  kind: embedded-clause
+- clause: 6.5.3.2.2
+  title: 6.5.3.2.2 Mapping of the capabilities of ML models
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.3 AI_ML
+    inference capabilities management.md
+  source_words: 195
+  kind: embedded-clause
+- clause: 6.5.3.3
+  title: 6.5.3.3 Requirements for AI/ML inference capabilities management
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.3 AI_ML
+    inference capabilities management.md
+  source_words: 281
+  kind: embedded-clause
+- clause: 6.5.4
+  title: 6.5.4 AI/ML inference capability configuration management
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.4 AI_ML
+    inference capability configuration management.md
+  source_words: 645
+  kind: source-file
+- clause: 6.5.4.1
+  title: 6.5.4.1 Description
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.4 AI_ML
+    inference capability configuration management.md
+  source_words: 165
+  kind: embedded-clause
+- clause: 6.5.4.2
+  title: 6.5.4.2 Use cases
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.4 AI_ML
+    inference capability configuration management.md
+  source_words: 153
+  kind: embedded-clause
+- clause: 6.5.4.2.1
+  title: 6.5.4.2.1 Managing NG-RAN AI/ML-based distributed Network Energy Saving
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.4 AI_ML
+    inference capability configuration management.md
+  source_words: 62
+  kind: embedded-clause
+- clause: 6.5.4.2.2
+  title: 6.5.4.2.2 Managing NG-RAN AI/ML-based distributed Mobility Optimization
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.4 AI_ML
+    inference capability configuration management.md
+  source_words: 50
+  kind: embedded-clause
+- clause: 6.5.4.2.3
+  title: 6.5.4.2.3 Managing NG-RAN AI/ML-based distributed Load Balancing
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.4 AI_ML
+    inference capability configuration management.md
+  source_words: 41
+  kind: embedded-clause
+- clause: 6.5.4.3
+  title: 6.5.4.3 Requirements for AI/ML inference management
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.4 AI_ML
+    inference capability configuration management.md
+  source_words: 327
+  kind: embedded-clause
+- clause: 6.5.5
+  title: 6.5.5 AI/ML Inference History
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.5 AI_ML
+    Inference History.md
+  source_words: 421
+  kind: source-file
+- clause: 6.5.5.1
+  title: 6.5.5.1 Description
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.5 AI_ML
+    Inference History.md
+  source_words: 58
+  kind: embedded-clause
+- clause: 6.5.5.2
+  title: 6.5.5.2 Use cases
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.5 AI_ML
+    Inference History.md
+  source_words: 258
+  kind: embedded-clause
+- clause: 6.5.5.2.1
+  title: 6.5.5.2.1 AI/ML Inference History - tracking inferences and context
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.5 AI_ML
+    Inference History.md
+  source_words: 258
+  kind: embedded-clause
+- clause: 6.5.5.3
+  title: 6.5.5.3 Requirements for AI/ML Inference History
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.5 AI_ML
+    Inference History.md
+  source_words: 105
+  kind: embedded-clause
+- clause: 6.5.6
+  title: 6.5.6 Managing ML models in use in a live network
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.6 Managing
+    ML models in use in a live network.md
+  source_words: 287
+  kind: source-file
+- clause: 6.5.6.1
+  title: 6.5.6.1 Description
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.6 Managing
+    ML models in use in a live network.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 6.5.6.2
+  title: 6.5.6.2 Use cases
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.6 Managing
+    ML models in use in a live network.md
+  source_words: 162
+  kind: embedded-clause
+- clause: 6.5.6.2.1
+  title: 6.5.6.2.1 Handling of underperforming ML trained models in live networks
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.6 Managing
+    ML models in use in a live network.md
+  source_words: 70
+  kind: embedded-clause
+- clause: 6.5.6.2.2
+  title: 6.5.6.2.2 Performance monitoring of Network Functions with ML trained models
+    in live networks
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.6 Managing
+    ML models in use in a live network.md
+  source_words: 92
+  kind: embedded-clause
+- clause: 6.5.6.3
+  title: 6.5.6.3 Requirements for Managing ML models in use in a live network
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.6 Managing
+    ML models in use in a live network.md
+  source_words: 96
+  kind: embedded-clause
+- clause: 6.5.7
+  title: 6.5.7 AI/ML inference explainability
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.7 AI_ML
+    inference explainability.md
+  source_words: 234
+  kind: source-file
+- clause: 6.5.7.1
+  title: 6.5.7.1 Description
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.7 AI_ML
+    inference explainability.md
+  source_words: 74
+  kind: embedded-clause
+- clause: 6.5.7.2
+  title: 6.5.7.2 Use cases
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.7 AI_ML
+    inference explainability.md
+  source_words: 114
+  kind: embedded-clause
+- clause: 6.5.7.2.1
+  title: 6.5.7.2.1 Management of explanation in AI/ML inference
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.7 AI_ML
+    inference explainability.md
+  source_words: 114
+  kind: embedded-clause
+- clause: 6.5.7.3
+  title: 6.5.7.3 Requirements for AI/ML inference explainability managment
+  path: 6 AI_ML management use cases and requirements/6.5 AI_ML inference/6.5.7 AI_ML
+    inference explainability.md
+  source_words: 46
+  kind: embedded-clause
+- clause: '7'
+  title: 7 Information model definitions for AI/ML management
+  path: 7 Information model definitions for AI_ML management/README.md
+  source_words: 16323
+  kind: navigation-directory
+- clause: '7.1'
+  title: 7.1 Imported and associated information entities
+  path: 7 Information model definitions for AI_ML management/7.1 Imported and associated
+    information entities.md
+  source_words: 160
+  kind: source-file
+- clause: 7.1.1
+  title: 7.1.1 Imported information entities and local labels
+  path: 7 Information model definitions for AI_ML management/7.1 Imported and associated
+    information entities.md
+  source_words: 96
+  kind: embedded-clause
+- clause: 7.1.2
+  title: 7.1.2 Associated information entities and local labels
+  path: 7 Information model definitions for AI_ML management/7.1 Imported and associated
+    information entities.md
+  source_words: 64
+  kind: embedded-clause
+- clause: '7.2'
+  title: 7.2 Void
+  path: 7 Information model definitions for AI_ML management/7.2 Void.md
+  source_words: 0
+  kind: source-file
+- clause: 7.2a
+  title: 7.2a Common information model definitions for AI/ML management
+  path: 7 Information model definitions for AI_ML management/7.2a Common information
+    model definitions for AI_ML management.md
+  source_words: 740
+  kind: source-file
+- clause: 7.2a.1
+  title: 7.2a.1 Class diagram
+  path: 7 Information model definitions for AI_ML management/7.2a Common information
+    model definitions for AI_ML management.md
+  source_words: 29
+  kind: embedded-clause
+- clause: 7.2a.1.1
+  title: 7.2a.1.1 Relationships
+  path: 7 Information model definitions for AI_ML management/7.2a Common information
+    model definitions for AI_ML management.md
+  source_words: 14
+  kind: embedded-clause
+- clause: 7.2a.1.2
+  title: 7.2a.1.2 Inheritance
+  path: 7 Information model definitions for AI_ML management/7.2a Common information
+    model definitions for AI_ML management.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 7.2a.2
+  title: 7.2a.2 Class definitions
+  path: 7 Information model definitions for AI_ML management/7.2a Common information
+    model definitions for AI_ML management.md
+  source_words: 711
+  kind: embedded-clause
+- clause: 7.2a.2.1
+  title: 7.2a.2.1 MLModel
+  path: 7 Information model definitions for AI_ML management/7.2a Common information
+    model definitions for AI_ML management.md
+  source_words: 496
+  kind: embedded-clause
+- clause: 7.2a.2.1.1
+  title: 7.2a.2.1.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.2a Common information
+    model definitions for AI_ML management.md
+  source_words: 323
+  kind: embedded-clause
+- clause: 7.2a.2.1.2
+  title: 7.2a.2.1.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.2a Common information
+    model definitions for AI_ML management.md
+  source_words: 115
+  kind: embedded-clause
+- clause: 7.2a.2.1.3
+  title: 7.2a.2.1.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.2a Common information
+    model definitions for AI_ML management.md
+  source_words: 41
+  kind: embedded-clause
+- clause: 7.2a.2.1.4
+  title: 7.2a.2.1.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.2a Common information
+    model definitions for AI_ML management.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 7.2a.2.2
+  title: 7.2a.2.2 MLModelRepository
+  path: 7 Information model definitions for AI_ML management/7.2a Common information
+    model definitions for AI_ML management.md
+  source_words: 72
+  kind: embedded-clause
+- clause: 7.2a.2.2.1
+  title: 7.2a.2.2.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.2a Common information
+    model definitions for AI_ML management.md
+  source_words: 41
+  kind: embedded-clause
+- clause: 7.2a.2.2.2
+  title: 7.2a.2.2.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.2a Common information
+    model definitions for AI_ML management.md
+  source_words: 13
+  kind: embedded-clause
+- clause: 7.2a.2.2.3
+  title: 7.2a.2.2.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.2a Common information
+    model definitions for AI_ML management.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 7.2a.2.2.4
+  title: 7.2a.2.2.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.2a Common information
+    model definitions for AI_ML management.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 7.2a.2.3
+  title: 7.2a.2.3 MLModelCoordinationGroup
+  path: 7 Information model definitions for AI_ML management/7.2a Common information
+    model definitions for AI_ML management.md
+  source_words: 143
+  kind: embedded-clause
+- clause: 7.2a.2.3.1
+  title: 7.2a.2.3.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.2a Common information
+    model definitions for AI_ML management.md
+  source_words: 82
+  kind: embedded-clause
+- clause: 7.2a.2.3.2
+  title: 7.2a.2.3.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.2a Common information
+    model definitions for AI_ML management.md
+  source_words: 43
+  kind: embedded-clause
+- clause: 7.2a.2.3.3
+  title: 7.2a.2.3.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.2a Common information
+    model definitions for AI_ML management.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 7.2a.2.3.4
+  title: 7.2a.2.3.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.2a Common information
+    model definitions for AI_ML management.md
+  source_words: 17
+  kind: embedded-clause
+- clause: '7.3'
+  title: 7.3 Void
+  path: 7 Information model definitions for AI_ML management/7.3 Void.md
+  source_words: 0
+  kind: source-file
+- clause: 7.3a
+  title: 7.3a Information model definitions for AI/ML operational phases
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/README.md
+  source_words: 5566
+  kind: navigation-directory
+- clause: 7.3a.1
+  title: 7.3a.1 Information model definitions for ML model training
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1 Information model definitions
+    for ML model training.md
+  source_words: 2238
+  kind: source-file
+- clause: 7.3a.1.1
+  title: 7.3a.1.1 Class diagram
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1 Information model definitions
+    for ML model training.md
+  source_words: 54
+  kind: embedded-clause
+- clause: 7.3a.1.1.1
+  title: 7.3a.1.1.1 Relationships
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1 Information model definitions
+    for ML model training.md
+  source_words: 40
+  kind: embedded-clause
+- clause: 7.3a.1.1.2
+  title: 7.3a.1.1.2 Inheritance
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1 Information model definitions
+    for ML model training.md
+  source_words: 14
+  kind: embedded-clause
+- clause: 7.3a.1.2
+  title: 7.3a.1.2 Class definitions
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1 Information model definitions
+    for ML model training.md
+  source_words: 2184
+  kind: embedded-clause
+- clause: 7.3a.1.2.1
+  title: 7.3a.1.2.1 MLTrainingFunction
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1 Information model definitions
+    for ML model training.md
+  source_words: 346
+  kind: embedded-clause
+- clause: 7.3a.1.2.1.1
+  title: 7.3a.1.2.1.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1 Information model definitions
+    for ML model training.md
+  source_words: 247
+  kind: embedded-clause
+- clause: 7.3a.1.2.1.2
+  title: 7.3a.1.2.1.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1 Information model definitions
+    for ML model training.md
+  source_words: 68
+  kind: embedded-clause
+- clause: 7.3a.1.2.1.3
+  title: 7.3a.1.2.1.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1 Information model definitions
+    for ML model training.md
+  source_words: 14
+  kind: embedded-clause
+- clause: 7.3a.1.2.1.4
+  title: 7.3a.1.2.1.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1 Information model definitions
+    for ML model training.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 7.3a.1.2.2
+  title: 7.3a.1.2.2 MLTrainingRequest
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1 Information model definitions
+    for ML model training.md
+  source_words: 962
+  kind: embedded-clause
+- clause: 7.3a.1.2.2.1
+  title: 7.3a.1.2.2.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1 Information model definitions
+    for ML model training.md
+  source_words: 720
+  kind: embedded-clause
+- clause: 7.3a.1.2.2.2
+  title: 7.3a.1.2.2.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1 Information model definitions
+    for ML model training.md
+  source_words: 146
+  kind: embedded-clause
+- clause: 7.3a.1.2.2.3
+  title: 7.3a.1.2.2.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1 Information model definitions
+    for ML model training.md
+  source_words: 79
+  kind: embedded-clause
+- clause: 7.3a.1.2.2.4
+  title: 7.3a.1.2.2.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1 Information model definitions
+    for ML model training.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 7.3a.1.2.3
+  title: 7.3a.1.2.3 MLTrainingReport
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1 Information model definitions
+    for ML model training.md
+  source_words: 247
+  kind: embedded-clause
+- clause: 7.3a.1.2.3.1
+  title: 7.3a.1.2.3.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1 Information model definitions
+    for ML model training.md
+  source_words: 77
+  kind: embedded-clause
+- clause: 7.3a.1.2.3.2
+  title: 7.3a.1.2.3.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1 Information model definitions
+    for ML model training.md
+  source_words: 98
+  kind: embedded-clause
+- clause: 7.3a.1.2.3.3
+  title: 7.3a.1.2.3.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1 Information model definitions
+    for ML model training.md
+  source_words: 55
+  kind: embedded-clause
+- clause: 7.3a.1.2.3.4
+  title: 7.3a.1.2.3.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1 Information model definitions
+    for ML model training.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 7.3a.1.2.4
+  title: 7.3a.1.2.4 MLTrainingProcess
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1 Information model definitions
+    for ML model training.md
+  source_words: 629
+  kind: embedded-clause
+- clause: 7.3a.1.2.4.1
+  title: 7.3a.1.2.4.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1 Information model definitions
+    for ML model training.md
+  source_words: 480
+  kind: embedded-clause
+- clause: 7.3a.1.2.4.2
+  title: 7.3a.1.2.4.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1 Information model definitions
+    for ML model training.md
+  source_words: 98
+  kind: embedded-clause
+- clause: 7.3a.1.2.4.3
+  title: 7.3a.1.2.4.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1 Information model definitions
+    for ML model training.md
+  source_words: 34
+  kind: embedded-clause
+- clause: 7.3a.1.2.4.4
+  title: 7.3a.1.2.4.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1 Information model definitions
+    for ML model training.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 7.3a.1b
+  title: 7.3a.1b Information model definitions for ML model testing
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1b Information model definitions
+    for ML model testing.md
+  source_words: 807
+  kind: source-file
+- clause: 7.3a.1b.1
+  title: 7.3a.1b.1 Class diagram
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1b Information model definitions
+    for ML model testing.md
+  source_words: 54
+  kind: embedded-clause
+- clause: 7.3a.1b.1.1
+  title: 7.3a.1b.1.1 Relationships
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1b Information model definitions
+    for ML model testing.md
+  source_words: 40
+  kind: embedded-clause
+- clause: 7.3a.1b.1.2
+  title: 7.3a.1b.1.2 Inheritance
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1b Information model definitions
+    for ML model testing.md
+  source_words: 14
+  kind: embedded-clause
+- clause: 7.3a.1b.2
+  title: 7.3a.1b.2 Class definitions
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1b Information model definitions
+    for ML model testing.md
+  source_words: 753
+  kind: embedded-clause
+- clause: 7.3a.1b.2.1
+  title: 7.3a.1b.2.1 MLTestingFunction
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1b Information model definitions
+    for ML model testing.md
+  source_words: 150
+  kind: embedded-clause
+- clause: 7.3a.1b.2.1.4
+  title: 7.3a.1b.2.1.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1b Information model definitions
+    for ML model testing.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 7.3a.1b.2.2
+  title: 7.3a.1b.2.2 MLTestingRequest
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1b Information model definitions
+    for ML model testing.md
+  source_words: 338
+  kind: embedded-clause
+- clause: 7.3a.1b.2.2.4
+  title: 7.3a.1b.2.2.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1b Information model definitions
+    for ML model testing.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 7.3a.1b.2.3
+  title: 7.3a.1b.2.3 MLTestingReport
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.1b Information model definitions
+    for ML model testing.md
+  source_words: 231
+  kind: embedded-clause
+- clause: 7.3a.2
+  title: 7.3a.2 Information model definitions for AI/ML inference emulation
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.2 Information model definitions
+    for AI_ML inference emulation.md
+  source_words: 152
+  kind: source-file
+- clause: 7.3a.2.1
+  title: 7.3a.2.1 Class diagram
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.2 Information model definitions
+    for AI_ML inference emulation.md
+  source_words: 26
+  kind: embedded-clause
+- clause: 7.3a.2.1.1
+  title: 7.3a.2.1.1 Relationships
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.2 Information model definitions
+    for AI_ML inference emulation.md
+  source_words: 14
+  kind: embedded-clause
+- clause: 7.3a.2.1.2
+  title: 7.3a.2.1.2 Inheritance
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.2 Information model definitions
+    for AI_ML inference emulation.md
+  source_words: 12
+  kind: embedded-clause
+- clause: 7.3a.2.2
+  title: 7.3a.2.2 Class definitions
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.2 Information model definitions
+    for AI_ML inference emulation.md
+  source_words: 126
+  kind: embedded-clause
+- clause: 7.3a.2.2.1
+  title: 7.3a.2.2.1 AIMLInferenceEmulationFunction
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.2 Information model definitions
+    for AI_ML inference emulation.md
+  source_words: 126
+  kind: embedded-clause
+- clause: 7.3a.2.2.1.1
+  title: 7.3a.2.2.1.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.2 Information model definitions
+    for AI_ML inference emulation.md
+  source_words: 95
+  kind: embedded-clause
+- clause: 7.3a.2.2.1.2
+  title: 7.3a.2.2.1.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.2 Information model definitions
+    for AI_ML inference emulation.md
+  source_words: 13
+  kind: embedded-clause
+- clause: 7.3a.2.2.1.3
+  title: 7.3a.2.2.1.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.2 Information model definitions
+    for AI_ML inference emulation.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 7.3a.2.2.1.4
+  title: 7.3a.2.2.1.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.2 Information model definitions
+    for AI_ML inference emulation.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 7.3a.3
+  title: 7.3a.3 Information model definitions for ML model deployment
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.3 Information model definitions
+    for ML model deployment.md
+  source_words: 886
+  kind: source-file
+- clause: 7.3a.3.1
+  title: 7.3a.3.1 Class diagram
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.3 Information model definitions
+    for ML model deployment.md
+  source_words: 54
+  kind: embedded-clause
+- clause: 7.3a.3.1.1
+  title: 7.3a.3.1.1 Relationships
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.3 Information model definitions
+    for ML model deployment.md
+  source_words: 40
+  kind: embedded-clause
+- clause: 7.3a.3.1.2
+  title: 7.3a.3.1.2 Inheritance
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.3 Information model definitions
+    for ML model deployment.md
+  source_words: 14
+  kind: embedded-clause
+- clause: 7.3a.3.2
+  title: 7.3a.3.2 Class definitions
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.3 Information model definitions
+    for ML model deployment.md
+  source_words: 832
+  kind: embedded-clause
+- clause: 7.3a.3.2.1
+  title: 7.3a.3.2.1 MLModelLoadingRequest
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.3 Information model definitions
+    for ML model deployment.md
+  source_words: 221
+  kind: embedded-clause
+- clause: 7.3a.3.2.1.1
+  title: 7.3a.3.2.1.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.3 Information model definitions
+    for ML model deployment.md
+  source_words: 141
+  kind: embedded-clause
+- clause: 7.3a.3.2.1.2
+  title: 7.3a.3.2.1.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.3 Information model definitions
+    for ML model deployment.md
+  source_words: 62
+  kind: embedded-clause
+- clause: 7.3a.3.2.1.3
+  title: 7.3a.3.2.1.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.3 Information model definitions
+    for ML model deployment.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 7.3a.3.2.1.4
+  title: 7.3a.3.2.1.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.3 Information model definitions
+    for ML model deployment.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 7.3a.3.2.2
+  title: 7.3a.3.2.2 MLModelLoadingPolicy
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.3 Information model definitions
+    for ML model deployment.md
+  source_words: 214
+  kind: embedded-clause
+- clause: 7.3a.3.2.2.1
+  title: 7.3a.3.2.2.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.3 Information model definitions
+    for ML model deployment.md
+  source_words: 103
+  kind: embedded-clause
+- clause: 7.3a.3.2.2.2
+  title: 7.3a.3.2.2.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.3 Information model definitions
+    for ML model deployment.md
+  source_words: 56
+  kind: embedded-clause
+- clause: 7.3a.3.2.2.3
+  title: 7.3a.3.2.2.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.3 Information model definitions
+    for ML model deployment.md
+  source_words: 38
+  kind: embedded-clause
+- clause: 7.3a.3.2.2.4
+  title: 7.3a.3.2.2.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.3 Information model definitions
+    for ML model deployment.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 7.3a.3.2.3
+  title: 7.3a.3.2.3 MLModelLoadingProcess
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.3 Information model definitions
+    for ML model deployment.md
+  source_words: 397
+  kind: embedded-clause
+- clause: 7.3a.3.2.3.1
+  title: 7.3a.3.2.3.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.3 Information model definitions
+    for ML model deployment.md
+  source_words: 263
+  kind: embedded-clause
+- clause: 7.3a.3.2.3.2
+  title: 7.3a.3.2.3.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.3 Information model definitions
+    for ML model deployment.md
+  source_words: 74
+  kind: embedded-clause
+- clause: 7.3a.3.2.3.3
+  title: 7.3a.3.2.3.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.3 Information model definitions
+    for ML model deployment.md
+  source_words: 43
+  kind: embedded-clause
+- clause: 7.3a.3.2.3.4
+  title: 7.3a.3.2.3.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.3 Information model definitions
+    for ML model deployment.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 7.3a.4
+  title: 7.3a.4 Information model definitions for AI/ML inference
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 1483
+  kind: source-file
+- clause: 7.3a.4.1
+  title: 7.3a.4.1 Class diagram
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 77
+  kind: embedded-clause
+- clause: 7.3a.4.1.1
+  title: 7.3a.4.1.1 Relationships
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 51
+  kind: embedded-clause
+- clause: 7.3a.4.1.2
+  title: 7.3a.4.1.2 Inheritance
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 26
+  kind: embedded-clause
+- clause: 7.3a.4.2
+  title: 7.3a.4.2 Class definitions
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 1406
+  kind: embedded-clause
+- clause: 7.3a.4.2.1
+  title: 7.3a.4.2.1 MLUpdateFunction
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 143
+  kind: embedded-clause
+- clause: 7.3a.4.2.1.1
+  title: 7.3a.4.2.1.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 75
+  kind: embedded-clause
+- clause: 7.3a.4.2.1.2
+  title: 7.3a.4.2.1.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 50
+  kind: embedded-clause
+- clause: 7.3a.4.2.1.3
+  title: 7.3a.4.2.1.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 7.3a.4.2.1.4
+  title: 7.3a.4.2.1.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 7.3a.4.2.2
+  title: 7.3a.4.2.2 MLUpdateRequest
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 376
+  kind: embedded-clause
+- clause: 7.3a.4.2.2.1
+  title: 7.3a.4.2.2.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 266
+  kind: embedded-clause
+- clause: 7.3a.4.2.2.2
+  title: 7.3a.4.2.2.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 92
+  kind: embedded-clause
+- clause: 7.3a.4.2.2.3
+  title: 7.3a.4.2.2.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 7.3a.4.2.2.4
+  title: 7.3a.4.2.2.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 7.3a.4.2.3
+  title: 7.3a.4.2.3 MLUpdateProcess
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 240
+  kind: embedded-clause
+- clause: 7.3a.4.2.3.1
+  title: 7.3a.4.2.3.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 148
+  kind: embedded-clause
+- clause: 7.3a.4.2.3.2
+  title: 7.3a.4.2.3.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 74
+  kind: embedded-clause
+- clause: 7.3a.4.2.3.3
+  title: 7.3a.4.2.3.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 7.3a.4.2.3.4
+  title: 7.3a.4.2.3.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 7.3a.4.2.4
+  title: 7.3a.4.2.4 MLUpdateReport
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 221
+  kind: embedded-clause
+- clause: 7.3a.4.2.4.1
+  title: 7.3a.4.2.4.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 149
+  kind: embedded-clause
+- clause: 7.3a.4.2.4.2
+  title: 7.3a.4.2.4.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 56
+  kind: embedded-clause
+- clause: 7.3a.4.2.4.3
+  title: 7.3a.4.2.4.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 7.3a.4.2.4.4
+  title: 7.3a.4.2.4.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 7.3a.4.2.5
+  title: 7.3a.4.2.5 AIMLInferenceFunction
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 277
+  kind: embedded-clause
+- clause: 7.3a.4.2.5.1
+  title: 7.3a.4.2.5.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 197
+  kind: embedded-clause
+- clause: 7.3a.4.2.5.2
+  title: 7.3a.4.2.5.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 62
+  kind: embedded-clause
+- clause: 7.3a.4.2.5.3
+  title: 7.3a.4.2.5.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 7.3a.4.2.5.4
+  title: 7.3a.4.2.5.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 7.3a.4.2.6
+  title: 7.3a.4.2.6 AIMLInferenceReport
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 149
+  kind: embedded-clause
+- clause: 7.3a.4.2.6.1
+  title: 7.3a.4.2.6.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 83
+  kind: embedded-clause
+- clause: 7.3a.4.2.6.2
+  title: 7.3a.4.2.6.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 48
+  kind: embedded-clause
+- clause: 7.3a.4.2.6.3
+  title: 7.3a.4.2.6.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 7.3a.4.2.6.4
+  title: 7.3a.4.2.6.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.3a Information model
+    definitions for AI_ML operational phases/7.3a.4 Information model definitions
+    for AI_ML inference.md
+  source_words: 17
+  kind: embedded-clause
+- clause: '7.4'
+  title: 7.4 Data type definitions
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 2798
+  kind: source-file
+- clause: 7.4.1
+  title: 7.4.1 ModelPerformance \<\<dataType\>\>
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 102
+  kind: embedded-clause
+- clause: 7.4.1.1
+  title: 7.4.1.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 24
+  kind: embedded-clause
+- clause: 7.4.1.2
+  title: 7.4.1.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 62
+  kind: embedded-clause
+- clause: 7.4.1.3
+  title: 7.4.1.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 7.4.1.4
+  title: 7.4.1.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 7.4.2
+  title: 7.4.2 Void
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 0
+  kind: embedded-clause
+- clause: 7.4.3
+  title: 7.4.3 MLContext \<\<dataType\>\>
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 91
+  kind: embedded-clause
+- clause: 7.4.3.1
+  title: 7.4.3.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 34
+  kind: embedded-clause
+- clause: 7.4.3.2
+  title: 7.4.3.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 25
+  kind: embedded-clause
+- clause: 7.4.3.3
+  title: 7.4.3.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 7.4.3.4
+  title: 7.4.3.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 7.4.4
+  title: 7.4.4 SupportedPerfIndicator \<\<dataType\>\>
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 111
+  kind: embedded-clause
+- clause: 7.4.4.1
+  title: 7.4.4.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 32
+  kind: embedded-clause
+- clause: 7.4.4.2
+  title: 7.4.4.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 31
+  kind: embedded-clause
+- clause: 7.4.4.3
+  title: 7.4.4.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 33
+  kind: embedded-clause
+- clause: 7.4.4.4
+  title: 7.4.4.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 7.4.5
+  title: 7.4.5 AvailMLCapabilityReport \<\<dataType\>\>
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 192
+  kind: embedded-clause
+- clause: 7.4.5.1
+  title: 7.4.5.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 130
+  kind: embedded-clause
+- clause: 7.4.5.2
+  title: 7.4.5.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 46
+  kind: embedded-clause
+- clause: 7.4.5.3
+  title: 7.4.5.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 7.4.5.4
+  title: 7.4.5.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 7.4.6
+  title: 7.4.6 AIMLManagementPolicy \<\<dataType\>\>
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 54
+  kind: embedded-clause
+- clause: 7.4.6.1
+  title: 7.4.6.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 13
+  kind: embedded-clause
+- clause: 7.4.6.2
+  title: 7.4.6.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 25
+  kind: embedded-clause
+- clause: 7.4.6.3
+  title: 7.4.6.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 7.4.6.4
+  title: 7.4.6.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 7.4.7
+  title: 7.4.7 ManagedActivationScope \<\<choice\>\>
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 127
+  kind: embedded-clause
+- clause: 7.4.7.1
+  title: 7.4.7.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 26
+  kind: embedded-clause
+- clause: 7.4.7.2
+  title: 7.4.7.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 40
+  kind: embedded-clause
+- clause: 7.4.7.3
+  title: 7.4.7.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 46
+  kind: embedded-clause
+- clause: 7.4.7.4
+  title: 7.4.7.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 7.4.8
+  title: 7.4.8. MLCapabilityInfo \<\<dataType\>\>
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 72
+  kind: embedded-clause
+- clause: 7.4.8.1
+  title: 7.4.8.1. Definition
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 24
+  kind: embedded-clause
+- clause: 7.4.8.2
+  title: 7.4.8.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 32
+  kind: embedded-clause
+- clause: 7.4.8.3
+  title: 7.4.8.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 7.4.8.4
+  title: 7.4.8.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 7.4.9
+  title: 7.4.9 InferenceOutput \<\<dataType\>\>
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 130
+  kind: embedded-clause
+- clause: 7.4.9.1
+  title: 7.4.9.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 44
+  kind: embedded-clause
+- clause: 7.4.9.2
+  title: 7.4.9.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 70
+  kind: embedded-clause
+- clause: 7.4.9.3
+  title: 7.4.9.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 7.4.9.4
+  title: 7.4.9.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 7.4.10
+  title: 7.4.10 AIMLInferenceName \<\<choice\>\>
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 169
+  kind: embedded-clause
+- clause: 7.4.10.1
+  title: 7.4.10.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 11
+  kind: embedded-clause
+- clause: 7.4.10.2
+  title: 7.4.10.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 44
+  kind: embedded-clause
+- clause: 7.4.10.3
+  title: 7.4.10.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 99
+  kind: embedded-clause
+- clause: 7.4.10.4
+  title: 7.4.10.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 7.4.11
+  title: 7.4.11 DataStatisticalProperties \<\<dataType\>\>
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 66
+  kind: embedded-clause
+- clause: 7.4.11.1
+  title: 7.4.11.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 25
+  kind: embedded-clause
+- clause: 7.4.11.2
+  title: 7.4.11.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 25
+  kind: embedded-clause
+- clause: 7.4.11.3
+  title: 7.4.11.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 7.4.11.4
+  title: 7.4.11.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 7.4.12
+  title: 7.4.12 DistributedTrainingExpectation \<\<dataType\>\>
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 109
+  kind: embedded-clause
+- clause: 7.4.12.1
+  title: 7.4.12.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 66
+  kind: embedded-clause
+- clause: 7.4.12.2
+  title: 7.4.12.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 25
+  kind: embedded-clause
+- clause: 7.4.12.3
+  title: 7.4.12.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 7.4.12.4
+  title: 7.4.12.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 7.4.13
+  title: 7.4.13 PotentialImpactInfo \<\<dataType\>\>
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 55
+  kind: embedded-clause
+- clause: 7.4.13.1
+  title: 7.4.13.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 13
+  kind: embedded-clause
+- clause: 7.4.13.2
+  title: 7.4.13.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 26
+  kind: embedded-clause
+- clause: 7.4.13.3
+  title: 7.4.13.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 7.4.13.4
+  title: 7.4.13.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 7.4.14
+  title: 7.4.14 ImpactedPM \<\<dataType\>\>
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 68
+  kind: embedded-clause
+- clause: 7.4.14.1
+  title: 7.4.14.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 27
+  kind: embedded-clause
+- clause: 7.4.14.2
+  title: 7.4.14.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 25
+  kind: embedded-clause
+- clause: 7.4.14.3
+  title: 7.4.14.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 7.4.14.4
+  title: 7.4.14.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 7.4.15
+  title: 7.4.15 MLKnowledge \<\<dataType\>\>
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 150
+  kind: embedded-clause
+- clause: 7.4.15.1
+  title: 7.4.15.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 103
+  kind: embedded-clause
+- clause: 7.4.15.2
+  title: 7.4.15.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 31
+  kind: embedded-clause
+- clause: 7.4.15.3
+  title: 7.4.15.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 7.4.15.4
+  title: 7.4.15.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 7.4.16
+  title: 7.4.16 EnvironmentScope \<\<choice\>\>
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 216
+  kind: embedded-clause
+- clause: 7.4.16.1
+  title: 7.4.16.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 109
+  kind: embedded-clause
+- clause: 7.4.16.2
+  title: 7.4.16.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 38
+  kind: embedded-clause
+- clause: 7.4.16.3
+  title: 7.4.16.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 54
+  kind: embedded-clause
+- clause: 7.4.16.4
+  title: 7.4.16.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 7.4.17
+  title: 7.4.17 SupportedLearningTechnology \<\<dataType\>\>
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 149
+  kind: embedded-clause
+- clause: 7.4.17.1
+  title: 7.4.17.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 60
+  kind: embedded-clause
+- clause: 7.4.17.2
+  title: 7.4.17.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 43
+  kind: embedded-clause
+- clause: 7.4.17.3
+  title: 7.4.17.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 31
+  kind: embedded-clause
+- clause: 7.4.17.4
+  title: 7.4.17.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 7.4.18
+  title: 7.4.18 RLRequirement \<\<dataType\>\>
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 255
+  kind: embedded-clause
+- clause: 7.4.18.1
+  title: 7.4.18.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 196
+  kind: embedded-clause
+- clause: 7.4.18.2
+  title: 7.4.18.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 43
+  kind: embedded-clause
+- clause: 7.4.18.3
+  title: 7.4.18.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 7.4.18.4
+  title: 7.4.18.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 7.4.19
+  title: 7.4.19 ClusteringCriteria \<\<dataType\>\>
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 319
+  kind: embedded-clause
+- clause: 7.4.19.1
+  title: 7.4.19.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 260
+  kind: embedded-clause
+- clause: 7.4.19.2
+  title: 7.4.19.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 43
+  kind: embedded-clause
+- clause: 7.4.19.3
+  title: 7.4.19.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 7.4.19.4
+  title: 7.4.19.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 7.4.20
+  title: 7.4.20 FLParticipationInfo \<\<dataType\>\>
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 85
+  kind: embedded-clause
+- clause: 7.4.20.1
+  title: 7.4.20.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 11
+  kind: embedded-clause
+- clause: 7.4.20.2
+  title: 7.4.20.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 40
+  kind: embedded-clause
+- clause: 7.4.20.3
+  title: 7.4.20.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 19
+  kind: embedded-clause
+- clause: 7.4.20.4
+  title: 7.4.20.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 7.4.21
+  title: 7.4.21 FLRequirement \<\<dataType\>\>
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 79
+  kind: embedded-clause
+- clause: 7.4.21.1
+  title: 7.4.21.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 24
+  kind: embedded-clause
+- clause: 7.4.21.2
+  title: 7.4.21.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 37
+  kind: embedded-clause
+- clause: 7.4.21.3
+  title: 7.4.21.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 7.4.21.4
+  title: 7.4.21.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 17
+  kind: embedded-clause
+- clause: 7.4.22
+  title: 7.4.22 FLClientSelectionCriteria \<\<dataType\>\>
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 127
+  kind: embedded-clause
+- clause: 7.4.22.1
+  title: 7.4.22.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 56
+  kind: embedded-clause
+- clause: 7.4.22.2
+  title: 7.4.22.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 55
+  kind: embedded-clause
+- clause: 7.4.22.3
+  title: 7.4.22.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 7.4.22.4
+  title: 7.4.22.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 7.4.23
+  title: 7.4.23 FLReportPerClient \<\<dataType\>\>
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 72
+  kind: embedded-clause
+- clause: 7.4.23.1
+  title: 7.4.23.1 Definition
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 19
+  kind: embedded-clause
+- clause: 7.4.23.2
+  title: 7.4.23.2 Attributes
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 37
+  kind: embedded-clause
+- clause: 7.4.23.3
+  title: 7.4.23.3 Attribute constraints
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 1
+  kind: embedded-clause
+- clause: 7.4.23.4
+  title: 7.4.23.4 Notifications
+  path: 7 Information model definitions for AI_ML management/7.4 Data type definitions.md
+  source_words: 15
+  kind: embedded-clause
+- clause: 7.4a
+  title: 7.4a Enumerations
+  path: 7 Information model definitions for AI_ML management/7.4a Enumerations.md
+  source_words: 63
+  kind: source-file
+- clause: 7.4a.1
+  title: 7.4a.1 NgRanInferenceType \<\<enumeration\>\>
+  path: 7 Information model definitions for AI_ML management/7.4a Enumerations.md
+  source_words: 63
+  kind: embedded-clause
+- clause: '7.5'
+  title: 7.5 Attribute definitions
+  path: 7 Information model definitions for AI_ML management/7.5 Attribute definitions/README.md
+  source_words: 6938
+  kind: navigation-directory
+- clause: 7.5.1
+  title: 7.5.1 Attribute properties
+  path: 7 Information model definitions for AI_ML management/7.5 Attribute definitions/7.5.1
+    Attribute properties.md
+  source_words: 6937
+  kind: source-file
+- clause: 7.5.2
+  title: 7.5.2 Constraints
+  path: 7 Information model definitions for AI_ML management/7.5 Attribute definitions/7.5.2
+    Constraints.md
+  source_words: 1
+  kind: source-file
+- clause: '7.6'
+  title: 7.6 Common notifications
+  path: 7 Information model definitions for AI_ML management/7.6 Common notifications.md
+  source_words: 58
+  kind: source-file
+- clause: 7.6.1
+  title: 7.6.1 Configuration notifications
+  path: 7 Information model definitions for AI_ML management/7.6 Common notifications.md
+  source_words: 58
+  kind: embedded-clause
+- clause: '8'
+  title: 8 Service components
+  path: 8 Service components.md
+  source_words: 506
+  kind: source-file
+- clause: '8.0'
+  title: 8.0 General
+  path: 8 Service components.md
+  source_words: 24
+  kind: embedded-clause
+- clause: '8.1'
+  title: 8.1 Lifecycle management operations for AI/ML management MnS
+  path: 8 Service components.md
+  source_words: 482
+  kind: embedded-clause
+- clause: '9'
+  title: 9 Solution Set (SS)
+  path: 9 Solution Set (SS).md
+  source_words: 111
+  kind: source-file
+- clause: '9.1'
+  title: 9.1 OpenAPI document for provisioning MnS
+  path: 9 Solution Set (SS).md
+  source_words: 51
+  kind: embedded-clause
+- clause: '9.2'
+  title: 9.2 OpenAPI document for AI/ML management
+  path: 9 Solution Set (SS).md
+  source_words: 60
+  kind: embedded-clause
+- clause: '10'
+  title: 10 Stage 3 definition for AI/ML Management
+  path: 10 Stage 3 definition for AI_ML Management.md
+  source_words: 1173
+  kind: source-file
+- clause: '10.1'
+  title: 10.1 RESTful HTTP-based solution set
+  path: 10 Stage 3 definition for AI_ML Management.md
+  source_words: 1173
+  kind: embedded-clause
+- clause: 10.1.1
+  title: 10.1.1 ML model training
+  path: 10 Stage 3 definition for AI_ML Management.md
+  source_words: 241
+  kind: embedded-clause
+- clause: 10.1.2
+  title: 10.1.2 ML model testing
+  path: 10 Stage 3 definition for AI_ML Management.md
+  source_words: 205
+  kind: embedded-clause
+- clause: 10.1.3
+  title: 10.1.3 AI/ML inference emulation
+  path: 10 Stage 3 definition for AI_ML Management.md
+  source_words: 69
+  kind: embedded-clause
+- clause: 10.1.4
+  title: 10.1.4 ML model deployment
+  path: 10 Stage 3 definition for AI_ML Management.md
+  source_words: 306
+  kind: embedded-clause
+- clause: 10.1.5
+  title: 10.1.5 AI/ML inference
+  path: 10 Stage 3 definition for AI_ML Management.md
+  source_words: 309
+  kind: embedded-clause
+- clause: Annex A
+  title: 'Annex A (informative): PlantUML source code for NRM class diagrams'
+  path: Annex A (informative)_ PlantUML source code for NRM class diagrams.md
+  source_words: 810
+  kind: source-file
+- clause: A.1
+  title: A.1 General
+  path: Annex A (informative)_ PlantUML source code for NRM class diagrams.md
+  source_words: 20
+  kind: embedded-clause
+- clause: A.2
+  title: 'A.2 PlantUML code for Figure 7.3a.1.1.1-1: NRM fragment for ML model training'
+  path: Annex A (informative)_ PlantUML source code for NRM class diagrams.md
+  source_words: 124
+  kind: embedded-clause
+- clause: A.3
+  title: 'A.3 PlantUML code for Figure 7.3a.1.1.2-1: Inheritance Hierarchy for ML
+    model training related NRMs'
+  path: Annex A (informative)_ PlantUML source code for NRM class diagrams.md
+  source_words: 41
+  kind: embedded-clause
+- clause: A.4
+  title: 'A.4 PlantUML code for Figure 7.2a.1.2-1: Inheritance Hierarchy for common
+    information models for AI/ML management'
+  path: Annex A (informative)_ PlantUML source code for NRM class diagrams.md
+  source_words: 35
+  kind: embedded-clause
+- clause: A.5
+  title: 'A.5 PlantUML code for Figure 7.2a.1.1-1: Relationships for common information
+    models for AI/ML management'
+  path: Annex A (informative)_ PlantUML source code for NRM class diagrams.md
+  source_words: 59
+  kind: embedded-clause
+- clause: A.6
+  title: 'A.6 PlantUML code for Figure 7.3a.1.1.1-2: NRM fragment for ML model testing'
+  path: Annex A (informative)_ PlantUML source code for NRM class diagrams.md
+  source_words: 89
+  kind: embedded-clause
+- clause: A.7
+  title: 'A.7 PlantUML code for Figure 7.3a.1.1.2-2: Inheritance Hierarchy for ML
+    model testing related NRMs'
+  path: Annex A (informative)_ PlantUML source code for NRM class diagrams.md
+  source_words: 37
+  kind: embedded-clause
+- clause: A.8
+  title: 'A.8 PlantUML code for Figure 7.3a.4.1.1-1: NRM fragment for ML update'
+  path: Annex A (informative)_ PlantUML source code for NRM class diagrams.md
+  source_words: 78
+  kind: embedded-clause
+- clause: A.9
+  title: 'A.9 PlantUML code for Figure 7.3a.4.1.2-1: Inheritance Hierarchy for ML
+    update related NRMs'
+  path: Annex A (informative)_ PlantUML source code for NRM class diagrams.md
+  source_words: 41
+  kind: embedded-clause
+- clause: A.10
+  title: 'A.10 PlantUML code for Figure 7.3a.3.1.1-1: NRM fragment for ML model loading'
+  path: Annex A (informative)_ PlantUML source code for NRM class diagrams.md
+  source_words: 55
+  kind: embedded-clause
+- clause: A.11
+  title: 'A.11 PlantUML code for Figure 7.3a.3.1.2-1: Inheritance Hierarchy for ML
+    model loading related NRMs'
+  path: Annex A (informative)_ PlantUML source code for NRM class diagrams.md
+  source_words: 35
+  kind: embedded-clause
+- clause: A.12
+  title: 'A.12 PlantUML code for Figure 7.3a.4.1.1-2: NRM fragment for AI/ML inference
+    function'
+  path: Annex A (informative)_ PlantUML source code for NRM class diagrams.md
+  source_words: 85
+  kind: embedded-clause
+- clause: A.13
+  title: 'A.13 PlantUML code for Figure 7.3a.4.1.2-2: Inheritance Hierarchy for AI/ML
+    inference function'
+  path: Annex A (informative)_ PlantUML source code for NRM class diagrams.md
+  source_words: 31
+  kind: embedded-clause
+- clause: A.14
+  title: 'A.14 PlantUML code for Figure 7.3a.2.1.1-1: NRM fragment for AI/ML inference
+    emulation Control'
+  path: Annex A (informative)_ PlantUML source code for NRM class diagrams.md
+  source_words: 53
+  kind: embedded-clause
+- clause: A.15
+  title: 'A.15 PlantUML code for Figure 7.3a.2.1.2-1: AI/ML inference emulation Inheritance
+    Relations'
+  path: Annex A (informative)_ PlantUML source code for NRM class diagrams.md
+  source_words: 27
+  kind: embedded-clause
+- clause: Annex B
+  title: 'Annex B (normative): OpenAPI definition of the AI/ML NRM'
+  path: Annex B (normative)_ OpenAPI definition of the AI_ML NRM.md
+  source_words: 58
+  kind: source-file
+- clause: B.1
+  title: B.1 General
+  path: Annex B (normative)_ OpenAPI definition of the AI_ML NRM.md
+  source_words: 47
+  kind: embedded-clause
+- clause: B.2
+  title: B.2 Solution Set (SS) definitions
+  path: Annex B (normative)_ OpenAPI definition of the AI_ML NRM.md
+  source_words: 0
+  kind: embedded-clause
+- clause: B.2.1
+  title: B.2.1 OpenAPI document "TS28105_AiMlNrm.yaml"
+  path: Annex B (normative)_ OpenAPI definition of the AI_ML NRM.md
+  source_words: 11
+  kind: embedded-clause
+- clause: Annex C
+  title: 'Annex C (informative): Change history'
+  path: Annex C (informative)_ Change history.md
+  source_words: 2245
+  kind: source-file
