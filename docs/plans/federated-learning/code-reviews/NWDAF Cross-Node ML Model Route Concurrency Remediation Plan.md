@@ -2,7 +2,7 @@
 
 日期：2026-08-13
 
-狀態：規劃完成，尚未實作
+狀態：程式實作與 repository 驗證完成；full-core E2E 待重跑
 
 上層文件：
 
@@ -853,6 +853,41 @@ review 不能只看報告中的兩個 DELETE function，必須確認：
 8. 既有 full-core business flow 仍通過；
 9. teardown 不再出現重複 30 秒 cleanup timeout 或 leaked route；
 10. 本文件記錄實作結果與 exact revisions。
+
+### 16.1 2026-08-13 實作與審查結果
+
+NWDAF 實作已在 `318ac19d8b027373f4468660394da1ec3338268e` 基線上完成，尚未
+建立 implementation commit。完成內容包括：
+
+- 四種 ML model route family 的 create、replace、PATCH、DELETE、callback 與
+  pending cleanup 都改成 prepare／execute／conditional-complete；
+- `MLModelPeerRoute.OperationRevision` 與 process-local monotonic counter 已成為
+  stale completion fence；
+- peer、PyAnLF、PyMTLF 與 external callback I/O 均移出 `mlModelMu`；
+- backend generation reset 仍先移除及 tombstone route，再於鎖外 best-effort
+  cleanup，沒有加入 replay 或 external sync；
+- opposite-direction Provision／Monitor DELETE、same-route concurrent DELETE、
+  reset、same-ID replacement、pending cleanup ownership 與 callback-during-replace
+  都有 deterministic regression test；
+- follow-up review 修正 Training PUT/PATCH 在 peer `404` 時誤刪 local route、
+  cleanup 把 `nil` response 誤判成功，以及 failed-create 進入
+  `PENDING_CLEANUP` 時未配置新 operation revision 的問題；
+- review 也撤回會改變既有 monitor registration／subscription 線性化語意的
+  owner recheck，不把 concurrency 修正擴大成新的 parent-child cleanup policy。
+
+已通過：
+
+```text
+go test ./...
+go test -race ./internal/context ./internal/sbi/processor
+golangci-lint run ./...
+go build ./...
+```
+
+另以機械式掃描確認所有 `mlModelMu` critical section 內沒有 peer consumer、Python
+backend client 或 callback HTTP call。尚未完成的是 §12 的 full-core A/B/C E2E
+重跑，因此目前不能宣稱 full-core teardown 驗收已關閉，也不能填入最終
+implementation revision。
 
 ## 17. 決策門檻
 
