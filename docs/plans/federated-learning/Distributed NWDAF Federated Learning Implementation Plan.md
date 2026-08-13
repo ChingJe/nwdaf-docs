@@ -14,6 +14,12 @@ repository verification 與 full-core cross-process 驗證；Phase 7 full FL
 business E2E 與 window-first、10% validation split 收尾修正皆已完成實作及
 重新驗證
 
+2026-08-13 後續發現：Phase 7 teardown 暴露 NWDAF 在持有全域 ML model
+route mutex 時執行反向 peer DELETE 的跨節點互鎖。完整業務閉環結果仍成立，
+但完整資源清理尚待
+[NWDAF 跨節點 ML Model Route 併發修正計畫](code-reviews/NWDAF%20Cross-Node%20ML%20Model%20Route%20Concurrency%20Remediation%20Plan.md)
+完成後重新驗證。
+
 相關文件：
 
 - [Distributed NWDAF Model Monitoring and Federated Retraining Architecture](../../design/Distributed%20NWDAF%20Model%20Monitoring%20And%20Federated%20Retraining%20Architecture.md)
@@ -24,6 +30,7 @@ business E2E 與 window-first、10% validation split 收尾修正皆已完成實
 - [Phase 5 Final Validation ADRF Publication And Reprovision Detailed Plan](Phase%205%20Final%20Validation%20ADRF%20Publication%20And%20Reprovision%20Detailed%20Plan.md)
 - [Phase 6 Standard Collection And Full-Core Data-Flow Detailed Plan](Phase%206%20Standard%20Collection%20Prerequisites%20Detailed%20Plan.md)
 - [Phase 7 Full-Core Federated Learning Business E2E Detailed Plan](Phase%207%20Full-Core%20Federated%20Learning%20Business%20E2E%20Detailed%20Plan.md)
+- [NWDAF 跨節點 ML Model Route 併發修正計畫](code-reviews/NWDAF%20Cross-Node%20ML%20Model%20Route%20Concurrency%20Remediation%20Plan.md)
 - [PyMTLF Role-Oriented Configuration Refactor Detailed Plan](PyMTLF%20Role-Oriented%20Configuration%20Refactor%20Detailed%20Plan.md)
 - [PyAnLF Typed Configuration And Annotation Refactor Detailed Plan](PyAnLF%20Typed%20Configuration%20And%20Annotation%20Refactor%20Detailed%20Plan.md)
 

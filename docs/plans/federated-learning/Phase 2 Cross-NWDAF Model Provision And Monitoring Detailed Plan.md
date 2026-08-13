@@ -10,6 +10,12 @@ Pre-Phase 6 Python backend configuration checkpoint移除。正式model identity
 改為numeric `modelUniqueId`；provider NWDAF `nfInstanceId`只保留為
 Model Provision／Monitor route context。本文其餘內容保留當時實作歷史。
 
+併發修正補充（2026-08-13）：full-core teardown 證明目前 NWDAF
+實作仍會在持有全域 `mlModelMu` 時執行 peer／backend HTTP，偏離本文
+§17 已核准的「network call 不持有全域 route mutex」與 revision guard。修正範圍、狀態轉移及
+驗收測試記錄於
+[NWDAF 跨節點 ML Model Route 併發修正計畫](code-reviews/NWDAF%20Cross-Node%20ML%20Model%20Route%20Concurrency%20Remediation%20Plan.md)。
+
 上層計畫：
 
 - [Distributed NWDAF Federated Learning Implementation Plan](./Distributed%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)

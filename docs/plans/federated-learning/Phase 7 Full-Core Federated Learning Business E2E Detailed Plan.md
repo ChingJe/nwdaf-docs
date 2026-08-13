@@ -1089,3 +1089,31 @@ peer subscription 迴避競態。
 PyAnLF process-internal remediation 已於 2026-08-11 完成，repository-level 結果為
 `282 passed, 2 skipped`且 Ruff通過。Phase 7 full-core FL E2E尚未使用修正版重跑，
 因此完整關閉證據仍以 remediation plan 的 pending verification 記錄為準。
+
+## 19. 後續發現（2026-08-13）
+
+以 NWDAF revision `318ac19d8b027373f4468660394da1ec3338268e`、PyAnLF
+revision `08798f15c3693027e00bc60dd53f74ebaa26c3a1` 與 PyMTLF revision
+`7e8ab7f23bf5d6398eb1cd5f053dd8bda9439a87` 執行 teardown 時，A 的
+outbound Model Provision DELETE 與 C 的 outbound Model Monitor DELETE
+同時發生。兩側 NWDAF 各自持有 process-local 全域 `mlModelMu` 再同步呼叫
+對方，反向進入的 DELETE handler 又需要同一把本地 mutex，形成跨 HTTP 的
+分散式 lock inversion。
+
+30 秒 peer timeout 會把兩側請求轉成 `503 Service Unavailable`。PyAnLF 與
+PyMTLF 使用相同 exponential backoff 後再次同步重試，因此完整資源清理
+無法可靠完成。PyMTLF 的單一 reconciler worker 也會因第一筆退休 resource
+反覆失敗而阻塞第二筆，但它不是根因。
+
+本次後續修正只修改 NWDAF：所有 ML model route external I/O 必須移出
+`mlModelMu`，並以 lifecycle state、process-local operation revision 與 backend
+generation 做 conditional completion。不得修改 PyAnLF／PyMTLF retry 來掩蓋
+問題，也不得重新加入 external full-state sync。
+
+完整證據、狀態機、HTTP mapping、實作切片與 deterministic concurrency tests
+記錄於：
+
+- [NWDAF 跨節點 ML Model Route 併發修正計畫](code-reviews/NWDAF%20Cross-Node%20ML%20Model%20Route%20Concurrency%20Remediation%20Plan.md)
+
+Phase 7 analytics、monitoring、FL、ADRF publication 與 model cutover 的成功結論
+仍成立；完整資源清理在本修正完成並重跑 full-core E2E 前維持待驗證狀態。
