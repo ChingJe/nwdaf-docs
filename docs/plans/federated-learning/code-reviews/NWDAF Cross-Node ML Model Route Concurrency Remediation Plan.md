@@ -2,7 +2,7 @@
 
 日期：2026-08-13
 
-狀態：程式實作與 repository 驗證完成；full-core E2E 待重跑
+狀態：完成；程式實作、repository 驗證與 full-core E2E 均已通過
 
 上層文件：
 
@@ -856,8 +856,8 @@ review 不能只看報告中的兩個 DELETE function，必須確認：
 
 ### 16.1 2026-08-13 實作與審查結果
 
-NWDAF 實作已在 `318ac19d8b027373f4468660394da1ec3338268e` 基線上完成，尚未
-建立 implementation commit。完成內容包括：
+NWDAF 實作已在 `318ac19d8b027373f4468660394da1ec3338268e` 基線上完成，最終
+implementation revision 為 `c53f05804c6533ec4c5fa7e230e90048fb219162`。完成內容包括：
 
 - 四種 ML model route family 的 create、replace、PATCH、DELETE、callback 與
   pending cleanup 都改成 prepare／execute／conditional-complete；
@@ -885,9 +885,29 @@ go build ./...
 ```
 
 另以機械式掃描確認所有 `mlModelMu` critical section 內沒有 peer consumer、Python
-backend client 或 callback HTTP call。尚未完成的是 §12 的 full-core A/B/C E2E
-重跑，因此目前不能宣稱 full-core teardown 驗收已關閉，也不能填入最終
-implementation revision。
+backend client 或 callback HTTP call。
+
+### 16.2 2026-08-15 Full-core E2E 驗收結果
+
+修正後的 full-core A/B/C E2E 已完成重跑。驗收使用的整合版本如下：
+
+| Repository | Revision |
+| --- | --- |
+| `NWDAF/` | `c53f05804c6533ec4c5fa7e230e90048fb219162` |
+| `PyAnLF/` | `08798f15c3693027e00bc60dd53f74ebaa26c3a1` |
+| `PyMTLF/` | `7e8ab7f23bf5d6398eb1cd5f053dd8bda9439a87` |
+| `nwdaf-resources/` | `8a7619ec9c745f71a8fea42134cefd550ad2c180` |
+
+驗收結果：
+
+- A、C 方向相反的 Model Provision／Model Monitor 資源可以並行清理；
+- teardown 不再出現因 cross-node lock inversion 造成的 30 秒 peer timeout；
+- DELETE 不再因該互鎖反覆回傳 `503 Service Unavailable`；
+- analytics、model provision、model monitoring 與 FL 閉環在修正後仍可完成；
+- teardown 可以收斂，未觀察到本問題造成的殘留 route 或 downstream
+  subscription。
+
+因此 §12 與 §16 的 full-core 驗收門檻已關閉，本 remediation 完成。
 
 ## 17. 決策門檻
 

@@ -14,11 +14,12 @@ repository verification 與 full-core cross-process 驗證；Phase 7 full FL
 business E2E 與 window-first、10% validation split 收尾修正皆已完成實作及
 重新驗證
 
-2026-08-13 後續發現：Phase 7 teardown 暴露 NWDAF 在持有全域 ML model
-route mutex 時執行反向 peer DELETE 的跨節點互鎖。完整業務閉環結果仍成立，
-但完整資源清理尚待
+2026-08-15 收尾更新：Phase 7 teardown 曾暴露 NWDAF 在持有全域 ML model
+route mutex 時執行反向 peer DELETE 的跨節點互鎖。該問題已依
 [NWDAF 跨節點 ML Model Route 併發修正計畫](code-reviews/NWDAF%20Cross-Node%20ML%20Model%20Route%20Concurrency%20Remediation%20Plan.md)
-完成後重新驗證。
+於 NWDAF revision `c53f05804c6533ec4c5fa7e230e90048fb219162` 修正，並完成
+full-core A/B/C E2E 重跑。完整業務閉環與 teardown 資源清理均已通過，Phase 7
+closure 不再保留此例外。
 
 相關文件：
 
@@ -2065,6 +2066,12 @@ profile 能超過 62 筆理論下限。重新驗證取得每個 client 40 個 tr
 4 個 validation samples，兩輪各聚合 80 samples；PyMTLF tests、portable
 regression、Phase 6 collection regression 與 Phase 7 full business E2E 全部
 通過。
+
+2026-08-15 另完成 cross-node route concurrency remediation 後的 full-core
+A/B/C E2E 重跑。方向相反的 Model Provision 與 Model Monitor DELETE 可並行
+完成，未再出現 30 秒 peer timeout、互鎖導致的重複 `503`，或本問題造成的殘留
+route／downstream subscription。因此 Phase 7 的完整業務流程與 teardown
+closure 均已驗收；詳細版本與修正證據見上述 remediation 文件。
 
 ---
 
