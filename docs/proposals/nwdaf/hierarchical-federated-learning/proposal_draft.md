@@ -84,6 +84,59 @@ Client 可透過 `Nnwdaf_MLModelTraining_Subscribe` response 或
 `Nnwdaf_MLModelTraining_Notify` 表達是否參與 FL。因此，標準允許 preparation decision
 使用非同步 notification 回報。
 
+Preparation 並不是另一套獨立的 SBI service。它使用相同的
+`Nnwdaf_MLModelTraining_Subscribe` operation，並在
+`NwdafMLModelTrainSubsc.mLPreFlag` 設為 `true`。TS 29.520 §5.5.6.2.2 對此欄位的
+原文說明是：
+
+> “Indicates whether the subscription is for preparation of ML Model training. Set
+> to "true" if it is for ML training preparation, otherwise set to "false".”
+
+並明確要求：
+
+> “It shall be present when the service is for preparation of Federated Learning.”
+
+以下是省略非必要條件的簡化標準 request body；它只示範 preparation、FL correlation
+與 model URL 如何放入既有 schema，不包含本設計的 bundle 內部格式：
+
+```text
+POST {apiRoot}/nnwdaf-mlmodeltraining/v1/subscriptions
+```
+
+```json
+{
+  "mLEventSubscs": [
+    {
+      "mLEvent": "UE_COMMUNICATION",
+      "mLEventFilter": {},
+      "modelInterInfo": "vendor-model-format-v1"
+    }
+  ],
+  "notifUri": "https://root.example.com/ml-training/callback",
+  "notifCorreId": "prep-root-branch-a",
+  "mlCorreId": "fl-upper-001",
+  "mLPreFlag": true,
+  "mLModelInfos": [
+    {
+      "event": "UE_COMMUNICATION",
+      "mLFileAddr": {
+        "mLModelUrl": "https://models.example.com/bundles/plan-001"
+      }
+    }
+  ]
+}
+```
+
+其中，`mLEventSubscs`、`notifUri` 與 `notifCorreId` 是 OpenAPI schema 的 required
+properties；`mlCorreId` 在 FL service 中應存在；`mLPreFlag: true` 才把這次
+ML Model Training subscription 定位為 preparation。實際情境可再加入
+`mLModelTrainInfos` 表達 data／time availability requirements。
+
+規格來源：
+
+- [TS 29.520 §5.5.6 Data Model](../../../../specs/TS%2029.520/5%20API%20Definitions/5.5%20Nnwdaf_MLModelTraining%20Service%20API/5.5.6%20Data%20Model.md)
+- [Release 18 OpenAPI `NwdafMLModelTrainSubsc`](../../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
+
 ### 3.3 Model file address
 
 TS 29.520 的 `mLModelInfos` 可包含：
@@ -234,14 +287,33 @@ sequenceDiagram
     participant B as Leaf B
 
     ROOT->>BRANCH: Preparation + model/hierarchy bundle URL
-    BRANCH-->>ROOT: 201 Created
     BRANCH->>NRF: Resolve assigned Leaf NWDAFs
     BRANCH->>A: Lower-tier preparation
     BRANCH->>B: Lower-tier preparation
-    A-->>BRANCH: Prepared notification
-    B-->>BRANCH: Failed/termination notification
+    A-->>BRANCH: Preparation outcome notification
+    B-->>BRANCH: Preparation outcome notification
     BRANCH-->>ROOT: Preparation result notification<br/>(details carrier is vendor contract)
 ```
+
+文字流程如下：
+
+1. Root 從 candidate inventory 選出 Branch，建立 upper-tier preparation，並以
+   `mLModelUrl` 提供包含模型與 topology plan 的 bundle。
+2. Branch 下載並驗證 bundle，取得 Root 指派的 Leaf candidate identifiers 與
+   admission policy。
+3. Branch 以 NRF discovery 重新解析這些 identifiers，確認各 Leaf 目前的 NF profile、
+   FL capability 與 service endpoint。
+4. Branch 為 lower tier 建立另一組 FL process，並分別向候選 Leaf 發送 preparation
+   request。傳給 Leaf 的內容只包含該層需要的模型與 training contract。
+5. 每個 Leaf 獨立檢查模型下載、interoperability、資料與時間可用性，再以相同的
+   preparation outcome notification 形式回報是否參與；成功或失敗由 notification
+   內容表達。
+6. Branch 依本次 admission policy 等待 Leaf outcomes，整理實際 prepared、failed
+   與未在期限內完成的 participants。
+7. Branch 向 Root 發送 upper-tier preparation result notification；若採本設計的
+   result-bundle contract，詳細結果由 notification 中的 model bundle URL 提供。
+8. Root 根據實際結果與 admission policy，決定接受目前 topology、補選 Leaf、重新
+   分組，或更換 Branch 後再次執行 preparation。
 
 ## 5. 非同步 preparation 狀態語意
 
