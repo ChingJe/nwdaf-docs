@@ -472,35 +472,110 @@ Branch NWDAF：FL Server
 Branch 內部維護 upper process 與 lower process 的對應關係；3GPP 尚未定義這個
 cross-process hierarchy mapping。
 
-## 10. 與現有 baseline 的關係
+## 10. Hierarchical training flow
 
-現有 NWDAF／PyMTLF 已具備：
+下圖以一個 Branch subtree 表示一輪 hierarchical training；其他 Branch 以相同流程
+平行執行。
 
-- 標準 `Nnwdaf_MLModelTraining` subscription gateway。
-- NRF FL capability registration／discovery 基礎。
-- FL Server 與 FL Client runtime。
-- 非同步 preparation：先 `201`，再下載模型、建立 ADRF dataset，最後 callback。
-- Prepared status 與 termination notification。
-- Flat synchronous FL 與 sample-count-weighted FedAvg。
+TS 23.288 §6.2C.2.2 step 2 對 FL Server 下送訓練要求的描述是：
 
-新設計需要補上的主要能力是：
+> “FL Server NWDAF sends a Nnwdaf_MLModelTraining_Subscribe or
+> Nnwdaf_MLModelTrainingInfo_Request to the selected NWDAF(s) containing MTLF
+> (FL Client NWDAF(s)), which participate in the Federated learning to perform the
+> local model training and determine the interim local ML Model information ...”
 
-- 同一 NWDAF 同時承擔 upper Client 與 lower Server runtime。
-- Hierarchy plan bundle 與 result bundle schema。
-- Preparation 階段接收與處理帶 `mLModelInfos` 的 result notification。
-- Upper／lower FL process mapping。
-- Topology planner 與 re-planning lifecycle。
-- Complete-required／partial-allowed admission policy。
-- 對已成功、失敗與替補 participants 的資源清理與重用規則。
+Step 4 說明 FL Client 的訓練與回報：
 
-## 11. 尚待討論
+> “Each FL Client NWDAF further trains the ML Model provided by the FL Server NWDAF
+> based on its local data and reports the interim local ML Model information to the
+> FL Server NWDAF in Nnwdaf_MLModelTraining_Notify or
+> Nnwdaf_MLModelTrainingInfo_Request response.”
 
-1. Root 更新 topology plan 時，採修改既有 upper-tier subscription，或建立新的
-   preparation subscription。
-2. 已準備完成的 Leaf 是否跨 topology revision 保留，及其資料／模型有效性條件。
-3. Result bundle 的最小必要欄位、版本與完整性驗證方式。
-4. Branch 可否在 Root 指定的候選集合內自行補選，以及需要回報到什麼粒度。
-5. `PARTIAL_ALLOWED` 的最低門檻由 Root、Branch 或 strategy module 決定。
-6. Preparation timeout、重試與 late notification 的處理。
-7. Topology 完成後，upper／lower training rounds 的協調頻率與 effective sample count
-   propagation。
+Step 5 則定義 FL Server 的 aggregation：
+
+> “The FL Server NWDAF aggregates all the local ML Model information retrieved at
+> step 4, to update the global ML Model.”
+
+本設計將同一組標準行為分別套用在 Root–Branch 與 Branch–Leaf process。3GPP 定義
+的是每一個 FL process 內的 Server／Client training procedure；Branch 聚合下層結果
+後，再把它作為上層 interim local ML Model information 回報 Root，則是本設計對兩個
+標準 processes 的 hierarchical composition。
+
+規格來源：[TS 23.288 §6.2C.2.2](../../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
+
+```mermaid
+sequenceDiagram
+    participant ROOT as Root NWDAF
+    participant BRANCH as Branch NWDAF
+    participant A as Leaf A
+    participant B as Leaf B
+
+    loop Training rounds
+        ROOT->>BRANCH: Nnwdaf_MLModelTraining_Subscribe<br/>model info + roundInd + maximum response time
+
+        BRANCH->>A: Nnwdaf_MLModelTraining_Subscribe<br/>model info + roundInd + maximum response time
+        BRANCH->>B: Nnwdaf_MLModelTraining_Subscribe<br/>model info + roundInd + maximum response time
+
+        A->>A: Local training
+        B->>B: Local training
+
+        A-->>BRANCH: Nnwdaf_MLModelTraining_Notify<br/>local model info + roundInd + status report
+        B-->>BRANCH: Nnwdaf_MLModelTraining_Notify<br/>local model info + roundInd + status report
+
+        BRANCH->>BRANCH: Aggregate Leaf model results
+        BRANCH-->>ROOT: Nnwdaf_MLModelTraining_Notify<br/>aggregated model info + roundInd + status report
+
+        ROOT->>ROOT: Aggregate Branch model results
+    end
+```
+
+文字流程如下：
+
+1. Root 以 `Nnwdaf_MLModelTraining_Subscribe` 將本輪模型、round information 與
+   maximum response time 傳給 Branch。
+2. Branch 對下作為 FL Server，以相同標準 operation 將模型傳給所屬 Leaf。
+3. 各 Leaf 使用 local dataset 執行 training，再以
+   `Nnwdaf_MLModelTraining_Notify` 回傳 local model information。
+4. Branch 聚合 Leaf model results，並在 upper-tier process 中將 aggregated model
+   視為自己的 interim local ML Model information，透過相同 Notify operation 回傳
+   Root。
+5. Root 聚合各 Branch results，產生下一輪模型並重複上述流程。
+
+Upper-tier 與 lower-tier 仍是不同的 FL processes，各自維護 correlation 與 round
+state；圖中的 `roundInd` 不表示兩層必須使用相同值。
+
+## 11. Daisy 作為實作參考
+
+Daisy 已有 Master–Zone–Client 的 hierarchical FL control，可用來類比本設計的
+Root–Branch–Leaf：
+
+| Daisy | 本設計中的位置 |
+| --- | --- |
+| Master | Root NWDAF |
+| Zone | Branch NWDAF |
+| Client | Leaf NWDAF |
+
+這個對應只用來參考 FL control 與 aggregation，不代表直接搬用 Daisy 的 networking
+或 component identity。NWDAF 之間仍透過 NRF discovery 與標準
+`Nnwdaf_MLModelTraining` operations 溝通。
+
+Daisy 可提供下列 high-level 實作參考：
+
+- **Strategy abstraction**：把 client selection、等待條件與 aggregation 從固定
+  training flow 中分離，使相同流程可替換不同 policy。
+- **Participant selection**：先維護可參與 process 的 client inventory，再由每輪
+  strategy 從目前可用 clients 中選擇實際 participants，不必每輪重新 discovery。
+- **Aggregation**：可先沿用 sample-count-weighted FedAvg，也能在不改動標準 SBI
+  的前提下替換其他 aggregation strategy。
+- **Waiting policy**：除了等待所有 clients，也可參考 minimum-results／quorum，
+  在達到門檻後聚合已收到的 results；某輪未及時回覆不必永久移除 client。
+- **Asynchronous option**：Daisy 的 FedAsync 與 staleness weighting 可作為處理
+  late updates 的延伸選項，不必成為第一版 hierarchy 的固定行為。
+- **Hierarchical round control**：Branch 可參考 Daisy Zone，先完成下層 round 並形成
+  一份 aggregated result，再以 FL Client 身分回覆 Root。
+- **Per-tier configuration**：Root–Branch 與 Branch–Leaf processes 可分別選擇不同
+  selection、wait 與 aggregation policy。
+
+因此，Daisy 的主要價值是提供可重用的 FL engine 與 policy 組合方式；hierarchical
+topology establishment、NRF capability discovery、model bundle contract，以及各層
+標準 subscription／notification lifecycle，仍由 NWDAF 設計負責。
