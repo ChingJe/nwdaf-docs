@@ -35,6 +35,24 @@ Leaf NWDAF
 「Root」、「Branch」與「Leaf」是一次 hierarchical FL topology 中的相對位置，
 不是新的 NF type，也不要求 NWDAF 在部署時永久綁定同一角色。
 
+一棵 topology 只有一個 Root，但 Branch 數量與每個 Branch 管理的 Leaf 數量均不固定：
+
+```text
+Root
+├─ Branch 1
+│  ├─ Leaf 1.1
+│  ├─ ...
+│  └─ Leaf 1.N
+├─ ...
+└─ Branch M
+   ├─ Leaf M.1
+   ├─ ...
+   └─ Leaf M.K
+```
+
+因此，文件中的少量 Branch／Leaf 範例只用來說明 procedure，不構成固定規模限制。
+本設計先處理可擴充的三層 topology，不預先宣稱支援任意深度的 recursive hierarchy。
+
 ## 3. 標準提供的基礎
 
 ### 3.1 FL capability registration and discovery
@@ -365,9 +383,16 @@ TS 23.288 §6.2C.2.1 step 9 允許 Client 使用 Notify 或 Subscribe response �
 > response service operation to indicate to the FL Server NWDAF whether it will
 > join the FL procedure ...”
 
+但 preparation 的標準目的，是讓 Client 檢查 requirements、取得模型並判斷是否
+參與 FL；此時尚未執行 local training，也沒有產生新的 interim local model。因此，
+即使不考慮 hierarchy metadata，在 preparation outcome Notify 中由 Branch 回傳
+`mLModelInfos` 或 model URL，本身就不是最自然的 procedure 語意。
+
 本設計希望 Branch 在上述非同步回報中，將下層 preparation result manifest 放入
 `mLModelUrl` 所指向的 bundle，使 Root 能得知哪些 Leaf 已準備完成、哪些 Leaf 失敗，
-再進行 partial admission 或 topology re-planning。
+再進行 partial admission 或 topology re-planning。為保留 model file 的基本解讀，
+result bundle 仍包含 Root 原先提供的有效 model artifact；Branch 不會宣稱這是
+preparation 階段新訓練出的模型，而是在同一 bundle 中附加 preparation result。
 
 這不是 `mLModelUrl` 最自然的標準語意。TS 29.520 將它定義為 ML Model file 的 URL，
 並將 Notify 中的 `mLModelInfos` 描述為 “Represents the ML Model information.”；規格
@@ -381,9 +406,15 @@ TS 23.288 §6.2C.2.1 step 9 允許 Client 使用 Notify 或 Subscribe response �
 > 使用標準 SBI 欄位傳遞 model bundle URL，並在未標準化的 bundle 內容中附加
 > hierarchy preparation result。
 
-這種做法在 data type 與傳輸流程上未被規格直接阻止，但附加資訊的語意與解析方式是
-同 vendor implementation contract，不能宣稱為 3GPP 已定義的 hierarchical FL
-procedure。若後續認為這項語意延伸不可接受，才需要另行選擇詳細結果的承載方式。
+這種做法在 data type 與傳輸流程上未被規格直接阻止，但包含兩層需要明確揭露的語意
+疑慮：
+
+1. Preparation 尚未產生新的 model update，為何此時需要回傳 model information？
+2. 為何 ML Model file URL 進一步承載 topology preparation result？
+
+附加資訊的語意與解析方式是同 vendor implementation contract，不能宣稱為 3GPP
+已定義的 hierarchical FL procedure。若後續認為這項語意延伸不可接受，才需要另行
+選擇詳細結果的承載方式。
 
 規格來源：
 
@@ -423,13 +454,17 @@ Root保留已成功participants或清理本次attempt
 
 ## 8. Topology ownership
 
+Root 持有整棵 hierarchical FL topology 的主要管理權；Branch 負責執行被委派的
+subtree 工作，但不會在 Root 未知情的情況下改變整體 topology。
+
 ```text
 Root
 ├─ 維護整體candidate inventory
 ├─ 選擇Branch與Leaf assignments
 ├─ 決定admission policy
 ├─ 接收實際preparation results
-└─ 接受、補選或重建topology
+├─ 接受、補選或重建topology
+└─ 控制整體training的開始、推進與結束
 
 Branch
 ├─ 執行被指派的lower-tier preparation
@@ -496,12 +531,34 @@ Step 5 則定義 FL Server 的 aggregation：
 > “The FL Server NWDAF aggregates all the local ML Model information retrieved at
 > step 4, to update the global ML Model.”
 
+Training 不需要為每一輪重新建立 subscription。TS 23.288 §6.2F 說明：
+
+> “When NWDAF service consumer determine to further update the ML Model, NWDAF
+> service consumer modifies the subscription by invoking
+> Nnwdaf_MLModelTraining_Subscribe ...”
+
+TS 29.520 §4.6.2.2.3 將既有 subscription 的完整更新映射為：
+
+> “The NF service consumer shall send an HTTP PUT request with ...
+> /subscriptions/{subscriptionId} ... to update an Individual NWDAF ML Model
+> Training Subscription.”
+
+因此，本設計先建立 subscription，後續 rounds 沿用同一個 `subscriptionId`，更新
+model information、`roundInd` 與該輪 training parameters。TS 29.520 也允許使用
+PATCH 進行 partial modification，所以 PUT 並非唯一更新方式。這是本設計採用的
+standards-aligned lifecycle；規格並未要求 preparation 建立的 subscription 必須是
+唯一可沿用的實現形式。
+
 本設計將同一組標準行為分別套用在 Root–Branch 與 Branch–Leaf process。3GPP 定義
 的是每一個 FL process 內的 Server／Client training procedure；Branch 聚合下層結果
 後，再把它作為上層 interim local ML Model information 回報 Root，則是本設計對兩個
 標準 processes 的 hierarchical composition。
 
-規格來源：[TS 23.288 §6.2C.2.2](../../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
+規格來源：
+
+- [TS 23.288 §6.2C.2.2](../../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
+- [TS 23.288 §6.2F](../../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2F%20Procedure%20for%20ML%20Model%20Training.md)
+- [TS 29.520 §4.6 Nnwdaf_MLModelTraining Service](../../../../specs/TS%2029.520/4%20Services%20offered%20by%20the%20NWDAF/4.6%20Nnwdaf_MLModelTraining%20Service.md)
 
 ```mermaid
 sequenceDiagram
@@ -511,10 +568,10 @@ sequenceDiagram
     participant B as Leaf B
 
     loop Training rounds
-        ROOT->>BRANCH: Nnwdaf_MLModelTraining_Subscribe<br/>model info + roundInd + maximum response time
+        ROOT->>BRANCH: Nnwdaf_MLModelTraining_Subscribe<br/>update existing subscription
 
-        BRANCH->>A: Nnwdaf_MLModelTraining_Subscribe<br/>model info + roundInd + maximum response time
-        BRANCH->>B: Nnwdaf_MLModelTraining_Subscribe<br/>model info + roundInd + maximum response time
+        BRANCH->>A: Nnwdaf_MLModelTraining_Subscribe<br/>update existing subscription
+        BRANCH->>B: Nnwdaf_MLModelTraining_Subscribe<br/>update existing subscription
 
         A->>A: Local training
         B->>B: Local training
@@ -531,9 +588,10 @@ sequenceDiagram
 
 文字流程如下：
 
-1. Root 以 `Nnwdaf_MLModelTraining_Subscribe` 將本輪模型、round information 與
+1. Root 更新既有 upper-tier subscription，將本輪模型、round information 與
    maximum response time 傳給 Branch。
-2. Branch 對下作為 FL Server，以相同標準 operation 將模型傳給所屬 Leaf。
+2. Branch 對下作為 FL Server，更新既有 lower-tier subscriptions，將模型傳給
+   所屬 Leaf。
 3. 各 Leaf 使用 local dataset 執行 training，再以
    `Nnwdaf_MLModelTraining_Notify` 回傳 local model information。
 4. Branch 聚合 Leaf model results，並在 upper-tier process 中將 aggregated model
