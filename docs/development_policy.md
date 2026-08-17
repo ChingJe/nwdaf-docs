@@ -408,6 +408,24 @@ Use OpenAPI for paths, methods, fields, status codes, headers, and schema. Use
 TS text for procedure intent and role boundaries. Use free5GC exemplars for
 implementation shape, not to override the target contract.
 
+### 10.1 Evidence Before Technical Conclusions
+
+Use the reference order to gather the minimum sufficient evidence, not merely
+the first evidence that supports an expected answer.
+
+- For implementation behavior, trace the relevant production path and its
+  direct tests.
+- For standardized behavior, distinguish TS procedure text, OpenAPI schema,
+  and implementation behavior.
+- When field semantics or procedure legality is central to the decision, cite
+  the exact clause and the shortest necessary quotation.
+- Explicitly label conclusions as specification-defined behavior,
+  implementation behavior, inference, or proposed design.
+- Check for contradictory evidence or semantic tension before recommending a
+  design.
+- Keep the final explanation proportional to the user's question; evidence
+  depth does not require a long response.
+
 ---
 
 ## 11. Commit Format
