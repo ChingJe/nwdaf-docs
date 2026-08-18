@@ -2,7 +2,7 @@
 
 日期：2026-08-18
 
-狀態：Draft；待 team review 後進入 implementation
+狀態：Implementation complete；待 team review、commit 與 push
 
 上層計畫：
 
@@ -63,7 +63,12 @@ Slice 1 直接繼承下列 Slice 0 contracts：
 - 第一版 strategy 只接受 FedProx／all participants／wait for all／sample-weighted
   aggregation；
 - result 必須完整 partition assigned clients 為 prepared、failed 或 timed out；
-- artifact signature、跨 trust domain authentication 與 restart recovery 不在第一版。
+- 第一版所有 NWDAF／PyMTLF 位於同一受控 vendor trust domain；publisher identity 只作
+  logical process／topology validation；
+- artifact signature、requester NF identity 與 artifact origin 強綁定、跨 trust domain
+  authentication，以及 restart recovery 不在第一版；
+- 第一版不新增 `expected_artifact_origin`、requester identity private header，亦不為此
+  修改 OAuth／mTLS identity propagation。
 
 若實作需要改變上述任一點，必須回到 canonical 主計畫與 Slice 0 review，不得在 code
 review 中以 implementation convenience 默默改變 contract。
@@ -476,6 +481,12 @@ standard `roundInd`。
 9. 比對 expected role、message type、publisher、recipient，以及已知時的 `plan_id`；
 10. 所有檢查通過後，才以 atomic operation 暴露 local file。
 
+上述 publisher comparison 是同一受控系統內的 logical contract validation。標準 inbound
+`NwdafMLModelTrainSubsc` body 不提供 requester NF instance ID；因此第一版不宣稱此欄位
+或 allowed-origin validation 能證明實際 HTTP caller identity。Caller 已有 process route
+或 orchestration expectation 時仍應提供 expected publisher，但 Slice 1 不增加獨立的
+artifact-origin identity binding。
+
 對 inbound preparation request 而言，receiver 在完成 bundle 驗證前並不知道 `plan_id`。
 因此 hierarchy downloader 先串流寫入 workspace-owned temporary staging file，解析並驗證
 identity contract，再將檔案 atomically commit 到已驗證的 `plan_id` directory。它不得要求
@@ -790,8 +801,11 @@ generic `dict[str, Any]` fallback。
 
 風險：manifest publisher field 被誤認為 signed attestation。
 
-控制：要求 expected peer identity、allowed origin 與 digest binding，並記錄第一版 publisher
-binding 只代表 logical same-vendor trust。
+控制：明確記錄第一版 publisher binding 只代表 logical same-vendor trust。保留 expected
+peer（caller 已知時）、allowed origin 與 digest binding 作一致性檢查，但不新增
+`expected_artifact_origin`、requester identity header 或 OAuth／mTLS propagation，也不將
+這些檢查描述為 authenticated caller proof。嚴格 requester-to-origin binding 延後到跨
+trust domain 的 security hardening。
 
 ### 11.3 Branch passthrough 洩漏 topology 或增加 Root 負載
 
@@ -870,3 +884,70 @@ Slice 1 只有在下列條件全部成立時才算完成：
 process-scoped role state；Slice 3 可以將 Root topology／config 接入 Branch assignment
 publication；Slice 4 可以呼叫 Branch republish／result primitives，並修正 preparation
 notification sender／validator／stage-aware receiver contract。
+
+---
+
+## 14. Implementation checkpoint
+
+### 14.1 Branch 與 baseline
+
+- repository：`PyMTLF/`；
+- branch：`feat/r18-hierarchical-federated-learning`；
+- base branch：`feat/r18-federated-learning`；
+- base revision：`7e8ab7f23bf5d6398eb1cd5f053dd8bda9439a87`；
+- implementation state：working tree complete，尚未 commit 或 push。
+
+### 14.2 實際變更
+
+新增：
+
+- `src/py_mtlf/core/fl_hierarchy.py`；
+- `src/py_mtlf/core/fl_hierarchy_artifacts.py`；
+- `tests/test_fl_hierarchy.py`；
+- `tests/test_fl_hierarchy_artifacts.py`。
+
+擴充：
+
+- `src/py_mtlf/core/fl_artifacts.py`；
+- `src/py_mtlf/core/fl_workspace.py`；
+- `tests/test_fl_artifacts.py`；
+- `tests/test_health_and_artifact_api.py`。
+
+完成內容：
+
+- FedProx-only typed strategy、UUIDv4 `plan_id`、Branch／Leaf assignment 與 preparation
+  result partition contracts；
+- `HIERARCHY_ASSIGNMENT` 與 `HIERARCHY_PREPARATION_RESULT` artifact roles；
+- 共用 complete-manifest projection 與 role-incompatible field rejection；
+- Root Branch assignment publication；
+- Branch-owned Leaf assignment republish，typed API 不接受 raw Root URL；
+- Branch preparation result publication；
+- hierarchy download staging、allowed-origin、URL／header／body digest binding、role／message／
+  publisher／recipient／plan validation；
+- bounded hierarchy transport／integrity／contract／identity error categories；
+- exact UUIDv4 `release_plan()` 與 stale staging／plan TTL cleanup；
+- 既有 FL artifact serving route 的 hierarchy role coverage。
+
+### 14.3 Verification evidence
+
+執行：
+
+```text
+.venv/bin/pytest -q
+.venv/bin/ruff check .
+```
+
+結果：
+
+- Pytest：`241 passed, 2 skipped`；
+- Ruff：`All checks passed`；
+- skipped tests 為既有 suite 的環境條件 skip，沒有新增 failure；
+- warnings 為既有 Starlette/httpx deprecation 與 joblib／NumPy deprecation，沒有 Slice 1
+  contract failure。
+
+### 14.4 Handoff
+
+Team review 應優先確認 typed schema、Branch republish ownership、digest binding 與
+`release_plan()` scope。Review 通過並完成 PyMTLF commit 後，Slice 2 可以直接使用這些
+immutable contracts 與 artifact primitives 建立 capability-oriented runtime 和
+process-scoped role state。

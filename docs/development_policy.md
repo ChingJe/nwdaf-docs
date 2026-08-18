@@ -119,6 +119,36 @@ Review must enumerate every newly added package and verify its necessity,
 dependency direction, and exemplar. Passing tests demonstrate behavior, not
 package-placement correctness.
 
+### 2.2 Cross-Boundary Data-Flow Gate
+
+A proposed change that crosses a process, repository, API, callback, storage,
+or trust boundary is not implementation-ready until its end-to-end data flow
+is established.
+
+The active plan or implementation analysis must identify:
+
+1. the behavior or acceptance criterion that requires the change;
+2. the authoritative producer of each required value;
+3. how each value crosses every boundary;
+4. which component owns and stores it at each stage;
+5. whether the receiving component can obtain it independently of the data
+   being validated;
+6. lifecycle, restart, timeout, and stale-data behavior where applicable;
+7. every affected repository and public, standard-shaped, or private
+   contract;
+8. focused boundary tests and the required end-to-end verification.
+
+A downstream schema field, validation parameter, configuration entry, or
+helper function is not a complete design unless its upstream source and
+propagation are also defined.
+
+If the required data is unavailable at the consuming boundary, classify the
+work as an architecture or contract change. Do not silently assume the data
+exists, derive an expected value from the same untrusted value being checked,
+or describe the change as implementation-local. Estimate complexity from the
+complete production data flow, not only from the size of the final local code
+change.
+
 ## 3. Standard Boundary Levels
 
 ### 3.1 External SBI

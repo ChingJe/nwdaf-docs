@@ -245,6 +245,23 @@ Branch 不能把 Root URL 原樣轉交 Leaves。它必須：
 可選 strategy。Root 只直接服務 Branch，Leaf 從所屬 Branch 下載。Branch 建立的
 preparation result 與 lower-tier round artifacts 同樣由 Branch PyMTLF 發布。
 
+#### First-version artifact trust boundary
+
+第一版部署假設 Root、Branch、Leaf NWDAF 及各自的 PyMTLF 都屬於本專案控制的同一套
+實驗系統與同一 vendor trust domain。Hierarchy manifest 的
+`publisher_nf_instance_id` 是 process／topology 使用的 logical identity，不是經由
+signature、OAuth requester identity 或 mTLS client identity 所形成的 cryptographic
+attestation。
+
+第一版不新增 `expected_artifact_origin`、requester identity private header，也不為
+hierarchy artifact 額外修改 OAuth／mTLS identity propagation。下載端仍執行 configured
+allowed-origin、URL／header／archive digest、publisher、recipient、message type 與
+`planId` 等既有一致性驗證，但不得將這些檢查描述為已證明實際 HTTP caller 的 NF
+instance identity。
+
+跨 vendor、跨管理域或不可信網路環境所需的 requester NF identity 與 artifact origin
+強綁定，列為未來 security hardening，不是第一版 decision gate，也不阻擋後續 Slice。
+
 ### 4.4 Asynchronous preparation
 
 第一版沿用既有 implementation profile：
@@ -679,6 +696,8 @@ Detailed plan：
 
 目標：提供可驗證、可版本化且不覆寫標準欄位的 assignment／result bundles。
 
+狀態：Implementation complete；待 team review、commit 與 push。
+
 Detailed plan：
 
 - [Slice 1：Hierarchy Bundle Contract 與 Artifact Primitives 詳細計畫](./Slice%201%20Hierarchy%20Bundle%20Contract%20and%20Artifact%20Primitives%20Detailed%20Plan.md)
@@ -1049,3 +1068,4 @@ optional hardening，不得默默擴張進第一版。
 | 2026-08-18 | E2E smoke 使用一個 Branch；aggregation acceptance 至少使用兩個 Branches | Confirmed |
 | 2026-08-18 | 修正既有 preparation notification contract regression：`statusReport` 不得單獨代表成功，sender／validator／stage-aware receiver 改以 `mLModelInfos` profile 為準 | Confirmed |
 | 2026-08-18 | preparation 的 `statusReport` 僅為 optional supplemental status；不再以固定 `samplRatio: 100` 作為 completed latch | Confirmed |
+| 2026-08-18 | 第一版假設所有 NWDAF／PyMTLF 位於同一受控 vendor trust domain；publisher 僅為 logical identity，不新增 artifact-origin／requester cryptographic binding | Confirmed |
