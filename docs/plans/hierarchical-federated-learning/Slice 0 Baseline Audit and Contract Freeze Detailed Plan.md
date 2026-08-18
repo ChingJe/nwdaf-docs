@@ -632,11 +632,13 @@ matching `planId`、expected Branch publisher 與 intended Root 的 result。
 - `delayEventNotif` 不得與 `mLModelInfos` 或 `termTrainReq` 共存；
 - preparation notification不帶 standard `roundInd`。
 
-成功時回報輸入 assignment model URL仍不是最自然的 preparation語意，但它保持 URL指向
-有效 model artifact，並避免以 `statusReport` 單獨違反 TS conditional rule。接收端依
-active preparation stage解讀 assignment acknowledgement或 Branch result，不把它當成新
-trained model。Slice 4需同步修正 Go／PyMTLF wire validation、sender與 stage-aware receiver
-tests；不能只改 HFL orchestrator而保留 status-only validator。對同時含 result bundle與
+TS conditional rule結合 Stage 2 join decision可推導出：成功且不延後、不終止的
+preparation outcome應使用 `mLModelInfos`。因此成功時回報已下載並驗證的 input assignment
+model URL可作為成功 acknowledgement；它保持 URL指向有效 model artifact，也不宣稱產生
+新 trained model。真正的擴充語意是 bundle內的 hierarchy metadata。接收端依 active
+preparation stage解讀 assignment acknowledgement或 Branch result。Slice 4需同步修正
+Go／PyMTLF wire validation、sender與 stage-aware receiver tests；不能只改 HFL orchestrator
+而保留 status-only validator。對同時含 result bundle與
 `termTrainReq` 的 Branch failure，receiver必須先驗證並記錄 result partition，再將 process
 標記 terminal；現有 `FLServerOrchestrator.receive_notification()` 的 mutually exclusive
 `elif` handling不能直接沿用。

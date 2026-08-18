@@ -300,7 +300,8 @@ TS 29.520 對 <code>mLModelUrl</code> 的定義是：
 - <code>mLModelUrl</code> 與 ML Model Training SBI 是標準欄位與標準介面。
 - Hierarchy manifest、assignment 與 result manifest 是本設計加入的語意。
 - Model file 內部格式未被 3GPP 規範，也沒有明文禁止附加同 vendor metadata。
-- 但 topology control 並不是 <code>mLModelUrl</code> 最自然的標準語意。
+- 規格沒有定義 hierarchy manifest 的內容；它是附加於有效 model bundle 的同 vendor
+  contract，而不是 3GPP-defined topology property。
 
 因此，正確定位是：
 
@@ -315,7 +316,7 @@ TS 29.520 對 <code>mLModelUrl</code> 的定義是：
 | Branch | 下載並驗證 bundle、解析 assignment、透過 NRF 重新確認 Leaf |
 | Leaf | 接收該層所需的模型與 training contract，不需理解完整 topology |
 
-### 5.3 Preparation Notify 中回傳 Model URL 的雙重語意疑慮
+### 5.3 Preparation Notify 的成功載體與擴充界線
 
 TS 23.288 §6.2C.2.1 step 9 明確允許 FL Client 使用 Notify 回報是否參與 FL：
 
@@ -325,10 +326,19 @@ TS 23.288 §6.2C.2.1 step 9 明確允許 FL Client 使用 Notify 回報是否參
 因此，Branch 等待下層 Leafs 完成檢查後，再以非同步 Notify 回報 Root，本身符合
 preparation procedure。
 
-但 preparation 的標準目的只是檢查 Client 能否滿足 requirements、能否下載模型，
-以及是否參與 FL。此時尚未執行 local training，也沒有產生新的 interim local model。
-因此，即使暫時不考慮 hierarchy metadata，在 preparation outcome Notify 中回傳
-一份 <code>mLModelInfos</code> 或 model URL，本身就不是最自然的 procedure 語意。
+TS 29.520 §5.5.6.2.8 NOTE 1 同時要求
+<code>NwdafMLModelTrainNotif</code> 至少包含
+<code>delayEventNotif</code>、<code>mLModelInfos</code> 或
+<code>termTrainReq</code> 其中之一；<code>statusReport</code> 雖可附加，但不能
+單獨滿足這項條件。對已成功完成、沒有要求延後或終止的 preparation outcome 而言，
+<code>delayEventNotif</code> 與 <code>termTrainReq</code> 都不符合該結果，因此剩下的
+標準結果欄位就是 <code>mLModelInfos</code>。
+
+規格沒有逐字寫成「preparation success shall include
+<code>mLModelInfos</code>」；這是結合 Stage 2 join decision 與 Stage 3 conditional
+fields 所得的規格推論。因此 Client 指回已下載並驗證的有效 input model bundle，
+可視為 preparation 成功確認，並不需要先將這種用法判定為不自然。它也不表示 Client
+在 preparation 階段產生了新的 interim local model。
 
 本設計還希望在這次 Notify 的 <code>mLModelInfos.mLFileAddr.mLModelUrl</code>
 提供一個 result bundle URL。為了維持 model file 的基本解讀，Bundle 仍包含 Root
@@ -350,25 +360,25 @@ preparation procedure。
 }
 ~~~
 
-這裡存在明確的語意延伸：
+這裡需要區分標準相容用法與語意延伸：
 
-- Preparation 沒有產生新的 model update，因此此時由 Branch 回傳 model information
-  本身就顯得不自然。
-- TS 29.520 允許 <code>NwdafMLModelTrainNotif</code> 包含
-  <code>mLModelInfos</code>。
-- 但規格將 <code>mLModelInfos</code> 描述為 “Represents the ML Model
-  information.”，而 <code>mLModelUrl</code> 原本是 ML Model file 的 URL。
-- 規格沒有將它描述成 topology preparation result channel。
+- 以 <code>mLModelInfos</code> 回報成功 preparation outcome，有上述 conditional
+  fields 的規格推論支撐。
+- URL 指回已下載並驗證的 input model bundle，不代表 preparation 產生新的 model
+  update。
+- 規格將 <code>mLModelInfos</code> 描述為 “Represents the ML Model
+  information.”，而 <code>mLModelUrl</code> 是 ML Model file 的 URL。
+- 規格沒有定義 bundle 內的 <code>preparationResult</code> schema，也沒有將它標準化為
+  topology preparation result channel。
 - Model file 內容格式未標準化，也沒有明文禁止在有效 model bundle 中附加這些
   metadata。
 
 因此，這個 URL 在 schema 與標準 Notify 流程中可以被傳遞，但
 <code>preparationResult</code> 的內容與解析方式仍是 vendor-specific contract。
-它是本方法用來讓 Root 取得 subordinate preparation details 的核心設計，同時帶有
-兩層需要明確揭露的語意疑慮：
-
-1. Preparation 階段為什麼需要回傳 model information？
-2. 為什麼 model file URL 進一步承載 topology preparation result？
+它是本方法用來讓 Root 取得 subordinate preparation details 的核心設計。需要明確
+揭露的界線是：<code>mLModelInfos</code> 作為成功 outcome 載體可由規格條件推導；
+<code>preparationResult</code> 的內容及其位於 model bundle 內的解析方式，則是
+vendor-specific contract。
 
 規格來源：
 

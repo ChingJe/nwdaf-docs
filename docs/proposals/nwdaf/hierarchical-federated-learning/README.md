@@ -40,9 +40,10 @@ FL execution strategy
 - Model file 的 serialization format 不由 3GPP 指定；本設計在同 vendor 前提下，
   以仍含有效模型的 bundle 附加 hierarchy manifest。這是 vendor-specific contract，
   不是標準定義的 hierarchy 欄位。
-- 本設計希望透過 Notify 中的 model bundle URL 回傳 per-Leaf preparation result。
-  這不是 `mLModelUrl` 最自然的欄位語意，但規格沒有明文禁止在有效模型 bundle 中
-  附加同 vendor metadata；其內容與解析方式仍須標示為 vendor-specific contract。
+- TS 29.520 的 notification conditional fields 可推導出：成功且不延後、不終止的
+  preparation outcome 需以 `mLModelInfos` 作為結果載體；本設計讓 URL 指回已驗證的
+  有效 model bundle。Bundle 內另外附加的 per-Leaf preparation result 才是同 vendor
+  metadata，其內容與解析方式仍須標示為 vendor-specific contract。
 - Root 負責 topology planning；Branch 負責執行 Leaf preparation 並回報結果。
 - 完整成功與部分成功都是可選 policy，不在框架中寫死。
 

@@ -383,10 +383,17 @@ TS 23.288 §6.2C.2.1 step 9 允許 Client 使用 Notify 或 Subscribe response �
 > response service operation to indicate to the FL Server NWDAF whether it will
 > join the FL procedure ...”
 
-但 preparation 的標準目的，是讓 Client 檢查 requirements、取得模型並判斷是否
-參與 FL；此時尚未執行 local training，也沒有產生新的 interim local model。因此，
-即使不考慮 hierarchy metadata，在 preparation outcome Notify 中由 Branch 回傳
-`mLModelInfos` 或 model URL，本身就不是最自然的 procedure 語意。
+TS 29.520 §5.5.6.2.8 NOTE 1 又進一步要求 `NwdafMLModelTrainNotif` 至少包含
+`delayEventNotif`、`mLModelInfos` 或 `termTrainReq` 其中之一；`statusReport` 雖可附加，
+但不能單獨滿足這項條件。結合 preparation outcome 的狀態來看，`delayEventNotif`
+表示尚未完成，`termTrainReq` 表示終止，因此對於已成功完成、沒有要求延後或終止的
+preparation outcome，剩下可用的標準結果欄位就是 `mLModelInfos`。
+
+規格沒有逐字寫成「preparation success shall include `mLModelInfos`」；上述結論是由
+Stage 2 的 join decision 語意與 Stage 3 的 conditional fields 共同推導而得。因此，
+Client 以 `mLModelInfos` 指回已下載並驗證的有效 model bundle，可解讀為本次
+preparation 的成功確認，並不需要先假定這是一個不自然的欄位用法。它也不代表
+preparation 已產生新的 interim local model。
 
 本設計希望 Branch 在上述非同步回報中，將下層 preparation result manifest 放入
 `mLModelUrl` 所指向的 bundle，使 Root 能得知哪些 Leaf 已準備完成、哪些 Leaf 失敗，
@@ -394,9 +401,11 @@ TS 23.288 §6.2C.2.1 step 9 允許 Client 使用 Notify 或 Subscribe response �
 result bundle 仍包含 Root 原先提供的有效 model artifact；Branch 不會宣稱這是
 preparation 階段新訓練出的模型，而是在同一 bundle 中附加 preparation result。
 
-這不是 `mLModelUrl` 最自然的標準語意。TS 29.520 將它定義為 ML Model file 的 URL，
-並將 Notify 中的 `mLModelInfos` 描述為 “Represents the ML Model information.”；規格
-並沒有把這個 URL 描述成一般性的 topology control 或 preparation-result channel。
+`mLModelInfos` 作為成功 preparation outcome 的載體有上述規格推論支撐；真正超出
+3GPP 明文定義的部分，是 result bundle 內額外加入 subordinate topology preparation
+details。TS 29.520 將 `mLModelUrl` 定義為 ML Model file 的 URL，並將 Notify 中的
+`mLModelInfos` 描述為 “Represents the ML Model information.”；規格沒有定義其中的
+`preparationResult` schema，也沒有把它標準化成一般性的 topology control channel。
 
 另一方面，TS 29.520 沒有規範 ML model file 的內部格式，且
 `NwdafMLModelTrainNotif` schema 允許在 Notify 中提供 `mLModelInfos`。規格也沒有明文
@@ -406,15 +415,16 @@ preparation 階段新訓練出的模型，而是在同一 bundle 中附加 prepa
 > 使用標準 SBI 欄位傳遞 model bundle URL，並在未標準化的 bundle 內容中附加
 > hierarchy preparation result。
 
-這種做法在 data type 與傳輸流程上未被規格直接阻止，但包含兩層需要明確揭露的語意
-疑慮：
+這種做法可分成兩層理解：
 
-1. Preparation 尚未產生新的 model update，為何此時需要回傳 model information？
-2. 為何 ML Model file URL 進一步承載 topology preparation result？
+1. 以 `mLModelInfos` 回報成功 preparation outcome，是由 notification conditional
+   fields 推導出的標準相容用法；URL 指回已驗證的 input model bundle，不宣稱產生新模型。
+2. 在該有效 model bundle 中附加 subordinate topology preparation result，則是本設計的
+   vendor-specific extension。
 
 附加資訊的語意與解析方式是同 vendor implementation contract，不能宣稱為 3GPP
-已定義的 hierarchical FL procedure。若後續認為這項語意延伸不可接受，才需要另行
-選擇詳細結果的承載方式。
+已定義的 hierarchical FL procedure；但不能只因 preparation 沒有產生新模型，就將
+`mLModelInfos` 作為成功 outcome 的用法判定為不自然。
 
 規格來源：
 

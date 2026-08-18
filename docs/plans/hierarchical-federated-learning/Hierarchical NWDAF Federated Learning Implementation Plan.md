@@ -195,9 +195,12 @@ Bundle 不應重複或覆寫上述標準欄位的 normative semantics。
 5. Root 下載並驗證 result bundle 後，依實際 subordinate result 接受或拒絕整個
    attempt。
 
-這不是 `mLModelUrl` 最自然的 procedure semantics，但在不新增 private external SBI、
-不修改 Release 18 OpenAPI schema 的前提下，是組合現有
-`Nnwdaf_MLModelTraining` mechanism 實現 hierarchical FL 最直接的方式。
+TS 29.520 §5.5.6.2.8 NOTE 1 要求 notification 至少包含 `delayEventNotif`、
+`mLModelInfos` 或 `termTrainReq` 其中之一。結合 Stage 2 join decision 可推導出：成功且
+不延後、不終止的 preparation outcome 應以 `mLModelInfos` 作為結果載體。因此這不是單純
+借用一個不自然的欄位，而是在不新增 private external SBI、不修改 Release 18 OpenAPI
+schema 的前提下，組合現有 `Nnwdaf_MLModelTraining` mechanism 實現 hierarchical FL
+最直接的方式。規格沒有逐字定義上述 success mapping，文件應將它標示為規格推論。
 
 此行為必須明確標示為同 vendor implementation contract，不得宣稱為 3GPP 已定義的
 hierarchical FL procedure。後續實作與 review 不再把是否採用 result bundle 當作 open
@@ -219,10 +222,11 @@ decision；只有具體 schema、完整性、lifecycle 與 error behavior 仍待
   failure result bundle，可同時提供 `mLModelInfos` 與 `termTrainReq`，供 Root 先記錄結果
   partition，再將 attempt 標記為 terminal failure。
 
-Leaf 回報輸入 assignment bundle 並不是最自然的 preparation 語意，但這是團隊已接受的
-Release 18 implementation profile：它保留有效 model artifact、符合 notification 的最低
-結果條件，也不虛構 preparation 已產生新 trained model。這項 semantic tension 不得再以
-`statusReport`-only callback 規避。
+Leaf 回報已下載並驗證的 input assignment bundle，可作為上述 `mLModelInfos` success
+mapping 的 acknowledgement：它保留有效 model artifact、符合 notification 的最低結果
+條件，也不虛構 preparation 已產生新 trained model。真正的 vendor-specific extension 是
+bundle 內的 hierarchy metadata，而不是 `mLModelInfos` 作為成功 outcome 本身；不得再以
+`statusReport`-only callback 取代這項 contract。
 
 ### 4.3 Bundle publication and Branch republishing
 
@@ -309,8 +313,9 @@ results 組成實際 subordinate topology 後，對整個 attempt 做下列決�
 若 Root 接受：
 
 1. 將各 Branch 的 `preparedClients` 凍結為本次實際 participant snapshot；
-2. 更新各 accepted Branch 的既有 upper-tier subscription 並送出第一輪 training，作為
-   topology 已被接受的 execution transition。
+2. 將 Root attempt 與對應 Server process標記為 `ADMITTED`，保留既有 upper／lower
+   subscriptions供後續使用；更新subscription並送出第一輪training屬於Slice 5，不在
+   preparation／admission完成的同一Slice提前執行。
 
 若 Root 不接受：
 
@@ -719,11 +724,11 @@ Detailed plan：
 
 ### Slice 2：Capability and process-scoped role foundation
 
+狀態：Completed；production implementation、review 與 verification 已完成。
+
 詳細計畫：
 
 - [Slice 2 Capability and Process-scoped Role Foundation Detailed Plan](./Slice%202%20Capability%20and%20Process-scoped%20Role%20Foundation%20Detailed%20Plan.md)
-
-目前狀態：detailed plan 已完成初稿，待 review 後開始 production implementation。
 
 目標：讓同一 NWDAF implementation 可在不同 FL processes 中承擔不同角色，並使
 Branch 安全地連結 upper／lower resources。
@@ -747,6 +752,12 @@ Branch 安全地連結 upper／lower resources。
 
 ### Slice 3：Root initiation, static topology and assignment
 
+狀態：Completed；production implementation、review 與 verification 已完成。
+
+詳細計畫：
+
+- [Slice 3 Root Initiation, Static Topology and Assignment Detailed Plan](./Slice%203%20Root%20Initiation%2C%20Static%20Topology%20and%20Assignment%20Detailed%20Plan.md)
+
 目標：完成 Root control plane：由 degradation 或已啟用的 private API 建立單一 active
 plan，載入 static topology、透過 NRF 驗證 configured assignment，並送出 upper-tier
 preparation。
@@ -768,6 +779,13 @@ preparation。
 
 ### Slice 4：End-to-end preparation and admission
 
+狀態：Ready for implementation；detailed plan與team review已完成，production
+implementation尚未開始。
+
+詳細計畫：
+
+- [Slice 4 End-to-end Preparation and Admission Detailed Plan](./Slice%204%20End-to-end%20Preparation%20and%20Admission%20Detailed%20Plan.md)
+
 目標：完成 Root–Branch–Leaf 的 preparation walking skeleton；Branch 非同步完成
 lower-tier preparation，以 result bundle 回報 Root，並由 Root 做整棵 topology admission。
 
@@ -777,8 +795,11 @@ lower-tier preparation，以 result bundle 回報 Root，並由 Root 做整棵 t
 - Root-to-Branch bundle download；
 - Branch process／republish and Leaf bundle download；
 - assigned Leaf NRF re-resolution；
+- Branch 在送出任何 lower request 前自行失敗時，不啟動 lower-tier preparation，也不等待
+  不存在的 Leaf callback；
 - lower-tier preparation fan-out；
-- per-Leaf outcome／deadline tracking；
+- lower-tier 已啟動後，即使一個 Leaf 先失敗，仍收集其餘 per-Leaf outcomes，直到全部
+  terminal 或 bounded deadline 到期；
 - `complete_required` evaluation input；
 - result bundle construction and notification；
 - Root accept／reject decision and rejected-attempt cleanup；
@@ -1048,7 +1069,8 @@ optional hardening，不得默默擴張進第一版。
 | 2026-08-17 | Hierarchy 由多個獨立標準 FL processes 組成 | Confirmed |
 | 2026-08-17 | Assignment metadata 放在仍含有效模型的 vendor model bundle | Confirmed |
 | 2026-08-17 | Subordinate preparation detail 使用 `mLModelUrl` result bundle 回報 | Confirmed |
-| 2026-08-17 | 接受上述 result bundle 的 procedure semantic tension，並明確標為同 vendor contract | Confirmed |
+| 2026-08-17 | 將 `mLModelInfos` success mapping 與 result bundle 一併視為 procedure semantic tension | Superseded |
+| 2026-08-18 | 修正上述判斷：`mLModelInfos` success mapping 可由 notification conditional fields 與 join decision 推導；只有 bundle 內 hierarchy result metadata 是同 vendor contract | Confirmed |
 | 2026-08-18 | PyMTLF 直接 serving artifacts，Go 只傳遞 URL；Branch 必須處理 Root bundle 後重新發布 Leaf bundle | Confirmed |
 | 2026-08-18 | 所有 process restart 都從全新 state 開始，不恢復或 reconcile 舊 hierarchy process | Confirmed |
 | 2026-08-18 | 第一版 algorithm 只支援 FedProx；FedAvg 與 `proximal_mu: 0` baseline 延後 | Confirmed |
@@ -1074,4 +1096,5 @@ optional hardening，不得默默擴張進第一版。
 | 2026-08-18 | E2E smoke 使用一個 Branch；aggregation acceptance 至少使用兩個 Branches | Confirmed |
 | 2026-08-18 | 修正既有 preparation notification contract regression：`statusReport` 不得單獨代表成功，sender／validator／stage-aware receiver 改以 `mLModelInfos` profile 為準 | Confirmed |
 | 2026-08-18 | preparation 的 `statusReport` 僅為 optional supplemental status；不再以固定 `samplRatio: 100` 作為 completed latch | Confirmed |
+| 2026-08-18 | Branch pre-dispatch failure 不啟動 lower resources；lower 已啟動後，單一 Leaf failure 不提前結束 collection，等待全部 terminal outcomes 或 bounded deadline | Confirmed |
 | 2026-08-18 | 第一版假設所有 NWDAF／PyMTLF 位於同一受控 vendor trust domain；publisher 僅為 logical identity，不新增 artifact-origin／requester cryptographic binding | Confirmed |
