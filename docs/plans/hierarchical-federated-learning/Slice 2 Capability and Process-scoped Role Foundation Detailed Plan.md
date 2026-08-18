@@ -2,7 +2,7 @@
 
 日期：2026-08-18
 
-狀態：Draft；待 review 後開始實作
+狀態：Completed；production implementation、review 與 verification 已完成
 
 上層計畫：
 
@@ -868,37 +868,62 @@ shutdown有明確admission fence並沿用app-owned lifecycle。
 
 ### 15.1 Capability and config
 
-- [ ] 沒有新增永久Root／Branch／Leaf mode；
-- [ ] Go capability仍是唯一advertisement source；
-- [ ] combined engine config可用；
-- [ ] old sample configs與docs同checkpoint遷移；
-- [ ] invalid matrix完整fail closed。
+- [x] 沒有新增永久Root／Branch／Leaf mode；
+- [x] Go capability仍是唯一advertisement source；
+- [x] combined engine config可用；
+- [x] old sample configs與docs同checkpoint遷移；
+- [x] invalid matrix完整fail closed。
 
 ### 15.2 Boundary ownership
 
-- [ ] Go route沒有新增`planId`或hierarchy role；
-- [ ] PyMTLF沒有直接處理public peer SBI；
-- [ ] capability projection來自runtime NF profile snapshot；
-- [ ] registry不取代Client／Server engine standard maps；
-- [ ] free5GC exemplar claim只限實際比較的lifecycle／package boundary。
+- [x] Go route沒有新增`planId`或hierarchy role；
+- [x] PyMTLF沒有直接處理public peer SBI；
+- [x] capability projection來自runtime NF profile snapshot；
+- [x] registry不取代Client／Server engine standard maps；
+- [x] free5GC exemplar claim只限實際比較的lifecycle／package boundary。
 
 ### 15.3 Concurrency and lifecycle
 
-- [ ] guard在background work前取得；
-- [ ] Branch pair算一個experiment；
-- [ ] terminal cleanup前不提早release；
-- [ ] every timer／executor／HTTP client有owner與stop path；
-- [ ] registry lock內沒有I/O或blocking wait；
-- [ ] restart後state為空且不呼叫restore helpers。
+- [x] guard在background work前取得；
+- [x] Branch pair算一個experiment；
+- [x] terminal cleanup前不提早release；
+- [x] every timer／executor／HTTP client有owner與stop path；
+- [x] registry lock內沒有I/O或blocking wait；
+- [x] restart後state為空且不呼叫restore helpers。
 
 ### 15.4 Tests and scope
 
-- [ ] local／pure Server／pure Client／combined regression都存在；
-- [ ] readiness unavailable／mismatch／recovery有測試；
-- [ ] registry正反向invariants有isolated tests；
-- [ ] Go backend generation reset仍通過；
-- [ ] Slice 3／4／5 behavior沒有提前混入；
-- [ ] full verification與skipped checks明確記錄。
+- [x] local／pure Server／pure Client／combined regression都存在；
+- [x] readiness unavailable／mismatch／recovery有測試；
+- [x] registry正反向invariants有isolated tests；
+- [x] Go backend generation reset仍通過；
+- [x] Slice 3／4／5 behavior沒有提前混入；
+- [x] full verification與skipped checks明確記錄。
+
+### 15.5 Implementation、review 與 verification record
+
+Production commits：
+
+- `NWDAF/`：`b045423 feat(context): expose federated learning capabilities`；
+- `PyMTLF/`：
+  - `4b7bc00 feat(mtlf): enable capability-based FL engines`；
+  - `6b8ff10 feat(mtlf): verify advertised FL capabilities`；
+  - `530180b feat(mtlf): add process-scoped FL experiment registry`；
+  - `ecd6dee feat(mtlf): integrate FL experiment ownership`。
+
+Mandatory review檢查完整Slice diff後，直接修復下列in-scope findings：
+
+- shutdown fence擴及既有provisional record的plan bind與Server attach；
+- bound Client resource在尚未進入experiment cleanup時拒絕DELETE且保留engine state；
+- Client mapping只在provisional rollback或`CLEANING`階段解除；
+- 非同步Client create測試改為等待可觀察完成條件，避免依賴executor排程時機。
+
+Follow-up targeted review未發現新的in-scope finding。最終verification：
+
+- `NWDAF/`：`make test`通過；`make build`通過；`make lint`通過，0 issues；
+- `PyMTLF/`：`.venv/bin/pytest -q`通過，298 passed、2 skipped；兩項skip皆因本機沒有
+  CUDA runtime；
+- `PyMTLF/`：`.venv/bin/ruff check .`通過。
 
 ---
 
