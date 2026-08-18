@@ -696,7 +696,7 @@ Detailed plan：
 
 目標：提供可驗證、可版本化且不覆寫標準欄位的 assignment／result bundles。
 
-狀態：Implementation complete；待 team review、commit 與 push。
+狀態：Implementation complete；已 commit，待 team review 與 push。
 
 Detailed plan：
 

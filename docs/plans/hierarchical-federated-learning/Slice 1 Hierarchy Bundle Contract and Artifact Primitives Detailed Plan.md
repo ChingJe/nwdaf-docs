@@ -2,7 +2,7 @@
 
 日期：2026-08-18
 
-狀態：Implementation complete；待 team review、commit 與 push
+狀態：Implementation complete；已 commit，待 team review 與 push
 
 上層計畫：
 
@@ -895,7 +895,8 @@ notification sender／validator／stage-aware receiver contract。
 - branch：`feat/r18-hierarchical-federated-learning`；
 - base branch：`feat/r18-federated-learning`；
 - base revision：`7e8ab7f23bf5d6398eb1cd5f053dd8bda9439a87`；
-- implementation state：working tree complete，尚未 commit 或 push。
+- implementation commit：`fa352d3`（`feat(mtlf): add hierarchical FL artifact primitives`）；
+- implementation state：已 commit，尚未 push。
 
 ### 14.2 實際變更
 
@@ -948,6 +949,6 @@ notification sender／validator／stage-aware receiver contract。
 ### 14.4 Handoff
 
 Team review 應優先確認 typed schema、Branch republish ownership、digest binding 與
-`release_plan()` scope。Review 通過並完成 PyMTLF commit 後，Slice 2 可以直接使用這些
+`release_plan()` scope。Review 通過後，Slice 2 可以直接使用這些
 immutable contracts 與 artifact primitives 建立 capability-oriented runtime 和
 process-scoped role state。
