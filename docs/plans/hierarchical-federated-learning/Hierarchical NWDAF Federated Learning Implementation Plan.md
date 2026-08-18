@@ -546,6 +546,16 @@ tooling 與 NWDAF／PyMTLF production changes 混在同一 commit。
 `resources/` 只作 Daisy、free5GC generated code 與 exemplar reference，不在本計畫
 修改。
 
+### 6.6 Implementation branch workflow
+
+本 canonical plan 可直接維護於 `nwdaf-docs/main`。開始 production implementation 前，
+`NWDAF/`、`PyMTLF/`，以及確實需要修改時的 `PyAnLF/`，各自在自己的 repository 建立
+`feat/r18-hierarchical-federated-learning`，沿用既有 `feat/r18-federated-learning`
+workstream 的命名格式。新 branch 以包含既有 distributed FL baseline 的 branch／commit
+為基底；若開始實作時該 baseline 尚未合併，便從 `feat/r18-federated-learning` 分出。
+各 repository 必須獨立 commit、測試及 push，不跨 repository 混合提交；若 `PyAnLF/`
+只需驗證既有行為，則維持 verify-only，不為了名稱一致而建立無實際修改的 branch。
+
 ---
 
 ## 7. Target control flow
