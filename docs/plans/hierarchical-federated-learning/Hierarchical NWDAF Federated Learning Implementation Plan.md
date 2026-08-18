@@ -9,6 +9,7 @@
 相關文件：
 
 - [Hierarchical NWDAF Federated Learning Proposal Draft](../../proposals/nwdaf/hierarchical-federated-learning/proposal_draft.md)
+- [Phase 0 Release 18 Contract Foundation Detailed Plan](../federated-learning/Phase%200%20Release%2018%20Contract%20Foundation%20Detailed%20Plan.md)
 - [Distributed NWDAF Federated Learning Implementation Plan](../federated-learning/Distributed%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)
 - [Phase 3 And 4 Federated Training Execution Detailed Plan](../federated-learning/Phase%203%20And%204%20Federated%20Training%20Execution%20Detailed%20Plan.md)
 - [NWDAF Development Policy](../../development_policy.md)
@@ -56,6 +57,26 @@ Hierarchical FL 不重做上述基礎，而是在其上增加：
 phases。若實作發現既有 baseline defect，依 development policy 判斷為目前 slice 的直接
 blocker、future-phase handoff、legacy cleanup、optional hardening、integration
 verification gap 或 unconfirmed risk。
+
+既有 preparation notification contract 是本次 workstream 的直接 blocker，因此是上述
+原則的明確例外修正範圍。早期 Phase 0 contract foundation 已正確記錄：依 TS 29.520
+§5.5.6.2.8 NOTE 1，notification 至少須包含 `delayEventNotif`、`mLModelInfos` 或
+`termTrainReq` 其中之一，`statusReport` 只能作為補充資訊，不能獨自滿足該條件。後續
+distributed FL 主計畫與 Phase 3／4 execution plan 卻把 `statusReport` 誤列為可獨立成立的
+結果，並據此要求 preparation 接受 `statusReport`-only callback；現有 Go／PyMTLF
+validator、PyMTLF preparation sender 與 FL Server stage handling 也實作了這個後期決策。
+
+本計畫明確 supersede 該項後期決策。這次 HFL 實作必須同步修正既有 contract regression，
+不能只在新的 hierarchy orchestrator 外圍繞過：
+
+- wire validator 不再把 `statusReport` 單獨存在視為滿足 notification 最低結果集合；
+- preparation success sender 必須提供符合本計畫 profile 的 `mLModelInfos`；
+- preparation-stage receiver 必須能依 active stage 解讀 `mLModelInfos`，不得再要求
+  `statusReport` 才能判定成功；
+- `statusReport` 若存在，只提供附加的標準 training status，不作為 preparation completed
+  latch；不得再以固定 `trainInDataInfo.samplRatio: 100` 代替完成結果；
+- non-hierarchical distributed FL regression tests 必須一併更新，以證明修正沒有破壞既有
+  subscription、round 與 final-result behavior。
 
 ---
 
@@ -181,6 +202,27 @@ Bundle 不應重複或覆寫上述標準欄位的 normative semantics。
 此行為必須明確標示為同 vendor implementation contract，不得宣稱為 3GPP 已定義的
 hierarchical FL procedure。後續實作與 review 不再把是否採用 result bundle 當作 open
 decision；只有具體 schema、完整性、lifecycle 與 error behavior 仍待定案。
+
+#### Preparation success notification contract
+
+第一版固定以下成功通知：
+
+- Leaf preparation success 提供 `mLModelInfos`，URL 指回該 Leaf 已下載並驗證的
+  Branch-published assignment bundle；
+- Branch preparation success 提供 `mLModelInfos`，URL 指向 Branch-published
+  preparation-result bundle；
+- 兩者都可另外包含 `statusReport`，但 receiver 不得以其存在與否決定 preparation 是否
+  完成；
+- preparation notification 不帶 standard `roundInd`，接收端以 active process stage、
+  notification correlation 與 artifact contract 判斷其用途；
+- 在尚未形成有效 result artifact 前失敗，使用 `termTrainReq`；若 Branch 已形成完整
+  failure result bundle，可同時提供 `mLModelInfos` 與 `termTrainReq`，供 Root 先記錄結果
+  partition，再將 attempt 標記為 terminal failure。
+
+Leaf 回報輸入 assignment bundle 並不是最自然的 preparation 語意，但這是團隊已接受的
+Release 18 implementation profile：它保留有效 model artifact、符合 notification 的最低
+結果條件，也不虛構 preparation 已產生新 trained model。這項 semantic tension 不得再以
+`statusReport`-only callback 規避。
 
 ### 4.3 Bundle publication and Branch republishing
 
@@ -616,6 +658,10 @@ acceptance tests、deferred behavior 與 checkpoint。
 
 目標：確認既有 distributed FL implementation 可重用邊界，避免平行重建。
 
+Detailed plan：
+
+- [Slice 0 Baseline Audit and Contract Freeze Detailed Plan](./Slice%200%20Baseline%20Audit%20and%20Contract%20Freeze%20Detailed%20Plan.md)
+
 預期產出：
 
 - current Go Training route／callback／NRF discovery evidence map；
@@ -997,3 +1043,5 @@ optional hardening，不得默默擴張進第一版。
 | 2026-08-18 | Slice 3 同時實作 Root initiation、single-active guard、static topology 與 assignment | Confirmed |
 | 2026-08-18 | Preparation failure policy 歸 Slice 4，round failure policy 歸 Slice 5；Slice 6 只做 lifecycle closure／restart hardening | Confirmed |
 | 2026-08-18 | E2E smoke 使用一個 Branch；aggregation acceptance 至少使用兩個 Branches | Confirmed |
+| 2026-08-18 | 修正既有 preparation notification contract regression：`statusReport` 不得單獨代表成功，sender／validator／stage-aware receiver 改以 `mLModelInfos` profile 為準 | Confirmed |
+| 2026-08-18 | preparation 的 `statusReport` 僅為 optional supplemental status；不再以固定 `samplRatio: 100` 作為 completed latch | Confirmed |
