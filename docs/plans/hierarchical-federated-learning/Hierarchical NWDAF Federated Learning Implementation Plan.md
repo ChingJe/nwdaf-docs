@@ -719,6 +719,12 @@ Detailed plan：
 
 ### Slice 2：Capability and process-scoped role foundation
 
+詳細計畫：
+
+- [Slice 2 Capability and Process-scoped Role Foundation Detailed Plan](./Slice%202%20Capability%20and%20Process-scoped%20Role%20Foundation%20Detailed%20Plan.md)
+
+目前狀態：detailed plan 已完成初稿，待 review 後開始 production implementation。
+
 目標：讓同一 NWDAF implementation 可在不同 FL processes 中承擔不同角色，並使
 Branch 安全地連結 upper／lower resources。
 
