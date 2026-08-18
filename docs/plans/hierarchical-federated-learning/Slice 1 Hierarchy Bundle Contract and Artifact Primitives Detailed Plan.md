@@ -2,7 +2,7 @@
 
 日期：2026-08-18
 
-狀態：Implementation complete；已 commit，待 team review 與 push
+狀態：Implementation 與 code review 完成；PyMTLF checkpoint 已 commit
 
 上層計畫：
 
@@ -834,31 +834,31 @@ Slice 2–4。
 
 ### 12.1 Contract
 
-- [ ] 既有四檔案 bundle contract 維持不變。
-- [ ] Hierarchy metadata 必須 strict、versioned 且 role-discriminated。
-- [ ] `plan_id` 是 UUIDv4，且不同於 standard process identifiers。
-- [ ] Branch 與 Leaf assignments 都是 recipient-specific。
-- [ ] 第一版 strategy 只接受已確認的值。
-- [ ] Preparation result 精確 partition assigned clients。
-- [ ] Failure causes 是 bounded values，且不包含 raw error details。
+- [x] 既有四檔案 bundle contract 維持不變。
+- [x] Hierarchy metadata 必須 strict、versioned 且 role-discriminated。
+- [x] `plan_id` 是 UUIDv4，且不同於 standard process identifiers。
+- [x] Branch 與 Leaf assignments 都是 recipient-specific。
+- [x] 第一版 strategy 只接受已確認的值。
+- [x] Preparation result 精確 partition assigned clients。
+- [x] Failure causes 是 bounded values，且不包含 raw error details。
 
 ### 12.2 Artifact 行為
 
-- [ ] New roles 重用既有 workspace 與 serving route。
-- [ ] Branch republish 無法把 Root URL 當作 Leaf artifact 回傳或暴露。
-- [ ] URL、header 與 body archive digests 完成 binding。
-- [ ] Model、preprocessing 與 weights 經過 republish／result publication 後維持相容。
-- [ ] Artifact URLs 在 retention 期間 immutable。
-- [ ] `release_plan()` 只以一個已驗證的 plan directory 為 target。
-- [ ] TTL 維持 crash-leftover cleanup mechanism。
+- [x] New roles 重用既有 workspace 與 serving route。
+- [x] Branch republish 無法把 Root URL 當作 Leaf artifact 回傳或暴露。
+- [x] URL、header 與 body archive digests 完成 binding。
+- [x] Model、preprocessing 與 weights 經過 republish／result publication 後維持相容。
+- [x] Artifact URLs 在 retention 期間 immutable。
+- [x] `release_plan()` 只以一個已驗證的 plan directory 為 target。
+- [x] TTL 維持 crash-leftover cleanup mechanism。
 
 ### 12.3 Scope
 
-- [ ] 不修改 Go、PyAnLF、`nwdaf-resources` 或 OpenAPI。
-- [ ] 不加入 NRF、topology planner、Training SBI 或 orchestration logic。
-- [ ] 不執行 FedProx 或 aggregation。
-- [ ] 不接受 future strategy value。
-- [ ] 既有 non-HFL FL tests 維持通過。
+- [x] 不修改 Go、PyAnLF、`nwdaf-resources` 或 OpenAPI。
+- [x] 不加入 NRF、topology planner、Training SBI 或 orchestration logic。
+- [x] 不執行 FedProx 或 aggregation。
+- [x] 不接受 future strategy value。
+- [x] 既有 non-HFL FL tests 維持通過。
 
 ---
 
@@ -896,7 +896,8 @@ notification sender／validator／stage-aware receiver contract。
 - base branch：`feat/r18-federated-learning`；
 - base revision：`7e8ab7f23bf5d6398eb1cd5f053dd8bda9439a87`；
 - implementation commit：`fa352d3`（`feat(mtlf): add hierarchical FL artifact primitives`）；
-- implementation state：已 commit，尚未 push。
+- review remediation commit：`6cc1df0`（`fix(mtlf): enforce hierarchy artifact workspace invariants`）；
+- implementation state：implementation、remediation 與 targeted follow-up review 均已完成。
 
 ### 14.2 實際變更
 
@@ -940,15 +941,29 @@ notification sender／validator／stage-aware receiver contract。
 
 結果：
 
-- Pytest：`241 passed, 2 skipped`；
+- Pytest：`248 passed, 2 skipped`；
 - Ruff：`All checks passed`；
 - skipped tests 為既有 suite 的環境條件 skip，沒有新增 failure；
 - warnings 為既有 Starlette/httpx deprecation 與 joblib／NumPy deprecation，沒有 Slice 1
   contract failure。
 
-### 14.4 Handoff
+### 14.4 Code review outcome
 
-Team review 應優先確認 typed schema、Branch republish ownership、digest binding 與
-`release_plan()` scope。Review 通過後，Slice 2 可以直接使用這些
-immutable contracts 與 artifact primitives 建立 capability-oriented runtime 和
-process-scoped role state。
+Initial review 與 test-first remediation 已完成。已修正：
+
+- 空字串 `expected_plan_id` 意外停用 plan expectation；
+- allowed origin 未正規化與 invalid URL port 漏出未分類例外；
+- archive／manifest／workspace I/O failure 未落入 bounded error categories；
+- publication 在完整驗證前建立 workspace path；
+- 既有 content-addressed path 與實際 bytes 衝突時未 fail closed。
+
+補強的 acceptance evidence 包含 recipient-specific／idempotent publication、實際 Root
+download → Branch process → Leaf republish、valid timed-out result、unsupported contract
+version、raw error detail rejection，以及 staging I/O failure。Focused remediation、targeted
+follow-up review、完整 PyMTLF regression 與 Ruff 均通過；目前沒有未解決的 Slice 1 finding。
+
+### 14.5 Handoff
+
+Slice 1 review 已通過。Slice 2 可以直接使用這些 immutable contracts 與 artifact
+primitives 建立 capability-oriented runtime 和 process-scoped role state；開始實作前先建立
+Slice 2 detailed plan。
