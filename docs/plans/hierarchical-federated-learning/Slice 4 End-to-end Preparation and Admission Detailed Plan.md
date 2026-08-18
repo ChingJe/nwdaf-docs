@@ -2,8 +2,8 @@
 
 日期：2026-08-18
 
-狀態：Ready for implementation；local evidence 與 team review 已完成，production
-implementation 尚未開始
+狀態：Completed；production code、full verification、mandatory review、targeted
+remediation 與 repository-separated implementation commits 均已完成
 
 上層計畫：
 
@@ -1298,59 +1298,85 @@ decision gate，只要ownership、wire contract與acceptance criteria不變。
 
 ### 18.1 Standard contract
 
-- [ ] statusReport-only rejected in Go and Py
-- [ ] mLModelInfos + termTrainReq preserved
-- [ ] delay mutual exclusions match TS NOTE 1
-- [ ] preparation callback has no roundInd
-- [ ] Go route remains hierarchy-unaware
-- [ ] no OpenAPI/generated-code change
+- [x] statusReport-only rejected in Go and Py
+- [x] mLModelInfos + termTrainReq preserved
+- [x] delay mutual exclusions match TS NOTE 1
+- [x] preparation callback has no roundInd
+- [x] Go route remains hierarchy-unaware
+- [x] no OpenAPI/generated-code change
 
 ### 18.2 Assignment and role
 
-- [ ] role comes only from validated assignment
-- [ ] no role config
-- [ ] local recipient is checked
-- [ ] publisher limitation is not described as caller authentication
-- [ ] plain FL does not bind hierarchy plan
-- [ ] invalid hierarchy does not fallback
+- [x] role comes only from validated assignment
+- [x] no role config
+- [x] local recipient is checked
+- [x] publisher limitation is not described as caller authentication
+- [x] plain FL does not bind hierarchy plan
+- [x] invalid hierarchy does not fallback
 
 ### 18.3 Branch and Leaf flow
 
-- [ ] Branch re-resolves every assigned Leaf
-- [ ] Branch republishes recipient-specific URLs
-- [ ] Branch does not run local dataset preparation
-- [ ] pre-dispatch Branch failure creates no lower resources and waits for no Leaf callback
-- [ ] Leaf prepares local dataset
-- [ ] lower Server process attaches same reservation
-- [ ] no Root URL is forwarded to Leaf
+- [x] Branch re-resolves every assigned Leaf
+- [x] Branch republishes recipient-specific URLs
+- [x] Branch does not run local dataset preparation
+- [x] pre-dispatch Branch failure creates no lower resources and waits for no Leaf callback
+- [x] Leaf prepares local dataset
+- [x] lower Server process attaches same reservation
+- [x] no Root URL is forwarded to Leaf
 
 ### 18.4 Outcome and admission
 
-- [ ] every assigned identity appears exactly once in result partition
-- [ ] first Leaf failure does not finish collection before all terminal outcomes or deadline
-- [ ] complete_required is the only admission mode
-- [ ] models + termination records result before failure
-- [ ] Root validates plan/publisher/recipient/assigned set
-- [ ] admitted snapshot is immutable
-- [ ] no round dispatch occurs
+- [x] every assigned identity appears exactly once in result partition
+- [x] first Leaf failure does not finish collection before all terminal outcomes or deadline
+- [x] complete_required is the only admission mode
+- [x] models + termination records result before failure
+- [x] Root validates plan/publisher/recipient/assigned set
+- [x] admitted snapshot is immutable
+- [x] no round dispatch occurs
 
 ### 18.5 Lifecycle
 
-- [ ] failure cleanup cascades upper to lower
-- [ ] parent DELETE cancels bound hierarchy work
-- [ ] ADMITTED resources remain active
-- [ ] registry release follows terminal/cleaning order
-- [ ] shutdown wakes all waiters
-- [ ] no automatic topology retry/recovery
+- [x] failure cleanup cascades upper to lower
+- [x] parent DELETE cancels bound hierarchy work
+- [x] ADMITTED resources remain active
+- [x] registry release follows terminal/cleaning order
+- [x] shutdown wakes all waiters
+- [x] no automatic topology retry/recovery
 
 ### 18.6 Verification
 
-- [ ] focused Go and Py tests pass
-- [ ] PyMTLF full pytest and Ruff pass
-- [ ] NWDAF make test/build/lint pass
-- [ ] flat FL regressions pass
-- [ ] mandatory review and targeted remediation complete
-- [ ] implementation record and repository commits recorded
+- [x] focused Go and Py tests pass
+- [x] PyMTLF full pytest and Ruff pass
+- [x] NWDAF make test/build/lint pass
+- [x] flat FL regressions pass
+- [x] mandatory review and targeted remediation complete
+- [x] implementation record and repository commits recorded
+
+### 18.7 Implementation record（2026-08-18）
+
+實作 repositories：
+
+- `NWDAF` commit `8885cd9`：修正Release 18 preparation notification conditional validation，保持Go只做
+  standard validation與relay；
+- `PyMTLF` commit `096c401`：完成typed assignment ingress、Leaf preparation、Branch lower-tier
+  orchestration、完整outcome collection、preparation-result publication、Root
+  `complete_required` admission與hierarchy-aware cleanup；
+- `nwdaf-docs`：回填本文件實作與驗證紀錄；
+- `PyAnLF`：未修改。
+
+Full verification：
+
+- PyMTLF：`370 passed, 2 skipped`；`ruff check .`通過；
+- NWDAF：`make test`、`make build`、`make lint`通過，lint為`0 issues`；
+- `git diff --check`於NWDAF與PyMTLF皆通過。
+
+Mandatory review直接修正三項不改變計畫決策的問題：
+
+1. flat FL preparation收到`termTrainReq`後仍可能繼續round；
+2. Branch在pre-dispatch parent DELETE競態下仍可能繼續發布artifact；
+3. preparation collection完成後未凍結stage，late callback可能改動結果。
+
+修正後增加deterministic regression tests並完成targeted recheck。
 
 ---
 
