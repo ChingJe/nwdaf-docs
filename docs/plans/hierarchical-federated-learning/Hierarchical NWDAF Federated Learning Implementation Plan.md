@@ -679,6 +679,10 @@ Detailed plan：
 
 目標：提供可驗證、可版本化且不覆寫標準欄位的 assignment／result bundles。
 
+Detailed plan：
+
+- [Slice 1：Hierarchy Bundle Contract 與 Artifact Primitives 詳細計畫](./Slice%201%20Hierarchy%20Bundle%20Contract%20and%20Artifact%20Primitives%20Detailed%20Plan.md)
+
 至少包含：
 
 - bundle type／version；
