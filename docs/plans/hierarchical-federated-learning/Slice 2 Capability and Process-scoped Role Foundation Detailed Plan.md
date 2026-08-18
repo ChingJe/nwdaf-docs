@@ -909,7 +909,12 @@ Production commits：
   - `4b7bc00 feat(mtlf): enable capability-based FL engines`；
   - `6b8ff10 feat(mtlf): verify advertised FL capabilities`；
   - `530180b feat(mtlf): add process-scoped FL experiment registry`；
-  - `ecd6dee feat(mtlf): integrate FL experiment ownership`。
+  - `ecd6dee feat(mtlf): integrate FL experiment ownership`；
+  - `c688113 refactor(mtlf): align FL engine class names`。
+
+完成後的內部runtime class名稱統一為`FLClientEngine`與`FLServerEngine`。本計畫前段保留的
+`FLClientService`／`FLServerOrchestrator`名稱是Slice開始時的baseline記錄；rename未改變
+private API、config、`app.state.fl_client`／`fl_server`或engine責任邊界。
 
 Mandatory review檢查完整Slice diff後，直接修復下列in-scope findings：
 
