@@ -226,9 +226,17 @@ For each confirmed defect:
 3. Make the smallest production change that closes the failure and its direct
    behavioral dependency.
 4. Run the focused regression suite.
-5. Review the remediation diff and its direct dependencies.
-6. Prepare a commit-ready checkpoint before starting another architectural
-   area; commit only when the user has requested or authorized it.
+5. Perform a targeted follow-up review of the remediation diff and its direct
+   dependencies.
+6. Continue the remediation and targeted-review loop until the admitted
+   finding is closed or a decision gate is reached.
+
+Once an initial review admits a finding whose remediation stays within the
+approved plan, architecture, ownership, contracts, and verification scope,
+continue directly into test-first remediation without waiting for additional
+user confirmation. Progress updates do not replace this continuation and are
+not approval gates. Pause only when section 6 requires a decision, required
+authority or permissions are missing, or the user changes the objective.
 
 Do not begin a structural remediation from prose alone when the defect can be
 captured in a deterministic test. Use Event, barrier, controllable clock, or
@@ -327,7 +335,11 @@ future work into the current phase.
 
 ### 8.1 Initial Review
 
-The first review of an implementation slice may inspect:
+After implementation and the required full verification complete, perform one
+initial review as the uninterrupted next step and before preparing the
+implementation commit checkpoint. Do not wait for a separate review request.
+
+The initial review must inspect, as applicable:
 
 - the complete slice diff
 - the agreed plan and acceptance criteria
@@ -337,7 +349,8 @@ The first review of an implementation slice may inspect:
 
 ### 8.2 Follow-up Review
 
-A follow-up review is targeted. Inspect only:
+After each in-scope remediation and its focused verification, immediately
+perform a targeted follow-up review. Inspect only:
 
 - the remediation diff
 - the original finding's direct dependencies
@@ -353,6 +366,12 @@ New issues outside the remediation boundary go to the backlog and do not
 reopen the active slice. A passing targeted review closes the finding; do not
 require repeated open-ended reviews to prove that no unrelated defect exists
 anywhere in the repository.
+
+Continue the remediation and targeted-review loop without pausing while the
+remaining work stays within the approved plan. Stop only for a section 6
+decision gate or another genuine blocker. After all admitted findings close,
+rerun any full verification invalidated by the remediation before preparing
+the commit checkpoint.
 
 ### 8.3 Review Output
 
@@ -509,10 +528,21 @@ or finding when that identifier is itself the documentation being changed.
 5. Implement the smallest complete slice.
 6. Run focused verification.
 7. Run required full verification before completion.
-8. Perform one initial review if requested.
-9. Fix admitted findings test-first.
-10. Perform targeted follow-up review only.
-11. Prepare repository-separated commit checkpoints.
+8. Continue directly into one mandatory initial review without waiting for a
+   separate request.
+9. Classify findings through the finding admission gate.
+10. Fix admitted in-scope findings test-first without pausing when remediation
+    preserves the approved plan, architecture, ownership, contracts, and
+    verification scope.
+11. Run focused verification and perform a targeted follow-up review after
+    each remediation; repeat this loop until the findings close or a decision
+    gate is reached.
+12. Record and defer optional hardening, future-phase work, legacy cleanup,
+    integration gaps, and unconfirmed risks without letting them block the
+    current slice.
+13. Rerun required full verification when remediation invalidated the earlier
+    result.
+14. Prepare repository-separated commit checkpoints.
 
 ### 12.2 Documentation
 
