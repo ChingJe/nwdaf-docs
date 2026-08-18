@@ -2,7 +2,7 @@
 
 日期：2026-08-18
 
-狀態：Ready for implementation
+狀態：Completed；production implementation、review 與 verification 已完成
 
 上層計畫：
 
@@ -941,57 +941,86 @@ focused verification；不得用移除所有 capability checks或hardcoded endpo
 
 ### 16.1 Contract and configuration
 
-- [ ] topology path relative to main config, not CWD
-- [ ] no permanent role config
-- [ ] no endpoints or runtime IDs in topology
-- [ ] strategy is typed and `proximal_mu` only exists inside FedProx algorithm block
-- [ ] private route absent by default
-- [ ] flat-FL config remains valid
-- [ ] all strict config models reject unknown fields
+- [x] topology path relative to main config, not CWD
+- [x] no permanent role config
+- [x] no endpoints or runtime IDs in topology
+- [x] strategy is typed and `proximal_mu` only exists inside FedProx algorithm block
+- [x] private route absent by default
+- [x] flat-FL config remains valid
+- [x] all strict config models reject unknown fields
 
 ### 16.2 Identity and ownership
 
-- [ ] requestId、planId、processId、mlCorreId與notifCorreId保持分離
-- [ ] registry reserved before external side effects
-- [ ] Root coordinator does not own Server correlation maps
-- [ ] FL Server engine does not re-plan static topology
-- [ ] Branch/Leaf role exists only inside active plan snapshot
+- [x] requestId、planId、processId、mlCorreId與notifCorreId保持分離
+- [x] registry reserved before external side effects
+- [x] Root coordinator does not own Server correlation maps
+- [x] FL Server engine does not re-plan static topology
+- [x] Branch/Leaf role exists only inside active plan snapshot
 
 ### 16.3 Discovery and dispatch
 
-- [ ] every configured identity is exact-resolved
-- [ ] profile identity/status/capability/analytics/service are validated
-- [ ] no hardcoded peer endpoint
-- [ ] every Branch receives isolated assignment bundle
-- [ ] all required Branch resources exist before waiting state
-- [ ] partial dispatch rolls back already-created resources
+- [x] every configured identity is exact-resolved
+- [x] profile identity/status/capability/analytics/service are validated
+- [x] no hardcoded peer endpoint
+- [x] every Branch receives isolated assignment bundle
+- [x] all required Branch resources exist before waiting state
+- [x] partial dispatch rolls back already-created resources
 
 ### 16.4 Failure and lifecycle
 
-- [ ] no automatic retry after required participant failure
-- [ ] degradation respects active and failed latch
-- [ ] explicit new request can start after terminal cleanup
-- [ ] restart produces fresh memory state
-- [ ] shutdown cleanup is bounded
-- [ ] status errors do not expose sensitive payloads
+- [x] no automatic retry after required participant failure
+- [x] degradation respects active and failed latch
+- [x] explicit new request can start after terminal cleanup
+- [x] restart produces fresh memory state
+- [x] shutdown cleanup is bounded
+- [x] status errors do not expose sensitive payloads
 
 ### 16.5 Slice boundary
 
-- [ ] no lower-tier Branch orchestration
-- [ ] no preparation result interpretation
-- [ ] no admission or round start
-- [ ] no Release 18 OpenAPI change
-- [ ] no unnecessary Go production change
+- [x] no lower-tier Branch orchestration
+- [x] no preparation result interpretation
+- [x] no admission or round start
+- [x] no Release 18 OpenAPI change
+- [x] no unnecessary Go production change
 
 ### 16.6 Implementation record
 
-完成後在本文件補記：
+Production commits：
 
-- production commits per repository；
-- focused與full verification commands／results；
-- code review findings與remediation commits；
-- actual changed-file scope；
-- 任何已核准的plan deviation。
+- `PyMTLF/`：`8e6d7d4 feat(mtlf): initiate hierarchical FL root plans`；
+- `NWDAF/`：經focused verification確認既有private context與backend boundary足夠，沒有
+  production change，也沒有建立empty commit。
+
+實際變更範圍：
+
+- 新增typed FedProx strategy、main-config-relative static topology與config-gated private trigger；
+- 新增strict topology loader、exact-instance hierarchy discovery與process-local Root coordinator；
+- 擴充既有FL Server engine，建立並擁有upper-tier standard preparation resources；
+- 新增recipient-specific assignment bundle publication、partial rollback與bounded shutdown cleanup；
+- 將degradation trigger接到同一Root coordinator，並保留flat-FL fallback；
+- 新增private create/status API及config、topology、discovery、Root、Server、API與runtime regression
+  tests。Slice 3沒有修改Release 18 OpenAPI、NRF、Go public SBI或lower-tier Branch orchestration。
+
+Mandatory code review先加入deterministic regression tests，再修復以下in-scope findings；修復均已
+fold進上述production commit，沒有另建remediation commit：
+
+- terminal status原本可能帶出peer response body，改為stable phase-level public detail；
+- assignment publication後到dispatch前base catalog可能被替換，新增第二次artifact identity check；
+- topology loader原本接受並正規化非canonical UUID，改為strict canonical UUIDv4 rejection。
+
+Follow-up targeted review未發現新的in-scope finding。最終verification：
+
+- `PyMTLF/` focused suite：`.venv/bin/pytest -q tests/test_config.py
+  tests/test_fl_topology.py tests/test_fl_hierarchy_discovery.py tests/test_fl_root.py
+  tests/test_fl_server.py tests/test_hierarchical_fl_api.py tests/test_runtime_modes.py`通過，116 passed；
+- `PyMTLF/` full suite：`.venv/bin/pytest -q`通過，347 passed、2 skipped；兩項skip皆因本機
+  沒有CUDA runtime；
+- `PyMTLF/`：`.venv/bin/ruff check .`通過；
+- `NWDAF/`：`go test ./internal/backend ./internal/mtlf`通過。
+
+沒有已核准或未核准的plan deviation。真實NRF與多peer deployment integration不在本地
+verification環境內執行；Slice 4仍負責preparation callback outcome interpretation、admission與
+round start，本Slice成功狀態維持在`PREPARATION_WAITING`。
 
 ---
 
