@@ -2,9 +2,8 @@
 
 日期：2026-08-19
 
-狀態：Ready for review；現有 production path、Slice 4 handoff、Release 18 OpenAPI／TS
-contract 與 first-version strategy decisions 已完成唯讀確認，production implementation
-尚未開始
+狀態：Completed；production implementation、full verification、mandatory review、targeted
+remediation 與 repository-separated implementation commit 均已完成
 
 上層計畫：
 
@@ -1268,52 +1267,85 @@ plan；不得視為implementation-local追加。
 
 ### Contract
 
-- [ ] standard PATCH fields、content type與`200`／`204`符合OpenAPI
-- [ ] success／delay／termination callback combinations符合TS 29.520
-- [ ] no public/private round API added
-- [ ] no Go hierarchy state or OpenAPI/generated change
-- [ ] vendor fields只存在artifact／PyMTLF state
-- [ ] `ROUND_INPUT.client_training.epochs` required、typed且不進入standard PATCH field
+- [x] standard PATCH fields、content type與`200`／`204`符合OpenAPI
+- [x] success／delay／termination callback combinations符合TS 29.520
+- [x] no public/private round API added
+- [x] no Go hierarchy state or OpenAPI/generated change
+- [x] vendor fields只存在artifact／PyMTLF state
+- [x] `ROUND_INPUT.client_training.epochs` required、typed且不進入standard PATCH field
 
 ### State與ownership
 
-- [ ] Root只在ADMITTED後dispatch
-- [ ] Branch upper／lowermapping explicit且immutable
-- [ ] Branch不執行local dataset training
-- [ ] Leaf strategy來自validated assignment
-- [ ] Root／flat Server是epochs authoritative source
-- [ ] Branch原樣轉傳epochs，Leaf無local fallback
-- [ ] successful subscriptions retained throughcandidate handoff
-- [ ] failure cleanup followsregistry lifecycle
+- [x] Root只在ADMITTED後dispatch
+- [x] Branch upper／lowermapping explicit且immutable
+- [x] Branch不執行local dataset training
+- [x] Leaf strategy來自validated assignment
+- [x] Root／flat Server是epochs authoritative source
+- [x] Branch原樣轉傳epochs，Leaf無local fallback
+- [x] successful subscriptions retained throughcandidate handoff
+- [x] failure cleanup followsregistry lifecycle
 
 ### Training與aggregation
 
-- [ ] FedProx proximal reference immutable
-- [ ] positive finite mu enforced
-- [ ] trainer恰好執行Server-supplied positive integer epochs
-- [ ] all／all semantics enforced
-- [ ] Branch effective count equalsLeaf sum
-- [ ] Root usesBranch effective counts
-- [ ] no partial aggregate onfailure／timeout
-- [ ] deterministic participant／tensor ordering
+- [x] FedProx proximal reference immutable
+- [x] positive finite mu enforced
+- [x] trainer恰好執行Server-supplied positive integer epochs
+- [x] all／all semantics enforced
+- [x] Branch effective count equalsLeaf sum
+- [x] Root usesBranch effective counts
+- [x] no partial aggregate onfailure／timeout
+- [x] deterministic participant／tensor ordering
 
 ### Concurrency與failure
 
-- [ ] duplicate／late／wrong-round behavior deterministic
-- [ ] collection frozen beforeartifact I/O
-- [ ] stale workers fenced byrevision／round／plan
-- [ ] cancellation wakesall waiters
-- [ ] first failure still yieldsbounded terminal collection
-- [ ] no automatic retry ornew plan
+- [x] duplicate／late／wrong-round behavior deterministic
+- [x] collection frozen beforeartifact I/O
+- [x] stale workers fenced byrevision／round／plan
+- [x] cancellation wakesall waiters
+- [x] first failure still yieldsbounded terminal collection
+- [x] no automatic retry ornew plan
 
 ### Verification
 
-- [ ] focused PyMTLF tests pass
-- [ ] PyMTLF full pytest／Ruff pass
-- [ ] NWDAF focused／full build-test-lint pass
-- [ ] flat FL regressions pass
-- [ ] mandatory review與targeted remediation complete
-- [ ] repository-separated commits recorded
+- [x] focused PyMTLF tests pass
+- [x] PyMTLF full pytest／Ruff pass
+- [x] NWDAF focused／full build-test-lint pass
+- [x] flat FL regressions pass
+- [x] mandatory review與targeted remediation complete
+- [x] repository-separated commits recorded
+
+### Implementation record（2026-08-19）
+
+實作 repositories：
+
+- `PyMTLF` commit `0d1b529`：完成Root multi-round orchestration、Branch upper／lower
+  mapping、Branch lower aggregation、Root effective-sample aggregation、Leaf FedProx、
+  Server-controlled epochs、typed artifacts、observable status與hierarchy failure cleanup；
+- `NWDAF`：production未修改，維持standard validation／relay boundary；驗證基準commit
+  `8885cd9`；
+- `nwdaf-docs`：回填本文件與上層計畫的完成狀態、實作與驗證紀錄；
+- `PyAnLF`：未修改。
+
+Verification：
+
+- PyMTLF focused matrix：`163 passed, 2 skipped`；review remediation affected suites：
+  `77 passed`；
+- PyMTLF full：`403 passed, 2 skipped`；`ruff check .`通過；
+- NWDAF：`make test`、`make build`、`make lint`通過，lint為`0 issues`；
+- `git diff --check`於PyMTLF通過；NWDAF working tree維持clean。
+
+Mandatory review與targeted remediation修正下列不改變architecture decision的問題：
+
+1. Branch mapping原先在lower dispatch後才固定，且upper／lower round index仍依賴數值相同；
+2. hierarchy failure可能在lower resources清理前先回到上層；
+3. Root request未完整投影dispatch、waiting、aggregation與candidate progress；
+4. parent在lower PATCH fan-out途中取消後，仍可能dispatch後續participants；
+5. multi-round lineage、two-Branch effective weighting、deadline、duplicate、late callback、
+   cancellation與shutdown缺少direct deterministic evidence。
+
+修正後已完成focused recheck、PyMTLF full verification與plan-to-implementation follow-up
+review。驗證範圍是unit／mock與local build；real NRF、OAuth、TLS、multi-process deployment與
+cross-host artifact download仍依計畫留給Slice 7，不在本Slice宣稱已驗證。
 
 ---
 

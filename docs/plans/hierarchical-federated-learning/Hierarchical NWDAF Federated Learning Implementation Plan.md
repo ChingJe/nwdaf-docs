@@ -835,7 +835,8 @@ lower-tier preparation，以 result bundle 回報 Root，並由 Root 做整棵 t
 
 ### Slice 5：Hierarchical rounds and aggregation
 
-狀態：Detailed plan draft 已建立，待 team review。
+狀態：Completed；production implementation、review、remediation、full verification與
+repository-separated implementation commit 已完成。
 
 詳細計畫：
 
