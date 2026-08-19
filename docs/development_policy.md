@@ -347,6 +347,39 @@ The initial review must inspect, as applicable:
 - relevant standard/free5GC evidence
 - tests and skipped verification
 
+### 8.1.1 Plan-Conformance Gate
+
+For a substantial implementation slice whose active plan defines review
+checklists, acceptance criteria, completion criteria, or required verification
+commands, maintain a working conformance map throughout implementation and
+review.
+
+For every normative plan item, record one of:
+
+- the production path that implements it
+- the deterministic test that verifies it
+- the verification command and result that prove it
+- an explicitly approved deferral or plan change
+
+The initial review must inspect in both directions:
+
+1. implementation to plan: every production change remains within the approved
+   slice
+2. plan to implementation: every required plan item has implementation and
+   verification evidence
+
+Passing the existing test suite does not prove that an acceptance criterion is
+covered. A required criterion without direct evidence remains open and blocks
+a completion claim.
+
+Do not mark a slice complete, prepare its implementation commit, or report it
+as complete while any required plan item is missing, unverified, silently
+deferred, or satisfied only by inference.
+
+A focused test or command does not satisfy a plan-required full verification
+command unless the active plan is explicitly changed or the omission is
+reported as an open verification gap.
+
 ### 8.2 Follow-up Review
 
 After each in-scope remediation and its focused verification, immediately
@@ -384,6 +417,12 @@ the commit checkpoint.
 - When claiming free5GC alignment, name the exemplar and boundary used.
 - State whether the slice is complete, partially complete, or intentionally
   deferred.
+- For a substantial slice, include a plan-conformance summary that identifies
+  each required criterion as satisfied, open, explicitly deferred, or changed,
+  and names the evidence for each completed or open conclusion.
+- Never summarize a slice as complete solely from repository-wide test success.
+  State separately whether the required behavior is implemented and whether
+  the plan-required verification matrix is closed.
 
 ### 8.4 Review Documentation
 
@@ -522,27 +561,33 @@ or finding when that identifier is itself the documentation being changed.
 
 1. Confirm the active slice, owner, contract, acceptance tests, and deferred
    work.
-2. Trace the current behavior and direct dependencies.
-3. Read only the evidence required for the active technical boundary.
-4. Add characterization or failing tests where practical.
-5. Implement the smallest complete slice.
-6. Run focused verification.
-7. Run required full verification before completion.
-8. Continue directly into one mandatory initial review without waiting for a
+2. Convert the active plan's normative checklist, acceptance criteria,
+   completion criteria, and required verification commands into a working
+   conformance map before implementation begins.
+3. Trace the current behavior and direct dependencies.
+4. Read only the evidence required for the active technical boundary.
+5. Add characterization or failing tests where practical.
+6. Implement the smallest complete slice.
+7. Run focused verification.
+8. Run required full verification before completion.
+9. Continue directly into one mandatory initial review without waiting for a
    separate request.
-9. Classify findings through the finding admission gate.
-10. Fix admitted in-scope findings test-first without pausing when remediation
+10. Classify findings through the finding admission gate.
+11. Fix admitted in-scope findings test-first without pausing when remediation
     preserves the approved plan, architecture, ownership, contracts, and
     verification scope.
-11. Run focused verification and perform a targeted follow-up review after
+12. Run focused verification and perform a targeted follow-up review after
     each remediation; repeat this loop until the findings close or a decision
     gate is reached.
-12. Record and defer optional hardening, future-phase work, legacy cleanup,
+13. Record and defer optional hardening, future-phase work, legacy cleanup,
     integration gaps, and unconfirmed risks without letting them block the
     current slice.
-13. Rerun required full verification when remediation invalidated the earlier
+14. Rerun required full verification when remediation invalidated the earlier
     result.
-14. Prepare repository-separated commit checkpoints.
+15. Close the plan-conformance map by reconciling every required item against
+    production code, deterministic tests, and executed verification commands.
+16. Prepare repository-separated commit checkpoints only after the
+    plan-conformance map is closed.
 
 ### 12.2 Documentation
 
