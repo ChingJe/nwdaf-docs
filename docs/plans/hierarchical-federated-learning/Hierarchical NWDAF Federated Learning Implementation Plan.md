@@ -2,7 +2,7 @@
 
 日期：2026-08-17
 
-最後更新：2026-08-18
+最後更新：2026-08-19
 
 狀態：Draft；canonical 主計畫，後續依團隊討論持續調整
 
@@ -386,6 +386,31 @@ Root 將已解析的 strategy contract 放入 model bundle，Branch／Leaf 驗�
 節點只依本地 config 推測本次 FL semantics。第一版先使用同一份 strategy contract 貫穿
 topology；per-tier override 保留為未來擴充，不在第一版實作。
 
+#### Server-controlled client epochs
+
+Client 每輪 local fitting 的 `epochs` 不再由 Client 本地決定。主動編排訓練的
+Server 使用下列 typed config：
+
+```yaml
+federated_learning:
+  server:
+    client_training:
+      epochs: 18
+```
+
+- flat FL 由 flat FL Server 讀取此設定，並將當輪 `epochs` 放進
+  `ROUND_INPUT.fl_metadata.client_training`；
+- hierarchical FL 只有 Root 是 `epochs` authoritative source；Branch 必須驗證並原樣
+  重新發布給 Leaves，不得以 Branch 本地 Server／Client config 覆寫；
+- Leaf 只使用當輪已驗證 `ROUND_INPUT` 的 positive integer `epochs`，不再從
+  `federated_learning.client.training.epochs` 或 environment 推測，也不提供缺欄位時的
+  local fallback；
+- `batch_size`、`learning_rate`、device、validation split 與 random seed 此次不變，
+  仍是 Client runtime 設定。
+
+`epochs` 放在 round input 而不是 hierarchy-only assignment，使 flat 與 hierarchical
+flow 共用同一份 training-input contract，並保留未來 Server 依輪調整的空間。
+
 ### 4.8 Root-only static topology configuration
 
 第一版 topology establishment strategy 固定為 `static`。只有主動建立 topology 的 Root
@@ -665,6 +690,8 @@ Root updates upper-tier subscriptions
 
 第一版使用 synchronous rounds，預設以 FedProx 執行 Leaf local training，再以
 `sample_weighted` 聚合；participant selection 與 waiting policy 都固定為 `all`。
+每輪 local fitting 的 `epochs` 由 Root config 決定並透過 `ROUND_INPUT` 傳給
+Branch／Leaf；Branch 只轉傳，Leaf 不使用本地 epochs 覆寫。
 FedAvg、`fixed_count`、`minimum_results`、FedAsync、staleness weighting、per-tier
 strategy override 或任意深度 recursive scheduling 不作為第一版 implementation 的
 必要條件。
@@ -779,8 +806,7 @@ preparation。
 
 ### Slice 4：End-to-end preparation and admission
 
-狀態：Ready for implementation；detailed plan與team review已完成，production
-implementation尚未開始。
+狀態：Completed；production implementation、review、remediation 與 verification 已完成。
 
 詳細計畫：
 
@@ -809,12 +835,20 @@ lower-tier preparation，以 result bundle 回報 Root，並由 Root 做整棵 t
 
 ### Slice 5：Hierarchical rounds and aggregation
 
+狀態：Detailed plan draft 已建立，待 team review。
+
+詳細計畫：
+
+- [Slice 5 Hierarchical Rounds and Aggregation Detailed Plan](./Slice%205%20Hierarchical%20Rounds%20and%20Aggregation%20Detailed%20Plan.md)
+
 目標：完成 Root–Branch–Leaf 的 multi-round hierarchical aggregation。
 
 至少完成：
 
 - upper／lower round dispatch；
 - per-tier round correlation；
+- Root／flat Server-controlled `epochs` round-input contract 與 Client-local epochs config
+  migration；
 - Leaf local result validation；
 - FedProx local objective、global-reference snapshot 與 `proximal_mu` validation；
 - `all` participant selection 與 `all` waiting；
@@ -1039,23 +1073,27 @@ optional hardening，不得默默擴張進第一版。
 12. 第一版只接受 typed FedProx algorithm block、`all` selection、`all` waiting 與
     `sample_weighted` aggregation；`proximal_mu` 只存在於 algorithm block，其他 strategy
     values 在 validation 階段被拒絕；
-13. Branch 可聚合 lower-tier updates，並以 subordinate sample count 總和作為 effective
+13. flat FL 的 Client epochs 由 flat Server 決定；hierarchical FL 只由 Root 決定，
+    Branch 原樣轉傳，Leaf 必須使用 `ROUND_INPUT` 指定的 positive integer
+    `epochs`，不使用 Client-local fallback；
+14. Branch 可聚合 lower-tier updates，並以 subordinate sample count 總和作為 effective
     weight，將 interim local model 回報 Root；Root 會以至少兩個 Branch updates 驗證真正
     的 upper-tier weighted aggregation；
-14. multi-round flow 正確隔離 upper／lower correlations、rounds、deadlines 與 cleanup；
-15. Branch 下載並處理 Root bundle，再由 Branch PyMTLF 發布 Leaf bundle；Leaf 不直接使用
+15. multi-round flow 正確隔離 upper／lower correlations、rounds、deadlines 與 cleanup；
+16. Branch 下載並處理 Root bundle，再由 Branch PyMTLF 發布 Leaf bundle；Leaf 不直接使用
     Root artifact URL，Go 不 proxy artifact bytes；
-16. degradation 與 config-enabled private management request 都可在標準 Training SBI
+17. degradation 與 config-enabled private management request 都可在標準 Training SBI
     procedure 之前建立新 plan；private request 直接由 Root PyMTLF 處理，不經過 Go；
-17. private API 預設關閉，未啟用的 PyMTLF 不掛載該 route；
-18. 同一 PyMTLF 同時間最多一個 active training；衝突 request 不會建立第二個 plan；
-19. 任一必要 participant 的 preparation／round failure 終止整個 experiment，且不自動
+18. private API 預設關閉，未啟用的 PyMTLF 不掛載該 route；
+19. 同一 PyMTLF 同時間最多一個 active training；衝突 request 不會建立第二個 plan；
+20. 任一必要 participant 的 preparation／round failure 終止整個 experiment，且不自動
     retry；
-20. process restart 後不恢復舊 active state，stale callback／result 不會重建 process；
-21. failure、timeout、duplicate、late result 與 bundle expiry 均有明確且有測試的 state
+21. process restart 後不恢復舊 active state，stale callback／result 不會重建 process；
+22. failure、timeout、duplicate、late result 與 bundle expiry 均有明確且有測試的 state
     transition；
-22. existing non-hierarchical distributed FL behavior 沒有 regression；
-23. documentation 明確區分 Release 18 3GPP-defined behavior、同 vendor implementation
+23. existing non-hierarchical distributed FL 除改由Server發布`ROUND_INPUT`並決定epochs外，
+    objective、result、aggregation與lifecycle behavior沒有 regression；
+24. documentation 明確區分 Release 18 3GPP-defined behavior、同 vendor implementation
     profile，以及僅供參考的 Release 19 management semantics。
 
 ---
@@ -1098,3 +1136,4 @@ optional hardening，不得默默擴張進第一版。
 | 2026-08-18 | preparation 的 `statusReport` 僅為 optional supplemental status；不再以固定 `samplRatio: 100` 作為 completed latch | Confirmed |
 | 2026-08-18 | Branch pre-dispatch failure 不啟動 lower resources；lower 已啟動後，單一 Leaf failure 不提前結束 collection，等待全部 terminal outcomes 或 bounded deadline | Confirmed |
 | 2026-08-18 | 第一版假設所有 NWDAF／PyMTLF 位於同一受控 vendor trust domain；publisher 僅為 logical identity，不新增 artifact-origin／requester cryptographic binding | Confirmed |
+| 2026-08-19 | Client local fitting `epochs` 改由 Server 決定；flat 由 flat Server 下發，hierarchy 由 Root 下發並由 Branch 原樣轉傳，Leaf 無 local fallback | Confirmed |
