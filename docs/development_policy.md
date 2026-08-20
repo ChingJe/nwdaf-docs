@@ -368,9 +368,10 @@ future work into the current phase.
 
 ### 8.1 Initial Review
 
-After implementation and the required full verification complete, perform one
-initial review as the uninterrupted next step and before preparing the
-implementation commit checkpoint. Do not wait for a separate review request.
+After implementation and its focused verification complete, perform one
+initial review as the uninterrupted next step and before the final full
+verification or implementation commit checkpoint. Do not wait for a separate
+review request.
 
 The initial review must inspect, as applicable:
 
@@ -416,6 +417,21 @@ Passing the existing test suite does not prove that an acceptance criterion is
 covered. A required criterion without direct evidence remains open and blocks
 a completion claim.
 
+A test satisfies a planned criterion only when it exercises the exact
+production owner, entry point, lifecycle state, and outcome named by that
+criterion. A test does not directly prove a criterion when:
+
+- the behavior being claimed is replaced or bypassed by a mock
+- only an adjacent phase, state, operation, or shared implementation is tested
+- the assertion proves only that a call occurred while the required downstream
+  effect or fencing behavior is not exercised
+- multiple tests are assumed to compose into an end-to-end guarantee without
+  explicitly verifying the connecting contract
+
+Mocks remain valid outside the behavior under review. Shared mechanisms may be
+reused only when the test explicitly runs the required entry point and state
+through that mechanism.
+
 Do not mark a slice complete, prepare its implementation commit, or report it
 as complete while any required plan item is missing, unverified, silently
 deferred, or satisfied only by inference.
@@ -446,9 +462,29 @@ anywhere in the repository.
 
 Continue the remediation and targeted-review loop without pausing while the
 remaining work stays within the approved plan. Stop only for a section 6
-decision gate or another genuine blocker. After all admitted findings close,
-rerun any full verification invalidated by the remediation before preparing
-the commit checkpoint.
+decision gate or another genuine blocker.
+
+### 8.2.1 Final Fresh-read Conformance Gate
+
+After implementation, review remediation, and targeted verification are
+finished, but before the final full verification and completion claim:
+
+1. Re-open and read the current development policy and active plan from disk.
+2. Rebuild the final conformance check from the current text, including every
+   normative statement, verification-matrix item, review-checklist item,
+   completion criterion, required command, and approved deferral.
+3. Reconcile each item against the final production diff and exact test path.
+4. Treat any missing or indirect evidence as open. Do not claim completion
+   until it is implemented, directly verified, or explicitly deferred.
+
+Earlier summaries, remembered requirements, existing conformance maps, and
+previously passing test results do not replace this fresh read and
+reconciliation.
+
+If production behavior appears implemented but any required direct evidence
+remains open, report the phase as implementation-complete but
+verification-incomplete. A green focused or full test suite must not override
+that classification.
 
 ### 8.3 Review Output
 
@@ -617,25 +653,26 @@ or finding when that identifier is itself the documentation being changed.
 6. Add characterization or failing tests where practical.
 7. Implement the smallest complete slice.
 8. Run focused verification.
-9. Run required full verification before completion.
-10. Continue directly into one mandatory initial review without waiting for a
+9. Continue directly into one mandatory initial review without waiting for a
    separate request.
-11. Classify findings through the finding admission gate.
-12. Fix admitted in-scope findings test-first without pausing when remediation
+10. Classify findings through the finding admission gate.
+11. Fix admitted in-scope findings test-first without pausing when remediation
     preserves the approved plan, architecture, ownership, contracts, and
     verification scope.
-13. Run focused verification and perform a targeted follow-up review after
+12. Run focused verification and perform a targeted follow-up review after
     each remediation; repeat this loop until the findings close or a decision
     gate is reached.
-14. Record and defer optional hardening, future-phase work, legacy cleanup,
+13. Record and defer optional hardening, future-phase work, legacy cleanup,
     integration gaps, and unconfirmed risks without letting them block the
     current slice.
-15. Rerun required full verification when remediation invalidated the earlier
-    result.
-16. Close the plan-conformance map by reconciling the baseline dispositions and
-    every required plan item against production code, deterministic tests, and
-    executed verification commands.
-17. Prepare repository-separated commit checkpoints only after the
+14. Re-read the current development policy and active plan from disk, then
+    rebuild the final plan-conformance map from their current text.
+15. Reconcile the baseline dispositions and every required plan item against
+    the final production diff, exact deterministic test paths, and required
+    verification commands. Keep missing or indirect evidence open.
+16. Run the required final full verification.
+17. Record the final verification results and close the plan-conformance map.
+18. Prepare repository-separated commit checkpoints only after the
     plan-conformance map is closed.
 
 ### 12.2 Documentation
