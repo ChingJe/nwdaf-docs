@@ -2,8 +2,8 @@
 
 日期：2026-08-20
 
-狀態：Plan ready；flat FL baseline、HFL production gap、target data flow 與 evidence
-contract 已確認，可進入 production implementation
+狀態：Completed；production implementation、mandatory review、targeted remediation、
+plan-conformance closure 與 required verification 均已完成
 
 上層計畫：
 
@@ -16,8 +16,8 @@ contract 已確認，可進入 production implementation
 
 後續 slice：
 
-- Slice 7 lifecycle closure and fresh-state restart；待 Slice 6 implementation、code review
-  與針對性修正完成後再檢視與定案，現有草稿不是本 Slice 的 normative input。
+- Slice 7 lifecycle closure and fresh-state restart；Slice 6 handoff 已完成，可開始重新檢視
+  與定案。現有草稿在完成該檢視前仍不是 normative implementation input。
 
 ---
 
@@ -588,46 +588,87 @@ Slice 8 E2E關閉。
 
 ### Baseline and semantics
 
-- [ ] flat production flow是canonical baseline
-- [ ] every baseline stage有explicit disposition
-- [ ] `CANDIDATE_READY`只有validation accepted後成立
-- [ ] candidate維持`ROUND_GLOBAL`
-- [ ] `FINAL_MODEL`是publication建立的新bundle
+- [x] flat production flow是canonical baseline
+- [x] every baseline stage有explicit disposition
+- [x] `CANDIDATE_READY`只有validation accepted後成立
+- [x] candidate維持`ROUND_GLOBAL`
+- [x] `FINAL_MODEL`是publication建立的新bundle
 
 ### Data flow
 
-- [ ] Root candidate URL有唯一明確recipient set
-- [ ] Branch download／validate／republish完整
-- [ ] Leaf只使用Branch URL
-- [ ] Branch與Root都驗證exact subordinate identities
-- [ ] evidence producer、carrier、consumer與retention owner完整
+- [x] Root candidate URL有唯一明確recipient set
+- [x] Branch download／validate／republish完整
+- [x] Leaf只使用Branch URL
+- [x] Branch與Root都驗證exact subordinate identities
+- [x] evidence producer、carrier、consumer與retention owner完整
 
 ### Publication
 
-- [ ] publication logic沒有在Root重複實作
-- [ ] effective sample count與direct Branch participant一致
-- [ ] hierarchy evidence durable且不弱化flat contract
-- [ ] validation rejected不建立正式model ID
-- [ ] old latest在ADRF／catalog commit前不變
+- [x] publication logic沒有在Root重複實作
+- [x] effective sample count與direct Branch participant一致
+- [x] hierarchy evidence durable且不弱化flat contract
+- [x] validation rejected不建立正式model ID
+- [x] old latest在ADRF／catalog commit前不變
 
 ### Status and lifecycle handoff
 
-- [ ] private status不提供candidate download contract
-- [ ] `candidateUrl`已移除
-- [ ] Slice 7只在validation／publication允許的stage cleanup
-- [ ] no automatic validation retry
+- [x] private status不提供candidate download contract
+- [x] `candidateUrl`已移除
+- [x] Slice 7只在validation／publication允許的stage cleanup
+- [x] no automatic validation retry
 
 ### Verification
 
-- [ ] every normative plan item有production／test／approved deferral evidence
-- [ ] focused tests通過
-- [ ] full ruff與pytest通過
-- [ ] initial review與targeted remediation loop完成
-- [ ] baseline ↔ plan ↔ implementation conformance closed
+- [x] every normative plan item有production／test／approved deferral evidence
+- [x] focused tests通過
+- [x] full ruff與pytest通過
+- [x] initial review與targeted remediation loop完成
+- [x] baseline ↔ plan ↔ implementation conformance closed
 
 ---
 
-## 11. Completion criteria
+## 11. Implementation record（2026-08-20）
+
+實作 repositories：
+
+- `PyMTLF` commit `cebfe90`：完成Root candidate preflight、Root–Branch–Leaf
+  validation-only orchestration、Branch byte-identical candidate republish、exact topology
+  evidence validation、aggregate／per-Leaf performance gate、durable hierarchy provenance、
+  publication handoff與Root status projection；
+- `NWDAF`：production未修改，沿用既有Release 18-shaped Training PATCH／notification relay；
+- `PyAnLF`、`adrf`：production未修改，沿用既有Provision與publication contracts；
+- `nwdaf-docs`：回填本文件與上層計畫的完成狀態、實作與驗證紀錄。
+
+Verification：
+
+- Slice 6 focused matrix：`121 passed`；
+- PyMTLF full：`430 passed, 2 skipped`；
+- `.venv/bin/ruff check src tests`通過；
+- `git diff --check`於PyMTLF implementation checkpoint與本文件更新均通過。
+
+Mandatory initial review先確認plan-to-implementation的direct evidence，並以test-first
+remediation補齊下列項目：
+
+1. Branch validation cancellation後的late lower result fencing；
+2. parent DELETE與real Branch validation callback的terminal race；
+3. publication期間duplicate Root status query不得重新啟動validation；
+4. shutdown during validation不得進入publication；
+5. Leaf validation-only path不得呼叫trainer，以及`CUTOVER_PENDING`的Server／Root
+   state projection；
+6. Root candidate原先在Branch PATCH dispatch後才驗證；修正為dispatch前驗證role、process、
+   training round、digest與model／preprocessing contract，collection後再次驗證以防止等待期間
+   artifact被替換。
+
+Targeted follow-up review與focused／full verification均已通過。14項completion criteria皆有
+production path、direct deterministic test或明確deferred owner；Slice 7保留terminal
+cleanup／fresh-state restart，Slice 8保留production multi-process E2E與network partition。
+
+本紀錄只宣稱unit／mock與local repository verification，不宣稱real ADRF、NRF、OAuth、TLS
+或multi-process integration。
+
+---
+
+## 12. Completion criteria
 
 Slice 6 完成必須同時滿足：
 

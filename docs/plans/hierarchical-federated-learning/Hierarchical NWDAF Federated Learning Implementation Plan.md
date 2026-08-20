@@ -932,8 +932,8 @@ Slice 5的正確成功handoff是「final Root `ROUND_GLOBAL` formed，pending fi
 
 ### Slice 6：Hierarchical final validation and publication
 
-狀態：Plan ready；flat baseline、production gap、target data flow與evidence contract
-已確認，可進入production implementation。
+狀態：Completed；PyMTLF production implementation、mandatory review、targeted remediation、
+plan-conformance closure與required verification均已完成。Implementation commit為`cebfe90`。
 
 詳細計畫：
 
@@ -961,9 +961,9 @@ candidate進入`CANDIDATE_READY`並接回既有`FINAL_MODEL` publication／cutov
 
 ### Slice 7：Lifecycle closure and fresh-state restart behavior
 
-狀態：Planning deferred；現有草稿未經審查，不作為normative implementation
-input。待Slice 6 implementation、code review與針對性修正完成後，再根據實際
-lifecycle behavior重新檢視與定案。
+狀態：Planning review next；Slice 6 implementation、code review與針對性修正已完成，
+可根據實際lifecycle behavior重新檢視現有草稿。草稿在完成檢視與核准前仍不是
+normative implementation input。
 
 目標：收斂前述 slices 已隨流程實作的 terminal／cleanup semantics，並驗證 process restart
 後不恢復舊 state 的行為。基本 cleanup 不得延後到此 slice 才首次實作。
@@ -1259,6 +1259,7 @@ optional hardening，不得默默擴張進第一版。
 | 2026-08-20 | 新增Slice 6處理hierarchical final validation／publication；原lifecycle與E2E順延為Slice 7／8 | Confirmed |
 | 2026-08-20 | Candidate維持`ROUND_GLOBAL`；Root URL只供assigned Branch validation，Branch republish後供Leaves使用，private status不提供`candidateUrl` | Confirmed |
 | 2026-08-20 | Slice 6 plan ready；Leaf validation summaries必須經Branch typed evidence一路回傳Root，並durably記錄在`FINAL_MODEL.hierarchy_validation` | Confirmed |
-| 2026-08-20 | Slice 7草稿未經審查，不作為normative input；待Slice 6 implementation、review與修正完成後再定案 | Confirmed |
+| 2026-08-20 | Slice 6 implementation完成；PyMTLF commit `cebfe90`通過mandatory review、targeted remediation、focused與full verification | Confirmed |
+| 2026-08-20 | Slice 7草稿可在Slice 6 handoff後開始重新檢視；完成檢視與核准前仍不作為normative input | Confirmed |
 | 2026-08-20 | Go per-boot `processInstanceId`由`pkg/service.NwdafApp`擁有並constructor-inject到private MTLF server，不放入generic context／NRF／public SBI | Confirmed |
 | 2026-08-20 | Workspace、candidate artifact、terminal status與tombstone retention分開設定，預設值可相同 | Confirmed |
