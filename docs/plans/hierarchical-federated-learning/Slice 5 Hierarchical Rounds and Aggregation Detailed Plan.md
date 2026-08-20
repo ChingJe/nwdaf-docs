@@ -2,8 +2,9 @@
 
 日期：2026-08-19
 
-狀態：Implementation checkpoint完成；2026-08-20確認`CANDIDATE_READY` semantic defect，
-產品流程需由Slice 6 remediation後才完整
+狀態：Completed；production implementation、review、remediation、full verification與
+repository-separated commit已完成。PyMTLF implementation commit：`0d1b529`。2026-08-20
+確認的`CANDIDATE_READY` semantic defect已由Slice 6 commit `cebfe90`修正
 
 上層計畫：
 
@@ -970,7 +971,7 @@ payload時，才修改production Go。不得新增Go package或hierarchy-aware r
 - Release 18 OpenAPI YAML；
 - generated free5GC OpenAPI；
 - `resources/`；
-- `nwdaf-resources/`（留給Slice 7 profiles）。
+- `nwdaf-resources/`（留給Slice 8 profiles）。
 
 ---
 
@@ -1175,7 +1176,7 @@ git diff --check
 ### 18.5 Claims boundary
 
 Unit／mock verification只能證明process-local orchestration與mocked HTTP contract。Real NRF、
-OAuth、TLS、multi-process deployment與cross-host artifact download留給Slice 7，不得在Slice 5
+OAuth、TLS、multi-process deployment與cross-host artifact download留給Slice 8，不得在Slice 5
 完成報告中宣稱已驗證。
 
 ---
@@ -1369,7 +1370,7 @@ Mandatory review與targeted remediation修正下列不改變architecture decisio
 
 修正後已完成focused recheck、PyMTLF full verification與plan-to-implementation follow-up
 review。驗證範圍是unit／mock與local build；real NRF、OAuth、TLS、multi-process deployment與
-cross-host artifact download仍依計畫留給Slice 7，不在本Slice宣稱已驗證。
+cross-host artifact download仍依計畫留給Slice 8，不在本Slice宣稱已驗證。
 
 ---
 
@@ -1392,7 +1393,8 @@ Slice 5只有在下列條件全部成立後才能標為Completed：
 12. duplicate、late、wrong-round、incompatible artifact與timeout全部有deterministic tests；
 13. 任一requiredparticipant failure使complete experiment terminal且無partial aggregate／retry；
 14. failure cleanup從Root向Branch／Leaf bounded cascade；
-15. finalconfigured Root aggregate停在unpromoted `CANDIDATE_READY`；
+15. final configured Root aggregate形成unpromoted `ROUND_GLOBAL`並等待Slice 6 final
+    validation；不得在validation前標成`CANDIDATE_READY`；
 16. flat FL也改由Server發布`ROUND_INPUT`並決定epochs，其餘objective、result與
     lifecycle behavior沒有regression；
 17. NWDAF保持standard relay boundary，無hierarchy-awarebusiness state；
@@ -1400,6 +1402,6 @@ Slice 5只有在下列條件全部成立後才能標為Completed：
 19. implementation後不中斷完成mandatory review、in-scope remediation與targeted recheck；
 20. production changes依repository分開commit並回填implementation record。
 
-完成後的下一步是確認hierarchy candidate finalization是否另立production slice，再進入Slice 6
-lifecycle closure與Slice 7 multi-process E2E。若第一版只要求training candidate，Slice 6可直接
-接手successful terminal cleanup與fresh-state restart verification。
+後續切分已確認：Slice 6完成hierarchical final validation與publication，Slice 7完成lifecycle
+closure與fresh-state restart，Slice 8負責real multi-process E2E。本段取代早期把candidate
+finalization、lifecycle closure與E2E合併考量的草案敘述。

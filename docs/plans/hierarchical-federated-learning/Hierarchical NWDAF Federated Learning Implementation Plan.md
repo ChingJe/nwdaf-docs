@@ -2,9 +2,9 @@
 
 日期：2026-08-17
 
-最後更新：2026-08-20
+最後更新：2026-08-21
 
-狀態：Draft；canonical 主計畫，後續依團隊討論持續調整
+狀態：In progress；Slice 0–7 Completed，Slice 8 detailed plan與real multi-process E2E尚未開始
 
 相關文件：
 
@@ -781,7 +781,15 @@ strategy override 或任意深度 recursive scheduling 不作為第一版 implem
 每個 slice 開始前都必須建立或更新 detailed plan，明列 affected repositories、contract、
 acceptance tests、deferred behavior 與 checkpoint。
 
+整體進度：Slice 0–7的baseline、production implementation、review、remediation與required
+repository verification均已完成；下一個work unit是先建立並review Slice 8 detailed plan，再
+執行real multi-process E2E與regression closure。現階段不宣稱real NRF／OAuth／TLS或cross-host
+artifact flow已驗證。
+
 ### Slice 0：Baseline audit and contract freeze
+
+狀態：Completed；唯讀baseline audit與contract freeze已完成，並由Slice 1–7 production
+implementation evidence確認。
 
 目標：確認既有 distributed FL implementation 可重用邊界，避免平行重建。
 
@@ -806,7 +814,8 @@ Detailed plan：
 
 目標：提供可驗證、可版本化且不覆寫標準欄位的 assignment／result bundles。
 
-狀態：Implementation 與 code review 完成；PyMTLF checkpoint 已 commit。
+狀態：Completed；implementation、code review與targeted remediation已完成。PyMTLF commits：
+`fa352d3`、`6cc1df0`。
 
 Detailed plan：
 
@@ -913,9 +922,10 @@ lower-tier preparation，以 result bundle 回報 Root，並由 Root 做整棵 t
 
 ### Slice 5：Hierarchical rounds and aggregation
 
-狀態：Implementation checkpoint完成；production implementation、review、remediation、full
-verification與repository-separated implementation commit已完成。2026-08-20確認最後aggregate
-提早標成`CANDIDATE_READY`的semantic defect，由Slice 6 remediation。
+狀態：Completed；production implementation、review、remediation、full verification與
+repository-separated implementation commit已完成。PyMTLF commit為`0d1b529`。2026-08-20
+確認最後aggregate提早標成`CANDIDATE_READY`的semantic defect，已由Slice 6 commit `cebfe90`
+修正。
 
 詳細計畫：
 
@@ -1054,9 +1064,9 @@ implementation 依標準 registered FL capability 啟用對應 FL Server／Clien
 assignment 與 `planId` process state 決定本次實際行為。Branch 所需的雙向 behavior 由同一
 runtime 中可同時使用的 Server／Client capabilities 組成。
 
-Slice 0 仍須提出既有互斥 `runtime.mode` 的 migration detail、Go advertised capability 與
-PyMTLF enabled engines 的一致性 validation，以及 restart／lifecycle ownership；但不再重新
-選擇 role-oriented runtime 方案。
+Slice 0已固定既有互斥`runtime.mode`的migration requirements；Slice 2完成capability-oriented
+runtime、Go advertised capability與PyMTLF enabled engines一致性validation，Slice 7完成
+restart／lifecycle ownership。Role-oriented runtime方案不再重新選擇。
 
 ### Bundle publication owner
 

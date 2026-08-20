@@ -2,7 +2,8 @@
 
 日期：2026-08-18
 
-狀態：Ready for review（唯讀確認完成，待 team review 後作為 Slice 1–7 contract baseline）
+狀態：Completed；唯讀baseline audit與contract freeze已完成，並已作為Slice 1–7的
+implementation baseline。2026-08-21依後續production evidence完成狀態一致性回填
 
 上層計畫：
 
@@ -974,44 +975,44 @@ Slice 1 不建立完整 Root／Branch orchestration。
 
 ### 7.1 Architecture consistency
 
-- [ ] 沒有新增 Root／Branch／Leaf NF type或 permanent runtime role。
-- [ ] Branch eligibility明確要求 `FL_SERVER_AND_CLIENT`。
-- [ ] per-tier標準 `mlCorreId` 與 vendor `planId` 未混用。
-- [ ] Go只擁有標準 transport、NRF gateway與最小 route state。
-- [ ] PyMTLF擁有 topology、strategy、bundle、admission與 aggregation。
-- [ ] PyAnLF維持 final Provision consumer boundary。
+- [x] 沒有新增 Root／Branch／Leaf NF type或 permanent runtime role。
+- [x] Branch eligibility明確要求 `FL_SERVER_AND_CLIENT`。
+- [x] per-tier標準 `mlCorreId` 與 vendor `planId` 未混用。
+- [x] Go只擁有標準 transport、NRF gateway與最小 route state。
+- [x] PyMTLF擁有 topology、strategy、bundle、admission與 aggregation。
+- [x] PyAnLF維持 final Provision consumer boundary。
 
 ### 7.2 Contract completeness
 
-- [ ] Branch assignment、Leaf assignment與 preparation result皆有 version、publisher、
+- [x] Branch assignment、Leaf assignment與 preparation result皆有 version、publisher、
   intended recipient與 `planId`。
-- [ ] result partitions完整覆蓋 assigned client set。
-- [ ] bundle始終包含有效 model artifact。
-- [ ] preparation success不再只送 `statusReport`，且不誤帶 standard `roundInd`。
-- [ ] Go／PyMTLF validator 不再把 `statusReport` 單獨存在視為有效最低結果集合。
-- [ ] preparation-stage receiver 以 `mLModelInfos`、active stage 與 correlation 判定成功，
+- [x] result partitions完整覆蓋 assigned client set。
+- [x] bundle始終包含有效 model artifact。
+- [x] preparation success不再只送 `statusReport`，且不誤帶 standard `roundInd`。
+- [x] Go／PyMTLF validator 不再把 `statusReport` 單獨存在視為有效最低結果集合。
+- [x] preparation-stage receiver 以 `mLModelInfos`、active stage 與 correlation 判定成功，
   不要求 `statusReport`，也不把固定 `samplRatio: 100` 當 completed latch。
-- [ ] non-hierarchical distributed FL preparation regression tests 已納入 Slice 4 範圍。
-- [ ] Branch-to-Leaf URL由 Branch發布，而非 Root URL passthrough。
-- [ ] strategy只接受 FedProx／all／all／sample-weighted。
-- [ ] `proximal_mu` 只在 typed algorithm block且 `> 0`。
-- [ ] topology config只含 static identities、tree與 admission。
+- [x] non-hierarchical distributed FL preparation regression tests 已納入 Slice 4 範圍。
+- [x] Branch-to-Leaf URL由 Branch發布，而非 Root URL passthrough。
+- [x] strategy只接受 FedProx／all／all／sample-weighted。
+- [x] `proximal_mu` 只在 typed algorithm block且 `> 0`。
+- [x] topology config只含 static identities、tree與 admission。
 
 ### 7.3 Lifecycle completeness
 
-- [ ] private API預設關閉、由 PyMTLF直接處理且不經 Go。
-- [ ] degradation與 private API共用 single-active guard。
-- [ ] Branch upper／lower processes算同一 active experiment。
-- [ ] preparation與 round必要 participant failure皆 terminal。
-- [ ] transport retry沒有變成 experiment retry。
-- [ ] restart後不恢復、reconcile或隱式重建舊 experiment。
+- [x] private API預設關閉、由 PyMTLF直接處理且不經 Go。
+- [x] degradation與 private API共用 single-active guard。
+- [x] Branch upper／lower processes算同一 active experiment。
+- [x] preparation與 round必要 participant failure皆 terminal。
+- [x] transport retry沒有變成 experiment retry。
+- [x] restart後不恢復、reconcile或隱式重建舊 experiment。
 
 ### 7.4 Repository readiness
 
-- [ ] production branches依既有命名與 baseline建立。
-- [ ] 每個 production slice有自己的 detailed plan、focused tests、full regression與 commit。
-- [ ] 不跨 repositories混合 commit。
-- [ ] 不修改 `resources/` reference tree。
+- [x] production branches依既有命名與 baseline建立。
+- [x] 每個 production slice有自己的 detailed plan、focused tests、full regression與 commit。
+- [x] 不跨 repositories混合 commit。
+- [x] 不修改 `resources/` reference tree。
 
 ---
 

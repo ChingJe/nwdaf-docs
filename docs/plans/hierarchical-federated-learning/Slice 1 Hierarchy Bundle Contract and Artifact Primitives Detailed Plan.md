@@ -2,7 +2,8 @@
 
 日期：2026-08-18
 
-狀態：Implementation 與 code review 完成；PyMTLF checkpoint 已 commit
+狀態：Completed；implementation、code review與targeted remediation已完成。PyMTLF
+implementation commit：`fa352d3`；review remediation commit：`6cc1df0`
 
 上層計畫：
 
