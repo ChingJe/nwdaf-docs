@@ -2,7 +2,7 @@
 
 日期：2026-08-17
 
-最後更新：2026-08-19
+最後更新：2026-08-20
 
 狀態：Draft；canonical 主計畫，後續依團隊討論持續調整
 
@@ -40,6 +40,8 @@ slices。尚未討論完成的 package、schema 與 private API 細節不得因�
   Model Training resource；
 - PyMTLF 已具備 FL Client preparation／local round execution，以及 FL Server
   participant selection／round orchestration／FedAvg；
+- flat FL production flow已具備final validation、`CANDIDATE_READY` gate、durable
+  `FINAL_MODEL` publication、ADRF store、catalog commit與cutover；
 - model bundle、temporary artifact、round correlation 與跨 process E2E 已有可延伸的
   implementation baseline。
 
@@ -77,6 +79,29 @@ validator、PyMTLF preparation sender 與 FL Server stage handling 也實作了�
   latch；不得再以固定 `trainInDataInfo.samplRatio: 100` 代替完成結果；
 - non-hierarchical distributed FL regression tests 必須一併更新，以證明修正沒有破壞既有
   subscription、round 與 final-result behavior。
+
+### 2.1 Existing-flow extension baseline
+
+HFL是flat FL production flow的topology extension。每個implementation slice都必須以flat
+flow為canonical baseline，明確記錄各階段是直接沿用、調整、取代、核准延後或不適用。
+
+整體baseline disposition固定為：
+
+| Flat production stage | HFL disposition |
+| --- | --- |
+| degradation／management trigger | 調整為Root plan initiation，維持single-active invariant |
+| preparation | 調整為Root–Branch–Leaf walking skeleton |
+| training rounds | 調整為lower／upper hierarchical rounds |
+| final Root aggregate | 直接沿用未驗證candidate語意，仍是`ROUND_GLOBAL` |
+| final validation | 調整為Root dispatch Branch、Branch republish並dispatch Leaves |
+| validation evidence／gate | 調整為exact topology evidence與component-sum gate |
+| `CANDIDATE_READY` | 直接沿用「validation accepted、可publication」語意 |
+| `FINAL_MODEL` publication／cutover | 重用既有owner並增加hierarchy provenance |
+| terminal cleanup／restart | 調整為Root–Branch–Leaf cascade與fresh-state generation fence |
+
+不得再以同名state、artifact、status或其他semantic representation表達較弱的前置／後置
+條件。Slice 5曾把configured rounds完成直接稱為`CANDIDATE_READY`，已確認為semantic
+defect；由Slice 6修正，歷史Slice 5文件保留erratum而不改寫已完成commit紀錄。
 
 ---
 
@@ -472,7 +497,48 @@ Root-only topology config 只允許該 deployment 主動建立 static plan，不
 註冊為特殊 Root。未來可新增 `strategy: dynamic`，以 NRF candidate inventory 自動建立
 assignment，但不改變後續 bundle、preparation 與 training contracts。
 
-### 4.9 Fresh-state restart semantics
+### 4.9 Candidate、final validation and publication semantics
+
+最後configured Root `ROUND_GLOBAL`形成時，只能稱為待驗證candidate：
+
+```text
+final Root ROUND_GLOBAL
+  -> hierarchy final validation
+  -> VALIDATION_REJECTED
+     or
+  -> CANDIDATE_READY
+  -> PUBLISHING
+  -> CUTOVER_PENDING / COMPLETE
+```
+
+- candidate仍使用`artifact_role: ROUND_GLOBAL`；不新增`CANDIDATE` artifact role；
+- `CANDIDATE_READY`只有在完整final validation evidence通過technical validation且gate接受後
+  成立；
+- Root candidate URL透過Training PATCH只提供給assigned Branches；
+- Branch必須下載、驗證並以Branch PyMTLF重新發布byte-identical candidate，Leaves只使用
+  Branch-owned URL；
+- Branch彙整exact assigned Leaf validation evidence後，才以上層
+  `ROUND_LOCAL/ACCURACY_CHECK`回報Root；
+- accepted candidate交給既有`PublicationCoordinator`建立新的immutable `FINAL_MODEL`；
+- private management status不提供`candidateUrl`，可保留state與candidate digest；
+- Branch／Leaf Training resources不得在final aggregate形成時cleanup；cleanup依
+  validation／publication terminal outcome執行。
+
+Lifecycle retention採分離設定，預設值可相同：
+
+```yaml
+federated_learning:
+  workspace_ttl_seconds: 3600
+  lifecycle:
+    candidate_artifact_ttl_seconds: 3600
+    terminal_status_ttl_seconds: 3600
+    tombstone_ttl_seconds: 3600
+```
+
+`workspace_ttl_seconds`只負責staging、downloads與crash leftovers；不得拿來隱式代表所有
+terminal owner的retention contract。
+
+### 4.10 Fresh-state restart semantics
 
 第一版不實作 active hierarchy state persistence、restart recovery 或 reconciliation。
 Root、Branch、Leaf 的 Go 或 PyMTLF process 重新啟動後，都從全新 runtime state 開始，
@@ -483,7 +549,7 @@ correlation 不相符或 artifact 已過期而被拒絕；不得隱式重建舊 
 terminal cleanup、artifact retention／expiry 與 garbage collection，但不為 crash 後的舊
 remote resources 增加 recovery protocol。
 
-### 4.10 Training initiation boundary
+### 4.11 Training initiation boundary
 
 Hierarchical training 有兩個第一版入口：
 
@@ -508,7 +574,7 @@ management-plane semantics 參考；其中 consumer 建立 request，producer �
 仍以 Release 18 為標準基線，因此 private API 不宣稱符合 TS 28.105，也不在本 slice 實作
 完整 TS 28.532 generic Provisioning MnS。
 
-### 4.11 Single-active-training and failure termination
+### 4.12 Single-active-training and failure termination
 
 第一版沿用 PyMTLF 既有「同時間只能有一個 training」限制；此限制作用於整個 PyMTLF
 instance，而不是每個 model 各自允許一個 active plan：
@@ -835,8 +901,9 @@ lower-tier preparation，以 result bundle 回報 Root，並由 Root 做整棵 t
 
 ### Slice 5：Hierarchical rounds and aggregation
 
-狀態：Completed；production implementation、review、remediation、full verification與
-repository-separated implementation commit 已完成。
+狀態：Implementation checkpoint完成；production implementation、review、remediation、full
+verification與repository-separated implementation commit已完成。2026-08-20確認最後aggregate
+提早標成`CANDIDATE_READY`的semantic defect，由Slice 6 remediation。
 
 詳細計畫：
 
@@ -860,22 +927,62 @@ repository-separated implementation commit 已完成。
 - any required-participant failure terminates the complete experiment；
 - no automatic round retry。
 
-### Slice 6：Lifecycle closure and fresh-state restart behavior
+Slice 5的正確成功handoff是「final Root `ROUND_GLOBAL` formed，pending final validation」，不是
+`CANDIDATE_READY`。既有round／aggregation implementation不重做。
+
+### Slice 6：Hierarchical final validation and publication
+
+狀態：Plan ready；flat baseline、production gap、target data flow與evidence contract
+已確認，可進入production implementation。
+
+詳細計畫：
+
+- [Slice 6 Hierarchical Final Validation and Publication Detailed Plan](./Slice%206%20Hierarchical%20Final%20Validation%20and%20Publication%20Detailed%20Plan.md)
+
+目標：讓final Root aggregate經Root–Branch–Leaf validation-only flow後，只有accepted
+candidate進入`CANDIDATE_READY`並接回既有`FINAL_MODEL` publication／cutover。
+
+至少完成：
+
+- flat final validation／publication baseline stage map；
+- final aggregate不再直接設定`CANDIDATE_READY`；
+- Root-to-Branch candidate validation PATCH；
+- Branch下載、驗證並重新發布candidate，Leaf不直接使用Root URL；
+- Leaf frozen-dataset validation-only execution；
+- Branch exact subordinate evidence validation與component-sum upper result；
+- Root exact topology validation、aggregate／per-Leaf gate；
+- Leaf validation summaries經Branch typed evidence一路回傳Root，並durably記錄在
+  `FINAL_MODEL.hierarchy_validation`；
+- `FINAL_VALIDATION_*`、`VALIDATION_REJECTED`、`CANDIDATE_READY`、`PUBLISHING`、
+  `CUTOVER_PENDING`與`COMPLETE`一致語意；
+- accepted candidate重用`PublicationCoordinator`建立`FINAL_MODEL`；
+- private status移除`candidateUrl`，保留state／digest；
+- flat final validation／publication regression。
+
+### Slice 7：Lifecycle closure and fresh-state restart behavior
+
+狀態：Planning deferred；現有草稿未經審查，不作為normative implementation
+input。待Slice 6 implementation、code review與針對性修正完成後，再根據實際
+lifecycle behavior重新檢視與定案。
 
 目標：收斂前述 slices 已隨流程實作的 terminal／cleanup semantics，並驗證 process restart
 後不恢復舊 state 的行為。基本 cleanup 不得延後到此 slice 才首次實作。
 
 至少完成：
 
+- Root `VALIDATION_REJECTED`／`COMPLETE`／`FAILED` terminal cleanup、upper subscription
+  removal與single-active slot release；`CANDIDATE_READY`／`PUBLISHING`不提前cleanup；
 - Root、Branch、Leaf individual restart behavior；
 - Go restart 與 PyMTLF restart boundary；
-- bundle URL expiry／missing artifact behavior；
+- containing Go process generation的private lifecycle fence；
+- 同一plan跨process directories的explicit artifact ownership與exact release；
+- candidate artifact、terminal status、tombstone分離TTL與bundle URL expiry／missing behavior；
 - restart 後不 resume 或 reconcile 舊 active process；
 - stale callback／result rejection；
 - idempotent cleanup；
 - terminal process retention and garbage collection。
 
-### Slice 7：Multi-process E2E and regression closure
+### Slice 8：Multi-process E2E and regression closure
 
 目標：用兩個層級的 topology profiles 驗證完整 business flow：
 
@@ -891,6 +998,7 @@ repository-separated implementation commit 已完成。
 - complete preparation；
 - rejected preparation cleanup and operator-initiated new experiment；
 - multi-round lower／upper aggregation；
+- hierarchical final validation、candidate gate與`FINAL_MODEL` publication；
 - 至少兩個 Branch results 的 Root upper-tier aggregation；
 - 不同 subordinate sample counts 的 two-tier effective-weight propagation；
 - FedProx、`all` selection／waiting 與 `sample_weighted` aggregation；
@@ -1083,18 +1191,27 @@ optional hardening，不得默默擴張進第一版。
 15. multi-round flow 正確隔離 upper／lower correlations、rounds、deadlines 與 cleanup；
 16. Branch 下載並處理 Root bundle，再由 Branch PyMTLF 發布 Leaf bundle；Leaf 不直接使用
     Root artifact URL，Go 不 proxy artifact bytes；
-17. degradation 與 config-enabled private management request 都可在標準 Training SBI
+17. final Root `ROUND_GLOBAL`只表示待驗證candidate；Root URL只給assigned Branches，Branch
+    重新發布後才提供Leaves validation；
+18. Branch收集exact assigned Leaf validation evidence，Root驗證完整topology與component sums；
+19. `CANDIDATE_READY`只有在final validation accepted後成立，private status不提供
+    `candidateUrl`；
+20. accepted candidate由既有publication owner建立新的`FINAL_MODEL`、store ADRF、commit
+    catalog並完成必要cutover；validation rejection不改變old latest；
+21. degradation 與 config-enabled private management request 都可在標準 Training SBI
     procedure 之前建立新 plan；private request 直接由 Root PyMTLF 處理，不經過 Go；
-18. private API 預設關閉，未啟用的 PyMTLF 不掛載該 route；
-19. 同一 PyMTLF 同時間最多一個 active training；衝突 request 不會建立第二個 plan；
-20. 任一必要 participant 的 preparation／round failure 終止整個 experiment，且不自動
+22. private API 預設關閉，未啟用的 PyMTLF 不掛載該 route；
+23. 同一 PyMTLF 同時間最多一個 active training；衝突 request 不會建立第二個 plan；
+24. 任一必要 participant 的 preparation／round／validation failure 終止整個 experiment，且不自動
     retry；
-21. process restart 後不恢復舊 active state，stale callback／result 不會重建 process；
-22. failure、timeout、duplicate、late result 與 bundle expiry 均有明確且有測試的 state
+25. process restart 後不恢復舊 active state，stale callback／result 不會重建 process；
+26. failure、timeout、duplicate、late result 與 bundle expiry 均有明確且有測試的 state
     transition；
-23. existing non-hierarchical distributed FL 除改由Server發布`ROUND_INPUT`並決定epochs外，
-    objective、result、aggregation與lifecycle behavior沒有 regression；
-24. documentation 明確區分 Release 18 3GPP-defined behavior、同 vendor implementation
+27. candidate artifact、terminal status、tombstone與workspace leftovers使用分離且有typed
+    validation的retention設定；
+28. existing non-hierarchical distributed FL 除改由Server發布`ROUND_INPUT`並決定epochs外，
+    objective、result、aggregation、final validation、publication與lifecycle behavior沒有 regression；
+29. documentation 明確區分 Release 18 3GPP-defined behavior、同 vendor implementation
     profile，以及僅供參考的 Release 19 management semantics。
 
 ---
@@ -1131,10 +1248,17 @@ optional hardening，不得默默擴張進第一版。
 | 2026-08-18 | Preparation 或 round 任一必要 participant 失敗即終止 experiment；不自動 retry，由 operator 檢查後重新啟動 | Confirmed |
 | 2026-08-18 | `proximal_mu` 放在 typed FedProx algorithm block，不作為 generic strategy 或 Leaf-local fitting 欄位 | Confirmed |
 | 2026-08-18 | Slice 3 同時實作 Root initiation、single-active guard、static topology 與 assignment | Confirmed |
-| 2026-08-18 | Preparation failure policy 歸 Slice 4，round failure policy 歸 Slice 5；Slice 6 只做 lifecycle closure／restart hardening | Confirmed |
+| 2026-08-18 | Preparation failure policy 歸 Slice 4，round failure policy 歸 Slice 5；Slice 6 只做 lifecycle closure／restart hardening | Superseded |
 | 2026-08-18 | E2E smoke 使用一個 Branch；aggregation acceptance 至少使用兩個 Branches | Confirmed |
 | 2026-08-18 | 修正既有 preparation notification contract regression：`statusReport` 不得單獨代表成功，sender／validator／stage-aware receiver 改以 `mLModelInfos` profile 為準 | Confirmed |
 | 2026-08-18 | preparation 的 `statusReport` 僅為 optional supplemental status；不再以固定 `samplRatio: 100` 作為 completed latch | Confirmed |
 | 2026-08-18 | Branch pre-dispatch failure 不啟動 lower resources；lower 已啟動後，單一 Leaf failure 不提前結束 collection，等待全部 terminal outcomes 或 bounded deadline | Confirmed |
 | 2026-08-18 | 第一版假設所有 NWDAF／PyMTLF 位於同一受控 vendor trust domain；publisher 僅為 logical identity，不新增 artifact-origin／requester cryptographic binding | Confirmed |
 | 2026-08-19 | Client local fitting `epochs` 改由 Server 決定；flat 由 flat Server 下發，hierarchy 由 Root 下發並由 Branch 原樣轉傳，Leaf 無 local fallback | Confirmed |
+| 2026-08-20 | Slice 5把final aggregate提早標為`CANDIDATE_READY`是semantic defect；正確前置條件是hierarchy final validation accepted | Confirmed |
+| 2026-08-20 | 新增Slice 6處理hierarchical final validation／publication；原lifecycle與E2E順延為Slice 7／8 | Confirmed |
+| 2026-08-20 | Candidate維持`ROUND_GLOBAL`；Root URL只供assigned Branch validation，Branch republish後供Leaves使用，private status不提供`candidateUrl` | Confirmed |
+| 2026-08-20 | Slice 6 plan ready；Leaf validation summaries必須經Branch typed evidence一路回傳Root，並durably記錄在`FINAL_MODEL.hierarchy_validation` | Confirmed |
+| 2026-08-20 | Slice 7草稿未經審查，不作為normative input；待Slice 6 implementation、review與修正完成後再定案 | Confirmed |
+| 2026-08-20 | Go per-boot `processInstanceId`由`pkg/service.NwdafApp`擁有並constructor-inject到private MTLF server，不放入generic context／NRF／public SBI | Confirmed |
+| 2026-08-20 | Workspace、candidate artifact、terminal status與tombstone retention分開設定，預設值可相同 | Confirmed |

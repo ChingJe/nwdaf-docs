@@ -2,8 +2,8 @@
 
 日期：2026-08-19
 
-狀態：Completed；production implementation、full verification、mandatory review、targeted
-remediation 與 repository-separated implementation commit 均已完成
+狀態：Implementation checkpoint完成；2026-08-20確認`CANDIDATE_READY` semantic defect，
+產品流程需由Slice 6 remediation後才完整
 
 上層計畫：
 
@@ -22,6 +22,30 @@ remediation 與 repository-separated implementation commit 均已完成
 - [Hierarchical NWDAF Federated Learning Proposal Draft](../../proposals/nwdaf/hierarchical-federated-learning/proposal_draft.md)
 - [Phase 3 And 4 Federated Training Execution Detailed Plan](../federated-learning/Phase%203%20And%204%20Federated%20Training%20Execution%20Detailed%20Plan.md)
 - [NWDAF Development Policy](../../development_policy.md)
+
+---
+
+## 0. 2026-08-20 semantic erratum
+
+本文件在Slice 5實作時把「configured rounds完成、final Root `ROUND_GLOBAL`形成」稱為
+`CANDIDATE_READY`。這個名稱沿用了當時不完整的phase文字，但違反現有flat FL production
+invariant：`CANDIDATE_READY`只有在final validation evidence完整且gate accepted後成立。
+
+因此本文件後續所有「Slice 5進入／停在`CANDIDATE_READY`」應視為歷史implementation
+checkpoint描述，其正確語意是：
+
+```text
+final Root ROUND_GLOBAL formed
+-> candidate pending final validation
+```
+
+不修改已完成multi-round／aggregation的scope與commit歷史；production state remediation、
+hierarchical final validation與publication由：
+
+- [Slice 6 Hierarchical Final Validation and Publication Detailed Plan](./Slice%206%20Hierarchical%20Final%20Validation%20and%20Publication%20Detailed%20Plan.md)
+
+負責。Slice 6完成前，不得以本文件原有的`CANDIDATE_READY` completion claim宣稱HFL產品流程
+已完成。
 
 ---
 
