@@ -973,8 +973,9 @@ candidate進入`CANDIDATE_READY`並接回既有`FINAL_MODEL` publication／cutov
 
 ### Slice 7：Lifecycle closure and fresh-state restart behavior
 
-狀態：Planning review completed；已依Slice 6 production behavior重新建立baseline並修正
-詳細計畫，production implementation尚未開始，待明確授權。
+狀態：Completed；production implementation、mandatory review、in-scope remediation、full
+verification與repository-separated commits已完成。PyMTLF implementation commit為`c7c66b9`，
+NWDAF implementation commit為`3279891`。
 
 目標：收斂前述 slices 已隨流程實作的 terminal／cleanup semantics，並驗證 process restart
 後不恢復舊 state 的行為。基本 cleanup 不得延後到此 slice 才首次實作。
@@ -1291,6 +1292,7 @@ optional hardening，不得默默擴張進第一版。
 | 2026-08-20 | Workspace、candidate artifact、terminal status與tombstone retention分開設定，預設值可相同 | Superseded；candidate沒有terminal consumer，不保留candidate TTL |
 | 2026-08-20 | `CUTOVER_PENDING`只在同一process內關閉Training procedure並保留publication admission fence到adoption `COMPLETE`；restart不重建該fence | Confirmed |
 | 2026-08-20 | restart不恢復active hierarchy process或任何未完成publication action；production不呼叫`PublicationCoordinator.resume()`，只重新載入已完成catalog commit的model result | Confirmed |
+| 2026-08-21 | Slice 7 implementation、mandatory review、remediation、second conformance audit與full verification完成；PyMTLF commit `c7c66b9`、NWDAF commit `3279891` | Confirmed |
 | 2026-08-20 | candidate publication pin只處理同一process內的owner交接；old active generation與old publication pin都是crash leftover，依workspace TTL收斂 | Superseded；改為startup立即清理，TTL只兜底失敗 |
 | 2026-08-20 | ADRF store成功但catalog尚未commit時crash可能留下orphan model；第一版不做自動publication recovery或ADRF orphan reconciliation | Confirmed |
 | 2026-08-20 | Candidate不提供terminal consumer；synchronous publication call返回後立即刪除，不新增`candidate_artifact_ttl_seconds`、`PUBLICATION_PINNED`或hierarchy `RETAINED` marker | Confirmed |

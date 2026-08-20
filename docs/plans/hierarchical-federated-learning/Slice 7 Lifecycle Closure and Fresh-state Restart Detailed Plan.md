@@ -2,8 +2,9 @@
 
 日期：2026-08-20
 
-狀態：Planning review completed；已依 Slice 6 production implementation 重新建立 baseline，
-production implementation 尚未開始，待明確授權
+狀態：Completed；production implementation、mandatory review、in-scope remediation、full
+verification 與 repository-separated commits 已完成。PyMTLF implementation commit：`c7c66b9`；
+NWDAF implementation commit：`3279891`
 
 上層計畫：
 
@@ -1030,60 +1031,60 @@ real NRF、peer NWDAFs與cross-process artifact flow。
 
 ### Contract
 
-- [ ] public Release 18 path／method／status未變
-- [ ] private `processInstanceId` producer／carrier／consumer／lifetime完整
-- [ ] no hierarchy role added to NF profile
-- [ ] no active HFL or unfinished publication restore／resume contract introduced
-- [ ] completed catalog result restore不建立舊publication action
-- [ ] artifact ownership只存在process-local memory index，不進bundle或filesystem marker
+- [x] public Release 18 path／method／status未變
+- [x] private `processInstanceId` producer／carrier／consumer／lifetime完整
+- [x] no hierarchy role added to NF profile
+- [x] no active HFL or unfinished publication restore／resume contract introduced
+- [x] completed catalog result restore不建立舊publication action
+- [x] artifact ownership只存在process-local memory index，不進bundle或filesystem marker
 
 ### Lifecycle
 
-- [ ] Root terminal outcome releases subscriptions and active slot
-- [ ] `CANDIDATE_READY`／`PUBLISHING`不被誤當terminal cleanup signal
-- [ ] `CUTOVER_PENDING`只關閉Training resources，publication admission fence保留到adoption完成
-- [ ] Branch upper DELETE cascades lower cleanup
-- [ ] Leaf capacity／outbox slots release exactly once
-- [ ] cleanup failure cannot reactivate experiment
-- [ ] graceful shutdown order bounded
-- [ ] second explicit request can start after prior terminal cleanup
+- [x] Root terminal outcome releases subscriptions and active slot
+- [x] `CANDIDATE_READY`／`PUBLISHING`不被誤當terminal cleanup signal
+- [x] `CUTOVER_PENDING`只關閉Training resources，publication admission fence保留到adoption完成
+- [x] Branch upper DELETE cascades lower cleanup
+- [x] Leaf capacity／outbox slots release exactly once
+- [x] cleanup failure cannot reactivate experiment
+- [x] graceful shutdown order bounded
+- [x] second explicit request can start after prior terminal cleanup
 
 ### Restart
 
-- [ ] PyMTLF restart is fenced by Go backend generation
-- [ ] Go restart is fenced by PyMTLF containing generation
-- [ ] Root／Branch／Leaf individual restart matrix covered
-- [ ] stale callback／PATCH／DELETE／result cannot create state
-- [ ] no old plan resume／reconciliation／automatic retry
-- [ ] non-terminal publication journal不建立worker、admission fence或Root／Branch／Leaf state
+- [x] PyMTLF restart is fenced by Go backend generation
+- [x] Go restart is fenced by PyMTLF containing generation
+- [x] Root／Branch／Leaf individual restart matrix covered
+- [x] stale callback／PATCH／DELETE／result cannot create state
+- [x] no old plan resume／reconciliation／automatic retry
+- [x] non-terminal publication journal不建立worker、admission fence或Root／Branch／Leaf state
 
 ### Artifact and GC
 
-- [ ] release covers all process directories owned by exact plan
-- [ ] ownership index完整涵蓋planId與各層mlCorreId directories
-- [ ] sibling／flat artifacts preserved
-- [ ] Root candidate在synchronous publication call返回且open reader釋放後立即刪除
-- [ ] terminal status retained for terminal status TTL
-- [ ] tombstones retained for tombstone TTL
-- [ ] lifecycle-cleaned／missing URL returns `404`
-- [ ] active plan never expires solely because runtime exceeds TTL
-- [ ] terminal records／tombstones／retired identities collected
-- [ ] no workspace／status／tombstone maintenance worker introduced
-- [ ] artifact response持有open handle／reader count時cleanup不產生partial bytes
-- [ ] config rejects durable-root overlap；deployment config gives each PyMTLF a unique workspace root
-- [ ] startup clear rejects filesystem／working／repository roots and deletes only validated direct children
-- [ ] containing-Go generation admission只讀single monitor的cached fence
+- [x] release covers all process directories owned by exact plan
+- [x] ownership index完整涵蓋planId與各層mlCorreId directories
+- [x] sibling／flat artifacts preserved
+- [x] Root candidate在synchronous publication call返回且open reader釋放後立即刪除
+- [x] terminal status retained for terminal status TTL
+- [x] tombstones retained for tombstone TTL
+- [x] lifecycle-cleaned／missing URL returns `404`
+- [x] active plan never expires solely because runtime exceeds TTL
+- [x] terminal records／tombstones／retired identities collected
+- [x] no workspace／status／tombstone maintenance worker introduced
+- [x] artifact response持有open handle／reader count時cleanup不產生partial bytes
+- [x] config rejects durable-root overlap；deployment config gives each PyMTLF a unique workspace root
+- [x] startup clear rejects filesystem／working／repository roots and deletes only validated direct children
+- [x] containing-Go generation admission只讀single monitor的cached fence
 
 ### Verification and review
 
-- [ ] focused deterministic tests pass
-- [ ] PyMTLF full pytest／Ruff pass
-- [ ] NWDAF test／build／lint pass
-- [ ] flat FL regression pass
-- [ ] mandatory initial review complete
-- [ ] admitted findings remediated and targeted rechecked
-- [ ] plan-conformance map closed
-- [ ] repository-separated commits prepared with descriptive bodies
+- [x] focused deterministic tests pass
+- [x] PyMTLF full pytest／Ruff pass
+- [x] NWDAF test／build／lint pass
+- [x] flat FL regression pass
+- [x] mandatory initial review complete
+- [x] admitted findings remediated and targeted rechecked
+- [x] plan-conformance map closed for production behavior and verification
+- [x] repository-separated commits prepared with descriptive bodies
 
 ---
 
@@ -1223,7 +1224,8 @@ operator觀察處理，不宣稱自動cleanup。
     admission只讀cached readiness／generation，不再同步重查private context。
 
 這些不是額外algorithm或strategy選項，而是Slice 7的fresh-state lifecycle contract。Production
-implementation仍待使用者明確授權。
+implementation、review、remediation、verification與repository-separated commits均已完成。
+Production commits為PyMTLF `c7c66b9`與NWDAF `3279891`。
 
 若implementation evidence迫使改變上述owner、state flow或private contract，必須先更新本
 計畫並使用development policy decision gate，不得在code中默默改回舊設計。
@@ -1271,3 +1273,50 @@ Slice 7只有在下列條件全部成立後才能標為Completed：
 23. implementation後不中斷完成mandatory review、in-scope remediation與targeted recheck；
 24. plan-conformance map逐項closed，production changes依repository分開commit並回填
     implementation record。
+
+---
+
+## 21. Implementation record（2026-08-20–2026-08-21）
+
+### 21.1 Production changes
+
+- PyMTLF完成per-plan scratch artifact ownership、exact release、open-reader-safe serving、startup
+  clear與workspace safety validation；terminal status、tombstone與failed cleanup採bounded lazy／
+  opportunistic collection，不新增maintenance worker。
+- Root、Server、Branch與Client完成outcome-aware cleanup、Branch-to-Leaf cascade、Leaf capacity exact
+  release，以及generation／shutdown fences；late CREATE、PATCH、callback、result與worker completion
+  不得跨generation寫回新state。
+- `CUTOVER_PENDING`只保留same-process publication ownership；candidate在publication call返回後
+  release，terminal private status不暴露candidate URL。Production startup不resume未完成
+  publication action，completed catalog result仍由既有restore路徑載入。
+- NWDAF每次`NwdafApp`生命週期產生獨立UUIDv4 `processInstanceId`，透過既有private
+  `nwdaf-context`提供給PyMTLF；它不取代穩定的NF instance ID，也不新增public SBI contract。
+- App-owned containing-generation monitor是唯一refresh owner；generation改變或暫時不可用時，
+  PyMTLF先關閉admission並清理舊generation state，再接受新工作。
+
+### 21.2 Mandatory review and remediation
+
+Initial review後承認並修正的主要findings包括：workspace root安全邊界、cleanup error local-release、
+Leaf capacity ownership、Branch pre-dispatch race、Server late CREATE leak、Root stale worker commit、
+terminal state過早可見、final aggregate與shutdown競爭，以及candidate／published-result terminal
+bookkeeping。每項修正後均加入或更新針對性deterministic test；最後再依本文件與
+`development_policy.md`重新完成plan-conformance檢查。
+
+### 21.3 Verification evidence
+
+| Repository | Command | Result |
+|---|---|---|
+| PyMTLF | `.venv/bin/pytest -q` | PASS：468 passed、2 skipped |
+| PyMTLF | `.venv/bin/ruff check .` | PASS：All checks passed |
+| NWDAF | `make test` | PASS |
+| NWDAF | `make build` | PASS |
+| NWDAF | `make lint` | PASS：0 issues |
+| all affected repositories | `git diff --check` | PASS |
+
+2026-08-21再次逐項檢查completion criteria，並以timeout保護重跑先前留下background terminal
+的兩組focused tests：分別為26 passed與161 passed，均正常退出；再次完整執行PyMTLF與NWDAF
+verification亦通過，沒有殘留pytest process。
+
+上述證據涵蓋completion criteria 1–23；criteria 24由PyMTLF commit `c7c66b9`、NWDAF commit
+`3279891`與本implementation record關閉。因此Slice 7標記Completed；這仍不宣稱Slice 8的
+real multi-process NRF／OAuth／TLS／cross-host E2E。
