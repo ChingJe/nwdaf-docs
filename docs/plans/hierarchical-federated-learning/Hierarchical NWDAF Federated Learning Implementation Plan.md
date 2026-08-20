@@ -522,27 +522,39 @@ final Root ROUND_GLOBAL
 - accepted candidate交給既有`PublicationCoordinator`建立新的immutable `FINAL_MODEL`；
 - private management status不提供`candidateUrl`，可保留state與candidate digest；
 - Branch／Leaf Training resources不得在final aggregate形成時cleanup；cleanup依
-  validation／publication terminal outcome執行。
+  validation／publication terminal outcome執行；
+- candidate只保留到active validation與same-process publication最後一個reader釋放；正式
+  `FINAL_MODEL`建立後立即刪除candidate，不提供terminal candidate retention。
 
-Lifecycle retention採分離設定，預設值可相同：
+Lifecycle retention只保留仍有consumer的terminal metadata：
 
 ```yaml
 federated_learning:
   workspace_ttl_seconds: 3600
   lifecycle:
-    candidate_artifact_ttl_seconds: 3600
     terminal_status_ttl_seconds: 3600
     tombstone_ttl_seconds: 3600
 ```
 
-`workspace_ttl_seconds`只負責staging、downloads與crash leftovers；不得拿來隱式代表所有
-terminal owner的retention contract。
+每個PyMTLF獨占自己的`workspace_root`，且不得與durable artifact、model-state或publication
+directory重疊。Startup在admission前無條件清空此FL scratch workspace；runtime只以memory
+`owner_plan_id -> paths` index執行Root、Branch、Leaf local cleanup，不寫durable ownership marker。
+Durable-root overlap由config validation拒絕；兩個live PyMTLF共用workspace列為unsupported
+deployment，不新增filesystem／distributed lock。Resolved path不得是filesystem root、working
+directory、repository root或durable-root ancestor；startup只刪除驗證後workspace的direct
+children，不刪除workspace root本身。
+`workspace_ttl_seconds`只供同一process內staging／failed deletion的opportunistic retry；不新增
+periodic workspace worker。Candidate沒有terminal consumer，因此不新增
+`candidate_artifact_ttl_seconds`。
 
 ### 4.10 Fresh-state restart semantics
 
 第一版不實作 active hierarchy state persistence、restart recovery 或 reconciliation。
 Root、Branch、Leaf 的 Go 或 PyMTLF process 重新啟動後，都從全新 runtime state 開始，
 不恢復舊 topology、subscription mapping、prepared participant snapshot 或 round state。
+同一規則套用於尚未完成的publication action：不resume ADRF store、catalog promotion、cutover
+retry或scope adoption tracking，也不重建publication admission fence。已完成catalog commit的
+current／latest model result仍依既有catalog restore載入；這是載入完成結果，不是恢復舊action。
 
 Restart 前的 callback、bundle 或 round result 若之後送達，必須因找不到 active process、
 correlation 不相符或 artifact 已過期而被拒絕；不得隱式重建舊 process。正常流程仍須實作
@@ -961,9 +973,8 @@ candidate進入`CANDIDATE_READY`並接回既有`FINAL_MODEL` publication／cutov
 
 ### Slice 7：Lifecycle closure and fresh-state restart behavior
 
-狀態：Planning review next；Slice 6 implementation、code review與針對性修正已完成，
-可根據實際lifecycle behavior重新檢視現有草稿。草稿在完成檢視與核准前仍不是
-normative implementation input。
+狀態：Planning review completed；已依Slice 6 production behavior重新建立baseline並修正
+詳細計畫，production implementation尚未開始，待明確授權。
 
 目標：收斂前述 slices 已隨流程實作的 terminal／cleanup semantics，並驗證 process restart
 後不恢復舊 state 的行為。基本 cleanup 不得延後到此 slice 才首次實作。
@@ -972,15 +983,30 @@ normative implementation input。
 
 - Root `VALIDATION_REJECTED`／`COMPLETE`／`FAILED` terminal cleanup、upper subscription
   removal與single-active slot release；`CANDIDATE_READY`／`PUBLISHING`不提前cleanup；
+- `CUTOVER_PENDING`在同一process內關閉Training resources但保留publication admission fence，
+  直到adoption `COMPLETE`才釋放top-level ownership；這是因第一版每個family只有一組adoption
+  generation且PyMTLF只有一個top-level experiment slot，restart不重建該fence；
 - Root、Branch、Leaf individual restart behavior；
 - Go restart 與 PyMTLF restart boundary；
 - containing Go process generation的private lifecycle fence；
-- 同一plan跨process directories的explicit artifact ownership與exact release；
-- candidate artifact、terminal status、tombstone分離TTL與bundle URL expiry／missing behavior；
-- restart 後不 resume 或 reconcile 舊 active process；
+- 同一plan跨process directories的process-local artifact ownership與exact release；ownership只存
+  memory，Root、Branch、Leaf各自清除local artifacts，
+  startup無條件清空獨占FL scratch workspace；
+- synchronous publication call返回後立即刪除candidate；不新增publication pin state；terminal
+  status、tombstone分離TTL與
+  bundle URL cleanup／missing behavior；
+- restart後不resume或reconcile舊active HFL process，也不恢復未完成publication action、cutover
+  retry、scope adoption tracking或publication admission fence；只重新載入已完成catalog commit的
+  current／latest model result；
+- `PublicationCoordinator.open()`不啟動recovery worker；non-terminal journal保持原樣且不驅動
+  runtime action；
 - stale callback／result rejection；
 - idempotent cleanup；
-- terminal process retention and garbage collection。
+- Root terminal status retention、non-queryable engine state immediate removal與tombstone garbage
+  collection；
+- terminal status與tombstone採owner-operation lazy pruning，不新增periodic maintenance worker；
+- containing-Go generation只由單一app-owned monitor refresh，training admission讀cached fence；
+- publication retry可被shutdown signal bounded中止並abandon；下一次startup不依journal接續。
 
 ### Slice 8：Multi-process E2E and regression closure
 
@@ -1207,8 +1233,8 @@ optional hardening，不得默默擴張進第一版。
 25. process restart 後不恢復舊 active state，stale callback／result 不會重建 process；
 26. failure、timeout、duplicate、late result 與 bundle expiry 均有明確且有測試的 state
     transition；
-27. candidate artifact、terminal status、tombstone與workspace leftovers使用分離且有typed
-    validation的retention設定；
+27. candidate在synchronous publication call返回後立即刪除；terminal status與tombstone使用分離
+    retention，workspace在startup清空且failed deletion只opportunistic retry；
 28. existing non-hierarchical distributed FL 除改由Server發布`ROUND_INPUT`並決定epochs外，
     objective、result、aggregation、final validation、publication與lifecycle behavior沒有 regression；
 29. documentation 明確區分 Release 18 3GPP-defined behavior、同 vendor implementation
@@ -1262,4 +1288,15 @@ optional hardening，不得默默擴張進第一版。
 | 2026-08-20 | Slice 6 implementation完成；PyMTLF commit `cebfe90`通過mandatory review、targeted remediation、focused與full verification | Confirmed |
 | 2026-08-20 | Slice 7草稿可在Slice 6 handoff後開始重新檢視；完成檢視與核准前仍不作為normative input | Confirmed |
 | 2026-08-20 | Go per-boot `processInstanceId`由`pkg/service.NwdafApp`擁有並constructor-inject到private MTLF server，不放入generic context／NRF／public SBI | Confirmed |
-| 2026-08-20 | Workspace、candidate artifact、terminal status與tombstone retention分開設定，預設值可相同 | Confirmed |
+| 2026-08-20 | Workspace、candidate artifact、terminal status與tombstone retention分開設定，預設值可相同 | Superseded；candidate沒有terminal consumer，不保留candidate TTL |
+| 2026-08-20 | `CUTOVER_PENDING`只在同一process內關閉Training procedure並保留publication admission fence到adoption `COMPLETE`；restart不重建該fence | Confirmed |
+| 2026-08-20 | restart不恢復active hierarchy process或任何未完成publication action；production不呼叫`PublicationCoordinator.resume()`，只重新載入已完成catalog commit的model result | Confirmed |
+| 2026-08-20 | candidate publication pin只處理同一process內的owner交接；old active generation與old publication pin都是crash leftover，依workspace TTL收斂 | Superseded；改為startup立即清理，TTL只兜底失敗 |
+| 2026-08-20 | ADRF store成功但catalog尚未commit時crash可能留下orphan model；第一版不做自動publication recovery或ADRF orphan reconciliation | Confirmed |
+| 2026-08-20 | Candidate不提供terminal consumer；synchronous publication call返回後立即刪除，不新增`candidate_artifact_ttl_seconds`、`PUBLICATION_PINNED`或hierarchy `RETAINED` marker | Confirmed |
+| 2026-08-20 | Root、Branch、Leaf各自依`owner_plan_id`清理local workspace；Root DELETE Branch、Branch DELETE Leaves，Leaf downloads與local results也必須清除 | Confirmed |
+| 2026-08-20 | `CUTOVER_PENDING`在同一process內阻擋下一場top-level training，因第一版每個family只有一組adoption generation且PyMTLF只有一個active slot；restart不重建fence | Confirmed |
+| 2026-08-20 | 每個PyMTLF獨占dedicated `workspace_root`且不得使用broad／durable-overlapping path；ownership只存memory，startup在admission前清空其validated direct children，不寫per-artifact durable marker | Confirmed |
+| 2026-08-20 | Workspace cleanup failure採opportunistic retry，terminal status與tombstone採lazy pruning；第一版不新增periodic maintenance worker | Confirmed |
+| 2026-08-20 | Containing-Go generation只由單一app-owned monitor refresh；training admission只讀cached readiness／generation，不額外同步查詢 | Confirmed |
+| 2026-08-20 | Non-terminal publication journal在startup保持原樣；不呼叫`resume()`，也不做terminalize、compact或sanitation | Confirmed |
