@@ -55,7 +55,40 @@ verify, and prepare a checkpoint for one slice before expanding into another
 cross-cutting flow. Do not intentionally accumulate an entire multi-repository
 phase as one unreviewable working-tree change.
 
-### 1.3 Out-of-scope Classification
+### 1.3 Existing-Flow Extension Gate
+
+When a new mode, topology, role, version, or procedure extends an existing
+production flow, name the canonical existing flow as its baseline before the
+plan is implementation-ready. Map the baseline end to end, including trigger,
+preparation, execution, validation, publication or handoff, successful
+completion, failure, timeout, restart, and cleanup where applicable.
+
+For every baseline stage, the active plan must record one of:
+
+- reused without semantic change
+- adapted, with the changed owner, data flow, or invariant identified
+- explicitly replaced
+- approved for deferral
+- not applicable, with evidence and rationale
+
+A baseline stage must not be silently omitted. A deferral is not valid when
+the omitted stage is required for a shared lifecycle claim, completion
+criterion, or other meaning asserted by the current slice.
+
+When an extension reuses any existing name, value, or representation that
+carries behavioral, lifecycle, or contract meaning, it must preserve the
+established preconditions, postconditions, transition invariants, and
+externally or internally relied-upon interpretation, regardless of where or
+how that meaning is encoded. If the meaning differs, use a distinct
+representation or treat the change as an explicit semantic contract decision.
+This applies to any semantic representation; states, events, artifact roles,
+result labels, operation names, status values, schema discriminators, and
+lifecycle milestones are non-exhaustive examples.
+
+The acceptance criteria and tests must cover both the intended differences and
+the shared semantics retained from the baseline.
+
+### 1.4 Out-of-scope Classification
 
 Use one of these labels for discovered work that does not block the active
 slice:
@@ -300,7 +333,7 @@ A review finding belongs to the current implementation only when conditions
 4. It is not already assigned to a future phase.
 
 If any of conditions 1 through 4 is false, use an out-of-scope classification
-from section 1.3 instead of treating it as a current blocker.
+from section 1.4 instead of treating it as a current blocker.
 
 After admission, determine whether its remediation fits the approved slice:
 
@@ -343,6 +376,7 @@ The initial review must inspect, as applicable:
 
 - the complete slice diff
 - the agreed plan and acceptance criteria
+- the canonical baseline flow and its recorded stage-by-stage disposition
 - direct call paths and lifecycle dependencies
 - relevant standard/free5GC evidence
 - tests and skipped verification
@@ -354,6 +388,13 @@ checklists, acceptance criteria, completion criteria, or required verification
 commands, maintain a working conformance map throughout implementation and
 review.
 
+Any active-plan statement that commits to production behavior, a deliverable,
+an acceptance or completion criterion, or required verification is a
+normative plan item unless it is explicitly identified as background context,
+a non-goal, optional work, or an approved deferral. Writing a requirement in
+narrative prose instead of a checklist does not exempt it from the conformance
+map.
+
 For every normative plan item, record one of:
 
 - the production path that implements it
@@ -361,12 +402,15 @@ For every normative plan item, record one of:
 - the verification command and result that prove it
 - an explicitly approved deferral or plan change
 
-The initial review must inspect in both directions:
+The initial review must inspect in all applicable directions:
 
 1. implementation to plan: every production change remains within the approved
    slice
 2. plan to implementation: every required plan item has implementation and
    verification evidence
+3. baseline to plan: every stage and shared semantic representation from an
+   extended production flow has an explicit disposition, and the plan does not
+   reuse an established meaning with weaker or different invariants
 
 Passing the existing test suite does not prove that an acceptance criterion is
 covered. A required criterion without direct evidence remains open and blocks
@@ -561,32 +605,37 @@ or finding when that identifier is itself the documentation being changed.
 
 1. Confirm the active slice, owner, contract, acceptance tests, and deferred
    work.
-2. Convert the active plan's normative checklist, acceptance criteria,
-   completion criteria, and required verification commands into a working
-   conformance map before implementation begins.
-3. Trace the current behavior and direct dependencies.
-4. Read only the evidence required for the active technical boundary.
-5. Add characterization or failing tests where practical.
-6. Implement the smallest complete slice.
-7. Run focused verification.
-8. Run required full verification before completion.
-9. Continue directly into one mandatory initial review without waiting for a
+2. Determine whether the work extends an existing production flow. If it does,
+   identify the canonical baseline and complete the stage and semantic-delta
+   map required by section 1.3.
+3. Convert every normative commitment in the active plan, including narrative
+   requirements, checklists, acceptance criteria, completion criteria, and
+   required verification commands, into a working conformance map before
+   implementation begins.
+4. Trace the current behavior and direct dependencies.
+5. Read only the evidence required for the active technical boundary.
+6. Add characterization or failing tests where practical.
+7. Implement the smallest complete slice.
+8. Run focused verification.
+9. Run required full verification before completion.
+10. Continue directly into one mandatory initial review without waiting for a
    separate request.
-10. Classify findings through the finding admission gate.
-11. Fix admitted in-scope findings test-first without pausing when remediation
+11. Classify findings through the finding admission gate.
+12. Fix admitted in-scope findings test-first without pausing when remediation
     preserves the approved plan, architecture, ownership, contracts, and
     verification scope.
-12. Run focused verification and perform a targeted follow-up review after
+13. Run focused verification and perform a targeted follow-up review after
     each remediation; repeat this loop until the findings close or a decision
     gate is reached.
-13. Record and defer optional hardening, future-phase work, legacy cleanup,
+14. Record and defer optional hardening, future-phase work, legacy cleanup,
     integration gaps, and unconfirmed risks without letting them block the
     current slice.
-14. Rerun required full verification when remediation invalidated the earlier
+15. Rerun required full verification when remediation invalidated the earlier
     result.
-15. Close the plan-conformance map by reconciling every required item against
-    production code, deterministic tests, and executed verification commands.
-16. Prepare repository-separated commit checkpoints only after the
+16. Close the plan-conformance map by reconciling the baseline dispositions and
+    every required plan item against production code, deterministic tests, and
+    executed verification commands.
+17. Prepare repository-separated commit checkpoints only after the
     plan-conformance map is closed.
 
 ### 12.2 Documentation
