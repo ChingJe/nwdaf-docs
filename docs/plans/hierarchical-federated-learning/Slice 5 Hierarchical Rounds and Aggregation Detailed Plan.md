@@ -32,38 +32,37 @@ repository-separated commit已完成。PyMTLF implementation commit：`0d1b529`�
 `CANDIDATE_READY`。這個名稱沿用了當時不完整的phase文字，但違反現有flat FL production
 invariant：`CANDIDATE_READY`只有在final validation evidence完整且gate accepted後成立。
 
-因此本文件後續所有「Slice 5進入／停在`CANDIDATE_READY`」應視為歷史implementation
-checkpoint描述，其正確語意是：
+因此本文件的current contract已統一修正為：
 
 ```text
 final Root ROUND_GLOBAL formed
 -> candidate pending final validation
 ```
 
-不修改已完成multi-round／aggregation的scope與commit歷史；production state remediation、
+不修改已完成multi-round／aggregation的scope與commit歷史；若implementation record引用修正前
+的checkpoint，該文字只代表當時發現問題的歷史證據。Production state remediation、
 hierarchical final validation與publication由：
 
 - [Slice 6 Hierarchical Final Validation and Publication Detailed Plan](./Slice%206%20Hierarchical%20Final%20Validation%20and%20Publication%20Detailed%20Plan.md)
 
-負責。Slice 6完成前，不得以本文件原有的`CANDIDATE_READY` completion claim宣稱HFL產品流程
-已完成。
+負責。Slice 5不得以configured rounds完成宣稱`CANDIDATE_READY`或完整HFL產品流程已完成。
 
 ---
 
 ## 1. 目的與完成邊界
 
 Slice 5 從 Slice 4 的 `ADMITTED` state 接手，讓已凍結的 Root–Branch–Leaf participant
-snapshot 實際完成 fixed-count synchronous hierarchical training rounds：Root 先對 Branches
+snapshot 實際完成 configured-count synchronous hierarchical training rounds：Root 先對 Branches
 發 upper-tier round；Branch 以明確的 upper／lower mapping 將同一模型重新發布並對 Leaves
 發 lower-tier round；Root 在每輪 input 指定 Client `epochs`，Leaves 使用該指示與 FedProx
 執行 local training；Branch 先做 lower-tier
 `sample_weighted` aggregation，再以具有 subordinate provenance 與 effective sample count 的
 upper-tier interim result 回報 Root；Root 最後再做一次 `sample_weighted` aggregation。
 
-本 Slice 的成功終點是 `CANDIDATE_READY`：Root 已完成 configured rounds，最後一個
-Root `ROUND_GLOBAL` artifact 是尚未 promotion 的 hierarchical candidate。成功時不在本 Slice
-執行 hierarchy-aware final validation、`FINAL_MODEL` publication、ADRF store、catalog
-promotion、Model Provision notification 或 cutover。
+本 Slice 的成功終點是最後一個Root `ROUND_GLOBAL` artifact形成，並立即handoff給Slice 6
+final validation。此artifact只是pending validation的hierarchical candidate；Slice 5不設定
+`CANDIDATE_READY`，也不執行hierarchy-aware final validation、`FINAL_MODEL` publication、
+ADRF store、catalog promotion、Model Provision notification或cutover。
 
 成功流程固定為：
 
@@ -86,7 +85,7 @@ Root ADMITTED
   -> Root sample-weights all Branch interim models
   -> Root publishes upper ROUND_GLOBAL(r)
   -> repeat until configured round_count is complete
-  -> Root enters CANDIDATE_READY
+  -> final Root ROUND_GLOBAL is handed to Slice 6 final validation
 ```
 
 本 Slice 不會：
@@ -158,7 +157,7 @@ behavior 不因本 Slice 改變。
 | nwdaf-docs/ | main | 2d961cd | canonical plan |
 | PyAnLF/ | existing branch | unchanged | out of scope |
 | nrf/ | existing branch | unchanged | verify-only dependency |
-| nwdaf-resources/ | existing branch | unchanged | Slice 7 E2E handoff |
+| nwdaf-resources/ | existing branch | unchanged | Slice 8 E2E handoff |
 
 Working trees 在本計畫開始前皆為 clean。Production implementation 必須維持 repository
 separation；若 focused Go regression 證明既有 relay contract 有缺口，才在 NWDAF 的相同
@@ -594,15 +593,16 @@ ADMITTED
   -> ROUND_WAITING
   -> AGGREGATING
   -> ROUND_DISPATCH ...
-  -> CANDIDATE_READY
+  -> final ROUND_GLOBAL formed
+  -> FINAL_VALIDATION_DISPATCH (Slice 6)
 
 ADMITTED / ROUND_DISPATCH / ROUND_WAITING / AGGREGATING
   -> FAILED
 ```
 
-`RootRequestSnapshot`應能觀察current upper round與candidate URL／digest，但不得暴露mutable
-internal participant objects。Slice 3 private status API沿用同一resource，不新增start-round
-route。
+`RootRequestSnapshot`應能觀察current upper round；final aggregate形成後可投影candidate
+digest，但private status不提供candidate URL，也不得暴露mutable internal participant objects。
+Slice 3 private status API沿用同一resource，不新增start-round route。
 
 ### 8.2 Hierarchy Server process
 
@@ -619,8 +619,9 @@ READY
 READY -> ... -> FAILED
 ```
 
-Root final configured round成功後，由Root coordinator將upper process標為
-`CANDIDATE_READY`。Branch lower process每輪完成後回到`READY`，等待下一個upper command。
+Root final configured round成功後，upper process直接進入Slice 6的
+`FINAL_VALIDATION_DISPATCH`，不得先標為`CANDIDATE_READY`。Branch lower process每輪完成後
+回到`READY`，等待下一個upper command。
 
 進入`ROUND_EVALUATING`後，本輪terminal partition凍結；late callback只能作exact duplicate
 ack或reject，不能改動aggregate input。
@@ -903,18 +904,19 @@ Branch hierarchy DELETE path向下取消Leaves。Cleanup遵守experiment registr
 - stale worker不得在resource revision或plan retired後enqueue callback；
 - flat in-progress DELETE仍維持既有`ML_TRAINING_NOT_COMPLETE` behavior。
 
-### 14.4 Success retention
+### 14.4 Success handoff retention
 
-`CANDIDATE_READY`時保留：
+Final Root `ROUND_GLOBAL`形成並handoff給Slice 6時保留：
 
-- Root candidate `ROUND_GLOBAL` URL／digest；
+- Root candidate `ROUND_GLOBAL` artifact與digest；其internal URL只在Slice 6 Training PATCH中
+  提供給assigned Branches，不是private management response欄位；
 - Root admission snapshot；
 - upper／lower subscriptions與process mappings；
 - required round artifacts；
 - active experiment reservation。
 
-本 Slice不自行promote或release successful experiment。後續finalization／lifecycle slice接手；
-failure所需cleanup則不得延後。
+本Slice不自行promote或release successful experiment。Slice 6接手final validation與publication，
+Slice 7接手完整terminal cleanup；failure所需cleanup則不得延後。
 
 ---
 
@@ -1100,8 +1102,9 @@ in-scope findings依development policy test-first修正並做targeted follow-up 
 - two Branches不同effective counts得到正確weighted result；
 - round 0 input是admitted base；
 - round r+1 input weights等於Root `ROUND_GLOBAL(r)`；
-- configured rounds完成後`CANDIDATE_READY`；
-- candidate未promotion且沒有round之外的PATCH；
+- configured rounds完成後形成final `ROUND_GLOBAL`並進入Slice 6 final validation，不得先設定
+  `CANDIDATE_READY`；
+- Slice 5本身不promotion candidate，也不發出training round以外的PATCH；
 - failure cleanup cascades upper to lower。
 
 ### 17.5 Flat regression
@@ -1230,8 +1233,8 @@ Client-local fallback保持舊行為。
 
 風險：最後Root `ROUND_GLOBAL`被寫入catalog或觸發Provision notification。
 
-控制：Slice 5終點明確是unpromoted `CANDIDATE_READY`；tests assert no model ID、ADRF store、
-catalog update或cutover。
+控制：Slice 5終點明確是unpromoted final `ROUND_GLOBAL` pending validation；tests assert此時
+沒有model ID、ADRF store、catalog update、cutover或提早`CANDIDATE_READY`。
 
 ---
 
@@ -1242,8 +1245,8 @@ catalog update或cutover。
 - hierarchy-aware final validation；
 - `FINAL_MODEL` publication、ADRF store、catalog promotion、Provision notification與cutover；
 - successful candidate terminal unsubscribe與complete cleanup；
-- restart／stale interaction／artifact expiry完整matrix（Slice 6）；
-- real multi-process topologies與two-Branch E2E（Slice 7）；
+- restart／stale interaction／artifact lifecycle完整matrix（Slice 7）；
+- real multi-process topologies與two-Branch E2E（Slice 8）；
 - dynamic participant maintenance、reselection與partial admission；
 - FedAvg、fixed-count selection、minimum-results waiting與其他aggregation。
 
@@ -1272,7 +1275,7 @@ review時必須確認，確認後implementation不得自行更改：
 
 | Item | Recommended Slice 5 decision |
 | --- | --- |
-| Success endpoint | `CANDIDATE_READY`，不含hierarchy final validation／promotion |
+| Success endpoint | final Root `ROUND_GLOBAL` formed and pending Slice 6 final validation；不得先設定`CANDIDATE_READY` |
 | Round input | new vendor `ROUND_INPUT`，不把base假裝成`ROUND_GLOBAL` |
 | Branch upper result | `ROUND_LOCAL(HIERARCHY_AGGREGATE)`，帶subordinate provenance與effective count |
 | Strategy source | only validated assignment；round PATCH不重複strategy |

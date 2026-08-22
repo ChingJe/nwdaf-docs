@@ -68,9 +68,10 @@ validated assignments、participant snapshot 與必要 artifacts 都要保留，
 - 修改 Release 18 OpenAPI YAML 或 generated free5GC OpenAPI module；
 - 將同 vendor hierarchy metadata 描述成 3GPP 定義的 hierarchical FL procedure。
 
-Slice 5 負責 rounds 與 aggregation；Slice 6 負責完整 terminal lifecycle closure 與 restart
-hardening。Slice 4 仍必須完成本次 preparation failure 所直接需要的 bounded cleanup，
-不能以 Slice 6 為理由留下 active subscriptions、correlations 或 process-local slot。
+Slice 5 負責 rounds 與 aggregation；Slice 6 負責hierarchical final validation與publication；
+Slice 7負責完整terminal lifecycle closure與fresh-state restart hardening。Slice 4仍必須完成
+本次preparation failure所直接需要的bounded cleanup，不能以後續Slice為理由留下active
+subscriptions、correlations或process-local slot。
 
 ---
 

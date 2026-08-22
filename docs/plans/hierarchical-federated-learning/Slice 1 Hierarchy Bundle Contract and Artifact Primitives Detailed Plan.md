@@ -138,7 +138,7 @@ Slice 1 必須擴充這條 validation path，不得建立另一個接受不同 h
 
 ### 4.2 可重用的 workspace 與 serving path
 
-`src/py_mtlf/core/fl_workspace.py` 目前提供：
+Slice 1開始時的`src/py_mtlf/core/fl_workspace.py`提供：
 
 - 對 `config.json`、`model.py`、`model.npy`、`scaler.pkl` 的 fixed archive entry validation；
 - compressed／extracted／single-file／entry-count limits；
@@ -148,6 +148,10 @@ Slice 1 必須擴充這條 validation path，不得建立另一個接受不同 h
 - content-addressed workspace paths 與 URLs；
 - publisher-owned artifact resolution；
 - startup TTL cleanup。
+
+這是Slice 1的baseline描述；Slice 7後的現行startup行為是admission前無條件清空每個
+PyMTLF獨占的FL scratch workspace，TTL只用於同一process內的staging與已記錄cleanup
+failure之opportunistic retry，不會依artifact年齡清除active plan。
 
 `src/py_mtlf/api/artifacts.py` 已提供 FL artifact serving，response 包含：
 
@@ -524,7 +528,7 @@ NRF eligibility check 由 Slice 4 在呼叫此 primitive 前完成，不嵌入 a
 
 ### 6.5 Retention 與 release
 
-新增 idempotent exact-plan release primitive：
+Slice 1新增 idempotent exact-plan release primitive：
 
 ```text
 release_plan(plan_id)
@@ -532,18 +536,23 @@ release_plan(plan_id)
 
 規則：
 
-- target 只能是 normalized UUIDv4 plan directory；
-- release 只刪除該確切 plan directory 內的 artifacts 與 downloads；
+- Slice 1 primitive的直接target是normalized UUIDv4 plan directory；
+- Slice 1 release只刪除該確切plan directory內的artifacts與downloads；
 - download staging files 不屬於 retained plan artifacts，每次失敗都必須刪除；crash 後
   abandoned staging files 可由 startup cleanup 清除；
 - directory 不存在仍視為成功；
 - 不接受 caller-provided arbitrary path、glob 或 recursive workspace root target；
 - normal orchestration 只在 plan terminal cleanup 開始時呼叫 release；
 - callback `204 No Content` 本身不會釋放 result bundle；
-- startup TTL cleanup 繼續負責 crash leftovers；
+- Slice 1以startup TTL cleanup負責crash leftovers；
 - restart 後不恢復任何 artifact 或 active process。
 
-Slice 1 直接測試此 primitive；由 Slice 4／6 決定 orchestration 的呼叫時機。
+Slice 7已擴充現行contract：`release_plan(plan_id)`依process-local ownership index清除同一plan
+明確擁有的所有process directories；startup則在admission前無條件清空獨占scratch workspace。
+因此active plan不會因TTL到期被刪除，TTL只處理staging與先前失敗的local deletion retry。
+
+Slice 1 直接測試初版primitive；preparation failure呼叫時機由Slice 4負責，完整terminal與
+restart cleanup由Slice 7負責。
 
 ### 6.6 Error boundary
 
@@ -679,7 +688,7 @@ Branch → Root artifact round trips 通過。
 Checkpoint 驗收：tampered URL、header、body、manifest 與 peer identity fixtures 全部 fail
 closed，且不留下 partial file。
 
-### Checkpoint 5：Release、TTL 與完整 regression
+### Checkpoint 5：Release、TTL 與完整 regression（Slice 1 implementation baseline）
 
 實作 exact-plan release，並執行：
 
@@ -691,6 +700,9 @@ closed，且不留下 partial file。
 
 Checkpoint 驗收：workspace cleanup 無法刪除 sibling plans 或 workspace root，且所有既有
 non-hierarchical tests 通過。
+
+此checkpoint記錄Slice 1當時的驗收；現行startup與multi-directory ownership驗收已由Slice 7
+取代並另有direct tests。
 
 所有 checkpoints 都在同一個 Slice 1 implementation branch 上進行。Commit boundary 可以
 依 checkpoints 切分，但完整 acceptance matrix 通過前，Slice 1 不算完成。
@@ -850,8 +862,10 @@ Slice 2–4。
 - [x] URL、header 與 body archive digests 完成 binding。
 - [x] Model、preprocessing 與 weights 經過 republish／result publication 後維持相容。
 - [x] Artifact URLs 在 retention 期間 immutable。
-- [x] `release_plan()` 只以一個已驗證的 plan directory 為 target。
-- [x] TTL 維持 crash-leftover cleanup mechanism。
+- [x] Slice 1的`release_plan()`只以一個已驗證的plan directory為target；Slice 7後依
+  process-local ownership index擴充為同一plan的所有owned process directories。
+- [x] Slice 1以TTL處理crash leftovers；Slice 7後改為startup無條件清空獨占scratch
+  workspace，TTL不清active plan。
 
 ### 12.3 Scope
 
@@ -930,6 +944,9 @@ notification sender／validator／stage-aware receiver contract。
 - bounded hierarchy transport／integrity／contract／identity error categories；
 - exact UUIDv4 `release_plan()` 與 stale staging／plan TTL cleanup；
 - 既有 FL artifact serving route 的 hierarchy role coverage。
+
+上述為Slice 1 implementation record；現行release、startup cleanup與retention contract由
+Slice 7的implementation record與completion criteria取代。
 
 ### 14.3 Verification evidence
 

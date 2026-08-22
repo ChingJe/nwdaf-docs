@@ -274,14 +274,14 @@ assignment／result bundle。它目前透過標準 ML Model Provision 取得完�
 
 第一版 HFL 不改變 final model Provision contract，因此 PyAnLF disposition 是：
 
-- Slice 0–6 無 production change；
-- Slice 7 只執行既有 final model download／activation regression；
+- Slice 0–7 無 production change；
+- Slice 8 只執行既有 final model download／activation regression；
 - 只有最終 bundle 或 Provision contract 真正改變時，才建立 PyAnLF HFL branch。
 
 ### 3.8 nwdaf-resources boundary
 
-`nwdaf-resources/` 不擁有 runtime contract。Slice 1–6 只有在需要 cross-repository fixture
-或可重用 validation sample 時才修改；Slice 7 再加入 topology deployment profiles 與
+`nwdaf-resources/` 不擁有 runtime contract。Slice 1–7 只有在需要 cross-repository fixture
+或可重用 validation sample 時才修改；Slice 8 再加入 topology deployment profiles 與
 E2E scripts。
 
 ---
@@ -373,6 +373,10 @@ Go containing-NWDAF private context 在 Slice 2 增加由實際 NRF profile conf
   ]
 }
 ```
+
+Slice 7 後此 private response 另包含每次 Go process startup 產生的
+`processInstanceId`，供 PyMTLF 偵測 containing Go generation 改變。它是後續 lifecycle
+extension，不改變本 Slice 凍結的 capability contract，也不代表 hierarchy role。
 
 Projection只包含 PyMTLF engine consistency所需的 standard capability fields；entries與
 analytics IDs canonical sort並去重。Go仍以自己的 validated `nwdafInfo.mlAnalyticsList`
@@ -477,7 +481,9 @@ Publisher retention rules：
 - callback收到 `204 No Content` 不代表 parent已完成非同步下載，publisher不得因此立即
   刪除 result bundle；
 - normal flow由 subscription deletion／plan terminal cleanup釋放 per-plan artifacts；
-- crash path由 workspace TTL清除，不建立跨 restart artifact reconciliation；
+- Slice 1 初版以 workspace TTL處理 crash leftovers；此 cleanup mechanism已由Slice 7取代為
+  startup在admission前無條件清空每個PyMTLF獨占的FL scratch workspace，不建立跨restart
+  artifact reconciliation；
 - content-addressed URL在保留期間 immutable，同一 URL不得換內容。
 
 ### 5.5 Branch assignment schema
@@ -949,16 +955,17 @@ Slice 1 不建立完整 Root／Branch orchestration。
 - configured target NRF resolution；
 - Branch assignment publish與 upper preparation dispatch。
 
-### Slice 4–6
+### Slice 4–7
 
 - Slice 4：Root–Branch–Leaf asynchronous preparation與 `complete_required` admission；
 - Slice 4同時修正 standard preparation notification最低欄位集合、success sender與
   preparation-stage `mLModelInfos` receiver；
 - Slice 5：FedProx local objective、Branch lower aggregation、effective weight與 Root upper
   aggregation；
-- Slice 6：terminal lifecycle、cleanup、restart與 stale interaction hardening。
+- Slice 6：hierarchical final validation、evidence gate與publication；
+- Slice 7：terminal lifecycle、cleanup、fresh-state restart與stale interaction hardening。
 
-### Slice 7
+### Slice 8
 
 `nwdaf-resources/` 建立：
 
