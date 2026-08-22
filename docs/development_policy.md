@@ -233,6 +233,31 @@ training, and model logic.
   implementation repositories.
 - Documentation in `nwdaf-docs/` may use English or Traditional Chinese, but
   each document should remain internally consistent.
+- Before drafting or editing documentation, select its prose language in this
+  order: explicit user instruction, the existing document's dominant prose
+  language, the established language of sibling documents in the same series,
+  then the repository default. A new document extending an existing series
+  inherits that series' prose language unless the user explicitly requests
+  otherwise.
+- Code identifiers, API names, paths, configuration keys, protocol terms,
+  status values, and direct quotations do not change the selected prose
+  language. Headings, explanations, table labels, checklist items, captions,
+  and complete sentences must use the selected language consistently.
+- Before a documentation change is declared ready, reviewed, or complete,
+  perform a dedicated language-consistency pass over the entire changed
+  document. Check headings, paragraphs, tables, captions, checklists, status
+  text, and newly added decision records. For a document in an established
+  series, compare it with at least one current sibling document during this
+  pass.
+- The language-consistency pass is separate from technical correctness,
+  formatting, and diff checks. Mixed-language prose does not pass merely
+  because it is grammatical or uses familiar project terminology. Do not
+  declare the document ready or complete while prose-language inconsistencies
+  remain.
+- Report the selected prose language, the selection evidence, and the result
+  of the language-consistency pass only in the final user-facing conversation.
+  Do not write this procedural report into the target document, an
+  implementation record, a review ledger, or a commit message.
 - Keep implementations explicit and readable; avoid speculative abstractions.
 - Add comments only when intent is not apparent from the code.
 - Keep config naming aligned with the existing YAML layout and project terms.
@@ -476,6 +501,10 @@ finished, but before the final full verification and completion claim:
 3. Reconcile each item against the final production diff and exact test path.
 4. Treat any missing or indirect evidence as open. Do not claim completion
    until it is implemented, directly verified, or explicitly deferred.
+5. When documentation changed, report the selected prose language, the
+   evidence used to select it, and the result of the full-document language
+   consistency pass only in the final user-facing conversation. A diff check
+   or spot check does not replace this pass.
 
 Earlier summaries, remembered requirements, existing conformance maps, and
 previously passing test results do not replace this fresh read and
@@ -683,3 +712,5 @@ or finding when that identifier is itself the documentation being changed.
 4. Keep phase-specific decisions in the phase plan.
 5. Keep review iterations in one phase ledger where practical.
 6. Link existing evidence instead of restating entire parent documents.
+7. Before handoff or commit, complete the documentation language gate from
+   section 4 and report its result only in the final user-facing conversation.
