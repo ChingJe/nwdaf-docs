@@ -51,9 +51,9 @@ Before a substantial implementation begins, identify:
 5. explicitly deferred behavior
 
 A named project phase may contain several implementation slices. Finish,
-verify, and prepare a checkpoint for one slice before expanding into another
-cross-cutting flow. Do not intentionally accumulate an entire multi-repository
-phase as one unreviewable working-tree change.
+verify, and prepare the user-review handoff for one slice before expanding into
+another cross-cutting flow. Do not intentionally accumulate an entire
+multi-repository phase as one unreviewable working-tree change.
 
 ### 1.3 Existing-Flow Extension Gate
 
@@ -625,7 +625,40 @@ the first evidence that supports an expected answer.
 
 ---
 
-## 11. Commit Format
+## 11. User Review, Commit Approval, And Format
+
+### 11.1 User Review Gate
+
+Completing implementation, review, verification, or plan conformance does not
+authorize marking the active plan `Completed` or moving the review diff into a
+commit. Until the user confirms the review result:
+
+- keep the intended changes unstaged and uncommitted so they remain directly
+  visible in the IDE, unless the user explicitly requests another review form;
+- keep the active plan at `Ready for User Review`, `Review Pending`, or an
+  equivalent open state;
+- report the affected repositories, working-tree diff summary, verification
+  results, and remaining gaps.
+
+Then stop and wait for user review. After the user confirms the review result,
+advance the plan to the next applicable open state and prepare the commit
+proposal. Do not mark the plan `Completed` while any plan-required follow-up
+implementation, external validation, or acceptance evidence remains. Review
+confirmation does not itself authorize staging or committing.
+
+### 11.2 Commit Approval Gate
+
+The workspace-level Commit Approval Gate in `AGENTS.md` governs every
+repository. Completing implementation, review, verification, or plan
+conformance authorizes preparing a commit proposal only. It does not authorize
+staging or committing.
+
+A plan requirement to create commits is a delivery requirement, not
+implementation or verification evidence. Track it separately as
+`pending user approval`; it does not keep the non-Git conformance map open and
+never grants permission to perform the Git operation.
+
+### 11.3 Commit Message Format
 
 This format applies to implementation commits in `NWDAF/`, `PyAnLF/`, and
 `PyMTLF/`. The repositories remain independent and must be committed
@@ -700,9 +733,20 @@ or finding when that identifier is itself the documentation being changed.
     the final production diff, exact deterministic test paths, and required
     verification commands. Keep missing or indirect evidence open.
 16. Run the required final full verification.
-17. Record the final verification results and close the plan-conformance map.
-18. Prepare repository-separated commit checkpoints only after the
-    plan-conformance map is closed.
+17. Record the final verification results and close all non-Git items in the
+    plan-conformance map. Keep the active plan open as `Ready for User Review`
+    or an equivalent state.
+18. Keep the intended changes unstaged and uncommitted, present the review
+    handoff required by the workspace User Review Gate, then stop and wait for
+    the user to confirm the review result.
+19. After review confirmation, advance the plan to the next applicable open
+    state and prepare the read-only, repository-separated commit proposal
+    required by the workspace Commit Approval Gate. Track the commit checkpoint
+    as `pending user approval`, then stop and wait for explicit commit approval.
+20. After commit approval, stage only the approved changes, inspect the staged
+    diff, and create only the approved repository-separated commits.
+21. Report the resulting commit hashes. Do not push without separate explicit
+    user approval.
 
 ### 12.2 Documentation
 
@@ -714,3 +758,13 @@ or finding when that identifier is itself the documentation being changed.
 6. Link existing evidence instead of restating entire parent documents.
 7. Before handoff or commit, complete the documentation language gate from
    section 4 and report its result only in the final user-facing conversation.
+8. Keep the intended documentation changes unstaged and uncommitted, present
+   the review handoff required by the workspace User Review Gate, then stop and
+   wait for the user to confirm the review result.
+9. After review confirmation, advance the plan to the next applicable open
+   state and present the read-only commit proposal required by the workspace
+   Commit Approval Gate, then stop and wait for explicit commit approval.
+10. After commit approval, stage only the approved documentation changes,
+    inspect the staged diff, and create only the approved commits.
+11. Report the resulting commit hashes. Do not push without separate explicit
+    user approval.
