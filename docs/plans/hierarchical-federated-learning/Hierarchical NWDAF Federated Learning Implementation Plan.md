@@ -2,9 +2,12 @@
 
 日期：2026-08-17
 
-最後更新：2026-08-21
+最後更新：2026-08-25
 
-狀態：In progress；Slice 0–7 Completed，Slice 8 detailed plan與real multi-process E2E尚未開始
+狀態：First Commit Proposal Pending；Slice 0–8 production implementation、review、repository
+verification與使用HTTP/H2C、`oauth: false`的真實NRF／ADRF本機多程序HFL E2E均已完成，
+使用者已確認第一批working-tree review結果。第一批commits後仍須完成flat FL self-download
+remediation、第二批commits與testbed validation，才能關閉本計畫
 
 相關文件：
 
@@ -781,10 +784,12 @@ strategy override 或任意深度 recursive scheduling 不作為第一版 implem
 每個 slice 開始前都必須建立或更新 detailed plan，明列 affected repositories、contract、
 acceptance tests、deferred behavior 與 checkpoint。
 
-整體進度：Slice 0–7的baseline、production implementation、review、remediation與required
-repository verification均已完成；下一個work unit是先建立並review Slice 8 detailed plan，再
-執行real multi-process E2E與regression closure。現階段不宣稱real NRF／OAuth／TLS或cross-host
-artifact flow已驗證。
+整體進度：Slice 0–8 的 baseline、production implementation、review、remediation、required
+repository verification 與 real local multi-process E2E 均已完成技術驗證。Slice 8 已以
+真實 NRF、ADRF、Go NWDAF、PyMTLF 與 PyAnLF processes 關閉 regression，並保存跨程序
+artifact flow、失敗、逾時與兩個方向 generation restart 的直接證據；使用者已確認第一批
+working-tree review，整體狀態為 `First Commit Proposal Pending`。第一批 commits 後依序進行
+flat FL self-download remediation、第二批 commits 與 testbed validation。
 
 ### Slice 0：Baseline audit and contract freeze
 
@@ -1021,6 +1026,15 @@ NWDAF implementation commit為`3279891`。
 
 ### Slice 8：Multi-process E2E and regression closure
 
+狀態：First Commit Proposal Pending；固定使用HTTP/H2C與`oauth: false`的local
+multi-process acceptance，runner、production remediation、repository verification與全部
+required local E2E scenarios均已完成，使用者也已確認第一批review結果。第一批commits後仍須
+完成flat FL self-download remediation、第二批commits與testbed validation。
+
+詳細計畫：
+
+- [Slice 8 Multi-process E2E and Regression Closure Detailed Plan](./Slice%208%20Multi-process%20E2E%20and%20Regression%20Closure%20Detailed%20Plan.md)
+
 目標：用兩個層級的 topology profiles 驗證完整 business flow：
 
 - smoke profile：一個 Root、一個 Branch、兩個 Leaves；
@@ -1159,7 +1173,7 @@ concurrency tests；不得只以固定 sleep 證明 correctness。
 
 ### 10.3 Verification claims
 
-Unit／mock tests 不得宣稱完成 real NRF、OAuth、TLS 或 multi-process integration。E2E
+Unit／mock tests 不得宣稱完成 real NRF 或 multi-process integration。E2E
 closure 必須分別記錄：build pass、repository test pass、cross-process pass、real NRF
 discovery pass，以及未執行的 environment-dependent checks。
 
@@ -1249,7 +1263,14 @@ optional hardening，不得默默擴張進第一版。
 28. existing non-hierarchical distributed FL 除改由Server發布`ROUND_INPUT`並決定epochs外，
     objective、result、aggregation、final validation、publication與lifecycle behavior沒有 regression；
 29. documentation 明確區分 Release 18 3GPP-defined behavior、同 vendor implementation
-    profile，以及僅供參考的 Release 19 management semantics。
+    profile，以及僅供參考的 Release 19 management semantics；
+30. flat FL Server 的上一輪 `ROUND_GLOBAL`、本機 `ROUND_INPUT` 與 final candidate 不經 remote
+    downloader self-download，且完成 direct regressions、完整 PyMTLF verification、flat isolated
+    E2E 與受影響的 hierarchy regression；
+31. 第一批與 flat remediation 第二批均以使用者核准的 repository-separated commits 固定精確
+    revisions，部署到 testbed 並通過部署前確認的 required scenario matrix；
+32. testbed record 完整記錄 VM topology、environment、revisions、commands、results、skips 與
+    remediation history，且使用者確認最終 evidence。
 
 ---
 
@@ -1312,3 +1333,6 @@ optional hardening，不得默默擴張進第一版。
 | 2026-08-20 | Workspace cleanup failure採opportunistic retry，terminal status與tombstone採lazy pruning；第一版不新增periodic maintenance worker | Confirmed |
 | 2026-08-20 | Containing-Go generation只由單一app-owned monitor refresh；training admission只讀cached readiness／generation，不額外同步查詢 | Confirmed |
 | 2026-08-20 | Non-terminal publication journal在startup保持原樣；不呼叫`resume()`，也不做terminalize、compact或sanitation | Confirmed |
+| 2026-08-22 | Slice 8 detailed plan建立獨立hierarchical deployment、smoke／two-Branch profiles、real-process failure／restart matrix與flat regression；transport固定為HTTP/H2C與`oauth: false`，OAuth／TLS及true cross-host deployment從未納入本次HFL計畫 | Confirmed；Slice 8 ready for implementation |
+| 2026-08-25 | Slice 8 real-process matrix完成；flat、manual smoke、two-Branch degradation、capability mismatch、preparation failure、deadline-driven round timeout與兩向generation restart全部通過，並以direct tests關閉dynamic NRF polling、owned round-input aggregation與restart re-resolution evidence缺口 | Confirmed；技術驗證完成，Slice 8與第一版HFL計畫Ready for User Review |
+| 2026-08-25 | 使用者確認第一批working-tree review；交付順序固定為第一批commits、flat FL self-download remediation、第二批commits，再以兩批精確revisions執行testbed validation | Confirmed；First Commit Proposal Pending，testbed通過與使用者確認evidence前不得Completed |
