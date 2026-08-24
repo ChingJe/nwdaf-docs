@@ -4,10 +4,9 @@
 
 最後更新：2026-08-25
 
-狀態：First Commit Proposal Pending；Slice 0–8 production implementation、review、repository
-verification與使用HTTP/H2C、`oauth: false`的真實NRF／ADRF本機多程序HFL E2E均已完成，
-使用者已確認第一批working-tree review結果。第一批commits後仍須完成flat FL self-download
-remediation、第二批commits與testbed validation，才能關閉本計畫
+狀態：Second Commit Proposal Pending；Slice 0–8本機E2E第一批commits已建立，必要
+self-download remediation、本機驗證與使用者IDE review均已完成。後續仍須取得第二批精確
+commit proposal核准、建立commits並完成testbed validation，才能關閉本計畫
 
 相關文件：
 
@@ -16,6 +15,7 @@ remediation、第二批commits與testbed validation，才能關閉本計畫
 - [Distributed NWDAF Federated Learning Implementation Plan](../federated-learning/Distributed%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)
 - [Phase 3 And 4 Federated Training Execution Detailed Plan](../federated-learning/Phase%203%20And%204%20Federated%20Training%20Execution%20Detailed%20Plan.md)
 - [NWDAF Development Policy](../../development_policy.md)
+- [Flat FL Owned Artifact Self-download Remediation Detailed Plan](./Flat%20FL%20Owned%20Artifact%20Self-download%20Remediation%20Detailed%20Plan.md)
 
 ---
 
@@ -788,8 +788,9 @@ acceptance tests、deferred behavior 與 checkpoint。
 repository verification 與 real local multi-process E2E 均已完成技術驗證。Slice 8 已以
 真實 NRF、ADRF、Go NWDAF、PyMTLF 與 PyAnLF processes 關閉 regression，並保存跨程序
 artifact flow、失敗、逾時與兩個方向 generation restart 的直接證據；使用者已確認第一批
-working-tree review，整體狀態為 `First Commit Proposal Pending`。第一批 commits 後依序進行
-flat FL self-download remediation、第二批 commits 與 testbed validation。
+working-tree review並建立第一批commits。flat FL self-download remediation、本機驗證與使用者
+IDE review也已完成，整體狀態為`Second Commit Proposal Pending`；取得精確proposal核准後，
+依序進行第二批commits與testbed validation。
 
 ### Slice 0：Baseline audit and contract freeze
 
@@ -1026,10 +1027,9 @@ NWDAF implementation commit為`3279891`。
 
 ### Slice 8：Multi-process E2E and regression closure
 
-狀態：First Commit Proposal Pending；固定使用HTTP/H2C與`oauth: false`的local
-multi-process acceptance，runner、production remediation、repository verification與全部
-required local E2E scenarios均已完成，使用者也已確認第一批review結果。第一批commits後仍須
-完成flat FL self-download remediation、第二批commits與testbed validation。
+狀態：Second Commit Proposal Pending；固定使用HTTP/H2C與`oauth: false`的local multi-process
+acceptance、第一批commits、flat self-download remediation、本機驗證與使用者IDE review均已完成。
+後續仍須取得第二批精確proposal核准、建立commits與完成testbed validation。
 
 詳細計畫：
 
@@ -1335,4 +1335,7 @@ optional hardening，不得默默擴張進第一版。
 | 2026-08-20 | Non-terminal publication journal在startup保持原樣；不呼叫`resume()`，也不做terminalize、compact或sanitation | Confirmed |
 | 2026-08-22 | Slice 8 detailed plan建立獨立hierarchical deployment、smoke／two-Branch profiles、real-process failure／restart matrix與flat regression；transport固定為HTTP/H2C與`oauth: false`，OAuth／TLS及true cross-host deployment從未納入本次HFL計畫 | Confirmed；Slice 8 ready for implementation |
 | 2026-08-25 | Slice 8 real-process matrix完成；flat、manual smoke、two-Branch degradation、capability mismatch、preparation failure、deadline-driven round timeout與兩向generation restart全部通過，並以direct tests關閉dynamic NRF polling、owned round-input aggregation與restart re-resolution evidence缺口 | Confirmed；技術驗證完成，Slice 8與第一版HFL計畫Ready for User Review |
-| 2026-08-25 | 使用者確認第一批working-tree review；交付順序固定為第一批commits、flat FL self-download remediation、第二批commits，再以兩批精確revisions執行testbed validation | Confirmed；First Commit Proposal Pending，testbed通過與使用者確認evidence前不得Completed |
+| 2026-08-25 | 使用者確認第一批working-tree review；交付順序固定為第一批commits、flat FL self-download remediation、第二批commits，再以兩批精確revisions執行testbed validation | Confirmed；第一批commits已建立，testbed通過與使用者確認evidence前不得Completed |
+| 2026-08-25 | 建立獨立flat FL owned-artifact self-download remediation detailed plan；先完成計畫審查，再修改第二批production code | Confirmed；使用者已核准計畫並開始實作 |
+| 2026-08-25 | flat Server三條owned-artifact self-download已移除；direct regressions、PyMTLF full verification、flat isolated E2E與hierarchy smoke regression均通過 | Ready for User Review；第二批diff保持unstaged、uncommitted |
+| 2026-08-25 | 使用者確認flat self-download remediation的IDE review結果 | Confirmed；Second Commit Proposal Pending，核准精確proposal前不得stage或commit |

@@ -2,16 +2,19 @@
 
 日期：2026-08-22
 
-狀態：First Commit Proposal Pending；前置審視、runner、production remediation、
-repository verification 與全部必要的本機真實多程序 E2E 情境均已完成，使用者亦已確認
-working-tree review 結果。第一批 commits 後仍須修正 flat FL self-download、建立第二批
-commits，並以兩批精確 revisions 完成 testbed 驗證；在此之前本 Slice 保持開放。
+狀態：Second Commit Proposal Pending；本機 E2E 第一批 commits 已建立，必要 remediation、
+本機驗證與使用者 IDE review 已完成。後續仍須取得第二批精確 proposal 核准、建立 commits，
+並以兩批精確 revisions 完成 testbed 驗證；在此之前本 Slice 保持開放。
 
 技術驗證完成日期：2026-08-25
 
 上層計畫：
 
 - [Hierarchical NWDAF Federated Learning Implementation Plan](./Hierarchical%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)
+
+必要後續 remediation：
+
+- [Flat FL Owned Artifact Self-download Remediation Detailed Plan](./Flat%20FL%20Owned%20Artifact%20Self-download%20Remediation%20Detailed%20Plan.md)
 
 前置 slices：
 
@@ -864,8 +867,10 @@ production bug，也不能視為通過。
 - [x] 完成 final fresh-read conformance gate
 - [x] 完整修改已恢復為 IDE 可直接審查的 unstaged working-tree diff
 - [x] 使用者已確認本機 E2E 批次的 review 結果
-- [ ] 第一批 repository-separated commit proposal 已獲核准並建立 commits
-- [ ] flat FL self-download remediation 已完成本機驗證、review 與第二批 commits
+- [x] 第一批 repository-separated commit proposal 已獲核准並建立 commits
+- [x] flat FL self-download remediation 已完成 production change、mandatory review 與本機驗證
+- [x] 使用者已確認 flat FL self-download remediation working-tree review 結果
+- [ ] flat FL self-download remediation 第二批 commits 已獲核准並建立
 - [ ] 兩批精確 revisions 已通過 required testbed validation
 - [ ] 使用者已確認 testbed evidence 與最終結果
 
@@ -1089,10 +1094,11 @@ completion criteria 1–23都有production path、direct test、獨立summary或
 沒有silent deferral或未關閉的本機技術驗證項目。使用者已於2026-08-25確認criterion 24的
 working-tree review結果。
 
-因此第一批目前是 `First Commit Proposal Pending`；已完成的技術驗證範圍精確描述為：使用
-HTTP/H2C與`oauth: false`的真實NRF／ADRF本機多程序HFL E2E。第一批 commits 不代表 Slice 8
-完成；後續仍依criteria 25–28進行flat FL self-download remediation、第二批 commits與testbed
-validation。
+因此目前是 `Second Commit Proposal Pending`；已完成的技術驗證範圍包含
+使用HTTP/H2C與`oauth: false`的真實NRF／ADRF本機多程序HFL E2E，以及flat owned-artifact
+self-download remediation的direct tests、full PyMTLF verification、flat isolated E2E與hierarchy
+smoke regression，且使用者已確認第二批working-tree review結果。第一批commits不代表Slice 8
+完成；後續仍依criteria 25–28取得精確proposal核准、建立第二批commits與完成testbed validation。
 
 ### 18.6 技術驗證後補充紀錄：flat FL self-download
 
@@ -1112,10 +1118,19 @@ round-input artifact，但未修改 flat flow。現行 flat isolated E2E 仍通�
 isolated E2E 與受影響的 hierarchy regression，並重新評估 `_aggregate_round()` 的 optional URL
 fallback 是否仍有合法 production caller。
 
+上述 remediation 已完成：flat process state 保存current global artifact handle；aggregation必須接收
+owned round-input artifact；final evaluator直接接收owned candidate metadata。三條本機
+self-download均已移除，peer-owned round與validation artifacts仍使用origin-checked downloader。
+direct regressions為`7 passed`，PyMTLF full suite為`479 passed, 2 skipped`，Ruff通過；flat isolated
+E2E與hierarchy smoke manual-success regression也均通過。完整commands、skip reasons、暫存summary
+paths與review結論記錄於remediation detailed plan §13；使用者已確認IDE review結果，目前第二批
+diff仍保持unstaged、uncommitted，等待精確commit proposal核准。
+
 ### 18.7 Commit 與 testbed acceptance sequence
 
-1. 使用者已完成第一批 working-tree review；先提出 repository-separated commit proposal，取得
-   對該精確 proposal 的核准後才建立第一批 commits。
+1. 使用者已完成第一批 working-tree review；第一批 repository-separated commits 已建立：
+   PyMTLF `579b86e`、`3628068`，PyAnLF `6a4d94a`，nwdaf-resources `213d031`、`39ced28`，
+   nwdaf-docs `f5c6186`、`4a5aaad`。
 2. 第一批 commits 建立後開始 §18.6 的 flat FL self-download remediation；通過必要本機驗證後，
    再次保持 unstaged diff 供使用者 review，並以另一份 proposal 取得第二批 commit 核准。
 3. 第二批 commits 建立後，狀態改為 `Testbed Validation Pending`。部署前須與使用者確認 required
