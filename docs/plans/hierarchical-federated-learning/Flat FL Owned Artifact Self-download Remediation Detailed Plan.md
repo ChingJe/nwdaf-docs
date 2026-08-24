@@ -2,8 +2,8 @@
 
 日期：2026-08-25
 
-狀態：Second Commit Proposal Pending；production remediation、mandatory review、必要本機驗證與
-使用者 IDE review 均已完成，等待使用者核准精確的 repository-separated commit proposal
+狀態：Locally Completed；production remediation、mandatory review、必要本機驗證、使用者
+IDE review 與第二批 repository-separated commits 均已完成，進入 `Testbed Validation Pending`
 
 上層計畫：
 
@@ -25,6 +25,11 @@
 - PyAnLF：`6a4d94a`
 - nwdaf-resources：`213d031`、`39ced28`
 - nwdaf-docs：`f5c6186`、`4a5aaad`
+
+第二批已建立 commits：
+
+- PyMTLF：`e9aa223`
+- nwdaf-docs：`f2d0175`
 
 ---
 
@@ -436,6 +441,6 @@ Initial review 發現 final evaluator 尚缺一條直接同時證明 owned candi
 result 仍下載的測試證據；已新增 focused regression，targeted follow-up 與完整驗證均通過。沒有
 新增 contract、schema、config 或 lifecycle owner。
 
-完成條件 1–13 已關閉；使用者已確認 IDE review 結果。條件 14 的第二批
-repository-separated commit proposal 已進入待核准狀態。第二批 changes 目前仍保持
-unstaged、uncommitted；testbed validation 仍是 commits 建立後的獨立 acceptance gate。
+完成條件 1–14 已關閉；使用者已確認 IDE review 與精確 commit proposal，第二批 commits 為
+PyMTLF `e9aa223` 與 nwdaf-docs `f2d0175`。本 remediation 已 locally completed；testbed
+validation 仍是整體 HFL 計畫的獨立 acceptance gate。

@@ -4,9 +4,9 @@
 
 最後更新：2026-08-25
 
-狀態：Second Commit Proposal Pending；Slice 0–8本機E2E第一批commits已建立，必要
-self-download remediation、本機驗證與使用者IDE review均已完成。後續仍須取得第二批精確
-commit proposal核准、建立commits並完成testbed validation，才能關閉本計畫
+狀態：Testbed Validation Pending；Slice 0–8本機E2E、必要self-download remediation、本機驗證、
+使用者IDE review與兩批repository-separated commits均已完成。後續須以精確revisions完成
+testbed validation，才能關閉本計畫
 
 相關文件：
 
@@ -788,9 +788,9 @@ acceptance tests、deferred behavior 與 checkpoint。
 repository verification 與 real local multi-process E2E 均已完成技術驗證。Slice 8 已以
 真實 NRF、ADRF、Go NWDAF、PyMTLF 與 PyAnLF processes 關閉 regression，並保存跨程序
 artifact flow、失敗、逾時與兩個方向 generation restart 的直接證據；使用者已確認第一批
-working-tree review並建立第一批commits。flat FL self-download remediation、本機驗證與使用者
-IDE review也已完成，整體狀態為`Second Commit Proposal Pending`；取得精確proposal核准後，
-依序進行第二批commits與testbed validation。
+working-tree review並建立第一批commits。flat FL self-download remediation、本機驗證、使用者
+IDE review與第二批commits也已完成，整體狀態為`Testbed Validation Pending`；下一步以兩批
+精確revisions執行部署前確認的required testbed scenario matrix。
 
 ### Slice 0：Baseline audit and contract freeze
 
@@ -1027,9 +1027,9 @@ NWDAF implementation commit為`3279891`。
 
 ### Slice 8：Multi-process E2E and regression closure
 
-狀態：Second Commit Proposal Pending；固定使用HTTP/H2C與`oauth: false`的local multi-process
-acceptance、第一批commits、flat self-download remediation、本機驗證與使用者IDE review均已完成。
-後續仍須取得第二批精確proposal核准、建立commits與完成testbed validation。
+狀態：Testbed Validation Pending；固定使用HTTP/H2C與`oauth: false`的local multi-process
+acceptance、flat self-download remediation、本機驗證、使用者IDE review與兩批commits均已完成。
+後續仍須部署精確revisions並完成required testbed validation。
 
 詳細計畫：
 
@@ -1339,3 +1339,4 @@ optional hardening，不得默默擴張進第一版。
 | 2026-08-25 | 建立獨立flat FL owned-artifact self-download remediation detailed plan；先完成計畫審查，再修改第二批production code | Confirmed；使用者已核准計畫並開始實作 |
 | 2026-08-25 | flat Server三條owned-artifact self-download已移除；direct regressions、PyMTLF full verification、flat isolated E2E與hierarchy smoke regression均通過 | Ready for User Review；第二批diff保持unstaged、uncommitted |
 | 2026-08-25 | 使用者確認flat self-download remediation的IDE review結果 | Confirmed；Second Commit Proposal Pending，核准精確proposal前不得stage或commit |
+| 2026-08-25 | 使用者核准第二批精確proposal並建立PyMTLF `e9aa223`與nwdaf-docs `f2d0175` | Confirmed；Testbed Validation Pending |

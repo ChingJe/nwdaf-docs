@@ -2,9 +2,9 @@
 
 日期：2026-08-22
 
-狀態：Second Commit Proposal Pending；本機 E2E 第一批 commits 已建立，必要 remediation、
-本機驗證與使用者 IDE review 已完成。後續仍須取得第二批精確 proposal 核准、建立 commits，
-並以兩批精確 revisions 完成 testbed 驗證；在此之前本 Slice 保持開放。
+狀態：Testbed Validation Pending；本機 E2E、必要 remediation、本機驗證、使用者 IDE review
+與兩批 commits 均已完成。後續須以兩批精確 revisions 完成 testbed 驗證；在此之前本 Slice
+保持開放。
 
 技術驗證完成日期：2026-08-25
 
@@ -870,7 +870,7 @@ production bug，也不能視為通過。
 - [x] 第一批 repository-separated commit proposal 已獲核准並建立 commits
 - [x] flat FL self-download remediation 已完成 production change、mandatory review 與本機驗證
 - [x] 使用者已確認 flat FL self-download remediation working-tree review 結果
-- [ ] flat FL self-download remediation 第二批 commits 已獲核准並建立
+- [x] flat FL self-download remediation 第二批 commits 已獲核准並建立
 - [ ] 兩批精確 revisions 已通過 required testbed validation
 - [ ] 使用者已確認 testbed evidence 與最終結果
 
@@ -1094,11 +1094,12 @@ completion criteria 1–23都有production path、direct test、獨立summary或
 沒有silent deferral或未關閉的本機技術驗證項目。使用者已於2026-08-25確認criterion 24的
 working-tree review結果。
 
-因此目前是 `Second Commit Proposal Pending`；已完成的技術驗證範圍包含
+因此目前是 `Testbed Validation Pending`；已完成的技術驗證範圍包含
 使用HTTP/H2C與`oauth: false`的真實NRF／ADRF本機多程序HFL E2E，以及flat owned-artifact
 self-download remediation的direct tests、full PyMTLF verification、flat isolated E2E與hierarchy
-smoke regression，且使用者已確認第二批working-tree review結果。第一批commits不代表Slice 8
-完成；後續仍依criteria 25–28取得精確proposal核准、建立第二批commits與完成testbed validation。
+smoke regression，且使用者已確認第二批working-tree review與精確commit proposal。criteria
+25–26已由PyMTLF `e9aa223`與nwdaf-docs `f2d0175`關閉；criteria 27–28仍須完成testbed
+validation、保存完整record並由使用者確認evidence。
 
 ### 18.6 技術驗證後補充紀錄：flat FL self-download
 
@@ -1123,17 +1124,17 @@ owned round-input artifact；final evaluator直接接收owned candidate metadata
 self-download均已移除，peer-owned round與validation artifacts仍使用origin-checked downloader。
 direct regressions為`7 passed`，PyMTLF full suite為`479 passed, 2 skipped`，Ruff通過；flat isolated
 E2E與hierarchy smoke manual-success regression也均通過。完整commands、skip reasons、暫存summary
-paths與review結論記錄於remediation detailed plan §13；使用者已確認IDE review結果，目前第二批
-diff仍保持unstaged、uncommitted，等待精確commit proposal核准。
+paths與review結論記錄於remediation detailed plan §13；使用者已確認IDE review與精確proposal，
+第二批commits為PyMTLF `e9aa223`與nwdaf-docs `f2d0175`，目前進入testbed validation gate。
 
 ### 18.7 Commit 與 testbed acceptance sequence
 
 1. 使用者已完成第一批 working-tree review；第一批 repository-separated commits 已建立：
    PyMTLF `579b86e`、`3628068`，PyAnLF `6a4d94a`，nwdaf-resources `213d031`、`39ced28`，
    nwdaf-docs `f5c6186`、`4a5aaad`。
-2. 第一批 commits 建立後開始 §18.6 的 flat FL self-download remediation；通過必要本機驗證後，
-   再次保持 unstaged diff 供使用者 review，並以另一份 proposal 取得第二批 commit 核准。
-3. 第二批 commits 建立後，狀態改為 `Testbed Validation Pending`。部署前須與使用者確認 required
+2. 第一批 commits 建立後完成 §18.6 的 flat FL self-download remediation；使用者已確認
+   working-tree review與精確proposal，第二批commits為PyMTLF `e9aa223`與nwdaf-docs `f2d0175`。
+3. 目前狀態為 `Testbed Validation Pending`。部署前須與使用者確認 required
    scenario matrix、VM topology 與 transport profile，並記錄兩批涉及的精確 repository revisions。
 4. 若 testbed 失敗，回到 working-tree remediation、重跑受影響的本機 regression、重新 review 與
    commit，再部署新 revisions；不得把失敗 revisions 或僅本機通過視為完成。
