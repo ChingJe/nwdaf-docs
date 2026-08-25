@@ -16,6 +16,7 @@ testbed validation，才能關閉本計畫
 - [Phase 3 And 4 Federated Training Execution Detailed Plan](../federated-learning/Phase%203%20And%204%20Federated%20Training%20Execution%20Detailed%20Plan.md)
 - [NWDAF Development Policy](../../development_policy.md)
 - [Flat FL Owned Artifact Self-download Remediation Detailed Plan](./Flat%20FL%20Owned%20Artifact%20Self-download%20Remediation%20Detailed%20Plan.md)
+- [Explicit Flat and Hierarchical Orchestration Configuration Detailed Plan](./Explicit%20Flat%20and%20Hierarchical%20Orchestration%20Configuration%20Detailed%20Plan.md)
 - [NWDAF Testbed Integration Status](../../progress/testbed_integration_status.md)
 
 ---
@@ -500,6 +501,12 @@ Config rules：
 Root-only topology config 只允許該 deployment 主動建立 static plan，不代表它向 NRF
 註冊為特殊 Root。未來可新增 `strategy: dynamic`，以 NRF candidate inventory 自動建立
 assignment，但不改變後續 bundle、preparation 與 training contracts。
+
+Follow-up orchestration work 將以顯式 `flat`／`hierarchical` mode 取代只靠 topology 欄位
+是否存在的 selection semantics，並為 flat FL 增加不依賴 Model Provision／Monitor active
+scopes 的 static participant topology。該需求與 migration boundary 由
+[Explicit Flat and Hierarchical Orchestration Configuration Detailed Plan](./Explicit%20Flat%20and%20Hierarchical%20Orchestration%20Configuration%20Detailed%20Plan.md)
+管理；在其 implementation 完成前，本節仍描述目前第一版 HFL 行為。
 
 ### 4.9 Candidate、final validation and publication semantics
 
@@ -1341,3 +1348,4 @@ optional hardening，不得默默擴張進第一版。
 | 2026-08-25 | flat Server三條owned-artifact self-download已移除；direct regressions、PyMTLF full verification、flat isolated E2E與hierarchy smoke regression均通過 | Ready for User Review；第二批diff保持unstaged、uncommitted |
 | 2026-08-25 | 使用者確認flat self-download remediation的IDE review結果 | Confirmed；Second Commit Proposal Pending，核准精確proposal前不得stage或commit |
 | 2026-08-25 | 使用者核准第二批精確proposal並建立PyMTLF `e9aa223`與nwdaf-docs `f2d0175` | Confirmed；Testbed Validation Pending |
+| 2026-08-25 | 新增顯式 flat／hierarchical orchestration selection需求；HFL維持static Branch／Leaf topology，flat新增可略過Model Provision／Monitor chain的static Client topology，並保留Server／Client與Root／Branch／Leaf的mode-specific術語 | Confirmed；implementation pending |
