@@ -16,6 +16,7 @@ testbed validation，才能關閉本計畫
 - [Phase 3 And 4 Federated Training Execution Detailed Plan](../federated-learning/Phase%203%20And%204%20Federated%20Training%20Execution%20Detailed%20Plan.md)
 - [NWDAF Development Policy](../../development_policy.md)
 - [Flat FL Owned Artifact Self-download Remediation Detailed Plan](./Flat%20FL%20Owned%20Artifact%20Self-download%20Remediation%20Detailed%20Plan.md)
+- [NWDAF Testbed Integration Status](../../progress/testbed_integration_status.md)
 
 ---
 
