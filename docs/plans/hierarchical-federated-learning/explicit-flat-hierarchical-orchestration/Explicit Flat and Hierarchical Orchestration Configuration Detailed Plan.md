@@ -1,13 +1,13 @@
 # Explicit Flat 與 Hierarchical Orchestration 設定詳細計畫
 
-日期：2026-08-25
+日期：2026-08-26
 
-狀態：Requirements Reviewed；Slice 1 Plan Approved；Slice 2 Review Deferred；implementation 尚未開始
+狀態：Slice 1 Implementation Committed；Slice 2 Plan Approved；Ready for Implementation；testbed validation pending
 
 相關文件：
 
 - [Slice 1：Explicit Orchestration 與 Static／Manual Training 詳細計畫](./Slice%201%20Explicit%20Orchestration%20and%20Static%20Manual%20Product%20Flow%20Detailed%20Plan.md)
-- Slice 2：MTLF-Triggered UPF Data Collection 詳細計畫（review deferred；尚未納入本次 commit）
+- [Slice 2：MTLF-Triggered UPF Data Collection 詳細計畫](./Slice%202%20MTLF-Triggered%20UPF%20Data%20Collection%20Detailed%20Plan.md)
 - [Hierarchical NWDAF Federated Learning Implementation Plan](../Hierarchical%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)
 - [Slice 8 Multi-process E2E and Regression Closure Detailed Plan](../Slice%208%20Multi-process%20E2E%20and%20Regression%20Closure%20Detailed%20Plan.md)
 - [NWDAF Development Policy](../../../development_policy.md)
@@ -59,8 +59,8 @@ profile。它新增的是 PyMTLF private collection management API 與 containin
 
 | 儲存庫 | 版本 | 用途 |
 | --- | --- | --- |
-| `PyMTLF/` | `e9aa2235b6b4adc1d9d778b6cfdf23645fc622ec` | orchestration、dataset、training lifecycle 與 tests |
-| `nwdaf-resources/` | `39ced284561e542c50da5fa7e83830aae4517821` | flat／HFL multi-process、fixture replay 與 evidence |
+| `PyMTLF/` | `2f15c4732aacbd2c4658a0af12e7612a1f076728` | Slice 1 committed orchestration、dataset、training lifecycle 與 tests |
+| `nwdaf-resources/` | `ac90df6388501db3fa74d2f20218076583af2c54` | Slice 1 committed flat／HFL runners、fixture replay 與 evidence |
 | `NWDAF/` | `3279891689dd9b54737ffe08dc18b9db72ec57b4` | containing-NWDAF private relays 與 Training SBI |
 | `PyAnLF/` | `6a4d94ad3cc6f66dac55ea921772d731e4b71371` | consumer-triggered collection baseline |
 | `nrf/` | `0dd4024d4ab75b6630e04901968228b9b9718cf5` | exact-instance discovery baseline |
@@ -73,9 +73,9 @@ characterization，不把本節記錄當成新 revision 的直接證據。
 
 | 現有行為 | 證據與結論 |
 | --- | --- |
-| Top-level owner inference | `create_app()` 看到 hierarchy topology 就建立 `FLRootCoordinator`；沒有 explicit mode。 |
-| Flat participant selection | `FLServerEngine` 從 degradation `RetrainIntent.active_scopes` 取得 participants；manual static set 尚不存在。 |
-| Manual API | 只有 `/internal/v1/hierarchical-fl/training-requests`，且直接要求 `app.state.fl_root`。 |
+| Top-level owner selection | `create_app()` 依 explicit orchestration mode 建立零或一個 `fl_coordinator`；engine presence 不再推論 owner。 |
+| Flat participant selection | Production degradation 保留 Monitor scopes；static flat 由 committed topology planner 產生 exact participants。 |
+| Manual API | Flat／HFL 共用 `/internal/v1/federated-learning/training-requests`；舊 hierarchy-specific route 已移除。 |
 | HFL lifecycle | Root 已有 idempotency、single-active、failure latch、terminal TTL、generation reset 與 cleanup。 |
 | Dataset preparation | `FLClientEngine` 由 Training Subscribe 建立 scope 與 absolute window；`DatasetCoordinator` 匹配本地 descriptor，再以 ADRF／MongoDB records freeze snapshot。 |
 | Training metadata | Subscribe 已攜帶 `mLEventSubscs`、`tgtRepUe`、`dataAvReq.inpEvents`、`minNumSamples` 與 `timeWindows`；不攜帶 private collection profile ID。 |
@@ -477,7 +477,10 @@ Slice 1 的 static manual success 以「matching descriptor 與 records 已存�
 
 ### Slice 2：MTLF-triggered UPF data collection
 
-詳細計畫目前是 working-tree 草稿；review deferred，尚未納入本次 commit。
+詳細計畫：[Slice 2](./Slice%202%20MTLF-Triggered%20UPF%20Data%20Collection%20Detailed%20Plan.md)
+
+計畫已依 Slice 1 committed interface、descriptor migration、app lifecycle 與現有 resources runner 重新校正，
+user review 已確認；可進入 implementation。
 
 完成 `private_api` collection trigger、configured profiles、per-data-owner management API、PyMTLF
 collection lifecycle、UPF callback、ADRF／Mongo storage、local descriptor、durable cleanup ledger，以及 Go
@@ -534,6 +537,23 @@ go test ./internal/mtlf/...
 make test
 make lint
 make build
+
+# workspace root
+PyMTLF/.venv/bin/pytest -q \
+  nwdaf-resources/deployments/hierarchical_fl/checks \
+  nwdaf-resources/deployments/distributed_fl/checks
+
+PyMTLF/.venv/bin/ruff check \
+  nwdaf-resources/deployments/hierarchical_fl \
+  nwdaf-resources/deployments/distributed_fl
+
+PyMTLF/.venv/bin/python \
+  nwdaf-resources/deployments/distributed_fl/scripts/run_private_collection.py \
+  --scenario success
+
+PyMTLF/.venv/bin/python \
+  nwdaf-resources/deployments/distributed_fl/scripts/run_private_collection.py \
+  --scenario restart-cleanup
 ```
 
 ### 12.3 Slice 3 與 local real-process
@@ -627,7 +647,8 @@ private collection 的 blocker。Real SMF／UPF 與 testbed execution 是 `integ
 
 開始 production implementation 前：
 
-1. 使用者已確認本次重新設計的父計畫與 Slice 1；Slice 2 在 Slice 1 完成後另行 review 與確認；
+1. 父計畫與 Slice 1 已確認，Slice 1 implementation 已分 repository commit；Slice 2 已重新校正並完成
+   user review，可進入 implementation；
 2. 每個 Slice 從最新文件建立 normative conformance map；
 3. 重新確認 target revisions、working trees 與 active callers；
 4. 依 Slice 順序實作、direct verification、mandatory review 與 user review；
