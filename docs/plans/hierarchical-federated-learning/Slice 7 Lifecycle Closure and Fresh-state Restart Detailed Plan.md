@@ -85,8 +85,9 @@ slice 可用 deterministic unit／component tests 關閉的 lifecycle 缺口延�
 - final validation、`FINAL_MODEL`、ADRF store、catalog promotion 或 cutover的新功能；這些由
   Slice 6實作，本Slice只關閉其resource lifecycle；
 - 新增 public SBI 或修改 Release 18 OpenAPI schema；
-- OAuth／mTLS requester identity 與 artifact origin 的額外安全綁定；
-- real multi-process NRF／OAuth／TLS deployment acceptance；該驗證仍屬 Slice 8。
+- OAuth／mTLS requester identity與artifact origin的額外安全綁定；這是本HFL計畫明確非目標，
+  不延後至Slice 8；
+- real multi-process NRF deployment acceptance；該驗證仍屬Slice 8。
 
 ---
 
@@ -1165,9 +1166,11 @@ operator觀察處理，不宣稱自動cleanup。
 ### Integration verification gap
 
 - real supervisor process restart；
-- real NRF／OAuth／TLS cleanup；
+- real NRF cleanup；
 - cross-host candidate download exactly at lifecycle cleanup boundary；
 - peer timeout behavior under network partition。
+
+OAuth／TLS不是integration verification gap；本HFL計畫固定使用HTTP/H2C與`oauth: false`。
 
 ### Existing legacy cleanup
 
@@ -1319,4 +1322,4 @@ verification亦通過，沒有殘留pytest process。
 
 上述證據涵蓋completion criteria 1–23；criteria 24由PyMTLF commit `c7c66b9`、NWDAF commit
 `3279891`與本implementation record關閉。因此Slice 7標記Completed；這仍不宣稱Slice 8的
-real multi-process NRF／OAuth／TLS／cross-host E2E。
+real multi-process NRF／cross-host E2E。OAuth／TLS依父計畫為非目標。

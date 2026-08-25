@@ -1082,9 +1082,11 @@ process generations、真實NRF／ADRF verification levels、support fake與任�
   kill，且未把technical process failure冒充deadline timeout。
 - Crash-time remote reconciliation依fresh-state contract標為`not_run`；crash前remote resources
   仍只由既有expiry／garbage-collection policy收斂。
-- 本機 E2E 未執行 OAuth、TLS、true cross-host deployment、UERANSIM／UPF data production與真實
-  network partition；timeout情境使用可觀察階段後的process pause。這不取代後續 testbed gate；
-  testbed 的 VM topology、transport profile 與 required scenario matrix 必須在部署前另行確認並記錄。
+- 本機 E2E 未執行true cross-host deployment、UERANSIM／UPF data production與真實network
+  partition；timeout情境使用可觀察階段後的process pause。這不取代後續testbed gate；testbed的
+  VM topology、transport profile與required scenario matrix必須在部署前另行確認並記錄。
+- OAuth／TLS依本Slice §11的固定HTTP/H2C、`oauth: false` baseline為計畫外項目，不屬後續
+  testbed gate。
 
 ### 18.5 Review 與完成結論
 

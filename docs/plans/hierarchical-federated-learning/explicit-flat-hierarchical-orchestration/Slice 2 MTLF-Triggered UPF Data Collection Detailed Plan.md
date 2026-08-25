@@ -2,7 +2,7 @@
 
 日期：2026-08-26
 
-狀態：Revision Complete；User Review Confirmed；Ready for Implementation
+狀態：Implementation and Local Verification Complete；Ready for User Review
 
 相關文件：
 
@@ -513,8 +513,8 @@ SBI clients。`pkg/service/init.go`把existing `nwdaf.consumer`依required inter
 - SMF create／read／replace／delete 轉送 `Location`、representation 與 operation-specific ProblemDetails；
 - ADRF create轉送`201`、`Location`與representation；
 - body limits 沿用／對齊 AnLF-private routes；
-- private route不自動取得public OAuth／TLS語意，但outbound consumer維持existing NRF discovery、access-token
-  與transport behavior；
+- private route維持existing internal transport boundary；OAuth／TLS不是本Slice或後續testbed
+  acceptance項目，亦不改變outbound consumer既有NRF discovery、access-token與transport behavior；
 - 不新增 public SBI route、NF registration service 或 OpenAPI generation change。
 
 ### 9.3 free5GC／本地 exemplar
@@ -554,8 +554,10 @@ create／delete calls、callback admission、storage result、descriptor／windo
 revisions。Raw SUPIs／group members 只保存於 protected temp evidence，不進 normal status 或 committed
 fixture。
 
-Real SMF→Nupf→UPF callback、UDM／UDR live data、OAuth／TLS、UE sessions與cross-VM network仍是
+Real SMF→Nupf→UPF callback、UDM／UDR live data、UE sessions與cross-VM network仍是
 `integration verification gap`，留給testbed。
+
+OAuth／TLS是本計畫明確非目標，不列入integration verification gap或testbed completion gate。
 
 ## 11. 預計修改檔案
 
@@ -715,36 +717,51 @@ workspace policy 使用 elevated permission。
 
 ## 14. 規範符合性對照表
 
-| ID | 要求 | Production owner | 直接證據目標 | 初始狀態 |
+| ID | 要求 | Production owner | 直接證據目標 | 目前狀態 |
 | --- | --- | --- | --- | --- |
-| S2-CFG-01 | private trigger／profile／consent strict settings | PyMTLF config | config tests | Open |
-| S2-CFG-02 | request只選profile；無target／peer override | API／config snapshot | API tests | Open |
-| S2-API-01 | POST／GET／DELETE、idempotency、errors、no disclosure | PyMTLF API／manager | route tests | Open |
-| S2-OWN-01 | one collection manager ownsrequest／resource／ledger lifecycle | app／manager | construction／ownership tests | Open |
-| S2-OWN-02 | manager在existing generation reset與shutdown中先fence admission／durable ownership，且早於DatasetCoordinator／context關閉 | app／manager | lifecycle ordering與fault-injection tests | Open |
-| S2-LED-01 | durable atomic ledger／inbox、corrupt fail closed | manager repository | restart／corruption tests | Open |
-| S2-LIF-01 | states、READY semantics、retention與TTL | manager | transition tests | Open |
-| S2-LIF-02 | restart cleanup-only recovery、no auto-resume | manager／ledger | restart tests | Open |
-| S2-RES-01 | Internal Group ID→UDM→serving SMF exact resolution | resolver | boundary tests | Open |
-| S2-RES-02 | private collection no-TAI contract | resolver／profile | query／config tests | Open |
-| S2-SMF-01 | Nsmf create／accepted identity／provisional cleanup | manager／Go relay | peer tests | Open |
-| S2-SMF-02 | key dedup、references、last-release delete／retry | manager | concurrency tests | Open |
-| S2-CB-01 | correlation／schema／durable inbox／duplicate admission | callback router／ingestion | callback tests | Open |
-| S2-STO-01 | accepted subscription→ADRF record；ADRF／Mongo semantics | ingestion／writers | storage tests | Open |
-| S2-DES-01 | correlation-only repository遷移為trusted origin／group key；AnLF wire與PUT／DELETE semantics不變 | manager／dataset repository | descriptor collision與AnLF compatibility tests | Open |
-| S2-DATA-01 | origin／request grouping、absolute window、ambiguity／duplicate rejection、no fallback | DatasetCoordinator | dataset／Client tests | Open |
-| S2-GO-01 | MTLF-private UDM relay | Go handler／processor／consumer | Go tests | Open |
-| S2-GO-02 | MTLF-private SMF relay | Go handler／processor／consumer | Go tests | Open |
-| S2-GO-03 | MTLF-private ADRF store relay | Go handler／processor／consumer | Go tests | Open |
-| S2-GO-04 | existing package／service wiring；無 public SBI／new package | mtlf／service | structural review＋tests | Open |
-| S2-E2E-01 | dedicated runner驗證support SMF callback→storage→descriptor→dataset success | resources／production owners | private-collection local run | Open |
-| S2-E2E-02 | dedicated runner驗證delete／late callback／restart cleanup | resources／production owners | private-collection failure runs | Open |
-| S2-REG-01 | consumer subscription、existing MTLF／AnLF flows不regression | all baseline owners | focused／full suites | Open |
-| S2-VER-01 | PyMTLF／NWDAF／resources required commands通過 | repositories | §13.6 | Open |
-| S2-REV-01 | mandatory review、fresh-read conformance、language pass | all diffs／docs | review handoff | Open |
+| S2-CFG-01 | private trigger／profile／consent strict settings | PyMTLF config | config tests | Satisfied |
+| S2-CFG-02 | request只選profile；無target／peer override | API／config snapshot | API tests | Satisfied |
+| S2-API-01 | POST／GET／DELETE、idempotency、errors、no disclosure | PyMTLF API／manager | route tests | Satisfied |
+| S2-OWN-01 | one collection manager ownsrequest／resource／ledger lifecycle | app／manager | construction／ownership tests | Satisfied |
+| S2-OWN-02 | manager在existing generation reset與shutdown中先fence admission／durable ownership，且早於DatasetCoordinator／context關閉 | app／manager | lifecycle ordering與fault-injection tests | Satisfied |
+| S2-LED-01 | durable atomic ledger／inbox、corrupt fail closed | manager repository | restart／corruption tests | Satisfied |
+| S2-LIF-01 | states、READY semantics、retention與TTL | manager | transition tests | Satisfied |
+| S2-LIF-02 | restart cleanup-only recovery、no auto-resume | manager／ledger | restart tests | Satisfied |
+| S2-RES-01 | Internal Group ID→UDM→serving SMF exact resolution | resolver | boundary tests | Satisfied |
+| S2-RES-02 | private collection no-TAI contract | resolver／profile | query／config tests | Satisfied |
+| S2-SMF-01 | Nsmf create／accepted identity／provisional cleanup | manager／Go relay | peer tests | Satisfied |
+| S2-SMF-02 | key dedup、references、last-release delete／retry | manager | concurrency tests | Satisfied |
+| S2-CB-01 | correlation／schema／durable inbox／duplicate admission | callback router／ingestion | callback tests | Satisfied |
+| S2-STO-01 | accepted subscription→ADRF record；ADRF／Mongo semantics | ingestion／writers | storage tests | Satisfied |
+| S2-DES-01 | correlation-only repository遷移為trusted origin／group key；AnLF wire與PUT／DELETE semantics不變 | manager／dataset repository | descriptor collision與AnLF compatibility tests | Satisfied |
+| S2-DATA-01 | origin／request grouping、absolute window、ambiguity／duplicate rejection、no fallback | DatasetCoordinator | dataset／Client tests | Satisfied |
+| S2-GO-01 | MTLF-private UDM relay | Go handler／processor／consumer | Go tests | Satisfied |
+| S2-GO-02 | MTLF-private SMF relay | Go handler／processor／consumer | Go tests | Satisfied |
+| S2-GO-03 | MTLF-private ADRF store relay | Go handler／processor／consumer | Go tests | Satisfied |
+| S2-GO-04 | existing package／service wiring；無 public SBI／new package | mtlf／service | structural review＋tests | Satisfied |
+| S2-E2E-01 | dedicated runner驗證support SMF callback→storage→descriptor→dataset success | resources／production owners | private-collection local run | Satisfied |
+| S2-E2E-02 | dedicated runner驗證delete／late callback／restart cleanup | resources／production owners | private-collection failure runs | Satisfied |
+| S2-REG-01 | consumer subscription、existing MTLF／AnLF flows不regression | all baseline owners | focused／full suites | Satisfied |
+| S2-VER-01 | PyMTLF／NWDAF／resources required commands通過 | repositories | §13.6 | Satisfied |
+| S2-REV-01 | mandatory review、fresh-read conformance、language pass | all diffs／docs | review handoff | Satisfied |
 
-Real SMF／UPF、UDM／UDR live state、UE session、OAuth／TLS與testbed network evidence維持Open integration gap，
+Real SMF／UPF、UDM／UDR live state、UE session與testbed network evidence維持Open integration gap，
 不在本Slice conformance map標Satisfied。
+
+### 14.1 本地驗證證據
+
+- PyMTLF focused matrix：217 passed；full suite：585 passed、2 skipped；`ruff`通過。
+- NWDAF：`go test ./internal/mtlf/...`、`make test`、`make lint`與`make build`通過。
+- `nwdaf-resources` checks：45 passed；hierarchical／distributed FL runner `ruff`通過。
+- Private collection success real-process E2E通過；summary：
+  `/tmp/nwdaf-private-collection-5uychwy8/summary.json`。
+- Private collection restart-cleanup real-process E2E通過；summary：
+  `/tmp/nwdaf-private-collection-gdh40nj_/summary.json`。
+- Initial review與test-first remediation已完成；final conformance依本文件最新內容重建。
+
+上述E2E使用production PyMTLF、production Go NWDAF、team NRF、team ADRF與real MongoDB，並以support UDM／SMF、
+callback replay及artifact peer補足尚未上testbed的邊界。因此目前結論仍為
+`Local Collection E2E Passed；Testbed Validation Pending`。
 
 ## 15. Review 與完成閘門
 

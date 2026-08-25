@@ -565,8 +565,8 @@ Full：
 .venv/bin/pytest -q
 ```
 
-本Slice不以unit／mock tests宣稱real ADRF、NRF、OAuth、TLS或multi-process integration；由
-Slice 8 E2E關閉。
+本Slice不以unit／mock tests宣稱real ADRF、NRF或multi-process integration；這些由Slice 8 E2E
+關閉。OAuth／TLS不在本HFL計畫或Slice 8 acceptance範圍。
 
 ---
 
@@ -663,8 +663,8 @@ Targeted follow-up review與focused／full verification均已通過。14項compl
 production path、direct deterministic test或明確deferred owner；Slice 7保留terminal
 cleanup／fresh-state restart，Slice 8保留production multi-process E2E與network partition。
 
-本紀錄只宣稱unit／mock與local repository verification，不宣稱real ADRF、NRF、OAuth、TLS
-或multi-process integration。
+本紀錄只宣稱unit／mock與local repository verification，不宣稱real ADRF、NRF或multi-process
+integration。OAuth／TLS依父計畫固定為HTTP/H2C與`oauth: false`，不是待驗證缺口。
 
 ---
 

@@ -269,7 +269,8 @@ context field 或 Go package。
 
 free5GC skill 在本 Slice 的作用限於確認 SBI responsibility 與 OpenAPI priority。由於沒有
 新的 Go endpoint、package 或 lifecycle shape，計畫不以外部 exemplar 推導新的 production
-結構，也不宣稱 unit tests 等於 real NRF／OAuth／TLS integration。
+結構，也不宣稱 unit tests 等於 real NRF／multi-process integration。OAuth／TLS依父計畫固定為
+HTTP/H2C與`oauth: false`，不是本Slice的驗證目標。
 
 ### 4.3 Existing flat PyMTLF round baseline
 
@@ -1179,8 +1180,8 @@ git diff --check
 ### 18.5 Claims boundary
 
 Unit／mock verification只能證明process-local orchestration與mocked HTTP contract。Real NRF、
-OAuth、TLS、multi-process deployment與cross-host artifact download留給Slice 8，不得在Slice 5
-完成報告中宣稱已驗證。
+multi-process deployment與cross-host artifact download留給Slice 8，不得在Slice 5完成報告中宣稱
+已驗證。OAuth／TLS不屬本HFL計畫或Slice 8 acceptance。
 
 ---
 
@@ -1260,9 +1261,10 @@ Client-local fallback保持舊行為。
 ### Integration verification gap
 
 - real NRF exact-instance discovery duringrounds；
-- OAuth／TLS peer PATCH與callbacks；
 - cross-host artifact serving throughput；
 - real multi-process deadline behavior。
+
+OAuth／TLS不是integration verification gap；本HFL計畫固定使用HTTP/H2C與`oauth: false`。
 
 以上不阻擋Slice 5 unit／mock acceptance。
 
@@ -1372,8 +1374,8 @@ Mandatory review與targeted remediation修正下列不改變architecture decisio
    cancellation與shutdown缺少direct deterministic evidence。
 
 修正後已完成focused recheck、PyMTLF full verification與plan-to-implementation follow-up
-review。驗證範圍是unit／mock與local build；real NRF、OAuth、TLS、multi-process deployment與
-cross-host artifact download仍依計畫留給Slice 8，不在本Slice宣稱已驗證。
+review。驗證範圍是unit／mock與local build；real NRF、multi-process deployment與cross-host
+artifact download仍依計畫留給Slice 8，不在本Slice宣稱已驗證。OAuth／TLS依父計畫為非目標。
 
 ---
 
