@@ -2,7 +2,7 @@
 
 日期：2026-08-25
 
-狀態：Requirements Reviewed；Plan Approved；implementation 尚未開始
+狀態：Implementation Verified；Mandatory Review Complete；User Review Confirmed；Commit Approved；testbed validation pending
 
 相關文件：
 
@@ -447,34 +447,49 @@ script commands 依 workspace policy 以 elevated permission 執行。
 
 ## 12. 規範符合性對照表
 
-| ID | 要求 | Production owner | 直接證據目標 | 初始狀態 |
+| ID | 要求 | Production owner | 實作與直接證據 | 狀態 |
 | --- | --- | --- | --- | --- |
-| S1-CFG-01 | explicit mode／participant source／training trigger strict matrix | `config.py` | parameterized config tests | Open |
-| S1-CFG-02 | Client marker 固定 `consumer_subscription`；拒絕 private collection 與 local file | `config.py` | config negative tests | Open |
-| S1-CFG-03 | committed profiles／generators一次遷移 | configs／resources | load＋generator checks | Open |
-| S1-OWN-01 | engine presence與autonomous owner分離；zero／one coordinator | `app.py` | construction tests | Open |
-| S1-OWN-02 | Assigned Branch不autonomous但保留assigned execution | app／Branch | negative initiation＋assignment tests | Open |
-| S1-INT-01 | participant selection、cutover與optional trigger typed separation | orchestration contract | initiation mapping tests | Open |
-| S1-INT-02 | disabled degradation atomic discard；local policy不變 | policy／monitor | queue／in-flight race tests | Open |
-| S1-TOP-01 | static flat schema、validation、canonical hash | topology | topology tests | Open |
-| S1-TOP-02 | family＋topology TAI composition；area ambiguity拒絕 | planner | scope tests | Open |
-| S1-DIS-01 | exact NRF resolve且不substitute decoy | resolver | resolver tests | Open |
-| S1-DIS-02 | HFL resolution不使用TAI | hierarchy resolver | no-TAI tests | Open |
-| S1-DATA-01 | static manual重用consumer-collected absolute-window snapshot | dataset／Client | prepared fixture flow | Open |
-| S1-DATA-02 | missing collected precondition bounded failure；無source fallback | dataset／Client | fault-injection tests | Open |
-| S1-DATA-03 | snapshot跨round／validation reuse；split semantics不變 | dataset／builder | reuse／split tests | Open |
-| S1-FLT-01 | Flat coordinator owns initiation；Server只execution | Flat coordinator／Server | ownership tests | Open |
-| S1-FLT-02 | static manual完成prepare→round→validate→publish→cleanup | Flat coordinator／Server | component flow | Open |
-| S1-HFL-01 | Root common adapter且FedProx lifecycle不變 | Root | HFL regressions | Open |
-| S1-API-01 | generic POST／GET、status／errors、no override | API／wire | API tests | Open |
-| S1-API-02 | old route移除、active caller遷移 | API／resources | route＋caller tests | Open |
-| S1-LIF-01 | idempotency、single-active、latch、TTL、restart fence | coordinators／registry | lifecycle tests | Open |
-| S1-LIF-02 | timeout／partial dispatch／shutdown cleanup | coordinators／engines | fault-injection tests | Open |
-| S1-VAL-01 | manual no fake trigger；aggregate／per-participant evidence | validation | manual tests | Open |
-| S1-PUB-01 | zero cutover仍publish／commit；degradation cutover不變 | publication | zero／nonzero tests | Open |
-| S1-REG-01 | production flat／HFL／local baselines保留 | all owners | direct regressions | Open |
-| S1-VER-01 | focused／full PyMTLF與resources checks通過 | repositories | §11.5 commands | Open |
-| S1-REV-01 | mandatory review、remediation、fresh-read與language pass | all diffs／docs | review handoff | Open |
+| S1-CFG-01 | explicit mode／participant source／training trigger strict matrix | `config.py` | `test_config.py` profile matrix與`test_runtime_modes.py` construction | 已滿足 |
+| S1-CFG-02 | Client marker 固定 `consumer_subscription`；拒絕 private collection 與 local file | `config.py` | `test_config.py` marker與negative cases | 已滿足 |
+| S1-CFG-03 | committed profiles／generators一次遷移 | configs／resources | committed config load與兩組resources checks | 已滿足 |
+| S1-OWN-01 | engine presence與autonomous owner分離；zero／one coordinator | `app.py` | Local／Client／Branch／flat／HFL construction tests | 已滿足 |
+| S1-OWN-02 | Assigned Branch不autonomous但保留assigned execution | app／Branch | route absence與real Branch delegation tests | 已滿足 |
+| S1-INT-01 | participant selection、cutover與optional trigger typed separation | orchestration contract | `test_fl_flat.py` manual／degradation mapping | 已滿足 |
+| S1-INT-02 | disabled degradation atomic discard；local policy不變 | policy／monitor | `test_accuracy_policy.py` atomic discard與runtime dispatch tests | 已滿足 |
+| S1-TOP-01 | static flat schema、validation、canonical hash | topology | `test_fl_topology.py` schema、self、order與digest tests | 已滿足 |
+| S1-TOP-02 | family＋topology TAI composition；area ambiguity拒絕 | planner | `test_fl_flat.py` static selection與area conflict tests | 已滿足 |
+| S1-DIS-01 | exact NRF resolve且不substitute decoy | resolver | `test_fl_server.py` exact profile、TAI、duplicate與dispatch fence tests | 已滿足 |
+| S1-DIS-02 | HFL resolution不使用TAI | hierarchy resolver | `test_fl_hierarchy_discovery.py` no-TAI query／profile tests | 已滿足 |
+| S1-DATA-01 | static manual重用consumer-collected absolute-window snapshot | dataset／Client | real Client→DatasetCoordinator collected fixture test | 已滿足 |
+| S1-DATA-02 | missing collected precondition bounded failure；無source fallback | dataset／Client | missing descriptor與ADRF／Mongo window fault tests | 已滿足 |
+| S1-DATA-03 | snapshot跨round／validation reuse；split semantics不變 | dataset／builder | real round＋validation snapshot reuse與split regressions | 已滿足 |
+| S1-FLT-01 | Flat coordinator owns initiation；Server只execution | Flat coordinator／Server | coordinator initiation與Server explicit execution tests | 已滿足 |
+| S1-FLT-02 | static manual完成prepare→round→validate→publish→cleanup | Flat coordinator／Server | `test_static_manual_runs_server_publication_and_cleanup_without_cutover` | 已滿足 |
+| S1-HFL-01 | Root common adapter且FedProx lifecycle不變 | Root | `test_fl_root.py`與hierarchy Server regressions | 已滿足 |
+| S1-API-01 | generic POST／GET、status／errors、no override | API／wire | API contract、runtime override、actual unavailable／restart tests | 已滿足 |
+| S1-API-02 | old route移除、active caller遷移 | API／resources | runtime `404`與resources source／runner checks | 已滿足 |
+| S1-LIF-01 | idempotency、single-active、latch、TTL、restart fence | coordinators／registry | Flat／Root lifecycle與actual API restart `404` tests | 已滿足 |
+| S1-LIF-02 | timeout／partial dispatch／shutdown cleanup | coordinators／engines | Server／Root／Client fault-injection與shutdown tests | 已滿足 |
+| S1-VAL-01 | manual no fake trigger；aggregate／per-participant evidence | validation | actual final-validation manual／degradation parameterized test | 已滿足 |
+| S1-PUB-01 | zero cutover仍publish／commit；degradation cutover不變 | publication | static manual component flow與publication nonzero regressions | 已滿足 |
+| S1-REG-01 | production flat／HFL／local baselines保留 | all owners | focused matrix與520-test full suite | 已滿足 |
+| S1-VER-01 | focused／full PyMTLF與resources checks通過 | repositories | §11.5全部五項指令通過 | 已滿足 |
+| S1-REV-01 | mandatory review、remediation、fresh-read與language pass | all diffs／docs | full diff review、test-first findings、fresh-read與全文檢查 | 已滿足 |
+
+### 12.1 最終驗證與審查紀錄
+
+2026-08-26 的最終驗證結果如下：
+
+- PyMTLF focused matrix：295 passed；
+- PyMTLF full suite：520 passed、2 skipped；
+- PyMTLF ruff：通過；
+- `nwdaf-resources` hierarchical／distributed checks：39 passed；
+- `nwdaf-resources` ruff：通過。
+
+必要審查確認並以deterministic tests修正exact TAI coverage、duplicate NRF candidate、admission／
+policy ownership、cutover family lookup、failure-latch queue cleanup、absolute window clipping與executor cleanup等
+Slice 1缺失；每項均完成focused regression與targeted follow-up review。`NWDAF/`、`PyAnLF/`、`nrf/`與
+`adrf/`維持read-only，未新增Go package、dataset source adapter或Slice 2 collection behavior。
 
 Slice 2 `private_api` collection、Go NWDAF relays、UPF callback、storage／descriptor與local cross-process
 evidence不得在本 Slice標為Satisfied。Slice 3 FedAvg comparison與multi-process numerical evidence同樣deferred。
