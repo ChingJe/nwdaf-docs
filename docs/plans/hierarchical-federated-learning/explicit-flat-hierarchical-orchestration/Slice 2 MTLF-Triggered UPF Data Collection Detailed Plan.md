@@ -2,7 +2,7 @@
 
 日期：2026-08-26
 
-狀態：Implementation and Local Verification Complete；Ready for User Review
+狀態：Implementation Verified；Mandatory Review Complete；User Review Confirmed；Committed and Pushed；部分 lifecycle／TAI contract 由 Slice 3 修正；testbed validation pending
 
 相關文件：
 
@@ -47,6 +47,32 @@ MongoDB，再以 local `TrainingDataDescriptor` 交給既有 `DatasetCoordinator
 本 Slice 不實作Root collection fan-out、不執行flat／HFL numerical comparison、不新增HFL FedAvg，也不
 修改 SMF、UPF、UDM、UDR、NRF、ADRF 或 PyAnLF production repositories。這些預期不修改的 component
 只作 integration peer 或 baseline。
+
+### 1.1 Post-commit 決策修正
+
+本文件同時保存 Slice 2 committed checkpoint 的原始 contract 與驗證證據。2026-08-26 在規劃 Slice 3 時，
+依 operator-controlled collection 與 testbed topology 重新確認下列修正；它們不回寫成 Slice 2 已完成行為，
+而由 Slice 3 以 production diff、tests 與新 evidence 關閉：
+
+1. `minimum_observation_count`、status `minimumObservationCount` 與 collection `READY` state 移除。
+   Explicit collection 從 `COLLECTING` 持續到 caller DELETE，不因筆數自動停止或觸發 training；counts 與
+   stored window 只作可觀察狀態。DELETE後有durable stored data進`RETAINED`，無data進`TERMINATED`。
+2. Private collection profile 新增 typed local `network_area.tais`。PyMTLF 將它映射到 Nsmf
+   `eventSubs[].networkArea`，由 SMF 以 static UE current TAI gating group members；descriptor 保存 area
+   provenance，但 HFL dataset 不再依 TAI 篩選 records。
+3. Static flat topology 的 tracking areas 繼續負責 exact NRF discovery、profile validation 與既有 Training
+   scope；Client local collection TAI 必須由 deployment inventory 與 topology 保持一致。HFL topology、
+   assignment、discovery 與 Training Subscribe 仍不帶 TAI，Leaf local collection area 不改變此邊界。
+4. Top-level Server 不新增 preparation lag。DatasetCoordinator 由「descriptor 完整覆蓋 requested window」
+   改為「descriptor 與 requested window 有交集」，只 freeze interval 內 records，再由既有 sample
+   construction 與現行 `minNumSamples: 1` admission 決定是否成功。
+5. 所有 data owners 仍解析同一 Internal Group membership；各 owner 的 local collection TAI 必須
+   non-overlapping，由 SMF 依 static UE current TAI gating，使每個 SUPI 只進入一個 owner。UE mobility與
+   subscription migration不在本階段範圍。
+
+下文提到 minimum gate、`READY`、private collection no-TAI 或 full-window coverage 時，描述的是已提交的
+Slice 2 checkpoint，不是 Slice 3 完成後的目標 contract。Canonical follow-up requirements 以父計畫與
+Slice 3 詳細計畫為準。
 
 ## 2. 基準版本與 repository 責任
 
@@ -603,7 +629,7 @@ Gate 先進 decision gate。
 - support NRF／UDM／SMF collection behavior、private collection profile與reachable callback URI；
 - collection API caller、status waiter、callback replay與cleanup assertions；
 - focused checks與README；
-- temporary evidence schema，不先加入Slice 3 paired numerical comparison。
+- temporary evidence schema，不先加入Slice 3的multi-topology local E2E evidence。
 
 ## 12. 實作檢查點
 
@@ -725,16 +751,16 @@ workspace policy 使用 elevated permission。
 | S2-OWN-01 | one collection manager ownsrequest／resource／ledger lifecycle | app／manager | construction／ownership tests | Satisfied |
 | S2-OWN-02 | manager在existing generation reset與shutdown中先fence admission／durable ownership，且早於DatasetCoordinator／context關閉 | app／manager | lifecycle ordering與fault-injection tests | Satisfied |
 | S2-LED-01 | durable atomic ledger／inbox、corrupt fail closed | manager repository | restart／corruption tests | Satisfied |
-| S2-LIF-01 | states、READY semantics、retention與TTL | manager | transition tests | Satisfied |
+| S2-LIF-01 | states、READY semantics、retention與TTL | manager | transition tests | Satisfied at Slice 2 checkpoint；READY contract superseded by Slice 3 |
 | S2-LIF-02 | restart cleanup-only recovery、no auto-resume | manager／ledger | restart tests | Satisfied |
 | S2-RES-01 | Internal Group ID→UDM→serving SMF exact resolution | resolver | boundary tests | Satisfied |
-| S2-RES-02 | private collection no-TAI contract | resolver／profile | query／config tests | Satisfied |
+| S2-RES-02 | private collection no-TAI contract | resolver／profile | query／config tests | Satisfied at Slice 2 checkpoint；no-TAI profile superseded by Slice 3 |
 | S2-SMF-01 | Nsmf create／accepted identity／provisional cleanup | manager／Go relay | peer tests | Satisfied |
 | S2-SMF-02 | key dedup、references、last-release delete／retry | manager | concurrency tests | Satisfied |
 | S2-CB-01 | correlation／schema／durable inbox／duplicate admission | callback router／ingestion | callback tests | Satisfied |
 | S2-STO-01 | accepted subscription→ADRF record；ADRF／Mongo semantics | ingestion／writers | storage tests | Satisfied |
 | S2-DES-01 | correlation-only repository遷移為trusted origin／group key；AnLF wire與PUT／DELETE semantics不變 | manager／dataset repository | descriptor collision與AnLF compatibility tests | Satisfied |
-| S2-DATA-01 | origin／request grouping、absolute window、ambiguity／duplicate rejection、no fallback | DatasetCoordinator | dataset／Client tests | Satisfied |
+| S2-DATA-01 | origin／request grouping、absolute window、ambiguity／duplicate rejection、no fallback | DatasetCoordinator | dataset／Client tests | Satisfied at Slice 2 checkpoint；coverage admission superseded by Slice 3 |
 | S2-GO-01 | MTLF-private UDM relay | Go handler／processor／consumer | Go tests | Satisfied |
 | S2-GO-02 | MTLF-private SMF relay | Go handler／processor／consumer | Go tests | Satisfied |
 | S2-GO-03 | MTLF-private ADRF store relay | Go handler／processor／consumer | Go tests | Satisfied |
@@ -762,6 +788,16 @@ Real SMF／UPF、UDM／UDR live state、UE session與testbed network evidence維
 上述E2E使用production PyMTLF、production Go NWDAF、team NRF、team ADRF與real MongoDB，並以support UDM／SMF、
 callback replay及artifact peer補足尚未上testbed的邊界。因此目前結論仍為
 `Local Collection E2E Passed；Testbed Validation Pending`。
+
+### 14.2 Commit 與 push 紀錄
+
+- `PyMTLF/`：`aa65204387b38162d87b1c478d64c724548a10c3`；
+- `NWDAF/`：`6aed268d6528f8be6c729cbd45b59d067e5e80dc`；
+- `nwdaf-resources/`：`0d839d167dedb6235b8bfbe97e346a95dc53580d`；
+- `nwdaf-docs/`：`03b7822f2c981e5a760b5c415cf18a0a626f2bb4`。
+
+上述revisions已push到各自目前branch。這只固定local-verified implementation；real SMF／UPF與testbed
+validation仍未完成。
 
 ## 15. Review 與完成閘門
 
@@ -804,8 +840,7 @@ repository-separated commit proposal。
 - `anyUe`、direct SUPI／GPSI private collection；
 - UDM user-consent retrieval／change subscription；
 - finite lease renewal與active collection automatic restart resume；
-- TAI／network-area private collection profile；
-- HFL FedAvg與paired numerical comparison；
+- flat FedProx及其strategy transport，以及algorithm×topology／cross-topology numerical comparison；
 - real SMF→Nupf→UPF、UE session、data-plane與cross-VM testbed execution；
 - hot reload profile、distributed durable collection coordinator與multi-process shared ledger。
 
