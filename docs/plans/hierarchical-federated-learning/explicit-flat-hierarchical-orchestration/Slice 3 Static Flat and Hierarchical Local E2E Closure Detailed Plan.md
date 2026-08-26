@@ -2,7 +2,7 @@
 
 日期：2026-08-26
 
-狀態：Draft；Ready for User Review；implementation 尚未開始；testbed validation pending
+狀態：Implementation Verified；Mandatory Review Complete；User Review Confirmed；Commit Pending Approval；testbed validation pending
 
 相關文件：
 
@@ -559,28 +559,28 @@ make build
 
 ## 14. 規範符合性對照表
 
-| ID | 要求 | Production／evidence owner | 直接證據目標 | 初始狀態 |
+| ID | 要求 | Production／evidence owner | 直接證據目標 | 最終狀態 |
 | --- | --- | --- | --- | --- |
-| S3-LIF-01 | explicit collection維持COLLECTING直到caller DELETE；移除minimum gate／READY／auto-actions | PyMTLF config／manager／wire | config＋state transition＋API tests | Open |
-| S3-LIF-02 | DELETE cleanup後依durable stored data進RETAINED或TERMINATED | PyMTLF manager／wire | state transition＋API tests | Open |
-| S3-WIN-01 | 保留existing current-time window與`minNumSamples: 1`；無lag或request override | FL Server | characterization＋request tests | Open |
-| S3-WIN-02 | descriptor與requested window partial overlap可用；no overlap拒絕且只取interval內records | DatasetCoordinator／runner | dataset tests＋flat／HFL evidence | Open |
-| S3-TAI-01 | private collection typed network area進Nsmf gating與descriptor provenance | config／collection manager／relay | config＋payload＋accepted resource tests | Open |
-| S3-TAI-02 | static flat保留topology／NRF／Training TAI，且local collection TAI一致 | flat owners／runner | discovery＋Subscribe＋preflight＋E2E | Open |
-| S3-TAI-03 | HFL topology／Training無TAI；Leaf local area只作ingress gating | HFL／dataset owners | matching tests＋preflight＋E2E | Open |
-| S3-TAI-04 | 同一group的每個SUPI依static current TAI恰好只屬於一個data owner | support SMF／runner | partition checks＋scenario summaries | Open |
-| S3-DATA-01 | deterministic dataset evidence | dataset builder／artifact | canonicalization tests | Open |
-| S3-DATA-02 | training artifact必帶evidence；Branch aggregate禁止local evidence | producer／validator | artifact tests | Open |
-| S3-FLAT-01 | 四-Client private collection→FedAvg E2E | production processes＋support peers | flat scenario summary | Open |
-| S3-FLAT-02 | flat one-tier aggregate可逐輪獨立重算 | runner | bundle recomputation | Open |
-| S3-HFL-01 | 四-Leaf private collection→existing FedProx E2E | production processes＋support peers | HFL scenario summary | Open |
-| S3-HFL-02 | Branch／Root aggregates與effective counts可逐輪獨立重算 | runner | bundle recomputation | Open |
-| S3-LIF-03 | failure／timeout／generation／cleanup不regression | PyMTLF lifecycle owners | focused tests | Open |
-| S3-REG-01 | production flat isolated flow preserved | existing flat owners | distributed FL runner | Open |
-| S3-REG-02 | existing HFL FedProx flow preserved | existing HFL owners | aggregation runner | Open |
-| S3-EVD-01 | summaries區分production、support與not-claimed boundaries | resources runner | schema checks | Open |
-| S3-VER-01 | §13 required commands完成 | affected repositories | exact results | Open |
-| S3-REV-01 | mandatory review、fresh-read conformance與language pass完成 | all diffs／docs | review handoff | Open |
+| S3-LIF-01 | explicit collection維持COLLECTING直到caller DELETE；移除minimum gate／READY／auto-actions | PyMTLF config／manager／wire | config＋state transition＋API tests | Satisfied |
+| S3-LIF-02 | DELETE cleanup後依durable stored data進RETAINED或TERMINATED | PyMTLF manager／wire | state transition＋API tests | Satisfied |
+| S3-WIN-01 | 保留existing current-time window與`minNumSamples: 1`；無lag或request override | FL Server | characterization＋request tests | Satisfied |
+| S3-WIN-02 | descriptor與requested window partial overlap可用；no overlap拒絕且只取interval內records | DatasetCoordinator／runner | dataset tests＋flat／HFL evidence | Satisfied |
+| S3-TAI-01 | private collection typed network area進Nsmf gating與descriptor provenance | config／collection manager／relay | config＋payload＋accepted resource tests | Satisfied |
+| S3-TAI-02 | static flat保留topology／NRF／Training TAI，且local collection TAI一致 | flat owners／runner | discovery＋Subscribe＋preflight＋E2E | Satisfied |
+| S3-TAI-03 | HFL topology／Training無TAI；Leaf local area只作ingress gating | HFL／dataset owners | matching tests＋preflight＋E2E | Satisfied |
+| S3-TAI-04 | 同一group的每個SUPI依static current TAI恰好只屬於一個data owner | support SMF／runner | partition checks＋scenario summaries | Satisfied |
+| S3-DATA-01 | deterministic dataset evidence | dataset builder／artifact | canonicalization tests | Satisfied |
+| S3-DATA-02 | training artifact必帶evidence；Branch aggregate禁止local evidence | producer／validator | artifact tests | Satisfied |
+| S3-FLAT-01 | 四-Client private collection→FedAvg E2E | production processes＋support peers | flat scenario summary | Satisfied |
+| S3-FLAT-02 | flat one-tier aggregate可逐輪獨立重算 | runner | bundle recomputation | Satisfied |
+| S3-HFL-01 | 四-Leaf private collection→existing FedProx E2E | production processes＋support peers | HFL scenario summary | Satisfied |
+| S3-HFL-02 | Branch／Root aggregates與effective counts可逐輪獨立重算 | runner | bundle recomputation | Satisfied |
+| S3-LIF-03 | failure／timeout／generation／cleanup不regression | PyMTLF lifecycle owners | focused tests | Satisfied |
+| S3-REG-01 | production flat isolated flow preserved | existing flat owners | distributed FL runner | Satisfied |
+| S3-REG-02 | existing HFL FedProx flow preserved | existing HFL owners | aggregation runner | Satisfied |
+| S3-EVD-01 | summaries區分production、support與not-claimed boundaries | resources runner | schema checks | Satisfied |
+| S3-VER-01 | §13 required commands完成 | affected repositories | exact results | Satisfied |
+| S3-REV-01 | mandatory review、fresh-read conformance與language pass完成 | all diffs／docs | review handoff | Satisfied |
 
 Flat 與 HFL 的 cross-topology model equality 明確沒有 conformance item。Real SMF／Nupf／UPF、UE session、
 cross-VM與testbed network evidence是open integration verification gap，不在local map標為Satisfied。
@@ -589,41 +589,41 @@ cross-VM與testbed network evidence是open integration verification gap，不在
 
 ### 15.1 架構與 contract
 
-- [ ] Flat維持FedAvg；HFL維持FedProx，沒有新增algorithm variant或strategy transport。
-- [ ] Collection由caller明確create／delete；沒有minimum observation setting、`READY`、auto-stop或auto-training。
-- [ ] DELETE cleanup後，有durable stored data進`RETAINED`，無data進`TERMINATED`；failure cleanup不被掩蓋。
-- [ ] 不新增historical lag或sample-threshold config；現行current-time window與`minNumSamples: 1`保留。
-- [ ] DatasetCoordinator只放寬descriptor coverage為partial overlap；仍只取requested interval內records且不
+- [x] Flat維持FedAvg；HFL維持FedProx，沒有新增algorithm variant或strategy transport。
+- [x] Collection由caller明確create／delete；沒有minimum observation setting、`READY`、auto-stop或auto-training。
+- [x] DELETE cleanup後，有durable stored data進`RETAINED`，無data進`TERMINATED`；failure cleanup不被掩蓋。
+- [x] 不新增historical lag或sample-threshold config；現行current-time window與`minNumSamples: 1`保留。
+- [x] DatasetCoordinator只放寬descriptor coverage為partial overlap；仍只取requested interval內records且不
   re-anchor。
-- [ ] Static flat topology／NRF／Training TAI保留，local collection TAI一致；production monitor flow不變。
-- [ ] HFL topology／assignment／Training不帶TAI；Leaf local TAI只進Nsmf collection gating。
-- [ ] 所有data owners解析同一group；每個SUPI依static current TAI恰好只在一個owner形成fixture／stored data。
-- [ ] 沒有新增public SBI、request override、Root fan-out或test-only introspection endpoint。
-- [ ] Dataset evidence是production artifact provenance，不含raw records或transport correlations。
+- [x] Static flat topology／NRF／Training TAI保留，local collection TAI一致；production monitor flow不變。
+- [x] HFL topology／assignment／Training不帶TAI；Leaf local TAI只進Nsmf collection gating。
+- [x] 所有data owners解析同一group；每個SUPI依static current TAI恰好只在一個owner形成fixture／stored data。
+- [x] 沒有新增public SBI、request override、Root fan-out或test-only introspection endpoint。
+- [x] Dataset evidence是production artifact provenance，不含raw records或transport correlations。
 
 ### 15.2 端到端資料流
 
-- [ ] 每條scenario各自完成fixture→callback→storage→descriptor→snapshot→training→publication→cleanup。
-- [ ] Descriptor與actual requested window有交集，window外records不進dataset，interval內samples足夠。
-- [ ] DELETE後retained descriptor直接支援training，late callback被拒絕。
-- [ ] 每個local artifact的dataset evidence與自身counts一致。
-- [ ] HFL Branch沒有local data或sample contribution。
+- [x] 每條scenario各自完成fixture→callback→storage→descriptor→snapshot→training→publication→cleanup。
+- [x] Descriptor與actual requested window有交集，window外records不進dataset，interval內samples足夠。
+- [x] DELETE後retained descriptor直接支援training，late callback被拒絕。
+- [x] 每個local artifact的dataset evidence與自身counts一致。
+- [x] HFL Branch沒有local data或sample contribution。
 
 ### 15.3 聚合與 evidence
 
-- [ ] Flat sample counts來自actual artifacts且不全相等，one-tier aggregate逐輪獨立重算。
-- [ ] HFL Leaf counts來自actual artifacts且不全相等，Branch／Root aggregates逐輪獨立重算。
-- [ ] Tolerance只用於同topology production result與runner重算結果。
-- [ ] 沒有把flat／HFL dataset、weights、metrics或final model equality列為通過條件。
-- [ ] Partial summary與failure diagnostics在失敗時仍保存。
+- [x] Flat sample counts來自actual artifacts且不全相等，one-tier aggregate逐輪獨立重算。
+- [x] HFL Leaf counts來自actual artifacts且不全相等，Branch／Root aggregates逐輪獨立重算。
+- [x] Tolerance只用於同topology production result與runner重算結果。
+- [x] 沒有把flat／HFL dataset、weights、metrics或final model equality列為通過條件。
+- [x] Partial summary與failure diagnostics在失敗時仍保存。
 
 ### 15.4 Regression 與外部邊界
 
-- [ ] Production flat isolated與existing HFL FedProx regressions通過。
-- [ ] 既有failure／timeout／generation／cleanup direct tests通過。
-- [ ] Support UDM／SMF／callback replay沒有被描述為real SMF／UPF integration。
-- [ ] Summary保存support SMF的SUPI ownership partition，並將real SMF／Nupf gating保留為testbed gap。
-- [ ] Testbed validation仍維持open。
+- [x] Production flat isolated與existing HFL FedProx regressions通過。
+- [x] 既有failure／timeout／generation／cleanup direct tests通過。
+- [x] Support UDM／SMF／callback replay沒有被描述為real SMF／UPF integration。
+- [x] Summary保存support SMF的SUPI ownership partition，並將real SMF／Nupf gating保留為testbed gap。
+- [x] Testbed validation仍維持open。
 
 ## 16. 明確延後項目
 
@@ -677,12 +677,72 @@ real SMF／UPF／UE／cross-VM scenario matrix、保存record並由使用者確�
 
 ## 18. 實作紀錄
 
-尚未開始。Implementation時在本節追加：
+### 18.1 Baseline 與修改範圍
 
-- exact repository revisions與working-tree baseline；
-- production／support files與contract delta；
-- test-first findings與remediation iterations；
-- exact focused／full／E2E commands、results與summary paths；
-- final conformance map結果；
-- mandatory review與language consistency pass；
-- remaining testbed gap與repository-separated commit proposal。
+2026-08-26 implementation 使用下列未提交 baseline：
+
+- `PyMTLF/`：`aa65204387b38162d87b1c478d64c724548a10c3`；
+- `nwdaf-resources/`：`0d839d167dedb6235b8bfbe97e346a95dc53580d`；
+- `nwdaf-docs/`：`93a5a5c38f40bab89315a35242c81ade4479baee`；
+- `NWDAF/`：`6aed268d6528f8be6c729cbd45b59d067e5e80dc`，無production diff。
+
+`PyMTLF/`完成explicit collection lifecycle、typed `networkArea`、descriptor partial-overlap admission、
+deterministic dataset evidence與artifact validation。Collection ledger升為schema version 2，並保存實際收到
+callback的resource correlations；DELETE後只保留確實寫入資料之resources的descriptor，避免共享ADRF中
+out-of-area subscription使其他data owner誤取資料。
+
+`nwdaf-resources/`更新private collection runner，並加入四-Client Flat FedAvg與Root／兩Branch／四-Leaf
+Hierarchical FedProx兩條獨立static-collection E2E。Support UDM／SMF提供同一group與TAI ownership gating，
+callback replay只向matching owner注入資料；summary保存fixtures、requested windows、dataset evidence、
+aggregation重算、publication、cleanup以及production／support／not-claimed boundaries。
+
+### 18.2 Review 與 remediation
+
+Mandatory initial review與後續targeted review關閉下列in-scope findings：
+
+1. 共享ADRF原先會讓每個Leaf保留所有group members的descriptor。先以
+   `test_delete_retains_descriptors_only_for_resources_that_stored_data`重現，再以observed correlation
+   ownership修正；四個Leaf最終trainable sample counts分別為4、9、14、18。
+2. Static collection scenario不啟動PyAnLF，因此不再等待model provision cutover；summary以`not_run`與
+   原因明確記錄，而不虛構該verification claim。
+3. 新runner entrypoint的module名稱與pytest collection衝突，改為唯一dynamic module名稱並以完整resources
+   checks驗證。
+4. 新scenario的unequal sample-count assertion一度誤套到既有`degradation-success`。先確認real-process
+   regression失敗並加入deterministic unit test，再將條件限於`static_collection`；focused test、ruff與原
+   regression重跑均通過。
+
+未確認但不阻擋本 Slice 的風險為舊schema version 1 collection ledger的跨版本migration；目前沒有已部署
+v1 ledger必須由此未提交版本原地升級的acceptance requirement，分類為`optional hardening`。Real SMF／
+Nupf／UPF、UE session、cross-VM與testbed execution仍為`integration verification gap`。
+
+### 18.3 Final verification
+
+Final working tree的exact結果如下：
+
+- 計畫指定的PyMTLF focused matrix：422 passed、2 skipped、37 warnings；
+- `PyMTLF/.venv/bin/pytest -q`：597 passed、2 skipped、46 warnings；
+- `PyMTLF/.venv/bin/ruff check src tests`：passed；
+- resources checks：53 passed；
+- resources ruff：passed；
+- hierarchical preflight：passed；
+- Flat static-collection FedAvg：passed，summary位於
+  `/tmp/nwdaf-hierarchical-fl-flat-7l0cn4z2/summary.json`；
+- Hierarchical static-collection FedProx：passed，summary位於
+  `/tmp/nwdaf-hierarchical-fl-aggregation-lh5t43e7/summary.json`；
+- production Flat isolated regression：passed，temporary root為
+  `/tmp/nwdaf-distributed-fl-vxbbhe1m`；
+- existing HFL FedProx `degradation-success` regression：passed，summary位於
+  `/tmp/nwdaf-hierarchical-fl-aggregation-82xspryq/summary.json`。
+
+兩條static scenarios均保存四個SUPI各自唯一owner、16次SMF subscription create／delete、DELETE後
+`RETAINED`、late callback `404`、requested-window overlap、不同sample counts、兩個configured rounds、
+topology內aggregation重算、ADRF publication與bounded cleanup。Flat與Hierarchical不作cross-topology
+model equality claim；support callback replay也不作real SMF／UPF integration claim。
+
+### 18.4 Conformance 與交付狀態
+
+§14所有本地normative items均為`Satisfied`；mandatory initial review、test-first remediation、fresh-read
+conformance與final full verification均完成。使用者已確認review結果；文件狀態為
+`Commit Pending Approval`，三個repositories的intended changes維持unstaged／uncommitted，等待使用者核准
+repository-separated commit proposal。Testbed validation仍未執行，因此父計畫保持
+`Testbed Validation Pending`。

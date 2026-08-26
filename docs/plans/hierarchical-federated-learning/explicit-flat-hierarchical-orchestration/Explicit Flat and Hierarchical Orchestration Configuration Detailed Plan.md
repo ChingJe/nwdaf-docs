@@ -2,7 +2,7 @@
 
 日期：2026-08-26
 
-狀態：Slice 1–2 Implementation Committed and Pushed；Slice 3 Plan Drafted；Ready for User Review；testbed validation pending
+狀態：Slice 1–2 Implementation Committed and Pushed；Slice 3 Implementation Verified and User Review Confirmed；Commit Pending Approval；testbed validation pending
 
 相關文件：
 
@@ -537,12 +537,11 @@ NWDAF MTLF-private UDM／SMF／ADRF relays。以 support SMF 與 callback replay
 
 詳細計畫：[Slice 3](./Slice%203%20Static%20Flat%20and%20Hierarchical%20Local%20E2E%20Closure%20Detailed%20Plan.md)
 
-計畫已依Slice 1／2 committed interfaces與現行runner evidence重新校正，等待user review。預計完成private
-collection lifecycle簡化、flat／HFL分層TAI、partial-overlap window admission、actual dataset evidence、
-四-Client static flat FedAvg與Root／Branches／四-Leaf HFL FedProx兩條獨立private-collection scenarios、各自
-aggregation recomputation、production flat isolated rerun、existing HFL FedProx／lifecycle regressions與完整
-local evidence。兩條scenario不作cross-topology equivalence claim。完成後仍維持
-`Testbed Validation Pending`。
+Implementation、local verification、mandatory review與user review均已完成，等待commit approval。已完成private collection
+lifecycle簡化、flat／HFL分層TAI、partial-overlap window admission、actual dataset evidence、四-Client static
+flat FedAvg與Root／Branches／四-Leaf HFL FedProx兩條獨立private-collection scenarios、各自aggregation
+recomputation、production flat isolated rerun、existing HFL FedProx／lifecycle regressions與完整local
+evidence。兩條scenario不作cross-topology equivalence claim，並維持`Testbed Validation Pending`。
 
 三個 Slice 各自完成 implementation、direct verification、mandatory review 與 user review 後才可提出各
 repository commit proposal；不得累積成一個跨 repository 大 commit。
@@ -712,7 +711,7 @@ private collection 的 blocker。Real SMF／UPF 與 testbed execution 是 `integ
 開始 production implementation 前：
 
 1. Slice 1／2 implementation、local verification、user review、repository-separated commits與push已完成；
-   Slice 3詳細計畫等待user review；
+   Slice 3 implementation、local verification、mandatory review與user review已完成，等待commit approval；
 2. 每個 Slice 從最新文件建立 normative conformance map；
 3. 重新確認 target revisions、working trees 與 active callers；
 4. 依 Slice 順序實作、direct verification、mandatory review 與 user review；
