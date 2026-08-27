@@ -2,7 +2,7 @@
 
 日期：2026-08-26
 
-狀態：Slice 1–2 Implementation Committed and Pushed；Slice 3 Implementation Verified and User Review Confirmed；Commit Pending Approval；testbed validation pending
+狀態：Slice 1–2 Implementation Committed and Pushed；Slice 3 Implementation Verified and User Review Confirmed；Commit Pending Approval；Static Flat Testbed Validation Completed / Verified Record；Static HFL Testbed Validation Pending
 
 相關文件：
 
@@ -636,6 +636,26 @@ PyMTLF/.venv/bin/python \
   --profile aggregation --scenario degradation-success
 ```
 
+### 12.4 Static Flat testbed validation
+
+2026-08-27 的新版 testbed Phase 3 在 approved Host context 使用 real 三 VM、五個 NWDAF／PyMTLF、八個 UE、
+SMF／UPF collection path 與 ADRF 完成 static Flat external validation。四個 data owners 各取得兩個互斥 SUPI 的
+current-run observations並保留 descriptor；Server exact 選出四個 Clients，完成兩輪 FedAvg、final validation、
+ADRF／catalog publication與四個 training resources exact cleanup。Static request以 `required_scopes=0`進入
+`COMPLETE`；production Flat Consumer→degradation→two-client training→publication／cutover regression亦完成。
+
+Testbed integration另外確認 static Flat Client的NRF Training registration必須包含和topology／local collection
+profile相同的TAI；renderer與checker已由同一authoritative owner inventory產生並exact compare。這項修正不改變
+HFL無TAI邊界。PyMTLF只補充successful training-resource create／delete的可觀測log，未改變API、state machine或
+cleanup behavior。
+
+Static Flat詳細run identity、counts、artifact digest、model identity、reset／seed與regression evidence保存在
+testbed Phase 3 active plan與
+`records/hierarchical-federated-learning/static-flat-controlled-flow-validation-2026-08-27.md`。該Phase user review
+已於2026-08-28確認；PyMTLF `7479629`、Infrastructure `e5b1d44`與testbed-docs `1bf51f3`保存reviewed source
+及verified record。此證據只關閉static Flat的real SMF／UPF與cross-VM gap；Static HFL仍由後續testbed phase
+驗證，因此本component計畫尚不可宣稱整體testbed validation完成。
+
 實際 filenames／CLI 可在各 Slice 詳細計畫與 implementation 中依 existing owner 小幅調整，但不得省略
 各自 direct coverage 或 full repository verification。Code／script commands 依 workspace policy 以
 elevated permission 執行。
@@ -681,8 +701,9 @@ elevated permission 執行。
     data-plane integration 已通過。
 20. 每個 Slice 保持 unstaged／uncommitted 供 IDE review，review 確認後另提 repository-separated commit
     proposal。
-21. Local completion 後狀態仍為 `Testbed Validation Pending`；只有部署到 testbed 並保存 real SMF／UPF
-    與跨 VM evidence 後才能宣稱整體完成。
+21. Static Flat 已保存 real SMF／UPF 與跨 VM evidence、通過testbed user review並提交verified record；Static
+    HFL仍為`Testbed Validation Pending`。只有兩條 topology均完成各自required testbed review與verified
+    record後，才能宣稱整體testbed validation完成。
 
 ## 14. 明確延後項目與非目標
 
@@ -716,4 +737,5 @@ private collection 的 blocker。Real SMF／UPF 與 testbed execution 是 `integ
 3. 重新確認 target revisions、working trees 與 active callers；
 4. 依 Slice 順序實作、direct verification、mandatory review 與 user review；
 5. 每個 repository commit 前另行提出完整 commit proposal 並取得明確核准；
-6. local Slice 3 完成後保留 `Testbed Validation Pending`，不提前關閉 external acceptance。
+6. Static Flat external validation已完成required execution、testbed user review與verified record commit；Static
+   HFL繼續保留`Testbed Validation Pending`，不提前關閉整體external acceptance。
