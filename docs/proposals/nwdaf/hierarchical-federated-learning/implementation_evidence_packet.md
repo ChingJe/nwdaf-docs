@@ -2,7 +2,9 @@
 
 日期：2026-08-27
 
-狀態：草稿；持續查證中；testbed E2E 執行結果待補
+最後更新：2026-08-28
+
+狀態：草稿；HFL testbed functional E2E 已確認；正式 Flat／HFL experiment 待執行
 
 ## 1. 文件目的
 
@@ -50,49 +52,77 @@ real NRF、跨 VM、SMF／UPF、UE 或 data-plane evidence。
 
 | 項目 | 本機證據 | Testbed 證據 | 狀態／待補資料 |
 | --- | --- | --- | --- |
-| 同一套實作支援 Flat／HFL | Explicit orchestration config與本機real-process scenarios已完成 | 待確認部署版本與實際config | 本機 `Confirmed`；testbed `Pending verification` |
-| Branch upper-client／lower-server dual role | 本機HFL實作、tests與multi-process E2E已完成 | 待取得runtime topology與process evidence | 本機 `Confirmed`；testbed `Pending verification` |
-| Same global-round semantics | 本機流程已驗證每次lower-tier aggregation後形成upper-tier update | 待取得round-level runtime record | 本機 `Confirmed`；testbed `Pending verification` |
-| HFL testbed E2E | 不適用 | 實際執行者目前正直接執行testbed驗證 | `In progress`；結果、commands與record待補 |
-| Flat／HFL正式實驗就緒度 | 本機isolated scenarios已存在，但不是正式論文實驗結果 | 待確認testbed topology、dataset與instrumentation | `Pending verification` |
+| 同一套實作支援 Flat／HFL | Explicit orchestration config與本機real-process scenarios已完成 | 同一PyMTLF revision已分別跑通Static HFL與fresh Static Flat regression | 本機與testbed functional flows皆`Confirmed` |
+| Branch upper-client／lower-server dual role | 本機HFL實作、tests與multi-process E2E已完成 | 兩個Branches各管理兩個Leaves，完成lower process、upper回報與6-resource cleanup | 本機與testbed functional E2E皆`Confirmed` |
+| Same global-round semantics | 本機流程已驗證每次lower-tier aggregation後形成upper-tier update | 兩輪均完成4個Leaf updates、2個Branch aggregates與1個Root aggregate | 本機與testbed functional E2E皆`Confirmed` |
+| HFL testbed E2E | 不適用 | real three-VM Static HFL已完成collection、training、validation、publication與cleanup | `Confirmed`；只代表bounded functional E2E |
+| Flat／HFL正式實驗就緒度 | 本機isolated scenarios已存在，但不是正式論文實驗結果 | Static HFL與Static Flat functional runs已跑通；paper instrumentation與dataset contract尚未完成 | `Open`；不得把functional runs當正式比較結果 |
 
 目前canonical plan的decision log仍將「explicit flat／hierarchical orchestration」標為
-implementation pending，但現行`PyMTLF@36166f0`已包含對應實作：執行時會明確選擇
+implementation pending，但testbed使用的`PyMTLF@7479629`已包含對應實作：執行時會明確選擇
 Flat或Hierarchical orchestration，Flat可以固定participant topology直接啟動。故本文件將
-implementation狀態列為`Confirmed`，同時保留canonical plan ledger需要另行reconcile的
-文件差異；這項結論仍不代表testbed已使用相同revision驗證。
+implementation與functional E2E狀態列為`Confirmed`，同時保留canonical plan ledger需要另行
+reconcile的文件差異。
 
 本機的canonical status仍見
 [Hierarchical NWDAF Federated Learning Implementation Plan](../../../plans/hierarchical-federated-learning/Hierarchical%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)；
 testbed摘要見
 [NWDAF Testbed 整合進度摘要](../../../progress/testbed_integration_status.md)。
 
-### 3.2 Testbed 證據收集欄位
+### 3.2 Flat／HFL 切換與公平性邊界
 
-Testbed E2E 完成後，本節至少補齊下列資料：
+Flat與HFL使用同一套NWDAF／PyMTLF implementation；執行時由selected configuration明確選擇
+orchestration mode與static participant topology，不是依Server／Client engines是否存在來推論模式。
+兩種模式的差異如下：
 
-- testbed repository branch、HEAD與working-tree狀態；
-- 所有 affected component revisions與submodule gitlinks；
-- VM、Root／Branch／Leaf、NRF、ADRF、SMF／UPF與資料來源 placement；
-- 實際使用的 topology、capability、trigger、round、strategy與dataset設定；
-- 執行 commands、開始／結束時間、Run ID及log／artifact位置；
-- preparation、round、aggregation、validation、publication與cleanup結果；
-- failure、timeout、retry、restart或skipped checks；
-- runtime remediation，以及 remediation 後是否使用相同或更新後的 revisions 重跑；
-- confirmed claims、remaining gaps與明確不可宣稱的範圍。
+| 項目 | Flat | HFL |
+| --- | --- | --- |
+| Top-level coordinator | Root／FL Server | Root／FL Server |
+| Participant topology | Root直接指定所有FL Clients | Root指定Branches，並為每個Branch指定Leaves |
+| Training resources | Root直接建立Client subscriptions | Root建立upper-tier Branch subscriptions；各Branch再建立lower-tier Leaf subscriptions |
+| Intermediate role | 不適用 | Branch對上為FL Client、對下為FL Server |
+| Round result flow | Client update直接回Root | Leaf updates先由Branch聚合，再由Branch回傳單一upper-tier update |
+
+因此「同一套實作」不表示Flat與HFL使用完全相同的config file；topology-specific configuration必然
+不同。正式paper experiment的fairness contract應固定相同implementation revision、model、
+initialization、local training algorithm／epochs、participant datasets、global rounds與offline evaluator，
+只改變mode與topology-specific assignment。現有testbed中的Static HFL與Static Flat regression使用
+相同PyMTLF revision，足以證明兩種模式都能執行；但兩個functional runs的algorithm與目的不同，
+不能直接作為正式Flat／HFL比較結果。
+
+### 3.3 Testbed functional E2E 證據
+
+本次Static HFL functional E2E的權威摘要由
+`ChingJe/testbed-docs@89f0c4f`中的
+`static-hierarchical-controlled-flow-validation-2026-08-28.md`保存；執行所用Infrastructure
+source為`feat/r18-hierarchical-federated-learning@9a7bc914`。已固定的主要identity如下：
+
+| 項目 | 已確認內容 |
+| --- | --- |
+| Component revisions | NWDAF `6aed268`、PyMTLF `7479629`、PyAnLF `6a4d94a`、ADRF `905f059` |
+| Runtime placement | `core`、`path-a`、`path-b`三台VM；1 Root、2 Branches、4 Leaves、7個NWDAF／PyMTLF instances |
+| Run identity | `84708477-5dca-499f-a8a0-640b25a30c8c` |
+| Training topology | exact 2 Branches × 2 Leaves；兩輪Leaf FedProx與two-tier sample-count-weighted aggregation |
+| Data path | 四個Leaves各取得real SMF／UPF collection evidence並保留各自local snapshot |
+| Completion path | four-Leaf final validation、ADRF／Root catalog publication、2 upper＋4 lower resources cleanup |
+| Regression | 同一Phase另以fresh Static Flat run確認shared operator／renderer／status lifecycle未被破壞 |
+
+這份證據足以支持「Root–Branch–Leaf HFL已在real testbed跑通」的C2 implementation／testbed
+realization；它不是正式Flat／HFL performance experiment。該run使用real collection path與bounded
+smoke configuration，而paper主實驗仍採固定local datasets、共同held-out test set與另外實作的
+communication／timing instrumentation。
 
 Raw logs、generated configs、run artifacts及完整操作紀錄由
 `5G_NWDAF_Infrastructure` 保存；本文件只保存可供 proposal 引用的摘要與精確來源。
-目前 workspace 中的唯讀 reference 為該 repository 舊版 `main@7d0a36c`，只用於理解
-既有 Flat testbed topology、config renderer、component lock、experiments與observability
-結構，不作為本次 HFL testbed 執行證據。
+目前workspace中的唯讀reference已抓取本次feature branch；`main@7d0a36c`仍是舊版，不能取代
+前述`9a7bc914`作為本次HFL source identity。
 
 ## 4. 指標與 instrumentation 可行性
 
 ### 4.1 初始可行性矩陣
 
 下表整合第一輪production path trace；取值點可由現行source確認，但正式experiment logging
-尚未實作，testbed上的可觀測性也仍待驗證。
+尚未實作。本次functional testbed observability只證明流程閉合，不等同paper metric stream。
 
 | 指標 | 論文語意 | 候選measurement boundary | 目前狀態 | 待確認事項 |
 | --- | --- | --- | --- | --- |
@@ -243,8 +273,9 @@ local shards。實際split比例、random seed、test-set identity與offline eva
 
 本輪稽核使用 Release 18 TS 23.288 v18.13.0、TS 29.520 v18.14.0 與本地
 Release 18 OpenAPI corpus。現行實作快照為 `NWDAF@6aed268`、
-`PyMTLF@36166f0` 與 `nrf@0dd4024`；以下 `Confirmed` 只代表這些 revisions 的
-source／deterministic test evidence，不包含尚在執行的 testbed run。
+`PyMTLF@7479629` 與 `nrf@0dd4024`。Source／deterministic conclusions與§3.3的functional
+testbed record分開標示；testbed evidence只支持實際跑通的static successful flow，不擴張成
+dynamic topology或performance claim。
 
 | 證據入口 | 本輪用途 |
 | --- | --- |
@@ -278,8 +309,8 @@ source／deterministic test evidence，不包含尚在執行的 testbed run。
   3GPP直接定義的procedure。
 - **Classification**：`standard boundary`（標準未表達cross-process binding）＋
   `our design choice`（Branch composition profile）。
-- **Status**：source／deterministic tests為`Confirmed`；testbed runtime evidence為
-  `Pending verification`。
+- **Status**：source／deterministic tests與two-Branch／four-Leaf testbed functional flow皆為
+  `Confirmed`。
 
 ### 5.3 P2：NRF capability discovery與hierarchy／topology establishment
 
@@ -304,8 +335,8 @@ source／deterministic test evidence，不包含尚在執行的 testbed run。
   reconfiguration或Branch自行補選。
 - **Classification**：`standard boundary`（discovery不等於hierarchy establishment）＋
   `our design choice`（Root-only static assignment）。
-- **Status**：source／deterministic tests為`Confirmed`；real NRF testbed trace為
-  `Pending verification`。
+- **Status**：source／deterministic tests為`Confirmed`；testbed functional record確認七個unique
+  NWDAF profiles與exact 2×2 admission。
 
 ### 5.4 P3：`mLModelUrl`／model bundle與cross-process mapping
 
@@ -331,8 +362,8 @@ source／deterministic test evidence，不包含尚在執行的 testbed run。
   標準hierarchy schema。
 - **Classification**：`standard boundary`（3GPP未標準化bundle內容）＋`our design choice`
   （typed bundle與download／republish flow）。
-- **Status**：source／deterministic tests為`Confirmed`；跨VM artifact transfer為
-  `Pending verification`。
+- **Status**：source／deterministic tests為`Confirmed`；testbed functional record確認跨節點
+  artifact URL／digest與Leaf–Branch–Root two-tier lineage。
 
 ### 5.5 P4：Preparation accept／reject／status expressiveness
 
@@ -358,8 +389,8 @@ source／deterministic test evidence，不包含尚在執行的 testbed run。
   增加新的public SBI field。
 - **Classification**：`standard boundary`（無hierarchical outcome schema）；將
   `statusReport`視為獨立成功載體屬`misunderstanding／non-issue`。
-- **Status**：source／deterministic tests為`Confirmed`；testbed callback sequence為
-  `Pending verification`。
+- **Status**：source／deterministic tests為`Confirmed`；testbed成功路徑確認四個Leaves完成
+  preparation並由Root exact admission，負向outcome仍由deterministic evidence涵蓋。
 
 ### 5.6 P5：Server-driven selection與Client-initiated participation
 
@@ -390,16 +421,20 @@ source／deterministic test evidence，不包含尚在執行的 testbed run。
 
 | 候選主張 | 必要證據 | 目前狀態 | Proposal處理 |
 | --- | --- | --- | --- |
-| 多個既有NWDAF FL processes可組成Root–Branch–Leaf execution | Spec composition analysis、production trace、local與testbed E2E | Local部分已確認；testbed待補 | 維持candidate claim |
-| Branch可安全維持upper-client／lower-server dual role | Process mapping、correlation isolation、round／failure／cleanup evidence | Source與deterministic audit已確認；testbed待補 | 不先擴張為標準已定義行為 |
+| 多個既有NWDAF FL processes可組成Root–Branch–Leaf execution | Spec composition analysis、production trace、local與testbed E2E | Local與real three-VM functional E2E皆已確認 | 可支持C1／C2 realization claim |
+| Branch可維持upper-client／lower-server dual role並完成two-tier training | Process mapping、correlation isolation、round／cleanup evidence | Source、deterministic audit與two-Branch testbed成功流程已確認 | 作為implementation realization，不擴張為標準已定義行為 |
 | HFL降低Root-facing communication | Frozen byte semantics與正式Flat／HFL experiment | 尚無正式結果 | 不提前寫成已證實結論 |
 | HFL引入lower-tier communication、Branch aggregation與latency cost | Frozen measurement semantics與正式實驗 | 尚無正式結果 | 以research question／hypothesis表述 |
 | 3GPP management／FL models未直接表達hierarchical orchestration | Release-specific TS／OpenAPI audit | P1–P5第一輪完成；OAM evidence reconciliation待補 | 暫列practical implication候選 |
 
 ## 7. 待辦事項
 
-- [ ] 取得本次testbed run的repository HEAD、component revisions與working-tree狀態。
-- [ ] 取得testbed topology、commands、Run ID、logs與result summary。
+- [x] 取得本次testbed functional run的Infrastructure／component revisions、topology、Run ID與
+  verified result summary。
+- [x] 確認real three-VM Static HFL完成collection、two-tier training、validation、publication與
+  cleanup，足以支持proposal C2。
+- [x] 明確記錄Flat／HFL共用implementation的切換方式、topology-specific config差異與正式
+  experiment fairness boundary。
 - [ ] Reconcile canonical plan中explicit orchestration仍標示implementation pending的舊狀態。
 - [x] 完成Flat／HFL source-level message與artifact transport初查；testbed route trace待補。
 - [x] 形成bytes counting、retry、failure與double-counting候選規則；待experiment spec freeze。
@@ -410,7 +445,8 @@ source／deterministic test evidence，不包含尚在執行的 testbed run。
   離線計算WAPE；不以FL流程內的distributed validation代替。
 - [ ] 由Dataset／Generator Design Packet確認`train／validation／test` split比例、random seed、
   test-set identity與offline evaluator input contract。
-- [x] 完成P1–P5第一輪spec、implementation與classification audit；testbed evidence欄位待補。
+- [x] 完成P1–P5第一輪spec、implementation與classification audit，並補入successful-flow
+  testbed functional evidence。
 - [ ] 將可成立的claim與limitation回填Proposal初稿。
 
 ## 8. 更新紀錄
@@ -423,3 +459,5 @@ source／deterministic test evidence，不包含尚在執行的 testbed run。
 | 2026-08-27 | 深入追蹤`mLModelUrl`後續artifact GET；固定artifact-first metrics、各階段logical transfer inventory與receiver-side counting rule |
 | 2026-08-27 | 修正testbed evidence provenance：由實際執行者直接確認執行中，非團隊二手回報；同時將measurement code明確延後至正式experiment instrumentation階段 |
 | 2026-08-27 | 固定learning-outcome contract：每次run後以Root final model對共同held-out test set離線計算WAPE；dataset另拆train／validation／test，實際split由Dataset／Generator Design Packet確認 |
+| 2026-08-28 | 回填real three-VM Static HFL verified record；確認1 Root／2 Branches／4 Leaves的functional E2E、two-tier aggregation、publication與cleanup，並與正式Flat／HFL experiment明確分開 |
+| 2026-08-28 | 補充Flat／HFL切換契約：兩者共用implementation revision，但使用不同mode與topology-specific configuration；正式比較另固定training與dataset條件 |
