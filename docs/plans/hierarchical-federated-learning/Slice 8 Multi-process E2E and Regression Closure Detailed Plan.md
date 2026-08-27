@@ -2,9 +2,11 @@
 
 日期：2026-08-22
 
-狀態：Testbed Validation Pending；本機 E2E、必要 remediation、本機驗證、使用者 IDE review
-與兩批 commits 均已完成。後續須以兩批精確 revisions 完成 testbed 驗證；在此之前本 Slice
-保持開放。
+狀態：Remediation Pending／Testbed Validation Pending；本機 E2E與前兩批 remediation已完成，
+但 2026-08-27 late code review 確認hierarchy preparation assignment會對同一URL重複
+HTTP GET。現行testbed run可保留為functional diagnostics，但不能作為最終可驗收
+revision；修正、本機驗證、使用者review與commit後，必須重跑受影響的HFL testbed
+scenario。在此之前本 Slice保持開放。
 
 技術驗證完成日期：2026-08-25
 
@@ -15,6 +17,7 @@
 必要後續 remediation：
 
 - [Flat FL Owned Artifact Self-download Remediation Detailed Plan](./Flat%20FL%20Owned%20Artifact%20Self-download%20Remediation%20Detailed%20Plan.md)
+- 本文 §18.8：Hierarchy assignment duplicate GET late code-review finding
 
 前置 slices：
 
@@ -871,7 +874,10 @@ production bug，也不能視為通過。
 - [x] flat FL self-download remediation 已完成 production change、mandatory review 與本機驗證
 - [x] 使用者已確認 flat FL self-download remediation working-tree review 結果
 - [x] flat FL self-download remediation 第二批 commits 已獲核准並建立
-- [ ] 兩批精確 revisions 已通過 required testbed validation
+- [ ] hierarchy preparation assignment duplicate GET 已完成test-first remediation、本機驗證與
+  targeted follow-up review
+- [ ] 使用者已確認本remediation的working-tree review結果，並核准精確commit proposal
+- [ ] 包含本remediation的精確 revisions 已通過 required testbed validation
 - [ ] 使用者已確認 testbed evidence 與最終結果
 
 ---
@@ -888,6 +894,24 @@ production bug，也不能視為通過。
   tests 與 Ruff、flat isolated E2E，以及受影響的 hierarchy regression。
 - 此 remediation 必須在第一批 commits 之後進行，另經使用者 review 與 commit proposal
   核准建立第二批 commits，才可部署到 testbed。
+- 2026-08-27 late code review 確認`FLClientEngine._run_preparation()`對hierarchy
+  assignment先呼叫generic `FLWorkspace.download()`與`inspect_artifact()`，辨識為
+  hierarchy後刪除該暫存檔，再對同一URL呼叫`download_assignment()`。因此
+  Root → Branch與Branch → Leaf每個logical assignment都會產生兩次HTTP GET；
+  Flat preparation不進入該hierarchy branch，沒有這個重複。
+- 此行為不是retry，也不是hierarchical FL的必要communication cost。根因是Slice 4在保留
+  原flat generic ingress的同時，新增了會自行取回bytes的typed hierarchy downloader；當時
+  tests將`download()`與`download_assignment()`分開mock，只驗證兩個helper都被呼叫，
+  沒有對真實HTTP GET次數設上限。
+- 修正邊界限於`PyMTLF/`：每assignment只能取回一次，但必須在同一份已接收bytes上
+  保留URL、response header digest、archive digest、artifact role、recipient與`planId`的typed
+  validation，並將通過驗證的同一份artifact移交給plan-owned workspace。不得單純刪除
+  第二次呼叫而一併移除strict hierarchy validation；不修改Go NWDAF、public SBI、
+  Release 18 schema或artifact wire contract。
+- 必須先以deterministic transport test證明Branch與Leaf各自對assignment只發出一次真實
+  HTTP GET，並保留flat單次download、digest／recipient／role／`planId`失敗、cleanup與
+  ownership regressions。修正後重跑focused tests、PyMTLF full pytest、Ruff、local HFL
+  smoke／aggregation scenario與受影響的testbed HFL scenario。
 
 ### 未來階段移交（future-phase handoff）
 
@@ -997,8 +1021,12 @@ Slice 8 只有在下列必要項目都有直接證據後才能標為完成：
     verification、flat isolated E2E 與受影響的 hierarchy regression；
 26. 第一批與 flat remediation 第二批均以使用者核准的 repository-separated commits 固定可部署的
     精確 revisions；
-27. 兩批精確 revisions 已部署到 testbed，並通過部署前與使用者確認的 required scenario matrix；
-28. testbed record 已列出 VM topology、environment、各 repository revision、部署與驗證 commands、
+27. hierarchy preparation assignment對每個remote recipient只發出一次HTTP GET，且不放寬
+    typed validation與artifact ownership；本remediation已完成direct regressions、完整PyMTLF
+    verification、local HFL E2E、targeted follow-up review、使用者review與核准的commit；
+28. 包含第三批remediation的精確 revisions 已部署到 testbed，並通過部署前與使用者確認的
+    required scenario matrix；
+29. testbed record 已列出 VM topology、environment、各 repository revision、部署與驗證 commands、
     results、skips 及 failure remediation history，且使用者已確認最終 evidence。
 
 第 15 項只有在 deadline-driven timeout 確實被觀察到時才算通過；generation／process technical
@@ -1006,7 +1034,7 @@ failure 不能替代它。Graceful cleanup 與 crash-time expiry／GC 也必須�
 cleanup pass。
 
 本機 checkpoint 只能描述為「使用 HTTP/H2C 與 `oauth: false` 的真實 NRF／ADRF 本機多程序
-HFL E2E 已通過」。只有 criteria 25–28 也完成後，才能描述 Slice 8 與本 HFL 第一版計畫完成。
+HFL E2E 已通過」。只有 criteria 25–29 也完成後，才能描述 Slice 8 與本 HFL 第一版計畫完成。
 
 ---
 
@@ -1096,12 +1124,13 @@ completion criteria 1–23都有production path、direct test、獨立summary或
 沒有silent deferral或未關閉的本機技術驗證項目。使用者已於2026-08-25確認criterion 24的
 working-tree review結果。
 
-因此目前是 `Testbed Validation Pending`；已完成的技術驗證範圍包含
+因此目前是 `Remediation Pending／Testbed Validation Pending`；已完成的技術驗證範圍包含
 使用HTTP/H2C與`oauth: false`的真實NRF／ADRF本機多程序HFL E2E，以及flat owned-artifact
 self-download remediation的direct tests、full PyMTLF verification、flat isolated E2E與hierarchy
 smoke regression，且使用者已確認第二批working-tree review與精確commit proposal。criteria
-25–26已由PyMTLF `e9aa223`與nwdaf-docs `f2d0175`關閉；criteria 27–28仍須完成testbed
-validation、保存完整record並由使用者確認evidence。
+25–26已由PyMTLF `e9aa223`與nwdaf-docs `f2d0175`關閉；criterion 27因2026-08-27的
+late code review finding重新開啟為remediation pending，criteria 28–29仍須以修正後的精確
+revisions完成testbed validation、保存完整record並由使用者確認evidence。
 
 ### 18.6 技術驗證後補充紀錄：flat FL self-download
 
@@ -1136,9 +1165,28 @@ paths與review結論記錄於remediation detailed plan §13；使用者已確認
    nwdaf-docs `f5c6186`、`4a5aaad`。
 2. 第一批 commits 建立後完成 §18.6 的 flat FL self-download remediation；使用者已確認
    working-tree review與精確proposal，第二批commits為PyMTLF `e9aa223`與nwdaf-docs `f2d0175`。
-3. 目前狀態為 `Testbed Validation Pending`。部署前須與使用者確認 required
-   scenario matrix、VM topology 與 transport profile，並記錄兩批涉及的精確 repository revisions。
-4. 若 testbed 失敗，回到 working-tree remediation、重跑受影響的本機 regression、重新 review 與
+3. 2026-08-27 late code review發現hierarchy preparation assignment duplicate GET，以本文
+   §18.8為單一review ledger entry；完成test-first remediation、本機驗證、使用者review與精確
+   commit proposal核准前，不得將現行revisions視為最終可驗收版本。
+4. 使用者於2026-08-27因現在來不及完成修正後重測，決定先保存finding而不修改
+   production code。現行testbed run可保留為functional diagnostics；修正後須以包含第三批
+   commits的精確revisions重跑受影響的HFL scenario，並記錄scenario matrix、VM topology與transport
+   profile。
+5. 若 testbed 失敗，回到 working-tree remediation、重跑受影響的本機 regression、重新 review 與
    commit，再部署新 revisions；不得把失敗 revisions 或僅本機通過視為完成。
-5. 只有 required testbed matrix 全部通過、record 完整且使用者確認 evidence 後，Slice 8 與本 HFL
+6. 只有 required testbed matrix 全部通過、record 完整且使用者確認 evidence 後，Slice 8 與本 HFL
    第一版計畫才可標為 `Completed`。
+
+### 18.8 Late code review finding：hierarchy assignment duplicate GET
+
+| 欄位 | 紀錄 |
+| --- | --- |
+| ID／狀態 | `S8-R5`／`Open — Deferred until the current testbed run completes` |
+| Owner phase | Slice 8 testbed closure；原始production path由Slice 4引入 |
+| Confirmed evidence | PyMTLF commit `096c401`的`FLClientEngine._run_preparation()`在hierarchy assignment path先執行`download()`／`inspect_artifact()`，再對同一URL執行`download_assignment()`；`download_assignment()`內部又經`_download_hierarchy()`發出HTTP GET。Root → Branch與Branch → Leaf都走此路徑，Flat preparation不走此分支。 |
+| Consequence | HFL preparation的Root-facing與lower-tier artifact bytes被實作額外放大，增加不必要的I/O與failure surface；此overhead不得解釋為hierarchy固有代價，現行revision不適合用於正式communication comparison。 |
+| Root cause | Slice 4為保留flat ingress behavior先沿用generic download，再加入具strict hierarchy checks的typed downloader；兩個helper各自擁有transport，tests又分開mock呼叫，因此沒有驗證每個logical assignment的實際GET次數。 |
+| Required remediation | 將transport與typed validation拆開；單次取回artifact後，在同一份bytes上完成URL／header／archive digest、role、recipient與`planId`驗證，再將同一份artifact移交給plan-owned workspace。 |
+| Verification | 新增真實HTTP transport count tests，證明Branch／Leaf每assignment各一次GET；保留flat與全部strict-validation／cleanup regressions；重跑focused tests、PyMTLF full pytest、Ruff、local HFL smoke／aggregation及受影響的testbed HFL scenario。 |
+| Deferral | 2026-08-27使用者決定本次只保存finding，不修改production code，因為當前時間不足以完成必要重測。此決定不關閉finding，也不允許現行revision用於正式communication comparison或最終testbed acceptance。 |
+| Closing commit | Pending；尚未修改production code |

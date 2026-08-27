@@ -2,11 +2,12 @@
 
 日期：2026-08-17
 
-最後更新：2026-08-25
+最後更新：2026-08-27
 
-狀態：Testbed Validation Pending；Slice 0–8本機E2E、必要self-download remediation、本機驗證、
-使用者IDE review與兩批repository-separated commits均已完成。後續須以精確revisions完成
-testbed validation，才能關閉本計畫
+狀態：Remediation Pending／Testbed Validation Pending；Slice 0–8本機E2E與前兩批
+remediation已完成，但late code review確認hierarchy preparation assignment duplicate
+GET。必須完成PyMTLF remediation、review與新commit，再以精確revisions重跑受影響的
+HFL testbed validation，才能關閉本計畫
 
 相關文件：
 
@@ -797,8 +798,10 @@ repository verification 與 real local multi-process E2E 均已完成技術驗�
 真實 NRF、ADRF、Go NWDAF、PyMTLF 與 PyAnLF processes 關閉 regression，並保存跨程序
 artifact flow、失敗、逾時與兩個方向 generation restart 的直接證據；使用者已確認第一批
 working-tree review並建立第一批commits。flat FL self-download remediation、本機驗證、使用者
-IDE review與第二批commits也已完成，整體狀態為`Testbed Validation Pending`；下一步以兩批
-精確revisions執行部署前確認的required testbed scenario matrix。
+IDE review與第二批commits也已完成。2026-08-27 late code review另確認hierarchy
+preparation assignment duplicate GET，因此整體狀態重新開啟為
+`Remediation Pending／Testbed Validation Pending`。現行testbed run可保留為functional
+diagnostics，但最終驗收必須使用修正後的精確revisions。
 
 ### Slice 0：Baseline audit and contract freeze
 
@@ -1035,9 +1038,10 @@ NWDAF implementation commit為`3279891`。
 
 ### Slice 8：Multi-process E2E and regression closure
 
-狀態：Testbed Validation Pending；固定使用HTTP/H2C與`oauth: false`的local multi-process
-acceptance、flat self-download remediation、本機驗證、使用者IDE review與兩批commits均已完成。
-後續仍須部署精確revisions並完成required testbed validation。
+狀態：Remediation Pending／Testbed Validation Pending；local multi-process acceptance與前兩批
+remediation已完成；hierarchy preparation assignment duplicate GET已記入Slice 8 late code
+review ledger，待完成修正與新一批review／commit後，以精確revisions執行required
+testbed validation。
 
 詳細計畫：
 
@@ -1275,9 +1279,14 @@ optional hardening，不得默默擴張進第一版。
 30. flat FL Server 的上一輪 `ROUND_GLOBAL`、本機 `ROUND_INPUT` 與 final candidate 不經 remote
     downloader self-download，且完成 direct regressions、完整 PyMTLF verification、flat isolated
     E2E 與受影響的 hierarchy regression；
-31. 第一批與 flat remediation 第二批均以使用者核准的 repository-separated commits 固定精確
-    revisions，部署到 testbed 並通過部署前確認的 required scenario matrix；
-32. testbed record 完整記錄 VM topology、environment、revisions、commands、results、skips 與
+31. hierarchy preparation assignment對每個remote Branch／Leaf只發出一次HTTP GET，且保留
+    typed digest、role、recipient、`planId`與artifact ownership validation；已完成direct
+    regressions、PyMTLF full verification、local HFL E2E、targeted follow-up review、使用者review
+    與核准的commit；
+32. 包含第三批remediation的精確 revisions已以使用者核准的 repository-separated
+    commits固定，
+    部署到 testbed 並通過部署前確認的 required scenario matrix；
+33. testbed record 完整記錄 VM topology、environment、revisions、commands、results、skips 與
     remediation history，且使用者確認最終 evidence。
 
 ---
@@ -1349,3 +1358,5 @@ optional hardening，不得默默擴張進第一版。
 | 2026-08-25 | 使用者確認flat self-download remediation的IDE review結果 | Confirmed；Second Commit Proposal Pending，核准精確proposal前不得stage或commit |
 | 2026-08-25 | 使用者核准第二批精確proposal並建立PyMTLF `e9aa223`與nwdaf-docs `f2d0175` | Confirmed；Testbed Validation Pending |
 | 2026-08-25 | 新增顯式 flat／hierarchical orchestration selection需求；HFL維持static Branch／Leaf topology，flat新增可略過Model Provision／Monitor chain的static Client topology，並保留Server／Client與Root／Branch／Leaf的mode-specific術語 | Confirmed；implementation pending |
+| 2026-08-27 | Late code review確認hierarchy assignment在preparation對同一URL先走generic download，再走typed hierarchy download，使Root → Branch與Branch → Leaf每個logical assignment各產生兩次HTTP GET；此非hierarchy固有成本，且Flat不受影響 | Confirmed finding；PyMTLF remediation、review、commit與修正後testbed rerun pending |
+| 2026-08-27 | 因目前時間不足以完成duplicate GET修正後的必要重測，本次只保存code-review finding，不修改production code；現行testbed run只作functional diagnostics | Confirmed deferral；finding仍為open，正式communication comparison與最終testbed acceptance前必須修正並重測 |
