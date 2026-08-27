@@ -15,6 +15,8 @@ FL topology，而是先回答以下核心問題：
 目前主文件為：
 
 - [Proposal 初稿](proposal_draft.md)
+- [實作證據包](implementation_evidence_packet.md)：持續整理實作事實、testbed證據、
+  instrumentation可行性與HFL整合觀察。
 
 先前以 Analytics Aggregator、Model Provision、Model Monitor 與特定 UE
 Communication scenario 為主線的版本，保留在：
