@@ -17,6 +17,8 @@ FL topology，而是先回答以下核心問題：
 - [Proposal 初稿](proposal_draft.md)
 - [實作證據包](implementation_evidence_packet.md)：持續整理實作事實、testbed證據、
   instrumentation可行性與HFL整合觀察。
+- [Protocol／Schema Feasibility 討論稿](protocol_schema_feasibility.md)：持續整理
+  hierarchical topology下發、結果回傳與failure replacement的candidate extensions。
 
 先前以 Analytics Aggregator、Model Provision、Model Monitor 與特定 UE
 Communication scenario 為主線的版本，保留在：
