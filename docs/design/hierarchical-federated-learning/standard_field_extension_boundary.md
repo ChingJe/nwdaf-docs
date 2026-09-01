@@ -116,6 +116,33 @@ profile、analytics、local configuration 或 Client admission decision，不能
 round，`maxResTime` 表示等待結果的 deadline；兩者都沒有表達「此 node 完成
 多少 local epochs 或 lower-tier rounds 後才向 parent 回報一次」。
 
+### 3.4 `mlCorreId` 與 local process correlation
+
+TS 23.288 與 TS 29.520 Release 18 至 Release 20 對 `mlCorreId` 的核心定義
+一致：它識別訓練 ML Model 的 Federated Learning procedure。TS 29.520 的
+`NwdafMLModelTrainSubsc` 與 `NwdafMLModelTrainNotif` 都包含此欄位；
+structured data type 將它定義為 `string`、cardinality `0..1`，並要求 service
+用於 Federated Learning 時提供。
+
+| Release | 查核版本 | Subscription | Notify | 定義變化 |
+| --- | --- | --- | --- | --- |
+| Release 18 | TS 29.520 V18.14.0 | `mlCorreId` | `mlCorreId` | 無 |
+| Release 19 | TS 29.520 V19.7.0 | `mlCorreId` | `mlCorreId` | 無 |
+| Release 20 | TS 29.520 V20.0.0 | `mlCorreId` | `mlCorreId` | 無 |
+
+三個 release 都沒有替 `mlCorreId` 定義全域唯一性、namespace，或限制它只能
+對應一個 Model Training subscription resource；也沒有明文定義多個
+subscriptions 共用同一值的 hierarchical binding 行為。因此既有規格沒有
+否定以同一 `mlCorreId` 關聯多個 local FL processes，但 hierarchy-wide reuse
+仍是本設計補充的 correlation semantics，不能宣稱為 3GPP 已定義的 procedure。
+
+`notifCorreId` 與 subscription resource ID 繼續識別各 local subscription
+及其 callback，避免讓共用的 `mlCorreId` 取代 subscription lifecycle
+identity。三個 release 的 `NwdafMLModelTrainSubscPatch` 都沒有
+`mlCorreId`，因此 partial update 不以此欄位改變既有 FL procedure
+correlation。`roundInd` 表示 local process round，規格沒有定義其與
+`mlCorreId` 的一對一關係，也不要求 hierarchical tiers 的 rounds 同步。
+
 ---
 
 ## 4. Notify 與 lifecycle 中可直接重用的標準資訊
@@ -206,8 +233,24 @@ Server 原本就有的 selection／aggregation 能力。
 | `strategy` | 沒有 FL method、aggregation rule 與 typed method parameters | Model interoperability 不能替代此 contract |
 | `reportAfter` | 沒有 node-local work-to-upstream-report cadence | `roundInd`／`maxResTime` 不等同此語意 |
 | `x-flTopologyReport` | 沒有 recursive realized topology 與逐級 node lifecycle report | Node identity 重用 `NfInstanceId`；timestamp 重用 `DateTime` |
+| `x-retainedResultReq` | 新 FL Server 建立 subscription 時，沒有標準欄位可明確要求 Client 查找同一 FL procedure 的最新保留結果 | Trigger 為新欄位；結果重用既有 immediate report 或 Notify 中的 `roundInd` 與 `mLModelInfos` |
+| `x-retainedResultStatus` | 標準 notification 沒有明確區分 retained result 已找到或已完成查找但不存在 | `FOUND` 時重用 `roundInd` 與 `mLModelInfos`；`NOT_FOUND` 不建立空 model payload |
 
-### 6.2 不新增或不放進 extension 的資訊
+### 6.2 `x-retainedResultReq` 與既有回報方式
+
+本設計只新增 request-side `x-retainedResultReq` 與 report-side
+`x-retainedResultStatus`。查詢 key 重用 subscription 的 `mlCorreId`；
+`FOUND` outcome 重用 `roundInd` 與 `mLModelInfos` 承載結果，`NOT_FOUND`
+不建立空 model payload。結果可以透過既有 `immReport` 或 Notify 傳遞，
+不需要增加 service operation。
+
+由於 TS 29.520 Release 18 要求 Notify 至少包含 `delayEventNotif`、
+`mLModelInfos` 或 `termTrainReq` 之一，正式 extension 必須將
+`x-retainedResultStatus` 納入合法 notification detailed information，才能
+單獨表達 `NOT_FOUND`。完整 lookup procedure 與 HTTP examples 見
+[Topology、policy 與 strategy 細節設計](./topology_policy_design.md)。
+
+### 6.3 不新增或不放進 extension 的資訊
 
 第一版不新增：
 
@@ -247,14 +290,15 @@ release 已有的 unsubscribe／DELETE 行為，不能直接把 Release 19
 
 ## 8. 下一步
 
-1. 依本文件邊界建立 `x-flTopology` 與 `x-flTopologyReport` 的 candidate
-   OpenAPI mapping。
+1. 依本文件邊界建立 `x-flTopology`、`x-flTopologyReport`、
+   `x-retainedResultReq` 與 `x-retainedResultStatus` 的 candidate OpenAPI
+   mapping。
 2. 分別處理 POST／PUT、PATCH 與 Notify direction，確認每個 extension entry
    的 producer、consumer、required condition 與 validation。
 3. 解決 topology-only Notify 與既有 detailed-information condition 的
    procedure mapping。
-4. 在 HTTP examples 中保留實際使用的標準欄位，只加入本文確認缺少的
-   hierarchical extension。
+4. 以本文件作為 schema review boundary；完整 procedure 與 HTTP examples
+   維護於 [Topology、policy 與 strategy 細節設計](./topology_policy_design.md)。
 
 ---
 
@@ -277,3 +321,4 @@ release 已有的 unsubscribe／DELETE 行為，不能直接把 Release 19
 | 日期 | 內容 |
 | --- | --- |
 | 2026-09-02 | 建立標準欄位與 proposed extension 邊界；完成 Release 18 request／Notify mapping，並納入 Release 19 unsubscribe-info 與 Release 20 status report 差異。 |
+| 2026-09-02 | 加入 retained-result extension boundary：request 使用 `x-retainedResultReq`，report 使用 `x-retainedResultStatus`，並標示既有 `mlCorreId`、`roundInd`、`mLModelInfos`、`immReport` 與 Notify 的重用位置。 |

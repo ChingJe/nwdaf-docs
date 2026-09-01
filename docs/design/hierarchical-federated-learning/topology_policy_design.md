@@ -16,15 +16,16 @@
 
 本文聚焦 hierarchical NWDAF FL 中 topology instruction、Client selection、
 node-level policy、training／aggregation strategy、node-local execution
-instruction、candidate priority 與逐級 status report 的語意。本文先固定
-producer、consumer 與 lifecycle responsibility。Participant policy 採用 Flower
-中已有對應概念的 field names；request 使用 `x-flTopology`，Notify 使用
-`x-flTopologyReport`，最終 OpenAPI type、validation 與 procedure conditional
-mapping 仍待後續 schema 階段確認。
+instruction、candidate priority、逐級 status report 與 retained-result lookup
+的語意。本文先固定 producer、consumer 與 lifecycle responsibility。
+Participant policy 採用 Flower 中已有對應概念的 field names；request 使用
+`x-flTopology`，Notify 使用 `x-flTopologyReport`，最終 OpenAPI type、
+validation 與 procedure conditional mapping 仍待後續 schema 階段確認。
 
-本文不處理 `mlCorreId` 共用方式、Branch replacement 的完整 recovery
-procedure 或 retained result replay。這些議題與 topology 有關，但需要另外
-建立完整 directional flow，避免混入本次 selection design。
+本文不重新討論 `mlCorreId` 共用方式，也不處理 Branch replacement 的完整
+recovery procedure；只定義新 FL Server 重新建立 direct-client subscriptions
+時需要的 retained-result request／report behavior。Result retention、接受、
+去重、ownership 與 fencing 仍不在本文範圍。
 
 ---
 
@@ -496,7 +497,140 @@ direct-child relationship 的 FL Server 將其狀態更新為 `INACTIVE`，並�
 
 ---
 
-## 6. 完整 selection 與 training 範例
+## 6. Retained-result lookup
+
+### 6.1 Request 與 correlation
+
+當新 FL Server 對原 direct Clients 建立 subscriptions 時，可以在
+`NwdafMLModelTrainSubsc` 加入 optional `x-retainedResultReq: true`，要求
+接收者查找並回報本地針對同一 `mlCorreId` 保留的最新已完成結果。因為本
+設計讓整棵 hierarchy 共用 `mlCorreId`，extension 不重複攜帶另一個 process
+ID。
+
+Retained-result lookup 與新一輪 training 是兩個不同動作。
+`x-retainedResultReq: true` 時，本次 request 只執行查找，不開始 local
+training。Server 收到查詢結果後，如需繼續訓練，必須另外更新 subscription，
+清除 `x-retainedResultReq` 或設為 `false`，再以正常的 model／round
+instruction 啟動 training。
+
+找不到 retained result 不使 subscription 建立失敗。新 Branch 仍需要透過
+成功建立的 subscription 維持後續 notification 與 training lifecycle，不能
+因為 Client 沒有舊結果而拒絕建立關係。
+
+### 6.2 Result status
+
+回報方向在 `NwdafMLModelTrainNotif` 增加 optional
+`x-retainedResultStatus`，只定義兩個 lookup outcomes：
+
+- `FOUND`：已找到最新完成結果；同一 report 使用既有 `roundInd` 與
+  `mLModelInfos` 回傳該結果。
+- `NOT_FOUND`：已完成查找，但本地沒有同一 `mlCorreId` 的已完成保留結果；
+  不建立空的 model payload。
+
+當 `x-retainedResultReq: true` 時，接收者必須透過 immediate report 或後續
+Notify 明確回報其中一個 outcome。Server 不能只依 `mLModelInfos` 缺席或
+callback timeout 推測結果不存在。`NOT_FOUND` 不是 subscription 或 API
+resource failure，因此不使用 HTTP `404`、`ProblemDetails`、
+`failEventReports` 或 `termTrainReq`。
+
+`x-retainedResultReq` 不要求 `eventReq.immRep` 必須為 `true`。若兩者一起
+使用且 lookup 已完成，接收者可以在 subscription response 的 `immReport`
+回傳；否則在 subscription 建立後透過既有 Notify procedure 回報。
+
+### 6.3 HTTP examples
+
+以下 request 要求 Leaf 查找同一 hierarchical FL procedure 的最新保留
+結果，並選擇搭配 immediate reporting：
+
+```http
+POST /nnwdaf-mlmodeltraining/v1/subscriptions HTTP/1.1
+Host: leaf-a.example.org
+Content-Type: application/json
+Accept: application/json
+
+{
+  "mLEventSubscs": [
+    {
+      "mLEvent": "UE_COMMUNICATION",
+      "mLEventFilter": {},
+      "modelInterInfo": "pymtlf-model-bundle-v1"
+    }
+  ],
+  "notifUri": "https://branch-b.example.org/nnwdaf-mlmodeltraining/v1/notifications",
+  "notifCorreId": "branch-b-leaf-a-subscription",
+  "mlCorreId": "hierarchical-fl-001",
+  "eventReq": {
+    "notifMethod": "ON_EVENT_DETECTION",
+    "immRep": true
+  },
+  "x-retainedResultReq": true
+}
+```
+
+若 Leaf 保留的最新已完成 local result 為 round 5，POST response 使用既有
+`immReport`：
+
+```http
+HTTP/1.1 201 Created
+Location: https://leaf-a.example.org/nnwdaf-mlmodeltraining/v1/subscriptions/sub-002
+Content-Type: application/json
+
+{
+  "mLEventSubscs": [
+    {
+      "mLEvent": "UE_COMMUNICATION",
+      "mLEventFilter": {},
+      "modelInterInfo": "pymtlf-model-bundle-v1"
+    }
+  ],
+  "notifUri": "https://branch-b.example.org/nnwdaf-mlmodeltraining/v1/notifications",
+  "notifCorreId": "branch-b-leaf-a-subscription",
+  "mlCorreId": "hierarchical-fl-001",
+  "eventReq": {
+    "notifMethod": "ON_EVENT_DETECTION",
+    "immRep": true
+  },
+  "x-retainedResultReq": true,
+  "immReport": {
+    "notifCorreId": "branch-b-leaf-a-subscription",
+    "mlCorreId": "hierarchical-fl-001",
+    "x-retainedResultStatus": "FOUND",
+    "roundInd": 5,
+    "mLModelInfos": [
+      {
+        "event": "UE_COMMUNICATION",
+        "mLFileAddr": {
+          "mLModelUrl": "https://leaf-a.example.org/results/hierarchical-fl-001/round-5"
+        }
+      }
+    ]
+  }
+}
+```
+
+若未要求 immediate report，且 Leaf 查找後沒有保留結果，則以 Notify 明確
+回報 `NOT_FOUND`：
+
+```http
+POST /nnwdaf-mlmodeltraining/v1/notifications HTTP/1.1
+Host: branch-b.example.org
+Content-Type: application/json
+
+{
+  "notifCorreId": "branch-b-leaf-a-subscription",
+  "mlCorreId": "hierarchical-fl-001",
+  "x-retainedResultStatus": "NOT_FOUND"
+}
+```
+
+`roundInd` 表示該 Client local process 的最新已完成 round，不代表 Root 或
+其他 tier 的 round。Result retention、cleanup、接受、去重與 aggregation
+handling 均由 implementation／strategy 決定，不由 request boolean 或
+outcome enum 定義。
+
+---
+
+## 7. 完整 selection 與 training 範例
 
 假設 Root 對 Branch-A 提供五個有 priority 的 candidates，並提供以下 policy：
 
@@ -576,7 +710,7 @@ mode。
 
 ---
 
-## 7. 初步資訊模型
+## 8. 初步資訊模型
 
 以下固定 request-side `x-flTopology`、Notify-side `x-flTopologyReport`、資訊
 關係與 participant policy field names；正式 OpenAPI type、required condition
@@ -622,6 +756,12 @@ Hierarchical topology report
     ├── strategy（optional，實際採用值，重用 FlStrategy）
     ├── reportAfter（optional，實際採用值，重用 FlReportAfter）
     └── child results[]
+
+Retained-result lookup
+├── NwdafMLModelTrainSubsc.x-retainedResultReq
+└── NwdafMLModelTrainNotif.x-retainedResultStatus
+    ├── FOUND -> roundInd + mLModelInfos
+    └── NOT_FOUND
 ```
 
 「實際採用」是欄位在 Notify direction 的語意，不是 property name 的
@@ -637,7 +777,7 @@ topology、policy 或 strategy 可以在既有 resource 上調整，candidate ex
 
 ---
 
-## 8. 後續 schema refinement 與查核
+## 9. 後續 schema refinement 與查核
 
 以下項目不重新打開前述設計語意，只在形成正式 OpenAPI 時完成：
 
@@ -651,13 +791,17 @@ topology、policy 或 strategy 可以在既有 resource 上調整，candidate ex
 - 確認只帶 `x-flTopologyReport` 的 Notify 如何滿足 TS 29.520 既有
   detailed-information 條件；在 procedure 正式擴充前，不假設 vendor field
   可取代既有 `mLModelInfos`、`delayEventNotif` 或 `termTrainReq`。
+- 將 `x-retainedResultReq` 映射至 subscription create／update，並將
+  `x-retainedResultStatus` 納入 immediate report／Notify 的合法 detailed
+  information；`FOUND` 時要求 `roundInd` 與 `mLModelInfos`，`NOT_FOUND` 時
+  不要求 model payload。
 - 在 notification schema 階段界定 candidate pool 的回報範圍，避免把所有
   NRF discovery results 都當成 topology nodes。
 - 查核無法接受 `reportAfter` 時可重用的 preparation failure 表達方式。
 
 ---
 
-## 9. 變更紀錄
+## 10. 變更紀錄
 
 | 日期 | 內容 |
 | --- | --- |
@@ -672,3 +816,4 @@ topology、policy 或 strategy 可以在既有 resource 上調整，candidate ex
 | 2026-09-02 | 確認 `reportAfter` 為 optional；直接上層可明確指定，省略時由接收 node 自行決定。 |
 | 2026-09-02 | 確認只有直接加入既有 3GPP message 的 `x-flTopology` extension entry 使用 `x-`；自定義 topology object 的內部 properties 不重複加 prefix。 |
 | 2026-09-02 | 確認 Notify 使用 `x-flTopologyReport`；report node 重用同名 `policy`、`strategy` 與 `reportAfter` 表示實際採用值，不增加 `effective*` 欄位，且不跨層回報 descendants 的 `roundInd`。 |
+| 2026-09-02 | 加入 retained-result lookup：`x-retainedResultReq` 只觸發查詢，`x-retainedResultStatus` 明確回報 `FOUND`／`NOT_FOUND`，並可使用 immediate report 或後續 Notify；完整 Branch recovery 維持不在本文範圍。 |
