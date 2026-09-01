@@ -9,6 +9,7 @@
 相關文件：
 
 - [Topology、policy 與 strategy 細節設計](./topology_policy_design.md)
+- [標準欄位與 Extension 邊界](./standard_field_extension_boundary.md)
 - [NWDAF Federated Learning Release 18 規格解讀](../../specification-guides/NWDAF%20Federated%20Learning%20Release%2018%20規格解讀.md)
 - [Hierarchical NWDAF Federated Learning Implementation Plan](../../plans/hierarchical-federated-learning/Hierarchical%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)
 - [既有 protocol/schema feasibility proposal](../../proposals/nwdaf/hierarchical-federated-learning/protocol_schema_feasibility.md)
@@ -378,6 +379,7 @@ protocol semantics：
 | Node-local `reportAfter` | `epoch`／`round` 語意、parent override／local decision 與 local scope 已確認；OpenAPI mapping 待定 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md) |
 | Topology status 與逐級回報 | `x-flTopologyReport`、status vocabulary，以及以同名 `policy`／`strategy`／`reportAfter` 回報實際採用值的語意已確認；正式 OpenAPI mapping 待定 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md) |
 | `mlCorreId` 與 local process correlation | 已確認 Release 18 至 Release 20 schema／procedure 未限制 hierarchy-wide reuse；共用 ID 是本設計的 hierarchical semantics，subscription lifecycle 與 `roundInd` 維持 local scope | 本文件 §4.7 |
+| 標準欄位與 extension boundary | 已完成 Release 18 request／Notify mapping，並確認 Release 19 unsubscribe-info 與 Release 20 status report 差異；task、data、model、deadline 與 local lifecycle 優先重用既有欄位 | [標準欄位與 Extension 邊界](./standard_field_extension_boundary.md) |
 | Branch replacement 與 retained result | 本階段延後 | 不在目前設計範圍 |
 
 ---
@@ -387,9 +389,7 @@ protocol semantics：
 1. 依已確認的 `x-flTopology`／`x-flTopologyReport`、policy／strategy 語意形成
    candidate OpenAPI schema 與 HTTP examples，並確認 topology-only report
    如何納入既有 Notify detailed-information 條件。
-2. 逐項對照既有 Model Training／NRF fields，確認 standardized、missing 與
-   implementation-specific boundary。
-3. 視討論成熟度建立 correlation 或其他獨立細節設計文件。
+2. 視討論成熟度建立 correlation 或其他獨立細節設計文件。
 
 ---
 
@@ -431,3 +431,4 @@ protocol semantics：
 | 2026-09-02 | 確認 hierarchy-wide `mlCorreId`、subscription-local lifecycle 與 local `roundInd` correlation model；保留正式規格相容性查核。 |
 | 2026-09-02 | 確認 Notify 使用 `x-flTopologyReport` 回報 realized topology，並重用同名 `policy`、`strategy` 與 `reportAfter` 表示實際採用值；topology report 不跨層攜帶 descendants 的 `roundInd`。 |
 | 2026-09-02 | 完成 TS 23.288／TS 29.520 Release 18 至 Release 20 `mlCorreId` 查核；確認 hierarchy-wide reuse 不受既有 schema／procedure 排除，但屬於本設計新增的 hierarchical correlation semantics。 |
+| 2026-09-02 | 建立標準欄位與 extension boundary 細節文件；確認 task、data／time requirement、model、deadline、round 與 local lifecycle 應重用既有欄位，candidate extension 僅補 hierarchical orchestration semantics。 |

@@ -15,6 +15,10 @@
   整理 recursive topology、node-level policy、training／aggregation strategy、
   node-level execution instruction、Client selection、candidate priority、
   participant threshold 與 status lifecycle。
+- [標準欄位與 Extension 邊界](./standard_field_extension_boundary.md)：
+  對照 Release 18 至 Release 20 的既有 Model Training fields，區分可直接重用
+  的資訊、hierarchical orchestration gap 與 proposed extension 的 minimum
+  scope。
 
 ## 相關資料
 
