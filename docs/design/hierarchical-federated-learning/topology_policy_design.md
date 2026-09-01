@@ -2,7 +2,9 @@
 
 日期：2026-09-01
 
-狀態：候選設計，供後續討論與 schema refinement 使用
+最後更新：2026-09-02
+
+狀態：核心語意與 participant policy 欄位已確認；OpenAPI／schema refinement pending
 
 上層文件：
 
@@ -13,10 +15,11 @@
 ## 1. 文件目的
 
 本文聚焦 hierarchical NWDAF FL 中 topology instruction、Client selection、
-node-level policy、training／aggregation strategy、candidate priority 與逐級
-status report 的語意。本文先固定 producer、consumer 與 lifecycle
-responsibility。Participant policy 先採用 Flower 中已有對應概念的 candidate
-field names；最終欄位掛載位置與 OpenAPI mapping 仍待後續 schema 階段確認。
+node-level policy、training／aggregation strategy、node-local execution
+instruction、candidate priority 與逐級 status report 的語意。本文先固定
+producer、consumer 與 lifecycle responsibility。Participant policy 採用 Flower
+中已有對應概念的 field names；最終欄位掛載位置與 OpenAPI mapping 仍待後續
+schema 階段確認。
 
 本文不處理 `mlCorreId` 共用方式、Branch replacement 的完整 recovery
 procedure 或 retained result replay。這些議題與 topology 有關，但需要另外
@@ -40,11 +43,13 @@ node
 │   └── child node
 ├── node policy
 ├── node strategy
+├── node reportAfter
 └── status information
 ```
 
-`children`、node policy 與 node strategy 都是 optional。Policy 與 strategy
-直接作為 node 的 sibling fields，不增加實際的 `localProcess` wrapper。
+`children`、node policy、node strategy 與 node `reportAfter` 都是 optional。
+Policy、strategy 與 `reportAfter` 直接作為 node 的 sibling fields，不增加
+實際的 `localProcess` wrapper。
 
 沒有 children 不代表該 node 永遠是 Leaf；如果 policy 授權它自行選擇
 Clients，它仍可發現候選者並建立下一層 local FL process。若 node 沒有
@@ -66,7 +71,7 @@ children，policy 仍可允許接收者補足人數，不需要再切換模式�
 
 ### 2.3 Policy 的直接作用範圍
 
-目前候選語意是：
+已確認語意是：
 
 > 一個 node 上的 policy，描述該 node 作為 local FL Server 時，如何選擇及
 > 管理 direct children。
@@ -76,28 +81,86 @@ Policy 不自動套用到所有 descendants。若未來需要 subtree inheritanc
 推測。
 
 Policy 的內容聚焦 participant criteria、candidate priority 的使用方式、
-目標／最低人數、部分失敗容忍與 dropout／replacement behavior。實際
-priority value 仍屬於各 candidate 的 metadata；FedProx、aggregation
-weighting 與 training hyperparameters 不屬於這個 policy。
+additional candidate authority、selection method、目標／最低人數、部分失敗
+容忍與 dropout／replacement behavior。實際 priority value 仍屬於各
+candidate 的 metadata；FedProx、aggregation weighting、training
+hyperparameters 與 `reportAfter` 不屬於這個 policy。
 
 ### 2.4 Strategy 的責任與作用範圍
 
-Strategy 描述 local FL process 的 training 與 aggregation 行為，包括：
+Strategy 描述 local FL process 的共同 training 與 aggregation contract：
 
-- local training method 與必要參數，例如 FedProx。
-- aggregation algorithm 與 weighting rule，例如 sample-weighted。
-- lower-tier local execution 與 upper-tier update cadence。
+- `method` 表示 FL method，例如 `fedProx`。
+- `aggregation` 表示結果的 aggregation／weighting rule，例如
+  `sampleWeighted`。
+- `methodParameters` 承載由 `method` 決定的 typed parameters。
 
 Policy 回答「找誰、多少人、失敗怎麼辦」；strategy 回答「找到人後如何訓練
 與聚合」。兩者直接放在同一個 recursive node，並維持不同 object 與
 semantics；它們共同作用於該 node 作為 FL Server 時，和 direct children
 組成的 local FL process。
 
-這裡的 local FL process 是作用範圍，不是額外的 schema wrapper。其中 local
-training instructions 必須到達實際執行 training 的 selected FL Clients，
-aggregation instructions 則由負責該 local FL process 的 FL Server 消費。
-後續 schema 不能只因兩者位於同一 node，就假設由同一 component 執行全部
-內容。
+不再把同一份 FedProx contract 拆成 `localTraining.method: fedProx` 與
+`aggregation.method: fedAvg`。當上層把 `method: fedProx` 與
+`aggregation: sampleWeighted` 指定給某個 node，該 node 向下建立 Model
+Training subscriptions 時必須維持相同 contract 並逐級傳遞。
+
+Method-specific parameters 不直接散落在 strategy 共通層，而是放入
+`methodParameters`：
+
+```yaml
+x-flTopology:
+  nfInstanceId: branch-a
+  strategy:
+    method: fedProx
+    aggregation: sampleWeighted
+    methodParameters:
+      proximalMu: 0.01
+```
+
+第一版只定義 `FedProxParameters`，其已知 property 為 `proximalMu`。
+`FedProxParameters` 必須使用 `additionalProperties: false`，不能成為任意
+object；`methodParameters` 必須依 `method` 使用對應的 typed schema。其他
+方法只有在需求確定後才新增自己的 parameter schema。
+
+當 `method: fedProx` 時，`methodParameters` 與其中的 `proximalMu` 都是條件
+必填，不提供隱含 default，避免不同 tiers 採用不同的 μ。其他 `method` 不得
+攜帶 `FedProxParameters`，而必須使用該方法對應的 typed schema。
+
+這裡的 local FL process 是作用範圍，不是額外的 schema wrapper。其中
+selected FL Clients 消費 method 所需的 training instructions，FL Server
+執行 aggregation contract。後續 schema 仍須分別驗證各方向的 producer、
+consumer 與 transport mapping。
+
+### 2.5 Node-local `reportAfter`
+
+`reportAfter` 是 optional node-local execution instruction，不屬於 policy，
+也不跟隨共同 strategy 原樣傳給 descendants。直接上層可以明確指定；若
+省略，對應的 Client 或 Intermediate 可依自己的 local capability 或
+configuration 決定：
+
+```yaml
+x-flTopology:
+  nfInstanceId: client-a
+  reportAfter:
+    count: 5
+    unit: epoch
+```
+
+- `unit: epoch` 表示 node 完成指定 local epochs 後，向 parent 回傳一次 model
+  update。
+- `unit: round` 表示 Intermediate 完成指定次數的 direct-child FL rounds 後，
+  向 parent 回傳一次 aggregated update。
+
+`count` 必須是 positive integer。上層若為 child node 提供 `reportAfter`，
+Intermediate 便使用該值建立下一層 subscription；若省略，Intermediate
+可以作為直接上層自行指定，也可以不指定並讓 child 自行決定。Intermediate
+自行加入額外候選者時也採相同規則。無論如何，Intermediate 都不能把自己的
+`reportAfter` 直接複製給 children。
+
+下層若無法執行直接上層明確指定的值，應在 preparation 拒絕參與或回報失敗，
+不能自行更改。只有上層未指定時，Client 或 Intermediate 才能使用自己的
+local decision。
 
 ---
 
@@ -129,43 +192,91 @@ topology。每個 child 可以帶有 optional priority，讓接收者先嘗試�
 Priority 只決定嘗試順序，不表示該 Client 必然符合 training requirement，
 也不取代 preparation 中的接受、拒絕與 availability check。
 
-以下只說明資訊關係，並非最終 wire format；policy property names 是目前採用的
-candidate names，topology 與 strategy names 仍是概念表示：
+以下範例使用 `x-flTopology` 作為直接加入既有 3GPP subscription 的 extension
+entry。進入這個自定義 object 後，內部 properties 不再重複使用 `x-`：
 
 ```yaml
-node:
+x-flTopology:
   nfInstanceId: branch-a
   children:
     - nfInstanceId: client-a
       priority: 100
+      reportAfter:
+        count: 5
+        unit: epoch
     - nfInstanceId: client-b
       priority: 80
+      reportAfter:
+        count: 5
+        unit: epoch
     - nfInstanceId: client-c
       priority: 60
+      reportAfter:
+        count: 5
+        unit: epoch
     - nfInstanceId: client-d
       priority: 40
+      reportAfter:
+        count: 5
+        unit: epoch
     - nfInstanceId: client-e
       priority: 20
+      reportAfter:
+        count: 5
+        unit: epoch
   policy:
+    allowAdditionalCandidates: true
+    additionalCandidatePriority: 0
+    selectionMethod: priority
     minAvailableNodes: 3
     fractionTrain: 0.6
     minTrainNodes: 3
     acceptFailures: true
     minCompletionRate: 0.6
   strategy:
-    localTrainingMethod: fedProx
+    method: fedProx
     aggregation: sampleWeighted
+    methodParameters:
+      proximalMu: 0.01
+  reportAfter:
+    count: 3
+    unit: round
 ```
 
-正式自定義 object 會使用 `x-` prefix；object 內的 policy properties 沿用
-Flower 概念名稱，並依 JSON／3GPP naming style 使用 lower camel case。
+只有 `x-flTopology` 這個 3GPP schema extension entry 使用 `x-` prefix。
+`children`、`policy`、`strategy`、`reportAfter` 與更內層的 properties 都位於
+自定義 type 的 namespace 內，因此依 JSON／3GPP naming style 使用 lower
+camel case，不再逐層加上 `x-`。
 
-### 3.3 三階段 participant policy
+### 3.3 Additional candidates 與 selection method
+
+`allowAdditionalCandidates` 與 `selectionMethod` 必須分開：前者是上層授予
+node 加入未列於 `children` 的額外候選者之權限，後者只決定如何從 eligible
+candidate pool 中選擇。
+
+- `allowAdditionalCandidates: false`：node 只能使用上層列出的 children。
+  Node 仍可透過 NRF resolve／確認這些指定 identities；禁止的是加入未指定
+  candidate，不是禁止 NRF access。
+- `allowAdditionalCandidates: true`：node 可依既有 training requirements 與
+  NRF information 發現及加入其他 eligible NWDAFs。
+- `additionalCandidatePriority`：所有自行加入的 candidates 使用的預設
+  priority。上層明確指定的 child 若帶有自己的 `priority`，仍採該個別值。
+
+`selectionMethod` 第一版具有兩個已知值：
+
+- `priority`：priority 數值越大越優先；同順位使用 random selection。
+- `random`：從 eligible candidate pool 均勻隨機選擇。
+
+Criteria 先用來過濾 eligibility，`selectionMethod` 再決定從符合條件的
+candidates 中選誰。因此不另外增加 `criteriaBased` method。要讓全部 active
+Clients 參與某輪 training，使用 `fractionTrain: 1.0`，不增加 `all` method。
+
+### 3.4 三階段 participant policy
 
 Participant policy 分成候選池就緒、每輪選取及聚合判定三個階段，不能以
 同一個模糊的 participant count 同時表示三者。
 
-#### 3.3.1 候選池就緒：`minAvailableNodes`
+#### 3.4.1 候選池就緒：`minAvailableNodes`
 
 `minAvailableNodes` 表示一個 node 的 direct-child local FL process 至少需要
 多少個可用 Clients，才可視為已具備開始 training 的條件。這裡的 available
@@ -180,7 +291,7 @@ Candidate priority 只決定先嘗試誰及失敗後由誰遞補。兩者搭配�
 Intermediate 依 priority 建立 subscriptions，直到至少有
 `minAvailableNodes` 個 `ACTIVE` children。
 
-#### 3.3.2 每輪選取：`fractionTrain` 與 `minTrainNodes`
+#### 3.4.2 每輪選取：`fractionTrain` 與 `minTrainNodes`
 
 Topology 可用後，每個 local training round 由該 node 從目前 `ACTIVE` 的
 direct children 中選出本輪 participants。候選選取數量採用與 Flower
@@ -199,7 +310,7 @@ selected count = max(floor(active count * fractionTrain), minTrainNodes)
 `minTrainNodes`，該 node 不應開始新一輪 training，並依既有 deadline、
 participant update 或後續 policy 處理。
 
-#### 3.3.3 聚合判定：`acceptFailures` 與 `minCompletionRate`
+#### 3.4.3 聚合判定：`acceptFailures` 與 `minCompletionRate`
 
 `acceptFailures` 表示本輪被選中的 Clients 發生失敗時，是否仍允許使用成功
 結果聚合。當它是 `false`，所有被選中的 Clients 都必須成功，
@@ -224,7 +335,7 @@ available pool。Flower 現行 `FedAvg` 提供前三個 selection fields；
 `FedAvg`／`FaultTolerantFedAvg` strategy，作為已實作過的 failure-policy
 語意參考。
 
-### 3.4 Criteria 與既有標準資訊
+### 3.5 Criteria 與既有標準資訊
 
 Intermediate 自行選擇時，training task、Analytics／data requirement、time
 availability 與 model interoperability 應優先重用
@@ -242,12 +353,15 @@ Policy 只補充 hierarchical selection 真正缺少的 decision semantics，例
 ### 4.1 Forward instruction
 
 Root 對 direct Intermediate 傳送既有 training task context、recursive
-subtree instruction，以及需要傳遞的 node policy／strategy。Intermediate
-依序處理上層提供的候選者，必要時透過 NRF discovery 補充自己的 candidate
-pool，再對實際選中的 direct children 建立 Model Training subscriptions，
-直到滿足 `minAvailableNodes`，並把 Client 需要消費的 strategy instructions
-傳到下游。達標後可以先向上回報 realized topology 已可運作，也可以繼續
-確認其餘 candidates。
+subtree instruction，以及需要傳遞的 node policy／strategy／`reportAfter`。
+Intermediate 依序處理上層提供的候選者，必要時透過 NRF discovery 補充
+自己的 candidate pool，再對實際選中的 direct children 建立 Model Training
+subscriptions，直到滿足 `minAvailableNodes`，並把 Client 需要消費的
+strategy instructions 及已指定的 child `reportAfter` 傳到下游。若 child
+沒有指定值，Intermediate 可自行補上或讓 child 自行決定。只有
+`allowAdditionalCandidates: true` 時才能加入 children 未列出的候選者。達標
+後可以先向上回報 realized topology 已可運作，也可以繼續確認其餘
+candidates。
 
 Request 中出現的 children 不表示 subscriptions 已經全部建立，也不表示它們
 已經接受參與。因此 forward tree 是 candidate／instruction view；目前真正
@@ -281,7 +395,7 @@ Branch-B 補足替代者、移除失敗部分，或終止 establishment。
 
 ### 5.1 Candidate status vocabulary
 
-目前候選 status 如下：
+已確認的 status vocabulary 如下：
 
 | Status | 語意 |
 | --- | --- |
@@ -355,12 +469,51 @@ direct-child relationship 的 FL Server 將其狀態更新為 `INACTIVE`，並�
 假設 Root 對 Branch-A 提供五個有 priority 的 candidates，並提供以下 policy：
 
 ```yaml
-x-policy:
-  minAvailableNodes: 3
-  fractionTrain: 0.6
-  minTrainNodes: 3
-  acceptFailures: true
-  minCompletionRate: 0.6
+x-flTopology:
+  nfInstanceId: branch-a
+  children:
+    - nfInstanceId: client-a
+      priority: 100
+      reportAfter:
+        count: 5
+        unit: epoch
+    - nfInstanceId: client-b
+      priority: 80
+      reportAfter:
+        count: 5
+        unit: epoch
+    - nfInstanceId: client-c
+      priority: 60
+      reportAfter:
+        count: 5
+        unit: epoch
+    - nfInstanceId: client-d
+      priority: 40
+      reportAfter:
+        count: 5
+        unit: epoch
+    - nfInstanceId: client-e
+      priority: 20
+      reportAfter:
+        count: 5
+        unit: epoch
+  policy:
+    allowAdditionalCandidates: true
+    additionalCandidatePriority: 0
+    selectionMethod: priority
+    minAvailableNodes: 3
+    fractionTrain: 0.6
+    minTrainNodes: 3
+    acceptFailures: true
+    minCompletionRate: 0.6
+  strategy:
+    method: fedProx
+    aggregation: sampleWeighted
+    methodParameters:
+      proximalMu: 0.01
+  reportAfter:
+    count: 3
+    unit: round
 ```
 
 1. Root 傳送 Branch-A 的 subtree instruction；五個 candidates 尚未取得
@@ -372,13 +525,18 @@ x-policy:
    繼續確認它以擴大 available pool。
 5. Branch-A 將五個 candidates 的最新 status 與各自 timestamp 組成 subtree
    report，回傳 Root，表示目前已有足夠 Clients 可開始 training。
-6. 假設目前有三個 `ACTIVE` Clients，本輪依 `fractionTrain` 與
+6. Branch-A 向被選中的 Leaves 下發相同的 `method: fedProx`、
+   `aggregation: sampleWeighted` 與 `proximalMu: 0.01` contract，並依各 Leaf
+   node 的 `reportAfter` 指定 local epochs；Branch-A 自己則依 `unit: round`
+   完成三個 lower-tier rounds 後才向 Root 回報一次 aggregated update。
+7. 假設目前有三個 `ACTIVE` Clients，本輪依 `fractionTrain` 與
    `minTrainNodes` 選出三個 Clients 參與 training。
-7. 本輪若兩個 Clients 成功回覆、一個失敗，completion rate 為 `2/3`，高於
+8. 本輪若兩個 Clients 成功回覆、一個失敗，completion rate 為 `2/3`，高於
    `minCompletionRate: 0.6`，因此 Branch-A 可以聚合兩份有效結果。
-8. Training 期間若第一順位 Client 取消 subscription，Branch-A 將其更新為
+9. Training 期間若第一順位 Client 取消 subscription，Branch-A 將其更新為
    `INACTIVE`；若 active count 低於 `minAvailableNodes`，則嘗試第五順位或
-   其他 discovery candidates 補足後再開始下一輪。
+   其他 discovery candidates 補足後再開始下一輪。自行 discovery 的候選者
+   使用 `additionalCandidatePriority: 0`。
 
 這個流程同時涵蓋上層明確候選、Intermediate 執行 selection、priority
 fallback、部分失敗容忍與 training 期間狀態變更，不需要額外的 selection
@@ -388,19 +546,21 @@ mode。
 
 ## 7. 初步資訊模型
 
-以下固定目前的資訊關係與 participant policy candidate names；custom object
-的掛載位置，以及 topology、strategy、status 的最終 OpenAPI property names
-仍待 schema 階段確認：
+以下固定 request-side `x-flTopology` entry、資訊關係與 participant policy
+field names；notification／status 的 directional mapping 留到 schema 階段完成：
 
 ```text
 ML Model Training subscription
 ├── existing 3GPP task, model, timing and correlation fields
-└── proposed hierarchical instruction
-    └── node
+└── x-flTopology
+    └── topology node
         ├── nfInstanceId
         ├── optional candidate priority
         ├── optional direct-child policy
         │   ├── selection criteria
+        │   ├── allowAdditionalCandidates
+        │   ├── additionalCandidatePriority
+        │   ├── selectionMethod
         │   ├── minAvailableNodes
         │   ├── fractionTrain
         │   ├── minTrainNodes
@@ -409,9 +569,14 @@ ML Model Training subscription
         │   ├── dropout behavior
         │   └── replacement behavior
         ├── optional direct-child strategy
-        │   ├── local training method／parameters
-        │   ├── aggregation algorithm／weighting
-        │   └── local execution／upper update cadence
+        │   ├── method
+        │   ├── aggregation
+        │   └── conditionally required typed methodParameters
+        │       └── FedProxParameters
+        │           └── proximalMu
+        ├── optional node-local reportAfter
+        │   ├── count
+        │   └── unit: epoch／round
         └── candidate child nodes[]
 
 Hierarchical topology report
@@ -430,19 +595,19 @@ topology、policy 或 strategy 可以在既有 resource 上調整，candidate ex
 
 ---
 
-## 8. 尚待確認
+## 8. 後續 schema refinement 與查核
 
-- priority 的資料型別、排序方向與同順位處理。
-- candidate pool 要回報到什麼範圍，避免把所有 NRF discovery results 都
-  當成 topology nodes。
-- 各欄位 default value 與 invalid combination 的最終 OpenAPI validation。
-- policy 是否需要 inheritance／override；目前只定義 direct-child scope。
-- node strategy 中 training 與 aggregation instructions 如何投影至實際
-  subscription／notification message，以及各方向是否需要避免重複傳遞。
-- topology／strategy／status 的 exact custom property names、`x-` prefix
-  placement 與 status enum spelling。
-- status report 掛入 subscription notification、獨立 report object 或其他
-  既有 message 的最終方式。
+以下項目不重新打開前述設計語意，只在形成正式 OpenAPI 時完成：
+
+- 設定 priority、`additionalCandidatePriority`、`proximalMu`、`reportAfter`
+  等 properties 的資料型別、數值範圍與 invalid-combination validation。
+- 以 OpenAPI 表達 `method` 與 typed `methodParameters` 的條件 binding。
+- 將 topology、strategy、`reportAfter` 與 status report 分別映射到 create、
+  update／PATCH 與 notification direction；直接加入既有 3GPP message 的
+  entry 一律使用 `x-` prefix。
+- 在 notification schema 階段界定 candidate pool 的回報範圍，避免把所有
+  NRF discovery results 都當成 topology nodes。
+- 查核無法接受 `reportAfter` 時可重用的 preparation failure 表達方式。
 
 ---
 
@@ -454,3 +619,9 @@ topology、policy 或 strategy 可以在既有 resource 上調整，candidate ex
 | 2026-09-01 | 將 FL Server participant policy 與 training／aggregation strategy 拆為不同責任，並保留 node-level strategy 作為候選 scope。 |
 | 2026-09-01 | 確認 policy 與 strategy 為 recursive node 的 sibling fields，兩者作用於 node 的 direct-child local FL process，不增加 `localProcess` wrapper。 |
 | 2026-09-01 | 參考 Flower 將 policy 拆為 `minAvailableNodes`、`fractionTrain`、`minTrainNodes`、`acceptFailures` 與 `minCompletionRate`，分別處理候選池就緒、每輪選取及聚合判定。 |
+| 2026-09-01 | 確認本文的 topology、selection、priority、participant policy、strategy responsibility 與 status lifecycle 語意；後續只保留 schema／mapping 細節。 |
+| 2026-09-02 | 確認 `allowAdditionalCandidates`、`additionalCandidatePriority` 與 `selectionMethod` 分別表示額外候選授權、預設順位與 selection algorithm；第一版 method 為 `priority`／`random`。 |
+| 2026-09-02 | Strategy 收斂為逐級傳遞的共同 `method`／`aggregation` contract；新增 node-local 且不向 descendants 原樣繼承的 `reportAfter`。 |
+| 2026-09-02 | 新增 typed `methodParameters`；`method: fedProx` 時 `methodParameters.proximalMu` 條件必填、不提供隱含 default，並以 `additionalProperties: false` 排除任意 properties。 |
+| 2026-09-02 | 確認 `reportAfter` 為 optional；直接上層可明確指定，省略時由接收 node 自行決定。 |
+| 2026-09-02 | 確認只有直接加入既有 3GPP message 的 `x-flTopology` extension entry 使用 `x-`；自定義 topology object 的內部 properties 不重複加 prefix。 |

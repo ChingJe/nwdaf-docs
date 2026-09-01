@@ -2,7 +2,9 @@
 
 日期：2026-09-01
 
-狀態：設計草稿，供後續討論與規格查核使用
+最後更新：2026-09-02
+
+狀態：核心設計決策已確認；OpenAPI／schema refinement pending
 
 相關文件：
 
@@ -150,12 +152,13 @@ implementation extension 不在本次設計範圍內。
 
 ## 4. 核心設計原則
 
-### 4.1 Recursive node 同時承載 instruction、policy 與 strategy
+### 4.1 Recursive node 同時承載 instruction、policy、strategy 與 execution setting
 
 Topology 以 role-neutral recursive nodes 表示，不增加固定的
 Root／Branch／Leaf enum。每個 node 可以帶有上層提供的 `children`，也可以
 帶有該 node 建立 direct-child local FL process 時應採用的 policy 與
-strategy。
+strategy，以及 optional、用來指定該 node 完成多少 local work 後回報的
+`reportAfter`。
 
 不另外定義 explicit、delegated 或 hybrid mode。上層已列出的 children、
 node policy 授權的自行選擇能力，以及實際逐級形成的結果共同決定 topology。
@@ -167,6 +170,12 @@ Policy 描述 node 作為 FL Server 時如何選擇與管理 direct children，�
 participant criteria、candidate priority 的使用方式、目標與最低人數、部分
 失敗容忍、dropout／replacement behavior，以及 Intermediate 可以自行決定的
 範圍。
+
+`allowAdditionalCandidates` 明確表示 node 能否加入上層 `children` 未列出的
+候選者；`additionalCandidatePriority` 提供這類候選者的預設 priority；
+`selectionMethod` 則只決定如何從 eligible candidate pool 中選擇。這三項
+分別處理 selection authority、candidate ordering 與 selection algorithm，
+不能以某個 object 是否存在來暗示授權。
 
 第一版 participant policy 參考 Flower 已實際使用的 selection／aggregation
 概念，分成三個階段：以 `minAvailableNodes` 判斷可用 direct-child pool 是否
@@ -182,11 +191,33 @@ Policy 不承載 FedProx、sample-weighted aggregation 等 training／aggregatio
 
 ### 4.3 Strategy 描述 training 與 aggregation
 
-Strategy 保留原本的 training／aggregation responsibility，例如 local
-training method、aggregation algorithm、weighting rule、必要 training
-parameters 與 local／upper-tier update cadence。FedProx 描述 local training
-objective，sample-weighted 描述 aggregation weighting；兩者可以同時使用，
-但不應塞進同一個模糊的 `method` 欄位。
+Strategy 保留 training／aggregation responsibility。`method` 表示該 local
+FL process 使用的共同方法，例如 `fedProx`；`aggregation` 明確補充結果的
+聚合／加權方式，例如 `sampleWeighted`。不再把同一份 FedProx contract 拆成
+`localTraining.method: fedProx` 與 `aggregation.method: fedAvg`，避免看起來像
+上下游使用兩種不同方法。
+
+Method-specific parameters 放在獨立的 `methodParameters` object，不與共通
+欄位混在同一層。第一版只定義目前需求可證明的 `FedProxParameters`，其中
+包含 `proximalMu`；不先臆測其他 FL methods 的參數，也不使用
+任意 properties。`FedProxParameters` 在 OpenAPI 中必須使用
+`additionalProperties: false`：
+
+```yaml
+x-flTopology:
+  nfInstanceId: branch-a
+  strategy:
+    method: fedProx
+    aggregation: sampleWeighted
+    methodParameters:
+      proximalMu: 0.01
+```
+
+`methodParameters` 必須依 `method` 選用對應的 typed schema。未來確定需要
+其他方法時，再新增其 parameter schema，而不是把未知欄位塞進 generic
+object。當 `method: fedProx` 時，`methodParameters` 與其中的 `proximalMu`
+皆為條件必填；不提供隱含 default。其他 `method` 不得攜帶
+`FedProxParameters`。
 
 `policy` 與 `strategy` 直接作為 recursive node 的 sibling fields，不再增加
 實際的 `localProcess` wrapper。兩者共同描述該 node 作為 FL Server 時，和
@@ -197,12 +228,39 @@ Strategy 中的不同資訊仍可能由不同角色消費：selected FL Clients 
 training instructions，FL Server 使用 aggregation instructions。最終 schema
 仍須明確定義各欄位的 producer、consumer 與逐級傳遞方式。
 
+當上層在某個 node 指定 `method`、`aggregation` 與 `methodParameters`，該
+node 對下建立 Model Training subscriptions 時必須維持相同 contract 並逐級
+傳遞。Node-specific `reportAfter` 不隨 strategy 原樣向 descendants 繼承。
+
 第一版先定義目前已知且足夠使用的 semantics；真正未知或
 organization-specific 的 model parameters 再透過受控 extension point
-處理。自定義欄位使用 `x-` prefix，避免被誤認為現有 3GPP-defined
-property。
+處理。只有直接加入既有 3GPP message 的 extension entry 使用 `x-` prefix；
+本設計的 subscription entry 為 `x-flTopology`。進入自定義 topology object
+後，`children`、`policy`、`strategy`、`reportAfter` 及其內部 properties
+不再重複加上 `x-`。
 
-### 4.4 Instruction tree 與 realized topology 必須區分
+### 4.4 `reportAfter` 描述 node-local 回報週期
+
+`reportAfter` 是 optional node-local execution instruction，不屬於 participant
+policy。直接上層提供時，表示明確指定該 node 的回報週期；未提供時，該 node
+可依自己的 local capability 或 configuration 決定。它使用明確的 `count` 與
+`unit`，不能只依 node 當下看似 Leaf 或 Intermediate 的角色推測語意：
+
+- `unit: epoch`：node 完成指定 local epochs 後，向 parent 回傳一次 model
+  update。
+- `unit: round`：Intermediate 完成指定次數的 direct-child FL rounds 後，向
+  parent 回傳一次 aggregated update。
+
+`count` 必須是 positive integer。若直接上層已提供 `reportAfter`，下層無法
+執行時應在 preparation 拒絕參與或回報失敗，不能自行改寫。若直接上層未
+提供，Client 或 Intermediate 可以自行決定自己的回報週期。
+
+`reportAfter` 只作用於所在 node。Intermediate 向下建立 subscription 時，若
+subtree 已包含各 child 的 `reportAfter`，便依指定值下發；未包含時，
+Intermediate 可以作為這些 children 的直接上層自行指定，也可以不指定並讓
+各 child 自行決定。Intermediate 不能把自己的值直接複製給 children。
+
+### 4.5 Instruction tree 與 realized topology 必須區分
 
 上層提供的 children 可以是優先候選者，不代表全部都已成為 active
 participants。Intermediate 也可依 policy 補充自己發現的候選者，逐一建立
@@ -212,7 +270,7 @@ direct-child subscriptions，直到達成 policy 所需條件。
 report 才表達實際嘗試結果與目前形成的 topology。未經確認、正在建立、成功、
 失敗及後續退出必須能被區分。
 
-### 4.5 Topology 與 training lifecycle 分離
+### 4.6 Topology 與 training lifecycle 分離
 
 Topology establishment 完成後，一般 training round 不重新建立 hierarchy。
 各 tier 保留既有 Model Training subscription resources，並更新自己的
@@ -222,15 +280,22 @@ Topology establishment 完成後，一般 training round 不重新建立 hierarc
 topology information。Status report 可以在 preparation 與 training lifecycle
 持續更新，不限定於初始建立階段。
 
-### 4.6 Correlation 不等同於 round synchronization
+### 4.7 Correlation 不等同於 round synchronization
 
 `nfInstanceId`、subscription resource、`notifCorreId`、`mlCorreId` 與
 `roundInd` 各自具有不同責任。一個 Intermediate 可以在 lower tier 完成多次
 local rounds，才向 upper tier 提交一次 aggregated result，因此上下層
 `roundInd` 不必同步。
 
-整棵 hierarchy 是否共用 `mlCorreId` 尚待規格查核；即使共用，也不能只以
-`mlCorreId + roundInd` 推導每個 local FL process 的即時狀態。
+本設計讓整棵 hierarchy 共用一個 `mlCorreId`，表示同一次 hierarchical
+training procedure；各 tier 的 subscription resource 繼續作為對應 local FL
+process 的 lifecycle identity。第一版不另外增加 `localProcessId`。
+
+`roundInd` 維持 local FL process scope，不要求上下層同步。每個 node 可在
+hierarchical report 中回報自己的 local `roundInd`，由 recursive tree position、
+`nfInstanceId` 與 subscription context 判斷其所屬 process。多個 subscriptions
+共用同一 `mlCorreId` 是否完全符合既有 3GPP scope 仍須正式規格查核；這是
+compatibility validation，不再是 correlation model 的設計選擇。
 
 ---
 
@@ -264,25 +329,24 @@ protocol semantics：
 
 | 設計議題 | 狀態 | 細節位置 |
 | --- | --- | --- |
-| Recursive topology 與 node-scoped policy | 已形成候選語意 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md) |
+| Recursive topology 與 node-scoped policy | 已確認 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md) |
 | Explicit／delegated selection 共存 | 已確認不使用額外 mode；由 children 與 policy 自然組合 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md) |
-| Candidate priority、數量門檻與部分失敗 | 已形成三階段候選語意與 candidate fields；OpenAPI mapping 待定 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md) |
-| Training／aggregation strategy | 已與 participant policy 分離並採 node direct-child scope；exact fields／wire mapping 待定 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md) |
-| Topology status 與逐級回報 | 已形成 lifecycle 候選；exact enum 待定 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md) |
-| Policy inheritance／override | 尚待討論 | 尚未建立細節文件 |
-| `mlCorreId` 與 local process correlation | 尚待規格查核與設計 | 尚未建立細節文件 |
+| Candidate expansion、priority、selection 與數量／失敗門檻 | 語意與欄位名稱已確認；OpenAPI mapping 待定 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md) |
+| Training／aggregation strategy | `method`／`aggregation`、typed `methodParameters` 與逐級傳遞語意已確認；OpenAPI mapping 待定 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md) |
+| Node-local `reportAfter` | `epoch`／`round` 語意、parent override／local decision 與 local scope 已確認；OpenAPI mapping 待定 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md) |
+| Topology status 與逐級回報 | Status vocabulary 與 lifecycle 已確認；notification mapping 待定 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md) |
+| `mlCorreId` 與 local process correlation | 共用 `mlCorreId`、subscription-local lifecycle 與 local `roundInd` 已確認；規格相容性待查核 | 本文件 §4.7 |
 | Branch replacement 與 retained result | 本階段延後 | 不在目前設計範圍 |
 
 ---
 
 ## 7. 下一步
 
-1. 完成 topology／policy／strategy 候選語意的 review，再形成 candidate
-   OpenAPI schema 與 HTTP examples。
+1. 依已確認的 topology／policy／strategy 語意形成 candidate OpenAPI schema
+   與 HTTP examples。
 2. 逐項對照既有 Model Training／NRF fields，確認 standardized、missing 與
    implementation-specific boundary。
-3. 完成 `mlCorreId` 共用或 per-local-process 的規格查核與 correlation
-   trade-off。
+3. 查核多個 hierarchical subscriptions 共用 `mlCorreId` 的 3GPP 規格相容性。
 4. 視討論成熟度建立 correlation 或其他獨立細節設計文件。
 
 ---
@@ -310,3 +374,10 @@ protocol semantics：
 | 2026-09-01 | 區分 participant management policy 與 training／aggregation strategy 的責任。 |
 | 2026-09-01 | 確認 policy 與 strategy 直接放在 recursive node，作用於該 node 的 direct-child local FL process，不增加 `localProcess` wrapper。 |
 | 2026-09-01 | 參考 Flower 將 participant policy 收斂為候選池就緒、每輪選取與聚合門檻三個階段。 |
+| 2026-09-01 | 確認 recursive topology、hybrid selection、candidate priority、participant policy、strategy responsibility 與 status lifecycle 為設計決策；後續只保留 schema／mapping 細節。 |
+| 2026-09-02 | 分開 additional-candidate authority、default priority 與 selection method；確認 `priority`／`random` selection semantics。 |
+| 2026-09-02 | Strategy 收斂為共同 `method` 與 `aggregation` contract，並加入上層指定、node-local 的 `reportAfter` execution instruction。 |
+| 2026-09-02 | 新增 typed `methodParameters`；`method: fedProx` 時 `methodParameters.proximalMu` 條件必填、不提供隱含 default，並以 `additionalProperties: false` 排除任意 properties。 |
+| 2026-09-02 | 確認 `reportAfter` 為 optional；直接上層可明確指定，省略時由接收 node 自行決定。 |
+| 2026-09-02 | 確認只有直接加入既有 3GPP message 的 `x-flTopology` extension entry 使用 `x-`；自定義 topology object 的內部 properties 不重複加 prefix。 |
+| 2026-09-02 | 確認 hierarchy-wide `mlCorreId`、subscription-local lifecycle 與 local `roundInd` correlation model；保留正式規格相容性查核。 |

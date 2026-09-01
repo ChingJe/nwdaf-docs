@@ -13,8 +13,8 @@
 
 - [Topology、policy 與 strategy 細節設計](./topology_policy_design.md)：
   整理 recursive topology、node-level policy、training／aggregation strategy、
-  Client selection、candidate priority、participant threshold 與 status
-  lifecycle。
+  node-level execution instruction、Client selection、candidate priority、
+  participant threshold 與 status lifecycle。
 
 ## 相關資料
 
