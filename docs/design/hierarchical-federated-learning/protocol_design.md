@@ -302,6 +302,30 @@ lifecycle 持續更新，不限定於初始建立階段。
 local rounds，才向 upper tier 提交一次 aggregated result，因此上下層
 `roundInd` 不必同步。
 
+正式查核 TS 23.288 與 TS 29.520 Release 18 至 Release 20 後，三個 release
+對 `mlCorreId` 的核心定義一致：它識別訓練 ML Model 的 Federated Learning
+procedure。TS 29.520 的 `NwdafMLModelTrainSubsc` 與
+`NwdafMLModelTrainNotif` 都包含此欄位；structured data type 將它定義為
+`string`、cardinality `0..1`，並要求 service 用於 Federated Learning 時提供。
+
+| Release | 查核版本 | Subscription | Notify | 定義變化 |
+| --- | --- | --- | --- | --- |
+| Release 18 | TS 29.520 V18.14.0 | `mlCorreId` | `mlCorreId` | 無 |
+| Release 19 | TS 29.520 V19.7.0 | `mlCorreId` | `mlCorreId` | 無 |
+| Release 20 | TS 29.520 V20.0.0 | `mlCorreId` | `mlCorreId` | 無 |
+
+三個 release 都沒有替 `mlCorreId` 定義全域唯一性、namespace，或限制它只能
+對應一個 Model Training subscription resource；也沒有明文定義多個
+subscriptions 共用同一值的 hierarchical binding 行為。因此既有規格沒有
+否定以同一 `mlCorreId` 關聯多個 local FL processes，但這項共用規則仍是本設計
+補充的 hierarchical semantics，不能宣稱為 3GPP 已定義的 procedure。
+
+`notifCorreId` 與 subscription resource ID 繼續識別各 local subscription
+及其 callback，避免讓共用的 `mlCorreId` 取代 subscription lifecycle
+identity。三個 release 的 `NwdafMLModelTrainSubscPatch` 都沒有
+`mlCorreId`，因此 partial update 不以此欄位改變既有 FL procedure
+correlation。
+
 本設計讓整棵 hierarchy 共用一個 `mlCorreId`，表示同一次 hierarchical
 training procedure；各 tier 的 subscription resource 繼續作為對應 local FL
 process 的 lifecycle identity。第一版不另外增加 `localProcessId`。
@@ -310,9 +334,10 @@ process 的 lifecycle identity。第一版不另外增加 `localProcessId`。
 自己對 parent 發出的標準 `NwdafMLModelTrainNotif.roundInd` 中回報目前 local
 process round；`x-flTopologyReport` 不跨層攜帶 descendants 的 `roundInd`。
 Intermediate 自行維護 lower-tier progress 與何時形成 upper-tier update，Root
-不需要同步得知每個 descendant 的 local round。多個 subscriptions 共用同一
-`mlCorreId` 是否完全符合既有 3GPP scope 仍須正式規格查核；這是 compatibility
-validation，不再是 correlation model 的設計選擇。
+不需要同步得知每個 descendant 的 local round。TS 23.288 將 notification
+中的 Iteration round ID 描述為 FL Server NWDAF 指示的 training round，並未
+定義 `roundInd` 與 `mlCorreId` 的一對一關係；相同 procedure 可以依序具有
+多個 rounds，而 hierarchical tiers 仍各自維護 local progress。
 
 ---
 
@@ -352,7 +377,7 @@ protocol semantics：
 | Training／aggregation strategy | `method`／`aggregation`、typed `methodParameters` 與逐級傳遞語意已確認；OpenAPI mapping 待定 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md) |
 | Node-local `reportAfter` | `epoch`／`round` 語意、parent override／local decision 與 local scope 已確認；OpenAPI mapping 待定 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md) |
 | Topology status 與逐級回報 | `x-flTopologyReport`、status vocabulary，以及以同名 `policy`／`strategy`／`reportAfter` 回報實際採用值的語意已確認；正式 OpenAPI mapping 待定 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md) |
-| `mlCorreId` 與 local process correlation | 共用 `mlCorreId`、subscription-local lifecycle 與 local `roundInd` 已確認；規格相容性待查核 | 本文件 §4.7 |
+| `mlCorreId` 與 local process correlation | 已確認 Release 18 至 Release 20 schema／procedure 未限制 hierarchy-wide reuse；共用 ID 是本設計的 hierarchical semantics，subscription lifecycle 與 `roundInd` 維持 local scope | 本文件 §4.7 |
 | Branch replacement 與 retained result | 本階段延後 | 不在目前設計範圍 |
 
 ---
@@ -364,8 +389,7 @@ protocol semantics：
    如何納入既有 Notify detailed-information 條件。
 2. 逐項對照既有 Model Training／NRF fields，確認 standardized、missing 與
    implementation-specific boundary。
-3. 查核多個 hierarchical subscriptions 共用 `mlCorreId` 的 3GPP 規格相容性。
-4. 視討論成熟度建立 correlation 或其他獨立細節設計文件。
+3. 視討論成熟度建立 correlation 或其他獨立細節設計文件。
 
 ---
 
@@ -375,7 +399,13 @@ protocol semantics：
 - [TS 23.288 Release 18 §6.2F Procedure for ML Model Training](../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2F%20Procedure%20for%20ML%20Model%20Training.md)
 - [TS 29.520 Release 18 Nnwdaf_MLModelTraining OpenAPI](../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
 - [TS 29.520 Release 18 Nnwdaf_MLModelProvision OpenAPI](../../../specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
-- 3GPP official `REL-19` and `REL-20` `TS29520_Nnwdaf_MLModelTraining.yaml`
+- [3GPP official Release 18 `TS29520_Nnwdaf_MLModelTraining.yaml`](https://forge.3gpp.org/rep/all/5G_APIs/-/blob/REL-18/TS29520_Nnwdaf_MLModelTraining.yaml)
+- [3GPP official Release 19 `TS29520_Nnwdaf_MLModelTraining.yaml`](https://forge.3gpp.org/rep/all/5G_APIs/-/blob/REL-19/TS29520_Nnwdaf_MLModelTraining.yaml)
+- [3GPP official Release 20 `TS29520_Nnwdaf_MLModelTraining.yaml`](https://forge.3gpp.org/rep/all/5G_APIs/-/blob/REL-20/TS29520_Nnwdaf_MLModelTraining.yaml)
+- [TS 23.288 Release 19 V19.7.0](https://www.etsi.org/deliver/etsi_ts/123200_123299/123288/19.07.00_60/ts_123288v190700p.pdf)
+- [TS 23.288 Release 20 V20.0.0 source](https://www.3gpp.org/ftp/Specs/archive/23_series/23.288/23288-k00.zip)
+- [TS 29.520 Release 19 V19.7.0](https://www.etsi.org/deliver/etsi_ts/129500_129599/129520/19.07.00_60/ts_129520v190700p.pdf)
+- [TS 29.520 Release 20 V20.0.0 source](https://www.3gpp.org/ftp/Specs/archive/29_series/29.520/29520-k00.zip)
 - [Flower `FedAvg` ServerApp strategy（revision `492a31b`）](https://github.com/adap/flower/blob/492a31baf6e6dafbfddc4ad12dcb04ec279ac4be/framework/py/flwr/serverapp/strategy/fedavg.py)
 - [Flower legacy `FaultTolerantFedAvg`（revision `492a31b`）](https://github.com/adap/flower/blob/492a31baf6e6dafbfddc4ad12dcb04ec279ac4be/framework/py/flwr/server/strategy/fault_tolerant_fedavg.py)
 - Current implementation: `PyMTLF/src/py_mtlf/core/fl_topology.py`,
@@ -400,3 +430,4 @@ protocol semantics：
 | 2026-09-02 | 確認只有直接加入既有 3GPP message 的 `x-flTopology` extension entry 使用 `x-`；自定義 topology object 的內部 properties 不重複加 prefix。 |
 | 2026-09-02 | 確認 hierarchy-wide `mlCorreId`、subscription-local lifecycle 與 local `roundInd` correlation model；保留正式規格相容性查核。 |
 | 2026-09-02 | 確認 Notify 使用 `x-flTopologyReport` 回報 realized topology，並重用同名 `policy`、`strategy` 與 `reportAfter` 表示實際採用值；topology report 不跨層攜帶 descendants 的 `roundInd`。 |
+| 2026-09-02 | 完成 TS 23.288／TS 29.520 Release 18 至 Release 20 `mlCorreId` 查核；確認 hierarchy-wide reuse 不受既有 schema／procedure 排除，但屬於本設計新增的 hierarchical correlation semantics。 |
