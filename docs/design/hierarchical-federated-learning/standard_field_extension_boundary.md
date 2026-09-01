@@ -233,13 +233,16 @@ Server 原本就有的 selection／aggregation 能力。
 | `strategy` | 沒有 FL method、aggregation rule 與 typed method parameters | Model interoperability 不能替代此 contract |
 | `reportAfter` | 沒有 node-local work-to-upstream-report cadence | `roundInd`／`maxResTime` 不等同此語意 |
 | `x-flTopologyReport` | 沒有 recursive realized topology 與逐級 node lifecycle report | Node identity 重用 `NfInstanceId`；timestamp 重用 `DateTime` |
+| `retainedResultReq` | 上層沒有欄位可要求 Intermediate 對指定 direct child 執行 retained-result lookup | 作為 `x-flTopology` child node instruction，由 parent 映射成下游 subscription 的 `x-retainedResultReq` |
 | `x-retainedResultReq` | 新 FL Server 建立 subscription 時，沒有標準欄位可明確要求 Client 查找同一 FL procedure 的最新保留結果 | Trigger 為新欄位；結果重用既有 immediate report 或 Notify 中的 `roundInd` 與 `mLModelInfos` |
 | `x-retainedResultStatus` | 標準 notification 沒有明確區分 retained result 已找到或已完成查找但不存在 | `FOUND` 時重用 `roundInd` 與 `mLModelInfos`；`NOT_FOUND` 不建立空 model payload |
 
 ### 6.2 `x-retainedResultReq` 與既有回報方式
 
-本設計只新增 request-side `x-retainedResultReq` 與 report-side
-`x-retainedResultStatus`。查詢 key 重用 subscription 的 `mlCorreId`；
+在 Model Training message level，本設計新增 request-side
+`x-retainedResultReq` 與 report-side `x-retainedResultStatus`。上層若要指示
+Intermediate 對特定 direct child 使用此 trigger，則在該 `x-flTopology`
+child node 使用 `retainedResultReq`。查詢 key 重用 subscription 的 `mlCorreId`；
 `FOUND` outcome 重用 `roundInd` 與 `mLModelInfos` 承載結果，`NOT_FOUND`
 不建立空 model payload。結果可以透過既有 `immReport` 或 Notify 傳遞，
 不需要增加 service operation。
@@ -321,4 +324,4 @@ release 已有的 unsubscribe／DELETE 行為，不能直接把 Release 19
 | 日期 | 內容 |
 | --- | --- |
 | 2026-09-02 | 建立標準欄位與 proposed extension 邊界；完成 Release 18 request／Notify mapping，並納入 Release 19 unsubscribe-info 與 Release 20 status report 差異。 |
-| 2026-09-02 | 加入 retained-result extension boundary：request 使用 `x-retainedResultReq`，report 使用 `x-retainedResultStatus`，並標示既有 `mlCorreId`、`roundInd`、`mLModelInfos`、`immReport` 與 Notify 的重用位置。 |
+| 2026-09-02 | 加入 retained-result extension boundary：上層以 topology child node 的 `retainedResultReq` 指示 Intermediate，downstream request 使用 `x-retainedResultReq`，report 使用 `x-retainedResultStatus`，並標示既有 `mlCorreId`、`roundInd`、`mLModelInfos`、`immReport` 與 Notify 的重用位置。 |

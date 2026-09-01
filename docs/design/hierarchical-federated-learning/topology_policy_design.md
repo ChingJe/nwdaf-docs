@@ -46,12 +46,14 @@ node
 ├── node policy
 ├── node strategy
 ├── node reportAfter
+├── retainedResultReq
 └── status information
 ```
 
-`children`、node policy、node strategy 與 node `reportAfter` 都是 optional。
-Policy、strategy 與 `reportAfter` 直接作為 node 的 sibling fields，不增加
-實際的 `localProcess` wrapper。
+`children`、node policy、node strategy、node `reportAfter` 與
+`retainedResultReq` 都是 optional。Policy、strategy、`reportAfter` 與
+`retainedResultReq` 直接作為 node 的 sibling fields，不增加實際的
+`localProcess` wrapper。
 
 沒有 children 不代表該 node 永遠是 Leaf；如果 policy 授權它自行選擇
 Clients，它仍可發現候選者並建立下一層 local FL process。若 node 沒有
@@ -246,9 +248,9 @@ x-flTopology:
 ```
 
 只有 `x-flTopology` 這個 3GPP schema extension entry 使用 `x-` prefix。
-`children`、`policy`、`strategy`、`reportAfter` 與更內層的 properties 都位於
-自定義 type 的 namespace 內，因此依 JSON／3GPP naming style 使用 lower
-camel case，不再逐層加上 `x-`。
+`children`、`policy`、`strategy`、`reportAfter`、`retainedResultReq` 與更
+內層的 properties 都位於自定義 type 的 namespace 內，因此依 JSON／3GPP
+naming style 使用 lower camel case，不再逐層加上 `x-`。
 
 ### 3.3 Additional candidates 與 selection method
 
@@ -355,12 +357,13 @@ Policy 只補充 hierarchical selection 真正缺少的 decision semantics，例
 ### 4.1 Forward instruction
 
 Root 對 direct Intermediate 傳送既有 training task context、recursive
-subtree instruction，以及需要傳遞的 node policy／strategy／`reportAfter`。
-Intermediate 依序處理上層提供的候選者，必要時透過 NRF discovery 補充
-自己的 candidate pool，再對實際選中的 direct children 建立 Model Training
-subscriptions，直到滿足 `minAvailableNodes`，並把 Client 需要消費的
-strategy instructions 及已指定的 child `reportAfter` 傳到下游。若 child
-沒有指定值，Intermediate 可自行補上或讓 child 自行決定。只有
+subtree instruction，以及需要傳遞的 node policy／strategy／`reportAfter`／
+`retainedResultReq`。Intermediate 依序處理上層提供的候選者，必要時透過 NRF
+discovery 補充自己的 candidate pool，再對實際選中的 direct children 建立
+Model Training subscriptions，直到滿足 `minAvailableNodes`，並把 Client
+需要消費的 strategy instructions、已指定的 child `reportAfter`，以及需要
+映射到下游 subscription 的 child `retainedResultReq` 送到下游。若 child
+沒有指定 `reportAfter`，Intermediate 可自行補上或讓 child 自行決定。只有
 `allowAdditionalCandidates: true` 時才能加入 children 未列出的候選者。達標
 後可以先向上回報 realized topology 已可運作，也可以繼續確認其餘
 candidates。
@@ -501,9 +504,39 @@ direct-child relationship 的 FL Server 將其狀態更新為 `INACTIVE`，並�
 
 ### 6.1 Request 與 correlation
 
-當新 FL Server 對原 direct Clients 建立 subscriptions 時，可以在
-`NwdafMLModelTrainSubsc` 加入 optional `x-retainedResultReq: true`，要求
-接收者查找並回報本地針對同一 `mlCorreId` 保留的最新已完成結果。因為本
+接收 node 不能只依新的 subscription 或相同 `mlCorreId` 推測自己是替代
+Intermediate，也不能自行推測是否應向 direct children 取回既有結果。上層
+若要求這項動作，必須在 subtree instruction 的對應 child nodes 明確加入
+optional `retainedResultReq: true`：
+
+```json
+{
+  "x-flTopology": {
+    "nfInstanceId": "branch-a2",
+    "children": [
+      {
+        "nfInstanceId": "leaf-a1",
+        "retainedResultReq": true
+      },
+      {
+        "nfInstanceId": "leaf-a2",
+        "retainedResultReq": true
+      }
+    ]
+  }
+}
+```
+
+`retainedResultReq` 是 parent 建立對該 child 的 subscription 時所消費的
+edge-level instruction。Parent 對該 child 建立 `NwdafMLModelTrainSubsc`
+時，將它映射成 message-level optional `x-retainedResultReq: true`，要求
+接收者查找並回報本地針對同一 `mlCorreId` 保留的最新已完成結果。位於
+自定義 topology node 內的 property 不重複加 `x-`；直接加入既有 3GPP
+message 的 entry 才使用 `x-retainedResultReq`。
+
+這項 instruction 不自動向 descendants 繼承。若上層希望一個 Intermediate
+向多個 direct children 查詢，就在各 child node 分別指定；省略時，接收
+Intermediate 不得只因自己是新選出的 participant 而自行啟動 lookup。因為本
 設計讓整棵 hierarchy 共用 `mlCorreId`，extension 不重複攜帶另一個 process
 ID。
 
@@ -744,6 +777,8 @@ ML Model Training subscription
         ├── optional node-local reportAfter
         │   ├── count
         │   └── unit: epoch／round
+        ├── optional retainedResultReq
+        │   └── parent 建立對此 node 的 subscription 時要求查找保留結果
         └── candidate child nodes[]
 
 Hierarchical topology report
@@ -758,7 +793,8 @@ Hierarchical topology report
     └── child results[]
 
 Retained-result lookup
-├── NwdafMLModelTrainSubsc.x-retainedResultReq
+├── x-flTopology child node.retainedResultReq
+│   └── parent maps to NwdafMLModelTrainSubsc.x-retainedResultReq
 └── NwdafMLModelTrainNotif.x-retainedResultStatus
     ├── FOUND -> roundInd + mLModelInfos
     └── NOT_FOUND
@@ -767,8 +803,8 @@ Retained-result lookup
 「實際採用」是欄位在 Notify direction 的語意，不是 property name 的
 prefix。Request node 與 report node 可分別定義各自特有欄位，但共同引用
 同一組 `FlPolicy`、`FlStrategy` 與 `FlReportAfter` component schemas。
-Request node 可帶 candidate `priority`；report node 則帶 `status`、
-`statusTimestamp` 與 optional `cause`。
+Request node 可帶 candidate `priority` 與 `retainedResultReq`；report node 則帶
+`status`、`statusTimestamp` 與 optional `cause`。
 
 Request、PATCH 與 notification 的 directional flow 必須分開驗證。若
 topology、policy 或 strategy 可以在既有 resource 上調整，candidate extension
@@ -795,6 +831,9 @@ topology、policy 或 strategy 可以在既有 resource 上調整，candidate ex
   `x-retainedResultStatus` 納入 immediate report／Notify 的合法 detailed
   information；`FOUND` 時要求 `roundInd` 與 `mLModelInfos`，`NOT_FOUND` 時
   不要求 model payload。
+- 將 topology node 的 `retainedResultReq` 定義為 boolean，並驗證 parent
+  只把它映射至該 node 對應的 direct-client subscription，不將其視為 subtree
+  inheritance rule。
 - 在 notification schema 階段界定 candidate pool 的回報範圍，避免把所有
   NRF discovery results 都當成 topology nodes。
 - 查核無法接受 `reportAfter` 時可重用的 preparation failure 表達方式。
@@ -817,3 +856,4 @@ topology、policy 或 strategy 可以在既有 resource 上調整，candidate ex
 | 2026-09-02 | 確認只有直接加入既有 3GPP message 的 `x-flTopology` extension entry 使用 `x-`；自定義 topology object 的內部 properties 不重複加 prefix。 |
 | 2026-09-02 | 確認 Notify 使用 `x-flTopologyReport`；report node 重用同名 `policy`、`strategy` 與 `reportAfter` 表示實際採用值，不增加 `effective*` 欄位，且不跨層回報 descendants 的 `roundInd`。 |
 | 2026-09-02 | 加入 retained-result lookup：`x-retainedResultReq` 只觸發查詢，`x-retainedResultStatus` 明確回報 `FOUND`／`NOT_FOUND`，並可使用 immediate report 或後續 Notify；完整 Branch recovery 維持不在本文範圍。 |
+| 2026-09-02 | 新增 topology node `retainedResultReq` instruction；上層以 child node 明確要求 parent 在對該 child 建立 subscription 時加入 `x-retainedResultReq`，不以新 subscription 或 `mlCorreId` 暗示 replacement behavior。 |

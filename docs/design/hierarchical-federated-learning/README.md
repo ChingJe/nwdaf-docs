@@ -20,6 +20,12 @@
   的資訊、hierarchical orchestration gap 與 proposed extension 的 minimum
   scope；不承載完整 procedure 或 HTTP examples。
 
+## 設計情境
+
+- [Branch 故障替換情境](./branch_replacement_scenario.md)：
+  記錄三區域 deployment 中 active Branch 失效、Root 選擇替代 Branch、重新
+  建立 Leaf subscriptions，以及取回 Leaves 已保留結果的流程與責任邊界。
+
 ## 相關資料
 
 - [NWDAF Federated Learning Release 18 規格解讀](../../specification-guides/NWDAF%20Federated%20Learning%20Release%2018%20規格解讀.md)
