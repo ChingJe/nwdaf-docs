@@ -270,6 +270,21 @@ direct-child subscriptions，直到達成 policy 所需條件。
 report 才表達實際嘗試結果與目前形成的 topology。未經確認、正在建立、成功、
 失敗及後續退出必須能被區分。
 
+Notify 方向以 `x-flTopologyReport` 作為直接加入
+`NwdafMLModelTrainNotif` 的 extension entry。Report node 除了回報
+`nfInstanceId`、status、status timestamp、optional cause 與 recursive
+children，也可使用與 subscription 相同名稱及型別的 `policy`、`strategy`
+與 `reportAfter`，表示該 node 實際採用的 contract。所在 message 已經區分
+instruction 與 result，因此不另外建立 `effectivePolicy`、
+`effectiveStrategy` 或 `effectiveReportAfter`。
+
+若上層已指定某個值，Notify 回報相同值可作為 applied-contract
+acknowledgement；若上層省略並允許 node 依 local capability 或
+configuration 決定，Notify 則讓上層取得實際採用值。例如上層未指定 local
+epochs 時，Client 可在 preparation result 中以 `reportAfter` 回報自己採用的
+`count` 與 `unit: epoch`。這只是同一套 resolved-contract report 的一個
+使用情況，不為 epochs 另外新增專用欄位。
+
 ### 4.6 Topology 與 training lifecycle 分離
 
 Topology establishment 完成後，一般 training round 不重新建立 hierarchy。
@@ -277,8 +292,8 @@ Topology establishment 完成後，一般 training round 不重新建立 hierarc
 `roundInd`、`mLModelInfos`、deadline 與其他 round-specific information。
 
 只有 participant membership 或 parent／child relationship 改變時，才更新
-topology information。Status report 可以在 preparation 與 training lifecycle
-持續更新，不限定於初始建立階段。
+topology information。`x-flTopologyReport` 可以在 preparation 與 training
+lifecycle 持續更新，不限定於初始建立階段。
 
 ### 4.7 Correlation 不等同於 round synchronization
 
@@ -292,10 +307,12 @@ training procedure；各 tier 的 subscription resource 繼續作為對應 local
 process 的 lifecycle identity。第一版不另外增加 `localProcessId`。
 
 `roundInd` 維持 local FL process scope，不要求上下層同步。每個 node 可在
-hierarchical report 中回報自己的 local `roundInd`，由 recursive tree position、
-`nfInstanceId` 與 subscription context 判斷其所屬 process。多個 subscriptions
-共用同一 `mlCorreId` 是否完全符合既有 3GPP scope 仍須正式規格查核；這是
-compatibility validation，不再是 correlation model 的設計選擇。
+自己對 parent 發出的標準 `NwdafMLModelTrainNotif.roundInd` 中回報目前 local
+process round；`x-flTopologyReport` 不跨層攜帶 descendants 的 `roundInd`。
+Intermediate 自行維護 lower-tier progress 與何時形成 upper-tier update，Root
+不需要同步得知每個 descendant 的 local round。多個 subscriptions 共用同一
+`mlCorreId` 是否完全符合既有 3GPP scope 仍須正式規格查核；這是 compatibility
+validation，不再是 correlation model 的設計選擇。
 
 ---
 
@@ -334,7 +351,7 @@ protocol semantics：
 | Candidate expansion、priority、selection 與數量／失敗門檻 | 語意與欄位名稱已確認；OpenAPI mapping 待定 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md) |
 | Training／aggregation strategy | `method`／`aggregation`、typed `methodParameters` 與逐級傳遞語意已確認；OpenAPI mapping 待定 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md) |
 | Node-local `reportAfter` | `epoch`／`round` 語意、parent override／local decision 與 local scope 已確認；OpenAPI mapping 待定 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md) |
-| Topology status 與逐級回報 | Status vocabulary 與 lifecycle 已確認；notification mapping 待定 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md) |
+| Topology status 與逐級回報 | `x-flTopologyReport`、status vocabulary，以及以同名 `policy`／`strategy`／`reportAfter` 回報實際採用值的語意已確認；正式 OpenAPI mapping 待定 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md) |
 | `mlCorreId` 與 local process correlation | 共用 `mlCorreId`、subscription-local lifecycle 與 local `roundInd` 已確認；規格相容性待查核 | 本文件 §4.7 |
 | Branch replacement 與 retained result | 本階段延後 | 不在目前設計範圍 |
 
@@ -342,8 +359,9 @@ protocol semantics：
 
 ## 7. 下一步
 
-1. 依已確認的 topology／policy／strategy 語意形成 candidate OpenAPI schema
-   與 HTTP examples。
+1. 依已確認的 `x-flTopology`／`x-flTopologyReport`、policy／strategy 語意形成
+   candidate OpenAPI schema 與 HTTP examples，並確認 topology-only report
+   如何納入既有 Notify detailed-information 條件。
 2. 逐項對照既有 Model Training／NRF fields，確認 standardized、missing 與
    implementation-specific boundary。
 3. 查核多個 hierarchical subscriptions 共用 `mlCorreId` 的 3GPP 規格相容性。
@@ -381,3 +399,4 @@ protocol semantics：
 | 2026-09-02 | 確認 `reportAfter` 為 optional；直接上層可明確指定，省略時由接收 node 自行決定。 |
 | 2026-09-02 | 確認只有直接加入既有 3GPP message 的 `x-flTopology` extension entry 使用 `x-`；自定義 topology object 的內部 properties 不重複加 prefix。 |
 | 2026-09-02 | 確認 hierarchy-wide `mlCorreId`、subscription-local lifecycle 與 local `roundInd` correlation model；保留正式規格相容性查核。 |
+| 2026-09-02 | 確認 Notify 使用 `x-flTopologyReport` 回報 realized topology，並重用同名 `policy`、`strategy` 與 `reportAfter` 表示實際採用值；topology report 不跨層攜帶 descendants 的 `roundInd`。 |

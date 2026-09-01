@@ -18,8 +18,9 @@
 node-level policy、training／aggregation strategy、node-local execution
 instruction、candidate priority 與逐級 status report 的語意。本文先固定
 producer、consumer 與 lifecycle responsibility。Participant policy 採用 Flower
-中已有對應概念的 field names；最終欄位掛載位置與 OpenAPI mapping 仍待後續
-schema 階段確認。
+中已有對應概念的 field names；request 使用 `x-flTopology`，Notify 使用
+`x-flTopologyReport`，最終 OpenAPI type、validation 與 procedure conditional
+mapping 仍待後續 schema 階段確認。
 
 本文不處理 `mlCorreId` 共用方式、Branch replacement 的完整 recovery
 procedure 或 retained result replay。這些議題與 topology 有關，但需要另外
@@ -379,6 +380,37 @@ Request 中出現的 children 不表示 subscriptions 已經全部建立，也�
 與 status time；Intermediate 可以包裝 child reports，但不能把 descendant
 status 的發生時間改成自己向上通知的時間。
 
+Notify 以 `x-flTopologyReport` 承載 recursive report。除了 status result，
+report node 可重用 subscription node 已定義的 `policy`、`strategy` 與
+`reportAfter` 欄位，表示該 node 實際採用的 contract。兩個方向使用相同欄位
+名稱及 component schemas，不另外建立 `effective*` 欄位：subscription 中是
+上層下發的 instruction，Notify 中則是 resolved／applied result。
+
+若上層已指定值，回報相同值表示 node 已採用該 contract；若上層省略並允許
+node 自行決定，回報值則揭露 local decision。例如上層沒有指定 Client 每次
+回報前執行多少 local epochs，Client 可以在 preparation result 中回報：
+
+```json
+{
+  "nfInstanceId": "client-a",
+  "status": "ACTIVE",
+  "statusTimestamp": "2026-09-02T14:30:25+08:00",
+  "reportAfter": {
+    "count": 5,
+    "unit": "epoch"
+  }
+}
+```
+
+這只是 `reportAfter` resolved value 的使用範例；同一原則也適用於 node
+實際採用的 `policy` 與 `strategy`。上層可依回報結果接受目前設定、透過既有
+subscription update／PATCH 再調整，或終止該 subscription。
+
+`x-flTopologyReport` 不用來同步 descendants 的 local round。通知者仍以既有
+頂層 `NwdafMLModelTrainNotif.roundInd` 表示自己和 parent 之間 local FL
+process 的 round；Intermediate 內部維護 lower-tier progress 與 upper-tier
+update 的關係。
+
 ### 4.3 Partial／unbalanced topology
 
 假設 Root 要求 Branch-A 管理 Client-A1、Client-A2，Branch-B 管理
@@ -453,8 +485,8 @@ name 仍待 schema 階段決定。
 
 ### 5.4 Training lifecycle 中的狀態更新
 
-Status report 不限定於 preparation。Topology establishment 完成後，一般
-training round 只更新各 local FL process 的 `roundInd`、model reference、
+`x-flTopologyReport` 不限定於 preparation。Topology establishment 完成後，
+一般 training round 只更新各 local FL process 的 `roundInd`、model reference、
 deadline 與結果，不需要重新建立 tree。
 
 若 Active Client 因資源不足、取消 subscription 或其他原因離開，負責該
@@ -546,8 +578,9 @@ mode。
 
 ## 7. 初步資訊模型
 
-以下固定 request-side `x-flTopology` entry、資訊關係與 participant policy
-field names；notification／status 的 directional mapping 留到 schema 階段完成：
+以下固定 request-side `x-flTopology`、Notify-side `x-flTopologyReport`、資訊
+關係與 participant policy field names；正式 OpenAPI type、required condition
+與 procedure mapping 留到 schema 階段完成：
 
 ```text
 ML Model Training subscription
@@ -585,8 +618,17 @@ Hierarchical topology report
     ├── status
     ├── status timestamp
     ├── failure cause（optional）
+    ├── policy（optional，實際採用值，重用 FlPolicy）
+    ├── strategy（optional，實際採用值，重用 FlStrategy）
+    ├── reportAfter（optional，實際採用值，重用 FlReportAfter）
     └── child results[]
 ```
+
+「實際採用」是欄位在 Notify direction 的語意，不是 property name 的
+prefix。Request node 與 report node 可分別定義各自特有欄位，但共同引用
+同一組 `FlPolicy`、`FlStrategy` 與 `FlReportAfter` component schemas。
+Request node 可帶 candidate `priority`；report node 則帶 `status`、
+`statusTimestamp` 與 optional `cause`。
 
 Request、PATCH 與 notification 的 directional flow 必須分開驗證。若
 topology、policy 或 strategy 可以在既有 resource 上調整，candidate extension
@@ -604,7 +646,11 @@ topology、policy 或 strategy 可以在既有 resource 上調整，candidate ex
 - 以 OpenAPI 表達 `method` 與 typed `methodParameters` 的條件 binding。
 - 將 topology、strategy、`reportAfter` 與 status report 分別映射到 create、
   update／PATCH 與 notification direction；直接加入既有 3GPP message 的
-  entry 一律使用 `x-` prefix。
+  entry 一律使用 `x-` prefix。Notify entry 使用 `x-flTopologyReport`，其
+  `policy`、`strategy` 與 `reportAfter` 重用 request-side component schemas。
+- 確認只帶 `x-flTopologyReport` 的 Notify 如何滿足 TS 29.520 既有
+  detailed-information 條件；在 procedure 正式擴充前，不假設 vendor field
+  可取代既有 `mLModelInfos`、`delayEventNotif` 或 `termTrainReq`。
 - 在 notification schema 階段界定 candidate pool 的回報範圍，避免把所有
   NRF discovery results 都當成 topology nodes。
 - 查核無法接受 `reportAfter` 時可重用的 preparation failure 表達方式。
@@ -625,3 +671,4 @@ topology、policy 或 strategy 可以在既有 resource 上調整，candidate ex
 | 2026-09-02 | 新增 typed `methodParameters`；`method: fedProx` 時 `methodParameters.proximalMu` 條件必填、不提供隱含 default，並以 `additionalProperties: false` 排除任意 properties。 |
 | 2026-09-02 | 確認 `reportAfter` 為 optional；直接上層可明確指定，省略時由接收 node 自行決定。 |
 | 2026-09-02 | 確認只有直接加入既有 3GPP message 的 `x-flTopology` extension entry 使用 `x-`；自定義 topology object 的內部 properties 不重複加 prefix。 |
+| 2026-09-02 | 確認 Notify 使用 `x-flTopologyReport`；report node 重用同名 `policy`、`strategy` 與 `reportAfter` 表示實際採用值，不增加 `effective*` 欄位，且不跨層回報 descendants 的 `roundInd`。 |
