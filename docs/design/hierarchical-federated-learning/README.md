@@ -19,6 +19,11 @@
   對照 Release 18 至 Release 20 的既有 Model Training fields，區分可直接重用
   的資訊、hierarchical orchestration gap 與 proposed extension 的 minimum
   scope；不承載完整 procedure 或 HTTP examples。
+- [Candidate OpenAPI Schema](./candidate_openapi_schema.md)：
+  將已確認的 topology、policy、strategy、status 與 retained-result 語意映射
+  至 Subscription、PATCH 與 Notify，並提供 candidate OpenAPI YAML、跨欄位
+  validation rules、`suppFeats` negotiation、error mapping 與 HTTP message
+  examples。
 
 ## 設計情境
 

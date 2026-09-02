@@ -4,12 +4,13 @@
 
 最後更新：2026-09-02
 
-狀態：核心設計決策已確認；OpenAPI／schema refinement pending
+狀態：核心設計決策已確認；candidate OpenAPI schema 待使用者審查
 
 相關文件：
 
 - [Topology、policy 與 strategy 細節設計](./topology_policy_design.md)
 - [標準欄位與 Extension 邊界](./standard_field_extension_boundary.md)
+- [Candidate OpenAPI Schema](./candidate_openapi_schema.md)
 - [NWDAF Federated Learning Release 18 規格解讀](../../specification-guides/NWDAF%20Federated%20Learning%20Release%2018%20規格解讀.md)
 - [Hierarchical NWDAF Federated Learning Implementation Plan](../../plans/hierarchical-federated-learning/Hierarchical%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)
 - [既有 protocol/schema feasibility proposal](../../proposals/nwdaf/hierarchical-federated-learning/protocol_schema_feasibility.md)
@@ -161,6 +162,11 @@ Root／Branch／Leaf enum。每個 node 可以帶有上層提供的 `children`�
 strategy，以及 optional、用來指定該 node 完成多少 local work 後回報的
 `reportAfter`。
 
+每段 subscription 傳遞的 subtree root 必須是實際接收者，回報 wrapper 也必須
+綁定該 subscription 的 direct Client identity。單一 subtree 不允許重複
+`nfInstanceId` 或 ancestor cycle；payload identity 不取代既有 subscription／
+callback context 的 peer binding。
+
 不另外定義 explicit、delegated 或 hybrid mode。上層已列出的 children、
 node policy 授權的自行選擇能力，以及實際逐級形成的結果共同決定 topology。
 詳細語意見 [Topology、policy 與 strategy 細節設計](./topology_policy_design.md)。
@@ -168,9 +174,9 @@ node policy 授權的自行選擇能力，以及實際逐級形成的結果共�
 ### 4.2 Policy 描述 Server-side orchestration
 
 Policy 描述 node 作為 FL Server 時如何選擇與管理 direct children，包括
-participant criteria、candidate ordering、selection authority、可用與每輪參與
-門檻，以及部分失敗與 dropout／replacement behavior。它也界定 Intermediate
-可以自行決定的範圍。
+candidate ordering、selection authority、可用與每輪參與門檻，以及部分失敗
+容忍。Participant eligibility 優先使用既有 training requirements 與 NRF
+information；policy 則界定 Intermediate 可以自行決定的範圍。
 
 Policy 不承載 FedProx、sample-weighted aggregation 等 training／aggregation
 設定，避免把「找誰、多少人、失敗怎麼辦」和「找到人後如何訓練與聚合」混為
@@ -209,15 +215,27 @@ report 才表達實際嘗試結果與目前形成的 topology。未經確認、�
 directional mapping 見
 [Topology、policy 與 strategy 細節設計](./topology_policy_design.md)。
 
+上層若要明確剔除某個 child，使用該 child node 的 `enabled: false`；降低
+priority 或從 upstream-assigned `children` 省略該 identity 都不等同於禁止
+Intermediate 透過 local discovery 再次選用它。
+
+Candidate enums 採 3GPP 常見的 forward-compatible enumeration pattern，讓
+舊版 schema 可以解析未來新增的 vocabulary。未知 report-side value 不得被
+推測成既有狀態；未知 instruction-side value 若接收者無法履行，仍應拒絕整個
+operation。由於 `strategy.method` 會決定 typed parameters，它維持 closed
+discriminator，新增 method 時一併增加對應 subtype。
+
 ### 4.6 Topology 與 training lifecycle 分離
 
 Topology establishment 完成後，一般 training round 不重新建立 hierarchy。
 各 tier 保留既有 Model Training subscription resources，並更新自己的
 `roundInd`、`mLModelInfos`、deadline 與其他 round-specific information。
 
-只有 participant membership 或 parent／child relationship 改變時，才更新
-topology information。`x-flTopologyReport` 可以在 preparation 與 training
-lifecycle 持續更新，不限定於初始建立階段。
+一般 round-specific update 不需要重送 `x-flTopology`。只有 participant
+membership、parent／child relationship、policy、strategy 或 node-local
+instruction 等 orchestration contract 改變時，才更新 topology extension。
+`x-flTopologyReport` 可以在 preparation 與 training lifecycle 持續更新，不
+限定於初始建立階段。
 
 ### 4.7 Correlation 不等同於 round synchronization
 
@@ -233,10 +251,39 @@ Release 20 的正式欄位與相容性查核見
 Retained-result lookup 與新一輪 training 是不同動作。新 FL Server 可以在
 建立 direct-client subscription 時，以 `x-retainedResultReq` 要求查找同一
 `mlCorreId` 的最新已完成 local result；Client 以
-`x-retainedResultStatus` 明確回報 `FOUND` 或 `NOT_FOUND`。結果可搭配既有
-immediate report 或後續 Notify 傳遞，找不到結果不使 subscription 建立
-失敗。完整 procedure、回報內容與 HTTP examples 見
+`x-retainedResultStatus` 明確回報 `FOUND`、`NOT_FOUND` 或 `FAILED`。結果可
+搭配既有 immediate report 或後續 Notify 傳遞；找不到結果或已接受的 lookup
+後續執行失敗，都不改變 subscription 已成功建立的事實。這是
+operation-scoped 的一次性 request；當次 Create、PUT 或
+PATCH 帶 `true` 時只查詢一次，不會成為持續的 subscription state。
+每個 local subscription 同時最多只能有一個 outstanding lookup；Server
+收到本次 lookup outcome 後才能再次要求，因此不新增 request ID。等待 outcome
+timeout 時不得在同一 subscription 另起新的 outstanding lookup。本版本使用
+`FOUND`／`NOT_FOUND`／`FAILED`；未知的 forward-compatible outcome 只結束
+該次 lookup，不視為可用結果。
+完整 procedure、回報內容與 HTTP examples 見
 [Topology、policy 與 strategy 細節設計](./topology_policy_design.md)。
+
+### 4.9 Extension capability 沿每個 subscription edge 協商
+
+本設計重用 `NwdafMLModelTrainSubsc.suppFeats`，不新增 capability 欄位。
+整組 hierarchical orchestration semantics 使用一個 candidate optional
+feature `HierarchicalFLOrch`。為避開 Release 19 feature 1 與 Release 20
+feature 2，候選 feature number 為 3，單獨宣告時的 bitmask 值為 `"4"`。
+
+Feature negotiation 以 local subscription resource 為 scope。Root 與
+Intermediate 協商成功，不代表 Intermediate 與 Leaves 已協商成功；每個
+Intermediate 建立 direct-child subscription 時都要重新協商並檢查 response。
+若 initial Create response 未回傳 feature 3，consumer 不得把該 resource
+當作 hierarchical resource，也不得在後續 operation 套用 extension procedure。
+若 hierarchy 是本次 subscription 的必要條件，consumer 刪除該 resource，並將
+該 candidate 回報為 `FAILED`／`FEATURE_NOT_SUPPORTED`。
+
+接收者不得靜默改寫已協商後的 instruction。Schema 或 validation 錯誤使用
+既有 `400 Bad Request`；message 合法但不能履行 node-wide `policy`、
+`strategy` 或 `reportAfter` contract 時，使用
+`403 ML_MODEL_TRAINING_REQS_NOT_MET`。完整 mapping 見
+[Candidate OpenAPI Schema](./candidate_openapi_schema.md)。
 
 ---
 
@@ -272,23 +319,23 @@ protocol semantics：
 | --- | --- | --- |
 | Recursive topology 與 node-scoped policy | 已確認 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md) |
 | Explicit／delegated selection 共存 | 已確認不使用額外 mode；由 children 與 policy 自然組合 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md) |
-| Candidate expansion、priority、selection 與數量／失敗門檻 | 語意與欄位名稱已確認；OpenAPI mapping 待定 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md) |
-| Training／aggregation strategy | `method`／`aggregation`、typed `methodParameters` 與逐級傳遞語意已確認；OpenAPI mapping 待定 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md) |
-| Node-local `reportAfter` | `epoch`／`round` 語意、parent override／local decision 與 local scope 已確認；OpenAPI mapping 待定 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md) |
-| Topology status 與逐級回報 | `x-flTopologyReport`、status vocabulary，以及以同名 `policy`／`strategy`／`reportAfter` 回報實際採用值的語意已確認；正式 OpenAPI mapping 待定 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md) |
+| Candidate expansion、priority、selection 與數量／失敗門檻 | 語意與欄位名稱已確認；candidate OpenAPI mapping 待審查 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md)；[Candidate OpenAPI Schema](./candidate_openapi_schema.md) |
+| Training／aggregation strategy | `method`／`aggregation`、typed `methodParameters` 與逐級傳遞語意已確認；candidate OpenAPI mapping 待審查 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md)；[Candidate OpenAPI Schema](./candidate_openapi_schema.md) |
+| Node-local `reportAfter` | `epoch`／`round` 語意、parent override／local decision 與 local scope 已確認；candidate OpenAPI mapping 待審查 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md)；[Candidate OpenAPI Schema](./candidate_openapi_schema.md) |
+| Topology status 與逐級回報 | `x-flTopologyReport`、status vocabulary、`FAILED`／`INACTIVE` 的 `statusCause`，以及以同名 `policy`／`strategy`／`reportAfter` 回報實際採用值的語意已確認；candidate OpenAPI mapping 待審查 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md)；[Candidate OpenAPI Schema](./candidate_openapi_schema.md) |
 | `mlCorreId` 與 local process correlation | 已確認 Release 18 至 Release 20 schema／procedure 未限制 hierarchy-wide reuse；共用 ID 是本設計的 hierarchical semantics，subscription lifecycle 與 `roundInd` 維持 local scope | 本文件 §4.7；[標準欄位與 Extension 邊界](./standard_field_extension_boundary.md) |
 | 標準欄位與 extension boundary | 已完成 Release 18 request／Notify mapping，並確認 Release 19 unsubscribe-info 與 Release 20 status report 差異；task、data、model、deadline 與 local lifecycle 優先重用既有欄位 | [標準欄位與 Extension 邊界](./standard_field_extension_boundary.md) |
 | Branch replacement 與 retained result | 完整 replacement／ownership recovery 延後；`x-retainedResultReq` lookup trigger、`x-retainedResultStatus` outcome 與既有 immediate／Notify 回報方式已確認 | 本文件 §4.8；[Topology、policy 與 strategy 細節設計](./topology_policy_design.md)；[標準欄位與 Extension 邊界](./standard_field_extension_boundary.md) |
+| Extension feature negotiation 與 rejection | 已確認重用 `suppFeats`、candidate feature 3，並以既有 `400`／`403` error semantics 拒絕無效或無法履行的 instruction | 本文件 §4.9；[Candidate OpenAPI Schema](./candidate_openapi_schema.md) |
 
 ---
 
 ## 7. 下一步
 
-1. 依已確認的 `x-flTopology`／`x-flTopologyReport`、
-   `x-retainedResultReq`／`x-retainedResultStatus`、policy／strategy 語意形成
-   candidate OpenAPI schema 與 HTTP examples，並確認 proposed report 如何納入
-   既有 Notify detailed-information 條件。
-2. 視討論成熟度建立 correlation 或其他獨立細節設計文件。
+1. 審查 [Candidate OpenAPI Schema](./candidate_openapi_schema.md) 中的 message
+   mapping、component types、validation rules 與 HTTP examples。
+2. 設計確認後，視需要將 candidate fragments 整合成可由 validator／generator
+   處理的獨立 OpenAPI YAML。
 
 ---
 
@@ -298,6 +345,7 @@ protocol semantics：
 - [TS 23.288 Release 18 §6.2F Procedure for ML Model Training](../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2F%20Procedure%20for%20ML%20Model%20Training.md)
 - [TS 29.520 Release 18 Nnwdaf_MLModelTraining OpenAPI](../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
 - [TS 29.520 Release 18 Nnwdaf_MLModelProvision OpenAPI](../../../specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
+- [TS 29.500 Release 18 §6.6 Extensibility Mechanisms](../../../specs/TS%2029.500/6%20General%20Functionalities%20in%20Service%20Based%20Architecture/6.6%20Extensibility%20Mechanisms.md)
 - [3GPP official Release 18 `TS29520_Nnwdaf_MLModelTraining.yaml`](https://forge.3gpp.org/rep/all/5G_APIs/-/blob/REL-18/TS29520_Nnwdaf_MLModelTraining.yaml)
 - [3GPP official Release 19 `TS29520_Nnwdaf_MLModelTraining.yaml`](https://forge.3gpp.org/rep/all/5G_APIs/-/blob/REL-19/TS29520_Nnwdaf_MLModelTraining.yaml)
 - [3GPP official Release 20 `TS29520_Nnwdaf_MLModelTraining.yaml`](https://forge.3gpp.org/rep/all/5G_APIs/-/blob/REL-20/TS29520_Nnwdaf_MLModelTraining.yaml)
@@ -307,8 +355,8 @@ protocol semantics：
 - [TS 29.520 Release 20 V20.0.0 source](https://www.3gpp.org/ftp/Specs/archive/29_series/29.520/29520-k00.zip)
 - [Flower `FedAvg` ServerApp strategy（revision `492a31b`）](https://github.com/adap/flower/blob/492a31baf6e6dafbfddc4ad12dcb04ec279ac4be/framework/py/flwr/serverapp/strategy/fedavg.py)
 - [Flower legacy `FaultTolerantFedAvg`（revision `492a31b`）](https://github.com/adap/flower/blob/492a31baf6e6dafbfddc4ad12dcb04ec279ac4be/framework/py/flwr/server/strategy/fault_tolerant_fedavg.py)
-- Current implementation: `PyMTLF/src/py_mtlf/core/fl_topology.py`,
-  `fl_hierarchy.py` and `fl_branch.py`
+- 現行實作：`PyMTLF/src/py_mtlf/core/fl_topology.py`,
+  `fl_hierarchy.py`、`fl_branch.py`
 
 ---
 
@@ -331,4 +379,8 @@ protocol semantics：
 | 2026-09-02 | 確認 Notify 使用 `x-flTopologyReport` 回報 realized topology，並重用同名 `policy`、`strategy` 與 `reportAfter` 表示實際採用值；topology report 不跨層攜帶 descendants 的 `roundInd`。 |
 | 2026-09-02 | 完成 TS 23.288／TS 29.520 Release 18 至 Release 20 `mlCorreId` 查核；確認 hierarchy-wide reuse 不受既有 schema／procedure 排除，但屬於本設計新增的 hierarchical correlation semantics。 |
 | 2026-09-02 | 建立標準欄位與 extension boundary 細節文件；確認 task、data／time requirement、model、deadline、round 與 local lifecycle 應重用既有欄位，candidate extension 僅補 hierarchical orchestration semantics。 |
-| 2026-09-02 | 加入 retained-result lookup：`x-retainedResultReq` 觸發查詢，`x-retainedResultStatus` 明確回報 `FOUND`／`NOT_FOUND`，並可選擇搭配既有 immediate reporting；查詢不觸發新訓練。 |
+| 2026-09-02 | 加入 retained-result lookup：`x-retainedResultReq` 觸發查詢，`x-retainedResultStatus` 明確回報 `FOUND`／`NOT_FOUND`／`FAILED`，並可選擇搭配既有 immediate reporting；查詢不觸發新訓練。 |
+| 2026-09-02 | 確認 topology report 的 `FAILED`／`INACTIVE` node 必須帶 `statusCause`；其 vocabulary 與既有 HTTP、training termination 及 retained-result cause／outcome 分開處理。 |
+| 2026-09-02 | 確認整組 extension 重用 per-resource `suppFeats` negotiation，使用 candidate feature 3，並完成 schema-invalid 與無法履行 contract 的既有 `400`／`403` error mapping。 |
+| 2026-09-02 | 補齊 subtree identity binding／uniqueness、explicit 與 local candidate priority、Notify `mlCorreId`、disabled-child cleanup 與 unsupported feature failure semantics；candidate enums 採 3GPP forward-compatible pattern，`strategy.method` 維持 typed closed discriminator。 |
+| 2026-09-02 | 確認同一 subscription 的 retained-result lookup 必須序列化；只有收到前一次 outcome 後才能開始下一次，不增加 request ID。另統一 replacement array 中 explicit prohibition 的解除語意。 |
