@@ -41,6 +41,9 @@ feature negotiation 與 retained-result semantics 實作到正式
 
 - [Protocol Extension Implementation Slice Map](./Protocol%20Extension%20Implementation%20Slice%20Map.md)：
   依 wire、resource、execution owner與可獨立驗證邊界拆分 production work units。
+- [Slice 詳細計畫](./slices/)：
+  收錄接下來各 slice 的獨立實作計畫；每份計畫只處理一個可 review、驗證與交付的
+  work unit。
 
 ## 設計輸入
 
@@ -57,7 +60,7 @@ feature negotiation 與 retained-result semantics 實作到正式
 - Repository revision、code-level production flow、owner／transport mapping 與
   gap analysis 放在獨立盤點文件。
 - 在 end-to-end data flow 與 owner 確認前，不預先固定 implementation slice。
-- 後續若形成可獨立實作與審查的工作單位，再建立對應 detailed plan。
+- 後續若形成可獨立實作與審查的工作單位，在 `slices/` 建立對應 detailed plan。
 - Implementation review 維持單一 phase ledger；不為每次修正建立新的完整 review
   文件。
 - 各 repository 分開 review、commit 與驗證，不因其中一個 repository 通過就宣稱
