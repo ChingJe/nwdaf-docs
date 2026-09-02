@@ -2,13 +2,18 @@
 
 日期：2026-09-02
 
-狀態：候選設計，待使用者審查
+狀態：候選 schema 與獨立 OpenAPI artifact 已建立，待使用者審查
 
 上層文件：
 
 - [Hierarchical NWDAF Federated Learning 協定設計](./protocol_design.md)
 - [Topology、policy 與 strategy 細節設計](./topology_policy_design.md)
 - [標準欄位與 Extension 邊界](./standard_field_extension_boundary.md)
+- [Protocol Conformance Matrix](./protocol_conformance_matrix.md)
+
+對應 artifact：
+
+- [Candidate OpenAPI YAML](./candidate_openapi.yaml)
 
 ---
 
@@ -20,9 +25,9 @@ lookup 語意，映射成可供審查的 OpenAPI 3.0 candidate schema。
 
 本文採用 Stage 3 形式：先說明 service operation、資料型別、條件與 procedure
 語意，再提供 candidate OpenAPI YAML fragments 與實際 HTTP message examples。
-它不是直接修改 3GPP Release 18 OpenAPI attachment，也不是已完成 code
-generation 的獨立 OpenAPI file。設計確認後，才需要將 fragments 整合成可由
-validator 與 generator 處理的完整 YAML。
+完整 mapping 已另整理為可由 validator 與 generator 處理的
+[`candidate_openapi.yaml`](./candidate_openapi.yaml)。該 artifact 是本專案的
+候選 API，不直接修改 3GPP Release 18 OpenAPI attachment。
 
 主要 baseline 為 TS 29.520 Release 18 V18.14.0、
 `Nnwdaf_MLModelTraining` API 1.0.5。Release 19／20 的差異已在標準邊界文件
@@ -201,6 +206,15 @@ subscription 的目的必須依賴 hierarchy，consumer 應刪除該 resource，
 
 ## 4. 候選 OpenAPI YAML
 
+本節 fragments 用於對照設計；可執行的完整 API 定義以
+[`candidate_openapi.yaml`](./candidate_openapi.yaml) 為準。
+
+截至 2026-09-02，完整 artifact 已通過 Redocly CLI 2.49.0 驗證；以 OpenAPI
+Generator 7.24.0 隔離產生的 candidate extension models 亦可通過 Go 編譯。
+整份 Release 18 dependency graph 的 Go generation 仍受官方
+`GeographicArea` discriminator 生成問題影響，因此這項結果只證明本 candidate
+model 可生成，不代表應直接以整份生成輸出取代 `NWDAF` 現有 wire models。
+
 ### 4.1 既有 message type 擴充
 
 以下 fragments 應合併至 Release 18 相同名稱 schema 的 `properties`。Notify
@@ -292,18 +306,6 @@ components:
           minItems: 1
       required:
         - nfInstanceId
-      not:
-        allOf:
-          - properties:
-              enabled:
-                type: boolean
-                enum: [false]
-            required: [enabled]
-          - properties:
-              retainedResultReq:
-                type: boolean
-                enum: [true]
-            required: [retainedResultReq]
 
     FlPolicy:
       description: >
@@ -487,35 +489,6 @@ components:
         - nfInstanceId
         - status
         - statusTimestamp
-      oneOf:
-        - properties:
-            status:
-              type: string
-              enum:
-                - FAILED
-                - INACTIVE
-          required:
-            - statusCause
-        - properties:
-            status:
-              type: string
-              enum:
-                - UNCONFIRMED
-                - DEPLOYING
-                - ACTIVE
-          not:
-            required:
-              - statusCause
-        - properties:
-            status:
-              type: string
-              not:
-                enum:
-                  - UNCONFIRMED
-                  - DEPLOYING
-                  - ACTIVE
-                  - FAILED
-                  - INACTIVE
 
     FlTopologyStatus:
       description: Represents the lifecycle state of a hierarchical FL candidate.
@@ -594,61 +567,10 @@ TS 29.520 Release 18 §4.6.2.4.2 與 §5.5.6.2.8 目前要求 Notify 至少包�
 
 Candidate procedure 必須把 `x-flTopologyReport` 與
 `x-retainedResultStatus` 加入 notification detailed information 的合法集合。
-對應的 OpenAPI condition 可表示為：
-
-```yaml
-NwdafMLModelTrainNotif:
-  allOf:
-    - anyOf:
-        - required: [delayEventNotif]
-        - required: [mLModelInfos]
-        - required: [termTrainReq]
-        - required: [x-flTopologyReport]
-        - required: [x-retainedResultStatus]
-    - oneOf:
-        - not:
-            required: [x-retainedResultStatus]
-        - allOf:
-            - properties:
-                x-retainedResultStatus:
-                  type: string
-                  enum: [FOUND]
-              required:
-                - x-retainedResultStatus
-                - roundInd
-                - mLModelInfos
-        - allOf:
-            - properties:
-                x-retainedResultStatus:
-                  type: string
-                  enum: [NOT_FOUND, FAILED]
-              required:
-                - x-retainedResultStatus
-            - not:
-                anyOf:
-                  - required: [roundInd]
-                  - required: [mLModelInfos]
-        - properties:
-            x-retainedResultStatus:
-              type: string
-              not:
-                enum: [FOUND, NOT_FOUND, FAILED]
-          required:
-            - x-retainedResultStatus
-    - oneOf:
-        - not:
-            anyOf:
-              - required: [x-flTopologyReport]
-              - required: [x-retainedResultStatus]
-        - allOf:
-            - anyOf:
-                - required: [x-flTopologyReport]
-                - required: [x-retainedResultStatus]
-            - required: [mlCorreId]
-```
-
-這個 condition 保留既有 detailed information，並要求任何 extension report
-同時帶有 `mlCorreId`。本版本定義三種 retained-result report：
+完整 artifact 將這些條件列在 `x-stage3-rules`，不以 schema-level
+`oneOf`／`not` 組合改變 generated model 的 required properties；實作者必須在
+request／Notify validation boundary 執行相同規則。本版本定義三種
+retained-result report：
 
 - `FOUND` 必須同時提供既有 `roundInd` 與 `mLModelInfos`。
 - `NOT_FOUND` 不攜帶 `roundInd` 或空／不存在的 model result。
@@ -669,7 +591,10 @@ lookup、不使用其中的 model result，並依 local unsupported-outcome hand
 
 OpenAPI 3.0 可以表示 property type、static range、required fields 與部分
 conditional composition，但不能完整表達跨遞迴 node、既有 resource state 或
-兩個 numeric properties 間的比較。實作與 Stage 3 procedure text 仍需檢查：
+兩個 numeric properties 間的比較；部分 code generator 也會把 conditional
+composition 中的局部 required 誤展開成全域必填。完整 artifact 因此保留
+平坦且可生成的 message model，並以 `x-stage3-rules` 記錄以下需由實作與
+Stage 3 procedure text 檢查的條件：
 
 1. Create／PUT 中若出現 `x-flTopology` 或
    `x-retainedResultReq: true`，同一 `NwdafMLModelTrainSubsc` 必須提供
@@ -756,8 +681,8 @@ conditional composition，但不能完整表達跨遞迴 node、既有 resource 
 接收者已協商 `HierarchicalFLOrch` 後，若 request 內的 extension field 不符合
 candidate schema，例如 closed discriminator、range、required／conditional
 field 或跨欄位 validation 錯誤，應依 TS 29.500 §5.2.7.2 以
-`400 Bad Request` 拒絕，使用最
-適合的既有 cause（例如 `INVALID_MSG_FORMAT`、`MANDATORY_IE_INCORRECT` 或
+`400 Bad Request` 拒絕，使用最適合的既有 cause（例如
+`INVALID_MSG_FORMAT`、`MANDATORY_IE_INCORRECT` 或
 `OPTIONAL_IE_INCORRECT`），並以 `ProblemDetails.invalidParams` 指出錯誤的
 extension path。
 

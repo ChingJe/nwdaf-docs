@@ -4,13 +4,15 @@
 
 最後更新：2026-09-02
 
-狀態：核心設計決策已確認；candidate OpenAPI schema 待使用者審查
+狀態：核心設計決策已確認；candidate OpenAPI schema／artifact 待使用者審查
 
 相關文件：
 
 - [Topology、policy 與 strategy 細節設計](./topology_policy_design.md)
 - [標準欄位與 Extension 邊界](./standard_field_extension_boundary.md)
 - [Candidate OpenAPI Schema](./candidate_openapi_schema.md)
+- [Candidate OpenAPI artifact](./candidate_openapi.yaml)
+- [Protocol Conformance Matrix](./protocol_conformance_matrix.md)
 - [NWDAF Federated Learning Release 18 規格解讀](../../specification-guides/NWDAF%20Federated%20Learning%20Release%2018%20規格解讀.md)
 - [Hierarchical NWDAF Federated Learning Implementation Plan](../../plans/hierarchical-federated-learning/Hierarchical%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)
 - [既有 protocol/schema feasibility proposal](../../proposals/nwdaf/hierarchical-federated-learning/protocol_schema_feasibility.md)
@@ -332,10 +334,12 @@ protocol semantics：
 
 ## 7. 下一步
 
-1. 審查 [Candidate OpenAPI Schema](./candidate_openapi_schema.md) 中的 message
-   mapping、component types、validation rules 與 HTTP examples。
-2. 設計確認後，視需要將 candidate fragments 整合成可由 validator／generator
-   處理的獨立 OpenAPI YAML。
+1. 審查 [Candidate OpenAPI Schema](./candidate_openapi_schema.md) 與
+   [Candidate OpenAPI artifact](./candidate_openapi.yaml) 的 message mapping、
+   component types、validation rules、HTTP examples，以及
+   [Protocol Conformance Matrix](./protocol_conformance_matrix.md) 的預期結果。
+2. 設計確認後，將 artifact 映射到 `NWDAF` 現有 Model Training wire model、
+   request／Notify validation boundary 與 procedure state owner，再切分實作。
 
 ---
 

@@ -1,0 +1,872 @@
+openapi: 3.0.0
+
+info:
+  title: Nnwdaf_MLModelTraining Hierarchical FL Candidate
+  version: 0.1.0
+  description: |
+    Candidate extension of the 3GPP Release 18 Nnwdaf_MLModelTraining API for
+    hierarchical federated learning orchestration. This document is a project
+    proposal and is not a 3GPP specification.
+
+x-documentation:
+  protocolDesign: ./protocol_design.md
+  schemaSemantics: ./candidate_openapi_schema.md
+  conformanceMatrix: ./protocol_conformance_matrix.md
+
+servers:
+  - url: '{apiRoot}/nnwdaf-mlmodeltraining/v1'
+    variables:
+      apiRoot:
+        default: https://example.com
+        description: apiRoot as defined in clause 4.4 of 3GPP TS 29.501
+
+security:
+  - {}
+  - oAuth2ClientCredentials:
+      - nnwdaf-mlmodeltraining
+
+x-baseline:
+  specification: 3GPP TS 29.520 V18.14.0
+  apiVersion: 1.0.5
+  source: ../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml
+
+x-supported-features:
+  - featureNumber: 3
+    featureName: HierarchicalFLOrch
+    bitmask: '4'
+    description: >
+      Supports recursive topology instructions and reports, node-scoped
+      policy, strategy and report-after settings, and retained-result lookup.
+
+x-stage3-rules:
+  - >
+    The x-flTopology root nfInstanceId shall identify the request receiver;
+    the x-flTopologyReport root nfInstanceId shall identify the direct Client
+    bound to the subscription callback context.
+  - >
+    A topology instruction or report shall not contain duplicate nfInstanceId
+    values or an ancestor cycle.
+  - >
+    policy and strategy apply to the node acting as the FL Server for its
+    direct children; reportAfter applies to the node reporting to its direct
+    parent.
+  - >
+    When selectionMethod is priority, each enabled explicit child shall
+    provide priority, and minAvailableNodes shall be greater than or equal to
+    minTrainNodes.
+  - >
+    retainedResultReq and x-retainedResultReq are operation-scoped and shall
+    not be persisted as subscription state.
+  - >
+    A notification shall contain at least one of delayEventNotif,
+    mLModelInfos, termTrainReq, x-flTopologyReport or x-retainedResultStatus.
+    The existing mutual-exclusion rules for delayEventNotif, mLModelInfos and
+    termTrainReq remain applicable.
+  - >
+    A Create or PUT operation containing x-flTopology or a true
+    x-retainedResultReq shall contain mlCorreId. A PATCH operation using
+    either extension is valid only when the existing subscription is already
+    correlated with an FL procedure.
+  - >
+    A notification containing x-flTopologyReport or x-retainedResultStatus
+    shall contain mlCorreId.
+  - >
+    When x-retainedResultStatus is FOUND, roundInd and mLModelInfos shall be
+    present. When it is NOT_FOUND or FAILED, roundInd and mLModelInfos shall
+    be absent.
+  - >
+    A FlTopologyReportNode with status FAILED or INACTIVE shall contain
+    statusCause. A node with a status defined by this version other than
+    FAILED or INACTIVE shall not contain statusCause.
+  - >
+    retainedResultReq shall not be true for a child whose enabled value is
+    false.
+  - >
+    A local subscription shall have at most one outstanding retained-result
+    lookup. A subsequent lookup may start only after the previous outcome has
+    been received.
+  - >
+    The HierarchicalFLOrch feature shall be negotiated independently on every
+    parent-to-child subscription resource.
+
+paths:
+  /subscriptions:
+    post:
+      summary: Create an Individual NWDAF ML Model Training Subscription resource.
+      operationId: CreateNWDAFMLModelTrainingSubcription
+      tags:
+        - Subscriptions (Collection)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NwdafMLModelTrainSubsc'
+            examples:
+              hierarchicalTopology:
+                $ref: '#/components/examples/HierarchicalTopologySubscription'
+      responses:
+        '201':
+          description: The subscription resource was created successfully.
+          headers:
+            Location:
+              description: URI of the created subscription resource.
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NwdafMLModelTrainSubsc'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '411':
+          $ref: '#/components/responses/LengthRequired'
+        '413':
+          $ref: '#/components/responses/PayloadTooLarge'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaType'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '502':
+          $ref: '#/components/responses/BadGateway'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      callbacks:
+        myNotification:
+          '{$request.body#/notifUri}':
+            post:
+              summary: Notify the ML Model Training service consumer.
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/NwdafMLModelTrainNotif'
+                    examples:
+                      topologyReport:
+                        $ref: '#/components/examples/TopologyReportNotification'
+                      retainedResultFound:
+                        $ref: '#/components/examples/RetainedResultFoundNotification'
+                      retainedResultNotFound:
+                        $ref: '#/components/examples/RetainedResultNotFoundNotification'
+                      retainedResultFailed:
+                        $ref: '#/components/examples/RetainedResultFailedNotification'
+              responses:
+                '204':
+                  description: No Content, notification was successful.
+                '307':
+                  $ref: '#/components/responses/TemporaryRedirect'
+                '308':
+                  $ref: '#/components/responses/PermanentRedirect'
+                '400':
+                  $ref: '#/components/responses/BadRequest'
+                '401':
+                  $ref: '#/components/responses/Unauthorized'
+                '403':
+                  $ref: '#/components/responses/Forbidden'
+                '404':
+                  $ref: '#/components/responses/NotFound'
+                '411':
+                  $ref: '#/components/responses/LengthRequired'
+                '413':
+                  $ref: '#/components/responses/PayloadTooLarge'
+                '415':
+                  $ref: '#/components/responses/UnsupportedMediaType'
+                '429':
+                  $ref: '#/components/responses/TooManyRequests'
+                '500':
+                  $ref: '#/components/responses/InternalServerError'
+                '502':
+                  $ref: '#/components/responses/BadGateway'
+                '503':
+                  $ref: '#/components/responses/ServiceUnavailable'
+                default:
+                  $ref: '#/components/responses/DefaultError'
+
+  /subscriptions/{subscriptionId}:
+    parameters:
+      - $ref: '#/components/parameters/SubscriptionId'
+    put:
+      summary: Replace an Individual NWDAF ML Model Training Subscription resource.
+      operationId: UpdateNWDAFMLModelTrainingSubcription
+      tags:
+        - Individual NWDAF ML Model Training Subscription (Document)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NwdafMLModelTrainSubsc'
+      responses:
+        '200':
+          description: The subscription resource was replaced successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NwdafMLModelTrainSubsc'
+        '204':
+          description: The subscription resource was replaced successfully.
+        '307':
+          $ref: '#/components/responses/TemporaryRedirect'
+        '308':
+          $ref: '#/components/responses/PermanentRedirect'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '411':
+          $ref: '#/components/responses/LengthRequired'
+        '413':
+          $ref: '#/components/responses/PayloadTooLarge'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaType'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '502':
+          $ref: '#/components/responses/BadGateway'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+        default:
+          $ref: '#/components/responses/DefaultError'
+    patch:
+      summary: Partially update an Individual NWDAF ML Model Training Subscription resource.
+      operationId: PartialUpdateNWDAFMLModelTrainingSubcription
+      tags:
+        - Individual NWDAF ML Model Training Subscription (Document)
+      requestBody:
+        required: true
+        content:
+          application/merge-patch+json:
+            schema:
+              $ref: '#/components/schemas/NwdafMLModelTrainSubscPatch'
+            examples:
+              removeCandidate:
+                $ref: '#/components/examples/CandidateRemovalPatch'
+      responses:
+        '200':
+          description: The subscription resource was partially updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NwdafMLModelTrainSubsc'
+        '204':
+          description: The subscription resource was partially updated successfully.
+        '307':
+          $ref: '#/components/responses/TemporaryRedirect'
+        '308':
+          $ref: '#/components/responses/PermanentRedirect'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '411':
+          $ref: '#/components/responses/LengthRequired'
+        '413':
+          $ref: '#/components/responses/PayloadTooLarge'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaType'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '502':
+          $ref: '#/components/responses/BadGateway'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+        default:
+          $ref: '#/components/responses/DefaultError'
+    delete:
+      summary: Delete an Individual NWDAF ML Model Training Subscription resource.
+      operationId: DeleteNWDAFMLModelTrainingSubcription
+      tags:
+        - Individual NWDAF ML Model Training Subscription (Document)
+      responses:
+        '204':
+          description: The subscription resource was deleted successfully.
+        '307':
+          $ref: '#/components/responses/TemporaryRedirect'
+        '308':
+          $ref: '#/components/responses/PermanentRedirect'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '502':
+          $ref: '#/components/responses/BadGateway'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+        default:
+          $ref: '#/components/responses/DefaultError'
+
+components:
+  securitySchemes:
+    oAuth2ClientCredentials:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: '{nrfApiRoot}/oauth2/token'
+          scopes:
+            nnwdaf-mlmodeltraining: Access to the Nnwdaf_MLModelTraining API
+
+  parameters:
+    SubscriptionId:
+      name: subscriptionId
+      in: path
+      description: String identifying a subscription to the Nnwdaf_MLModelTraining Service.
+      required: true
+      schema:
+        type: string
+
+  responses:
+    TemporaryRedirect:
+      $ref: '../../../specs/openapi/TS29571_CommonData.yaml#/components/responses/307'
+    PermanentRedirect:
+      $ref: '../../../specs/openapi/TS29571_CommonData.yaml#/components/responses/308'
+    BadRequest:
+      $ref: '../../../specs/openapi/TS29571_CommonData.yaml#/components/responses/400'
+    Unauthorized:
+      $ref: '../../../specs/openapi/TS29571_CommonData.yaml#/components/responses/401'
+    Forbidden:
+      $ref: '../../../specs/openapi/TS29571_CommonData.yaml#/components/responses/403'
+    NotFound:
+      $ref: '../../../specs/openapi/TS29571_CommonData.yaml#/components/responses/404'
+    LengthRequired:
+      $ref: '../../../specs/openapi/TS29571_CommonData.yaml#/components/responses/411'
+    PayloadTooLarge:
+      $ref: '../../../specs/openapi/TS29571_CommonData.yaml#/components/responses/413'
+    UnsupportedMediaType:
+      $ref: '../../../specs/openapi/TS29571_CommonData.yaml#/components/responses/415'
+    TooManyRequests:
+      $ref: '../../../specs/openapi/TS29571_CommonData.yaml#/components/responses/429'
+    InternalServerError:
+      $ref: '../../../specs/openapi/TS29571_CommonData.yaml#/components/responses/500'
+    BadGateway:
+      $ref: '../../../specs/openapi/TS29571_CommonData.yaml#/components/responses/502'
+    ServiceUnavailable:
+      $ref: '../../../specs/openapi/TS29571_CommonData.yaml#/components/responses/503'
+    DefaultError:
+      $ref: '../../../specs/openapi/TS29571_CommonData.yaml#/components/responses/default'
+
+  schemas:
+    NwdafMLModelTrainSubsc:
+      description: >
+        Represents a Release 18 ML Model Training subscription extended with
+        hierarchical FL orchestration instructions.
+      type: object
+      properties:
+        mLEventSubscs:
+          type: array
+          items:
+            $ref: '../../../specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml#/components/schemas/MLEventSubscription'
+          minItems: 1
+        notifUri:
+          $ref: '../../../specs/openapi/TS29571_CommonData.yaml#/components/schemas/Uri'
+        suppFeats:
+          $ref: '../../../specs/openapi/TS29571_CommonData.yaml#/components/schemas/SupportedFeatures'
+        eventReq:
+          $ref: '../../../specs/openapi/TS29523_Npcf_EventExposure.yaml#/components/schemas/ReportingInformation'
+        failEventReports:
+          type: array
+          items:
+            $ref: '../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml#/components/schemas/FailureEventInfoForMLModelTrain'
+          minItems: 1
+        mlCorreId:
+          type: string
+          description: String identifying the subscription as part of a Federated Learning procedure.
+        mLModelInfos:
+          type: array
+          items:
+            $ref: '../../../specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml#/components/schemas/MLEventNotif'
+          minItems: 1
+        immReport:
+          $ref: '#/components/schemas/NwdafMLModelTrainNotif'
+        mLModelTrainInfos:
+          type: array
+          items:
+            $ref: '../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml#/components/schemas/MLModelTrainInfo'
+          minItems: 1
+        mLPreFlag:
+          type: boolean
+        mLAccChkFlg:
+          type: boolean
+        mLTrainRepInfo:
+          $ref: '../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml#/components/schemas/MLTrainReportInfo'
+        notifCorreId:
+          type: string
+        roundInd:
+          $ref: '../../../specs/openapi/TS29571_CommonData.yaml#/components/schemas/Uinteger'
+        tgtRepUe:
+          $ref: '../../../specs/openapi/TS29520_Nnwdaf_EventsSubscription.yaml#/components/schemas/TargetUeInformation'
+        skipFlInd:
+          type: boolean
+        x-flTopology:
+          $ref: '#/components/schemas/FlTopologyNode'
+        x-retainedResultReq:
+          type: boolean
+          writeOnly: true
+          description: >
+            Indicates whether the recipient shall perform one retained-result
+            lookup for this operation.
+      required:
+        - mLEventSubscs
+        - notifUri
+        - notifCorreId
+
+    NwdafMLModelTrainSubscPatch:
+      description: >
+        Represents parameters to request a partial update of an ML Model
+        Training subscription, including hierarchical FL instructions.
+      type: object
+      properties:
+        notifUri:
+          $ref: '../../../specs/openapi/TS29571_CommonData.yaml#/components/schemas/Uri'
+        eventReq:
+          $ref: '../../../specs/openapi/TS29523_Npcf_EventExposure.yaml#/components/schemas/ReportingInformation'
+        mLModelInfos:
+          type: array
+          items:
+            $ref: '../../../specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml#/components/schemas/MLEventNotif'
+          minItems: 1
+        mLModelTrainInfos:
+          type: array
+          items:
+            $ref: '../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml#/components/schemas/MLModelTrainInfo'
+          minItems: 1
+        mLPreFlag:
+          type: boolean
+        mLAccChkFlg:
+          type: boolean
+        mLTrainRepInfo:
+          $ref: '../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml#/components/schemas/MLTrainReportInfo'
+        roundInd:
+          $ref: '../../../specs/openapi/TS29571_CommonData.yaml#/components/schemas/Uinteger'
+        tgtRepUe:
+          $ref: '../../../specs/openapi/TS29520_Nnwdaf_EventsSubscription.yaml#/components/schemas/TargetUeInformation'
+        skipFlInd:
+          type: boolean
+        x-flTopology:
+          $ref: '#/components/schemas/FlTopologyNode'
+        x-retainedResultReq:
+          type: boolean
+          writeOnly: true
+          description: >
+            Indicates whether the recipient shall perform one retained-result
+            lookup for this partial-update operation.
+
+    NwdafMLModelTrainNotif:
+      description: >
+        Represents ML Model Training notifications, including hierarchical FL
+        topology reports and retained-result outcomes.
+      type: object
+      properties:
+        delayEventNotif:
+          $ref: '../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml#/components/schemas/DelayEventNotif'
+        mlCorreId:
+          type: string
+        mLModelInfos:
+          type: array
+          items:
+            $ref: '../../../specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml#/components/schemas/MLEventNotif'
+          minItems: 1
+        notifCorreId:
+          type: string
+        roundInd:
+          $ref: '../../../specs/openapi/TS29571_CommonData.yaml#/components/schemas/Uinteger'
+        statusReport:
+          $ref: '../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml#/components/schemas/StatusReportInfo'
+        termTrainReq:
+          $ref: '../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml#/components/schemas/TermTrainCause'
+        x-flTopologyReport:
+          $ref: '#/components/schemas/FlTopologyReport'
+        x-retainedResultStatus:
+          $ref: '#/components/schemas/RetainedResultStatus'
+      required:
+        - notifCorreId
+
+    FlTopologyNode:
+      description: >
+        Represents a role-neutral node in a recursive hierarchical FL topology
+        instruction.
+      type: object
+      additionalProperties: false
+      properties:
+        nfInstanceId:
+          $ref: '../../../specs/openapi/TS29571_CommonData.yaml#/components/schemas/NfInstanceId'
+        enabled:
+          type: boolean
+          default: true
+        priority:
+          type: integer
+          minimum: 0
+        policy:
+          $ref: '#/components/schemas/FlPolicy'
+        strategy:
+          $ref: '#/components/schemas/FlStrategy'
+        reportAfter:
+          $ref: '#/components/schemas/FlReportAfter'
+        retainedResultReq:
+          type: boolean
+          writeOnly: true
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/FlTopologyNode'
+          minItems: 1
+      required:
+        - nfInstanceId
+
+    FlPolicy:
+      description: >
+        Represents participant selection and result acceptance decisions
+        applied by a node acting as FL Server for its direct children.
+      type: object
+      additionalProperties: false
+      properties:
+        allowAdditionalCandidates:
+          type: boolean
+          default: false
+        additionalCandidatePriority:
+          type: integer
+          minimum: 0
+          default: 0
+        selectionMethod:
+          $ref: '#/components/schemas/FlSelectionMethod'
+        minAvailableNodes:
+          type: integer
+          minimum: 1
+        fractionTrain:
+          type: number
+          format: float
+          minimum: 0
+          exclusiveMinimum: true
+          maximum: 1
+        minTrainNodes:
+          type: integer
+          minimum: 1
+        acceptFailures:
+          type: boolean
+        minCompletionRate:
+          type: number
+          format: float
+          minimum: 0
+          exclusiveMinimum: true
+          maximum: 1
+
+    FlSelectionMethod:
+      description: Represents the method used to select eligible FL Clients.
+      anyOf:
+        - type: string
+          enum: [priority, random]
+        - type: string
+          description: >
+            This string provides forward-compatibility with future extensions
+            to the enumeration but is not used to encode content defined in
+            this version of the API.
+
+    FlStrategy:
+      description: Represents the training and aggregation contract of a local FL process.
+      oneOf:
+        - $ref: '#/components/schemas/FedProxStrategy'
+      discriminator:
+        propertyName: method
+        mapping:
+          fedProx: '#/components/schemas/FedProxStrategy'
+
+    FedProxStrategy:
+      type: object
+      additionalProperties: false
+      properties:
+        method:
+          type: string
+          enum: [fedProx]
+        aggregation:
+          $ref: '#/components/schemas/FlAggregation'
+        methodParameters:
+          $ref: '#/components/schemas/FedProxParameters'
+      required:
+        - method
+        - aggregation
+        - methodParameters
+
+    FlAggregation:
+      description: Represents the aggregation rule used by the FL Server.
+      anyOf:
+        - type: string
+          enum: [sampleWeighted]
+        - type: string
+          description: >
+            This string provides forward-compatibility with future extensions
+            to the enumeration but is not used to encode content defined in
+            this version of the API.
+
+    FedProxParameters:
+      description: Represents parameters required by the FedProx method.
+      type: object
+      additionalProperties: false
+      properties:
+        proximalMu:
+          type: number
+          format: float
+          minimum: 0
+      required:
+        - proximalMu
+
+    FlReportAfter:
+      description: >
+        Represents the amount of node-local work to complete before reporting
+        to the direct parent.
+      type: object
+      additionalProperties: false
+      properties:
+        count:
+          type: integer
+          minimum: 1
+        unit:
+          $ref: '#/components/schemas/FlReportUnit'
+      required:
+        - count
+        - unit
+
+    FlReportUnit:
+      description: Represents the unit used by a report-after instruction.
+      anyOf:
+        - type: string
+          enum: [epoch, round]
+        - type: string
+          description: >
+            This string provides forward-compatibility with future extensions
+            to the enumeration but is not used to encode content defined in
+            this version of the API.
+
+    FlTopologyReport:
+      description: >
+        Represents the reporting node and the recursive states of the
+        candidates managed by that node.
+      type: object
+      additionalProperties: false
+      properties:
+        nfInstanceId:
+          $ref: '../../../specs/openapi/TS29571_CommonData.yaml#/components/schemas/NfInstanceId'
+        policy:
+          $ref: '#/components/schemas/FlPolicy'
+        strategy:
+          $ref: '#/components/schemas/FlStrategy'
+        reportAfter:
+          $ref: '#/components/schemas/FlReportAfter'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/FlTopologyReportNode'
+          minItems: 1
+      required:
+        - nfInstanceId
+
+    FlTopologyReportNode:
+      description: >
+        Represents a node in a recursive report of a realized hierarchical FL
+        topology and its candidate states.
+      type: object
+      additionalProperties: false
+      properties:
+        nfInstanceId:
+          $ref: '../../../specs/openapi/TS29571_CommonData.yaml#/components/schemas/NfInstanceId'
+        status:
+          $ref: '#/components/schemas/FlTopologyStatus'
+        statusTimestamp:
+          $ref: '../../../specs/openapi/TS29571_CommonData.yaml#/components/schemas/DateTime'
+        statusCause:
+          $ref: '#/components/schemas/FlTopologyStatusCause'
+        policy:
+          $ref: '#/components/schemas/FlPolicy'
+        strategy:
+          $ref: '#/components/schemas/FlStrategy'
+        reportAfter:
+          $ref: '#/components/schemas/FlReportAfter'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/FlTopologyReportNode'
+          minItems: 1
+      required:
+        - nfInstanceId
+        - status
+        - statusTimestamp
+
+    FlTopologyStatus:
+      description: Represents the lifecycle state of a hierarchical FL candidate.
+      anyOf:
+        - type: string
+          enum: [UNCONFIRMED, DEPLOYING, ACTIVE, FAILED, INACTIVE]
+        - type: string
+          description: >
+            This string provides forward-compatibility with future extensions
+            to the enumeration but is not used to encode content defined in
+            this version of the API.
+
+    FlTopologyStatusCause:
+      description: Represents why a hierarchical FL relationship entered FAILED or INACTIVE.
+      anyOf:
+        - type: string
+          enum:
+            - SUBSCRIPTION_REJECTED
+            - RESPONSE_TIMEOUT
+            - COMMUNICATION_FAILURE
+            - NWDAF_OVERLOAD
+            - NOT_AVAILABLE_ML_TRAIN
+            - PARTICIPANT_WITHDRAWN
+            - REMOVED_BY_POLICY
+            - FEATURE_NOT_SUPPORTED
+            - OTHER
+        - type: string
+          description: >
+            This string provides forward-compatibility with future extensions
+            to the enumeration but is not used to encode content defined in
+            this version of the API.
+
+    RetainedResultStatus:
+      description: Represents the outcome of a retained-result lookup.
+      anyOf:
+        - type: string
+          enum: [FOUND, NOT_FOUND, FAILED]
+        - type: string
+          description: >
+            This string provides forward-compatibility with future extensions
+            to the enumeration but is not used to encode content defined in
+            this version of the API.
+
+  examples:
+    HierarchicalTopologySubscription:
+      summary: Root assigns candidates and delegates participant selection.
+      value:
+        mLEventSubscs:
+          - mLEvent: UE_COMMUNICATION
+            mLEventFilter: {}
+            modelInterInfo: pymtlf-model-bundle-v1
+        notifUri: https://root.example.org/callbacks/ml-model-training
+        notifCorreId: root-branch-a-subscription
+        suppFeats: '4'
+        mlCorreId: hierarchical-fl-001
+        mLPreFlag: true
+        x-flTopology:
+          nfInstanceId: 10000000-0000-4000-8000-000000000001
+          children:
+            - nfInstanceId: 10000000-0000-4000-8000-000000000101
+              priority: 100
+            - nfInstanceId: 10000000-0000-4000-8000-000000000102
+              priority: 80
+          policy:
+            allowAdditionalCandidates: true
+            additionalCandidatePriority: 0
+            selectionMethod: priority
+            minAvailableNodes: 2
+            fractionTrain: 1
+            minTrainNodes: 2
+            acceptFailures: true
+            minCompletionRate: 0.5
+          strategy:
+            method: fedProx
+            aggregation: sampleWeighted
+            methodParameters:
+              proximalMu: 0.01
+          reportAfter:
+            count: 3
+            unit: round
+
+    CandidateRemovalPatch:
+      summary: Root excludes one candidate and assigns its replacement.
+      value:
+        x-flTopology:
+          nfInstanceId: 10000000-0000-4000-8000-000000000001
+          children:
+            - nfInstanceId: 10000000-0000-4000-8000-000000000106
+              priority: 120
+            - nfInstanceId: 10000000-0000-4000-8000-000000000101
+              enabled: false
+
+    TopologyReportNotification:
+      summary: Branch reports the realized topology after preparation.
+      value:
+        notifCorreId: root-branch-a-subscription
+        mlCorreId: hierarchical-fl-001
+        x-flTopologyReport:
+          nfInstanceId: 10000000-0000-4000-8000-000000000001
+          policy:
+            allowAdditionalCandidates: true
+            additionalCandidatePriority: 0
+            selectionMethod: priority
+            minAvailableNodes: 2
+            fractionTrain: 1
+            minTrainNodes: 2
+            acceptFailures: true
+            minCompletionRate: 0.5
+          strategy:
+            method: fedProx
+            aggregation: sampleWeighted
+            methodParameters:
+              proximalMu: 0.01
+          reportAfter:
+            count: 3
+            unit: round
+          children:
+            - nfInstanceId: 10000000-0000-4000-8000-000000000101
+              status: ACTIVE
+              statusTimestamp: '2026-09-02T14:29:10+08:00'
+            - nfInstanceId: 10000000-0000-4000-8000-000000000102
+              status: FAILED
+              statusTimestamp: '2026-09-02T14:29:40+08:00'
+              statusCause: RESPONSE_TIMEOUT
+
+    RetainedResultFoundNotification:
+      summary: Client returns its latest completed retained result.
+      value:
+        notifCorreId: branch-a2-leaf-a1-subscription
+        mlCorreId: hierarchical-fl-001
+        x-retainedResultStatus: FOUND
+        roundInd: 5
+        mLModelInfos:
+          - event: UE_COMMUNICATION
+            mLFileAddr:
+              mLModelUrl: https://leaf-a1.example.org/results/hierarchical-fl-001/round-5
+
+    RetainedResultNotFoundNotification:
+      summary: Client completed the lookup without finding a retained result.
+      value:
+        notifCorreId: branch-a2-leaf-a1-subscription
+        mlCorreId: hierarchical-fl-001
+        x-retainedResultStatus: NOT_FOUND
+
+    RetainedResultFailedNotification:
+      summary: Client accepted the lookup but could not complete it.
+      value:
+        notifCorreId: branch-a2-leaf-a1-subscription
+        mlCorreId: hierarchical-fl-001
+        x-retainedResultStatus: FAILED

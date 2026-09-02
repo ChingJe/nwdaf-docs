@@ -24,6 +24,12 @@
   至 Subscription、PATCH 與 Notify，並提供 candidate OpenAPI YAML、跨欄位
   validation rules、`suppFeats` negotiation、error mapping 與 HTTP message
   examples。
+- [Candidate OpenAPI artifact](./candidate_openapi.yaml)：
+  可供 OpenAPI validator 與 generator 直接處理的完整候選 API；不取代
+  Release 18 3GPP attachment，也不表示已成為 3GPP-defined API。
+- [Protocol Conformance Matrix](./protocol_conformance_matrix.md)：
+  將 candidate schema 與 Stage 3 rules 轉成實作可直接採用的合法／非法
+  request、Notify 與 procedure-state test cases。
 
 ## 設計情境
 
