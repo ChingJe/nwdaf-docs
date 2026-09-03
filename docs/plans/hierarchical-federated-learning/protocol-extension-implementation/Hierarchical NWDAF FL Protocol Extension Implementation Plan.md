@@ -2,8 +2,8 @@
 
 日期：2026-09-02
 
-狀態：Ready for User Review／第一輪實作盤點與 slice map 已完成；production
-implementation 尚未開始
+狀態：Slice 1 Committed／production implementation、審查、驗證與收尾
+implementation commits 已完成；後續 execution work 尚未開始
 
 索引：
 
@@ -11,6 +11,7 @@ implementation 尚未開始
 - [Protocol Implementation Current-State Inventory](./Protocol%20Implementation%20Current-State%20Inventory.md)
 - [Model Bundle Metadata to Protocol Schema Mapping](./Model%20Bundle%20Metadata%20to%20Protocol%20Schema%20Mapping.md)
 - [Protocol Extension Implementation Slice Map](./Protocol%20Extension%20Implementation%20Slice%20Map.md)
+- [Protocol Extension Implementation Review Ledger](./Protocol%20Extension%20Implementation%20Review%20Ledger.md)
 
 設計輸入：
 
@@ -241,9 +242,14 @@ component，但依目前 production trace 不預期修改其 repository。
 
 - Candidate protocol、OpenAPI artifact 與 conformance cases 已有設計輸入。
 - 既有 static／model-bundle HFL 已有 local 與 real-process baseline。
-- Production implementation 尚未開始；current-state、owner 與主要 data-flow 已完成
-  第一輪盤點。ADRF global-model distribution 的 exact method placement、record
-  lifecycle 與驗證 evidence 已列入 Slice 4 closure，等待 user review。
+- Slice 1 已完成 typed candidate wire contract、resource-level feature state、
+  persistent／operation-scoped separation、receiver identity validation 與 lifecycle
+  foundation；production diff 已完成審查與計畫要求的 focused／full verification，
+  user review 已確認，`NWDAF` 與 `PyMTLF` 收尾 commits 已建立。
+- Candidate selection、policy／strategy execution、retained-result lookup、protocol-mode
+  orchestration 與 real-process E2E 仍依 Slice 2–5 的既定邊界處理。ADRF global-model
+  distribution 的 exact method placement、record lifecycle 與驗證 evidence 已列入
+  Slice 4 closure。
 
 已依
 [Model Bundle Metadata to Protocol Schema Mapping](./Model%20Bundle%20Metadata%20to%20Protocol%20Schema%20Mapping.md)
@@ -251,5 +257,6 @@ component，但依目前 production trace 不預期修改其 repository。
 [Protocol Implementation Current-State Inventory](./Protocol%20Implementation%20Current-State%20Inventory.md)
 完成各欄位的 production trace 與 gap mapping。Implementation work units 已整理於
 [Protocol Extension Implementation Slice Map](./Protocol%20Extension%20Implementation%20Slice%20Map.md)；
-下一個 production work unit 是 Slice 1，但開始修改 production code 前需先完成 Slice 1
-detailed plan 與 user review。
+Slice 1 的實作與驗證證據記錄於
+[Protocol Extension Implementation Review Ledger](./Protocol%20Extension%20Implementation%20Review%20Ledger.md)；
+Slice 1 完成後，再依 slice map 準備下一個 production work unit。

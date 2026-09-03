@@ -2,9 +2,8 @@
 
 日期：2026-09-02
 
-狀態：Ready for User Review；第一輪實作盤點與 slice map 已完成，model-free
-preparation、topology-ready 後的 ADRF distribution boundary 與 retained-result
-validation 已補入實作要求，production implementation 尚未開始
+狀態：Slice 1 Committed；production implementation、審查、驗證與收尾
+implementation commits 已完成；後續 execution work 仍由 Slice 2–5 負責
 
 ## 文件定位
 
@@ -44,6 +43,11 @@ feature negotiation 與 retained-result semantics 實作到正式
 - [Slice 詳細計畫](./slices/)：
   收錄接下來各 slice 的獨立實作計畫；每份計畫只處理一個可 review、驗證與交付的
   work unit。
+
+## 審查證據
+
+- [Protocol Extension Implementation Review Ledger](./Protocol%20Extension%20Implementation%20Review%20Ledger.md)：
+  維護各 slice 的審查發現、修正、驗證與 commit 狀態。
 
 ## 設計輸入
 

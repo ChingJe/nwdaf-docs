@@ -2,7 +2,8 @@
 
 日期：2026-09-03
 
-狀態：Ready for User Review／production implementation 尚未開始
+狀態：Committed／production implementation、mandatory initial review、計畫要求驗證
+與 `NWDAF`／`PyMTLF` 收尾 commits 已完成
 
 相關文件：
 
@@ -14,6 +15,7 @@
 - [Candidate OpenAPI Schema](../../../../design/hierarchical-federated-learning/candidate_openapi_schema.md)
 - [Candidate OpenAPI artifact](../../../../design/hierarchical-federated-learning/candidate_openapi.yaml)
 - [Protocol Conformance Matrix](../../../../design/hierarchical-federated-learning/protocol_conformance_matrix.md)
+- [Protocol Extension Implementation Review Ledger](../Protocol%20Extension%20Implementation%20Review%20Ledger.md)
 
 ---
 
@@ -47,7 +49,7 @@ result lookup，也不宣稱 protocol-driven HFL 已可執行。
 | --- | --- | --- |
 | `NWDAF/` | `6aed268d6528f8be6c729cbd45b59d067e5e80dc` | External／peer SBI、Go→PyMTLF gateway、route state 與 primary receiver validation |
 | `PyMTLF/` | `747962971b63f0a53031d52a1eb7e047ae776998` | Private backend typed mirror、subscription representation 與 execution-entry gate |
-| `nwdaf-docs/` | `c69f396a32c59ccc53f0c04d482e772d8f649c6e` 加上本次 unstaged 文件 | Canonical plan、candidate contract 與 conformance evidence |
+| `nwdaf-docs/` | `2964021c6858d1c6e55269898326082cd71177ff` 加上本次 unstaged 文件 | Canonical plan、candidate contract 與 conformance evidence |
 
 開始 production implementation 前應再次確認上述兩個 production repositories 的
 HEAD 與 clean working tree；若 revision 或 owner 已改變，先更新本計畫的 exact-file
@@ -650,35 +652,35 @@ NWDAF typed contract／route lifecycle
 
 ### 13.1 契約與責任
 
-- [ ] 沒有修改generated OpenAPI code或新增Go package。
-- [ ] 四個top-level candidate properties在Go／Python使用相同JSON names。
-- [ ] Expected receiver／participant identity在consumption point有independent source。
-- [ ] Go只做wire／route validation；PyMTLF擁有execution capability decision。
-- [ ] Candidate request沒有被接到legacy model-bundle execution。
+- [x] 沒有修改generated OpenAPI code或新增Go package。
+- [x] 四個top-level candidate properties在Go／Python使用相同JSON names。
+- [x] Expected receiver／participant identity在consumption point有independent source。
+- [x] Go只做wire／route validation；PyMTLF擁有execution capability decision。
+- [x] Candidate request沒有被接到legacy model-bundle execution。
 
 ### 13.2 狀態與原子性
 
-- [ ] Persistent與operation-scoped values在Create／PUT／PATCH均分離。
-- [ ] Accepted／backend representation除了callback URI外candidate semantics相同。
-- [ ] `200`與`204`產生相同effective persistent state。
-- [ ] Failed mutation不改representation、feature state或revision ownership。
-- [ ] DELETE／reset清除新增state，late callback／mutation仍被fence。
+- [x] Persistent與operation-scoped values在Create／PUT／PATCH均分離。
+- [x] Accepted／backend representation除了callback URI外candidate semantics相同。
+- [x] `200`與`204`產生相同effective persistent state。
+- [x] Failed mutation不改representation、feature state或revision ownership。
+- [x] DELETE／reset清除新增state，late callback／mutation仍被fence。
 
 ### 13.3 Feature 協商
 
-- [ ] Offered／negotiated mask與bound participant保存於每個route。
-- [ ] Response features不得超出offered mask。
-- [ ] Unnegotiated route拒絕後續candidate operations。
-- [ ] Slice 1 PyMTLF不advertise feature 3，也不啟動candidate execution。
-- [ ] Candidate-free legacy flow無behavior change。
+- [x] Offered／negotiated mask與bound participant保存於每個route。
+- [x] Response features不得超出offered mask。
+- [x] Unnegotiated route拒絕後續candidate operations。
+- [x] Slice 1 PyMTLF不advertise feature 3，也不啟動candidate execution。
+- [x] Candidate-free legacy flow無behavior change。
 
 ### 13.4 驗證與證據
 
-- [ ] Go／PyMTLF recursive limits、path format與cross-field results一致。
-- [ ] `400`與`403`分類沒有混用。
-- [ ] Normal result與retained FOUND的`roundInd`規則分開。
-- [ ] 每個Slice 1 normative item有production path與deterministic test evidence。
-- [ ] Full test／lint／build results與skipped integration checks完整記錄。
+- [x] Go／PyMTLF recursive limits、path format與cross-field results一致。
+- [x] `400`與`403`分類沒有混用。
+- [x] Normal result與retained FOUND的`roundInd`規則分開。
+- [x] 每個Slice 1 normative item有production path與deterministic test evidence。
+- [x] Full test／lint／build results與skipped integration checks完整記錄。
 
 ---
 
@@ -698,3 +700,15 @@ Slice 1只能在下列條件全部成立後進入`Ready for User Review` impleme
 即使以上條件成立，Slice 1仍只代表wire／resource foundation完成；feature 3 production
 advertisement、protocol-driven hierarchy execution與real-process evidence仍屬後續
 slices。
+
+---
+
+## 15. 實作證據
+
+Slice 1 的 production paths、deterministic tests、初始審查發現、修正結果、
+focused／full verification 與明確延後項目，統一記錄於
+[Protocol Extension Implementation Review Ledger](../Protocol%20Extension%20Implementation%20Review%20Ledger.md)。
+
+目前沒有未關閉的 Slice 1 code finding。尚未執行的 real NRF、ADRF、MongoDB、
+multi-NWDAF testbed 與 protocol-driven HFL E2E，均為本計畫 §3.2 與 §10.3 已核准的
+後續 slice 或 integration verification boundary，不作為本 slice 的完成宣稱。
