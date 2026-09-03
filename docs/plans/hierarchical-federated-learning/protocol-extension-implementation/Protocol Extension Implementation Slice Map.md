@@ -1,8 +1,9 @@
 # Hierarchical NWDAF FL Protocol Extension Implementation Slice Map
 
-日期：2026-09-02
+日期：2026-09-04
 
-狀態：Ready for User Review／依 production owner 與 dependency 完成初步拆分
+狀態：Slice 2 detailed plan Approved for Implementation／active sequence為
+Slice 1、2、4、5；Slice 3暫緩
 
 相關文件：
 
@@ -16,8 +17,9 @@
 ## 1. 拆分原則
 
 - 每個 slice 只承擔可獨立 review 與驗證的 owner boundary。
-- Feature 3 在所有 candidate behavior可執行前不對 production flow宣告成功；前置
-  slices不得形成「schema接受但 execution忽略」的半成品。
+- Feature 3 只在本階段承諾的 topology／policy／strategy／report behavior 可執行後
+  才對 production flow宣告成功；保留但未採用的 retained-result instruction 必須
+  明確拒絕，不得被靜默忽略。
 - Legacy model-bundle HFL在 protocol-driven E2E成立前保持可回歸。
 - 同一 execution只能使用 legacy bundle或 protocol contract其中一個 authority。
 - 每個 slice完成後先保留 unstaged diff供 user review，再另行提出 commit proposal。
@@ -59,7 +61,8 @@ per-resource feature state。
   `RET-01`–`RET-04` 的 wire／receiver部分通過。
 - `PATCH-01`–`PATCH-03`、`NOT-08`、`RET-05`–`RET-08` 所需的 Go
   effective-representation atomicity、typed transport、operation gate與 route
-  serialization prerequisites通過；procedure／state consumer留給後續 slices。
+  serialization prerequisites通過；retained procedure／state consumer暫不納入active
+  slices。
 - Create／PUT／PATCH response與 stored representation round-trip全部 candidate fields。
 - Operation-scoped fields在 destination執行入口可見，但 accepted representation中
   不存在。
@@ -67,7 +70,8 @@ per-resource feature state。
 
 ### 延後項目
 
-- Topology dispatch、policy execution、retained-result lookup與 feature success E2E。
+- Topology dispatch、policy execution與feature success E2E。
+- Retained-result lookup runtime不排入目前active slices。
 
 ---
 
@@ -99,6 +103,9 @@ node能解析 explicit subtree、補充 delegated candidates、套用 policy／s
   protocol strategy／policy／`reportAfter`接到既有 execution owner，並新增 selection、
   readiness與 completion gate，不重寫 FL algorithm。
 - Unknown forward-compatible values可保存，但無 known executor時拒絕明確 contract。
+- 修正legacy hierarchy assignment preparation對同一URL的duplicate GET，以單次
+  transport在同一份bytes上完成typed validation與plan-owned adoption；不改變其他
+  model transport或Slice 4的model-free preparation方向。
 
 ### 驗收條件
 
@@ -110,6 +117,8 @@ node能解析 explicit subtree、補充 delegated candidates、套用 policy／s
   protocol-driven input不得建立第二套 trainer或 aggregator。
 - Local candidate pool不因 upstream array replacement被清空；prohibited identity不會
   透過 discovery靜默加入。
+- Branch與Leaf每個logical hierarchy assignment各只發出一次HTTP GET，且strict
+  digest／role／recipient／plan validation、artifact ownership與cleanup regression仍通過。
 - Slice尚不宣稱跨 NWDAF protocol E2E完成。
 
 ### 延後項目
@@ -118,46 +127,23 @@ node能解析 explicit subtree、補充 delegated candidates、套用 policy／s
 
 ---
 
-## 4. Slice 3 — Retained Result State and Lookup
+## 4. Slice 3 — Retained Result State and Lookup（暫緩）
 
-### 行為
+Slice 3保留原編號，避免改寫Slice 1的既有計畫、測試紀錄與conformance case引用；
+本階段不建立其detailed plan，也不進入production implementation。
 
-在 PyMTLF 建立以 Root 產生的 hierarchy-wide UUID `mlCorreId`為 key 的
-latest-completed result index，讓新 subscription可查詢同一 NWDAF先前已完成但未成功
-送達舊 parent的結果。
+`x-retainedResultReq`與`x-retainedResultStatus`仍保留在candidate schema及Slice 1
+完成的wire／validation contract中，但目前不實作：
 
-### 涉及的 repositories
+- latest-completed result index；
+- artifact retention handle、保存期限與cleanup；
+- outstanding lookup state及`FOUND`／`NOT_FOUND`／`FAILED` outcome producer；
+- replacement Branch沿用舊Leaf／Branch計算結果。
 
-- `PyMTLF/`
-- `nwdaf-docs/`：更新 lifecycle／review evidence
-
-### 納入範圍
-
-- Leaf local result與 Branch aggregate共用的 retained-result entry。
-- Root生成 UUID；receiver在本地 active／retention window拒絕相同 UUID綁定另一個
-  procedure scope。
-- Artifact publication後、callback enqueue前原子更新 latest result。
-- 每個 requesting participant resource最多一個 outstanding lookup。
-- `FOUND`／`NOT_FOUND`／`FAILED` outcome與 artifact validation。
-- 以獨立 retention handle保護 artifact；即使 `mlCorreId`採 UUID，也不借用
-  hierarchy `plan_id` 的 release lifecycle。
-- Resource DELETE、procedure terminal、expiry與 backend generation reset cleanup。
-
-### 驗收條件
-
-- Conformance `RET-05`–`RET-08` 的 PyMTLF state／consumer tests通過；Go operation
-  gate與 route serialization prerequisites由 Slice 1驗證。
-- Callback transport持續失敗時，新 subscription仍可取得最新完成結果。
-- 同一 UUID可由 replacement subscription重用於同一 procedure；若已綁定另一個
-  active procedure scope則拒絕，且不得讀取或覆寫既有 retained entry。
-- 較低 round、未完成結果或已清除 artifact不得取代／冒充 latest completed entry。
-- 單一舊 subscription刪除時，若同一 procedure仍有 replacement subscription，entry
-  不被提前清除。
-
-### 延後項目
-
-- Root如何偵測 Branch failure、選 replacement或接受 retained result，維持既有
-  protocol scope boundary。
+Production receiver若收到 retained-result instruction，必須回覆明確的requirements／
+capability rejection，不得靜默忽略，也不得改成使用request中其他model資訊重新訓練。
+未來若重新啟用此slice，需先重新確認artifact owner、retention期限、procedure
+correlation與cleanup contract。
 
 ---
 
@@ -165,7 +151,7 @@ latest-completed result index，讓新 subscription可查詢同一 NWDAF先前�
 
 ### 行為
 
-把前三個 slices接入現有 Root／Intermediate／Client production flow，讓 protocol mode
+把前兩個active slices接入現有 Root／Intermediate／Client production flow，讓 protocol mode
 真正以 `x-flTopology`取代 assignment bundle，以 `x-flTopologyReport`取代
 preparation-result bundle，並在每條 edge完成 feature negotiation。
 
@@ -212,7 +198,11 @@ DELETE behavior無法支援本 flow，需先更新 slice boundary再修改。
 - Protocol mode支援 explicit、delegated與 hybrid topology。
 - Normal round沿用 standard `roundInd`／model result，不重送 topology；global model
   的 ADRF reference逐級下發，Leaf local result與 Branch aggregate不進 ADRF。
-- PUT／PATCH topology update、disabled-child cleanup與 retained lookup接入真實 route。
+- PUT／PATCH topology update與disabled-child cleanup接入真實 route；replacement Branch
+  只重建新的downstream resources，不查詢或沿用舊路徑未送達的result。
+- Create／PUT／PATCH若帶有`x-retainedResultReq`或nested `retainedResultReq`，PyMTLF
+  execution capability gate回覆明確的`403` requirements error；resource與topology
+  state不得因該operation部分更新。
 - Feature 3逐 edge negotiation；必要 feature未接受時清除 resource並回報 failure。
 - Legacy／protocol execution selector由 Root orchestration明確控制。
 
@@ -220,8 +210,10 @@ DELETE behavior無法支援本 flow，需先更新 slice boundary再修改。
 
 - Conformance `NOT-01`、`FEAT-01`–`FEAT-04` 與前述 procedure cases完成跨 component
   integration tests。
+- Unsupported retained-result instruction的`403`與resource atomicity由boundary test
+  證明，不以欄位被parse或丟棄視為成功。
 - Real-process evidence至少涵蓋 explicit topology、delegated／hybrid selection、
-  topology PATCH、topology-only Notify、feature mismatch與 retained-result lookup。
+  topology PATCH、topology-only Notify與feature mismatch。
 - Preparation evidence 證明各層 Create 不帶 `mLModelInfos`、不觸發 ADRF GET，且 Root
   在 realized topology ready 前不建立該輪 model record。
 - ADRF evidence涵蓋 realized-topology-to-`allowConsumerList` mapping、一次 store、至少
@@ -236,8 +228,8 @@ DELETE behavior無法支援本 flow，需先更新 slice boundary再修改。
 
 ### 延後項目
 
-- 完整 Branch failure detector、replacement selector、fencing與 retained-result
-  acceptance policy。
+- 完整 Branch failure detector、replacement selector與fencing。
+- Retained-result persistence、lookup與acceptance policy。
 
 ---
 
@@ -280,14 +272,15 @@ model／result／evidence，不再是第二套 orchestration source。
 ```text
 Slice 1: wire／resource lifecycle
   -> Slice 2: policy／candidate execution
-  -> Slice 3: retained-result state
   -> Slice 4: protocol-driven E2E integration
   -> Slice 5: migration closure
+
+Slice 3: retained-result state（暫緩，不在目前active dependency chain）
 ```
 
-Slice 2與 Slice 3在 code dependency上可分開，但依 workspace review規則仍逐一完成、
-驗證與交付，不同時累積成一個大型 working-tree diff。
+Slice 3的編號與原始邊界只為保留追溯性；目前完成Slice 2後直接準備Slice 4。各active
+slice仍依workspace review規則逐一完成、驗證與交付，不同時累積成一個大型
+working-tree diff。
 
-第一個 production implementation work unit為 Slice 1。開始前需建立 Slice 1 detailed
-plan，列出 exact files、test matrix、feature-disabled behavior與 repository-specific
-commit boundary。
+Slice 1已完成，Slice 2 detailed plan已確認。現在的production implementation work
+unit為Slice 2。

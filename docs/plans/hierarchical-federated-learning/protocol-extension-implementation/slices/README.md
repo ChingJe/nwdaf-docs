@@ -1,6 +1,6 @@
 # Protocol Extension Slice 詳細計畫
 
-日期：2026-09-03
+日期：2026-09-04
 
 ## 文件定位
 
@@ -17,6 +17,12 @@ verification 與 deferred work。
 - [Slice 1 — Wire Contract and Resource Lifecycle Foundation](./Slice%201%20Wire%20Contract%20and%20Resource%20Lifecycle%20Foundation%20Detailed%20Plan.md)：
   建立 Go／PyMTLF typed candidate contract、receiver validation、persistent／
   operation-scoped state 分離、CRUD atomicity 與 per-resource feature state。
+- [Slice 2 — Candidate Pool, Policy and Local Contract Execution](./Slice%202%20Candidate%20Pool%20Policy%20and%20Local%20Contract%20Execution%20Detailed%20Plan.md)：
+  建立 PyMTLF candidate pool、delegated discovery、policy／strategy／`reportAfter`
+  local execution、selected-set aggregation gate 與 realized topology snapshot。
+
+Slice 3 retained-result runtime目前暫緩，因此不建立detailed plan；Slice 2完成後的下一個
+active work unit為Slice 4 protocol-driven integration。
 
 ## 文件慣例
 

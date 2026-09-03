@@ -1,9 +1,9 @@
 # Hierarchical NWDAF FL Protocol Extension Implementation Plans
 
-日期：2026-09-02
+日期：2026-09-04
 
-狀態：Slice 1 Committed；production implementation、審查、驗證與收尾
-implementation commits 已完成；後續 execution work 仍由 Slice 2–5 負責
+狀態：Slice 1 Committed；Slice 2 detailed plan Approved for Implementation；後續
+Slice 2 production implementation 尚未開始
 
 ## 文件定位
 
@@ -13,8 +13,9 @@ implementation commits 已完成；後續 execution work 仍由 Slice 2–5 負�
 它和上一版 [Hierarchical NWDAF Federated Learning Implementation Plan](../hierarchical-fl-model-bundle-edition/Hierarchical%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)
 分開維護。舊計畫記錄目前已跑通的 model-bundle／static orchestration
 implementation；本分類則負責將已確認的 topology、policy、strategy、Notify、
-feature negotiation 與 retained-result semantics 實作到正式
-`Nnwdaf_MLModelTraining` message flow。
+feature negotiation semantics 實作到正式 `Nnwdaf_MLModelTraining` message flow。
+Retained-result fields仍保留在candidate wire contract，但其result保存、lookup與
+replacement recovery暫不納入目前implementation slices。
 
 ## 主計畫
 

@@ -1,9 +1,9 @@
 # Hierarchical NWDAF FL Protocol Extension Implementation Plan
 
-日期：2026-09-02
+日期：2026-09-04
 
-狀態：Slice 1 Committed／production implementation、審查、驗證與收尾
-implementation commits 已完成；後續 execution work 尚未開始
+狀態：Slice 1 Committed；Slice 2 detailed plan Approved for Implementation；retained-result
+runtime暫緩
 
 索引：
 
@@ -39,9 +39,10 @@ orchestration semantics 成為 `Nnwdaf_MLModelTraining` subscription resource
 的一部分。
 
 新的 candidate protocol 已定義 recursive topology、node-scoped policy／strategy、
-realized-topology report、feature negotiation 與 retained-result lookup。本
-workstream 的目的，是在保留既有 HFL 執行能力的前提下，將這些 semantics 接入
-正式 Model Training message flow。
+realized-topology report、feature negotiation 與 retained-result fields。本
+workstream 的目的，是在保留既有 HFL 執行能力的前提下，先將 topology、policy、
+strategy 與 report semantics 接入正式 Model Training message flow。Retained-result
+fields 保留在 wire contract，但本階段不建立其執行狀態與 recovery behavior。
 
 ---
 
@@ -56,11 +57,11 @@ workstream 的目的，是在保留既有 HFL 執行能力的前提下，將這�
   採用的 contract。
 - 每條 parent-to-child subscription edge 可透過 `suppFeats` 協商
   `HierarchicalFLOrch`。
-- 替代 node 可用一次性 `x-retainedResultReq` 查詢相同 `mlCorreId` 的最新已完成
-  結果，並透過 `x-retainedResultStatus` 回報 outcome。
+- 保留 `x-retainedResultReq` 與 `x-retainedResultStatus` 的 schema、解析與驗證能力；
+  本階段不執行 lookup，也不以 retained result 接續替代 node 的訓練。
 - Root 以 UUID 字串產生每個 hierarchical FL procedure 的 `mlCorreId`，整棵
-  hierarchy 逐級共用同一值；receiver 在本地 retention window 內不得接受與另一個
-  active procedure 衝突的 UUID。
+  hierarchy 逐級共用同一值。此識別用途不代表 node 必須保存可依該 ID 查詢的歷史
+  result artifact。
 
 ### 2.2 Execution 目標
 
@@ -72,8 +73,7 @@ workstream 的目的，是在保留既有 HFL 執行能力的前提下，將這�
   與 aggregation completion。
 - FL Client／Intermediate 可依 strategy 與 `reportAfter` 執行 local work 並向
   parent 回報。
-- Subscription state、local process state 與 operation-scoped lookup state 必須有
-  清楚且互不混淆的 lifecycle owner。
+- Subscription state 與 local process state 必須有清楚且互不混淆的 lifecycle owner。
 
 ### 2.3 Migration 目標
 
@@ -137,11 +137,12 @@ candidates 由該 node 的 policy 決定。
 ### 3.3 Branch replacement support
 
 當 active Branch 失效時，Root 可依內部 selection mechanism 選擇替代 Branch，
-再使用既有 subscription operation 將新的 subtree contract 下發。若需要接續既有
-計算結果，Root 可要求替代 Branch 對相關 Clients 執行一次 retained-result lookup。
+再使用既有 subscription operation 將新的 subtree contract 下發。替代 Branch 重新
+建立 downstream subscriptions 後，依 Root 後續下發的 model／round instruction
+繼續執行；失敗 Branch 路徑中尚未送達的 local result 不在本階段恢復或沿用。
 
-本 workstream 只提供 topology update 與 lookup 所需的 protocol information；完整
-failure detection、replacement selection、fencing 與 result acceptance 仍由內部
+本 workstream 只提供 topology update 所需的 protocol information；完整 failure
+detection、replacement selection、fencing，以及舊 result 的保存與接續仍由內部
 機制或後續工作負責。
 
 ---
@@ -152,8 +153,8 @@ failure detection、replacement selection、fencing 與 result acceptance 仍由
 
 - `NWDAF/`：External／peer SBI wire contract、validation、resource state、callback
   routing 與 Go→PyMTLF transport。
-- `PyMTLF/`：Topology／policy／strategy execution、local process state、realized
-  report 與 retained-result owner。
+- `PyMTLF/`：Topology／policy／strategy execution、local process state 與 realized
+  report owner。
 - `nwdaf-resources/`：Real-process request／Notify evidence、negative cases 與
   regression scenarios。
 - `nwdaf-docs/`：Canonical plan、盤點、conformance mapping 與 review evidence。
@@ -181,8 +182,8 @@ component，但依目前 production trace 不預期修改其 repository。
 
 - 建立每個 subscription resource 的 `HierarchicalFLOrch` negotiation 與後續
   operation gate。
-- 區分 persistent subscription contract、local process state 與一次性 lookup
-  state。
+- 區分 persistent subscription contract與local process state；retained-result
+  instruction 不進 persistent representation，也不在本階段建立 lookup state。
 - 維持 Create／PUT／PATCH atomicity、DELETE cleanup 與 restart boundary。
 
 ### 5.3 Topology orchestration 遷移
@@ -206,23 +207,21 @@ component，但依目前 production trace 不預期修改其 repository。
 - 讓 strategy 與 `reportAfter` 到達 local training／aggregation owner。
 - 讓 node 回報實際採用的 policy、strategy 與 reporting contract。
 
-### 5.5 Retained-result lookup
+### 5.5 Retained-result boundary
 
-- 實作一次性 lookup request 與 `FOUND`／`NOT_FOUND`／`FAILED` outcome。
-- 明確定義 latest-completed result owner、同一 resource 的 operation serialization
-  與 timeout／termination behavior。
-- 一般 training result 繼續比對 route 的 expected `roundInd`；
-  `x-retainedResultStatus: FOUND` 的 `roundInd` 則表示被查到的 local result round，
-  只驗證格式、artifact 與 procedure correlation，不與 replacement subscription 的
-  expected round 比較。
-- 不在此工作面向擴張為完整 Branch recovery protocol。
+- 保留 Slice 1 已完成的 `x-retainedResultReq`／`x-retainedResultStatus` wire models、
+  non-persistence 與 cross-field validation。
+- Production execution 不建立 `mlCorreId -> latest completed result` index，不接受
+  lookup 為可執行 operation，也不為此新增 artifact retention timer／cleanup owner。
+- 未來若重新採用 retained result，必須另行決定保存期限、artifact ownership、
+  replacement subscription correlation、timeout 與 cleanup，再建立獨立實作計畫。
 
 ### 5.6 驗證與 migration closure
 
 - 將 Protocol Conformance Matrix 映射到 unit、boundary 與 real-process tests。
 - 保留既有 static／model-bundle baseline，直到 protocol-driven E2E 可以回歸。
 - 分別驗證 explicit topology、delegated／hybrid topology、normal rounds、topology
-  update、feature rejection 與 retained-result lookup。
+  update 與 feature rejection。
 
 ---
 
@@ -230,6 +229,7 @@ component，但依目前 production trace 不預期修改其 repository。
 
 - 新 FL algorithm 或 learning-quality claim。
 - Branch failure replacement 的完整 orchestration protocol。
+- Retained-result persistence、lookup、artifact retention policy與舊計算結果接續。
 - Re-parent authorization、fencing、ownership token、retained-result freshness、
   deduplication 或 aggregation acceptance。
 - NRF schema extension、application-specific topology storage 或 ranking algorithm。
@@ -246,8 +246,9 @@ component，但依目前 production trace 不預期修改其 repository。
   persistent／operation-scoped separation、receiver identity validation 與 lifecycle
   foundation；production diff 已完成審查與計畫要求的 focused／full verification，
   user review 已確認，`NWDAF` 與 `PyMTLF` 收尾 commits 已建立。
-- Candidate selection、policy／strategy execution、retained-result lookup、protocol-mode
-  orchestration 與 real-process E2E 仍依 Slice 2–5 的既定邊界處理。ADRF global-model
+- Candidate selection與policy／strategy execution由Slice 2處理；protocol-mode
+  orchestration 與real-process E2E由Slice 4處理，migration closure由Slice 5處理。
+  Retained-result runtime暫緩，不是目前active slice的相依項目。ADRF global-model
   distribution 的 exact method placement、record lifecycle 與驗證 evidence 已列入
   Slice 4 closure。
 
@@ -259,4 +260,4 @@ component，但依目前 production trace 不預期修改其 repository。
 [Protocol Extension Implementation Slice Map](./Protocol%20Extension%20Implementation%20Slice%20Map.md)；
 Slice 1 的實作與驗證證據記錄於
 [Protocol Extension Implementation Review Ledger](./Protocol%20Extension%20Implementation%20Review%20Ledger.md)；
-Slice 1 完成後，再依 slice map 準備下一個 production work unit。
+Slice 2 detailed plan已確認；下一個production implementation work unit為Slice 2。
