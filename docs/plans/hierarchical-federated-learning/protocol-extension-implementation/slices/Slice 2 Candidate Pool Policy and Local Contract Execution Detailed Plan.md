@@ -2,7 +2,7 @@
 
 日期：2026-09-04
 
-狀態：Approved for Implementation／production implementation 尚未開始
+狀態：Committed／`PyMTLF` production commit `0e87ef1`，review evidence已收尾
 
 相關文件：
 
@@ -30,6 +30,8 @@ local orchestration primitives，能夠：
 - 分開保存 `upstream-assigned` 與 `locally-discovered` provenance；
 - 使用既有 training requirements 與 Go internal NRF proxy 補充 delegated
   candidates；
+- 保存NRF discovery result的有效期，並在使用過期的NRF-derived candidate前要求
+  refresh；
 - 解析實際採用的 node-local `policy`、`strategy` 與 `reportAfter`；
 - 依 readiness、每輪 selection 與 completion policy 決定可否進入既有 FL
   execution；
@@ -56,7 +58,7 @@ contract與tests，不表示 protocol-driven hierarchical FL已可跨NWDAF執行
 | --- | --- | --- |
 | `PyMTLF/` | `6c27d1581bbee91397aead12b2fa49c750f4ea3a` | Candidate pool、policy executor、NRF resolver與既有local FL execution owner |
 | `NWDAF/` | `302762a6af677f5ccfb5a3f9d0253fb3dd39bf62` | Read-only dependency；提供既有Go internal NRF discovery proxy |
-| `nwdaf-docs/` | `957bf884e5dc3ac4fa8ee80a3e0a1969cfbd0847` 加上本次unstaged文件 | Canonical design、slice plan與後續review evidence |
+| `nwdaf-docs/` | `871a3846fd3fbb190474afdce5b8cbd9b6208e62` 加上本次unstaged evidence | Canonical design、slice plan與review evidence |
 
 Production implementation開始前必須再次確認`PyMTLF/`與`NWDAF/`的HEAD及工作樹。
 若resolver、server或Slice 1 resource contract已改變，先更新本計畫的exact-file與
@@ -70,6 +72,9 @@ boundary mapping。
   停在idle `READY`且不進入legacy artifact execution。
 - `HierarchyNodeResolver.resolve()` 只能依explicit `nfInstanceId`解析單一Branch或Leaf；
   尚無省略exact identity的list-discovery。
+- 目前Slice 2 working-tree implementation雖已新增list-discovery，但
+  `discover()`／`discover_for_subscription()`只回傳resolved candidates，未保留
+  `SearchResult.validityPeriod`，candidate pool也無法判斷NRF-derived資訊是否已過期。
 - `FLBranchPreparationCoordinator`仍從legacy assignment bundle取得完整Leaf list，先
   resolve全部Leaves，再一次建立所有lower-tier subscriptions。任一Leaf在
   discovery或assignment publication失敗時，整組會立即失敗；尚未嘗試的其他
@@ -111,6 +116,10 @@ boundary mapping。
 - `ml-analytics-info-list`可表達analytics ID、FL capability、model
   interoperability與tracking area；
 - Go consumer會將這些條件傳給NRF並回傳SearchResult；
+- Release 18 `SearchResult.validityPeriod`是必填秒數，表示discovery result可被NF
+  Service Consumer視為有效並快取的期間；HTTP `Cache-Control: max-age`應使用相同值；
+- 相同query在有效期內應重用先前結果。現有Go consumer已按normalized query key快取，
+  cache hit時回傳剩餘`validityPeriod`，過期後才重新向NRF查詢；
 - 既有proxy負責query shape與standard-shaped error，不負責hierarchy policy、candidate
   provenance或selection。
 
@@ -133,6 +142,20 @@ decision，不可在PyMTLF繞過containing Go NWDAF直接連NRF。
 - Report-side未知status／cause可保存與逐級轉送，但不得被推測為`ACTIVE`或觸發已知
   recovery action。
 
+### 2.5 Candidate、participant與round cohort語意
+
+- `candidate`是可能成為direct child的NWDAF。它可能由上層明確指定或由本node從NRF
+  discovery取得，但尚不表示downstream subscription／preparation已成功；candidate
+  record可處於`UNCONFIRMED`、`DEPLOYING`、`FAILED`或`INACTIVE`。
+- `participant`是已完成downstream subscription／preparation、relationship狀態為
+  `ACTIVE`的direct child。
+- `selected participant`或`round cohort`是從active participant set中被選入特定一輪的
+  frozen identity set。Active但本輪未被選中的node仍是participant。
+- 單輪training failure只影響該round outcome；除非local coordinator另外確認
+  subscription／relationship失效，不得直接把participant relationship改成`FAILED`。
+- NRF `validityPeriod`管理的是discovery-derived candidate／endpoint資訊的新鮮度，不是
+  已建立之active participant relationship的存活期限。
+
 ---
 
 ## 3. Slice 邊界
@@ -142,7 +165,8 @@ decision，不可在PyMTLF繞過containing Go NWDAF直接連NRF。
 - PyMTLF local candidate record、pool、provenance與relationship state。
 - Effective node contract resolution與local-default injection boundary。
 - Explicit、delegated與hybrid candidate pool。
-- Hierarchy list-discovery及profile／service eligibility filtering。
+- Hierarchy list-discovery、profile／service eligibility filtering、result validity與
+  successful snapshot reconciliation。
 - Priority／random establishment及round selection。
 - Readiness與completion gates。
 - Disabled／omitted child reconciliation、DELETE intent及late-result fencing state。
@@ -198,6 +222,13 @@ Candidate record至少保存：
 - downstream subscription resource location，若已建立；
 - 最新child subtree report，若direct child已回報；
 - generation／revision token，用於拒絕stale establishment、result或cleanup completion。
+
+Pool另外保存目前effective normalized discovery scope最近一次成功snapshot的`observedAt`、
+剩餘`validityPeriod`、計算後的`validUntil`與snapshot revision。Discovery scope至少包含
+event、model interoperability、TAIs、所需role與containing NWDAF identity；scope改變時
+舊snapshot不得證明新query仍有效。Snapshot也要保存raw matched／returned count所需資訊；
+若`numNfInstComplete`表示NRF找到的總數大於實際回傳數量，該response不是完整membership
+snapshot，不得以缺席作pruning依據。
 
 Pool由擁有direct-child FL process的local coordinator保存。Go route、NRF與model artifact
 都不是candidate pool owner。Slice 2 pool不持久化；backend generation reset後失效，
@@ -289,6 +320,55 @@ List-discovery結果必須：
 
 Malformed SearchResult或Go／NRF error使本次discovery失敗，但不清空既有pool。NRF找到的
 所有profiles不直接出現在report；只有已納入candidate pool、準備嘗試或已嘗試者才回報。
+
+### 4.3.1 Discovery freshness與snapshot reconciliation
+
+Refresh trigger不是「candidate數量不足」，而是local coordinator即將使用
+NRF-derived資訊建立新的participant relationship時，該資訊是否仍在有效期內：
+
+```text
+need to establish an NRF-derived candidate
+  -> matching discovery snapshot still valid?
+       yes -> reuse current resolved candidate
+       no  -> request discovery through containing Go NWDAF
+  -> Go consumer reuses valid cache or queries NRF after cache expiry
+  -> successful SearchResult atomically reconciles the local candidate pool
+```
+
+Candidate pool不直接連NRF，也不複製Go discovery cache。PyMTLF只保存足以約束local
+candidate使用的snapshot freshness；實際是否命中cache或送出NRF request仍由Go consumer
+依normalized query與`validityPeriod`決定。從Go internal response收到
+`validityPeriod`時，以local receipt time計算`validUntil`；cache hit所帶的剩餘秒數不得被
+重設成原始完整TTL。
+
+固定規則如下：
+
+- 無matching successful snapshot、snapshot已過期或discovery scope已改變時，只有
+  `LOCALLY_DISCOVERED` provenance的`UNCONFIRMED` candidate不得產生establishment
+  intent；pool改為回報需要refresh。是否已有足夠candidate不是freshness判斷條件；
+- successful refresh可加入／更新實際回傳的eligible identities；只有完整successful
+  snapshot才是同一scope的authoritative candidate-membership observation。新出現者加入為
+  `UNCONFIRMED`；仍存在者更新last-seen與resolved service target，但不任意改寫
+  relationship status；
+- 只具`LOCALLY_DISCOVERED` provenance、仍為`UNCONFIRMED`且未出現在新snapshot的
+  identity，只有在新snapshot完整時才可立即從pool移除；partial result不得根據缺席
+  prune；
+- `DEPLOYING`或`ACTIVE` relationship不因一次refresh缺席而移除。前者等待in-flight
+  establishment完成，後者以實際subscription／communication lifecycle為準；
+- `FAILED`保留status／cause供topology snapshot回報；`INACTIVE`至少保留到downstream
+  cleanup完成。兩者都不具round eligibility，也不因refresh重新出現就自動恢復；
+- 具有`UPSTREAM_ASSIGNED` provenance的identity不因list-discovery缺席而移除。若其
+  NRF-derived service target已過期，重新建立relationship前仍需由exact resolver取得
+  fresh target；
+- malformed response、Go／NRF error、timeout或cancel都不是successful snapshot，不得
+  prune現有records，也不得延長舊snapshot的`validUntil`；
+- concurrent或late refresh result必須以scope與snapshot revision fencing，不能覆蓋較新
+  contract或較新discovery observation。
+
+Slice 2完成snapshot value、freshness gate、reconciliation與deterministic intents；Slice 4
+才負責在production coordinator中於需要建立新relationship時呼叫refresh並執行後續HTTP
+subscription。Failed／inactive record在report delivery後的最終history pruning也留給
+Slice 4，因為Slice 2沒有Notify delivery acknowledgement。
 
 ### 4.4 Establishment與relationship lifecycle
 
@@ -455,8 +535,8 @@ Slice 4 將 preparation 改為 model-free 的方向。
 | Legacy assignment ingress | 修正 | 同一logical assignment只取得一次；在同一份bytes上完成typed validation與plan adoption |
 | Node contract resolution | 調整 | 加入effective policy／strategy／`reportAfter`與local-default boundary |
 | Explicit identity discovery | 沿用並抽取共用filter | 保留exact resolver semantics |
-| Delegated discovery | 調整 | 新增省略target ID的list-discovery；不改Go／NRF schema |
-| Candidate establishment | 調整但transport延後 | 建立pool、ordering、state與intents；HTTP wiring留給Slice 4 |
+| Delegated discovery | 調整 | 新增省略target ID的list-discovery，保存`validityPeriod`／`validUntil`並reconcile successful snapshot；不改Go／NRF schema |
+| Candidate establishment | 調整但transport延後 | 建立pool、ordering、state與intents；NRF-derived資訊過期時不得建立relationship；HTTP wiring留給Slice 4 |
 | Preparation readiness | 調整 | 由complete-required改為`minAvailableNodes`＋`minTrainNodes` gate |
 | Round participant selection | 調整 | 由all participants改為凍結selected set；legacy預設仍為all |
 | Leaf local training | 沿用executor並增加binding | `reportAfter(epoch)`與`proximalMu`轉為既有trainer arguments |
@@ -495,14 +575,17 @@ coordinator擁有。Slice 2不把effective values寫回persistent subscription r
 accepted Model Training requirements + containing NWDAF identity
   -> PyMTLF HierarchyNodeResolver list query
   -> containing Go /internal/v1/nrf/nf-instances
-  -> NRF SearchResult
-  -> PyMTLF profile/service revalidation
-  -> locally-discovered candidate records
+  -> Go cache hit or NRF SearchResult after expiry
+  -> PyMTLF profile/service revalidation + validity capture
+  -> successful discovery snapshot
+  -> candidate pool freshness gate + atomic reconciliation
 ```
 
 Training request是event／interoperability／TAI的authoritative source；NRF profile是
 identity、status、capability與service endpoint的authoritative source；candidate
-provenance與priority由local pool擁有。
+provenance與priority由local pool擁有。Go consumer擁有真正的NRF discovery cache；
+PyMTLF local coordinator擁有candidate使用時的freshness decision，但不自行判斷是否需要
+bypass Go cache。
 
 ### 6.3 Round execution
 
@@ -556,8 +639,8 @@ FL Server／Go route／FL Client callback owners負責。
 
 | File | 預計變更 |
 | --- | --- |
-| `src/py_mtlf/core/fl_candidate_orchestration.py`（new） | Candidate record／pool、provenance、relationship transition、effective contract、selection／completion gates、PATCH reconciliation、intents與report snapshot |
-| `src/py_mtlf/core/fl_hierarchy_discovery.py` | 抽取共用profile／service eligibility，保留exact `resolve()`並新增bounded list-discovery |
+| `src/py_mtlf/core/fl_candidate_orchestration.py`（new） | Candidate record／pool、provenance、relationship transition、effective contract、discovery snapshot freshness／reconciliation、selection／completion gates、PATCH reconciliation、intents與report snapshot |
+| `src/py_mtlf/core/fl_hierarchy_discovery.py` | 抽取共用profile／service eligibility，保留exact `resolve()`語意並讓exact／list結果帶有效期資訊；list snapshot另保存判斷membership completeness所需的raw count |
 | `src/py_mtlf/core/fl_workspace.py` | 拆分單次transport與typed hierarchy admission，保留strict integrity／identity checks並正確adopt同一artifact |
 | `src/py_mtlf/core/fl_server.py` | Hierarchy round接受frozen selected set與completion policy；wait／aggregate只使用selected participants，legacy default維持all／complete-required |
 | `src/py_mtlf/core/fl_client.py` | 修正hierarchy preparation單次取得／adoption；增加resolved local-work argument boundary，使protocol `reportAfter(epoch)`與FedProx strategy使用既有round worker／trainer；feature-disabled resource gate不變 |
@@ -576,13 +659,14 @@ deterministic policy decision。Transport、training與artifact lifecycle仍留�
 
 | File | 預期證據 |
 | --- | --- |
-| `tests/test_fl_candidate_orchestration.py`（new） | Provenance、effective defaults、hybrid pool、ordering、readiness、selection、completion、PATCH、disabled cleanup、status snapshot與unknown report preservation |
-| `tests/test_fl_hierarchy_discovery.py` | Exact resolver regression、list query shape、TAI／capability／service filtering、self／duplicate／ambiguous排除與failure preservation |
+| `tests/test_fl_candidate_orchestration.py`（new） | Provenance、effective defaults、hybrid pool、discovery expiry gate、successful snapshot pruning、ordering、readiness、selection、completion、PATCH、disabled cleanup、status snapshot與unknown report preservation |
+| `tests/test_fl_hierarchy_discovery.py` | Exact resolver regression與validity、list query shape、`validityPeriod`／completeness propagation、TAI／capability／service filtering、self／duplicate／ambiguous排除與failure preservation |
 | `tests/test_fl_hierarchy_artifacts.py` | Typed hierarchy validation／adoption／cleanup regression；同一assignment的真實HTTP GET count |
 | `tests/test_fl_server.py` | Frozen selected-set dispatch、all-terminal wait、partial-success aggregation、gate rejection不呼叫aggregator、late／nonselected result排除及legacy all regression |
 | `tests/test_fl_client.py` | Branch／Leaf assignment透過真實workspace／MockTransport各只發一次GET；candidate local-work arguments真正進入既有trainer；上層指定值、local fallback、role mismatch與legacy artifact behavior |
 | `tests/test_fl_branch.py` | `reportAfter(round)`依序執行指定lower rounds、前輪aggregate成為後輪input、失敗不提前回報及legacy count 1 regression |
 | `tests/test_federated_trainer.py` | Real small-model FedProx `mu=0`／positive behavior與sample-weighted aggregation regression |
+| `tests/test_local_trainer.py` | 既有local trainer接受FedProx `mu=0`的boundary regression |
 
 若現有repository沒有`tests/test_federated_trainer.py`，建立該檔案；不要為了測試而從
 另一個large integration file間接呼叫private implementation。
@@ -619,8 +703,14 @@ Implementation期間只更新本plan status、同一phase review ledger及必要
 
 1. 為省略`target-nf-instance-id`的query建立MockTransport boundary test。
 2. 從standard training fields抽取event、interoperability與TAIs。
-3. 重用exact resolver的profile／service parsing，新增list filtering。
-4. 驗證malformed／error response不清除既有pool。
+3. 重用exact resolver的profile／service parsing，新增list filtering，並保留
+   `validityPeriod`、receipt time與normalized discovery scope。
+4. 以fake clock證明未過期snapshot可重用，過期或scope改變時local-only
+   `UNCONFIRMED` candidate不能產生establishment intent並要求refresh。
+5. 對successful refresh實作atomic snapshot reconciliation，涵蓋新增、仍存在、完整結果
+   中local-only `UNCONFIRMED`缺席、partial result不prune，以及
+   `DEPLOYING`／`ACTIVE`／`FAILED`／`INACTIVE`保留。
+6. 驗證malformed／error response不清除既有pool，也不延長舊snapshot validity。
 
 ### 8.3 Existing execution integration
 
@@ -662,6 +752,7 @@ Implementation期間只更新本plan status、同一phase review ledger及必要
 | `SCOPE-01` | Node-local policy／strategy／`reportAfter` resolver與role tests | Recursive message forwarding由Slice 4 |
 | `NOT-08` procedure portion | Unknown descendant status／cause保存、轉送snapshot且不計ACTIVE | Real Notify relay由Slice 4 |
 | `TOP-09` executor closure | Known forward-compatible fields有executor；未知selection／aggregation／unit拒絕且無fallback | Wire decode prerequisite已由Slice 1 |
+| Slice 2 discovery freshness | `validityPeriod` capture、expiry／scope gate、successful snapshot reconciliation與failure preservation tests | Production refresh invocation由Slice 4 coordinator完成 |
 
 Slice 2不得將只有intent或snapshot test的case標為完整protocol conformance。Review ledger
 需清楚標示local procedure evidence與Slice 4 E2E evidence的界線。
@@ -680,6 +771,8 @@ Slice 2不得將只有intent或snapshot test的case標為完整protocol conforma
   function的回傳值。
 - Fake clock只替換時間來源，用來斷言timestamp及idempotent transition；不mock
   candidate state transition。
+- 同一fake clock也用來跨越`validUntil`；直接證明expired local-only candidate不能產生
+  establishment intent，而不是mock freshness decision。
 - DELETE transport以recording fake作外部boundary；pool必須真實產生intent、revision與
   INACTIVE state。
 
@@ -702,8 +795,12 @@ Slice 2不得將只有intent或snapshot test的case標為完整protocol conforma
   service selection執行真實production code。
 - 同一test斷言request未帶`target-nf-instance-id`，並帶正確event、TAIs、capability與
   interoperability。
+- 解析真實SearchResult shape並斷言`validityPeriod`、receipt time、`validUntil`與
+  normalized scope都進入production snapshot；不得只在test自行補TTL。
 - 覆蓋self、explicit duplicate、disabled identity、suspended profile、capability
   mismatch、ambiguous service、malformed SearchResult與503。
+- Successful refresh table需覆蓋candidate增加、完整結果減少與partial result不prune；
+  error refresh需證明pool和舊`validUntil`均未變。
 
 ### 10.4 Execution tests
 
@@ -734,8 +831,9 @@ uv run pytest -q tests/test_fl_hierarchy_discovery.py
 uv run pytest -q tests/test_fl_hierarchy_artifacts.py
 uv run pytest -q tests/test_fl_server.py
 uv run pytest -q tests/test_federated_trainer.py
+uv run pytest -q tests/test_local_trainer.py
 uv run pytest -q tests/test_fl_branch.py tests/test_fl_client.py
-uv run ruff check src/py_mtlf/core/fl_candidate_orchestration.py src/py_mtlf/core/fl_hierarchy_discovery.py src/py_mtlf/core/fl_workspace.py src/py_mtlf/core/fl_server.py src/py_mtlf/core/fl_client.py src/py_mtlf/core/fl_branch.py src/py_mtlf/core/federated_trainer.py tests/test_fl_candidate_orchestration.py tests/test_fl_hierarchy_discovery.py tests/test_fl_hierarchy_artifacts.py tests/test_fl_server.py tests/test_fl_client.py tests/test_fl_branch.py tests/test_federated_trainer.py
+uv run ruff check src/py_mtlf/core/fl_candidate_orchestration.py src/py_mtlf/core/fl_hierarchy_discovery.py src/py_mtlf/core/fl_workspace.py src/py_mtlf/core/fl_server.py src/py_mtlf/core/fl_client.py src/py_mtlf/core/fl_branch.py src/py_mtlf/core/federated_trainer.py tests/test_fl_candidate_orchestration.py tests/test_fl_hierarchy_discovery.py tests/test_fl_hierarchy_artifacts.py tests/test_fl_server.py tests/test_fl_client.py tests/test_fl_branch.py tests/test_federated_trainer.py tests/test_local_trainer.py
 ```
 
 Full gate：
@@ -784,40 +882,48 @@ nwdaf-docs Slice 2 evidence/status
 
 ### 13.1 Ownership與boundary
 
-- [ ] Candidate pool只由direct-child local coordinator擁有。
-- [ ] Discovery仍經containing Go NWDAF，不由PyMTLF直連NRF。
-- [ ] Request／profile／local defaults各自有獨立authoritative source。
-- [ ] Pool只產生intents與snapshot，不假裝完成Slice 4 transport。
-- [ ] Feature 3在本slice後仍未於production flow啟用。
+- [x] Candidate pool只由direct-child local coordinator擁有。
+- [x] Discovery仍經containing Go NWDAF，不由PyMTLF直連NRF。
+- [x] Request／profile／local defaults各自有獨立authoritative source。
+- [x] Pool只產生intents與snapshot，不假裝完成Slice 4 transport。
+- [x] Feature 3在本slice後仍未於production flow啟用。
+- [x] Go consumer繼續單獨擁有NRF cache；PyMTLF只保存candidate freshness metadata，
+  沒有建立第二套cache或直連NRF。
 
 ### 13.2 Policy與state
 
-- [ ] Protocol defaults與local defaults優先順序固定且可測。
-- [ ] Explicit與local provenance可同時存在且explicit instruction優先。
-- [ ] Disabled identity、omitted identity與priority 0語意沒有混用。
-- [ ] Readiness、selection與completion三個threshold階段分開。
-- [ ] Selected set每輪凍結；late／nonselected result不進aggregate。
-- [ ] Unknown report values不被推測為known state或action。
+- [x] Protocol defaults與local defaults優先順序固定且可測。
+- [x] Explicit與local provenance可同時存在且explicit instruction優先。
+- [x] Disabled identity、omitted identity與priority 0語意沒有混用。
+- [x] Readiness、selection與completion三個threshold階段分開。
+- [x] Selected set每輪凍結；late／nonselected result不進aggregate。
+- [x] Unknown report values不被推測為known state或action。
+- [x] Candidate、participant與selected participant的語意在state與tests中分開。
+- [x] Expired或scope-mismatched discovery snapshot不能授權新的local-only
+  establishment intent。
+- [x] 只有完整successful refresh才立即prune消失的local-only `UNCONFIRMED` records；
+  partial result不prune，其他status依relationship／cleanup／report lifecycle保留。
+- [x] Failed refresh不改pool，也不延長舊snapshot validity。
 
 ### 13.3 Existing execution reuse
 
-- [ ] Branch／Leaf每個logical hierarchy assignment都只發出一次HTTP GET。
-- [ ] 單次取得仍保留全部strict hierarchy integrity／identity validation。
-- [ ] Resource只保存實際adopt且可由plan cleanup的artifact，不登記已刪除的
+- [x] Branch／Leaf每個logical hierarchy assignment都只發出一次HTTP GET。
+- [x] 單次取得仍保留全部strict hierarchy integrity／identity validation。
+- [x] Resource只保存實際adopt且可由plan cleanup的artifact，不登記已刪除的
   generic artifact。
-- [ ] 沒有第二套trainer、aggregator、artifact validator或round workspace。
-- [ ] FedProx `proximalMu`與candidate schema的`>= 0`一致。
-- [ ] `sampleWeighted`只映射既有sample-count weighted aggregation。
-- [ ] Leaf `epoch`與Intermediate `round`的`reportAfter` scope正確。
-- [ ] Legacy all／complete-required hierarchy regression沒有behavior change。
+- [x] 沒有第二套trainer、aggregator、artifact validator或round workspace。
+- [x] FedProx `proximalMu`與candidate schema的`>= 0`一致。
+- [x] `sampleWeighted`只映射既有sample-count weighted aggregation。
+- [x] Leaf `epoch`與Intermediate `round`的`reportAfter` scope正確。
+- [x] Legacy all／complete-required hierarchy regression沒有behavior change。
 
 ### 13.4 Verification與scope
 
-- [ ] Slice 2 direct conformance cases都有production path及deterministic test evidence。
-- [ ] Mock只隔離HTTP、clock或scheduler boundary，沒有mock掉被驗證的policy／aggregation。
-- [ ] Go NRF boundarycheck通過且沒有Go diff。
-- [ ] Full PyMTLF tests與ruff通過，或gap逐項記錄。
-- [ ] 沒有新增retained-result、ADRF、feature negotiation或E2E scope。
+- [x] Slice 2所有direct conformance cases都有production path及deterministic test evidence。
+- [x] Mock只隔離HTTP、clock或scheduler boundary，沒有mock掉被驗證的policy／aggregation。
+- [x] Go NRF boundarycheck通過且沒有Go diff。
+- [x] 新增freshness／reconciliation tests後，重新執行full PyMTLF tests與ruff。
+- [x] 沒有新增retained-result、ADRF、feature negotiation或E2E scope。
 
 ---
 
@@ -839,7 +945,59 @@ Slice 2只有在下列條件全部成立後才能進入implementation `Ready for
 9. 依Final Completion Re-read Gate重新讀取current development policy與本plan，完成
    final conformance map；
 10. Intended changes保持unstaged／uncommitted並交由user review。
+11. NRF discovery snapshot的`validityPeriod`／`validUntil`、scope、freshness gate與
+    successful refresh reconciliation均已實作並具direct tests；過期的NRF-derived
+    `UNCONFIRMED` candidate不得用於建立新relationship。
 
 即使以上條件全部成立，Root／Branch message wiring、feature 3 success與real-process
 protocol evidence仍未完成；retained-result runtime亦不在目前active scope。不得把
 Slice 2描述為hierarchical protocol E2E。
+
+---
+
+## 15. 實作審查檢查點
+
+2026-09-04 user review後新增discovery freshness requirement：先前implementation沒有保存
+`SearchResult.validityPeriod`，`add_discovered()`也只有增量加入，尚不能在使用
+NRF-derived candidate前判斷snapshot是否過期或依fresh successful snapshot處理消失的
+local-only `UNCONFIRMED` records。因此本slice已從`Ready for User Review`退回
+`Implementation Adjustment Required`。下列結果保留為調整前baseline evidence，不是目前
+final review closure。
+
+先前Slice 2 production implementation保留為 `PyMTLF/` unstaged／uncommitted
+working-tree diff。已實作範圍包含：
+
+- direct-child candidate pool、provenance、relationship revision、policy arithmetic、
+  PATCH reconciliation、DELETE／establishment intents與stable report snapshot；
+- bounded delegated discovery，以及由既有Model Training subscription抽取event、model
+  interoperability與TAI requirements；
+- selected-set freeze、all-terminal completion gate、partial-success acceptance與既有
+  sample-weighted aggregator重用；
+- Leaf `reportAfter(epoch)`／FedProx local work與Intermediate
+  `reportAfter(round)` lower-round scheduling；
+- legacy hierarchy assignment的single-fetch typed admission、artifact adoption與失敗清理。
+
+初始diff review辨識並修正了provenance omission、policy re-enable、DELETE retry、重複
+discovery revision、pre-bind artifact cleanup，以及以mock取代關鍵production behavior的
+測試缺口。詳細finding與direct evidence記錄於同一phase的
+[Protocol Extension Implementation Review Ledger](../Protocol%20Extension%20Implementation%20Review%20Ledger.md)。
+
+調整前驗證結果：focused test groups全數通過；`uv run pytest -q`為679 passed、2 skipped；
+`uv run ruff check .`通過；未修改的`NWDAF/` discovery boundary tests通過。
+
+本checkpoint只完成local procedure／state責任。Root／Branch protocol message wiring、
+feature 3 production advertisement、ADRF global-model distribution、real peer callback E2E
+與retained-result runtime仍明確延後，不列入Slice 2完成範圍。
+
+本次調整已關閉discovery freshness缺口：`HierarchyNodeResolver`現在保留normalized scope、
+receipt time、`validityPeriod`、`validUntil`、raw returned count與
+`numNfInstComplete`所表示的completeness；candidate pool以scope與獨立refresh revision
+fence late result，並只讓目前successful snapshot中實際出現且仍有效的local-only
+`UNCONFIRMED` candidate產生establishment intent。完整snapshot可移除缺席的local-only
+`UNCONFIRMED` record；partial snapshot不以缺席prune，且`DEPLOYING`、`ACTIVE`、`FAILED`、
+`INACTIVE` relationship維持既有lifecycle。
+
+最終驗證結果：Slice 2 focused test set為246 passed、2 skipped；其中candidate
+orchestration為34 passed，hierarchy discovery為17 passed。`uv run pytest -q`為688
+passed、2 skipped；`uv run ruff check .`通過；未修改的`NWDAF/` discovery boundary tests
+通過。現有warnings均為既有Starlette／NumPy dependency deprecation warnings。
