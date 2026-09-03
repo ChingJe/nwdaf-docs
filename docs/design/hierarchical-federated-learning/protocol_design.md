@@ -14,7 +14,7 @@
 - [Candidate OpenAPI artifact](./candidate_openapi.yaml)
 - [Protocol Conformance Matrix](./protocol_conformance_matrix.md)
 - [NWDAF Federated Learning Release 18 規格解讀](../../specification-guides/NWDAF%20Federated%20Learning%20Release%2018%20規格解讀.md)
-- [Hierarchical NWDAF Federated Learning Implementation Plan](../../plans/hierarchical-federated-learning/Hierarchical%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)
+- [Hierarchical NWDAF Federated Learning Implementation Plan](../../plans/hierarchical-federated-learning/hierarchical-fl-model-bundle-edition/Hierarchical%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)
 - [既有 protocol/schema feasibility proposal](../../proposals/nwdaf/hierarchical-federated-learning/protocol_schema_feasibility.md)
 
 ---

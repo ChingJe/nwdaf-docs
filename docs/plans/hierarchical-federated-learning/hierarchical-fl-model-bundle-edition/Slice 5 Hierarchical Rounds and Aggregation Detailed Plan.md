@@ -20,9 +20,9 @@ repository-separated commit已完成。PyMTLF implementation commit：`0d1b529`�
 
 相關文件：
 
-- [Hierarchical NWDAF Federated Learning Proposal Draft](../../proposals/nwdaf/hierarchical-federated-learning/proposal_draft.md)
-- [Phase 3 And 4 Federated Training Execution Detailed Plan](../federated-learning/Phase%203%20And%204%20Federated%20Training%20Execution%20Detailed%20Plan.md)
-- [NWDAF Development Policy](../../development_policy.md)
+- [Hierarchical NWDAF Federated Learning Proposal Draft](../../../proposals/nwdaf/hierarchical-federated-learning/proposal_draft.md)
+- [Phase 3 And 4 Federated Training Execution Detailed Plan](../../federated-learning/Phase%203%20And%204%20Federated%20Training%20Execution%20Detailed%20Plan.md)
+- [NWDAF Development Policy](../../../development_policy.md)
 
 ---
 

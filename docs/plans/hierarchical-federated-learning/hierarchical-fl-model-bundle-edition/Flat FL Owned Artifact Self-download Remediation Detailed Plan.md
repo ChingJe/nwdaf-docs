@@ -12,12 +12,12 @@ IDE review 與第二批 repository-separated commits 均已完成，進入 `Test
 
 既有 flat FL 設計：
 
-- [Distributed NWDAF Federated Learning Implementation Plan](../federated-learning/Distributed%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)
-- [Phase 3 And 4 Federated Training Execution Detailed Plan](../federated-learning/Phase%203%20And%204%20Federated%20Training%20Execution%20Detailed%20Plan.md)
+- [Distributed NWDAF Federated Learning Implementation Plan](../../federated-learning/Distributed%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)
+- [Phase 3 And 4 Federated Training Execution Detailed Plan](../../federated-learning/Phase%203%20And%204%20Federated%20Training%20Execution%20Detailed%20Plan.md)
 
 開發規則：
 
-- [NWDAF Development Policy](../../development_policy.md)
+- [NWDAF Development Policy](../../../development_policy.md)
 
 第一批已建立 commits：
 

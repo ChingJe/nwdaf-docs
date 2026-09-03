@@ -24,7 +24,7 @@ implementation 尚未開始
 
 既有 implementation baseline：
 
-- [Hierarchical NWDAF Federated Learning Implementation Plan](../Hierarchical%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)
+- [Hierarchical NWDAF Federated Learning Implementation Plan](../hierarchical-fl-model-bundle-edition/Hierarchical%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)
 - [Explicit Flat 與 Hierarchical Orchestration 設定詳細計畫](../explicit-flat-hierarchical-orchestration/Explicit%20Flat%20and%20Hierarchical%20Orchestration%20Configuration%20Detailed%20Plan.md)
 
 ---

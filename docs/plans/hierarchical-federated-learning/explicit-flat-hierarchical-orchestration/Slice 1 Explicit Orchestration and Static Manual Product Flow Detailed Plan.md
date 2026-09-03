@@ -8,10 +8,10 @@
 
 - [Explicit Flat and Hierarchical Orchestration Configuration Detailed Plan](./Explicit%20Flat%20and%20Hierarchical%20Orchestration%20Configuration%20Detailed%20Plan.md)
 - Slice 2：MTLF-Triggered UPF Data Collection 詳細計畫（review deferred；不作為本 Slice implementation input）
-- [Hierarchical NWDAF Federated Learning Implementation Plan](../Hierarchical%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)
-- [Slice 3 Root Initiation, Static Topology and Assignment Detailed Plan](../Slice%203%20Root%20Initiation%2C%20Static%20Topology%20and%20Assignment%20Detailed%20Plan.md)
-- [Slice 6 Hierarchical Final Validation and Publication Detailed Plan](../Slice%206%20Hierarchical%20Final%20Validation%20and%20Publication%20Detailed%20Plan.md)
-- [Slice 7 Lifecycle Closure and Fresh-state Restart Detailed Plan](../Slice%207%20Lifecycle%20Closure%20and%20Fresh-state%20Restart%20Detailed%20Plan.md)
+- [Hierarchical NWDAF Federated Learning Implementation Plan](../hierarchical-fl-model-bundle-edition/Hierarchical%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)
+- [Slice 3 Root Initiation, Static Topology and Assignment Detailed Plan](../hierarchical-fl-model-bundle-edition/Slice%203%20Root%20Initiation%2C%20Static%20Topology%20and%20Assignment%20Detailed%20Plan.md)
+- [Slice 6 Hierarchical Final Validation and Publication Detailed Plan](../hierarchical-fl-model-bundle-edition/Slice%206%20Hierarchical%20Final%20Validation%20and%20Publication%20Detailed%20Plan.md)
+- [Slice 7 Lifecycle Closure and Fresh-state Restart Detailed Plan](../hierarchical-fl-model-bundle-edition/Slice%207%20Lifecycle%20Closure%20and%20Fresh-state%20Restart%20Detailed%20Plan.md)
 - [NWDAF Development Policy](../../../development_policy.md)
 - [Release 18 Nnwdaf ML Model Training OpenAPI](../../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
 

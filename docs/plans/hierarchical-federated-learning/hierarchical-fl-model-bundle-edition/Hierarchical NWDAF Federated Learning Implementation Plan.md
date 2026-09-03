@@ -11,14 +11,14 @@ HFL testbed validation，才能關閉本計畫
 
 相關文件：
 
-- [Hierarchical NWDAF Federated Learning Proposal Draft](../../proposals/nwdaf/hierarchical-federated-learning/proposal_draft.md)
-- [Phase 0 Release 18 Contract Foundation Detailed Plan](../federated-learning/Phase%200%20Release%2018%20Contract%20Foundation%20Detailed%20Plan.md)
-- [Distributed NWDAF Federated Learning Implementation Plan](../federated-learning/Distributed%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)
-- [Phase 3 And 4 Federated Training Execution Detailed Plan](../federated-learning/Phase%203%20And%204%20Federated%20Training%20Execution%20Detailed%20Plan.md)
-- [NWDAF Development Policy](../../development_policy.md)
+- [Hierarchical NWDAF Federated Learning Proposal Draft](../../../proposals/nwdaf/hierarchical-federated-learning/proposal_draft.md)
+- [Phase 0 Release 18 Contract Foundation Detailed Plan](../../federated-learning/Phase%200%20Release%2018%20Contract%20Foundation%20Detailed%20Plan.md)
+- [Distributed NWDAF Federated Learning Implementation Plan](../../federated-learning/Distributed%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)
+- [Phase 3 And 4 Federated Training Execution Detailed Plan](../../federated-learning/Phase%203%20And%204%20Federated%20Training%20Execution%20Detailed%20Plan.md)
+- [NWDAF Development Policy](../../../development_policy.md)
 - [Flat FL Owned Artifact Self-download Remediation Detailed Plan](./Flat%20FL%20Owned%20Artifact%20Self-download%20Remediation%20Detailed%20Plan.md)
-- [Explicit Flat and Hierarchical Orchestration Configuration Detailed Plan](./explicit-flat-hierarchical-orchestration/Explicit%20Flat%20and%20Hierarchical%20Orchestration%20Configuration%20Detailed%20Plan.md)
-- [NWDAF Testbed Integration Status](../../progress/testbed_integration_status.md)
+- [Explicit Flat and Hierarchical Orchestration Configuration Detailed Plan](../explicit-flat-hierarchical-orchestration/Explicit%20Flat%20and%20Hierarchical%20Orchestration%20Configuration%20Detailed%20Plan.md)
+- [NWDAF Testbed Integration Status](../../../progress/testbed_integration_status.md)
 
 ---
 
@@ -506,7 +506,7 @@ assignment，但不改變後續 bundle、preparation 與 training contracts。
 Follow-up orchestration work 將以顯式 `flat`／`hierarchical` mode 取代只靠 topology 欄位
 是否存在的 selection semantics，並為 flat FL 增加不依賴 Model Provision／Monitor active
 scopes 的 static participant topology。該需求與 migration boundary 由
-[Explicit Flat and Hierarchical Orchestration Configuration Detailed Plan](./explicit-flat-hierarchical-orchestration/Explicit%20Flat%20and%20Hierarchical%20Orchestration%20Configuration%20Detailed%20Plan.md)
+[Explicit Flat and Hierarchical Orchestration Configuration Detailed Plan](../explicit-flat-hierarchical-orchestration/Explicit%20Flat%20and%20Hierarchical%20Orchestration%20Configuration%20Detailed%20Plan.md)
 管理；在其 implementation 完成前，本節仍描述目前第一版 HFL 行為。
 
 ### 4.9 Candidate、final validation and publication semantics
@@ -641,13 +641,13 @@ shape，不得覆寫 NWDAF contract。
 
 核心規格證據：
 
-- [TS 23.288 §6.2C Federated Learning among Multiple NWDAFs](../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
-- [TS 23.288 §6.2F Procedure for ML Model Training](../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2F%20Procedure%20for%20ML%20Model%20Training.md)
-- [TS 29.520 §4.6 Nnwdaf_MLModelTraining Service](../../../specs/TS%2029.520/4%20Services%20offered%20by%20the%20NWDAF/4.6%20Nnwdaf_MLModelTraining%20Service.md)
-- [Release 18 Nnwdaf_MLModelTraining OpenAPI](../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
-- [Release 18 Nnwdaf_MLModelProvision OpenAPI](../../../specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
-- [Release 18 Nnrf_NFDiscovery OpenAPI](../../../specs/openapi/TS29510_Nnrf_NFDiscovery.yaml)
-- [Release 18 Nnrf_NFManagement OpenAPI](../../../specs/openapi/TS29510_Nnrf_NFManagement.yaml)
+- [TS 23.288 §6.2C Federated Learning among Multiple NWDAFs](../../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
+- [TS 23.288 §6.2F Procedure for ML Model Training](../../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2F%20Procedure%20for%20ML%20Model%20Training.md)
+- [TS 29.520 §4.6 Nnwdaf_MLModelTraining Service](../../../../specs/TS%2029.520/4%20Services%20offered%20by%20the%20NWDAF/4.6%20Nnwdaf_MLModelTraining%20Service.md)
+- [Release 18 Nnwdaf_MLModelTraining OpenAPI](../../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
+- [Release 18 Nnwdaf_MLModelProvision OpenAPI](../../../../specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
+- [Release 18 Nnrf_NFDiscovery OpenAPI](../../../../specs/openapi/TS29510_Nnrf_NFDiscovery.yaml)
+- [Release 18 Nnrf_NFManagement OpenAPI](../../../../specs/openapi/TS29510_Nnrf_NFManagement.yaml)
 
 ### 5.2 free5GC implementation-shape evidence
 

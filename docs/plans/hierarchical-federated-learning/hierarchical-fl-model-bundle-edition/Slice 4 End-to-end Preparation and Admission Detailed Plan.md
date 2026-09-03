@@ -18,8 +18,8 @@ remediation 與 repository-separated implementation commits 均已完成
 
 相關文件：
 
-- [Hierarchical NWDAF Federated Learning Proposal Draft](../../proposals/nwdaf/hierarchical-federated-learning/proposal_draft.md)
-- [NWDAF Development Policy](../../development_policy.md)
+- [Hierarchical NWDAF Federated Learning Proposal Draft](../../../proposals/nwdaf/hierarchical-federated-learning/proposal_draft.md)
+- [NWDAF Development Policy](../../../development_policy.md)
 
 ---
 

@@ -11,11 +11,11 @@ implementation baseline。2026-08-21依後續production evidence完成狀態一�
 
 相關文件：
 
-- [Hierarchical Federated Learning Proposal Draft](../../proposals/nwdaf/hierarchical-federated-learning/proposal_draft.md)
-- [Phase 0 Release 18 Contract Foundation Detailed Plan](../federated-learning/Phase%200%20Release%2018%20Contract%20Foundation%20Detailed%20Plan.md)
-- [Distributed NWDAF Federated Learning Implementation Plan](../federated-learning/Distributed%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)
-- [Phase 3 And 4 Federated Training Execution Detailed Plan](../federated-learning/Phase%203%20And%204%20Federated%20Training%20Execution%20Detailed%20Plan.md)
-- [NWDAF Development Policy](../../development_policy.md)
+- [Hierarchical Federated Learning Proposal Draft](../../../proposals/nwdaf/hierarchical-federated-learning/proposal_draft.md)
+- [Phase 0 Release 18 Contract Foundation Detailed Plan](../../federated-learning/Phase%200%20Release%2018%20Contract%20Foundation%20Detailed%20Plan.md)
+- [Distributed NWDAF Federated Learning Implementation Plan](../../federated-learning/Distributed%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)
+- [Phase 3 And 4 Federated Training Execution Detailed Plan](../../federated-learning/Phase%203%20And%204%20Federated%20Training%20Execution%20Detailed%20Plan.md)
+- [NWDAF Development Policy](../../../development_policy.md)
 
 ---
 

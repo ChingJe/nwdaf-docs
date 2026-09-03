@@ -65,7 +65,7 @@ implementation與functional E2E狀態列為`Confirmed`，同時保留canonical p
 reconcile的文件差異。
 
 本機的canonical status仍見
-[Hierarchical NWDAF Federated Learning Implementation Plan](../../../plans/hierarchical-federated-learning/Hierarchical%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)；
+[Hierarchical NWDAF Federated Learning Implementation Plan](../../../plans/hierarchical-federated-learning/hierarchical-fl-model-bundle-edition/Hierarchical%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)；
 testbed摘要見
 [NWDAF Testbed 整合進度摘要](../../../progress/testbed_integration_status.md)。
 

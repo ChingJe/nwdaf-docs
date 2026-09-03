@@ -15,8 +15,8 @@ implementation commit：`fa352d3`；review remediation commit：`6cc1df0`
 
 相關文件：
 
-- [Hierarchical NWDAF Federated Learning Proposal Draft](../../proposals/nwdaf/hierarchical-federated-learning/proposal_draft.md)
-- [NWDAF Development Policy](../../development_policy.md)
+- [Hierarchical NWDAF Federated Learning Proposal Draft](../../../proposals/nwdaf/hierarchical-federated-learning/proposal_draft.md)
+- [NWDAF Development Policy](../../../development_policy.md)
 
 ---
 

@@ -22,7 +22,7 @@ NWDAF implementation commit：`3279891`
 
 開發規則：
 
-- [NWDAF Development Policy](../../development_policy.md)
+- [NWDAF Development Policy](../../../development_policy.md)
 
 ---
 

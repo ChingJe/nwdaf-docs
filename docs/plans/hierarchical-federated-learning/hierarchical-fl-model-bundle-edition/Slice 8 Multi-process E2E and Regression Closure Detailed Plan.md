@@ -32,7 +32,7 @@ scenario。在此之前本 Slice保持開放。
 
 開發規則：
 
-- [NWDAF Development Policy](../../development_policy.md)
+- [NWDAF Development Policy](../../../development_policy.md)
 
 ---
 

@@ -11,7 +11,7 @@ validation 已補入實作要求，production implementation 尚未開始
 本分類管理 hierarchical NWDAF FL protocol extension 的主計畫、現有實作盤點、
 後續詳細計畫、review ledger 與驗證紀錄。
 
-它和上一版 [Hierarchical NWDAF Federated Learning Implementation Plan](../Hierarchical%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)
+它和上一版 [Hierarchical NWDAF Federated Learning Implementation Plan](../hierarchical-fl-model-bundle-edition/Hierarchical%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)
 分開維護。舊計畫記錄目前已跑通的 model-bundle／static orchestration
 implementation；本分類則負責將已確認的 topology、policy、strategy、Notify、
 feature negotiation 與 retained-result semantics 實作到正式
