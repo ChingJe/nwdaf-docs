@@ -1,8 +1,8 @@
 # Slice 5 — Protocol-driven Hierarchy Integration Detailed Plan
 
-日期：2026-09-04
+日期：2026-09-04（2026-09-05依Slice 4完成後baseline校正）
 
-狀態：Draft／production implementation尚未開始；等待Slice 4 commit完成後進行開工前確認
+狀態：Draft／production implementation尚未開始；Slice 4已完成，待開工前確認
 
 相關文件：
 
@@ -26,8 +26,8 @@
 
 ## 1. Slice 結果
 
-本slice的production implementation以Slice 4A digest cleanup與Slice 4 controlled
-workload完成為前置條件。
+本slice的production implementation以已完成的Slice 4A digest cleanup與Slice 4 controlled
+workload為前置條件。
 
 本 slice 完成後，protocol mode 應能以 production `Nnwdaf_MLModelTraining` flow 跑通
 Root→Branch→Leaf hierarchical FL，而不是只解析 candidate fields或在單一process內
@@ -39,6 +39,9 @@ Root→Branch→Leaf hierarchical FL，而不是只解析 candidate fields或在
   feature 3；
 - 需要local training的Client在preparation不讀取local dataset，也不啟動traffic data
   collection；真正開始training時才由Slice 4 loader讀取deployment掛載的shard；
+- Root以`mLEventSubscs[].mLEvent`指定workload，以
+  `mLEventSubscs[].modelInterInfo`指定可互通的model／local dataset contract；Client在
+  preparation解析並驗證此mapping，但不讀取dataset；
 - Branch依Slice 2 candidate pool執行explicit、delegated或hybrid child
   establishment，並以`x-flTopologyReport`逐級回報realized subtree；
 - Root只在realized topology達到readiness後建立該輪global-model ADRF record；
@@ -66,10 +69,10 @@ ADRF caller authorization enforcement或正式testbed experiment完成。
 | Repository | Revision | Slice 5 角色 |
 | --- | --- | --- |
 | `NWDAF/` | `302762a6af677f5ccfb5a3f9d0253fb3dd39bf62` | Model Training SBI owner、backend route、ADRF／NRF private proxy |
-| `PyMTLF/` | `0e87ef13622cba0ddf740aa8cedce8ad76705815` | Root／Branch／Leaf hierarchy execution與candidate state owner |
-| `nwdaf-resources/` | `83473770e958623f052097349173f56af1e25953` | Multi-process deployment、scenario與evidence owner |
+| `PyMTLF/` | `e71f1d572f7293649c1ac2c8f8d556565c997f91` | Root／Branch／Leaf hierarchy execution、candidate state與controlled workload owner |
+| `nwdaf-resources/` | `92b143360c87fc813094e030d91581046b5c2ac5` | Multi-process deployment、scenario與evidence owner |
 | `adrf/` | `905f059` | ADRF runtime dependency；目前不預期修改 |
-| `nwdaf-docs/` | `c8d04d212d3ec6d8e889d041dba7cc82f8ca84b0` 加上本次unstaged plan | Canonical plan、design與review evidence |
+| `nwdaf-docs/` | `a56d986c94d999a6c2a2e41e23ea9a6bf86a32d9` 加上本次unstaged plan | Canonical plan、design與review evidence |
 
 Production implementation開始前必須重查所有affected repositories的HEAD與工作樹。
 若Slice 1 route contract、Slice 2 candidate pool、ADRF private proxy或real-process harness
@@ -82,6 +85,11 @@ Production implementation開始前必須重查所有affected repositories的HEAD
 
 - Create request的required properties是`mLEventSubscs`、`notifUri`與`notifCorreId`；
   `mLModelInfos`、`mlCorreId`、`mLPreFlag`與`roundInd`皆為optional；
+- 每個Model Training `mLEventSubscs` element必須提供`mLEvent`、`mLEventFilter`與
+  `modelInterInfo`；其中`modelInterInfo`的值與格式由vendors約定；
+- `NwdafEvent`使用forward-compatible enumeration pattern，因此candidate schema可承載
+  未知string，但未知值不因此成為Release 18已定義的analytics event；本project的
+  `X_IMAGE_CLASSIFICATION`只作為明確標示的experimental event value；
 - Create成功使用`201 Created`並回傳resource body與`Location`；
 - PUT與JSON Merge PATCH可更新subscription，成功可為`200`或`204`；
 - Notify由FL Client向subscription中的`notifUri`送出POST，成功回`204`；
@@ -134,6 +142,11 @@ private routes、processor與consumer methods。這是既有標準ADRF procedure
 - Existing `FLClientEngine` preparation會先下載model並使用manifest建立trainable
   dataset；Slice 4A先移除多層digest contract，protocol mode再新增model-free path，
   legacy path保持不變。
+- Existing Root／Client execution仍將training event限制為`UE_COMMUNICATION`，而Slice 4
+  image bundle刻意不宣告`analytics_event`。Protocol-controlled image workload要在本
+  slice明確替換這項限制：image seed descriptor與bundle都使用
+  `X_IMAGE_CLASSIFICATION`，並以dataset-specific `modelInterInfo`完成preparation與第一輪
+  cross-check；legacy traffic path維持原語意。
 - Existing final-model `PublicationCoordinator`是durable catalog publication owner；
   每輪temporary ADRF record不得透過它reserve／commit catalog version。
 
@@ -180,7 +193,9 @@ private routes、processor與consumer methods。這是既有標準ADRF procedure
 - 修改NRF schema、在NRF保存hierarchy ownership或新增ranking algorithm。
 - 最終移除legacy hierarchy artifact roles；由Slice 6處理。
 - 正式testbed performance experiment、traffic instrumentation與paper result。
-- 新增或修改workload、dataset／trainer／artifact profile；這些由Slice 4先完成。
+- 新增workload、dataset loader、trainer、model architecture或metric；這些由Slice 4先完成。
+  本slice只補controlled image workload進入Model Training protocol所需的event／
+  interoperability binding及對應artifact metadata。
 
 若實作發現完成本slice必須修改`adrf/`、`nrf/`或candidate design semantics，先回到
 boundary review，不把跨repository contract expansion隱藏在production patch中。
@@ -284,8 +299,38 @@ Protocol preparation request包含建立resource所需的標準fields、`mlCorre
 - 載入或驗證model／preprocessing contract；
 - 建立legacy hierarchy assignment plan。
 
-Leaf在preparation階段不讀取MNIST或CIFAR-10 shard；它只保存既有local config所選擇的
-workload。Dataset與shard path不從request取得。本scenario不以
+Controlled image workload使用以下project profile：
+
+- `mLEvent: X_IMAGE_CLASSIFICATION`表示使用image-classification workload；這是
+  project-defined forward-compatible value，不宣稱為Release 18標準event；
+- `modelInterInfo: pymtlf-image-classification-mnist`對應MNIST model／input contract；
+- `modelInterInfo: pymtlf-image-classification-cifar10`對應CIFAR-10 model／input contract；
+- 每個Intermediate建立direct-child subscription時原樣傳遞收到的`mLEvent`與
+  `modelInterInfo`，不得依local default改寫training task。
+
+MNIST preparation中的必要event element範例如下；CIFAR-10只將`modelInterInfo`換成
+`pymtlf-image-classification-cifar10`：
+
+```json
+{
+  "mLEventSubscs": [
+    {
+      "mLEvent": "X_IMAGE_CLASSIFICATION",
+      "mLEventFilter": {},
+      "modelInterInfo": "pymtlf-image-classification-mnist"
+    }
+  ]
+}
+```
+
+本slice的每個local trainer只配置一個controlled image dataset。Client收到上述欄位後，
+先將`mLEvent`解析為`image_classification` workload，再將`modelInterInfo`解析為MNIST或
+CIFAR-10 dataset contract，並確認它與local config的`training_data.dataset`及accepted
+interoperability ID一致。無對應mapping或local config不相容時拒絕preparation；不得等到
+training時自行改用另一份dataset。
+
+Leaf在preparation階段仍不讀取MNIST或CIFAR-10 shard。Dataset與shard path不從request
+取得，subscription只選擇contract；local config保存實際read-only shard位置。本scenario不以
 `dataAvReq`或`mLModelTrainInfos`表示local filesystem selection，也不啟動traffic
 collection／ADRF Data Management retrieval。
 
@@ -295,6 +340,17 @@ collection／ADRF Data Management retrieval。
 - workload profile與dataset selection；
 - model／preprocessing contract identity；
 - 實際training sample count。
+
+Image model bundle繼續是模型架構與權重的authority：`model.py`提供`Model` entry point、
+`model.npy`提供weights，manifest提供`workload_profile`、dataset、model與inference
+contract。為了與subscription及Root seed descriptor交叉驗證，image bundle也必須帶有
+`analytics_event: X_IMAGE_CLASSIFICATION`及完全相同的`model_interoperability`；
+`modelInterInfo`本身不描述CNN layers，也不傳遞local dataset path。
+
+Controlled experiment的初始bundle不使用pretrained model。它由`model.py`在一個已記錄的
+random seed下初始化一次，再將該組未訓練weights輸出為`model.npy`。同一組dataset／model
+configuration的Flat與HFL runs必須共用同一份初始artifact；各Client不得各自重新隨機初始化，
+避免把initialization差異混入topology比較。
 
 若第一輪才發現model-dependent requirement不成立，該operation以requirements failure
 終止並回報，不改讀其他shard，也不回頭在preparation偷偷抓model。Legacy mode仍保留
@@ -460,7 +516,8 @@ Root PyMTLF
   -> Branch PyMTLF: accept feature 3, resolve candidate intents
   -> Branch Go NWDAF: create child preparation subscriptions
   -> Leaf Go NWDAF: validate/store route, forward to Leaf PyMTLF
-  -> Leaf PyMTLF: keep configured workload selection, build x-flTopologyReport
+  -> Leaf PyMTLF: resolve requested workload/dataset contract against local config
+  -> Leaf PyMTLF: build x-flTopologyReport
   -> Leaf Go NWDAF callback: topology-only Notify
   -> Branch Go NWDAF -> Branch PyMTLF: consume child report
   -> Branch PyMTLF: compose realized subtree
@@ -526,7 +583,8 @@ current frozen cohort，則從下一輪record開始納入。
 | Direct-child resource URI | Parent PyMTLF `FLServerEngine` participant state | Subsequent PUT／PATCH／DELETE | Missing URI不得猜測 |
 | Hierarchy-wide `mlCorreId` | Root PyMTLF procedure | 每條subscription／Notify | Mismatch callback拒絕 |
 | Per-edge accepted feature | Parent Go route及parent PyMTLF participant state | Edge capability gate | 未接受則DELETE並FAILED |
-| Configured local workload selection | 實際執行local training的PyMTLF Client resource | First及subsequent local rounds | Generation reset即失效；deployment-mounted shard本身不刪除 |
+| Requested workload／dataset contract | Root selected seed descriptor | `mLEvent`／`modelInterInfo`逐級下傳 | Unknown或與local config不相容即拒絕preparation |
+| Local dataset及shard path | 實際執行local training的PyMTLF deployment config | First及subsequent local rounds | 不經subscription傳遞；generation reset不刪除deployment-mounted shard |
 | Realized subtree report | Reporting PyMTLF node | Notify逐級傳遞 | Unknown values保存但不推測成功 |
 | Root round ADRF mapping | Root PyMTLF round distribution owner | Root dispatch／update／cleanup | Restart遺失即procedure invalid |
 | ADRF record | Selected ADRF | Consumers經各自Go proxy GET | Store／GET／update failure gate training |
@@ -583,18 +641,22 @@ best-effort cleanup known resources，最後使procedure terminal。
   - 只在Root hierarchical orchestration建立對應legacy或protocol coordinator path；
   - 將existing candidate defaults、resolver、round distribution owner注入正確component；
   - generation reset納入new owner cleanup。
-- Slice 4A simplified artifact contract與Slice 4 workload modules
+- `src/py_mtlf/core/workloads.py`、`seed_import.py`、`artifacts.py`與`fl_workspace.py`
   - 本slice只使用whole-artifact repository key及URL/body check，不恢復component、model、
     weights、dataset或tensor digest；
   - 只注入與呼叫已完成的local workload provider、profile validator與held-out handoff；
-    不在protocol integration中重新定義local image loader、model或metric。
+    不在protocol integration中重新定義local image loader、model或metric；
+  - 補上`X_IMAGE_CLASSIFICATION`與兩個dataset-specific interoperability IDs的bounded
+    mapping，並讓image seed bundle保存event及interoperability contract；
+  - controlled image seed以記錄的random seed輸出未訓練weights，不匯入pretrained
+    checkpoint；相同experiment configuration重用同一份初始artifact。
 - `src/py_mtlf/wire/ml_model_training.py`
   - 原則上不新增candidate schema；只在integration發現既有typed model無法表達已確認
     contract時修正，且必須同步candidate OpenAPI evidence。
 - `src/py_mtlf/core/fl_client.py`
   - candidate Create真正協商feature 3；
-  - 加入protocol model-free preparation、Slice 4 local workload readiness、first-round
-    profile binding、
+  - 加入protocol model-free preparation、`mLEvent`／`modelInterInfo` local contract
+    selection、Slice 4 local workload readiness、first-round profile binding、
     `mLModelAdrf` input及retained instruction gate；
   - protocol mode不讀legacy hierarchy bundle；
   - Branch／Leaf output保持temporary `mLFileAddr`。
@@ -608,7 +670,9 @@ best-effort cleanup known resources，最後使procedure terminal。
 - `src/py_mtlf/core/fl_root.py`
   - protocol Root flow、UUID `mlCorreId`、realized readiness、round cohort freeze、
     ADRF store-before-dispatch與terminal cleanup；
-  - legacy flow保留並由selector選擇。
+  - protocol mode移除`UE_COMMUNICATION`-only gate，從selected seed descriptor建立
+    `X_IMAGE_CLASSIFICATION`及dataset-specific interoperability request；legacy flow保留
+    並由selector選擇。
 - `src/py_mtlf/core/fl_branch.py`
   - 以candidate intents取代protocol mode的Leaf assignment publication；
   - child report composition、first lower-round Root reference reuse、後續local
@@ -629,13 +693,18 @@ best-effort cleanup known resources，最後使procedure terminal。
 ### 7.4 `PyMTLF/` tests
 
 - `tests/test_runtime_modes.py`：selector default、protocol selection及invalid config。
-- `tests/test_fl_client.py`：model-free preparation、local workload freeze、first-round
-  profile binding、ADRF input、
+- `tests/test_image_classification.py`與`tests/test_seed_catalog.py`：image seed保存
+  `X_IMAGE_CLASSIFICATION`、dataset-specific interoperability ID，且descriptor／manifest
+  mismatch被拒絕；固定random seed產生未訓練initial weights，且相同設定重用同一份
+  initial artifact。
+- `tests/test_fl_client.py`：model-free preparation、MNIST／CIFAR-10 interoperability mapping、
+  mismatch rejection、local workload freeze、first-round profile binding、ADRF input、
   retained 403與legacy regression。
 - `tests/test_fl_server.py`：protocol request builder、per-edge feature、serialized
   mutation、topology callback、ADRF／local URL dispatch。
-- `tests/test_fl_root.py`：UUID、readiness-before-store、allowlist mapping、round lifecycle、
-  store／update／delete failure gate及restart invalidation。
+- `tests/test_fl_root.py`：UUID、controlled image event／interoperability request、
+  readiness-before-store、allowlist mapping、round lifecycle、store／update／delete failure
+  gate及restart invalidation。
 - `tests/test_fl_branch.py`：recursive establishment、report composition、same Root reference、
   multi-lower-round local artifact與upstream reuse。
 - `tests/test_adrf_discovery.py`：required ADRF identity、no-match／ambiguous／stale result。
@@ -650,6 +719,9 @@ best-effort cleanup known resources，最後使procedure terminal。
   runner selection。
 - Protocol scenario直接掛載Slice 4 pre-generated per-Client shards與matching initial
   model；run期間不下載dataset，也不啟動UPF／traffic collection path。
+- Root、Branch與Leaf的NRF capability／local config使用相同
+  `X_IMAGE_CLASSIFICATION`及dataset-specific interoperability ID；scenario不得以
+  `UE_COMMUNICATION`冒充controlled image workload。
 - Real-process evidence至少提供：
   - explicit Root→Branch→Leaf success；
   - delegated／hybrid candidate establishment；
@@ -693,8 +765,12 @@ contract時才另提repository change proposal。
 1. 加入Root-only`hierarchy_contract` selector並保持legacy default。
 2. 在FLClientEngine加入protocol-mode authority與retained request capability gate。
 3. 實作model-free preparation，確認此階段不讀取或處理local dataset。
-4. 實作第一輪`mLModelAdrf`取得、model／workload profile binding與single-fetch validation。
-5. 驗證legacy preparation及round behavior不變。
+4. 讓image seed descriptor／bundle保存`X_IMAGE_CLASSIFICATION`及dataset-specific
+   interoperability contract，移除image bundle禁止`analytics_event`的舊限制。
+5. 實作`X_IMAGE_CLASSIFICATION`及dataset-specific `modelInterInfo`到local configured
+   dataset contract的mapping與preparation rejection。
+6. 實作第一輪`mLModelAdrf`取得、model／workload profile binding與single-fetch validation。
+7. 驗證legacy preparation及round behavior不變。
 
 ### 8.3 Recursive establishment與report
 
@@ -771,6 +847,8 @@ Slice 1已完成的shape／wire tests與Slice 2已完成的local policy tests不
 ### 10.2 主要positive cases
 
 - One Root、two Branches、multiple Leaves的explicit topology完成preparation與一輪training。
+- `X_IMAGE_CLASSIFICATION`搭配MNIST或CIFAR-10 interoperability ID時，matching local
+  Clients完成model-free preparation，第一輪才載入對應local shard與model bundle。
 - Branch以NRF補充candidate後達到`minAvailableNodes`，未嘗試node維持`UNCONFIRMED`。
 - Explicit與local candidates共同形成hybrid selected cohort。
 - Parent PATCH停用active child並成功DELETE；下一輪selection不含該child。
@@ -782,6 +860,8 @@ Slice 1已完成的shape／wire tests與Slice 2已完成的local policy tests不
 ### 10.3 主要negative cases
 
 - `mLPreFlag:true`的protocol Create帶legacy assignment authority。
+- `X_IMAGE_CLASSIFICATION`使用未知、與local dataset不相容或與第一輪bundle不一致的
+  `modelInterInfo`。
 - Candidate Create未接受feature 3。
 - Child topology report的root identity、`mlCorreId`或`notifCorreId`不符。
 - Root readiness未達卻嘗試store／dispatch model。
@@ -888,7 +968,10 @@ User確認review後仍需另行批准commit；commit approval不等於push appro
 ### 13.2 Preparation與topology
 
 - [ ] Protocol preparation不帶model、不下載model、不查ADRF。
-- [ ] Configured local workload在preparation驗證並凍結，model profile checks在第一輪完成。
+- [ ] `mLEvent`與`modelInterInfo`在preparation唯一決定controlled local workload／dataset
+  contract；dataset path保持local，且不讀取shard。
+- [ ] Configured local workload在preparation驗證並凍結，model architecture及bundle
+  profile checks在第一輪完成。
 - [ ] Candidate intent只有在真實HTTP response後才改變relationship state。
 - [ ] Child topology report經callback進入parent並逐級組合。
 - [ ] Root在realized readiness前不store／dispatch global model。
@@ -921,16 +1004,18 @@ Slice 5只有在以下條件全部成立後才可標為Ready for User Review：
 
 1. NWDAF ADRF update／delete transport、error mapping與tests完成。
 2. Protocol selector、model-free preparation及retained capability gate完成。
-3. Root→Branch→Leaf逐edgefeature negotiation與recursive establishment完成。
-4. Topology-only Notify逐級回到Root，readiness gate使用realized state。
-5. Root per-round ADRF store、mapping、allowlist update、recipient retrieval與cleanup完成。
-6. Branch first lower-round reference reuse及subsequent local artifact path完成。
-7. Explicit、delegated／hybrid、PATCH、feature mismatch與failure gates通過integration tests。
-8. Legacy HFL regression沒有被protocol path破壞。
-9. 至少一組local real-process protocol scenario使用Slice 4 controlled local shards，並
+3. Controlled image event／interoperability contract從Root seed descriptor逐級傳至matching
+   local Client，且MNIST／CIFAR-10 mismatch在preparation被拒絕。
+4. Root→Branch→Leaf逐edgefeature negotiation與recursive establishment完成。
+5. Topology-only Notify逐級回到Root，readiness gate使用realized state。
+6. Root per-round ADRF store、mapping、allowlist update、recipient retrieval與cleanup完成。
+7. Branch first lower-round reference reuse及subsequent local artifact path完成。
+8. Explicit、delegated／hybrid、PATCH、feature mismatch與failure gates通過integration tests。
+9. Legacy HFL regression沒有被protocol path破壞。
+10. 至少一組local real-process protocol scenario使用Slice 4 controlled local shards，並
    提供跨Go／PyMTLF／NRF／ADRF evidence。
-10. Production code、test code、boundary conformance與scope review完成，remaining gaps明列。
-11. 所有intended changes保持unstaged／uncommitted供user review。
+11. Production code、test code、boundary conformance與scope review完成，remaining gaps明列。
+12. 所有intended changes保持unstaged／uncommitted供user review。
 
 正式testbed validation若尚未執行，應保留為remaining gap；只要本slice定義的local
 real-process evidence成立，可進入user review，但不可把testbed列為已驗證。
