@@ -2,8 +2,8 @@
 
 日期：2026-09-04
 
-狀態：Slice 2 Committed／`PyMTLF` closing commit `0e87ef1`；Slice 4A detailed plan
-Approved for Implementation；Slice 4、5 detailed plan review延後至Slice 4A完成後
+狀態：Slice 1、2、4A Committed；Slice 4 Review Confirmed／Commit Approval Pending；
+Slice 5尚未開始
 
 相關文件：
 
@@ -198,3 +198,60 @@ Slice 2 production closing commit：`PyMTLF` `0e87ef1`。
 `PyMTLF/` production與test changes已於`0e87ef1`收尾；`nwdaf-docs/`本次status／
 evidence changes由獨立文件commit保存。Slice 2 local procedure與state requirements均具
 direct evidence，但不得據此描述成hierarchical protocol E2E。
+
+---
+
+## 8. Slice 4 審查結果
+
+### 8.1 計畫符合性
+
+| 要求群組 | 狀態 | 直接證據 |
+| --- | --- | --- |
+| Known workload與config boundary | 已滿足 | Closed traffic／image profiles、MNIST／CIFAR-10 datasets、合法data-source組合與config tests |
+| Profile-specific artifact contract | 已滿足 | Traffic保留scaler；image只接受model config／code／weights；workspace與import tests覆蓋exact inventory |
+| Controlled model source | 已滿足 | MNIST／CIFAR-10 reproducible bundles、matching channels、獨立weights、無BatchNorm及trusted loading tests |
+| Local image execution | 已滿足 | Local `.npz` loader、normalization、CrossEntropy、真實optimizer step與production FL Client round test |
+| Generic FL reuse | 已滿足 | FedProx、actual sample count與production FL Server sample-weighted aggregation tests |
+| Aggregation-only Branch | 已滿足 | Image profile不配置local shard仍可建立與執行lower-server aggregation path |
+| Held-out evaluation | 已滿足 | Offline evaluator接受durable artifact key或workspace artifact path，輸出sample count與accuracy |
+| Existing traffic behavior | 已滿足 | Traffic configuration、trainer、artifact、FL Client／Server及full-suite regressions通過 |
+| Scope boundary | 已滿足 | 未修改`NWDAF/`、protocol schema、NRF或ADRF contract；protocol E2E保留給Slice 5 |
+
+### 8.2 發現與修正
+
+| ID | 狀態 | 確認證據 | 修正 | 驗證 |
+| --- | --- | --- | --- | --- |
+| `S4-R1` | 已關閉 | 初版image config要求所有nodes配置local shard，與aggregation-only Branch requirement衝突 | 只在真正執行local training時要求shard；aggregation-only Branch可省略training data | Config與Branch production-path tests |
+| `S4-R2` | 已關閉 | 初版offline evaluator只接受durable repository key，無法評估尚未進traffic catalog的final FL workspace artifact | 增加互斥的artifact key／artifact path輸入，兩者重用同一trusted loader | Known-result與CLI workspace-artifact tests |
+| `S4-R3` | 已關閉 | 初版關鍵tests只直接呼叫training／aggregation helpers，對production owners的連接證據不足 | 新增真實`FLClientEngine._run_round`與`FLServerEngine._aggregate_round` tests，只mock transport／callback boundary | Image Client round與two-client aggregation tests |
+
+Initial full-diff review與每項修正的targeted follow-up review均已完成；目前沒有未關閉的
+Slice 4 code finding。
+
+### 8.3 最終驗證
+
+| 命令／證據 | 結果 |
+| --- | --- |
+| `.venv/bin/pytest -q` | Pass；710 passed、2 skipped、55個dependency deprecation warnings |
+| `.venv/bin/ruff check .` | Pass |
+| `git diff --check` | Pass |
+| Real MNIST local smoke | Pass；2 Clients各64 training samples，128 held-out samples，accuracy `0.078125` |
+
+Smoke從workspace-local raw IDX cache一次性建立temporary `.npz` shards，通過真實local
+training、sample-weighted aggregation與held-out evaluator後清理。Accuracy僅作為execution
+evidence，不作為模型品質或正式實驗結果。
+
+### 8.4 明確延後與review gate
+
+- `future-phase handoff`：Root→Branch→Leaf protocol wiring、model-free preparation、
+  feature 3、ADRF global-model distribution、topology Notify／PATCH及multi-lower-round
+  artifact transport由Slice 5處理。
+- `integration verification gap`：real multi-process／multi-NWDAF testbed protocol E2E尚未執行。
+- `future-phase handoff`：正式participant partition、repeated runs、statistical analysis與paper
+  evaluation不屬於Slice 4。
+- `approved deferral`：Image final artifact不進入traffic-specific durable catalog；本slice
+  以workspace artifact handoff及offline evaluator完成驗證。
+
+Slice 4 production與test changes位於`PyMTLF/`，status／review evidence位於
+`nwdaf-docs/`。User已確認review結果；兩個repository的本次變更都維持unstaged、
+uncommitted，等待commit proposal核准。

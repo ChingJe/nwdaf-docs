@@ -2,7 +2,7 @@
 
 日期：2026-09-04
 
-狀態：Draft／review延後至Slice 4A完成後；production implementation尚未開始
+狀態：Draft／production implementation尚未開始；等待Slice 4 commit完成後進行開工前確認
 
 相關文件：
 

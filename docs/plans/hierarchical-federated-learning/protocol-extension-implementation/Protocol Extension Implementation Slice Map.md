@@ -2,8 +2,8 @@
 
 日期：2026-09-04
 
-狀態：Slice 1、2、4A Committed；Slice 4 pre-implementation review pending；Slice 5
-detailed plan待後續確認；active sequence為Slice 1、2、4A、4、5、6；Slice 3暫緩
+狀態：Slice 1、2、4A Committed；Slice 4 Review Confirmed／Commit Approval Pending；
+Slice 5尚未開始；active sequence為Slice 1、2、4A、4、5、6；Slice 3暫緩
 
 相關文件：
 
@@ -385,5 +385,6 @@ Slice 4。Slice 4A編號表示它是protocol integration前新增的supporting w
 slice仍依workspace review規則逐一完成、驗證與交付，不同時累積成一個大型
 working-tree diff。
 
-Slice 1、2、4A已完成並commit。Slice 4已依Slice 4A後baseline、local raw dataset與
-classification initial-model source完成開工前校正，目前等待user review後進入實作。
+Slice 1、2、4A已完成並commit。Slice 4已完成production implementation、initial review、
+in-scope remediation與required verification，user已確認review結果；目前維持unstaged、
+uncommitted並等待commit proposal核准。Commit完成後再進入Slice 5。

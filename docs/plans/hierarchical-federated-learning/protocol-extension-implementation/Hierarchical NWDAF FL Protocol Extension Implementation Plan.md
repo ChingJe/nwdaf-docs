@@ -2,8 +2,8 @@
 
 日期：2026-09-04
 
-狀態：Slice 1、2 Committed；Slice 4A detailed plan Approved for Implementation；
-Slice 4、5 detailed plan review延後至Slice 4A完成後；retained-result runtime暫緩
+狀態：Slice 1、2、4A Committed；Slice 4 Review Confirmed／Commit Approval Pending；
+Slice 5尚未開始；retained-result runtime暫緩
 
 索引：
 
@@ -288,8 +288,9 @@ component，但依目前 production trace 不預期修改其 repository。
 [Protocol Implementation Current-State Inventory](./Protocol%20Implementation%20Current-State%20Inventory.md)
 完成各欄位的 production trace 與 gap mapping。Implementation work units 已整理於
 [Protocol Extension Implementation Slice Map](./Protocol%20Extension%20Implementation%20Slice%20Map.md)；
-Slice 1 的實作與驗證證據記錄於
+各slice的實作與驗證證據記錄於
 [Protocol Extension Implementation Review Ledger](./Protocol%20Extension%20Implementation%20Review%20Ledger.md)；
-Slice 2 production implementation已完成並commit；Slice 4A detailed plan已核准，為下一個
-production implementation work unit。Slice 4與Slice 5 detailed plans已建立，但review
-延後至Slice 4A完成後。執行順序先完成Slice 4A digest cleanup，再審查並實作後續slice。
+Slice 1、2與4A已完成並commit。Slice 4 production implementation、initial review、
+in-scope remediation與required verification已完成，user已確認review結果；目前維持
+unstaged、uncommitted並等待commit proposal核准。Commit完成後，下一個production work
+unit為Slice 5。

@@ -2,7 +2,8 @@
 
 日期：2026-09-04（2026-09-05依Slice 4A後baseline校正）
 
-狀態：Review Pending／Slice 4A prerequisite已完成，production implementation尚未開始
+狀態：Review Confirmed／Commit Approval Pending；production implementation、review、
+in-scope remediation與required verification已完成
 
 相關文件：
 
@@ -86,13 +87,11 @@ digest，也不恢復舊schema compatibility path。
 | Repository | Revision | Slice 4角色 |
 | --- | --- | --- |
 | `PyMTLF/` | `899bf23b44da3699591ea30e7ae6eccdbbab0802` | Workload、dataset、trainer、artifact與aggregation owner |
-| `nwdaf-docs/` | `9acc990`後的本計畫working tree | Canonical plan與review evidence |
+| `nwdaf-docs/` | `35d000ff6549fd4ac50ab38a6f5431bac50062d7`後的本計畫working tree | Canonical plan與review evidence |
 | `NWDAF/` | `302762a6af677f5ccfb5a3f9d0253fb3dd39bf62` | Read-only runtime dependency；本slice不預期修改 |
 
-2026-09-05已確認`PyMTLF/`與`nwdaf-docs/`working tree在本次計畫調整前為clean。
-若user review後、production implementation開始前HEAD再次改變，需重新確認trainer、
-artifact contract與Slice 2 execution owner，必要時更新exact-file mapping與baseline
-disposition。
+2026-09-05已在上述baseline上完成Slice 4 implementation與review；本次變更保持
+unstaged、uncommitted，供user直接檢查working-tree diff。
 
 ### 3.2 現有 PyMTLF 限制
 
@@ -569,34 +568,34 @@ implementation。不得為了讓image classification通過而弱化所有bundle�
 
 ## 11. Acceptance checklist
 
-- [ ] `ue_communication_forecasting`與`image_classification`具有明確且封閉的execution
+- [x] `ue_communication_forecasting`與`image_classification`具有明確且封閉的execution
   contract。
-- [ ] 標準`UE_COMMUNICATION + consumer_subscription`流程保持通過。
-- [ ] Local image data可由config選擇MNIST或CIFAR-10，不寫死於FL execution。
-- [ ] Local image Client只讀deployment掛載的shard，runtime不下載dataset，也不要求每個
+- [x] 標準`UE_COMMUNICATION + consumer_subscription`流程保持通過。
+- [x] Local image data可由config選擇MNIST或CIFAR-10，不寫死於FL execution。
+- [x] Local image Client只讀deployment掛載的shard，runtime不下載dataset，也不要求每個
   PyMTLF執行dataset preparation。
-- [ ] 大量部署可共用相同config template與容器內`shard_path`，只由mount mapping分配
+- [x] 大量部署可共用相同config template與容器內`shard_path`，只由mount mapping分配
   各Client資料。
-- [ ] Local config只需提供dataset與shard path，不要求manifest或digest欄位，且不經
+- [x] Local config只需提供dataset與shard path，不要求manifest或digest欄位，且不經
   protocol傳遞。
-- [ ] Image classification不使用假的traffic `scaler.pkl`或traffic fields。
-- [ ] MNIST／CIFAR-10使用已定義的shared small-CNN family，分別匹配1／3 input channels、
+- [x] Image classification不使用假的traffic `scaler.pkl`或traffic fields。
+- [x] MNIST／CIFAR-10使用已定義的shared small-CNN family，分別匹配1／3 input channels、
   使用獨立initial weights，且不含BatchNorm。
-- [ ] MNIST／CIFAR-10 controlled initial bundles可經現行artifact／trusted-loader boundary
+- [x] MNIST／CIFAR-10 controlled initial bundles可經現行artifact／trusted-loader boundary
   載入，且不被註冊或回報成標準NWDAF analytics model。
-- [ ] Seed import tool不再產生Slice 4A已移除的private version／digest欄位，並能以同一
+- [x] Seed import tool不再產生Slice 4A已移除的private version／digest欄位，並能以同一
   profile-specific component contract建立traffic與classification bundles。
-- [ ] Unknown／mismatched workload、data source、dataset或model contract在training前被拒絕。
-- [ ] 真實image-classification optimizer step、FedProx與sample-weighted aggregation測試通過。
-- [ ] Branch-only aggregation不需要local dataset。
-- [ ] Final model可由獨立held-out evaluator產生accuracy evidence。
-- [ ] Traffic workload tests與artifact safety regressions保持通過。
-- [ ] Local smoke不依賴UPF、MongoDB、ADRF Data Management或外部network download。
-- [ ] Local smoke的real-data `.npz`由workspace-local raw cache一次性準備；PyMTLF runtime
+- [x] Unknown／mismatched workload、data source、dataset或model contract在training前被拒絕。
+- [x] 真實image-classification optimizer step、FedProx與sample-weighted aggregation測試通過。
+- [x] Branch-only aggregation不需要local dataset。
+- [x] Final model可由獨立held-out evaluator產生accuracy evidence。
+- [x] Traffic workload tests與artifact safety regressions保持通過。
+- [x] Local smoke不依賴UPF、MongoDB、ADRF Data Management或外部network download。
+- [x] Local smoke的real-data `.npz`由workspace-local raw cache一次性準備；PyMTLF runtime
   不包含download、Parquet／IDX conversion或per-instance preparation。
-- [ ] 沒有修改protocol schema、NRF或ADRF contract。
-- [ ] Slice 5能直接消費本slice的local workload，而不重新定義dataset或trainer。
-- [ ] Affected repositories的diff、verification與remaining gaps已交付user review。
+- [x] 沒有修改protocol schema、NRF或ADRF contract。
+- [x] Slice 5能直接消費本slice的local workload，而不重新定義dataset或trainer。
+- [x] Affected repositories的diff、verification與remaining gaps已交付user review。
 
 ---
 
@@ -614,16 +613,66 @@ transport與callback flow，不把dataset產生、切分或per-instance preparat
 
 ---
 
-## 13. Review evidence（implementation後填寫）
+## 13. Review evidence
 
-目前尚未開始Slice 4 production implementation。Slice 4A prerequisite、current owner
-mapping、raw dataset availability與initial-model source boundary已完成開工前校正；本節在
-實作完成後記錄：
+### 13.1 Revision與working tree
 
-- affected repository revisions與working-tree diff；
-- exact files與owner boundary；
-- focused／full test與lint結果；
-- local controlled FL smoke evidence；
-- traffic regression結果；
-- 未完成的external／testbed validation；
-- user review與commit狀態。
+| Repository | Baseline HEAD | 狀態 |
+| --- | --- | --- |
+| `PyMTLF/` | `899bf23b44da3699591ea30e7ae6eccdbbab0802` | Slice 4 production與test changes維持unstaged、uncommitted，等待user review |
+| `nwdaf-docs/` | `35d000ff6549fd4ac50ab38a6f5431bac50062d7` | 本plan、slice map與review ledger evidence維持unstaged、uncommitted |
+| `NWDAF/` | `302762a6af677f5ccfb5a3f9d0253fb3dd39bf62` | Working tree未因Slice 4修改 |
+
+`PyMTLF/`的production owner變更集中於workload／config、artifact／trusted loading、
+FL Client training、generic aggregation與offline evaluation。Tests、controlled source bundles、
+sample config及CLI一併更新；沒有修改standard-shaped protocol schema、NRF或ADRF contract。
+
+### 13.2 計畫符合性
+
+| 要求群組 | 狀態 | 直接證據 |
+| --- | --- | --- |
+| Known workload與config boundary | 已滿足 | `core/workloads.py`的closed profiles／datasets、`config.py`組合validation與config tests |
+| Profile-specific artifact contract | 已滿足 | `core/artifacts.py`、`core/fl_workspace.py`與artifact／workspace／import tests |
+| Controlled model sources | 已滿足 | MNIST／CIFAR-10 source bundles、reproducible initialization與trusted-loader tests |
+| Local image data與training | 已滿足 | `.npz` loader、normalization、CrossEntropy、real optimizer step及production `FLClientEngine` round test |
+| Existing FL semantics | 已滿足 | FedProx、actual sample count、real `FLServerEngine` sample-weighted aggregation與traffic regressions |
+| Branch-only aggregation | 已滿足 | Image profile不配置local shard仍可執行aggregation-only Branch的production-path test |
+| Held-out evaluation | 已滿足 | Offline evaluator支援durable artifact key及FL workspace artifact path，並有known-result與CLI tests |
+| Local smoke | 已滿足 | 兩個real MNIST shards完成local update、aggregation與獨立held-out evaluation |
+
+### 13.3 Review發現與修正
+
+| ID | 狀態 | 確認證據 | 修正 | 驗證 |
+| --- | --- | --- | --- | --- |
+| `S4-R1` | 已關閉 | 初版image config會要求所有image-profile nodes配置local shard，使aggregation-only Branch無法成立 | 將local shard要求移到真正執行local training的Client path；aggregation-only Branch只需profile | Config與Branch production-path tests |
+| `S4-R2` | 已關閉 | 初版evaluator只接受durable `ArtifactRepository` key，但Slice 4明確允許未進traffic catalog的final workspace artifact | Evaluator增加互斥的artifact key／artifact path入口，兩者皆經同一trusted loader | Known-result與CLI workspace-artifact tests |
+| `S4-R3` | 已關閉 | 初版關鍵證據偏重helper-level training／aggregation，不能直接證明production FL owners已接上 | 新增真實`FLClientEngine._run_round`及`FLServerEngine._aggregate_round` tests；只mock transport／callback boundary | Image production-path與two-client aggregation tests |
+
+Initial full-diff review與上述targeted follow-up review均已完成，目前沒有未關閉的Slice 4
+code finding。
+
+### 13.4 Verification結果
+
+| 驗證 | 結果 |
+| --- | --- |
+| `.venv/bin/pytest -q` | Pass；710 passed、2 skipped、55個dependency deprecation warnings |
+| `.venv/bin/ruff check .` | Pass |
+| `git diff --check` | Pass |
+| Real MNIST local smoke | Pass；2 Clients各64 training samples，128 held-out samples，accuracy `0.078125` |
+
+Real MNIST smoke直接讀取workspace-local raw IDX cache，一次性建立temporary `.npz` shards，
+執行兩個Client local updates、sample-weighted aggregation與held-out evaluation；temporary inputs
+已清理。Accuracy只證明完整execution可執行，不作為模型品質或paper experiment結果。
+
+### 13.5 Remaining gaps與review gate
+
+- `future-phase handoff`：Root→Branch→Leaf protocol wiring、model-free preparation、feature 3、
+  ADRF global-model distribution、topology Notify／PATCH與multi-lower-round transport由Slice 5負責。
+- `integration verification gap`：尚未執行real multi-process／multi-NWDAF testbed protocol E2E。
+- `future-phase handoff`：正式4／8／16 participant dataset partition、repeated experiments與paper
+  evaluation不屬於本slice。
+- `approved deferral`：Image final artifact不冒充traffic model進入現行durable catalog；本slice
+  使用workspace artifact handoff與offline evaluator完成驗證。
+
+Slice 4的production behavior與required verification已完成，user已確認review結果。
+所有變更保持unstaged、uncommitted，等待本次commit proposal取得明確核准。

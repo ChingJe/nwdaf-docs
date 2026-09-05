@@ -33,9 +33,10 @@ verification 與 deferred work。
   model-free preparation、逐edge feature negotiation、Root global-model ADRF lifecycle
   與Branch local-round artifact transport，並重用Slice 4 controlled workload。
 
-Slice 3 retained-result runtime目前暫緩，因此不建立detailed plan；下一個active work
-unit是Slice 4A，完成digest cleanup後再依序執行Slice 4與Slice 5。三份detailed plans
-均尚未開始production implementation。
+Slice 3 retained-result runtime目前暫緩，因此不建立detailed plan。Slice 4A已完成並
+commit；Slice 4的production implementation與required verification已完成，user已確認
+review結果，目前等待commit proposal核准。Commit完成後，下一個active work unit為
+Slice 5。
 
 ## 文件慣例
 
