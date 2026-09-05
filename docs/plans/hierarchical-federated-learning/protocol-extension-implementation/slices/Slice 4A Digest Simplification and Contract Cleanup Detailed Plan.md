@@ -2,7 +2,8 @@
 
 日期：2026-09-05
 
-狀態：Plan Ready for User Review／第二波production implementation尚未開始
+狀態：Committed／`PyMTLF` production commit `899bf23`、`nwdaf-resources`
+support commit `92b1433`，integration verification gap已記錄
 
 相關文件：
 
@@ -404,21 +405,28 @@ remaining gap，不以unit tests代替。
   retry與termination-first情境。
 - Scenario fixtures仍使用semantic weights／model／preprocessing digests；已改為完整
   artifact key、explicit workload contract、training scope與sample-count evidence。
+- Project-private durable model state、training-data ledger、FL artifact metadata與scenario
+  fixtures仍帶schema／contract version marker；已收斂為單一現行格式，移除version branch、
+  alias與fallback reader，並將seed migration命名改為initialization。
+- `publication-pending.json`缺少現行typed contract必填的`validationEvidence`；已補齊兩個
+  participant的scope、evaluation window與WAPE components，並直接以PyMTLF model驗證。
+- Scenario build／collection evidence仍保存非artifact binary與payload hash；已移除，完整
+  artifact repository key及URL／body驗證仍保留。
 
 ### 12.3 驗證證據
 
 - `PyMTLF/`：`ruff check src tests`通過。
-- `PyMTLF/`：Slice 4A focused regression為343 passed、2 skipped。
-- `PyMTLF/`：full regression為688 passed、2 skipped。
+- `PyMTLF/`：Slice 4A focused regression為369 passed、2 skipped。
+- `PyMTLF/`：full regression為687 passed、2 skipped。
 - `nwdaf-resources/`：hierarchical／distributed FL support regression為53 passed。
-- 相關JSON examples已通過parser validation；各repository `git diff --check`通過。
+- 未版本化的project-private FL JSON examples已通過JSON parser及現行PyMTLF typed model
+  validation；`nwdaf-resources/`變更Python檔亦通過Ruff。
+- 各repository `git diff --check`通過。
 
 ### 12.4 剩餘缺口
 
-- 第二波尚未移除project-private version markers、legacy field tolerance、
-  fallback readers、migration branches與相容性測試；因此本slice尚未達到最終
-  user-review checkpoint。
 - 尚未執行local real-process或正式testbed regression；依本slice boundary記為
-  `integration verification gap`，不以unit／support tests代替。
-- 第一波intended changes與本次plan revision保持unstaged／uncommitted；完成第二波後
-  再進行一次完整review與user-review handoff。
+  `integration verification gap`，不以unit／support tests代替，且不阻擋本slice的
+  user-review checkpoint。
+- User review已確認；`PyMTLF/`與`nwdaf-resources/`的intended changes已分別提交為
+  `899bf23`與`92b1433`。未修改`NWDAF/`、3GPP OpenAPI corpus、NRF或ADRF。

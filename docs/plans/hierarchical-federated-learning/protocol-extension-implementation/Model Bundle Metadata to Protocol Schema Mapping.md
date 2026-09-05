@@ -55,10 +55,10 @@ source。Artifact 中即使保留 correlation／round provenance，也只能用�
 
 | 舊欄位 | 現有用途 | 新位置／處理 | 結論 |
 | --- | --- | --- | --- |
-| `bundle_schema_version` | 驗證 model bundle container 格式 | 繼續由 artifact contract 使用 | 保留在 artifact，不搬到 protocol |
-| `file_digests` | 驗證 model／preprocessing files 完整性 | Slice 4A停止產生與驗證；legacy reader只在Slice 6前容忍舊欄位 | 移除，不搬到protocol |
+| `bundle_schema_version` | 驗證舊 model bundle container 格式 | Slice 4A移除project-private version marker與對應reader | 移除，不搬到protocol |
+| `file_digests` | 驗證 model／preprocessing files 完整性 | Slice 4A停止產生與驗證；現行strict schema收到此舊欄位時拒絕 | 移除，不搬到protocol |
 | `artifact_role: HIERARCHY_ASSIGNMENT` | 讓下載端判斷 bundle 是 hierarchy assignment | Create／PUT／PATCH 中出現 `x-flTopology` 已能表示這是 topology instruction | 移除 assignment-specific artifact role；model bundle 回到一般模型 artifact |
-| `contract_version` | 驗證舊 `hierarchy_metadata` 格式 | Candidate API schema／negotiated `HierarchicalFLOrch` 定義 wire contract | 不搬入 topology node；local parser version 若仍需要，只留在 implementation |
+| `contract_version` | 驗證舊 `hierarchy_metadata` 格式 | Slice 4A移除project-private version marker；Candidate API schema／negotiated `HierarchicalFLOrch`定義wire contract | 移除，不搬入topology node |
 | `message_type` | 區分 `BRANCH_ASSIGNMENT` 與 `LEAF_ASSIGNMENT` | 每段 subscription 都使用相同的 role-neutral `x-flTopology`；接收者由是否有 `children`、policy 與自身 capability 決定 local responsibilities | 移除，不在 protocol 固定 Root／Branch／Leaf role |
 | `plan_id` | 舊 hierarchy workspace、artifact 與 execution correlation | Root 產生 UUID 字串作為 hierarchy-wide `mlCorreId`；reservation／workspace key 可繼續作為 local state | 不新增 `planId` extension，也不把 internal reservation ID 上線 |
 | `publisher_nf_instance_id` | 驗證 assignment 發布者 | Direct subscription edge、authenticated peer／route context 已識別 sender；Notify report 另以 wrapper `nfInstanceId` 識別 reporting node | 不在 request topology 重複傳遞 |

@@ -2,9 +2,8 @@
 
 日期：2026-09-04
 
-狀態：Slice 1、2 Committed；Slice 4A detailed plan Approved for Implementation；Slice 4、5
-detailed plan review延後至Slice 4A完成後；active sequence為Slice 1、2、4A、4、5、6；
-Slice 3暫緩
+狀態：Slice 1、2、4A Committed；Slice 4、5 detailed plan待後續確認；active sequence為
+Slice 1、2、4A、4、5、6；Slice 3暫緩
 
 相關文件：
 
@@ -175,8 +174,8 @@ training-data collection的content digest。
   hashes，改用現有明確identity與typed state。
 - FL Notify改為resource／stage state idempotency：第一個terminal outcome生效，後續同
   stage terminal retry不再套用。
-- 更新persisted training-data ledger migration、fixtures與flat／distributed／legacy HFL
-  regression。
+- 將persisted training-data ledger收斂為單一現行格式，更新fixtures與flat／distributed／
+  legacy HFL regression；舊experimental state直接重建，不保留migration reader。
 
 ### 驗收條件
 
@@ -380,5 +379,5 @@ Slice 4。Slice 4A編號表示它是protocol integration前新增的supporting w
 slice仍依workspace review規則逐一完成、驗證與交付，不同時累積成一個大型
 working-tree diff。
 
-Slice 1、2已完成並commit。Slice 4A與4 detailed plans已完成盤點，目前等待user
-review；production implementation尚未開始。
+Slice 1、2、4A已完成並commit。Slice 4 detailed plan已完成盤點，下一步為確認計畫後
+進入實作。

@@ -167,11 +167,9 @@ Bundle manifest與local execution state新增內部discriminator `workload_profi
 Unknown profile必須在trusted bundle validation或execution preparation被拒絕，不做
 dynamic import、vendor plugin或fallback到traffic trainer。
 
-既有`bundle_schema_version: "1.0"` traffic bundles為相容性例外：若省略
-`workload_profile`，只有在它仍符合完整legacy traffic component與manifest contract時，
-才解讀為`ue_communication_forecasting`。所有新產生的bundle與FL artifacts都必須明確
-寫入`workload_profile`；image classification省略此欄位一律拒絕。這保留已存在的traffic
-artifacts，但不讓任意缺欄位bundle被猜成某個profile。
+所有Slice 4建立或消費的bundle與FL artifacts都必須明確寫入`workload_profile`；省略
+此欄位一律拒絕，不依舊格式推測profile。既有experimental traffic artifacts應以目前
+contract重新產生，不保留舊bundle reader或fallback。
 
 Profile是PyMTLF內部artifact／execution contract，不是本次proposed protocol extension
 field。Slice 5收到model後，可由已驗證bundle取得profile；dataset local path不放入
