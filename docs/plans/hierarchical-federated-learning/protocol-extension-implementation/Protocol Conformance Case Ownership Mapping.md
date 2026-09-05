@@ -99,9 +99,10 @@ contract，不能無條件選取所有 NWDAFs。取得 profiles後，Intermediat
 | `NOT-05` | Go recursive report validator | PyMTLF report consumer | Duplicate／cycle rejection；coordinator realized view不得部分更新 |
 | `NOT-08` | PyMTLF coordinator report consumer | Go transparent typed transport | Unknown status／cause可保存與轉送，但不觸發已知 action |
 
-直接可重用：Go callback route lookup、standard correlation、一般 training result 的
-expected round validation、raw body forwarding，以及 PyMTLF callback duplicate digest
-handling。Retained `FOUND` 使用被查到結果的 local `roundInd`，不得沿用 normal-result
+直接可重用：Go callback route lookup、standard correlation、一般training result的
+expected round validation與raw body forwarding。PyMTLF callback body digest只屬於
+Slice 4A前的現行baseline；Slice 4A後改由resource／stage state處理idempotency，不比較
+body digest。Retained `FOUND`使用被查到結果的local `roundInd`，不得沿用normal-result
 expected-round equality。
 
 確定 gap：Go 現行 Notify shape拒絕 topology-only report；route identity尚未比較
@@ -187,7 +188,7 @@ recursive validation仍由 deterministic unit tests負責完整覆蓋。
 - `FLExperimentRegistry` 已允許同一 active experiment 下，多個 Client subscription
   使用相同 `mlCorreId`；因此 replacement Branch 建立的新 subscription 可以與舊
   subscription 共存。
-- 現有 workspace 可依 process／participant／round／digest提供 artifact，但沒有
+- 現有 workspace 可依process／participant／round與whole-artifact key提供artifact，但沒有
   `mlCorreId -> latest completed result` 查詢，也不能從 callback outbox穩定取得結果。
 
 ### 9.2 Implementation owner

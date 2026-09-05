@@ -24,9 +24,10 @@ metadata，應如何遷移到新的 `Nnwdaf_MLModelTraining` candidate schema。
 - `HIERARCHY_PREPARATION_RESULT.hierarchy_metadata`；
 - 目前與 hierarchy instruction 混在 round artifact 中的 local-work instruction。
 
-Model bytes、preprocessing artifact、digest、sample count、dataset evidence、aggregation
-provenance 與 validation evidence 不屬於 topology protocol instruction，仍由 model／
-result artifact 負責。本次不把所有 artifact metadata 搬入 SBI message。
+Model bytes、preprocessing artifact、whole-artifact repository key、sample count、
+aggregation provenance與validation result不屬於topology protocol instruction，仍由
+model／result artifact負責。本次不把所有artifact metadata搬入SBI message。Component、
+model／weights、dataset與tensor digests則由Slice 4A移除，不搬到其他contract。
 
 ---
 
@@ -36,7 +37,7 @@ result artifact 負責。本次不把所有 artifact metadata 搬入 SBI message
 
 1. **搬到 protocol**：跨 NWDAF 的 topology、policy、strategy 或 reporting
    instruction／result。
-2. **保留在 artifact**：模型內容、完整性、訓練結果或可驗證 evidence。
+2. **保留在 artifact**：模型內容、whole-artifact identity、訓練結果或必要 evidence。
 3. **改為 local state**：subscription resource、route、workspace 或 execution
    lifecycle 所需，但不需要跨 peer 傳遞的 bookkeeping。
 4. **移除**：可由 operation、subscription edge 或其他欄位推導，或只是舊格式為了
@@ -55,7 +56,7 @@ source。Artifact 中即使保留 correlation／round provenance，也只能用�
 | 舊欄位 | 現有用途 | 新位置／處理 | 結論 |
 | --- | --- | --- | --- |
 | `bundle_schema_version` | 驗證 model bundle container 格式 | 繼續由 artifact contract 使用 | 保留在 artifact，不搬到 protocol |
-| `file_digests` | 驗證 model／preprocessing files 完整性 | 繼續由 artifact contract 使用 | 保留在 artifact，不搬到 protocol |
+| `file_digests` | 驗證 model／preprocessing files 完整性 | Slice 4A停止產生與驗證；legacy reader只在Slice 6前容忍舊欄位 | 移除，不搬到protocol |
 | `artifact_role: HIERARCHY_ASSIGNMENT` | 讓下載端判斷 bundle 是 hierarchy assignment | Create／PUT／PATCH 中出現 `x-flTopology` 已能表示這是 topology instruction | 移除 assignment-specific artifact role；model bundle 回到一般模型 artifact |
 | `contract_version` | 驗證舊 `hierarchy_metadata` 格式 | Candidate API schema／negotiated `HierarchicalFLOrch` 定義 wire contract | 不搬入 topology node；local parser version 若仍需要，只留在 implementation |
 | `message_type` | 區分 `BRANCH_ASSIGNMENT` 與 `LEAF_ASSIGNMENT` | 每段 subscription 都使用相同的 role-neutral `x-flTopology`；接收者由是否有 `children`、policy 與自身 capability 決定 local responsibilities | 移除，不在 protocol 固定 Root／Branch／Leaf role |
@@ -184,8 +185,9 @@ prepared／failed／timed-out 三個完整 partition。這也避免現有 pre-di
 | `fl_metadata.round_ind` | SBI 使用標準 `roundInd`；artifact 可保留副本驗證該 result 所屬 local round，不放入 topology report |
 | `client_training.epochs` | 對 Leaf 的持續 local-work contract 可表達為 `reportAfter: {count: ..., unit: epoch}`；若每輪變更則透過既有 subscription update 更新 contract |
 | Branch 每次 upper update 前執行的 lower rounds | 可表達為 Branch node 的 `reportAfter: {count: ..., unit: round}`；現行一次 lower round 對一次 upper update 的 baseline 為 count `1` |
-| model／preprocessing digests、weights digest | 保留在 artifact，作完整性與 lineage evidence |
-| training sample count、participant contribution、dataset evidence | 保留在 result artifact，供 aggregation 與實驗 evidence 使用 |
+| model／preprocessing digests、weights digest | Slice 4A移除；改用whole-artifact key、typed identity、process／round state與實際model compatibility |
+| training sample count、participant contribution | 保留在result artifact，供aggregation與實驗evidence使用 |
+| dataset／tensor digests | Slice 4A移除；local dataset identity、sample count及metric result以明確欄位保存 |
 | subordinate aggregation／validation summaries | 保留在 result／final artifact；它們是 learning-result provenance，不是 topology lifecycle status |
 
 `reportAfter` 描述 local node 完成多少工作後向 direct parent 回報，不取代
@@ -212,8 +214,8 @@ prepared／failed／timed-out 三個完整 partition。這也避免現有 pre-di
   boundary；後者同時涵蓋 Branch 對 direct parent 的上行回報與對 selected children
   的後續 lower-tier 下發；
 - round input、local result、global result 與 final model artifact；
-- digest、sample count、aggregation provenance、dataset evidence 與 validation
-  evidence；
+- whole-artifact repository key、sample count、aggregation provenance、明確dataset
+  identity與validation result；
 - subscription、callback、workspace、reservation 與 cleanup 所需的 local state。
 
 ---
@@ -291,7 +293,7 @@ PyMTLF 是該 record 的 distribution lifecycle owner，負責配置不重複的
 結束且沒有 in-flight retry，或 procedure terminal 時要求刪除 record。若 Root
 restart 後無法恢復這組 mapping，該 procedure 必須明確失效，不能僅靠
 `roundInd` 猜測 ADRF record。Exact durable allocator、restart representation 與
-cleanup helper 由 Slice 4 detailed plan 固定；新增 consumer 時可在下發 reference 前
+cleanup helper 由 Slice 5 detailed plan 固定；新增 consumer 時可在下發 reference 前
 更新 ACL metadata，但不得改寫同一 record 的 model payload 來服務不同 round，避免
 late consumer 下載到後一輪 model。
 
@@ -385,7 +387,7 @@ Detailed implementation slice 仍需落實：
    representation update path。
 2. Legacy／protocol selector 的 exact config key，以及 ambiguous contract 的錯誤
    mapping。
-3. Slice 4 detailed plan 需固定 preparation model-free gate、每輪 model-payload
+3. Slice 5 detailed plan 需固定 preparation model-free gate、每輪 model-payload
    immutable ADRF record 的 exact
    `modelUniqueId` allocator、Root procedure-to-record persistence、store／retrieval
    helper placement、realized-topology-to-`allowConsumerList` mapping、ACL update ordering、

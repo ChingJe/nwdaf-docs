@@ -2,8 +2,8 @@
 
 日期：2026-09-04
 
-狀態：Slice 1 Committed；Slice 2 detailed plan Approved for Implementation；retained-result
-runtime暫緩
+狀態：Slice 1、2 Committed；Slice 4A detailed plan Approved for Implementation；
+Slice 4、5 detailed plan review延後至Slice 4A完成後；retained-result runtime暫緩
 
 索引：
 
@@ -93,8 +93,8 @@ strategy 與 reporting instruction 放入 `x-flTopology`。Intermediate 只取�
 subscriptions。
 
 Preparation subscription 設定 `mLPreFlag: true`，但不提供 `mLModelInfos`。接收端
-只驗證 training requirements、`modelInterInfo`、hierarchy contract 與自身可用性，
-不下載、載入或驗證實際 model artifact。TS 29.520 Release 18
+只驗證request實際提供的標準欄位、hierarchy contract、自身可用性與local workload
+readiness，不下載、載入或驗證實際 model artifact。TS 29.520 Release 18
 §4.6.2.2.2／§5.5.6.2.2 將 `mLModelInfos` 定義為 optional，因此 topology
 establishment 不需要先發布 global model。
 
@@ -154,9 +154,9 @@ detection、replacement selection、fencing，以及舊 result 的保存與接�
 - `NWDAF/`：External／peer SBI wire contract、validation、resource state、callback
   routing 與 Go→PyMTLF transport。
 - `PyMTLF/`：Topology／policy／strategy execution、local process state 與 realized
-  report owner。
+  report owner，以及controlled local training workload。
 - `nwdaf-resources/`：Real-process request／Notify evidence、negative cases 與
-  regression scenarios。
+  regression scenarios；dataset產生與切分由experiment工作另行提供。
 - `nwdaf-docs/`：Canonical plan、盤點、conformance mapping 與 review evidence。
 
 目前不預期修改 NRF schema 或讓 NRF 保存 hierarchy-specific topology／policy。
@@ -186,7 +186,24 @@ component，但依目前 production trace 不預期修改其 repository。
   instruction 不進 persistent representation，也不在本階段建立 lookup state。
 - 維持 Create／PUT／PATCH atomicity、DELETE cleanup 與 restart boundary。
 
-### 5.3 Topology orchestration 遷移
+### 5.3 Controlled local training workload
+
+- 以known workload與data-source config區分既有`UE_COMMUNICATION` forecasting及
+  controlled image classification；MNIST／CIFAR-10只驗證FL與systems behavior，不表示
+  它們是標準NWDAF analytics資料。
+- Dataset／experiment工作一次產生所有Client shards；部署時使用共同config template，
+  將不同shard以read-only方式掛載到各PyMTLF相同的容器內路徑。每個instance不執行
+  dataset preparation，也不維護manifest或hash設定。
+- `workload.profile`選擇task／training semantics，data-source設定選擇既有
+  `consumer_subscription`、`private_api`或controlled `local`；標準
+  `UE_COMMUNICATION + consumer_subscription`行為保持不變。
+- `image_classification`再由local config選擇MNIST或CIFAR-10的preprocessing contract，
+  並與received model bundle交叉驗證，同時重用既有FedProx與sample-weighted
+  aggregation owner。
+- Final global model在training結束後，以獨立held-out test set計算accuracy；不把traffic
+  WAPE acceptance gate套用到classification workload。
+
+### 5.4 Topology orchestration 遷移
 
 - 將 recursive subtree instruction 與 realized report 接入既有 Root／Intermediate／
   Client flow。
@@ -200,14 +217,25 @@ component，但依目前 production trace 不預期修改其 repository。
 - 在 protocol path 成立後，移除相同 orchestration information 對 model-bundle
   metadata 的 runtime dependency。
 
-### 5.4 Policy、strategy 與 reporting execution
+### 5.5 Digest contract簡化
+
+- 完整壓縮artifact bytes的SHA-256保留為repository key與URL identity；下載者只比較
+  實際bytes與URL key。
+- 移除component、model／weights、scope／dataset／tensor、Notify body、topology與
+  collection content digest；不以新的config fingerprint或sidecar取代。
+- 以typed model／workload identity、process／round／resource state、explicit topology
+  與state-dict compatibility保留真正必要的語意檢查。
+- 此cleanup在protocol E2E integration前獨立完成，避免新路徑繼續依賴即將移除的
+  project-private digest contract。
+
+### 5.6 Policy、strategy 與 reporting execution
 
 - 讓 participant policy 實際控制 topology readiness、round selection 與
   aggregation completion。
 - 讓 strategy 與 `reportAfter` 到達 local training／aggregation owner。
 - 讓 node 回報實際採用的 policy、strategy 與 reporting contract。
 
-### 5.5 Retained-result boundary
+### 5.7 Retained-result boundary
 
 - 保留 Slice 1 已完成的 `x-retainedResultReq`／`x-retainedResultStatus` wire models、
   non-persistence 與 cross-field validation。
@@ -216,7 +244,7 @@ component，但依目前 production trace 不預期修改其 repository。
 - 未來若重新採用 retained result，必須另行決定保存期限、artifact ownership、
   replacement subscription correlation、timeout 與 cleanup，再建立獨立實作計畫。
 
-### 5.6 驗證與 migration closure
+### 5.8 驗證與 migration closure
 
 - 將 Protocol Conformance Matrix 映射到 unit、boundary 與 real-process tests。
 - 保留既有 static／model-bundle baseline，直到 protocol-driven E2E 可以回歸。
@@ -246,11 +274,13 @@ component，但依目前 production trace 不預期修改其 repository。
   persistent／operation-scoped separation、receiver identity validation 與 lifecycle
   foundation；production diff 已完成審查與計畫要求的 focused／full verification，
   user review 已確認，`NWDAF` 與 `PyMTLF` 收尾 commits 已建立。
-- Candidate selection與policy／strategy execution由Slice 2處理；protocol-mode
-  orchestration 與real-process E2E由Slice 4處理，migration closure由Slice 5處理。
+- Candidate selection與policy／strategy execution由Slice 2處理；controlled local
+  training workload由Slice 4處理；既有digest contract簡化由Slice 4A處理；
+  protocol-mode orchestration與real-process E2E由Slice 5處理，migration closure由
+  Slice 6處理。
   Retained-result runtime暫緩，不是目前active slice的相依項目。ADRF global-model
   distribution 的 exact method placement、record lifecycle 與驗證 evidence 已列入
-  Slice 4 closure。
+  Slice 5 closure。
 
 已依
 [Model Bundle Metadata to Protocol Schema Mapping](./Model%20Bundle%20Metadata%20to%20Protocol%20Schema%20Mapping.md)
@@ -260,4 +290,6 @@ component，但依目前 production trace 不預期修改其 repository。
 [Protocol Extension Implementation Slice Map](./Protocol%20Extension%20Implementation%20Slice%20Map.md)；
 Slice 1 的實作與驗證證據記錄於
 [Protocol Extension Implementation Review Ledger](./Protocol%20Extension%20Implementation%20Review%20Ledger.md)；
-Slice 2 detailed plan已確認；下一個production implementation work unit為Slice 2。
+Slice 2 production implementation已完成並commit；Slice 4A detailed plan已核准，為下一個
+production implementation work unit。Slice 4與Slice 5 detailed plans已建立，但review
+延後至Slice 4A完成後。執行順序先完成Slice 4A digest cleanup，再審查並實作後續slice。

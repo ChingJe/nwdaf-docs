@@ -38,7 +38,7 @@ component owner、目標差距與尚待確認的資料流。主計畫只保留�
 | `nwdaf-docs/` | `e38a6faa9a6a2706c6214b817134d0bc5a7d303a` | 本 workstream 文件尚未提交 | Canonical design、plan 與 conformance evidence |
 
 目前不預期修改 `nrf/`、`smf-nwdaf-ext/`、`udm/`、`udr/`、`adrf/`、`PyAnLF/`
-與 `resources/`。`adrf/` 雖不是預期修改對象，仍是 Slice 4 global-model
+與 `resources/`。`adrf/` 雖不是預期修改對象，仍是 Slice 5 global-model
 distribution 的 runtime dependency 與 real-process 受測 component；evidence harness
 仍由 `nwdaf-resources/` 擁有。NRF 維持既有
 registration／discovery owner，不保存
@@ -104,6 +104,9 @@ production trace 證明 required value 無法在上述 owner 間產生或傳遞�
 - 現有 PATCH 使用 top-level update 建立 effective representation；recursive
   topology array replacement、disabled-child cleanup 與 operation-scoped lookup
   尚未映射到 resource transition。
+- 現有dataset、bundle、trainer與final validation以traffic forecasting、
+  `StandardScaler`、Huber loss及WAPE為中心；尚不能把pre-staged MNIST shard當成
+  controlled local workload。這項差距先由Slice 4處理，再交給Slice 5 protocol flow。
 
 ### 3.3 現有 hierarchical orchestration
 
@@ -176,7 +179,7 @@ repository-local contract；不代表設計語意尚未決策：
    OpenAPI artifact 作為 contract／fixture，不另建 generated module。PyMTLF 對應
    extension 改為 explicit typed properties，不依賴 unknown-field passthrough。
 3. Root instruction 的 authoritative producer 已確認為 Root PyMTLF coordinator。
-   Preparation builder 下發標準必要／training requirement fields 與
+   Preparation builder 下發建立resource所需的標準fields與
    `x-flTopology`，但不建立 ADRF record，也不附 `mLModelInfos`。Root 收到滿足
    readiness 的 realized topology 後，才重用既有
    PyMTLF ADRF discovery 與 containing Go NWDAF ML Model Management proxy：Root
@@ -189,7 +192,7 @@ repository-local contract；不代表設計語意尚未決策：
    aggregate 作為後續 lower-tier round 輸入時，由 Branch 的暫存 workspace 提供
    `mLFileAddr`，不建立 ADRF record。
    Exact helper placement、每輪 model-payload immutable `modelUniqueId` allocator、ACL
-   update ordering 與 record cleanup 由 Slice 4 detailed plan 固定。
+   update ordering 與 record cleanup 由 Slice 5 detailed plan 固定。
 4. Subscription contract 中哪些資料由 Go resource state 保存，哪些只由 PyMTLF
    execution state 保存；restart 時各自採恢復或失效語意。
 5. `suppFeats` 的 request、accepted response、peer edge 與後續 PUT／PATCH gate
@@ -205,18 +208,16 @@ repository-local contract；不代表設計語意尚未決策：
 8. `strategy`、`reportAfter` 與 local config 的優先關係，以及 protocol 省略欄位時
    node-local decision 的回報位置。
 9. Root 以 UUID 字串產生 hierarchy-wide `mlCorreId`；同一 hierarchy 逐級共用，
-   receiver 在本地 retention window 內拒絕與另一 active procedure 衝突的 UUID。
-   Retained result 的 local owner 已確認為 PyMTLF `FLClientEngine`；需新增以該 UUID
-   索引的 latest-completed record，並另行處理 artifact retention。UUID 格式相容既有
-   workspace key 要求，但 retained lifecycle 仍不得直接借用另一個 owner 的
-   `release_plan` 語意。
+   receiver 在本地 active procedure window 內拒絕與另一 active procedure 衝突的 UUID。
+   Retained-result fields只保留wire contract；latest-completed index、artifact retention、
+   lookup與replacement recovery runtime目前暫緩，不納入active slices。
 10. Model-bundle metadata 的 migration authority 已確認由 Root PyMTLF
     orchestration 明確選擇 legacy bundle 或 protocol mode；兩者互斥，Go route 不做
     fallback。Protocol E2E 完成前保留 legacy regression，closure 再移除舊 runtime
     path。
 11. Protocol Conformance Matrix 的 case owner、test seam 與 real-process evidence
-    已完成第一輪對照；retained-result latest-completed state owner 亦已收斂至
-    PyMTLF `FLClientEngine`。
+    已完成第一輪對照；retained-result runtime仍維持暫緩，不以wire field owner推導
+    latest-completed state owner。
 
 ---
 
@@ -227,7 +228,7 @@ repository-local contract；不代表設計語意尚未決策：
 - [x] 逐段確認 Create／PUT／PATCH／DELETE／Notify 的雙向資料流與 current owner。
 - [x] 確認每個 extension value 的 producer、transport、stored owner、consumer 與
   failure behavior。
-- [ ] 在 Slice 4 detailed plan 固定 model-free preparation gate、ADRF per-round
+- [ ] 在 Slice 5 detailed plan 固定 model-free preparation gate、ADRF per-round
   `modelUniqueId` allocator、realized-topology-to-`allowConsumerList` mapping、ACL update
   ordering、record cleanup／restart 與 store／retrieval failure mapping，並將其轉成
   boundary／real-process tests。

@@ -132,7 +132,7 @@ atomicity與 Go→PyMTLF contract仍以 target repository、Release 18 OpenAPI�
 - Model-free preparation、ADRF global-model distribution或 Branch aggregate delivery。
 - Legacy model-bundle移除與 real-process E2E。
 
-上述項目分別由 Slice 2、Slice 3、Slice 4與 Slice 5負責；本 slice不得為了讓
+上述項目分別由 Slice 2、Slice 3、Slice 4、Slice 5與 Slice 6負責；本 slice不得為了讓
 candidate request「看起來能跑」而先接入舊 bundle execution。
 
 ---
@@ -274,11 +274,11 @@ representation不宣告feature 3，candidate operation不得啟動：
 - 本次取得的work／callback capacity立即依既有idle path釋放；
 - response中的 `suppFeats`為local supported mask與offered mask的intersection；
 - sender若把hierarchy視為必要條件，應刪除該resource；該cleanup與status production在
-  Slice 4實作。
+  Slice 5實作。
 
 這個狀態不表示receiver已支援hierarchy。Lossless representation只用於建立wire／
 resource foundation；`suppFeats`才是procedure applicability的authority。Slice 2／3
-完成local consumers後，仍不得單獨打開feature 3；直到Slice 4串接真實producer、
+完成local consumers後，仍不得單獨打開feature 3；直到Slice 5串接真實producer、
 consumer與cleanup flow後才啟用production advertised bit。
 
 不含candidate fields的既有Release 18／legacy requests完全沿用現有operation dispatch，
@@ -317,7 +317,7 @@ Go backend generation reset繼續使in-memory routes失效；PyMTLF
 
 | 基準階段 | 處置 | Slice 1處理 |
 | --- | --- | --- |
-| Trigger／instruction production | 核准延後 | Root coordinator與protocol-mode producer留給Slice 4 |
+| Trigger／instruction production | 核准延後 | Root coordinator與protocol-mode producer留給Slice 5 |
 | Public／private body read與media type | 沿用且不改變語意 | 保留size／media-type gate；只增加structured candidate error mapping |
 | Subscription／patch／Notify typed parse | 調整 | 加入candidate types、aliases與validation |
 | Callback URI rewrite | 沿用且不改變語意 | 仍以raw JSON object只改 `notifUri`，candidate fields不得遺失 |
@@ -331,7 +331,7 @@ Go backend generation reset繼續使in-memory routes失效；PyMTLF
 | DELETE | 沿用並清理新增狀態 | 清除新增route／resource fields；不做child cascade |
 | Timeout／retry | 沿用既有operations | 不新增lookup timeout或callback procedure |
 | Restart／generation reset | 沿用但不提供恢復 | 新增state與resource一起失效，不從body推論恢復 |
-| Migration cleanup | 核准延後 | Legacy bundle removal留給Slice 5 |
+| Migration cleanup | 核准延後 | Legacy bundle removal留給Slice 6 |
 
 ---
 
@@ -523,15 +523,15 @@ candidate design語意。若production evidence與既有schema矛盾，先停在
 | `TOP-01`–`TOP-08` | Shape、root identity、recursive uniqueness、policy relation、disabled＋lookup與FedProx validation | Downstream subscription side effect |
 | `TOP-09` | Forward-compatible enum decode；PyMTLF capability gate回`403`且無fallback | Known policy／strategy executor由Slice 2提供 |
 | `PATCH-01`–`PATCH-03` prerequisites | JSON Merge Patch、children array replacement、command stripping與resource atomicity | Local discovered pool、DELETE intent與provenance state由Slice 2提供 |
-| `NOT-01` Go portion | Existing callback／correlation加上candidate route gate | Parent coordinator consumption由Slice 4提供 |
+| `NOT-01` Go portion | Existing callback／correlation加上candidate route gate | Parent coordinator consumption由Slice 5提供 |
 | `NOT-02`–`NOT-07`, `NOT-09` | Go primary＋PyMTLF mirror validation | Realized topology state update |
 | `NOT-08` prerequisite | Unknown status／cause typed parse與raw relay，不推論known action | Coordinator preservation／action由Slice 2／4提供 |
 | `RET-01`–`RET-04` | FOUND／NOT_FOUND／FAILED shape、artifact／round combination與normal-round exception | Lookup state／artifact owner由Slice 3提供 |
 | `RET-05`, `RET-06` prerequisites | Create／PUT／PATCH operation extraction與non-persistence | Actual lookup與outcome producer由Slice 3提供 |
 | `RET-07`, `RET-08` prerequisites | Go operation gate與route serialization structure | Outstanding state與terminal outcome由Slice 3提供 |
 | `FEAT-01` | Initial request可帶offered feature＋candidate fields並進正常validation | 無 |
-| `FEAT-02` prerequisites | Fake destination `201`的negotiated bit與Go route state一致 | Production PyMTLF啟用feature 3留給Slice 4 |
-| `FEAT-03`, `FEAT-04` prerequisites | Unnegotiated route gate與per-resource state | Sender DELETE、status report與multi-edge E2E由Slice 4提供 |
+| `FEAT-02` prerequisites | Fake destination `201`的negotiated bit與Go route state一致 | Production PyMTLF啟用feature 3留給Slice 5 |
+| `FEAT-03`, `FEAT-04` prerequisites | Unnegotiated route gate與per-resource state | Sender DELETE、status report與multi-edge E2E由Slice 5提供 |
 
 Slice 1不得因某個case只完成wire prerequisite就將整個procedure case標成通過。
 

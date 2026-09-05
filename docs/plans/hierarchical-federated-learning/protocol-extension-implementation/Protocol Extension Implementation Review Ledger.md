@@ -2,7 +2,8 @@
 
 日期：2026-09-04
 
-狀態：Slice 2 Committed／`PyMTLF` closing commit `0e87ef1`
+狀態：Slice 2 Committed／`PyMTLF` closing commit `0e87ef1`；Slice 4A detailed plan
+Approved for Implementation；Slice 4、5 detailed plan review延後至Slice 4A完成後
 
 相關文件：
 
@@ -10,6 +11,9 @@
 - [Slice Map](./Protocol%20Extension%20Implementation%20Slice%20Map.md)
 - [Slice 1 Detailed Plan](./slices/Slice%201%20Wire%20Contract%20and%20Resource%20Lifecycle%20Foundation%20Detailed%20Plan.md)
 - [Slice 2 Detailed Plan](./slices/Slice%202%20Candidate%20Pool%20Policy%20and%20Local%20Contract%20Execution%20Detailed%20Plan.md)
+- [Slice 4A Detailed Plan](./slices/Slice%204A%20Digest%20Simplification%20and%20Contract%20Cleanup%20Detailed%20Plan.md)
+- [Slice 4 Detailed Plan](./slices/Slice%204%20Controlled%20Local%20Training%20Workload%20Detailed%20Plan.md)
+- [Slice 5 Detailed Plan](./slices/Slice%205%20Protocol-driven%20Hierarchy%20Integration%20Detailed%20Plan.md)
 
 ---
 
@@ -100,9 +104,11 @@ Slice 1 code finding。
   subscription dispatch（Slice 2）；
 - `future-phase handoff`：retained-result index、lookup與outcome producer（Slice 3）；
 - `future-phase handoff`：Root／Branch protocol-mode orchestration、feature 3 production
-  advertisement、ADRF global-model distribution與sender cleanup（Slice 4）；
-- `future-phase handoff`：legacy model-bundle cutover與移除（Slice 5）；
-- `integration verification gap`：real NRF、ADRF、MongoDB、multi-NWDAF testbed與
+  advertisement、ADRF global-model distribution與sender cleanup（Slice 5）；
+- `future-phase handoff`：除whole-artifact key外的既有digest contract清理（Slice 4A）；
+- `future-phase handoff`：controlled MNIST local workload與held-out evaluation（Slice 4）；
+- `future-phase handoff`：legacy model-bundle cutover與移除（Slice 6）；
+- `integration verification gap`：controlled local workload、real NRF、ADRF、multi-NWDAF testbed與
   protocol-driven HFL E2E。
 
 這些項目不改變 Slice 1 僅完成wire contract與resource lifecycle foundation的邊界。
@@ -183,7 +189,9 @@ Slice 2 production closing commit：`PyMTLF` `0e87ef1`。
 
 - Root／Branch protocol-mode message wiring與recursive subscription forwarding；
 - feature 3 production advertisement／negotiation success；
-- ADRF global-model distribution及real NRF／ADRF／MongoDB／multi-NWDAF E2E；
+- Controlled local workload、ADRF global-model distribution及real NRF／ADRF／multi-NWDAF E2E；
+- 除whole-artifact repository key外的bundle、model、training evidence、Notify、topology與
+  collection digest cleanup；
 - HTTP establishment／DELETE outcome、real Notify relay與peer callback E2E；
 - retained-result index、lookup、retention lifecycle與recovery runtime。
 

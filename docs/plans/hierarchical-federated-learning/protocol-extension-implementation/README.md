@@ -2,8 +2,8 @@
 
 日期：2026-09-04
 
-狀態：Slice 1 Committed；Slice 2 detailed plan Approved for Implementation；後續
-Slice 2 production implementation 尚未開始
+狀態：Slice 1、2 Committed；Slice 4A detailed plan Approved for Implementation；Slice 4、5
+detailed plan review延後至Slice 4A完成後；production implementation尚未開始
 
 ## 文件定位
 
@@ -16,6 +16,19 @@ implementation；本分類則負責將已確認的 topology、policy、strategy�
 feature negotiation semantics 實作到正式 `Nnwdaf_MLModelTraining` message flow。
 Retained-result fields仍保留在candidate wire contract，但其result保存、lookup與
 replacement recovery暫不納入目前implementation slices。
+
+Protocol integration前先完成兩個獨立supporting slices。Slice 4A清理既有多層digest
+contract；Slice 4再建立known-workload boundary。既有標準
+`UE_COMMUNICATION`可繼續使用`consumer_subscription`資料路徑；controlled image
+classification則讓每個Client依local config選擇MNIST或CIFAR-10並讀取部署前放置的
+local shard。Dataset工作一次產出所有shards，deployment使用共同config template及
+per-Client read-only mount，不要求每個PyMTLF執行preparation或維護manifest／hash。
+後者用於隔離protocol／hierarchy behavior，不解讀為標準NWDAF analytics資料，也不把
+dataset path加入protocol extension。
+
+Slice 4A只保留完整壓縮artifact bytes的SHA-256 repository key及URL/body verification；bundle
+component、model／weights、scope／dataset／tensor、Notify body、topology與collection
+content digest均不再成為後續runtime contract。
 
 ## 主計畫
 

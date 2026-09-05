@@ -39,7 +39,7 @@ local orchestration primitives，能夠：
   sample-weighted aggregation path，不建立第二套 trainer 或 aggregator；
 - 對 topology update 產生 establishment／DELETE intents，並維護 direct-child
   relationship status；
-- 產生可供 Slice 4 放入 `x-flTopologyReport` 的 realized status snapshot；
+- 產生可供 Slice 5 放入 `x-flTopologyReport` 的 realized status snapshot；
 - 修正 legacy hierarchy assignment preparation 的單次取得與 artifact ownership，
   使同一個 logical assignment 不再因 generic 與 typed validation 各自擁有
   transport 而下載兩次。
@@ -103,7 +103,7 @@ boundary mapping。
 - `FederatedTrainer.train()`已接受epochs與FedProx `proximal_mu`，
   `FederatedTrainer.aggregate()`已依sample count做weighted aggregation。
 - Legacy hierarchy將upper/lower process、round、artifact與cleanup完整串起；本slice
-  必須保留該回歸，不能用candidate primitive取代尚未完成的Slice 4 wiring。
+  必須保留該回歸，不能用candidate primitive取代尚未完成的Slice 5 wiring。
 
 ### 2.3 Go→NRF boundary evidence
 
@@ -190,7 +190,8 @@ decision，不可在PyMTLF繞過containing Go NWDAF直接連NRF。
 - Legacy assignment／preparation-result bundle移除。
 - Multi-NWDAF real-process或testbed evidence。
 
-Topology wiring、ADRF flow與legacy migration由Slice 4–5負責；retained-result runtime
+Controlled local workload由Slice 4負責；topology wiring、ADRF flow與legacy migration由
+Slice 5–6負責；retained-result runtime
 暫緩。Slice 2可以產生transport intents與report values，但不能把未送出或只在unit
 test內執行的intent描述為protocol side effect。
 
@@ -232,7 +233,7 @@ snapshot，不得以缺席作pruning依據。
 
 Pool由擁有direct-child FL process的local coordinator保存。Go route、NRF與model artifact
 都不是candidate pool owner。Slice 2 pool不持久化；backend generation reset後失效，
-Slice 4不得從stale report或NRF response自動恢復舊ownership。
+Slice 5不得從stale report或NRF response自動恢復舊ownership。
 
 Pool的reconcile、status update、round selection、intent completion與snapshot必須由同一
 lock保護；外部HTTP或training operation不得持有該lock。每個輸出intent攜帶pool
@@ -252,7 +253,7 @@ contract。Resolution順序固定如下：
    時回`RequirementsError`，不得靜默改成legacy value。
 
 Slice 2不新增production config key。Local resolver constructor接受typed defaults；
-Slice 4在啟用protocol mode前，必須將實際configuration映射到此boundary。這避免本slice
+Slice 5在啟用protocol mode前，必須將實際configuration映射到此boundary。這避免本slice
 預先固定migration selector或改動Leaf／Branch部署設定，同時讓所有省略欄位都有
 獨立於request的authoritative source。
 
@@ -365,14 +366,14 @@ candidate使用的snapshot freshness；實際是否命中cache或送出NRF reque
 - concurrent或late refresh result必須以scope與snapshot revision fencing，不能覆蓋較新
   contract或較新discovery observation。
 
-Slice 2完成snapshot value、freshness gate、reconciliation與deterministic intents；Slice 4
+Slice 2完成snapshot value、freshness gate、reconciliation與deterministic intents；Slice 5
 才負責在production coordinator中於需要建立新relationship時呼叫refresh並執行後續HTTP
 subscription。Failed／inactive record在report delivery後的最終history pruning也留給
-Slice 4，因為Slice 2沒有Notify delivery acknowledgement。
+Slice 5，因為Slice 2沒有Notify delivery acknowledgement。
 
 ### 4.4 Establishment與relationship lifecycle
 
-Candidate pool本身不發HTTP request，而是產生typed local intents；Slice 4將intent接到
+Candidate pool本身不發HTTP request，而是產生typed local intents；Slice 5將intent接到
 既有FL Server subscription client。Transition固定如下：
 
 ```text
@@ -467,7 +468,7 @@ Reconciliation規則：
 - explicit重新設為enabled會解除該identity prohibition並回到可resolve／establish狀態。
 
 對`DEPLOYING`或`ACTIVE` candidate停用時，pool立即從eligible／selected-future set排除，
-產生帶resource location與revision的DELETE intent並將relationship設為`INACTIVE`。Slice 4
+產生帶resource location與revision的DELETE intent並將relationship設為`INACTIVE`。Slice 5
 執行DELETE後回填：`204`／`404`使用`REMOVED_BY_POLICY`；timeout或communication error
 分別保存`RESPONSE_TIMEOUT`／`COMMUNICATION_FAILURE`並保留cleanup retry intent。任何
 舊revision的late result皆不得使candidate回到`ACTIVE`或進入aggregation。
@@ -488,7 +489,7 @@ Snapshot builder產生一個`FlTopologyReport` domain value：
 - output依canonical identity排序，使同一state產生stable representation；
 - 未知descendant status／cause原樣保存，但未知status不計入activeCount。
 
-Snapshot不帶descendant `roundInd`，也不負責發Notify。Slice 4才會把snapshot放入
+Snapshot不帶descendant `roundInd`，也不負責發Notify。Slice 5才會把snapshot放入
 `x-flTopologyReport`並交給既有callback lifecycle。
 
 ### 4.9 Legacy hierarchy assignment ingress cleanup
@@ -522,7 +523,7 @@ one HTTP GET
 
 這項修正先作為 Slice 2 的 baseline remediation，因為本 slice 會繼續延伸
 `FLClientEngine`、而 protocol path 成立前仍需保留 legacy HFL regression。它不改變
-Slice 4 將 preparation 改為 model-free 的方向。
+Slice 5 將 preparation 改為 model-free 的方向。
 
 ---
 
@@ -530,26 +531,27 @@ Slice 4 將 preparation 改為 model-free 的方向。
 
 | Baseline stage | 處置 | Slice 2處理 |
 | --- | --- | --- |
-| Trigger／initial tree production | 核准延後 | Root protocol producer留給Slice 4 |
+| Trigger／initial tree production | 核准延後 | Root protocol producer留給Slice 5 |
 | Candidate typed parse與resource storage | 沿用且不改變語意 | 重用Slice 1 typed models與persistent representation |
 | Legacy assignment ingress | 修正 | 同一logical assignment只取得一次；在同一份bytes上完成typed validation與plan adoption |
 | Node contract resolution | 調整 | 加入effective policy／strategy／`reportAfter`與local-default boundary |
 | Explicit identity discovery | 沿用並抽取共用filter | 保留exact resolver semantics |
 | Delegated discovery | 調整 | 新增省略target ID的list-discovery，保存`validityPeriod`／`validUntil`並reconcile successful snapshot；不改Go／NRF schema |
-| Candidate establishment | 調整但transport延後 | 建立pool、ordering、state與intents；NRF-derived資訊過期時不得建立relationship；HTTP wiring留給Slice 4 |
+| Candidate establishment | 調整但transport延後 | 建立pool、ordering、state與intents；NRF-derived資訊過期時不得建立relationship；HTTP wiring留給Slice 5 |
 | Preparation readiness | 調整 | 由complete-required改為`minAvailableNodes`＋`minTrainNodes` gate |
 | Round participant selection | 調整 | 由all participants改為凍結selected set；legacy預設仍為all |
 | Leaf local training | 沿用executor並增加binding | `reportAfter(epoch)`與`proximalMu`轉為既有trainer arguments |
-| Intermediate local rounds | 調整local scheduler contract | `reportAfter(round)`決定upper report前lower-round次數；wire loop留給Slice 4 |
+| Intermediate local rounds | 調整local scheduler contract | `reportAfter(round)`決定upper report前lower-round次數；wire loop留給Slice 5 |
 | Result validation | 沿用且不改變語意 | 所有artifact／round／scope／digest validation保留 |
 | Completion／aggregation | 調整 | selected terminal outcomes通過policy後才呼叫既有aggregator |
 | Model/result publication | 沿用且不改變語意 | 不改workspace artifact內容與sample-weighted output |
 | Topology update | 調整local state | Reconcile upstream replacement並保留local provenance |
-| DELETE／cleanup | 調整但transport延後 | 產生DELETE intent、INACTIVE state與late-result fence；HTTP留給Slice 4 |
-| Topology Notify | 調整producer、transport延後 | 產生snapshot；callback wiring留給Slice 4 |
+| DELETE／cleanup | 調整但transport延後 | 產生DELETE intent、INACTIVE state與late-result fence；HTTP留給Slice 5 |
+| Topology Notify | 調整producer、transport延後 | 產生snapshot；callback wiring留給Slice 5 |
 | Failure／timeout | 沿用deadline並增加policy分類 | Missing selected result在deadline後才成failure；discovery失敗不清pool |
 | Restart／generation reset | 沿用失效語意 | Candidate pool與in-flight intents隨PyMTLF generation失效，不做恢復 |
-| Final validation／cutover | 沿用legacy，protocol核准延後 | Slice 4／5處理protocol integration與migration closure |
+| Controlled workload | 核准延後 | Slice 4處理MNIST local workload與held-out evaluation |
+| Final validation／cutover | 沿用legacy，protocol核准延後 | Slice 5／6處理protocol integration與migration closure |
 
 ---
 
@@ -600,7 +602,7 @@ active candidate pool + effective policy
 ```
 
 除了§4.9的legacy assignment ingress修正外，本slice不改model transport。Round
-input與result URL仍由既有execution owner提供；ADRF global-model path是Slice 4工作。
+input與result URL仍由既有execution owner提供；ADRF global-model path是Slice 5工作。
 
 ### 6.4 Legacy assignment ingress
 
@@ -625,7 +627,7 @@ old effective subtree + new effective subtree
   -> establishment / DELETE intents + relationship revisions
   -> direct-child outcomes
   -> stable FlTopologyReport snapshot
-  -> Slice 4 Notify producer
+  -> Slice 5 Notify producer
 ```
 
 Pool只產生intent與snapshot。實際peer route、HTTP outcome及Notify delivery分別仍由既有
@@ -743,19 +745,19 @@ Implementation期間只更新本plan status、同一phase review ledger及必要
 
 | Cases | Slice 2 direct evidence | 明確延後 |
 | --- | --- | --- |
-| `POL-01`, `POL-02` | Active count readiness table；不達門檻無round dispatch | Real subscription establishment由Slice 4 |
-| `POL-03` | Formula、priority／random selection與frozen set tests | 跨NWDAF round wiring由Slice 4 |
-| `POL-04`, `POL-05` | All-terminal outcome、failure policy、rate boundary與no-aggregate tests | Peer callback E2E由Slice 4 |
-| `PATCH-01` | Upstream replacement保留local provenance | Go effective PATCH已由Slice 1；real resource wiring由Slice 4 |
-| `PATCH-02` | Disabled active child立即排除、INACTIVE及DELETE intent | HTTP DELETE outcome由Slice 4 |
-| `PATCH-03` | Omission、prohibition解除與authorized rediscovery state tests | Cross-edge PATCH scenario由Slice 4 |
-| `SCOPE-01` | Node-local policy／strategy／`reportAfter` resolver與role tests | Recursive message forwarding由Slice 4 |
-| `NOT-08` procedure portion | Unknown descendant status／cause保存、轉送snapshot且不計ACTIVE | Real Notify relay由Slice 4 |
+| `POL-01`, `POL-02` | Active count readiness table；不達門檻無round dispatch | Real subscription establishment由Slice 5 |
+| `POL-03` | Formula、priority／random selection與frozen set tests | 跨NWDAF round wiring由Slice 5 |
+| `POL-04`, `POL-05` | All-terminal outcome、failure policy、rate boundary與no-aggregate tests | Peer callback E2E由Slice 5 |
+| `PATCH-01` | Upstream replacement保留local provenance | Go effective PATCH已由Slice 1；real resource wiring由Slice 5 |
+| `PATCH-02` | Disabled active child立即排除、INACTIVE及DELETE intent | HTTP DELETE outcome由Slice 5 |
+| `PATCH-03` | Omission、prohibition解除與authorized rediscovery state tests | Cross-edge PATCH scenario由Slice 5 |
+| `SCOPE-01` | Node-local policy／strategy／`reportAfter` resolver與role tests | Recursive message forwarding由Slice 5 |
+| `NOT-08` procedure portion | Unknown descendant status／cause保存、轉送snapshot且不計ACTIVE | Real Notify relay由Slice 5 |
 | `TOP-09` executor closure | Known forward-compatible fields有executor；未知selection／aggregation／unit拒絕且無fallback | Wire decode prerequisite已由Slice 1 |
-| Slice 2 discovery freshness | `validityPeriod` capture、expiry／scope gate、successful snapshot reconciliation與failure preservation tests | Production refresh invocation由Slice 4 coordinator完成 |
+| Slice 2 discovery freshness | `validityPeriod` capture、expiry／scope gate、successful snapshot reconciliation與failure preservation tests | Production refresh invocation由Slice 5 coordinator完成 |
 
 Slice 2不得將只有intent或snapshot test的case標為完整protocol conformance。Review ledger
-需清楚標示local procedure evidence與Slice 4 E2E evidence的界線。
+需清楚標示local procedure evidence與Slice 5 E2E evidence的界線。
 
 ---
 
@@ -885,7 +887,7 @@ nwdaf-docs Slice 2 evidence/status
 - [x] Candidate pool只由direct-child local coordinator擁有。
 - [x] Discovery仍經containing Go NWDAF，不由PyMTLF直連NRF。
 - [x] Request／profile／local defaults各自有獨立authoritative source。
-- [x] Pool只產生intents與snapshot，不假裝完成Slice 4 transport。
+- [x] Pool只產生intents與snapshot，不假裝完成Slice 5 transport。
 - [x] Feature 3在本slice後仍未於production flow啟用。
 - [x] Go consumer繼續單獨擁有NRF cache；PyMTLF只保存candidate freshness metadata，
   沒有建立第二套cache或直連NRF。

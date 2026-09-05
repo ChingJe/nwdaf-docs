@@ -311,6 +311,34 @@ If closing the finding requires changing ownership, data flow, an external
 contract, or the approved verification level, stop and request a decision
 before editing that broader boundary.
 
+### 5.3 Avoid Hash-Level Validation By Default
+
+Treat new checksum, hash, and digest validation as overdesign unless an
+existing standard or external contract explicitly requires it.
+
+- Do not add operator-maintained expected hashes, duplicate derived hashes in
+  configuration, sidecar integrity manifests, or multi-stage digest checks as
+  general hardening.
+- Locally provisioned files, datasets, and configuration should use only the
+  loading, parsing, and semantic handling required by the supported behavior.
+  Do not add hash-based proof that trusted local deployment input has not
+  changed.
+- Do not make every deployed process run a preparation or certification step
+  solely to create or validate hashes. Prefer one deployment input and normal
+  runtime consumption.
+- Tests must not introduce hash-mismatch cases for a mechanism that the
+  production contract does not require.
+- An existing contract-required hash may remain at the boundary that defines
+  it, but it must not be copied into unrelated configuration or internal state.
+  Existing hash checks are not precedent for adding new ones elsewhere.
+- Adding a new hash-level check requires either an explicit standard or
+  external-contract requirement, or an explicit user decision. A hypothetical
+  corruption or tampering scenario is not sufficient by itself.
+
+This rule governs new plans and implementation. Removing an already supported
+wire field or externally relied-upon check remains a contract change and must
+follow the normal scope and decision gates.
+
 ---
 
 ## 6. Decision Gates And Blocking Policy

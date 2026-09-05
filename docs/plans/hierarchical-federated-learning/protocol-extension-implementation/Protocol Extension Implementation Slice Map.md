@@ -2,8 +2,9 @@
 
 日期：2026-09-04
 
-狀態：Slice 2 detailed plan Approved for Implementation／active sequence為
-Slice 1、2、4、5；Slice 3暫緩
+狀態：Slice 1、2 Committed；Slice 4A detailed plan Approved for Implementation；Slice 4、5
+detailed plan review延後至Slice 4A完成後；active sequence為Slice 1、2、4A、4、5、6；
+Slice 3暫緩
 
 相關文件：
 
@@ -105,7 +106,7 @@ node能解析 explicit subtree、補充 delegated candidates、套用 policy／s
 - Unknown forward-compatible values可保存，但無 known executor時拒絕明確 contract。
 - 修正legacy hierarchy assignment preparation對同一URL的duplicate GET，以單次
   transport在同一份bytes上完成typed validation與plan-owned adoption；不改變其他
-  model transport或Slice 4的model-free preparation方向。
+  model transport或Slice 5的model-free preparation方向。
 
 ### 驗收條件
 
@@ -147,7 +148,96 @@ correlation與cleanup contract。
 
 ---
 
-## 5. Slice 4 — Protocol-driven Hierarchy Integration
+## 5. Slice 4A — Digest Simplification and Contract Cleanup
+
+### 行為
+
+在controlled workload與protocol E2E integration前簡化PyMTLF既有hash contract。只保留
+完整壓縮artifact bytes的SHA-256 repository key及URL/body verification，移除bundle
+component、model／weights、scope／dataset／tensor、Notify body、topology與
+training-data collection的content digest。
+
+### 涉及的 repositories
+
+- `PyMTLF/`
+- `nwdaf-docs/`：更新plan與review evidence
+- `nwdaf-resources/`：只有fixtures或scenario仍依賴已移除欄位時才納入
+- `NWDAF/`：預設read-only；只有private artifact header contract實際需要同步時才納入
+
+### 納入範圍
+
+- 保留`ArtifactMetadata.key`與artifact URL中的whole-artifact SHA-256；下載者只將實際
+  bytes與URL key比較。
+- 移除`X-Artifact-SHA256` duplicate header requirement與`file_digests`。
+- 移除model／preprocessing／weights lineage digests，改用artifact key、typed model／
+  workload identity、process／round state及state-dict compatibility。
+- 移除scope、dataset、tensor、topology、request／profile／collection與record content
+  hashes，改用現有明確identity與typed state。
+- FL Notify改為resource／stage state idempotency：第一個terminal outcome生效，後續同
+  stage terminal retry不再套用。
+- 更新persisted training-data ledger migration、fixtures與flat／distributed／legacy HFL
+  regression。
+
+### 驗收條件
+
+- Production code只有whole-artifact repository key及URL/body verification仍使用
+  cryptographic hash。
+- 新產生的bundle、round／result metadata、training evidence與local state不包含其他
+  digest contract。
+- Local shard不需要manifest／hash；既有FL與training-data collection流程可回歸。
+- Slice 4與Slice 5不再建立於已移除digest之上。
+
+詳細內容見
+[Slice 4A Detailed Plan](./slices/Slice%204A%20Digest%20Simplification%20and%20Contract%20Cleanup%20Detailed%20Plan.md)。
+
+---
+
+## 6. Slice 4 — Controlled Local Training Workload
+
+### 行為
+
+在protocol wiring前建立known-workload boundary：既有`UE_COMMUNICATION`可繼續走
+標準`consumer_subscription`資料路徑；controlled experiment則由local config選擇MNIST
+或CIFAR-10 shard及相應image-classification preprocessing。既有FL Server重用
+sample-weighted aggregation，final global model再由獨立held-out test set計算accuracy。
+
+### 涉及的 repositories
+
+- `PyMTLF/`
+- `nwdaf-docs/`：更新plan與review evidence
+
+`NWDAF/`是read-only runtime dependency；本slice不改protocol、NRF、ADRF或Go SBI。
+
+### 納入範圍
+
+- `ue_communication_forecasting`與`image_classification` known workload profiles。
+- `consumer_subscription`、`private_api`與`local` data-source選擇及合法組合validation。
+- MNIST／CIFAR-10 local loader；local config只保存dataset及shard path。
+- 共用config template與per-Client read-only mount mapping；不執行per-instance dataset
+  preparation。
+- Dataset-specific shape／normalization、cross-entropy與accuracy。
+- Profile-specific model bundle／FL artifact contract；traffic profile保持原有語意。
+- Existing FedProx local penalty與sample-weighted state-dict aggregation重用。
+- Branch-only aggregation不要求local dataset。
+- 獨立held-out evaluator與不依賴UPF／ADRF Data Management／runtime下載的local smoke。
+
+### 驗收條件
+
+- 真實tensor／loss／optimizer／aggregation path完成至少兩個Clients的controlled FL smoke。
+- Image-classification bundle不需要假的`scaler.pkl`，UE Communication bundle contract與
+  `consumer_subscription` regression保持通過。
+- Dataset與shard path只來自local config，不進入`Nnwdaf_MLModelTraining` message；
+  不要求manifest或digest設定。
+- Final model可在獨立held-out test set產生可追溯accuracy evidence。
+
+### 延後項目
+
+- Protocol resource wiring、feature 3、topology Notify與ADRF global-model distribution。
+- 正式Flat／HFL participant-scale experiment與non-IID維度。
+
+---
+
+## 7. Slice 5 — Protocol-driven Hierarchy Integration
 
 ### 行為
 
@@ -169,9 +259,10 @@ DELETE behavior無法支援本 flow，需先更新 slice boundary再修改。
 ### 納入範圍
 
 - Root PyMTLF產生 UUID hierarchy-wide `mlCorreId`與每個 direct target subtree。
-- FL Server preparation subscription builder 送出標準必要／training requirement fields、
+- FL Server preparation subscription builder 送出標準必要fields、
   `mLPreFlag: true` 與 topology contract，但不附 `mLModelInfos`；Branch／Leaf
-  preparation 不下載或驗證 model artifact。
+  preparation 不下載或驗證 model artifact，也不讀取local dataset；真正開始local
+  training時才由Slice 4 loader讀取deployment掛載的shard。
 - Intermediate逐級建立 model-free downstream preparation subscriptions，並回傳 realized
   report；Root 只有在 report 滿足 topology readiness 後才開始 model distribution。
 - Root 每輪發布 model-payload immutable temporary global-model artifact，依 realized
@@ -205,6 +296,8 @@ DELETE behavior無法支援本 flow，需先更新 slice boundary再修改。
   state不得因該operation部分更新。
 - Feature 3逐 edge negotiation；必要 feature未接受時清除 resource並回報 failure。
 - Legacy／protocol execution selector由 Root orchestration明確控制。
+- Slice 4的controlled local image workload是主要protocol E2E資料路徑；不把
+  `dataAvReq`誤寫成MNIST／CIFAR-10 local filesystem selection contract。
 
 ### 驗收條件
 
@@ -233,7 +326,7 @@ DELETE behavior無法支援本 flow，需先更新 slice boundary再修改。
 
 ---
 
-## 6. Slice 5 — Migration and Regression Closure
+## 8. Slice 6 — Migration and Regression Closure
 
 ### 行為
 
@@ -252,10 +345,11 @@ model／result／evidence，不再是第二套 orchestration source。
 - 移除 `BranchAssignmentMetadata`、`LeafAssignmentMetadata`、
   `PreparationResultMetadata` 與 hierarchy-only artifact roles 的 active runtime path。
 - 刪除 Root preparation-result download／validation與 Branch Leaf-assignment republish。
-- 保留 model／round／aggregate／validation artifact與 provenance。
+- 保留 model／round／aggregate／validation artifact與必要的明確process／round／sample
+  provenance；不得恢復Slice 4A已移除的digest contract。
 - 更新 fixtures、real-process scenarios與操作文件。
 - 執行 flat、distributed FL、legacy migration checkpoint與 protocol HFL regression；
-  legacy path是否最終刪除依 Slice 4 review結果提出明確 commit proposal。
+  legacy path是否最終刪除依 Slice 5 review結果提出明確 commit proposal。
 
 ### 驗收條件
 
@@ -267,20 +361,24 @@ model／result／evidence，不再是第二套 orchestration source。
 
 ---
 
-## 7. 執行順序
+## 9. 執行順序
 
 ```text
 Slice 1: wire／resource lifecycle
   -> Slice 2: policy／candidate execution
-  -> Slice 4: protocol-driven E2E integration
-  -> Slice 5: migration closure
+  -> Slice 4A: digest simplification／contract cleanup
+  -> Slice 4: controlled local training workload
+  -> Slice 5: protocol-driven E2E integration
+  -> Slice 6: migration closure
 
 Slice 3: retained-result state（暫緩，不在目前active dependency chain）
 ```
 
-Slice 3的編號與原始邊界只為保留追溯性；目前完成Slice 2後直接準備Slice 4。各active
+Slice 3的編號與原始邊界只為保留追溯性；目前完成Slice 2後先執行Slice 4A，再執行
+Slice 4。Slice 4A編號表示它是protocol integration前新增的supporting work，不代表必須
+晚於Slice 4執行。各active
 slice仍依workspace review規則逐一完成、驗證與交付，不同時累積成一個大型
 working-tree diff。
 
-Slice 1已完成，Slice 2 detailed plan已確認。現在的production implementation work
-unit為Slice 2。
+Slice 1、2已完成並commit。Slice 4A與4 detailed plans已完成盤點，目前等待user
+review；production implementation尚未開始。
