@@ -224,6 +224,33 @@ material to define their Go-facing payload semantics, but use normal Python
 service structure for internal runtime, repository, queue, scheduling,
 training, and model logic.
 
+### 3.4 Experimental Schema Evolution
+
+Project-defined schemas used only by the current experimental implementation
+should evolve in place. Rapidly changing private payloads, artifacts, fixtures,
+configuration, and persisted test state do not require backward-compatible
+readers by default.
+
+- Update the current producer, consumer, stored representation, fixtures, and
+  tests together, then remove the superseded shape.
+- Do not retain ignored legacy fields, compatibility aliases, fallback readers,
+  migration branches, or parallel old/new models merely because an earlier
+  experiment used them.
+- Do not add or retain project-defined `v1`/`v2` type names, versioned paths,
+  `schemaVersion` fields, or equivalent revision markers solely to distinguish
+  obsolete experimental shapes. Use the single current schema directly.
+- Prefer deleting and regenerating disposable experimental artifacts and local
+  state over maintaining speculative migration code.
+- Backward compatibility requires a confirmed current consumer, non-disposable
+  state, or an explicit user decision. Record that requirement in the active
+  plan before implementing the compatibility path.
+
+Original 3GPP-defined schemas are outside this rule. Preserve standard-defined
+information elements, field semantics, protocol behavior, compatibility rules,
+and release distinctions exactly as required by the applicable specification.
+Do not remove or rename a 3GPP field or version concept merely because the
+project's surrounding implementation is experimental.
+
 ---
 
 ## 4. Language And Code Quality

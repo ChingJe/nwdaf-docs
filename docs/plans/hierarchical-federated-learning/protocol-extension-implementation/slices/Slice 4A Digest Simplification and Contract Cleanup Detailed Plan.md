@@ -2,7 +2,7 @@
 
 日期：2026-09-05
 
-狀態：Approved for Implementation／production implementation尚未開始
+狀態：Plan Ready for User Review／第二波production implementation尚未開始
 
 相關文件：
 
@@ -34,6 +34,20 @@
 這是既有跨flat／distributed／hierarchical FL與training-data collection的contract
 cleanup，不是Slice 4 dataset功能，也不改變Slice 1／2已完成工作的歷史證據。Slice 4
 與Slice 5都必須建立在本slice完成後的簡化contract上，不得重新引入上述digest。
+
+第一波實作完成digest語意收斂後，第二波依據development policy的
+experimental schema evolution規則，繼續精簡同一批project-private contract：
+
+- 移除只用來區分舊實驗格式的`schemaVersion`、`bundle_schema_version`與
+  `contract_version`；
+- 移除對舊欄位的特別容忍、別名、fallback、migration reader與舊新分支；
+- producer、consumer、persisted representation、fixtures與tests同步改用單一現行格式；
+- 舊artifact、temporary FL state、training-data ledger與其他可拋棄實驗資料
+  不提供轉換或resume，由operator刪除後重新產生。
+
+這不是對所有出現`v1`或version的文字做機械式刪除。原生3GPP schema、
+Release區分與標準API path必須保留；現行`/internal/v1`private route也不是本
+slice中為舊格式保留的parallel path，不在這次schema cleanup內改名。
 
 ---
 
@@ -77,6 +91,9 @@ Archive origin、size、path traversal、entry set與safe extraction仍是必要
 | topology digest | static topology與scope fingerprint | 移除；使用明確topology內容、`mlCorreId`、resource revision與runtime assignment state |
 | collection request／profile digest | persisted state重啟時比較config | 持久化並比較typed request／profile representation，不建立摘要欄位 |
 | data callback／record content digest | inbox檔名與內容去重 | inbox改用operation UUID；優先使用來源提供的native identity，沒有native identity時不再宣稱content-level deduplication |
+| `schemaVersion`／`bundle_schema_version`／`contract_version` | 區分project-private persisted state、bundle與metadata格式 | 移除版本欄位與對應validator，只保留單一現行typed schema |
+| `file_digests`舊欄位容忍 | 讓新reader繼續讀取舊bundle | 移除特別忽略／剝除邏輯與legacy acceptance tests，舊bundle重新產生 |
+| training-data ledger v2／v3 reader | 讀取舊`schemaVersion`與`storedInboxDigests` | 移除version branch與舊欄位fallback，只讀寫現行ledger representation |
 
 `upstream-assigned`／`locally-discovered` provenance不是cryptographic digest，不在本slice
 移除。一般Git commit hash與第三方cache key也不屬於production runtime contract。
@@ -137,19 +154,51 @@ FL Server以既有correlation與stage state處理callback：
 
 ---
 
-## 5. Compatibility與migration boundary
+## 5. Experimental schema與compatibility boundary
 
-- 新產生的bundle與round／result metadata不得包含被移除的digest欄位。
-- 既有durable model bundle若包含`file_digests`，migration reader可在明確的legacy
-  compatibility path讀取但不驗證；新writer不得再輸出。該legacy欄位接受路徑由
-  Slice 6隨舊bundle migration一併移除。
-- Temporary FL round artifacts不提供跨版本resume；active process在deployment升級時
-  依既有restart boundary失效，不為舊digest metadata新增轉換器。
-- Training-data persisted ledger升級為不含request／profile digests的representation；
-  若舊record已保存完整typed request／profile，loader由這些欄位完成migration，不因
-  缺少或不符舊digest拒絕啟動。
-- External 3GPP SBI schema沒有新增或移除hash欄位；本slice處理的是project-private
-  artifact與PyMTLF local state。
+### 5.1 單一現行格式
+
+- 新產生的bundle、round／result metadata、hierarchy metadata、durable model
+  state、training-data inbox與ledger不得包含被移除的digest或project-private
+  version欄位。
+- Current producer、consumer、Pydantic model、serializer、fixture與test同步使用單一
+  schema，不建立`V1`／`V2`type或parallel reader。
+- 對於已有strict typed boundary，當前格式以多餘欄位拒絕舊格式；不為舊欄位
+  另寫「接受但忽略」的特例。
+- 通用archive parser不必辨識每一個歷史版本，但進入FL／hierarchy的typed
+  contract boundary後必須只驗證現行欄位與語意。
+
+### 5.2 移除的舊版處理
+
+第二波實作必須一併移除：
+
+- 讀取到`file_digests`時特別容忍或在publish前以`pop`剝除的邏輯；
+- training-data ledger同時接受v2／v3的version branch；
+- `storedInboxIds`缺少時改讀`storedInboxDigests`的fallback；
+- 對舊request／profile digest或舊格式做特別忽略、別名、轉換或migration的程式與測試；
+- 只為舊實驗格式存在的schema-version literals、validator與fixtures。
+
+不為舊格式新增替代migration工具。舊artifact、`model-state.json`、
+training-data ledger、inbox與temporary round state都視為可拋棄實驗狀態；部署
+本change set前應刪除並由當前runtime重新建立。
+
+### 5.3 保留邊界
+
+- External 3GPP SBI schema、standard-defined fields、Release區分與標準API version
+  path不變。
+- `runtime_compatibility`表達artifact的實際runtime requirements，不是schema
+  revision marker，保留。
+- `modelUniqueId`、generation、resource revision、`mlCorreId`與`roundInd`都有獨立
+  runtime語意，不因移除schema version而刪除。
+- 由目前seed catalog建立第一份durable model state的bootstrap仍保留；它不是讀取舊
+  persisted schema的migration。若程式或fixture仍以migration命名，第二波應改成
+  initialization／bootstrap語意，避免和已移除的舊版轉換混淆。
+- 保護現行行為的regression／policy oracle仍可保留；本次移除的是schema-level legacy
+  acceptance，不是把所有含有compatibility字樣的行為測試機械式刪除。
+- 現行`/internal/v1`private route是跨process endpoint namespace，不是用來保留舊新
+  schema的fallback path；改路由屬於另一個跨邊界change，本slice不處理。
+- Slice 6仍負責舊hierarchy assignment／preparation-result runtime path的最終移除；
+  那是orchestration mode closure，不是本slice保留private schema compatibility的理由。
 
 ---
 
@@ -163,12 +212,16 @@ FL Server以既有correlation與stage state處理callback：
   與duplicate response header；
 - `core/bundle_builder.py`、`core/fl_workspace.py`、`core/fl_artifacts.py`：簡化artifact
   metadata、builder、loader與validation；
+- `core/fl_hierarchy.py`、`core/fl_hierarchy_artifacts.py`：移除hierarchy、assignment與
+  preparation-result metadata的project-private contract version；
 - `core/fl_client.py`、`core/fl_server.py`、`core/fl_root.py`、
   `core/fl_hierarchy_artifacts.py`：改用explicit process／round／artifact／model state；
 - `core/training_scope.py`、`core/training_data.py`、`core/trainer.py`、
   `core/training_jobs.py`：移除scope及dataset evidence digests；
 - `core/training_data_collection.py`、`core/dataset.py`：移除callback、request、profile、
   collection與record content hashes；
+- `core/model_records.py`、`core/publication.py`與initial-state builder：移除durable model
+  state中只用來區分實驗格式的schema version，不保留舊record reader；
 - `core/fl_topology.py`、`core/fl_flat.py`、`core/fl_orchestration.py`：移除topology與static
   scope hashes。
 
@@ -180,7 +233,9 @@ artifact key者需逐一證明，不可僅依名稱批次刪除。
 
 - `NWDAF/`：目前沒有production SHA／digest validation；預設read-only，只有實際private
   artifact header contract需要同步移除時才納入。
-- `nwdaf-resources/`：只有fixtures／scenario仍產生或驗證已移除欄位時修改。
+- `nwdaf-resources/`：fixtures／scenario及FL contract examples同步移除project-private
+  version fields；`contracts/federated_learning/v1/`改為單一未版本化的
+  `contracts/federated_learning/`目錄，不保留平行舊目錄。
 - `nwdaf-docs/`：更新plan、review evidence與operator-facing artifact說明。
 
 本slice不修改3GPP OpenAPI corpus、candidate schema、NRF或ADRF。
@@ -200,6 +255,9 @@ artifact key者需逐一證明，不可僅依名稱批次刪除。
 - 同一participant／round重送terminal Notify不造成第二次aggregation或state mutation；
 - training-data callback使用UUID inbox並可完成durable processing；
 - restart可載入不含request／profile digest的新ledger；
+- FL artifact、hierarchy metadata、durable model state與training-data ledger的新輸出不含
+  project-private schema／contract version欄位；
+- 未版本化的FL contract examples與current runtime output使用同一欄位組合；
 - static flat、distributed FL及legacy HFL baseline仍能執行。
 
 ### 7.2 必要negative cases
@@ -208,10 +266,12 @@ artifact key者需逐一證明，不可僅依名稱批次刪除。
 - bundle component set、typed metadata或workload compatibility不合法；
 - callback correlation、round或stage不符；
 - state dict keys／shape／dtype不相容；
-- persisted typed request／profile和目前resource語意不一致。
+- persisted typed request／profile和目前resource語意不一致；
+- current strict typed contract收到多餘舊欄位時拒絕，不透過compatibility
+  branch接受或轉換。
 
 不得保留或新增component、weights、tensor、callback-body、topology、request或profile
-hash mismatch tests。
+hash mismatch tests；也不保留「舊格式仍可讀取」或version migration tests。
 
 ---
 
@@ -223,9 +283,13 @@ hash mismatch tests。
 4. 將Notify改為resource／stage state idempotency。
 5. 移除training scope、dataset evidence與training-data collection content hashes。
 6. 移除static topology／scope fingerprint並更新flat／hierarchical state。
-7. 更新persisted ledger migration、fixtures與tests。
-8. 執行focused tests、PyMTLF full suite、ruff及相關real-process regression。
-9. 進行production與test-code review，保留unstaged diff供user review。
+7. 移除artifact／hierarchy metadata、durable model state與training-data ledger的
+   project-private version fields，並移除對舊格式的所有特別分支。
+8. 將FL contract examples移到未版本化目錄，同步更新fixtures、scenario與tests。
+9. 以`rg`審查project-private version markers、legacy aliases、fallback readers、
+   migration branches與compatibility tests，逐項證明已移除或屬於保留邊界。
+10. 執行focused tests、PyMTLF full suite、ruff及相關real-process regression。
+11. 進行production與test-code review，保留unstaged diff供user review。
 
 ---
 
@@ -240,6 +304,7 @@ hash mismatch tests。
   tests/test_health_and_artifact_api.py \
   tests/test_fl_workspace.py \
   tests/test_fl_artifacts.py \
+  tests/test_fl_hierarchy.py \
   tests/test_fl_hierarchy_artifacts.py \
   tests/test_fl_client.py \
   tests/test_fl_server.py \
@@ -252,6 +317,8 @@ hash mismatch tests。
   tests/test_collection_relay.py \
   tests/test_dataset.py \
   tests/test_training_jobs.py \
+  tests/test_model_records.py \
+  tests/test_publication.py \
   tests/test_local_trainer.py \
   tests/test_federated_trainer.py
 .venv/bin/pytest -q
@@ -277,9 +344,20 @@ Slice 4A只有在以下條件全部成立後才可標為Ready for User Review：
 5. Flat、distributed FL、legacy HFL、training-data collection與artifact regression通過。
 6. 既有traffic workload regression通過；Slice 4 plan不要求local shard或新
    image-classification bundle提供manifest／hash。
-7. Slice 4與Slice 5 plans及fixtures不再依賴已移除digest。
-8. Production code、test code與migration compatibility review完成，remaining gaps明列。
+7. Slice 4與Slice 5 plans及fixtures不再依賴已移除digest、project-private version
+   marker或舊格式fallback；其中已知的Slice 4 `bundle_schema_version`／缺少
+   `workload_profile`相容例外必須同步改成單一現行格式。
+8. Production code、test code與legacy compatibility handling review完成，remaining gaps明列。
 9. 所有intended changes保持unstaged／uncommitted供user review。
+10. Project-private FL artifacts、hierarchy metadata、durable model state與training-data
+    ledger不再輸出或要求`schemaVersion`、`bundle_schema_version`、
+    `contract_version`等只用於舊新格式區分的欄位。
+11. `file_digests`容忍、ledger v2／v3 branch、`storedInboxDigests` fallback
+    與其他本slice範圍內的legacy reader／alias／migration code與tests全數移除。
+12. `nwdaf-resources/contracts/federated_learning/`只保留單一現行格式，
+    沒有為舊實驗schema保留`v1`／`v2`平行目錄。
+13. 3GPP-defined fields、Release語意、standard API paths與現行private
+    endpoint namespace沒有被這次schema cleanup誤改。
 
 正式testbed validation不屬於本slice；若local real-process regression尚未執行，必須記為
 remaining gap，不以unit tests代替。
@@ -290,6 +368,57 @@ remaining gap，不以unit tests代替。
 
 - Legacy hierarchy assignment／preparation-result artifact roles的最終移除仍由Slice 6
   處理。
+- 現行`/internal/v1`private routes的重命名不屬於本slice；這些route沒有對應
+  並行的舊新schema reader。
+- 3GPP-defined schema version、Release區分與standard API version path不屬於
+  project-private experimental schema cleanup。
 - Retained-result runtime維持暫緩。
 - Branch failure detection／replacement selector不因移除digest而納入。
 - 不新增signature、HMAC、Merkle tree、dataset certification或其他替代hash方案。
+
+---
+
+## 12. 實作／審查證據
+
+### 12.1 第一波已完成實作
+
+- `PyMTLF/`已將runtime cryptographic hash收斂為完整artifact repository key
+  與URL／body verification；new writers不再產生`file_digests`。第一波暫留的
+  legacy reader容忍屬於第二波必須移除的未完成項目。
+- Model／preprocessing／weights／scope／dataset／tensor／Notify／topology與collection
+  content digests已從runtime contract移除，改由explicit process／round／participant／
+  training scope、typed model contract、state-dict key／shape／dtype與sample count驗證。
+- Notify以participant／stage state實現first-terminal-outcome semantics；Flat與hierarchical
+  path的後續terminal retry都不再改寫已接受結果。
+- Training-data durable inbox改用operation UUID；record有native identity時沿用，無native
+  identity時不再宣稱content-level deduplication。Persisted ledger保存並直接比較
+  typed request／profile；第一波暫留的version 2 reader由第二波移除。
+- `nwdaf-resources/`已更新FL contract examples與scenario evidence，不再產生或要求已
+  移除的digest fields。`NWDAF/`沒有需要同步變更的private artifact contract。
+
+### 12.2 審查發現與修正
+
+- Model compatibility最初會將state-dict insertion order當成contract；已改為比較key set，
+  並保留逐key的shape與dtype驗證。
+- Notify idempotency最初只完整覆蓋hierarchical path；已補上Flat round的terminal
+  retry與termination-first情境。
+- Scenario fixtures仍使用semantic weights／model／preprocessing digests；已改為完整
+  artifact key、explicit workload contract、training scope與sample-count evidence。
+
+### 12.3 驗證證據
+
+- `PyMTLF/`：`ruff check src tests`通過。
+- `PyMTLF/`：Slice 4A focused regression為343 passed、2 skipped。
+- `PyMTLF/`：full regression為688 passed、2 skipped。
+- `nwdaf-resources/`：hierarchical／distributed FL support regression為53 passed。
+- 相關JSON examples已通過parser validation；各repository `git diff --check`通過。
+
+### 12.4 剩餘缺口
+
+- 第二波尚未移除project-private version markers、legacy field tolerance、
+  fallback readers、migration branches與相容性測試；因此本slice尚未達到最終
+  user-review checkpoint。
+- 尚未執行local real-process或正式testbed regression；依本slice boundary記為
+  `integration verification gap`，不以unit／support tests代替。
+- 第一波intended changes與本次plan revision保持unstaged／uncommitted；完成第二波後
+  再進行一次完整review與user-review handoff。
