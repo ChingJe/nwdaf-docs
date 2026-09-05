@@ -2,7 +2,7 @@
 
 日期：2026-09-06
 
-狀態：Slice 1、2、4A、4 Committed；Slice 5 Review Confirmed／Commit Approval Pending
+狀態：Slice 1、2、4A、4、5 Committed；Slice 6 Planning／Review Pending
 
 相關文件：
 
@@ -13,6 +13,7 @@
 - [Slice 4A Detailed Plan](./slices/Slice%204A%20Digest%20Simplification%20and%20Contract%20Cleanup%20Detailed%20Plan.md)
 - [Slice 4 Detailed Plan](./slices/Slice%204%20Controlled%20Local%20Training%20Workload%20Detailed%20Plan.md)
 - [Slice 5 Detailed Plan](./slices/Slice%205%20Protocol-driven%20Hierarchy%20Integration%20Detailed%20Plan.md)
+- [Slice 6 Detailed Plan](./slices/Slice%206%20Migration%20and%20Regression%20Closure%20Detailed%20Plan.md)
 
 ---
 
@@ -317,6 +318,7 @@ Slice 4 production與test changes已由`PyMTLF/` `e71f1d5`收尾，status／revi
 - `optional hardening`：同一round key的並行double-store防漏；現有Root單一active request
   與sequential upper rounds不會觸發。
 
-`NWDAF/`、`PyMTLF/`、`nwdaf-resources/`與`nwdaf-docs/`的intended changes均維持
-unstaged／uncommitted。User已確認review結果；Slice 5不標為Completed，目前等待本次
-commit proposal核准，也未取得push授權。
+Slice 5已分別由`NWDAF/` `256349f`、`PyMTLF/` `554c96d`、
+`nwdaf-resources/` `33729a1`及`nwdaf-docs/` `5b23ce4`收尾。正式multi-host
+testbed仍為integration verification gap；下一個active work unit為Slice 6 migration
+closure。

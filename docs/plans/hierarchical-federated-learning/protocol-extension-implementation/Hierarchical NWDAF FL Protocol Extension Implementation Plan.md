@@ -2,8 +2,8 @@
 
 日期：2026-09-04
 
-狀態：Slice 1、2、4A Committed；Slice 4 Review Confirmed／Commit Approval Pending；
-Slice 5尚未開始；retained-result runtime暫緩
+狀態：Slice 1、2、4A、4、5 Committed；Slice 6 Planning／Review Pending；
+retained-result runtime暫緩
 
 索引：
 
@@ -12,6 +12,7 @@ Slice 5尚未開始；retained-result runtime暫緩
 - [Model Bundle Metadata to Protocol Schema Mapping](./Model%20Bundle%20Metadata%20to%20Protocol%20Schema%20Mapping.md)
 - [Protocol Extension Implementation Slice Map](./Protocol%20Extension%20Implementation%20Slice%20Map.md)
 - [Protocol Extension Implementation Review Ledger](./Protocol%20Extension%20Implementation%20Review%20Ledger.md)
+- [Slice 6 Detailed Plan](./slices/Slice%206%20Migration%20and%20Regression%20Closure%20Detailed%20Plan.md)
 
 設計輸入：
 
@@ -247,7 +248,8 @@ component，但依目前 production trace 不預期修改其 repository。
 ### 5.8 驗證與 migration closure
 
 - 將 Protocol Conformance Matrix 映射到 unit、boundary 與 real-process tests。
-- 保留既有 static／model-bundle baseline，直到 protocol-driven E2E 可以回歸。
+- Slice 5已完成protocol-driven local real-process E2E；Slice 6改碼前只保留一次
+  static／model-bundle migration checkpoint，cutover後移除舊runtime path。
 - 分別驗證 explicit topology、delegated／hybrid topology、normal rounds、topology
   update 與 feature rejection。
 
@@ -269,18 +271,13 @@ component，但依目前 production trace 不預期修改其 repository。
 ## 7. 目前狀態與下一步
 
 - Candidate protocol、OpenAPI artifact 與 conformance cases 已有設計輸入。
-- 既有 static／model-bundle HFL 已有 local 與 real-process baseline。
-- Slice 1 已完成 typed candidate wire contract、resource-level feature state、
-  persistent／operation-scoped separation、receiver identity validation 與 lifecycle
-  foundation；production diff 已完成審查與計畫要求的 focused／full verification，
-  user review 已確認，`NWDAF` 與 `PyMTLF` 收尾 commits 已建立。
-- Candidate selection與policy／strategy execution由Slice 2處理；controlled local
-  training workload由Slice 4處理；既有digest contract簡化由Slice 4A處理；
-  protocol-mode orchestration與real-process E2E由Slice 5處理，migration closure由
-  Slice 6處理。
-  Retained-result runtime暫緩，不是目前active slice的相依項目。ADRF global-model
-  distribution 的 exact method placement、record lifecycle 與驗證 evidence 已列入
-  Slice 5 closure。
+- Slice 1、2、4A、4與5均已完成審查、驗證及commit；protocol-driven hierarchy已有
+  local real-process E2E evidence。
+- Slice 6為目前active work unit，負責移除舊assignment／preparation-result bundle
+  authority、雙模式selector與legacy deployment scenario，同時保留standard
+  flat／distributed FL及model／result artifact regression。
+- Retained-result runtime暫緩，不是Slice 6相依項目；正式multi-host testbed仍是
+  integration verification gap。
 
 已依
 [Model Bundle Metadata to Protocol Schema Mapping](./Model%20Bundle%20Metadata%20to%20Protocol%20Schema%20Mapping.md)
@@ -290,7 +287,5 @@ component，但依目前 production trace 不預期修改其 repository。
 [Protocol Extension Implementation Slice Map](./Protocol%20Extension%20Implementation%20Slice%20Map.md)；
 各slice的實作與驗證證據記錄於
 [Protocol Extension Implementation Review Ledger](./Protocol%20Extension%20Implementation%20Review%20Ledger.md)；
-Slice 1、2與4A已完成並commit。Slice 4 production implementation、initial review、
-in-scope remediation與required verification已完成，user已確認review結果；目前維持
-unstaged、uncommitted並等待commit proposal核准。Commit完成後，下一個production work
-unit為Slice 5。
+Slice 6的現況盤點、精確檔案範圍、實作順序與驗收條件見
+[Slice 6 Detailed Plan](./slices/Slice%206%20Migration%20and%20Regression%20Closure%20Detailed%20Plan.md)。

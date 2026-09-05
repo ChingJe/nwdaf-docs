@@ -32,11 +32,13 @@ verification 與 deferred work。
   將candidate contract接上真實Root→Branch→Leaf subscription／Notify flow，完成
   model-free preparation、逐edge feature negotiation、Root global-model ADRF lifecycle
   與Branch local-round artifact transport，並重用Slice 4 controlled workload。
+- [Slice 6 — Migration and Regression Closure](./Slice%206%20Migration%20and%20Regression%20Closure%20Detailed%20Plan.md)：
+  將hierarchical runtime收斂為單一protocol authority，移除assignment／preparation-result
+  bundle schema、producer、consumer與legacy deployment scenario，同時保留flat／distributed
+  FL及hierarchical model／result artifact regression。
 
-Slice 3 retained-result runtime目前暫緩，因此不建立detailed plan。Slice 4A已完成並
-commit；Slice 4的production implementation與required verification已完成，user已確認
-review結果，目前等待commit proposal核准。Commit完成後，下一個active work unit為
-Slice 5。
+Slice 3 retained-result runtime目前暫緩，因此不建立detailed plan。Slice 1、2、4A、4、
+5均已commit；下一個active work unit為Slice 6，目前已完成現況盤點並等待計畫審查。
 
 ## 文件慣例
 

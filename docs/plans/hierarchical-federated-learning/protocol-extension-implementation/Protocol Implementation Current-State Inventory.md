@@ -2,8 +2,8 @@
 
 日期：2026-09-02
 
-狀態：Ready for User Review／production owner、resource lifecycle 與 slice boundary
-已完成第一輪盤點
+狀態：Historical Baseline／保留實作前第一輪盤點；Slice 5後現況與migration scope見
+[Slice 6 Detailed Plan](./slices/Slice%206%20Migration%20and%20Regression%20Closure%20Detailed%20Plan.md)
 
 相關文件：
 

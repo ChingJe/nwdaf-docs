@@ -2,8 +2,7 @@
 
 日期：2026-09-04
 
-狀態：Slice 1、2、4A Committed；Slice 4 Review Confirmed／Commit Approval Pending；
-Slice 5尚未開始
+狀態：Slice 1、2、4A、4、5均已commit；Slice 6已完成現況盤點並等待計畫審查
 
 ## 文件定位
 

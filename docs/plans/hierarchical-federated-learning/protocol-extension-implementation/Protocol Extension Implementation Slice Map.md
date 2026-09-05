@@ -2,8 +2,8 @@
 
 日期：2026-09-04
 
-狀態：Slice 1、2、4A Committed；Slice 4 Review Confirmed／Commit Approval Pending；
-Slice 5尚未開始；active sequence為Slice 1、2、4A、4、5、6；Slice 3暫緩
+狀態：Slice 1、2、4A、4、5 Committed；Slice 6 Planning／Review Pending；
+active sequence為Slice 1、2、4A、4、5、6；Slice 3暫緩
 
 相關文件：
 
@@ -353,8 +353,9 @@ model／result／evidence，不再是第二套 orchestration source。
 - 保留 model／round／aggregate／validation artifact與必要的明確process／round／sample
   provenance；不得恢復Slice 4A已移除的digest contract。
 - 更新 fixtures、real-process scenarios與操作文件。
-- 執行 flat、distributed FL、legacy migration checkpoint與 protocol HFL regression；
-  legacy path是否最終刪除依 Slice 5 review結果提出明確 commit proposal。
+- 改碼前執行一次legacy migration checkpoint；cutover後執行flat、distributed FL與
+  protocol HFL regression。Slice 5已完成review並確認protocol path可取代legacy
+  hierarchy runtime，因此本slice直接移除舊path，不保留雙模式selector。
 
 ### 驗收條件
 
@@ -385,6 +386,6 @@ Slice 4。Slice 4A編號表示它是protocol integration前新增的supporting w
 slice仍依workspace review規則逐一完成、驗證與交付，不同時累積成一個大型
 working-tree diff。
 
-Slice 1、2、4A已完成並commit。Slice 4已完成production implementation、initial review、
-in-scope remediation與required verification，user已確認review結果；目前維持unstaged、
-uncommitted並等待commit proposal核准。Commit完成後再進入Slice 5。
+Slice 1、2、4A、4與5已完成審查、驗證並commit。Slice 6是目前的
+active work unit，已完成legacy／protocol runtime盤點與detailed plan，實作尚未
+開始，正等待計畫審查。
