@@ -1,8 +1,8 @@
 # Slice 4 — Controlled Local Training Workload Detailed Plan
 
-日期：2026-09-04
+日期：2026-09-04（2026-09-05依Slice 4A後baseline校正）
 
-狀態：Draft／review延後至Slice 4A完成後；production implementation尚未開始
+狀態：Review Pending／Slice 4A prerequisite已完成，production implementation尚未開始
 
 相關文件：
 
@@ -34,6 +34,8 @@ final global model。
 - `ue_communication_forecasting`與`image_classification`兩種known workload contract；
 - `image_classification`依dataset設定選擇MNIST或CIFAR-10的資料讀取、shape與
   normalization，並與received model bundle的input／class contract對齊；
+- MNIST與CIFAR-10各有可由現行trusted loader讀取的controlled initial model bundle
+  source，供local smoke提供model architecture與initial weights；
 - `UE_COMMUNICATION`可繼續使用既有`consumer_subscription`標準資料取得流程；既有
   `private_api`模式亦不被破壞；
 - model bundle與FL round artifacts可依workload profile驗證所需component，不再強迫
@@ -42,7 +44,8 @@ final global model。
 - final model可在training結束後，以不參與local training的held-out test set離線計算
   workload-specific metric；
 - 一組不依賴UPF、MongoDB、ADRF Data Management或runtime外部下載的local smoke
-  evidence，供Slice 5直接重用。
+  evidence；該smoke使用一次性準備的real-dataset `.npz` shards與held-out set，供
+  Slice 5直接重用。
 
 MNIST與CIFAR-10在本計畫中是controlled FL workloads，不是NWDAF analytics資料或新的
 3GPP information element。它們用來降低實驗資料路徑干擾，驗證hierarchy／protocol造成
@@ -61,9 +64,9 @@ wiring、ADRF model distribution與training workload改造會混成一個難以r
 因此本slice只完成「本地controlled workload能被現有FL execution使用」；Slice 5才負責
 將它接上Root→Branch→Leaf subscription／Notify與model transport。兩者的界線如下：
 
-本slice的production implementation以Slice 4A完成為前置條件，直接使用其簡化後的
+Slice 4A已由`PyMTLF` commit `899bf23`完成並通過review。本slice直接使用其簡化後的
 whole-artifact key contract，不建立任何暫時性的component、model、weights或dataset
-digest。
+digest，也不恢復舊schema compatibility path。
 
 | 問題 | Slice 4 | Slice 5 |
 | --- | --- | --- |
@@ -82,26 +85,29 @@ digest。
 
 | Repository | Revision | Slice 4角色 |
 | --- | --- | --- |
-| `PyMTLF/` | `0e87ef13622cba0ddf740aa8cedce8ad76705815` | Workload、dataset、trainer、artifact與aggregation owner |
-| `nwdaf-docs/` | 本計畫所在working tree | Canonical plan與review evidence |
+| `PyMTLF/` | `899bf23b44da3699591ea30e7ae6eccdbbab0802` | Workload、dataset、trainer、artifact與aggregation owner |
+| `nwdaf-docs/` | `9acc990`後的本計畫working tree | Canonical plan與review evidence |
 | `NWDAF/` | `302762a6af677f5ccfb5a3f9d0253fb3dd39bf62` | Read-only runtime dependency；本slice不預期修改 |
 
-Production implementation開始前需再次確認affected repositories的HEAD與working tree。
-若PyMTLF trainer、artifact contract或Slice 2 execution owner已改變，先更新本計畫的
-exact-file mapping與baseline disposition。
+2026-09-05已確認`PyMTLF/`與`nwdaf-docs/`working tree在本次計畫調整前為clean。
+若user review後、production implementation開始前HEAD再次改變，需重新確認trainer、
+artifact contract與Slice 2 execution owner，必要時更新exact-file mapping與baseline
+disposition。
 
 ### 3.2 現有 PyMTLF 限制
 
 目前實作不是更換一個dataset path就能在traffic與image classification之間切換。
-本slice實作前由Slice 4A先移除多層digest contract；下列清單中的digest限制是
-pre-Slice-4A baseline，不是本slice應延伸的新要求：
+Slice 4A已移除多層digest與舊schema reader；目前剩餘的限制如下：
 
-- `core/artifacts.py`要求bundle精確包含`config.json`、`model.py`、`model.npy`與
-  `scaler.pkl`；
-- `TrustedBundleLoader`固定載入`StandardScaler`；
+- `core/artifacts.py`與`FLArtifactReader`仍要求bundle精確包含`config.json`、`model.py`、
+  `model.npy`與`scaler.pkl`；
+- `TrustedBundleLoader`固定載入`StandardScaler`，model constructor參數亦以現有traffic
+  model shape為主；
+- `tools/import_seed_model.py`仍固定讀取全域`REQUIRED_BUNDLE_FILES`，並重新產生Slice 4A
+  已移除的`bundle_schema_version`與`file_digests`；它目前產生的bundle會被現行
+  `ArtifactRepository`拒絕，且無法建立不含`scaler.pkl`的classification bundle；
 - `TrainingDataset`、`LocalTrainer`與`FederatedTrainer.train()`以traffic sequence、
   log transformation、Huber loss及WAPE設計；
-- FL artifact的`file_digests`也固定要求相同traffic bundle components；
 - final validation與publication gate依賴traffic WAPE語意；
 - `FederatedTrainer.aggregate()`本身只聚合PyTorch state dict並依sample count加權，
   可跨workload重用。
@@ -112,11 +118,13 @@ trainer或preprocessor。
 
 ### 3.3 Dependency boundary
 
-PyMTLF目前已有`numpy`與`torch`，沒有`torchvision`。本計畫不新增runtime
-`torchvision` dependency，也不允許Client啟動後向Internet下載MNIST或CIFAR-10。
-Dataset取得與license／source record是部署前置作業；runtime只消費已準備好的本地
-shard。既有`UE_COMMUNICATION`則繼續由已存在的training-data collection owner取得資料，
-不轉成local image dataset path。
+PyMTLF目前已有`numpy`與`torch`，沒有`torchvision`或Parquet reader。本計畫不新增
+runtime `torchvision`／Parquet dependency，也不允許Client啟動後向Internet下載MNIST或
+CIFAR-10。Workspace-local raw cache已備妥MNIST IDX gzip與CIFAR-10 train／test Parquet；
+它們不屬於任何repository，也不是runtime input。Local smoke開始前，僅在開發／實驗準備
+環境一次性轉成`.npz` shards與held-out set；PyMTLF runtime只消費轉換完成的檔案。
+既有`UE_COMMUNICATION`則繼續由已存在的training-data collection owner取得資料，不轉成
+local image dataset path。
 
 ---
 
@@ -127,6 +135,10 @@ shard。既有`UE_COMMUNICATION`則繼續由已存在的training-data collection
 - 已知workload profile：`ue_communication_forecasting`與`image_classification`。
 - 已知data source：既有`consumer_subscription`、`private_api`與controlled `local`。
 - Profile-specific bundle component contract與trusted loading。
+- 修正`tools/import_seed_model.py`和Slice 4A後的現行artifact contract不一致問題，讓它
+  重用同一profile-specific component owner，且不恢復private version／digest欄位。
+- MNIST／CIFAR-10 controlled initial model bundle sources與profile-aware loading；這些
+  bundles只作為local controlled workload輸入，不註冊成標準NWDAF analytics model。
 - MNIST／CIFAR-10 local shard loader與最小資料格式contract。
 - Image classification的dataset-specific loading／normalization、cross-entropy training與
   accuracy evaluation。
@@ -144,8 +156,9 @@ shard。既有`UE_COMMUNICATION`則繼續由已存在的training-data collection
 - NRF discovery、candidate pool或participant policy變更。
 - UPF、DCCF、ADRF Data Management、MongoDB或live traffic ingestion。
 - Runtime下載MNIST／CIFAR-10或在production dependency加入`torchvision`。
-- Dataset產生、partition、IID／non-IID選擇與train／validation／test切分工具；這些由
-  dataset／experiment工作提供，本slice只消費其輸出。
+- 正式dataset generator、4／8／16 participant partition、IID／non-IID選擇及paper用
+  train／validation／test切分工具；這些由dataset／experiment工作提供。本slice只允許為
+  local smoke一次性準備少量deterministic `.npz` inputs，不把該步驟做成runtime能力。
 - 正式4／8／16 participant experiment、統計分析或paper result。
 - 將MNIST／CIFAR-10註冊為標準NWDAF analytics event。
 - Retained-result recovery。
@@ -175,11 +188,21 @@ Profile是PyMTLF內部artifact／execution contract，不是本次proposed proto
 field。Slice 5收到model後，可由已驗證bundle取得profile；dataset local path不放入
 `Nnwdaf_MLModelTraining` message。
 
+Classification initial model在本slice以controlled source bundle進入同一
+`ArtifactRepository`／trusted-loader boundary，但不加入現行`model_provision.seed_models`
+或對外Model Provisioning通知。現行seed descriptor的`event`會進入標準形狀的model
+notification；在沒有定義合適NWDAF analytics event前，不得把MNIST／CIFAR-10假裝成
+`UE_COMMUNICATION` model。Slice 5若需要Root-side durable family selection，必須另行確認
+該model source如何進入hierarchical run，不能在本slice靜默借用traffic catalog identity。
+Classification source manifest以`workload_profile`及image input／class contract表達用途；
+不得由import tool補上假的`analytics_event: UE_COMMUNICATION`。Traffic source則繼續保留
+真正的`analytics_event`語意。
+
 ### 5.2 Workload 與 data source 的設定
 
-設定必須把「做什麼任務」和「資料從哪裡來」分開。沿用現有config owner時，概念上等同
-下列兩種設定；exact key nesting可在implementation對照`config.py`後確定，但不得把
-dataset名稱變成trainer dynamic import或protocol field。
+設定必須把「做什麼任務」和「資料從哪裡來」分開。沿用現有`FLClientSettings` owner，
+本slice固定使用下列nesting；不得把dataset名稱變成trainer dynamic import或protocol
+field。
 
 標準`UE_COMMUNICATION`範例：
 
@@ -228,10 +251,10 @@ images: uint8 [N, C, H, W]
 labels: integer [N]
 ```
 
-MNIST使用`[N, 1, 28, 28]`；CIFAR-10使用`[N, 3, 32, 32]`。Loader進入training前依dataset
-contract轉成normalized `float32` tensor。Labels轉成`int64`且介於0到9；images與labels的
-第一維必須一致。這些是loader完成training所需的基本格式處理，不建立額外dataset
-certification或完整性驗證流程。
+MNIST使用`[N, 1, 28, 28]`；CIFAR-10使用`[N, 3, 32, 32]`。Loader進入training前將
+`uint8` images轉成`float32`並除以`255.0`，不套用traffic workload的`StandardScaler`。
+Labels轉成`int64`且介於0到9；images與labels的第一維必須一致。這些是loader完成training
+所需的基本格式處理，不建立額外dataset certification或完整性驗證流程。
 
 下列語意不可改變：
 
@@ -242,10 +265,13 @@ certification或完整性驗證流程。
 
 ### 5.4 Dataset 與實驗責任邊界
 
-本slice不負責產生或切分dataset。Dataset／experiment工作一次產出所有per-Client shards
-及獨立held-out test set；deployment再把每個shard掛載給對應PyMTLF。相同participant
-scale的Flat與HFL使用相同shards，train／validation／test切分及IID／non-IID規則由該工作
-記錄，不轉成PyMTLF runtime validation。
+本slice不負責正式實驗的dataset generator或partition policy。為完成local smoke，可由
+workspace-local raw cache一次性產生少量deterministic per-Client `.npz` shards及獨立
+held-out test set；該轉換不進入PyMTLF startup／runtime，也不新增manifest、hash或
+per-instance preparation。正式實驗仍由Dataset／experiment工作一次產出所有per-Client
+shards，deployment再把每個shard掛載給對應PyMTLF。相同participant scale的Flat與HFL
+使用相同shards，train／validation／test切分及IID／non-IID規則由該工作記錄，不轉成
+PyMTLF runtime validation。
 
 Held-out test set不掛載到Client local training path，也不被local update使用；只提供給
 run完成後的offline evaluator。
@@ -254,11 +280,30 @@ run完成後的offline evaluator。
 
 固定語意：
 
-- dataset profile決定input shape及normalization；
+- dataset profile決定input shape、input channel及normalization；
+- MNIST與CIFAR-10共用同一個parameterized small-CNN architecture family，只由
+  `input_channels`區分MNIST的1 channel與CIFAR-10的3 channels：
+
+  ```text
+  Conv2d(input_channels, 32, kernel_size=3, padding=1)
+  -> ReLU
+  -> MaxPool2d(2)
+  -> Conv2d(32, 64, kernel_size=3, padding=1)
+  -> ReLU
+  -> AdaptiveAvgPool2d(1)
+  -> Flatten
+  -> Linear(64, 10)
+  ```
+
+- 此CNN不使用BatchNorm，避免各Client的running statistics在FL aggregation時引入額外
+  state語意；
 - model輸出`[batch, 10]` logits；
 - loss使用`CrossEntropyLoss`；
 - labels使用class indices，不做one-hot；
 - model architecture與initial weights來自trusted bundle，不由dataset config動態生成；
+- MNIST與CIFAR-10各自使用明確的controlled source bundle；bundle manifest記錄matching
+  input shape、channel count與class count，並分別保存各自的initial weights；兩者不共用
+  同一份initial weights。Local config只選dataset，不生成或修改模型；
 - local epochs由effective `reportAfter.epochs`控制；省略時沿用node local default；
 - optimizer先重用目前可配置的Adam及learning rate owner，不額外新增scheduler；
 - `strategy.method=fedProx`時，在classification loss上加入既有proximal penalty；
@@ -371,7 +416,7 @@ experiment增加confusion matrix或per-class accuracy，不是本slice完成條�
 | Participant／candidate selection | Reused without semantic change | 重用Slice 2 selected-set contract |
 | Traffic data collection | Reused without semantic change for UE Communication | `consumer_subscription`與`private_api`維持既有owner；local image profile不啟動traffic collection |
 | Dataset loading | Adapted | 由workload與data-source config選擇traffic builder或local image loader |
-| Initial model artifact | Adapted | Profile-specific component contract；安全檢查保留 |
+| Initial model artifact | Adapted | Local smoke使用受版本控制的classification source bundle並經現行artifact／trusted-loader boundary；不冒充標準NWDAF model family |
 | Local training | Adapted | Image classification使用cross entropy；UE Communication使用既有Huber／WAPE path |
 | FedProx local penalty | Reused without semantic change | 套用在profile-specific base loss之上 |
 | Round result | Adapted | 保留sample count與model state；metric payload依profile解讀 |
@@ -404,6 +449,18 @@ experiment增加confusion matrix或per-class accuracy，不是本slice完成條�
 - 新增或擴充既有dataset owner下的local image loader
   - 不為payload shape另建不必要package；
   - owner應接近既有dataset／training code，而非SBI package。
+- `seed_models/image_classification/mnist/`與`seed_models/image_classification/cifar10/`
+  controlled source bundles
+  - MNIST／CIFAR-10各有可重現的model source、initial weights與manifest；
+  - local smoke必須經`ArtifactRepository`與trusted loader，不直接注入任意
+    in-memory model；
+  - 不把classification source註冊到標準Model Provisioning event catalog。
+- `tools/import_seed_model.py`
+  - 移除仍在產生的`bundle_schema_version`與`file_digests`；
+  - 從source manifest取得`workload_profile`，並重用artifact owner的profile-specific
+    component contract，不自行維護第二份file list；
+  - 只有traffic profile處理真正的`analytics_event`，classification profile不合成假的
+    `UE_COMMUNICATION` event。
 - `src/py_mtlf/core/fl_artifacts.py`、`core/fl_workspace.py`
   - 讓round／aggregate／final artifacts保存profile並驗證正確component set。
 - `src/py_mtlf/core/fl_client.py`、`core/fl_server.py`
@@ -437,6 +494,7 @@ experiment增加confusion matrix或per-class accuracy，不是本slice完成條�
 ### 9.1 Dataset loader tests
 
 - MNIST與CIFAR-10 fixtures可由configured `shard_path`讀取並轉成正確tensor。
+- Image pixels由`uint8`轉成`float32`並除以`255.0`，不讀取或建立`scaler.pkl`。
 - 缺檔或無法形成training tensor的資料回報清楚的load／training failure。
 - Config path不能由protocol payload覆寫。
 
@@ -449,6 +507,11 @@ experiment增加confusion matrix或per-class accuracy，不是本slice完成條�
   mismatch被拒絕。
 - Round local→aggregate→final artifact保留一致profile與model source identity。
 - Archive、whole-artifact key與workspace safety regressions維持通過。
+- Import tool產生的traffic與classification bundles都能由現行`ArtifactRepository`重新
+  載入，且manifest不含`bundle_schema_version`或`file_digests`；classification bundle
+  不含假的`analytics_event`。
+- MNIST與CIFAR-10 bundle載入相同CNN architecture family、各自匹配1／3 input channels，
+  並保存彼此獨立的initial weights；model不含BatchNorm state。
 
 ### 9.3 Real training tests
 
@@ -458,6 +521,9 @@ experiment增加confusion matrix或per-class accuracy，不是本slice完成條�
 - 兩個不同sample count的真實local results經existing aggregator得到預期加權state。
 - Branch-only aggregation不建立或讀取local shard。
 - Offline evaluator以已知predictions／labels計算正確accuracy與sample count。
+- 至少一組real MNIST local smoke shards與held-out set由workspace-local raw cache一次性
+  轉換；CIFAR-10 loader／training path以tiny CIFAR-shaped fixture驗證，若同時準備real
+  CIFAR-10 smoke input則沿用相同`.npz` contract。
 
 關鍵training與aggregation測試不得只mock trainer／aggregator後驗證helper被呼叫。Mock可用於
 隔離transport或failure injection，但用來支撐「真實image classification可執行」的證據必須進入
@@ -479,17 +545,22 @@ experiment增加confusion matrix或per-class accuracy，不是本slice完成條�
 ## 10. 實作順序
 
 1. 以characterization tests鎖定traffic bundle、trainer、aggregation與final validation
-   現有behavior。
+   現有behavior，並固定重現current import tool和Slice 4A後artifact contract不一致問題。
 2. 建立typed workload／data-source config與合法組合validation。
 3. 建立profile-specific bundle inventory與known-profile discriminator。
-4. 實作MNIST／CIFAR-10 local shard loader與configuration selection。
-5. 實作dataset-specific preprocessing、cross-entropy training與profile adapter。
-6. 將existing FL Client／Server最小化接入profile adapter並保留generic aggregation。
-7. 讓round／aggregate／final artifact contract變成profile-aware。
-8. 實作offline held-out evaluator。
-9. 使用repository內小型fixtures執行local smoke。
-10. 執行focused tests、full regression、lint與local smoke。
-11. 更新review ledger，保留unstaged diff供user review。
+4. 讓seed import tool重用profile-specific artifact contract，移除殘留private version／
+   digest輸出。
+5. 建立MNIST／CIFAR-10 controlled classification source bundles並通過現有artifact／trusted
+   loader boundary。
+6. 實作MNIST／CIFAR-10 local shard loader與configuration selection。
+7. 實作dataset-specific preprocessing、cross-entropy training與profile adapter。
+8. 將existing FL Client／Server最小化接入profile adapter並保留generic aggregation。
+9. 讓round／aggregate／final artifact contract變成profile-aware。
+10. 實作offline held-out evaluator。
+11. 從workspace-local raw cache一次性準備smoke `.npz`，並使用repository內小型fixtures
+    執行local smoke。
+12. 執行focused tests、full regression、lint與local smoke。
+13. 更新review ledger，保留unstaged diff供user review。
 
 每一步若發現既有traffic semantics必須被改寫，先確認是必要adaptation還是可分離的profile
 implementation。不得為了讓image classification通過而弱化所有bundle或result validation。
@@ -509,12 +580,20 @@ implementation。不得為了讓image classification通過而弱化所有bundle�
 - [ ] Local config只需提供dataset與shard path，不要求manifest或digest欄位，且不經
   protocol傳遞。
 - [ ] Image classification不使用假的traffic `scaler.pkl`或traffic fields。
+- [ ] MNIST／CIFAR-10使用已定義的shared small-CNN family，分別匹配1／3 input channels、
+  使用獨立initial weights，且不含BatchNorm。
+- [ ] MNIST／CIFAR-10 controlled initial bundles可經現行artifact／trusted-loader boundary
+  載入，且不被註冊或回報成標準NWDAF analytics model。
+- [ ] Seed import tool不再產生Slice 4A已移除的private version／digest欄位，並能以同一
+  profile-specific component contract建立traffic與classification bundles。
 - [ ] Unknown／mismatched workload、data source、dataset或model contract在training前被拒絕。
 - [ ] 真實image-classification optimizer step、FedProx與sample-weighted aggregation測試通過。
 - [ ] Branch-only aggregation不需要local dataset。
 - [ ] Final model可由獨立held-out evaluator產生accuracy evidence。
 - [ ] Traffic workload tests與artifact safety regressions保持通過。
 - [ ] Local smoke不依賴UPF、MongoDB、ADRF Data Management或外部network download。
+- [ ] Local smoke的real-data `.npz`由workspace-local raw cache一次性準備；PyMTLF runtime
+  不包含download、Parquet／IDX conversion或per-instance preparation。
 - [ ] 沒有修改protocol schema、NRF或ADRF contract。
 - [ ] Slice 5能直接消費本slice的local workload，而不重新定義dataset或trainer。
 - [ ] Affected repositories的diff、verification與remaining gaps已交付user review。
@@ -537,7 +616,9 @@ transport與callback flow，不把dataset產生、切分或per-instance preparat
 
 ## 13. Review evidence（implementation後填寫）
 
-目前尚未開始Slice 4 production implementation。本節在實作完成後記錄：
+目前尚未開始Slice 4 production implementation。Slice 4A prerequisite、current owner
+mapping、raw dataset availability與initial-model source boundary已完成開工前校正；本節在
+實作完成後記錄：
 
 - affected repository revisions與working-tree diff；
 - exact files與owner boundary；

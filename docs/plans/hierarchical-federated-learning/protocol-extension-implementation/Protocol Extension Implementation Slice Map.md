@@ -2,8 +2,8 @@
 
 日期：2026-09-04
 
-狀態：Slice 1、2、4A Committed；Slice 4、5 detailed plan待後續確認；active sequence為
-Slice 1、2、4A、4、5、6；Slice 3暫緩
+狀態：Slice 1、2、4A Committed；Slice 4 pre-implementation review pending；Slice 5
+detailed plan待後續確認；active sequence為Slice 1、2、4A、4、5、6；Slice 3暫緩
 
 相關文件：
 
@@ -211,9 +211,15 @@ sample-weighted aggregation，final global model再由獨立held-out test set計
 
 - `ue_communication_forecasting`與`image_classification` known workload profiles。
 - `consumer_subscription`、`private_api`與`local` data-source選擇及合法組合validation。
+- 修正seed import tool仍產生Slice 4A已移除private version／digest欄位的carry-in defect，
+  並使其重用profile-specific artifact component contract。
 - MNIST／CIFAR-10 local loader；local config只保存dataset及shard path。
+- MNIST／CIFAR-10 controlled initial model bundles經現行artifact／trusted-loader boundary
+  載入，但不註冊成標準NWDAF analytics model。
 - 共用config template與per-Client read-only mount mapping；不執行per-instance dataset
   preparation。
+- Workspace-local raw cache只在開發／實驗準備階段一次性轉成smoke `.npz`；runtime不
+  下載dataset，也不讀取IDX或Parquet。
 - Dataset-specific shape／normalization、cross-entropy與accuracy。
 - Profile-specific model bundle／FL artifact contract；traffic profile保持原有語意。
 - Existing FedProx local penalty與sample-weighted state-dict aggregation重用。
@@ -379,5 +385,5 @@ Slice 4。Slice 4A編號表示它是protocol integration前新增的supporting w
 slice仍依workspace review規則逐一完成、驗證與交付，不同時累積成一個大型
 working-tree diff。
 
-Slice 1、2、4A已完成並commit。Slice 4 detailed plan已完成盤點，下一步為確認計畫後
-進入實作。
+Slice 1、2、4A已完成並commit。Slice 4已依Slice 4A後baseline、local raw dataset與
+classification initial-model source完成開工前校正，目前等待user review後進入實作。
