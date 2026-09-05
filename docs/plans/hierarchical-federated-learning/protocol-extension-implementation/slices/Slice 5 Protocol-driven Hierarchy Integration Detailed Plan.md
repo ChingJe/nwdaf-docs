@@ -1,8 +1,9 @@
 # Slice 5 — Protocol-driven Hierarchy Integration Detailed Plan
 
-日期：2026-09-04（2026-09-05依Slice 4完成後baseline校正）
+日期：2026-09-04（2026-09-06依實作與驗證結果更新）
 
-狀態：Draft／production implementation尚未開始；Slice 4已完成，待開工前確認
+狀態：Review Confirmed／Commit Approval Pending；production implementation與local
+real-process驗證已完成，正式testbed驗證尚未執行
 
 相關文件：
 
@@ -223,7 +224,7 @@ boundary review，不把跨repository contract expansion隱藏在production patc
 | Leaf local training | Reused from Slice 4 | 第一輪讀取configured shard並確認received model profile相容後，進入既有FL execution owner |
 | Branch selected-set wait與aggregation | Reused with Slice 2 gates | 仍使用既有server／aggregator，cohort與completion由effective policy決定 |
 | Leaf／Branch result Notify | Reused with protocol authority | 正常result仍以`roundInd`及producer `mLFileAddr`回報 |
-| Final validation與final-model handoff | Reused from Slice 4 | Controlled workload使用held-out accuracy evidence；不把temporary round ADRF owner併入final artifact handoff |
+| Final validation與final-model handoff | Adapted | Protocol path保留Root-owned final workspace artifact，另以Slice 4 offline evaluator在相同held-out test set檢查learning outcome；不啟動traffic-specific distributed validation或durable catalog cutover，也不把temporary round ADRF owner併入final artifact handoff |
 | Successful completion | Adapted | 除既有request terminal外，先完成round ADRF cleanup evidence |
 | Failure／timeout | Adapted | 停止仍會取用record的resources，再cleanup ADRF；不做retained recovery |
 | Process restart | Approved for deferral beyond invalidation | 遺失in-memory protocol／round mapping即使procedure失效，不恢復execution |
@@ -460,8 +461,8 @@ Branch／Leaf收到`mLModelAdrf`時：
 2. `AdrfResolver`必須解析指定`adrfId`，不得改用任意first match；
 3. 由各自containing Go NWDAF呼叫標準collection GET proxy；
 4. 驗證回傳record的transaction ID、model ID、artifact URL、size與consumer profile；
-5. 透過既有workspace安全下載URL，驗證實際bytes符合URL中的whole-artifact key，並
-   驗證artifact role、
+5. 透過既有workspace安全下載URL，以實際bytes計算whole-artifact repository key，並
+   驗證ADRF record中的size、archive安全性、artifact role、
    `mlCorreId`與該local operation所需round metadata；
 6. 同一logical model reference在該operation只取得一次，再由typed loader與trainer共用
    同一份owned artifact。
@@ -729,16 +730,19 @@ best-effort cleanup known resources，最後使procedure terminal。
   - child拒絕feature 3；
   - preparation無model／無ADRF GET；
   - 同一Root ADRF reference由至少兩個不同containing NWDAFs取得；
-  - Branch multiple lower rounds使用local artifact；
+  - Main scenario維持每次lower aggregation後立即進行upper update；
+  - Branch multiple lower rounds的替代policy path由production-owner integration test證明
+    第二輪起使用local artifact；
   - unsupported retained request的403與state unchanged。
 - Scenario輸出需保留request／response／callback摘要、participant identities、ADRF
   record lifecycle及artifact key evidence；不能只以最終process exit code代表成功。
 
 ### 7.6 `adrf/`
 
-目前只作read-only dependency與real-process component。先用既有tests／scenario證明
-POST／GET／PUT／DELETE及record persistence。只有既有resource無法履行TS 29.575
-contract時才另提repository change proposal。
+目前只作read-only dependency與real-process component。以既有focused tests驗證
+POST／GET／PUT／DELETE及record persistence，real-process scenario另實際走過
+POST／GET／DELETE。只有既有resource無法履行TS 29.575 contract時才另提repository
+change proposal。
 
 ### 7.7 `nwdaf-docs/`
 
@@ -840,8 +844,8 @@ Slice 1已完成的shape／wire tests與Slice 2已完成的local policy tests不
 - Round aggregation使用Slice 4 real image-classification model／artifact fixtures及真正trainer／aggregator
   path。可mock外部HTTP transport，但不能mock被claim的policy decision或aggregation
   result。
-- Real-process scenario必須啟動真實Go NWDAF、PyMTLF、NRF與ADRF，並掛載pre-staged
-  local shards；本scenario不需要MongoDB或UPF。若環境
+- Real-process scenario必須啟動真實Go NWDAF、PyMTLF、NRF、ADRF與其persistence所需的
+  MongoDB，並掛載pre-staged local shards；本scenario不需要UPF。若環境
   無法啟動，明列remaining gap，不能以unit test冒充。
 
 ### 10.2 主要positive cases
@@ -853,7 +857,8 @@ Slice 1已完成的shape／wire tests與Slice 2已完成的local policy tests不
 - Explicit與local candidates共同形成hybrid selected cohort。
 - Parent PATCH停用active child並成功DELETE；下一輪selection不含該child。
 - Root global model record包含realized selected identities，兩個不同NWDAFs以相同
-  `storTransId`取得相同whole-artifact key。
+  `storTransId`取得同一immutable ADRF model artifact；各receiver從實際bytes計算自己的
+  whole-artifact repository key。
 - Branch `reportAfter(round)>1`時只第一個lower round使用ADRF，其餘使用Branch URL。
 - Parent省略某些effective contract值時，child採local default並在report回傳實際值。
 
@@ -866,8 +871,8 @@ Slice 1已完成的shape／wire tests與Slice 2已完成的local policy tests不
 - Child topology report的root identity、`mlCorreId`或`notifCorreId`不符。
 - Root readiness未達卻嘗試store／dispatch model。
 - ADRF store非201、Location缺失、response record不一致或allowlist不一致。
-- Recipient解析到錯誤ADRF、缺`storTransId`、model ID不符、size不符或下載bytes與
-  whole-artifact URL key不符。
+- Recipient解析到錯誤ADRF、缺`storTransId`、model ID不符、size不符、archive不合法或
+  bundle contract不符。
 - allowlist update未完成就向新增consumer dispatch。
 - DELETE／PATCH response late completion試圖覆寫新revision。
 - Retained-result instruction與合法topology update同時送入；整個operation 403且state不變。
@@ -925,8 +930,9 @@ revision、config、run ID與evidence output。
 
 ### 11.4 `adrf/`
 
-執行既有ML Model Management focused tests，並由real-process scenario驗證實際
-POST／GET／PUT／DELETE。若未修改repository，不建立空白commit。
+執行既有ML Model Management focused tests。Real-process scenario驗證實際
+POST／GET／DELETE，PUT則由NWDAF consumer與PyMTLF round owner的transport tests覆蓋。
+若未修改repository，不建立空白commit。
 
 ---
 
@@ -959,42 +965,42 @@ User確認review後仍需另行批准commit；commit approval不等於push appro
 
 ### 13.1 Contract與authority
 
-- [ ] Protocol resource不讀legacy hierarchy metadata。
-- [ ] Legacy default及explicit selector可回歸。
-- [ ] Hierarchy-wide `mlCorreId`與per-edge resource／callback identity沒有混淆。
-- [ ] Feature 3逐edge協商，未接受時不執行candidate contract。
-- [ ] Retained instruction在任何state mutation前403。
+- [x] Protocol resource不讀legacy hierarchy metadata。
+- [x] Legacy default及explicit selector可回歸。
+- [x] Hierarchy-wide `mlCorreId`與per-edge resource／callback identity沒有混淆。
+- [x] Feature 3逐edge協商，未接受時不執行candidate contract。
+- [x] Retained instruction在任何state mutation前403。
 
 ### 13.2 Preparation與topology
 
-- [ ] Protocol preparation不帶model、不下載model、不查ADRF。
-- [ ] `mLEvent`與`modelInterInfo`在preparation唯一決定controlled local workload／dataset
+- [x] Protocol preparation不帶model、不下載model、不查ADRF。
+- [x] `mLEvent`與`modelInterInfo`在preparation唯一決定controlled local workload／dataset
   contract；dataset path保持local，且不讀取shard。
-- [ ] Configured local workload在preparation驗證並凍結，model architecture及bundle
+- [x] Configured local workload在preparation驗證並凍結，model architecture及bundle
   profile checks在第一輪完成。
-- [ ] Candidate intent只有在真實HTTP response後才改變relationship state。
-- [ ] Child topology report經callback進入parent並逐級組合。
-- [ ] Root在realized readiness前不store／dispatch global model。
-- [ ] PATCH mutation serialized且late completion有revision fence。
+- [x] Candidate intent只有在真實HTTP response後才改變relationship state。
+- [x] Child topology report經callback進入parent並逐級組合。
+- [x] Root在realized readiness前不store／dispatch global model。
+- [x] PATCH mutation serialized且late completion有revision fence。
 
 ### 13.3 Model transport與lifecycle
 
-- [ ] Root round artifact與final-model catalog publication分開。
-- [ ] ADRF store response、Location、record及allowlist完整驗證。
-- [ ] Recipient解析exact `adrfId`／`storTransId`並single-fetch payload。
-- [ ] First lower round轉送同一Root ADRF reference。
-- [ ] Subsequent lower rounds及upward results使用producer temporary `mLFileAddr`。
-- [ ] Allowlist update先於新增consumer dispatch。
-- [ ] Terminal／failure／reset cleanup順序不會在consumer仍retry時先刪record。
+- [x] Root round artifact與final-model catalog publication分開。
+- [x] ADRF store response、Location、record及allowlist完整驗證。
+- [x] Recipient解析exact `adrfId`／`storTransId`並single-fetch payload。
+- [x] First lower round轉送同一Root ADRF reference。
+- [x] Subsequent lower rounds及upward results使用producer temporary `mLFileAddr`。
+- [x] Allowlist update先於新增consumer dispatch；現行cohort凍結，dynamic replacement未啟用。
+- [x] Terminal／failure／reset cleanup順序不會在consumer仍retry時先刪record。
 
 ### 13.4 Testing與scope
 
-- [ ] Tests觀察被claim的真實behavior，不只mock helper return。
-- [ ] Go與Pythonfocused／full suites通過。
-- [ ] Protocol及legacy real-process scenarios皆有evidence。
-- [ ] ADRF access-control enforcement沒有被過度宣稱。
-- [ ] 未修改NRF／ADRF schema或實作隱含recovery scope。
-- [ ] 所有changed docs完成繁體中文語言一致性檢查。
+- [x] Tests觀察被claim的真實behavior，不只mock helper return。
+- [x] Go與Pythonfocused／full suites通過。
+- [x] Protocol及legacy real-process scenarios皆有evidence。
+- [x] ADRF access-control enforcement沒有被過度宣稱。
+- [x] 未修改NRF／ADRF schema或實作隱含recovery scope。
+- [x] 所有changed docs完成繁體中文語言一致性檢查。
 
 ---
 
@@ -1024,15 +1030,60 @@ real-process evidence成立，可進入user review，但不可把testbed列為�
 
 ## 15. 實作審查檢查點
 
-目前尚未開始Slice 5 production implementation。本節在實作完成後記錄：
+本次實作以第2.1節列出的revisions為baseline，影響`NWDAF/`、`PyMTLF/`、
+`nwdaf-resources/`及本文件；`adrf/`與`nrf/`只作既有runtime dependency，未修改。
 
-- affected repository revisions；
-- change summary與diff statistics；
-- focused／full test結果；
-- real-process scenario evidence；
-- production及test-code review findings；
-- remaining gaps；
-- proposed commit split與messages；
-- user review與commit approval狀態。
+完成內容：
 
-在user確認review前，本計畫維持open state，不標為Completed。
+- `NWDAF/`補上ADRF individual PUT／DELETE private gateway、processor與consumer，並讓
+  experimental image event可進入既有config及NRF discovery query boundary；
+- `PyMTLF/`接上protocol selector、model-free preparation、recursive candidate
+  establishment、topology-only callback、round ADRF distribution、Branch／Leaf execution、
+  retained-result 403 gate及controlled image workload binding；
+- `nwdaf-resources/`新增protocol-controlled MNIST真實多程序runner、config產生、preflight及
+  evidence parser，並保留legacy runner。
+
+審查中已修正：
+
+- 純aggregation Branch不應被要求配置Leaf local image shard；
+- 每個Leaf的Go availability boundary必須各自通過model-free preparation後才進入整體情境；
+- ADRF evidence parser的transaction ID必須限制在單一log token內；
+- protocol preparation的`dataAvReq`不得偽裝成`USER_DATA_USAGE_TRENDS`，改與
+  `X_IMAGE_CLASSIFICATION` training task一致；
+- unknown／local-incompatible image contract、第一輪bundle mismatch及兩個explicit
+  Branch subtrees補上直接測試；
+- 新增Go tests的lint findings已修正，沒有改變production行為。
+
+驗證摘要：
+
+- `NWDAF/` focused tests、`make test`、`make lint`與`make build`通過；
+- `PyMTLF/` Slice 5 focused matrix為283 passed，full suite為746 passed、2 skipped；
+  `ruff check src tests`通過；
+- `nwdaf-resources/` evidence parser為27 passed，changed Python lint與preflight通過；
+- Protocol real-process run通過，evidence位於
+  `/tmp/nwdaf-hierarchical-fl-protocol-nuym_1eg/summary.json`：Branch與兩個Leaves使用同一
+  `storTransId`取得Root model，topology PATCH、feature refusal、retained-result 403、
+  一輪training、held-out evaluation及ADRF terminal cleanup均完成；
+- Legacy `smoke/manual-success` real-process run通過，evidence位於
+  `/tmp/nwdaf-hierarchical-fl-smoke-il6yom5g/summary.json`；
+- `adrf/`既有ML Model Management processor focused test通過，且protocol real-process
+  scenario實際走過POST／GET／DELETE；PUT由NWDAF consumer與PyMTLF round owner的
+  transport tests直接覆蓋。
+
+剩餘缺口與邊界：
+
+- 正式multi-host testbed尚未驗證；目前證據是local real-process integration；
+- Main real-process scenario依same-global-round fairness只執行一個lower round；
+  `reportAfter(round)>1`的後續local artifact transport由
+  `tests/test_fl_branch.py`的production-owner integration test覆蓋；
+- ADRF `allowConsumerList`已建立、更新與驗證，但目前testbed沒有caller authentication，
+  不宣稱ADRF已強制阻擋未授權caller；
+- Active round的Root cohort會凍結；本slice提供allowlist replacement owner與transport，
+  但不實作Branch failure replacement或current-round dynamic re-parenting；
+- 同一round key的並行double-store防漏屬optional hardening；目前Root單一active request與
+  sequential upper-round owner不會產生該並行呼叫。
+
+Production code、test code、boundary conformance與scope review已完成，沒有未關閉的
+current-slice defect。User已確認review結果；所有intended changes維持
+unstaged／uncommitted，等待本次commit proposal核准。本計畫不標為Completed，也尚未
+取得push授權。

@@ -1,9 +1,8 @@
 # Hierarchical NWDAF FL Protocol Extension Implementation Review Ledger
 
-日期：2026-09-04
+日期：2026-09-06
 
-狀態：Slice 1、2、4A Committed；Slice 4 Review Confirmed／Commit Approval Pending；
-Slice 5尚未開始
+狀態：Slice 1、2、4A、4 Committed；Slice 5 Review Confirmed／Commit Approval Pending
 
 相關文件：
 
@@ -252,6 +251,72 @@ evidence，不作為模型品質或正式實驗結果。
 - `approved deferral`：Image final artifact不進入traffic-specific durable catalog；本slice
   以workspace artifact handoff及offline evaluator完成驗證。
 
-Slice 4 production與test changes位於`PyMTLF/`，status／review evidence位於
-`nwdaf-docs/`。User已確認review結果；兩個repository的本次變更都維持unstaged、
-uncommitted，等待commit proposal核准。
+Slice 4 production與test changes已由`PyMTLF/` `e71f1d5`收尾，status／review evidence
+已由`nwdaf-docs/` `a56d986`收尾。
+
+---
+
+## 9. Slice 5 審查結果
+
+### 9.1 計畫符合性
+
+| 要求群組 | 狀態 | 直接證據 |
+| --- | --- | --- |
+| Protocol／legacy authority | 已滿足 | Root-only `hierarchy_contract` selector、ambiguous authority rejection、config及legacy real-process regression |
+| Model-free preparation | 已滿足 | Protocol Create不帶model；Leaf與Branch preparation tests及real-process ADRF record count證明此階段不取model或讀local shard |
+| Recursive topology execution | 已滿足 | Root two-Branch subtree coordinator test、Branch explicit／NRF hybrid establishment、逐edge Create／feature negotiation及topology-only callback tests |
+| Controlled image contract | 已滿足 | `X_IMAGE_CLASSIFICATION`、MNIST／CIFAR-10 interoperability mapping、unknown／local mismatch preparation refusal及first-round bundle mismatch tests |
+| Round model distribution | 已滿足 | Root per-round ADRF owner的POST／PUT／GET／DELETE、exact ADRF、allowlist、int63 ID、failure及generation cleanup tests |
+| Lower-tier execution | 已滿足 | First lower round沿用Root ADRF reference；替代multi-lower policy的第二輪起使用Branch local artifact；Leaf result及Branch aggregate向上使用producer URL |
+| Topology PATCH與failure gates | 已滿足 | Candidate revision fence、disabled-child DELETE、feature mismatch cleanup、retained-result 403 atomicity及real-process PATCH evidence |
+| Real-process protocol flow | 已滿足local boundary | 真實Go NWDAF、PyMTLF、NRF、ADRF與MongoDB完成一輪controlled MNIST HFL；同一`storTransId`由Branch與兩個Leaves取得，record最終刪除 |
+| Legacy regression | 已滿足 | `smoke/manual-success`真實多程序情境及full test suites通過 |
+| Scope boundary | 已滿足 | 未修改`adrf/`、`nrf/`、generated OpenAPI或retained recovery；正式testbed與Branch replacement仍延後 |
+
+### 9.2 發現與修正
+
+| ID | 狀態 | 確認證據 | 修正 | 驗證 |
+| --- | --- | --- | --- | --- |
+| `S5-R1` | 已關閉 | Pure aggregation Branch在第一輪曾被Leaf local image config gate拒絕 | Branch只驗證上游image task／bundle contract，不要求local shard；Leaf維持local dataset gate | `test_protocol_intermediate_accepts_image_round_without_local_training_config`及real-process run |
+| `S5-R2` | 已關閉 | Direct scenario可能在第二個Leaf的Go availability monitor尚未接納PyMTLF時提早送request | Direct checks先對兩個Leaves各跑model-free preparation／cleanup，確認每個public Go boundary已ready | Protocol real-process run |
+| `S5-R3` | 已關閉 | Evidence regex曾把transaction ID後的換行文字一併擷取 | Transaction ID capture限制為單一non-whitespace token | `test_protocol_evidence_parses_transaction_ids_at_log_line_boundaries` |
+| `S5-R4` | 已關閉 | Protocol preparation的`dataAvReq`曾沿用traffic `USER_DATA_USAGE_TRENDS`，與image task矛盾 | 改用與subscription相同的`X_IMAGE_CLASSIFICATION` `nwdafEvent`，不啟動traffic collection | Protocol request builder test及real-process run |
+| `S5-R5` | 已關閉 | Unknown／local-incompatible image contract、first-round bundle mismatch與two-Branch protocol flow缺少直接測試 | 補上preparation refusal、bundle validation及two-Branch Root preparation／round tests | Slice 5 focused PyMTLF matrix |
+| `S5-R6` | 已關閉 | 新增Go test code有context、bytes comparison、constant與line-length lint findings | 依現有test style修正，不改production behavior | Focused Go tests與`make lint` |
+
+初始production／test-code review及每項修正的targeted follow-up review均已完成；目前沒有
+未關閉的Slice 5 current-slice code finding。
+
+### 9.3 驗證
+
+| Repository／命令 | 結果 |
+| --- | --- |
+| `NWDAF/` focused package tests | Pass |
+| `NWDAF/ make test` | Pass；environment-gated live backend tests維持既有skip行為 |
+| `NWDAF/ make lint` | Pass；`0 issues` |
+| `NWDAF/ make build` | Pass |
+| `PyMTLF/` Slice 5 focused matrix | Pass；283 passed，1個dependency deprecation warning |
+| `PyMTLF/ .venv/bin/pytest -q` | Pass；746 passed、2 skipped、55個dependency deprecation warnings |
+| `PyMTLF/ .venv/bin/ruff check src tests` | Pass |
+| `nwdaf-resources/` evidence parser tests | Pass；27 passed |
+| `nwdaf-resources/` changed Python lint與preflight | Pass |
+| Protocol real-process scenario | Pass；`/tmp/nwdaf-hierarchical-fl-protocol-nuym_1eg/summary.json` |
+| Legacy `smoke/manual-success` scenario | Pass；`/tmp/nwdaf-hierarchical-fl-smoke-il6yom5g/summary.json` |
+| `adrf/ go test ./internal/sbi/processor` | Pass；repository未修改 |
+
+### 9.4 剩餘缺口與審查狀態
+
+- `integration verification gap`：正式multi-host testbed尚未執行；目前只有local
+  real-process evidence。
+- `approved scope boundary`：Main protocol scenario為same-global-round fairness，只有一個
+  lower round；`reportAfter(round)>1`以production-owner integration test覆蓋。
+- `approved scope boundary`：ADRF allowlist representation已驗證，但目前環境不提供caller
+  authentication，因此不宣稱ADRF已強制access control。
+- `future-phase handoff`：Branch failure detection、replacement、dynamic re-parenting及
+  retained-result recovery不屬於Slice 5。
+- `optional hardening`：同一round key的並行double-store防漏；現有Root單一active request
+  與sequential upper rounds不會觸發。
+
+`NWDAF/`、`PyMTLF/`、`nwdaf-resources/`與`nwdaf-docs/`的intended changes均維持
+unstaged／uncommitted。User已確認review結果；Slice 5不標為Completed，目前等待本次
+commit proposal核准，也未取得push授權。
