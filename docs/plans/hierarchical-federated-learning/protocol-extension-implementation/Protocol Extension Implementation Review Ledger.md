@@ -2,7 +2,8 @@
 
 日期：2026-09-06
 
-狀態：Slice 1、2、4A、4、5 Committed；Slice 6 Planning／Review Pending
+狀態：Slice 1、2、4A、4、5 Committed；Slice 6 Review Confirmed／
+Commit Approval Pending
 
 相關文件：
 
@@ -322,3 +323,57 @@ Slice 5已分別由`NWDAF/` `256349f`、`PyMTLF/` `554c96d`、
 `nwdaf-resources/` `33729a1`及`nwdaf-docs/` `5b23ce4`收尾。正式multi-host
 testbed仍為integration verification gap；下一個active work unit為Slice 6 migration
 closure。
+
+---
+
+## 10. Slice 6 審查結果
+
+### 10.1 計畫符合性
+
+| 要求群組 | 狀態 | 直接證據 |
+| --- | --- | --- |
+| Protocol-only authority | 已滿足 | `hierarchy_contract`與legacy Root／Branch／Client branches已移除；hierarchical config直接使用protocol path |
+| Legacy artifact removal | 已滿足 | Assignment／preparation-result roles、typed metadata、publisher、reader及special admission已移除；old-role negative tests fail closed |
+| Model／result artifact preservation | 已滿足 | `HIERARCHY_AGGREGATE`、round artifacts、sample provenance與flat validation／publication regressions通過 |
+| Canonical deployment harness | 已滿足 | Protocol runner接替`run.py`；common runtime helpers收斂到`support.py`；legacy及static-collection entrypoints已移除 |
+| Protocol real-process regression | 已滿足local boundary | 真實Go NWDAF、PyMTLF、NRF、ADRF與MongoDB完成protocol hierarchy、ADRF distribution及cleanup |
+| Flat／distributed regression | 已滿足 | 既有distributed runner完成training、final validation、ADRF publication與model cutover |
+| Go transport boundary | 已滿足 | `go test ./...`、`make lint`與`make build`通過；`NWDAF/`無Slice 6 working-tree change |
+| Scope boundary | 已滿足 | Retained-result runtime、Branch replacement與正式testbed未被納入或誤宣稱完成 |
+
+### 10.2 審查發現與處理
+
+| ID | 狀態 | 確認證據 | 處理 | 驗證 |
+| --- | --- | --- | --- | --- |
+| `S6-R1` | 已關閉 | Canonical protocol runner仍dynamic import舊`run.py`取得port、config及readiness helpers | 將通用helper移至`support.py`，再由protocol runner接替canonical `run.py` | Hierarchy checks、Ruff、preflight及real-process scenario |
+| `S6-R2` | 已關閉 | Distributed regression preflight仍要求已被本workstream取代的NWDAF／PyMTLF舊branch名稱 | 只同步manifest的兩個branch prerequisites，不改scenario實作 | Distributed preflight及完整real-process regression |
+| `S6-R3` | 已關閉 | Fresh-read conformance檢查發現Root distribution owner prerequisite與candidate preparation夾帶model reference的feature refusal缺少直接測試 | 新增兩個production-entry tests；後者同時確認不下載model或啟動protocol preparation | Targeted tests、focused matrix及full suite |
+
+Production與test-code diff、legacy caller search及targeted fixes均已審查；目前沒有未關閉的
+Slice 6 current-slice finding。
+
+### 10.3 最終驗證
+
+| Repository／命令 | 結果 |
+| --- | --- |
+| `PyMTLF` focused Slice 6 matrix | Pass；259 tests，7個dependency warnings |
+| `PyMTLF/.venv/bin/pytest -q` | Pass；636 passed、2 skipped、16個dependency warnings |
+| `PyMTLF/.venv/bin/ruff check .` | Pass |
+| `nwdaf-resources` hierarchy checks | Pass；10 tests |
+| `nwdaf-resources` hierarchy Ruff／preflight | Pass |
+| Canonical hierarchy real-process | Pass；`/tmp/nwdaf-hierarchical-fl-protocol-61n8df8p/summary.json` |
+| Distributed／flat real-process | Pass；`/tmp/nwdaf-distributed-fl-h3dpak93` |
+| `NWDAF/go test ./...` | Pass |
+| `NWDAF/make lint` | Pass；`0 issues` |
+| `NWDAF/make build` | Pass |
+| Changed repositories `git diff --check` | Pass |
+
+### 10.4 Remaining gap與review gate
+
+- `integration verification gap`：正式multi-host external testbed尚未執行；local
+  real-process evidence不取代該項驗證。
+- `approved deferral`：retained-result persistence／lookup、Branch replacement、fencing與
+  runtime topology self-healing維持暫緩。
+- `review gate`：user review已確認；`PyMTLF/`、`nwdaf-resources/`與`nwdaf-docs/`
+  diff仍保持unstaged／uncommitted，等待commit approval；`NWDAF/`只作回歸驗證，
+  沒有Slice 6變更。

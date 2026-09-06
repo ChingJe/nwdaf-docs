@@ -2,7 +2,8 @@
 
 日期：2026-09-06
 
-狀態：Draft／Review Pending；已完成現況盤點，尚未進入實作
+狀態：Review Confirmed／Commit Approval Pending；production implementation、local
+regression與user review已完成，尚未commit
 
 相關文件：
 
@@ -436,26 +437,26 @@ PyMTLF/.venv/bin/python \
 
 ## 10. 驗收條件
 
-- [ ] `orchestration.mode: hierarchical`只有protocol-driven implementation。
-- [ ] Production config及code不存在`hierarchy_contract` selector。
-- [ ] Production code不存在`BranchAssignmentMetadata`、`LeafAssignmentMetadata`、
+- [x] `orchestration.mode: hierarchical`只有protocol-driven implementation。
+- [x] Production config及code不存在`hierarchy_contract` selector。
+- [x] Production code不存在`BranchAssignmentMetadata`、`LeafAssignmentMetadata`、
   `PreparationResultMetadata`。
-- [ ] Artifact role不存在`HIERARCHY_ASSIGNMENT`與
+- [x] Artifact role不存在`HIERARCHY_ASSIGNMENT`與
   `HIERARCHY_PREPARATION_RESULT`。
-- [ ] Root不發布assignment bundle，也不下載preparation-result bundle。
-- [ ] Branch不republish Leaf assignment或preparation result。
-- [ ] Client不依model bundle判斷Branch／Leaf hierarchy role。
-- [ ] Protocol execution只有message contract可控制topology、policy、strategy及status。
-- [ ] Flat／distributed non-candidate Model Training behavior維持通過。
-- [ ] `HIERARCHY_AGGREGATE`、round result及sample provenance維持通過。
-- [ ] Protocol resource failure／DELETE／generation reset仍完成bounded cleanup。
-- [ ] Hierarchical deployment runner不再dynamic import legacy runner。
-- [ ] Legacy-only runner、static hierarchy wrapper、static collection helper與dead tests
+- [x] Root不發布assignment bundle，也不下載preparation-result bundle。
+- [x] Branch不republish Leaf assignment或preparation result。
+- [x] Client不依model bundle判斷Branch／Leaf hierarchy role。
+- [x] Protocol execution只有message contract可控制topology、policy、strategy及status。
+- [x] Flat／distributed non-candidate Model Training behavior維持通過。
+- [x] `HIERARCHY_AGGREGATE`、round result及sample provenance維持通過。
+- [x] Protocol resource failure／DELETE／generation reset仍完成bounded cleanup。
+- [x] Hierarchical deployment runner不再dynamic import legacy runner。
+- [x] Legacy-only runner、static hierarchy wrapper、static collection helper與dead tests
   已移除；不得留下不可執行entrypoint。
-- [ ] PyMTLF full tests、ruff、NWDAF tests／lint／build及nwdaf-resources checks通過。
-- [ ] Canonical protocol real-process scenario通過。
-- [ ] Distributed／flat local real-process regression通過。
-- [ ] 正式external testbed若未執行，已明列為remaining gap。
+- [x] PyMTLF full tests、ruff、NWDAF tests／lint／build及nwdaf-resources checks通過。
+- [x] Canonical protocol real-process scenario通過。
+- [x] Distributed／flat local real-process regression通過。
+- [x] 正式external testbed若未執行，已明列為remaining gap。
 
 ---
 
@@ -484,3 +485,58 @@ PyMTLF/.venv/bin/python \
 實作完成後先保持unstaged diff，回報affected repositories、diff summary、測試
 結果與remaining gaps，等待user review。Review確認後再提出完整commit proposal；不得
 因本plan核准而直接commit或push。
+
+---
+
+## 13. 實作與驗證證據
+
+### 13.1 Authority cutover
+
+- `PyMTLF`已移除`hierarchy_contract`設定、legacy assignment／preparation-result
+  artifact schema、publisher、reader與Root／Branch／Client execution branches。
+- `orchestration.mode: hierarchical`直接進入protocol hierarchy；舊selector若仍出現在
+  experiment config，會依strict config validation拒絕。
+- `HIERARCHY_ASSIGNMENT`與`HIERARCHY_PREPARATION_RESULT`已不再是合法artifact
+  role；negative tests確認舊role不會被降級成一般model artifact。
+- `HIERARCHY_AGGREGATE`、round input／local／global artifact、sample provenance、
+  flat validation與final-model evidence types仍保留。
+
+### 13.2 Deployment closure
+
+- `nwdaf-resources/deployments/hierarchical_fl/scripts/run.py`已由原protocol runner接替，
+  不再dynamic import舊hierarchy runner。
+- Port allocation、repository evidence、NRF／ADRF config及readiness helper已收斂到
+  canonical `support.py`；hierarchy deployment只有一組NWDAF／PyMTLF config builder。
+- Legacy runner、`run_protocol.py`、static-collection wrapper／helper／tests與hierarchy
+  scenario中的PyAnLF dependency已移除。
+- Distributed FL regression manifest只同步目前NWDAF／PyMTLF implementation branch，
+  未改動其scenario behavior。
+
+### 13.3 Local verification
+
+| Repository／命令 | 結果 |
+| --- | --- |
+| `PyMTLF` focused Slice 6 matrix | Pass；259 tests，7個dependency warnings |
+| `PyMTLF/.venv/bin/pytest -q` | Pass；636 passed、2 skipped、16個dependency warnings |
+| `PyMTLF/.venv/bin/ruff check .` | Pass |
+| `nwdaf-resources` hierarchy checks | Pass；10 tests |
+| `nwdaf-resources` hierarchy Ruff／preflight | Pass |
+| Canonical protocol real-process scenario | Pass；`/tmp/nwdaf-hierarchical-fl-protocol-61n8df8p/summary.json` |
+| Distributed／flat real-process scenario | Pass；`/tmp/nwdaf-distributed-fl-h3dpak93` |
+| `NWDAF/go test ./...` | Pass |
+| `NWDAF/make lint` | Pass；`0 issues` |
+| `NWDAF/make build` | Pass |
+| Changed repositories `git diff --check` | Pass |
+
+Canonical protocol summary直接記錄model-free preparation、feature refusal、hybrid
+candidate establishment、topology PATCH、retained-result `403`、Root ADRF record由Branch
+與兩個Leaves取得，以及terminal record deletion。Distributed scenario另證明non-candidate
+training、final validation、ADRF publication與model cutover仍可執行。
+
+### 13.4 Review狀態與remaining gap
+
+Production code、test code與migration caller search已完成初步完整審查；目前沒有未關閉的
+Slice 6 finding。Working-tree changes維持unstaged／uncommitted，等待commit approval。
+
+正式multi-host external testbed未在本slice執行，仍是integration verification gap；
+上述結果只支持local real-process closure，不取代正式testbed evidence。

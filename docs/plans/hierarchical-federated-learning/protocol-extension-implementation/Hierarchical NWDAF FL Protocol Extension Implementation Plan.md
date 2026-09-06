@@ -2,7 +2,8 @@
 
 日期：2026-09-04
 
-狀態：Slice 1、2、4A、4、5 Committed；Slice 6 Planning／Review Pending；
+狀態：Slice 1、2、4A、4、5 Committed；Slice 6 Review Confirmed／
+Commit Approval Pending；
 retained-result runtime暫緩
 
 索引：
@@ -273,9 +274,9 @@ component，但依目前 production trace 不預期修改其 repository。
 - Candidate protocol、OpenAPI artifact 與 conformance cases 已有設計輸入。
 - Slice 1、2、4A、4與5均已完成審查、驗證及commit；protocol-driven hierarchy已有
   local real-process E2E evidence。
-- Slice 6為目前active work unit，負責移除舊assignment／preparation-result bundle
-  authority、雙模式selector與legacy deployment scenario，同時保留standard
-  flat／distributed FL及model／result artifact regression。
+- Slice 6已移除舊assignment／preparation-result bundle authority、雙模式selector與
+  legacy deployment scenario；protocol HFL及standard flat／distributed FL的local
+  real-process regression均已通過，目前等待commit approval。
 - Retained-result runtime暫緩，不是Slice 6相依項目；正式multi-host testbed仍是
   integration verification gap。
 

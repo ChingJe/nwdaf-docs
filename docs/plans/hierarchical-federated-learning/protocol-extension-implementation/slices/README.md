@@ -38,7 +38,8 @@ verification 與 deferred work。
   FL及hierarchical model／result artifact regression。
 
 Slice 3 retained-result runtime目前暫緩，因此不建立detailed plan。Slice 1、2、4A、4、
-5均已commit；下一個active work unit為Slice 6，目前已完成現況盤點並等待計畫審查。
+5均已commit；Slice 6已完成實作、local regression及user review，目前等待commit
+approval。
 
 ## 文件慣例
 
