@@ -4,6 +4,10 @@
 
 狀態：Ready for User Review／case owner、test seam 與 retained-result owner 已完成對照
 
+2026-09-07範圍更新：本文件的retained-result owner與case分析只保留為
+歷史盤點，該runtime仍不實作；Slice 3已重新界定為
+[不使用retained result的Branch replacement](./slices/Slice%203%20Branch%20Replacement%20without%20Retained-result%20Recovery%20Detailed%20Plan.md)。
+
 相關文件：
 
 - [Protocol Implementation Current-State Inventory](./Protocol%20Implementation%20Current-State%20Inventory.md)
@@ -30,7 +34,8 @@ implementation slice。
 - **PyMTLF wire mirror**：private backend boundary 重複必要 contract validation，避免
   internal request 或 future caller 繞過 public SBI 後產生不同語意。
 - **PyMTLF FL Client resource**：負責 persistent subscription contract、operation
-  dispatch、一次性 retained-result lookup與 resource cleanup。
+  dispatch與 resource cleanup。Retained-result lookup只是本文件保留的future owner
+  analysis，不是active runtime。
 - **PyMTLF FL Server／coordinator**：負責 participant resource、candidate pool、policy
   execution、Notify consumption、outstanding lookup 與逐級 topology report。
 - **`nwdaf-resources`**：只驗證跨 real Go／PyMTLF／peer process 的 observable
@@ -153,8 +158,9 @@ Repository unit tests完成後，`nwdaf-resources` 至少需要下列跨程序�
    在 parent callback boundary 被拒絕。
 4. Feature 3 在 Root→Intermediate成功、Intermediate→Client失敗時不被跨 edge繼承，
    並完成失敗 resource cleanup。
-5. Retained-result request不進 persistent representation，連續第二次 request在前一個
-   outcome 前被拒絕，terminal outcome後才可再次送出。
+5. Retained-result request的non-persistence與unsupported execution gate由現有wire／boundary
+   tests保留；latest-result lookup、outcome與重複request lifecycle為future work，不是
+   active Slice 3 real-process evidence。
 6. 不含 candidate fields的既有 flat／distributed FL Create、round、Notify與 DELETE
    regression仍維持原行為。
 7. Root／Intermediate 的 preparation Create 均設定 `mLPreFlag: true` 且不帶
@@ -209,8 +215,9 @@ UUID綁到另一個 procedure scope。Leaf result與 Branch aggregate沿用同�
 
 Entry 應在 model／aggregate artifact成功發布後、第一次 callback enqueue 前原子更新。
 因此舊 Branch的 callback即使送不出去，新 subscription仍能要求同一 NWDAF回傳結果。
-Slice 3需加入 UUID scope test：replacement subscription可重用同一 procedure UUID；
-已被另一個 active procedure使用的 UUID不得綁定、讀取或覆寫其 retained entry。
+若未來另行啟用retained-result runtime，該work unit需加入UUID scope test：replacement
+subscription可重用同一procedure UUID；已被另一個active procedure使用的UUID不得綁定、
+讀取或覆寫其retained entry。這不是目前Slice 3的acceptance requirement。
 
 ### 9.3 Lifecycle constraint
 

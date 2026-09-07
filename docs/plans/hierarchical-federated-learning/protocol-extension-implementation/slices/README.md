@@ -1,6 +1,6 @@
 # Protocol Extension Slice 詳細計畫
 
-日期：2026-09-04
+日期：2026-09-07
 
 ## 文件定位
 
@@ -20,6 +20,10 @@ verification 與 deferred work。
 - [Slice 2 — Candidate Pool, Policy and Local Contract Execution](./Slice%202%20Candidate%20Pool%20Policy%20and%20Local%20Contract%20Execution%20Detailed%20Plan.md)：
   建立 PyMTLF candidate pool、delegated discovery、policy／strategy／`reportAfter`
   local execution、selected-set aggregation gate 與 realized topology snapshot。
+- [Slice 3 — Branch Replacement without Retained-result Recovery](./Slice%203%20Branch%20Replacement%20without%20Retained-result%20Recovery%20Detailed%20Plan.md)：
+  以`branch_groups -> branches／leaves`保存不重複的static candidate assignment，並讓
+  Root選Branch與Branch選Leaf共用direct-child priority／policy semantics；主要驗證單一
+  Branch於training途中失效後的replacement，不取回舊結果。
 - [Slice 4A — Digest Simplification and Contract Cleanup](./Slice%204A%20Digest%20Simplification%20and%20Contract%20Cleanup%20Detailed%20Plan.md)：
   只保留完整artifact的content-addressed SHA-256 key，移除其他bundle、model、training
   evidence、Notify、topology與collection content digests，並以explicit identity及state
@@ -37,9 +41,9 @@ verification 與 deferred work。
   bundle schema、producer、consumer與legacy deployment scenario，同時保留flat／distributed
   FL及hierarchical model／result artifact regression。
 
-Slice 3 retained-result runtime目前暫緩，因此不建立detailed plan。Slice 1、2、4A、4、
-5均已commit；Slice 6已完成實作、local regression及user review，目前等待commit
-approval。
+Retained-result runtime仍維持暫緩；Slice 3編號已重新用於不使用retained result的
+Branch replacement。Slice 1、2、4A、4、5與6均已commit；Slice 3 detailed plan目前
+已通過user review並等待commit approval，尚未進入production implementation。
 
 ## 文件慣例
 

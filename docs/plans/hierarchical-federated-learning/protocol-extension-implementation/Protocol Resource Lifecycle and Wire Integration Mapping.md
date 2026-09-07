@@ -5,6 +5,11 @@
 狀態：Ready for User Review／lifecycle trace、type integration 與 migration authority
 已完成第一輪盤點
 
+2026-09-07範圍更新：Slice 3的Leaf rebind需要由PyMTLF要求containing Go NWDAF淘汰舊
+inbound training route；該internal lifecycle operation的精確owner與驗證見
+[Slice 3 Detailed Plan](./slices/Slice%203%20Branch%20Replacement%20without%20Retained-result%20Recovery%20Detailed%20Plan.md)。
+本文件原有retained-result lifecycle只保留為歷史設計盤點，runtime仍維持暫緩。
+
 相關文件：
 
 - [Protocol Extension Implementation Plan](./Hierarchical%20NWDAF%20FL%20Protocol%20Extension%20Implementation%20Plan.md)
@@ -368,5 +373,5 @@ authorization 已被 enforcement 的證據。
 unit／boundary／real-process test seam。依該 ownership 與 dependency 形成的工作單位
 記錄於
 [Protocol Extension Implementation Slice Map](./Protocol%20Extension%20Implementation%20Slice%20Map.md)。
-下一步是在修改 production code 前，建立 Slice 1 detailed plan，列出 exact files、
-test matrix、feature-disabled behavior 與 repository-specific verification boundary。
+本文件的第一輪盤點已由Slice 1、2、5與6實作完成；2026-09-07後新增的
+Branch replacement lifecycle則以Slice 3 detailed plan為active implementation authority。

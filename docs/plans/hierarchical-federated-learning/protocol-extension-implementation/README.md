@@ -1,9 +1,9 @@
 # Hierarchical NWDAF FL Protocol Extension Implementation Plans
 
-日期：2026-09-04
+日期：2026-09-07
 
-狀態：Slice 1、2、4A、4、5均已commit；Slice 6 Review Confirmed／
-Commit Approval Pending
+狀態：Slice 1、2、4A、4、5、6均已commit；Slice 3 Branch replacement detailed
+plan Review Confirmed／Commit Approval Pending
 
 ## 文件定位
 
@@ -15,7 +15,11 @@ Commit Approval Pending
 implementation；本分類則負責將已確認的 topology、policy、strategy、Notify、
 feature negotiation semantics 實作到正式 `Nnwdaf_MLModelTraining` message flow。
 Retained-result fields仍保留在candidate wire contract，但其result保存、lookup與
-replacement recovery暫不納入目前implementation slices。
+舊計算結果接續維持暫緩。Slice 3只實作不使用retained result的Branch replacement：
+Root與Branch從topology各自取得direct-child policy；Branch失效當輪先依Root completion
+policy決定是否以成功results聚合，剩餘cohort符合readiness時可與replacement preparation
+並行training。Root從failed Branch所屬group選出替代Branch並重建Leaf contract，new
+Branch只從尚未dispatch的下一輪加入。Leaf replacement不是本slice的主要驗證範圍。
 
 Protocol integration前先完成兩個獨立supporting slices。Slice 4A清理既有多層digest
 contract；Slice 4再建立known-workload boundary。既有標準
@@ -57,6 +61,9 @@ content digest均不再成為後續runtime contract。
 - [Slice 詳細計畫](./slices/)：
   收錄接下來各 slice 的獨立實作計畫；每份計畫只處理一個可 review、驗證與交付的
   work unit。
+- [Slice 3 — Branch Replacement without Retained-result Recovery](./slices/Slice%203%20Branch%20Replacement%20without%20Retained-result%20Recovery%20Detailed%20Plan.md)：
+  定義mid-training單一Branch failure、configured Root／Branch policy execution、degraded
+  rounds、replacement subtree重建與Leaf rebind的完整實作邊界。
 
 ## 審查證據
 

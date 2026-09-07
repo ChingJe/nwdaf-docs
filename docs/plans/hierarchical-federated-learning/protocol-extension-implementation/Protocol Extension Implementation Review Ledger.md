@@ -1,9 +1,9 @@
 # Hierarchical NWDAF FL Protocol Extension Implementation Review Ledger
 
-日期：2026-09-06
+日期：2026-09-07
 
-狀態：Slice 1、2、4A、4、5 Committed；Slice 6 Review Confirmed／
-Commit Approval Pending
+狀態：Slice 1、2、4A、4、5、6 Committed；Slice 3 Branch replacement detailed
+plan Review Confirmed／Commit Approval Pending
 
 相關文件：
 
@@ -11,6 +11,7 @@ Commit Approval Pending
 - [Slice Map](./Protocol%20Extension%20Implementation%20Slice%20Map.md)
 - [Slice 1 Detailed Plan](./slices/Slice%201%20Wire%20Contract%20and%20Resource%20Lifecycle%20Foundation%20Detailed%20Plan.md)
 - [Slice 2 Detailed Plan](./slices/Slice%202%20Candidate%20Pool%20Policy%20and%20Local%20Contract%20Execution%20Detailed%20Plan.md)
+- [Slice 3 Detailed Plan](./slices/Slice%203%20Branch%20Replacement%20without%20Retained-result%20Recovery%20Detailed%20Plan.md)
 - [Slice 4A Detailed Plan](./slices/Slice%204A%20Digest%20Simplification%20and%20Contract%20Cleanup%20Detailed%20Plan.md)
 - [Slice 4 Detailed Plan](./slices/Slice%204%20Controlled%20Local%20Training%20Workload%20Detailed%20Plan.md)
 - [Slice 5 Detailed Plan](./slices/Slice%205%20Protocol-driven%20Hierarchy%20Integration%20Detailed%20Plan.md)
@@ -103,7 +104,8 @@ Slice 1 code finding。
 
 - `future-phase handoff`：candidate selection、policy／strategy execution與downstream
   subscription dispatch（Slice 2）；
-- `future-phase handoff`：retained-result index、lookup與outcome producer（Slice 3）；
+- `future-phase handoff`：retained-result index、lookup與outcome producer（當時規劃為
+  Slice 3；2026-09-07後由本文件§11取代，retained runtime維持暫緩）；
 - `future-phase handoff`：Root／Branch protocol-mode orchestration、feature 3 production
   advertisement、ADRF global-model distribution與sender cleanup（Slice 5）；
 - `future-phase handoff`：除whole-artifact key外的既有digest contract清理（Slice 4A）；
@@ -374,6 +376,40 @@ Slice 6 current-slice finding。
   real-process evidence不取代該項驗證。
 - `approved deferral`：retained-result persistence／lookup、Branch replacement、fencing與
   runtime topology self-healing維持暫緩。
-- `review gate`：user review已確認；`PyMTLF/`、`nwdaf-resources/`與`nwdaf-docs/`
-  diff仍保持unstaged／uncommitted，等待commit approval；`NWDAF/`只作回歸驗證，
-  沒有Slice 6變更。
+- `closing commits`：`PyMTLF/` `8a1d6fc`、`nwdaf-resources/` `e0e73c3`與
+  `nwdaf-docs/` `021677f`；`NWDAF/`只作回歸驗證，沒有Slice 6變更。
+
+---
+
+## 11. Slice 3 重新界定與計畫狀態
+
+### 11.1 目標調整
+
+2026-09-07確認Branch replacement仍是目前implementation plan需要完成的behavior，但
+不採用retained-result recovery。原Slice 3的latest-completed index、lookup、artifact
+retention與舊結果接續維持暫緩；Slice 3編號改用於：
+
+- Root偵測單一direct Branch在training round中的availability failure；
+- 從該assignment的static candidates選擇replacement並做fresh NRF exact-ID resolve；
+- 從topology root與各Branch group解析policy，分別控制Root-to-Branch與
+  Branch-to-Leaf的readiness、selection與completion，不保留hard-coded all-required值；
+- 以same `mlCorreId`與same Leaf subtree建立新的model-free subscriptions；
+- 由Leaf PyMTLF要求containing Go NWDAF依backend resource identity／generation淘汰舊
+  inbound training route，避免rebind只清理一半；
+- Root policy接受時以successful Branch results完成degraded round；拒絕時才丟棄partial
+  results。剩餘cohort符合readiness時與replacement並行training，new Branch只加入尚未
+  dispatch的下一輪；
+- 完成Leaf same-procedure rebind、old-work fencing、ADRF lifecycle與real-process
+  process-termination evidence。
+
+詳細owner、failure classification、round semantics、tests與acceptance criteria見
+[Slice 3 Detailed Plan](./slices/Slice%203%20Branch%20Replacement%20without%20Retained-result%20Recovery%20Detailed%20Plan.md)。
+
+### 11.2 Review gate
+
+- `plan status`：Review Confirmed／Commit Approval Pending；尚未進入production
+  implementation。
+- `retained boundary`：既有wire fields與unsupported `403` execution gate保留，不建立
+  runtime owner。
+- `integration verification gap`：正式multi-host testbed尚未執行；未來local
+  real-process replacement evidence不能取代該項驗證。

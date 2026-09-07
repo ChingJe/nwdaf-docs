@@ -1,10 +1,9 @@
 # Hierarchical NWDAF FL Protocol Extension Implementation Plan
 
-日期：2026-09-04
+日期：2026-09-07
 
-狀態：Slice 1、2、4A、4、5 Committed；Slice 6 Review Confirmed／
-Commit Approval Pending；
-retained-result runtime暫緩
+狀態：Slice 1、2、4A、4、5、6 Committed；Slice 3 Branch replacement detailed
+plan Review Confirmed／Commit Approval Pending；retained-result runtime暫緩
 
 索引：
 
@@ -13,7 +12,7 @@ retained-result runtime暫緩
 - [Model Bundle Metadata to Protocol Schema Mapping](./Model%20Bundle%20Metadata%20to%20Protocol%20Schema%20Mapping.md)
 - [Protocol Extension Implementation Slice Map](./Protocol%20Extension%20Implementation%20Slice%20Map.md)
 - [Protocol Extension Implementation Review Ledger](./Protocol%20Extension%20Implementation%20Review%20Ledger.md)
-- [Slice 6 Detailed Plan](./slices/Slice%206%20Migration%20and%20Regression%20Closure%20Detailed%20Plan.md)
+- [Slice 3 Detailed Plan](./slices/Slice%203%20Branch%20Replacement%20without%20Retained-result%20Recovery%20Detailed%20Plan.md)
 
 設計輸入：
 
@@ -64,6 +63,9 @@ fields 保留在 wire contract，但本階段不建立其執行狀態與 recover
 - Root 以 UUID 字串產生每個 hierarchical FL procedure 的 `mlCorreId`，整棵
   hierarchy 逐級共用同一值。此識別用途不代表 node 必須保存可依該 ID 查詢的歷史
   result artifact。
+- Training途中一個direct Branch發生可歸因的availability failure時，Root可從該
+  Branch group的direct-child candidates選出新Branch、重建該group的Leaf candidate
+  contract，並從上一個成功的Root global model繼續後續training。
 
 ### 2.2 Execution 目標
 
@@ -141,11 +143,20 @@ candidates 由該 node 的 policy 決定。
 當 active Branch 失效時，Root 可依內部 selection mechanism 選擇替代 Branch，
 再使用既有 subscription operation 將新的 subtree contract 下發。替代 Branch 重新
 建立 downstream subscriptions 後，依 Root 後續下發的 model／round instruction
-繼續執行；失敗 Branch 路徑中尚未送達的 local result 不在本階段恢復或沿用。
+繼續執行。Root將單一direct Branch的round dispatch failure、termination Notify或
+response deadline timeout分類為可恢復的availability failure；candidate使用前必須經
+NRF fresh exact-ID resolve。
 
-本 workstream 只提供 topology update 所需的 protocol information；完整 failure
-detection、replacement selection、fencing，以及舊 result 的保存與接續仍由內部
-機制或後續工作負責。
+Root與各Branch的policy均放在local topology對應層級，並實際控制該Server對direct
+children的readiness、per-round selection與completion。Branch失效時，Root先依
+`acceptFailures`與`minCompletionRate`判斷當輪；policy接受便只聚合成功Branches，拒絕才
+丟棄partial results。只要剩餘Branches仍符合Root policy，training在replacement
+preparation期間繼續；replacement只從下一個尚未dispatch的round加入。新Branch與Leaves
+沿用同一hierarchy-wide `mlCorreId`，但使用新的per-edge resource與`notifCorreId`。
+
+本流程不送出`x-retainedResultReq`，也不恢復或沿用失敗路徑尚未送達的local result。
+完整multi-vendor re-parent authorization、old Branch恢復後的ownership handback、Root
+restart recovery與多個Branches同時失效仍不在本階段處理。
 
 ---
 
@@ -154,7 +165,8 @@ detection、replacement selection、fencing，以及舊 result 的保存與接�
 預期涉及：
 
 - `NWDAF/`：External／peer SBI wire contract、validation、resource state、callback
-  routing 與 Go→PyMTLF transport。
+  routing、Go→PyMTLF transport，以及Leaf rebind時由backend主動淘汰舊inbound route的
+  internal lifecycle operation。
 - `PyMTLF/`：Topology／policy／strategy execution、local process state 與 realized
   report owner，以及controlled local training workload。
 - `nwdaf-resources/`：Real-process request／Notify evidence、negative cases 與
@@ -246,7 +258,29 @@ component，但依目前 production trace 不預期修改其 repository。
 - 未來若重新採用 retained result，必須另行決定保存期限、artifact ownership、
   replacement subscription correlation、timeout 與 cleanup，再建立獨立實作計畫。
 
-### 5.8 驗證與 migration closure
+### 5.8 Branch replacement execution
+
+- Static topology以多個Branch groups表示並行assignment；每組將有priority的Branch
+  candidates與只宣告一次的Leaf candidates分開保存，不以重複Leaf subtree推導群組。
+- Root選Branch與Branch選Leaf共用既有direct-child candidate pool、priority與policy
+  semantics；initial preparation每組只選出一個active Branch，replacement使用前經NRF
+  fresh exact-ID resolve。本階段production recovery與E2E只驗證Branch replacement。
+- Root policy與各group的Branch-to-Leaf policy直接放在static topology對應層級；runtime
+  必須使用configured minimum、fraction與completion threshold，不保留hard-coded
+  all-required policy。
+- 將direct Branch availability failure從validation／aggregation／ADRF／Root internal
+  failure中明確分類；只有前者能進入bounded replacement loop。
+- Replacement以same `mlCorreId`與same Leaf subtree建立新resources；Leaf成功接受新edge
+  後淘汰舊edge的pending work與callback correlation，並要求containing Go NWDAF依
+  backend resource identity／generation退休對應inbound route。
+- Root policy接受的degraded round只聚合successful Branch results；拒絕的attempt才丟棄
+  partial results。剩餘cohort符合readiness時不等待replacement，replacement ready後只
+  加入下一個尚未dispatch的round。
+- Candidate exhaustion後依Root readiness policy決定維持degraded training或terminal
+  cleanup；同時多Branch失效與non-recoverable errors仍terminal。Leaf replacement的
+  production transition與E2E evidence維持延後。
+
+### 5.9 驗證與 migration closure
 
 - 將 Protocol Conformance Matrix 映射到 unit、boundary 與 real-process tests。
 - Slice 5已完成protocol-driven local real-process E2E；Slice 6改碼前只保留一次
@@ -259,12 +293,14 @@ component，但依目前 production trace 不預期修改其 repository。
 ## 6. 明確非目標
 
 - 新 FL algorithm 或 learning-quality claim。
-- Branch failure replacement 的完整 orchestration protocol。
 - Retained-result persistence、lookup、artifact retention policy與舊計算結果接續。
-- Re-parent authorization、fencing、ownership token、retained-result freshness、
-  deduplication 或 aggregation acceptance。
+- 通用re-parent authorization、跨節點ownership／fencing token、retained-result
+  freshness、deduplication 或其aggregation acceptance；本slice仍需完成本地resource
+  revision與late callback fencing。
+- Leaf replacement、多個Branches同時失效、任意NRF list discovery、Root restart
+  recovery與old Branch ownership handback。
 - NRF schema extension、application-specific topology storage 或 ranking algorithm。
-- OAM／MANO、runtime topology optimizer 或完整 self-healing。
+- OAM／MANO、runtime topology optimizer 或一般化self-healing。
 - Flat／hierarchical experiment metrics instrumentation。
 
 ---
@@ -272,13 +308,12 @@ component，但依目前 production trace 不預期修改其 repository。
 ## 7. 目前狀態與下一步
 
 - Candidate protocol、OpenAPI artifact 與 conformance cases 已有設計輸入。
-- Slice 1、2、4A、4與5均已完成審查、驗證及commit；protocol-driven hierarchy已有
-  local real-process E2E evidence。
-- Slice 6已移除舊assignment／preparation-result bundle authority、雙模式selector與
-  legacy deployment scenario；protocol HFL及standard flat／distributed FL的local
-  real-process regression均已通過，目前等待commit approval。
-- Retained-result runtime暫緩，不是Slice 6相依項目；正式multi-host testbed仍是
-  integration verification gap。
+- Slice 1、2、4A、4、5與6均已完成審查、驗證及commit；protocol-driven hierarchy、
+  protocol-only migration與standard flat／distributed FL已有local real-process evidence。
+- Slice 3已重新界定為「不使用retained result的Branch replacement」；完整實作計畫已
+  通過user review並等待commit approval，尚未進入production implementation。
+- Retained-result runtime維持暫緩；正式multi-host testbed仍是integration verification
+  gap。
 
 已依
 [Model Bundle Metadata to Protocol Schema Mapping](./Model%20Bundle%20Metadata%20to%20Protocol%20Schema%20Mapping.md)
@@ -288,5 +323,5 @@ component，但依目前 production trace 不預期修改其 repository。
 [Protocol Extension Implementation Slice Map](./Protocol%20Extension%20Implementation%20Slice%20Map.md)；
 各slice的實作與驗證證據記錄於
 [Protocol Extension Implementation Review Ledger](./Protocol%20Extension%20Implementation%20Review%20Ledger.md)；
-Slice 6的現況盤點、精確檔案範圍、實作順序與驗收條件見
-[Slice 6 Detailed Plan](./slices/Slice%206%20Migration%20and%20Regression%20Closure%20Detailed%20Plan.md)。
+Slice 3的現況盤點、精確owner、round semantics、實作順序與驗收條件見
+[Slice 3 Detailed Plan](./slices/Slice%203%20Branch%20Replacement%20without%20Retained-result%20Recovery%20Detailed%20Plan.md)。

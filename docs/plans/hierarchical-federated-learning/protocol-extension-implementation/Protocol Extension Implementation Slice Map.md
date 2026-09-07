@@ -1,10 +1,9 @@
 # Hierarchical NWDAF FL Protocol Extension Implementation Slice Map
 
-日期：2026-09-04
+日期：2026-09-07
 
-狀態：Slice 1、2、4A、4、5 Committed；Slice 6 Review Confirmed／
-Commit Approval Pending；
-active sequence為Slice 1、2、4A、4、5、6；Slice 3暫緩
+狀態：Slice 1、2、4A、4、5、6 Committed；Slice 3 Branch replacement detailed
+plan Review Confirmed／Commit Approval Pending；active sequence為Slice 1、2、4A、4、5、6、3
 
 相關文件：
 
@@ -128,23 +127,74 @@ node能解析 explicit subtree、補充 delegated candidates、套用 policy／s
 
 ---
 
-## 4. Slice 3 — Retained Result State and Lookup（暫緩）
+## 4. Slice 3 — Branch Replacement without Retained-result Recovery
 
-Slice 3保留原編號，避免改寫Slice 1的既有計畫、測試紀錄與conformance case引用；
-本階段不建立其detailed plan，也不進入production implementation。
+原Slice 3的retained-result runtime目標已取消並維持暫緩；本編號重新用於完成老師提出的
+mid-training Branch replacement情境，但明確不取回舊結果。
 
-`x-retainedResultReq`與`x-retainedResultStatus`仍保留在candidate schema及Slice 1
-完成的wire／validation contract中，但目前不實作：
+### 行為
 
-- latest-completed result index；
-- artifact retention handle、保存期限與cleanup；
-- outstanding lookup state及`FOUND`／`NOT_FOUND`／`FAILED` outcome producer；
-- replacement Branch沿用舊Leaf／Branch計算結果。
+一個已admitted direct Branch在training round中因transport failure、termination或
+response deadline timeout失效時，Root從該Branch group的direct-child candidates
+選出新Branch，經fresh NRF exact-ID resolve後重建同一Leaf candidate set。Root先按
+topology root policy判斷當輪completion；符合threshold便只聚合成功Branches，否則才拒絕
+attempt。剩餘active Branches符合readiness時可在replacement期間繼續training，new Branch
+只加入尚未dispatch的下一輪。
 
-Production receiver若收到 retained-result instruction，必須回覆明確的requirements／
-capability rejection，不得靜默忽略，也不得改成使用request中其他model資訊重新訓練。
-未來若重新啟用此slice，需先重新確認artifact owner、retention期限、procedure
-correlation與cleanup contract。
+### 涉及的 repositories
+
+- `PyMTLF/`
+- `NWDAF/`：新增backend-initiated inbound training-route retirement internal lifecycle
+  operation
+- `nwdaf-resources/`
+- `nwdaf-docs/`：更新plan與review evidence
+- `nrf/`、`adrf/`：runtime dependency，預設read-only
+
+### 納入範圍
+
+- topology root policy、`branch_groups -> branches／policy／leaves` static config、Branch
+  與Leaf priority，以及global identity validation；Leaf set每組只宣告一次，不以重複
+  subtree比對推導group。
+- Root選Branch與Branch選Leaf共用direct-child candidate pool／policy semantics；本slice
+  只實作及驗證Branch replacement，Leaf replacement維持延後。
+- Initial Branch selection與mid-training replacement使用同一group candidate pool；獨立
+  initial-preparation failure injection scenario不列為本slice必要evidence。
+- 可恢復direct Branch availability failure和non-recoverable validation／aggregation／
+  ADRF／Root internal failure分類。
+- Per-group `BRANCH_REPLACING` progress、bounded candidate loop與fresh exact discovery；
+  request可在其他active representatives符合Root policy時繼續round。
+- Failed participant與舊`notifCorreId` local retirement；remote DELETE為best effort且留下
+  cleanup evidence。
+- Same `mlCorreId`、new per-edge resource identity與same subtree的model-free preparation。
+- Leaf same-procedure rebind、舊resource／pending callback fencing與experiment lifecycle。
+- Leaf PyMTLF依backend resource identity／generation要求containing Go NWDAF淘汰舊inbound
+  public route；operation idempotent且不遞迴呼叫backend DELETE。
+- Root configured readiness／selection／completion execution、accepted degraded aggregate、
+  rejected-attempt cleanup、higher `roundInd`與last committed model continuation。
+- 三區域、四個Branch候選與多Leaves的real-process process-termination scenario。
+
+### 驗收條件
+
+- 有candidate時，單一mid-training Branch failure不立即終止Root request。
+- Accepted degraded round只聚合successful results並增加`completedRounds`；rejected
+  attempt不產生aggregate，下一attempt的`roundInd`嚴格增加。
+- Replacement使用前通過fresh NRF exact-ID validation，以same `mlCorreId`建立新
+  subscriptions，並使原Leaves安全切到新upper edge。
+- 新ADRF allowlist納入replacement並排除failed Branch，terminal record count回到零。
+- Candidate exhaustion依Root readiness決定degraded continuation或bounded terminal
+  cleanup；simultaneous Branch failures、non-recoverable errors與shutdown維持terminal。
+- Request／Notify不使用retained-result fields；既有unsupported execution gate維持通過。
+- Existing hierarchy與distributed／flat regressions維持通過。
+
+### 延後項目
+
+- Retained-result index、lookup、artifact retention與舊計算結果接續。
+- Leaf replacement、multi-Branch simultaneous recovery、dynamic NRF list discovery、Root
+  restart recovery與一般化re-parent authorization。
+- 正式multi-host testbed performance experiment。
+
+詳細內容見
+[Slice 3 Detailed Plan](./slices/Slice%203%20Branch%20Replacement%20without%20Retained-result%20Recovery%20Detailed%20Plan.md)。
 
 ---
 
@@ -377,16 +427,12 @@ Slice 1: wire／resource lifecycle
   -> Slice 4: controlled local training workload
   -> Slice 5: protocol-driven E2E integration
   -> Slice 6: migration closure
-
-Slice 3: retained-result state（暫緩，不在目前active dependency chain）
+  -> Slice 3: Branch replacement without retained-result recovery
 ```
 
-Slice 3的編號與原始邊界只為保留追溯性；目前完成Slice 2後先執行Slice 4A，再執行
-Slice 4。Slice 4A編號表示它是protocol integration前新增的supporting work，不代表必須
-晚於Slice 4執行。各active
-slice仍依workspace review規則逐一完成、驗證與交付，不同時累積成一個大型
-working-tree diff。
+Slice 3編號沿用原本暫緩的work unit，但目標已由retained-result lookup改為不使用舊結果
+的Branch replacement；先前已commit的Slice編號與歷史紀錄不重寫。Slice 4A編號表示它是
+protocol integration前新增的supporting work，不代表數字順序。
 
-Slice 1、2、4A、4與5已完成審查、驗證並commit。Slice 6已完成protocol-only
-authority cutover、legacy deployment scenario移除與local regression，目前保留
-unstaged diff等待commit approval。
+Slice 1、2、4A、4、5與6已完成審查、驗證並commit。Slice 3 detailed plan已建立，
+目前已通過user review並等待commit approval；尚未進入production implementation。

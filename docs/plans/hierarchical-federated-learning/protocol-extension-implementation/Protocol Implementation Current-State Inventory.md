@@ -5,6 +5,11 @@
 狀態：Historical Baseline／保留實作前第一輪盤點；Slice 5後現況與migration scope見
 [Slice 6 Detailed Plan](./slices/Slice%206%20Migration%20and%20Regression%20Closure%20Detailed%20Plan.md)
 
+2026-09-07範圍更新：retained-result runtime仍暫緩；不使用retained result的Branch
+replacement已改由
+[Slice 3 Detailed Plan](./slices/Slice%203%20Branch%20Replacement%20without%20Retained-result%20Recovery%20Detailed%20Plan.md)
+承接。本文件的retained-result owner分析只保留為歷史盤點，不代表active scope。
+
 相關文件：
 
 - [Protocol Extension Implementation Plan](./Hierarchical%20NWDAF%20FL%20Protocol%20Extension%20Implementation%20Plan.md)
@@ -210,7 +215,8 @@ repository-local contract；不代表設計語意尚未決策：
 9. Root 以 UUID 字串產生 hierarchy-wide `mlCorreId`；同一 hierarchy 逐級共用，
    receiver 在本地 active procedure window 內拒絕與另一 active procedure 衝突的 UUID。
    Retained-result fields只保留wire contract；latest-completed index、artifact retention、
-   lookup與replacement recovery runtime目前暫緩，不納入active slices。
+   lookup與舊結果接續runtime目前暫緩；Branch replacement改由Slice 3以configured
+   completion policy、degraded rounds與fresh next-round participation處理。
 10. Model-bundle metadata 的 migration authority 已確認由 Root PyMTLF
     orchestration 明確選擇 legacy bundle 或 protocol mode；兩者互斥，Go route 不做
     fallback。Protocol E2E 完成前保留 legacy regression，closure 再移除舊 runtime
