@@ -2,7 +2,7 @@
 
 日期：2026-09-07
 
-狀態：Review Confirmed／Commit Approval Pending；尚未進入 production implementation
+狀態：Remediation Planned
 
 相關文件：
 
@@ -52,7 +52,7 @@ restart recovery 或 retained-result handoff。
 | Repository | Revision | Slice 3 角色 |
 | --- | --- | --- |
 | `PyMTLF/` | `8a1d6fcfe8091efd543296ff0c11d1fb84766095` | Root failure／replacement state、FL Server participant lifecycle、Leaf rebind owner |
-| `NWDAF/` | `256349f3f2d459339bc1f4e33d6b5c8a17e2d1e6` | 既有 Model Training transport，以及Leaf backend主動淘汰舊inbound Go route的internal lifecycle owner |
+| `NWDAF/` | `256349f3f2d459339bc1f4e33d6b5c8a17e2d1e6` | 既有 Model Training Notify／DELETE transport與Leaf inbound route的terminal lifecycle owner |
 | `nwdaf-resources/` | `e0e73c3fbe6f48aec65d6f977c637d0dcc3902c9` | 多區域 real-process replacement scenario 與 evidence owner |
 | `nrf/` | `0dd4024d4ab75b6630e04901968228b9b9718cf5` | Fresh exact-ID discovery dependency；預設 read-only |
 | `adrf/` | `905f0599f68fe389bba14ed56db0ef9abeab5ccd` | Per-attempt global-model record dependency；預設 read-only |
@@ -76,6 +76,15 @@ Production implementation 開始前必須重新確認 affected repositories 的 
   iteration結束時發生。
 - TS 29.520 Release 18 §5.5.3.3提供既有 subscription的PUT、JSON Merge PATCH與
   DELETE；新 Branch則可沿用collection POST建立新的resource。
+- TS 29.520 Release 18 §4.6.2.4.2允許provider NWDAF以
+  `Nnwdaf_MLModelTraining_Notify`的`termTrainReq`要求終止subscription，並表示
+  後續不再對該subscription發送notification。Consumer回覆`204`只代表已接受
+  並保存該notification，規格沒有保證consumer之後一定發送DELETE。
+- TS 23.288 Release 18 §6.2C.2.3 step 1b將帶Termination Request的
+  `Nnwdaf_MLModelTraining_Notify`定義為FL Client表示離開FL process的既有方式。
+  本project的Branch consumer在接受該terminal notification後，會以既有
+  unsubscribe path補送標準DELETE；這是本實作的lifecycle behavior，不宣稱為
+  `204`的標準必然後續動作。
 - TS 29.520 Release 18 §5.5.6.2.2將`mlCorreId`定義為ML model training procedure
   identifier，將`roundInd`定義為multi-round training的round number；兩者沒有定義
   hierarchical parent／child recovery binding。
@@ -111,9 +120,14 @@ failed Branch assignment換成另一個Branch，仍是本project的orchestration
 - `FLExperimentRegistry`允許同一active experiment下的多個Client subscriptions共用
   `mlCorreId`；然而Leaf端尚未定義新Branch subscription成功後，如何淘汰舊Branch
   subscription、舊callback work與registry membership。
-- Leaf PyMTLF只知道自己的backend subscription ID；舊Branch建立的public subscription
-  route由containing Go NWDAF保存。現有internal API沒有讓PyMTLF依backend resource identity
-  單獨退休對應inbound route的operation，因此只刪PyMTLF state會留下無owner的Go route。
+- Leaf PyMTLF已可透過既有internal notification gateway將標準
+  `NwdafMLModelTrainNotif`交給containing Go NWDAF；Go會依`notifCorreId`找到對應
+  inbound route，同步轉送至consumer callback URI，並將peer的`204`或傳遞錯誤
+  沿同一HTTP request回給PyMTLF。
+- Go與PyMTLF也已有標準DELETE的正常resource path。目前Slice 3 working tree
+  另外新增backend-ID route retirement endpoint，會讓同一subscription的cleanup使用新的非標準命令
+  繞過既有Notify／DELETE lifecycle；本次remediation將移除該endpoint，並改由
+  `termTrainReq`、既有DELETE與bounded local fallback完成收尾。
 - `HierarchyNodeResolver.resolve()`每次都會經NRF exact-ID查詢並重新驗證registration、
   FL capability、event與model interoperability，因此可作替代Branch使用前的
   fresh check；Root現有static topology沒有足以進行任意list discovery的area／selection
@@ -156,8 +170,10 @@ global config或hard-coded mapping拼出。
   authority，再向replacement建立新的model-free preparation subscription。
 - Replacement Branch以同一hierarchy-wide `mlCorreId`、新的subscription resource與
   `notifCorreId`，對同一Leaf subtree逐級重建subscriptions。
-- Leaf在受控同一procedure內接受新parent subscription，並在新resource成功建立後淘汰
-  舊parent resource所屬work、registry membership與containing Go route。
+- Leaf在受控同一procedure內接受新parent subscription，並在新resource成功建立後
+  fence舊parent resource所屬work與registry membership。舊edge再以標準`termTrainReq`
+  通知consumer；成功時等consumer經既有路徑發送DELETE，明確傳遞失敗時由
+  provider端完成terminal cleanup。
 - 單一Branch失敗後，當輪若符合Root completion policy，使用成功Branches完成aggregate；
   若不符合才丟棄該attempt。只要剩餘active Branches仍符合Root readiness policy，Root在
   replacement preparation期間繼續dispatch後續round。
@@ -332,8 +348,8 @@ branch_groups:
   Branch自己的值。
 - 所有Branch candidate、Leaf candidate與Root identity都必須是canonical UUIDv4，
   並在同一topology內全域唯一；同一NF不能同時出現在兩個assignment或兩種role。
-- priority較高者先嘗試；相同priority沿用Slice 2可注入random source的tie-breaking，測試
-  可固定seed以重現結果。
+- priority較高者先嘗試；相同priority沿用Slice 2既有的canonical `nfInstanceId`
+  tie-breaking，不因本slice改變既有selection結果。
 - Root對每個group使用一個direct-child candidate pool，initial preparation只選出一個
   active Branch；其他Branch保持`UNCONFIRMED`，不建立subscription，也不列入ADRF
   allowlist。
@@ -490,19 +506,37 @@ transition：
 - 新subscription必須使用相同hierarchy-wide `mlCorreId`並通過完整preparation
   validation；Create尚未成功前不得破壞舊resource。
 - 新resource成功建立後，Leaf以同一procedure與role為scope，原子地將舊upper
-  subscription標為superseded，取消其pending training／callback work並移除舊registry
-  membership；新resource保持active。
+  subscription標為`SUPERSEDED`／`TERMINATING`，取消其pending training／callback work並
+  移除舊registry membership；新resource保持active。這個transition必須先完成，才能
+  發送舊resource的terminal notification。舊resource雖不再是active member，仍必須能以
+  backend resource ID取得，供後續標準DELETE完成實體清理。
 - 舊resource之後的PUT／PATCH或late completion不得改寫新resource state；尚未送出的
   callback work需取消。已經進入transport的HTTP callback無法被收回，由old Branch
   fail-stop前提與接收端的old-round／old-correlation fencing隔離。
-- Leaf PyMTLF將舊backend resource標為superseded後，透過containing Go NWDAF的internal
-  lifecycle operation，以backend subscription ID淘汰對應inbound public route。Go
-  processor自行取得目前MTLF availability generation並只匹配該generation；PyMTLF不在
-  request中另傳或保存generation。該operation只清Go route／tombstone，不再次呼叫
-  PyMTLF DELETE，避免遞迴。
-- Go route retirement必須idempotent；成功或route已不存在都回`204`。暫時失敗時，
-  Leaf保留bounded cleanup-pending work並讓新resource繼續執行；舊route即使收到request，
-  也因backend resource已superseded而不能恢復成active owner。
+- Leaf PyMTLF使用舊resource的`notifCorreId`產生含`termTrainReq`的
+  `NwdafMLModelTrainNotif`，透過既有internal notification gateway同步交給containing
+  Go NWDAF。PyMTLF在取得Go的明確回覆前，只保留完成terminal delivery所需的
+  最小resource metadata；舊training work已經fence，不會等待notification才停止。
+- Go依`notifCorreId`找到舊inbound route，將route轉為只允許terminal DELETE的
+  `TERMINATING`狀態，並將notification轉送至舊Branch callback URI。一般PUT／PATCH與
+  後續callback均不得讓該route回到active。
+- 若舊Branch接受notification並回`204`，Go將同一`204`回給Leaf PyMTLF，但保留
+  terminating route與Leaf terminal resource。本project的Branch PyMTLF在接受
+  `termTrainReq`後，排入原participant resource的既有unsubscribe；Branch Go再對Leaf
+  public resource發送標準DELETE。Leaf Go將DELETE傳給Leaf PyMTLF，只在backend完成
+  resource cleanup後才刪除／tombstone route。
+- `204`不能被視為規格保證後續一定收到DELETE。若舊Branch已回`204`卻在
+  bounded termination grace period內沒有發送DELETE，Leaf Go重用既有backend DELETE
+  lifecycle清除Leaf PyMTLF terminal resource，再刪除／tombstone route；不新增專用
+  cleanup API。
+- 若Go已成功處理PyMTLF request，但對舊Branch的notification因transport或peer
+  response明確失敗，Go在該次request內刪除／tombstone舊route，並將peer delivery
+  failure沿同一HTTP response回給PyMTLF。PyMTLF收到該明確結果後實體清除舊
+  backend resource，不再等不會到來的consumer DELETE。
+- 若Leaf PyMTLF本身無法連到containing Go，它不能推斷Go或舊Branch是否已
+  處理notification。此時保留最小terminal delivery job做bounded retry；舊
+  training work仍保持fenced。後續若Go回覆route已tombstone／不存在，PyMTLF可視為
+  Go端已完成收尾並刪除本地terminal resource。
 - Supersede舊resource不等於終止整個`mlCorreId` experiment；只有最後active upper
   subscription被正常刪除時，才進既有procedure cleanup。
 - 舊result artifact與callback work直接依既有workspace／resource lifecycle清除，不建立
@@ -556,6 +590,8 @@ sequenceDiagram
         R->>A2: model-free preparation, same mlCorreId, same subtree
         A2->>L: new subscriptions, same mlCorreId
         Note over L: activate new edge and supersede old edge
+        L--xA1: termTrainReq delivery fails
+        Note over L: clean old terminal resource and route
         L-->>A2: topology preparation status
         A2-->>R: realized subtree ready
     end
@@ -641,6 +677,8 @@ round。Replacement只加入尚未dispatch的下一輪，不改變in-flight coho
     rejected attempt，兩者都不得僅因availability failure取消整個hierarchy；
   - 允許retire failed participant、清除local correlation，並在remote DELETE失敗時保留
     cleanup evidence；
+  - 當consumer角色收到`termTrainReq`並成功接受時，排入該participant的既有
+    unsubscribe path，由containing Go NWDAF對provider resource發送標準DELETE；
   - 重用現有add-target／collect／admit transport owner建立replacement，避免第二套
     subscription client；但將replacement preparation保存為獨立per-participant substate，
     不要求仍在training的global process退回preparation state；
@@ -651,7 +689,11 @@ round。Replacement只加入尚未dispatch的下一輪，不改變in-flight coho
 
 - `src/py_mtlf/core/fl_client.py`
   - 在protocol preparation Create完成前後建立atomic same-procedure rebind；
-  - fence舊resource revision、pending work與late callback；
+  - fence舊resource revision、pending work與late callback，並將舊resource保留為terminal
+    resource直到consumer DELETE、明確delivery failure或bounded fallback cleanup；
+  - 對舊resource產生含`termTrainReq`的standard notification，並依Go同步回覆區分
+    accepted delivery、peer delivery failure與local Go unreachable；只有最後一種保留
+    bounded retry job；
   - 不觸發retained lookup，不重新解讀request中的model field。
 - `src/py_mtlf/core/fl_experiment.py`
   - 讓supersede只移除舊subscription membership，不把整個experiment標成terminal；
@@ -666,29 +708,39 @@ round。Replacement只加入尚未dispatch的下一輪，不改變in-flight coho
 ### 6.2 `NWDAF/`
 
 現有Go routes已能為新Branch與Leaves建立新的Create resources、轉送topology-only
-Notify、執行PATCH／DELETE並以per-resource `notifCorreId`做callback correlation；本
-slice只補一個不對外公開的local lifecycle gap：
+Notify、執行PATCH／DELETE並以per-resource `notifCorreId`做callback correlation。本次
+remediation不再新增另一條route retirement command path，而是將terminal semantics接回
+現有Notify／DELETE lifecycle：
 
-- 在MTLF internal gateway新增backend-initiated training-route retirement operation；
-- 固定使用
-  `DELETE /internal/v1/ml-model-training/inbound-routes/:backendSubscriptionId`，不新增request
-  body或custom header；
-- handler取得目前MTLF availability generation lease；processor只匹配
-  `DirectionInbound`、`BackendResourceID`與該generation都相同的training route，不得誤刪
-  outbound peer route或另一generation的resource；
-- 成功時移除route並建立既有deletion tombstone，不向PyMTLF反向發出DELETE；
-- operation須idempotent，matching route已不存在時仍回`204`；backend unavailable或
-  generation lease無法取得時回`503`，由caller保留cleanup pending；
-- PyMTLF端新增最小client method與bounded retry owner，只供same-procedure supersede
-  cleanup使用。
+- 移除
+  `DELETE /internal/v1/ml-model-training/inbound-routes/:backendSubscriptionId`及其handler、
+  processor contract、context lookup與PyMTLF dedicated client method；
+- backend-originated notification包含`termTrainReq`時，Go仍使用既有
+  `/internal/v1/ml-model-training/notifications`與`notifCorreId`找到舊inbound route，不新增
+  custom field、header或endpoint；
+- Go在轉送前以route revision保護terminal transition，使該route不再接受普通
+  mutation，但仍能接受consumer後續發送的標準DELETE；
+- peer回`204`時，Go同步回`204`給PyMTLF並等待consumer DELETE。DELETE沿
+  現有public handler→processor→backend DELETE path清除PyMTLF resource，成功後才刪除與
+  tombstone Go route；
+- peer notification明確失敗時，Go刪除／tombstone route後將既有
+  `ProblemDetails`失敗沿同一HTTP response回給PyMTLF；該回覆表示consumer未接受
+  notification，PyMTLF可完成舊terminal resource cleanup；
+- peer已回`204`但bounded grace period內沒有DELETE時，Go由原route保存的
+  backend resource identity重用既有backend DELETE operation，之後刪除／tombstone route。
+  Terminal route保存grace deadline，並由processor現有cleanup reconciliation worker以可測試
+  clock驅動；backend DELETE失敗時保留pending-cleanup state並依既有retry policy再試，不增加可呼叫的
+  cleanup API或新的external config surface。
 
 Focused regression需確認：
 
 - 多個不同subscription resources可以攜帶同一`mlCorreId`；
 - 新舊resource各自維持獨立`notifCorreId`、Location、revision與DELETE lifecycle；
-- backend identity只能淘汰matching inbound route，stale generation、outbound route與其他
-  backend resource不受影響；
-- retirement不回呼PyMTLF DELETE，重複request維持idempotent；
+- `termTrainReq`只終止舊resource，不會終止共用`mlCorreId`的新resource；
+- notification成功路徑等待標準DELETE；peer傳遞失敗與grace timeout路徑也都會
+  清掉backend resource與matching inbound route，不影響新resource或outbound route；
+- 重複DELETE、late DELETE或PyMTLF重試terminal notification不會重複清理或恢復舊
+  resource；
 - retained-result instruction仍被既有execution gate拒絕，replacement path不依賴它。
 
 ### 6.3 `nwdaf-resources/`
@@ -735,8 +787,8 @@ Focused regression需確認：
 | Round accounting | Accepted degraded round只聚合successful cohort並增加`completedRounds`；rejected attempt不aggregate／不增加計數；下一attempt使用higher `roundInd`與last committed global model |
 | FL Server recovery | Recoverable failure依effective completion policy產生typed outcome而不cancel entire process；retired participant與correlation立即fenced；non-recoverable error仍terminal |
 | Candidate failure | Initial或replacement discovery／preparation失敗改試下一Branch candidate；每個candidate只建立一次relationship；exhaustion後依Root readiness決定degraded continuation或terminal cleanup |
-| Leaf rebind | 新resource成功後才supersede舊resource；舊work／callback不能改寫新state；最後active resource DELETE才release experiment |
-| Go route retirement | Backend ID／generation只移除matching inbound route；outbound／stale route不受影響；idempotent且不遞迴DELETE backend |
+| Leaf rebind | 新resource成功後才supersede舊resource；舊work／callback不能改寫新state；舊edge發送`termTrainReq`，依同步回覆區分accepted、peer failure與local Go unreachable |
+| Terminal Notify／DELETE | Notify成功後Branch使用既有unsubscribe發送標準DELETE；明確peer failure與success-without-DELETE timeout都會清掉舊backend resource與matching route；不保留dedicated retirement API |
 | ADRF lifecycle | Per-round record cleanup、新record identity、replacement allowlist與terminal zero-record cleanup |
 | Generation／shutdown | Replacement途中Root generation改變或shutdown時停止所有新工作並清理已建立resources |
 
@@ -757,9 +809,19 @@ candidate resolve、participant mutation、round counter、ADRF mapping或Leaf r
 ### 7.2 `NWDAF` regression
 
 執行internal gateway、Model Training processor、route context、callback與resource
-lifecycle focused tests，再執行repository full test／lint／build。Go tests需直接驗證
-backend-initiated route retirement的direction／generation／idempotency；它們不代替
-PyMTLF replacement behavior test。
+lifecycle focused tests，再執行repository full test／lint／build。Go tests需直接驗證：
+
+- backend-originated `termTrainReq`沿現有notification route依`notifCorreId`匹配正確
+  inbound resource；
+- peer回`204`時Go保留terminal route，之後的標準DELETE會先到PyMTLF清理
+  backend resource，再清Go route；
+- peer transport／response failure以同一HTTP response回報PyMTLF，並且只清理該
+  matching inbound route；
+- accepted notification之後沒有DELETE的grace-timeout fallback重用既有backend
+  DELETE，不透過dedicated endpoint；
+- 舊 dedicated retirement route、processor contract、context lookup與tests已移除。
+
+這些Go tests不代替PyMTLF same-procedure rebind、consumer unsubscribe與terminal cleanup tests。
 
 ### 7.3 `nwdaf-resources` real-process evidence
 
@@ -775,7 +837,9 @@ Scenario至少需斷言：
 5. Root以fresh NRF resolve選到Area A replacement，使用同一`mlCorreId`建立新resource；
    新舊`notifCorreId`與resource Location不同。
 6. Replacement取得原Area A subtree，Leaves的新upper resources成功，舊callback path不再
-   被接受為active result owner，舊Leaf public routes最終被containing Go NWDAF淘汰。
+   被接受為active result owner。由於scenario已停止舊Branch，Leaf發送的
+   `termTrainReq`必須呈現peer delivery failure，該failure沿同一request回到Leaf PyMTLF後，
+   舊backend resource與public route都完成terminal cleanup。
 7. Request與Notify evidence均沒有使用`x-retainedResultReq`／
    `x-retainedResultStatus`。
 8. Replacement只從下一個尚未dispatch的round加入；該round使用最近一次成功Root global
@@ -792,43 +856,49 @@ replacement-only state改壞一般training lifecycle。
 
 ## 8. 驗收條件
 
-- [ ] Mid-training單一direct Branch failure在有candidate時不立即終止Root request。
-- [ ] Root只對可恢復的availability failure進replacement；validation、aggregation與ADRF
+- [x] Mid-training單一direct Branch failure在有candidate時不立即終止Root request。
+- [x] Root只對可恢復的availability failure進replacement；validation、aggregation與ADRF
   error維持terminal。
-- [ ] Root與Branch的direct-child candidates共用priority／eligibility semantics；本slice只
+- [x] Root與Branch的direct-child candidates共用priority／eligibility semantics；本slice只
   對Root的Branch replacement執行production recovery與E2E驗證。
-- [ ] Topology root與每個Branch group可分別設定policy與strategy；Root／Branch runtime確實使用
+- [x] Topology root與每個Branch group可分別設定policy與strategy；Root／Branch runtime確實使用
   `minAvailableNodes`、`fractionTrain`、`minTrainNodes`、`acceptFailures`與
   `minCompletionRate`及對應local process strategy，不再以hard-coded values取代。
-- [ ] Branch與Leaf candidates可在同一topology設定`enabled`、`priority`與`report_after`；
+- [x] Branch與Leaf candidates可在同一topology設定`enabled`、`priority`與`report_after`；
   Branch只接受`round`、Leaf只接受`epoch`，replacement保留被選candidate的node-local值。
-- [ ] Root產生的`x-flTopology`與static assignment一致；hierarchical explicit
+- [x] Root產生的`x-flTopology`與static assignment一致；hierarchical explicit
   participants不再從`federated_learning.strategy`、`server.client_training.epochs`或固定
   one-round取得指派值，Leaf training實際使用subscription保存的epochs。
-- [ ] 舊hierarchical `federated_learning.strategy`輸入已從current config schema、範例與
+- [x] 舊hierarchical `federated_learning.strategy`輸入已從current config schema、範例與
   fixtures移除，舊欄位不被靜默接受；flat flow與合法local default仍能使用
   `server.client_training.epochs`。
-- [ ] Root以每輪selected cohort為completion rate分母；policy接受時只聚合successful
+- [x] Root以每輪selected cohort為completion rate分母；policy接受時只聚合successful
   Branch results，policy拒絕時不產生aggregate。
-- [ ] Initial selection與replacement都只使用fresh NRF exact-ID resolve後的Branch，且
+- [x] Initial selection與replacement都只使用fresh NRF exact-ID resolve後的Branch，且
   每個candidate每個run最多建立一次relationship。
-- [ ] New Branch以same `mlCorreId`、fresh per-edge identity與same Leaf subtree完成
+- [x] New Branch以same `mlCorreId`、fresh per-edge identity與same Leaf subtree完成
   model-free preparation。
-- [ ] Leaf same-procedure rebind不終止整個experiment，舊resource／work／callback被fence。
-- [ ] Leaf containing Go NWDAF的舊inbound route經backend identity／generation安全淘汰，
-  不誤刪新resource或outbound route。
-- [ ] 剩餘active Branches符合Root readiness policy時，replacement期間仍可繼續training；
+- [ ] Leaf same-procedure rebind不終止整個experiment；新resource成功後舊resource／
+  work／callback被fence，並透過既有notification gateway發送`termTrainReq`。
+- [ ] `termTrainReq`成功時，Branch consumer排入既有unsubscribe，標準DELETE經
+  Leaf Go傳到Leaf PyMTLF真正清理resource，之後才清Go route。
+- [ ] `termTrainReq`明確peer delivery failure時，Go將failure沿同一request回給
+  PyMTLF，並且舊backend resource與matching route均完成terminal cleanup；PyMTLF連不到
+  local Go時則保留bounded retry job。
+- [ ] Accepted notification未等到DELETE時有bounded fallback cleanup；舊 dedicated
+  inbound-route retirement API、client與lookup已移除，不誤刪新resource或outbound route。
+- [x] 剩餘active Branches符合Root readiness policy時，replacement期間仍可繼續training；
   replacement只從下一個尚未dispatch的cohort加入。
-- [ ] Policy拒絕的attempt不保留partial result；後續使用higher upper-tier `roundInd`與last
+- [x] Policy拒絕的attempt不保留partial result；後續使用higher upper-tier `roundInd`與last
   committed global model進入fresh training attempt。
-- [ ] 每個round ADRF record均完成cleanup；replacement ready後的新allowlist排除failed
+- [x] 每個round ADRF record均完成cleanup；replacement ready後的新allowlist排除failed
   Branch並納入replacement；terminal record count為零。
-- [ ] Candidate exhaustion可觀察地留下unavailable group，並依Root readiness決定繼續或
+- [x] Candidate exhaustion可觀察地留下unavailable group，並依Root readiness決定繼續或
   bounded termination；simultaneous Branch failures與Root shutdown維持terminal cleanup。
-- [ ] Production path不發送或執行retained-result instruction，既有`403`gate維持通過。
+- [x] Production path不發送或執行retained-result instruction，既有`403`gate維持通過。
 - [ ] `PyMTLF` full tests與Ruff、`NWDAF` full test／lint／build、hierarchy與distributed
   real-process regressions通過。
-- [ ] 正式multi-host testbed若尚未執行，review ledger仍明確標為remaining gap。
+- [x] 正式multi-host testbed若尚未執行，review ledger仍明確標為remaining gap。
 
 ---
 
@@ -846,8 +916,9 @@ replacement-only state改壞一般training lifecycle。
    outcome與non-terminal participant retirement。
 4. 在Root接上effective policy、selected cohort與completion decision，分離attempt／
    completion counters，加入不阻塞eligible rounds的per-group replacement loop。
-5. 完成Leaf same-procedure rebind、Go inbound-route retirement、old-work fencing與
-   experiment cleanup tests。
+5. 完成Leaf same-procedure rebind、`termTrainReq`同步轉送、Branch consumer標準
+   DELETE、peer delivery failure與success-without-DELETE fallback；移除dedicated
+   inbound-route retirement endpoint與client，並完成old-work fencing與experiment cleanup tests。
 6. 串接per-round ADRF cleanup、replacement-ready後的新allowlist與actual final-round
    identity。
 7. 完成PyMTLF focused／full regression與code review；若發現Go contract gap，先回報並更新
@@ -863,9 +934,11 @@ runner workaround補掉production state缺口。
 
 ## 10. Review gate與剩餘風險
 
-目前這份文件只完成implementation-ready planning，尚未授權production edits。進入實作
-後，所有changed repositories先保留unstaged／uncommitted diff供user review；實作、驗證
-或plan conformance通過都不自動授權commit。
+現有replacement、degraded training與real-process evidence已完成，但Leaf rebind cleanup剛確認
+需要從dedicated inbound-route retirement API改為`termTrainReq`／standard DELETE
+lifecycle。`PyMTLF/`、`NWDAF/`、`nwdaf-resources/`與本文件的變更維持
+unstaged／uncommitted，目前停在`Remediation Planned`；完成重構、重新驗證與
+user review前不得回到commit checkpoint。
 
 預先確認的剩餘風險如下：
 
@@ -875,5 +948,7 @@ runner workaround補掉production state缺口。
   subscriptions；scenario必須提供足夠rounds直接觀察degraded與restored兩段結果；
 - static Branch groups只能驗證已知Branch候選，不能代表動態area-wide Branch discovery；
 - process restart不恢復in-memory replacement progress；
+- `termTrainReq`的`204`不是consumer必定發送DELETE的標準保證；本project以
+  Branch consumer unsubscribe behavior與Go-owned bounded grace fallback完成資源收尾；
 - local real-process evidence完成後，正式multi-host testbed仍需另行驗證實際網路失敗與
   timing behavior。

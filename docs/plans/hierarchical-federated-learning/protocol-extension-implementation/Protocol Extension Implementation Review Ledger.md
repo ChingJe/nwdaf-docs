@@ -2,8 +2,7 @@
 
 日期：2026-09-07
 
-狀態：Slice 1、2、4A、4、5、6 Committed；Slice 3 Branch replacement detailed
-plan Review Confirmed／Commit Approval Pending
+狀態：Slice 1、2、4A、4、5、6 Committed；Slice 3 Remediation Planned
 
 相關文件：
 
@@ -394,8 +393,10 @@ retention與舊結果接續維持暫緩；Slice 3編號改用於：
 - 從topology root與各Branch group解析policy，分別控制Root-to-Branch與
   Branch-to-Leaf的readiness、selection與completion，不保留hard-coded all-required值；
 - 以same `mlCorreId`與same Leaf subtree建立新的model-free subscriptions；
-- 由Leaf PyMTLF要求containing Go NWDAF依backend resource identity／generation淘汰舊
-  inbound training route，避免rebind只清理一半；
+- 由Leaf PyMTLF在新resource成功後透過既有notification gateway發送
+  `termTrainReq`；成功時由Branch consumer沿既有unsubscribe path發送標準
+  DELETE，peer delivery failure或後續DELETE超時時再做provider-side terminal cleanup，
+  不另建backend-ID route retirement API；
 - Root policy接受時以successful Branch results完成degraded round；拒絕時才丟棄partial
   results。剩餘cohort符合readiness時與replacement並行training，new Branch只加入尚未
   dispatch的下一輪；
@@ -407,9 +408,78 @@ retention與舊結果接續維持暫緩；Slice 3編號改用於：
 
 ### 11.2 Review gate
 
-- `plan status`：Review Confirmed／Commit Approval Pending；尚未進入production
-  implementation。
+- `plan status`：現有production implementation與前一輪verification已完成，但
+  `S3-R5`尚待remediation，目前為`Remediation Planned`；所有變更維持
+  unstaged／uncommitted。
 - `retained boundary`：既有wire fields與unsupported `403` execution gate保留，不建立
   runtime owner。
 - `integration verification gap`：正式multi-host testbed尚未執行；未來local
   real-process replacement evidence不能取代該項驗證。
+
+---
+
+## 12. Slice 3 實作審查結果
+
+### 12.1 計畫符合性
+
+| 要求群組 | 狀態 | 直接證據 |
+| --- | --- | --- |
+| Static topology與assignment | 已滿足 | `branch_groups`分開各區域的Branch candidate pool與單一Leaf set；Root／group policy、strategy及Branch／Leaf edge instructions均由topology config映射至production runtime |
+| Root policy與round accounting | 已滿足 | Root依selected cohort執行readiness、selection及completion；accepted degraded round只聚合成功Branches，dispatch `roundInd`與`completedRounds`分開計數 |
+| Branch replacement | 已滿足 | 單一direct Branch availability failure啟動background replacement；remaining cohort符合Root policy時繼續training，replacement只加入下一個尚未dispatch的round |
+| Candidate lifecycle | 已滿足 | Initial selection與replacement共用priority／eligibility semantics、fresh NRF exact-ID resolve及single-attempt candidate rule；candidate exhaustion依remaining readiness繼續或終止 |
+| Leaf rebind與terminal lifecycle | 待修正 | 新resource建立後的atomic supersede與old-work fencing已完成；舊route cleanup尚需從dedicated backend-ID endpoint改為`termTrainReq`、標準DELETE與bounded fallback |
+| ADRF與artifact lifecycle | 已滿足 | 每個attempt使用獨立ADRF record；replacement僅進入後續allowlist；terminal record count為零；Branch aggregate與上行result維持temporary `mLFileAddr` |
+| Retained-result boundary | 已滿足 | Production replacement未發送或執行retained-result instruction；既有unsupported `403` gate保留 |
+| Regression與real-process evidence | 已滿足local boundary | PyMTLF／NWDAF完整驗證、hierarchy smoke／aggregation、Branch replacement及distributed／flat real-process scenarios均通過 |
+
+### 12.2 審查發現與修正
+
+| ID | 狀態 | 確認證據 | 修正 | 驗證 |
+| --- | --- | --- | --- | --- |
+| `S3-R1` | 已關閉 | Priority selection的enabled explicit candidate可省略`priority`，與plan要求及deterministic candidate order不一致 | Branch與Leaf在priority mode一律要求explicit non-negative priority；random mode仍允許省略 | 新增Branch／Leaf rejection tests與random-mode regression；focused及full PyMTLF tests通過 |
+| `S3-R2` | 已關閉 | Go route retirement先只依backend ID取得任意route，再檢查direction／generation；相同backend ID出現在多個route時可能找不到應淘汰的current inbound route | Context lookup在同一lock內同時匹配backend ID、`DirectionInbound`及current generation，processor直接使用該結果 | Context與processor tests覆蓋shared backend ID、stale generation、outbound route及idempotency；Go full tests通過 |
+| `S3-R3` | 已關閉 | Leaf收到新parent preparation ACK後，registry membership切換與舊resource supersede之間可被舊parent DELETE插入，使同一procedure誤進terminal cleanup | 在同一Leaf lock內完成新resource activation、membership轉移與舊resource supersede，再於lock外釋放semaphore slots | Event／barrier concurrency regression先重現失敗，再確認舊DELETE無法終止新resource；PyMTLF full tests通過 |
+| `S3-R4` | 已關閉 | Root generation在replacement Create進行中重設時，Create response仍可能被舊generation採納並留下新remote resource | Create返回後再次確認active generation；stale／closing時best-effort移除剛建立的participant resource並拒絕adoption | Deterministic in-flight generation-reset test確認replacement resource被清理；focused及full PyMTLF tests通過 |
+| `S3-R5` | 待修正 | Leaf rebind為清除Go inbound route另新增backend-ID retirement endpoint，繞過既有Model Training Notify／DELETE lifecycle並引入只有單一cleanup情境使用的非標準API | 移除專用endpoint；Leaf以`termTrainReq`通知舊Branch，成功時等Branch經既有unsubscribe發送DELETE，明確peer failure或DELETE grace timeout時由provider本地收尾 | 待補PyMTLF成功／peer failure／local Go unreachable tests、Go Notify→DELETE／failure／timeout tests、full regressions與real-process replacement evidence |
+
+`S3-R1`至`S3-R4`的targeted follow-up review已完成；`S3-R5`是使用者審查時新增的
+current-slice finding，在實作、驗證與後續審查完成前保持開啟。
+
+### 12.3 Remediation 前驗證基準
+
+| Repository／命令 | 結果 |
+| --- | --- |
+| `PyMTLF/.venv/bin/pytest -q` | Pass；644 passed、2 skipped、16個dependency warnings |
+| `PyMTLF/.venv/bin/ruff check .` | Pass |
+| `NWDAF/make test` | Pass |
+| `NWDAF/make lint` | Pass；`0 issues` |
+| `NWDAF/make build` | Pass |
+| `nwdaf-resources` hierarchy support tests | Pass；16 tests |
+| `nwdaf-resources` hierarchy Ruff／preflight | Pass |
+| Branch replacement real-process | Pass；`/tmp/nwdaf-hierarchical-fl-protocol-wzic9hae/summary.json` |
+| Canonical hierarchy smoke | Pass；`/tmp/nwdaf-hierarchical-fl-protocol-pgitlu9e/summary.json` |
+| Canonical hierarchy aggregation | Pass；`/tmp/nwdaf-hierarchical-fl-protocol-u6rbxo42/summary.json` |
+| Distributed／flat real-process | Pass；`/tmp/nwdaf-distributed-fl-gkzquy6q` |
+| Changed repositories `git diff --check`與new topology YAML whitespace check | Pass |
+
+Branch replacement evidence直接呈現四個successful Root aggregations：initial all-active
+round、Area A primary失效後的accepted 2／3 degraded round、replacement尚未ready時的
+two-Branch round，以及replacement加入後恢復three-Branch round。新舊Branch使用同一
+`mlCorreId`及不同`notifCorreId`／Location；兩個Area A Leaf舊inbound routes均已淘汰，
+`retainedResultUsed=false`，四個ADRF `storeTransId`彼此不同且terminal record count為零。
+
+上述結果是`S3-R5`修正前的regression baseline，不足以驗收新的
+`termTrainReq`／standard DELETE lifecycle；remediation完成後必須重新執行受影響的
+focused、full與real-process checks。
+
+### 12.4 剩餘缺口與review gate
+
+- `integration verification gap`：正式multi-host external testbed尚未執行；local
+  real-process fail-stop、rebind與cleanup evidence不取代實際跨主機網路失敗及timing驗證。
+- `approved deferral`：retained-result persistence／lookup／handoff、Leaf replacement
+  production transition、simultaneous multi-Branch replacement、Root restart recovery及
+  authenticated multi-vendor re-parent不屬於本slice。
+- `review gate`：`S3-R5`目前是`Remediation Planned`。`PyMTLF/`、`NWDAF/`、
+  `nwdaf-resources/`與`nwdaf-docs/`變更均維持unstaged／uncommitted；修正與重新驗證
+  完成後仍需等待使用者檢查可見diff。
