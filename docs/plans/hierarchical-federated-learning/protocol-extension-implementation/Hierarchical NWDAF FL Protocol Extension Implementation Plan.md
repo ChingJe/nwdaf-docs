@@ -2,7 +2,7 @@
 
 日期：2026-09-07
 
-狀態：Slice 1、2、3、4A、4、5、6 Committed；Slice 7 experiment recording計畫已確認／待commit；
+狀態：Slice 1、2、3、4A、4、5、6、7 Committed；本機實作驗證完成；
 Formal Testbed Validation Pending；retained-result runtime暫緩
 
 索引：
@@ -322,12 +322,14 @@ component，但依目前 production trace 不預期修改其 repository。
 ## 7. 目前狀態與下一步
 
 - Candidate protocol、OpenAPI artifact 與 conformance cases 已有設計輸入。
-- Slice 1、2、3、4A、4、5與6均已完成審查、驗證及commit；protocol-driven hierarchy、
-  protocol-only migration與standard flat／distributed FL已有local real-process evidence。
+- Slice 1、2、3、4A、4、5、6與7均已完成審查、驗證及commit；protocol-driven hierarchy、
+  protocol-only migration、standard flat／distributed FL與experiment recording已有local
+  real-process evidence。
 - Slice 3已完成不使用retained result的Branch replacement、degraded training、
   Leaf rebind與terminal cleanup，並已完成local real-process驗證與repository-separated commits。
-- Slice 7已建立並確認experiment metrics與event recording detailed plan，尚未進入
-  implementation。
+- Slice 7已完成node-local validation、structured JSONL record、Branch lifecycle event
+  recording與canonical runner evidence collection，並已通過normal及Branch replacement
+  local real-process驗證。
 - Retained-result runtime維持暫緩；正式multi-host testbed仍是integration verification
   gap，目前尚未進入。
 
