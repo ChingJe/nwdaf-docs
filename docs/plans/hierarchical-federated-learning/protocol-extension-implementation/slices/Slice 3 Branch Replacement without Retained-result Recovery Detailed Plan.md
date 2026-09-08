@@ -2,7 +2,7 @@
 
 日期：2026-09-07
 
-狀態：Remediation Planned
+狀態：Review Confirmed／Commit Pending
 
 相關文件：
 
@@ -878,14 +878,14 @@ replacement-only state改壞一般training lifecycle。
   每個candidate每個run最多建立一次relationship。
 - [x] New Branch以same `mlCorreId`、fresh per-edge identity與same Leaf subtree完成
   model-free preparation。
-- [ ] Leaf same-procedure rebind不終止整個experiment；新resource成功後舊resource／
+- [x] Leaf same-procedure rebind不終止整個experiment；新resource成功後舊resource／
   work／callback被fence，並透過既有notification gateway發送`termTrainReq`。
-- [ ] `termTrainReq`成功時，Branch consumer排入既有unsubscribe，標準DELETE經
+- [x] `termTrainReq`成功時，Branch consumer排入既有unsubscribe，標準DELETE經
   Leaf Go傳到Leaf PyMTLF真正清理resource，之後才清Go route。
-- [ ] `termTrainReq`明確peer delivery failure時，Go將failure沿同一request回給
+- [x] `termTrainReq`明確peer delivery failure時，Go將failure沿同一request回給
   PyMTLF，並且舊backend resource與matching route均完成terminal cleanup；PyMTLF連不到
   local Go時則保留bounded retry job。
-- [ ] Accepted notification未等到DELETE時有bounded fallback cleanup；舊 dedicated
+- [x] Accepted notification未等到DELETE時有bounded fallback cleanup；舊 dedicated
   inbound-route retirement API、client與lookup已移除，不誤刪新resource或outbound route。
 - [x] 剩餘active Branches符合Root readiness policy時，replacement期間仍可繼續training；
   replacement只從下一個尚未dispatch的cohort加入。
@@ -896,7 +896,7 @@ replacement-only state改壞一般training lifecycle。
 - [x] Candidate exhaustion可觀察地留下unavailable group，並依Root readiness決定繼續或
   bounded termination；simultaneous Branch failures與Root shutdown維持terminal cleanup。
 - [x] Production path不發送或執行retained-result instruction，既有`403`gate維持通過。
-- [ ] `PyMTLF` full tests與Ruff、`NWDAF` full test／lint／build、hierarchy與distributed
+- [x] `PyMTLF` full tests與Ruff、`NWDAF` full test／lint／build、hierarchy與distributed
   real-process regressions通過。
 - [x] 正式multi-host testbed若尚未執行，review ledger仍明確標為remaining gap。
 
@@ -934,11 +934,12 @@ runner workaround補掉production state缺口。
 
 ## 10. Review gate與剩餘風險
 
-現有replacement、degraded training與real-process evidence已完成，但Leaf rebind cleanup剛確認
-需要從dedicated inbound-route retirement API改為`termTrainReq`／standard DELETE
-lifecycle。`PyMTLF/`、`NWDAF/`、`nwdaf-resources/`與本文件的變更維持
-unstaged／uncommitted，目前停在`Remediation Planned`；完成重構、重新驗證與
-user review前不得回到commit checkpoint。
+Replacement、degraded training、Leaf rebind與terminal cleanup均已完成production
+remediation及local real-process驗證。Dedicated inbound-route retirement API已移除，
+目前改由`termTrainReq`、Branch consumer standard DELETE與Go-owned bounded grace
+fallback完成收尾。`PyMTLF/`、`NWDAF/`、`nwdaf-resources/`與本文件的變更維持
+unstaged／uncommitted；使用者已確認review結果，目前停在`Commit Pending`，等待
+repository-separated commit proposal獲得明確核准。
 
 預先確認的剩餘風險如下：
 
