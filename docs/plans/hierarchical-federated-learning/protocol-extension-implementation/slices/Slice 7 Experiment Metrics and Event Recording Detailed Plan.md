@@ -2,8 +2,8 @@
 
 日期：2026-09-08
 
-狀態：Review Confirmed／Commit Approval Pending；本機實作驗證完成；正式多主機
-testbed驗證待執行；尚未提交
+狀態：Implementation Committed／External Validation Pending；本機實作驗證與提交完成；
+正式多主機testbed驗證待執行
 
 相關文件：
 
@@ -514,4 +514,4 @@ NWDAF: 若無production diff，只執行既有required regression，不建立com
 5. Canonical local normal及Branch-replacement real-process verification。
 6. Initial review、test-first remediation、full verification及user review handoff。
 
-本文件已通過user review；後續提交仍須另行核准。
+本文件已通過user review並完成實作提交；整體phase待正式多主機testbed驗證後完成。
