@@ -2,7 +2,7 @@
 
 日期：2026-09-08
 
-狀態：Slice 1、2、4A、4、5、6 Committed；Slice 3 Review Confirmed／Commit Pending
+狀態：Slice 1、2、3、4A、4、5、6 Committed；Formal Testbed Validation Pending
 
 相關文件：
 
@@ -408,8 +408,8 @@ retention與舊結果接續維持暫緩；Slice 3編號改用於：
 
 ### 11.2 Review gate
 
-- `plan status`：`S3-R5` remediation與重新驗證已完成，使用者已確認review結果，目前為
-  `Commit Pending`；所有變更維持unstaged／uncommitted。
+- `plan status`：`S3-R5` remediation、重新驗證與repository-separated commits已完成；
+  closing commits見第12.5節。
 - `retained boundary`：既有wire fields與unsupported `403` execution gate保留，不建立
   runtime owner。
 - `integration verification gap`：正式multi-host testbed尚未執行；未來local
@@ -504,6 +504,7 @@ DELETE不會再次清理backend resource。
 - `approved deferral`：retained-result persistence／lookup／handoff、Leaf replacement
   production transition、simultaneous multi-Branch replacement、Root restart recovery及
   authenticated multi-vendor re-parent不屬於本slice。
-- `review gate`：`S3-R5`已關閉，使用者已確認Slice 3 review結果，目前是
-  `Commit Pending`。`PyMTLF/`、`NWDAF/`、`nwdaf-resources/`與`nwdaf-docs/`變更均維持
-  unstaged／uncommitted，等待repository-separated commit proposal獲得明確核准。
+- `closing commits`：`NWDAF/` `be3fa57`、`PyMTLF/` `90f1f62`、
+  `nwdaf-resources/` `da9b848`、`nwdaf-docs/` `8433b03`。
+- `delivery status`：Slice 3已完成repository-separated commits；正式multi-host testbed仍是
+  未關閉的external validation，因此整體phase尚未標示為`Completed`。

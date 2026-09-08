@@ -2,8 +2,7 @@
 
 日期：2026-09-07
 
-狀態：Slice 1、2、4A、4、5、6均已commit；Slice 3 Branch replacement detailed
-plan Review Confirmed／Commit Approval Pending
+狀態：Slice 1、2、3、4A、4、5、6均已commit；正式multi-host testbed尚未進入
 
 ## 文件定位
 

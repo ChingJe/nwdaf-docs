@@ -2,8 +2,8 @@
 
 日期：2026-09-07
 
-狀態：Slice 1、2、4A、4、5、6 Committed；Slice 3 Branch replacement detailed
-plan Review Confirmed／Commit Approval Pending；retained-result runtime暫緩
+狀態：Slice 1、2、3、4A、4、5、6 Committed；Formal Testbed Validation Pending；
+retained-result runtime暫緩
 
 索引：
 
@@ -308,12 +308,12 @@ component，但依目前 production trace 不預期修改其 repository。
 ## 7. 目前狀態與下一步
 
 - Candidate protocol、OpenAPI artifact 與 conformance cases 已有設計輸入。
-- Slice 1、2、4A、4、5與6均已完成審查、驗證及commit；protocol-driven hierarchy、
+- Slice 1、2、3、4A、4、5與6均已完成審查、驗證及commit；protocol-driven hierarchy、
   protocol-only migration與standard flat／distributed FL已有local real-process evidence。
-- Slice 3已重新界定為「不使用retained result的Branch replacement」；完整實作計畫已
-  通過user review並等待commit approval，尚未進入production implementation。
+- Slice 3已完成不使用retained result的Branch replacement、degraded training、
+  Leaf rebind與terminal cleanup，並已完成local real-process驗證與repository-separated commits。
 - Retained-result runtime維持暫緩；正式multi-host testbed仍是integration verification
-  gap。
+  gap，目前尚未進入。
 
 已依
 [Model Bundle Metadata to Protocol Schema Mapping](./Model%20Bundle%20Metadata%20to%20Protocol%20Schema%20Mapping.md)

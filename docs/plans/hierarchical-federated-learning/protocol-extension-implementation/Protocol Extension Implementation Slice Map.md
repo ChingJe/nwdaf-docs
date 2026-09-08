@@ -2,8 +2,8 @@
 
 日期：2026-09-07
 
-狀態：Slice 1、2、4A、4、5、6 Committed；Slice 3 Branch replacement detailed
-plan Review Confirmed／Commit Approval Pending；active sequence為Slice 1、2、4A、4、5、6、3
+狀態：Slice 1、2、3、4A、4、5、6 Committed；Formal Testbed Validation Pending；
+completed sequence為Slice 1、2、4A、4、5、6、3
 
 相關文件：
 
@@ -434,5 +434,6 @@ Slice 3編號沿用原本暫緩的work unit，但目標已由retained-result loo
 的Branch replacement；先前已commit的Slice編號與歷史紀錄不重寫。Slice 4A編號表示它是
 protocol integration前新增的supporting work，不代表數字順序。
 
-Slice 1、2、4A、4、5與6已完成審查、驗證並commit。Slice 3 detailed plan已建立，
-目前已通過user review並等待commit approval；尚未進入production implementation。
+Slice 1、2、3、4A、4、5與6已完成審查、驗證並commit。Slice 3的Branch
+replacement、degraded training、Leaf rebind與terminal cleanup已有local real-process
+evidence；正式multi-host testbed尚未進入。

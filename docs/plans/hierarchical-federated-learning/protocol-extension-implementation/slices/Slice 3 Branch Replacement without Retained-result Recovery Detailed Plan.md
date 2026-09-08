@@ -2,7 +2,7 @@
 
 日期：2026-09-07
 
-狀態：Review Confirmed／Commit Pending
+狀態：Committed／Formal Testbed Validation Pending
 
 相關文件：
 
@@ -937,9 +937,9 @@ runner workaround補掉production state缺口。
 Replacement、degraded training、Leaf rebind與terminal cleanup均已完成production
 remediation及local real-process驗證。Dedicated inbound-route retirement API已移除，
 目前改由`termTrainReq`、Branch consumer standard DELETE與Go-owned bounded grace
-fallback完成收尾。`PyMTLF/`、`NWDAF/`、`nwdaf-resources/`與本文件的變更維持
-unstaged／uncommitted；使用者已確認review結果，目前停在`Commit Pending`，等待
-repository-separated commit proposal獲得明確核准。
+fallback完成收尾。Slice 3的production、test tooling與delivery record已分別提交至
+`NWDAF/`、`PyMTLF/`、`nwdaf-resources/`與`nwdaf-docs/`；正式multi-host
+testbed驗證尚待執行，因此本計畫不標示為`Completed`。
 
 預先確認的剩餘風險如下：
 

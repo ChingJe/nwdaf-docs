@@ -42,8 +42,8 @@ verification 與 deferred work。
   FL及hierarchical model／result artifact regression。
 
 Retained-result runtime仍維持暫緩；Slice 3編號已重新用於不使用retained result的
-Branch replacement。Slice 1、2、4A、4、5與6均已commit；Slice 3 detailed plan目前
-已通過user review並等待commit approval，尚未進入production implementation。
+Branch replacement。Slice 1、2、3、4A、4、5與6均已完成審查、驗證與commit；
+正式multi-host testbed尚未進入。
 
 ## 文件慣例
 
