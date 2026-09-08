@@ -2,7 +2,8 @@
 
 日期：2026-09-07
 
-狀態：Slice 1、2、3、4A、4、5、6均已commit；正式multi-host testbed尚未進入
+狀態：Slice 1、2、3、4A、4、5、6均已commit；Slice 7 experiment recording計畫已確認／待commit；
+正式multi-host testbed尚未進入
 
 ## 文件定位
 
@@ -63,6 +64,9 @@ content digest均不再成為後續runtime contract。
 - [Slice 3 — Branch Replacement without Retained-result Recovery](./slices/Slice%203%20Branch%20Replacement%20without%20Retained-result%20Recovery%20Detailed%20Plan.md)：
   定義mid-training單一Branch failure、configured Root／Branch policy execution、degraded
   rounds、replacement subtree重建與Leaf rebind的完整實作邊界。
+- [Slice 7 — Experiment Metrics and Event Recording](./slices/Slice%207%20Experiment%20Metrics%20and%20Event%20Recording%20Detailed%20Plan.md)：
+  定義node-local validation、以`mlCorreId`分批保存的JSONL record、Root round cohort及
+  Branch failure／replacement event evidence；不新增protocol欄位或集中式metrics服務。
 
 ## 審查證據
 

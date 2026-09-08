@@ -2,8 +2,8 @@
 
 日期：2026-09-07
 
-狀態：Slice 1、2、3、4A、4、5、6 Committed；Formal Testbed Validation Pending；
-completed sequence為Slice 1、2、4A、4、5、6、3
+狀態：Slice 1、2、3、4A、4、5、6 Committed；Slice 7 plan review confirmed／commit pending；
+Formal Testbed Validation Pending；completed sequence為Slice 1、2、4A、4、5、6、3
 
 相關文件：
 
@@ -418,7 +418,63 @@ model／result／evidence，不再是第二套 orchestration source。
 
 ---
 
-## 9. 執行順序
+## 9. Slice 7 — Experiment Metrics and Event Recording
+
+### 行為
+
+在不改變Model Training protocol與training decision的前提下，讓各PyMTLF以每次
+procedure的UUIDv4 `mlCorreId`建立node-local JSONL record。Root保存initial與每個
+accepted global aggregate的validation loss／accuracy、每個round attempt的direct
+Branch cohort，以及Branch failure detection與replacement ready時間；Branch／Leaf可
+透過local config選擇保存domain／local model validation。Test controller另保存實際
+停止Branch processes的時間，canonical runner再收集所有raw evidence。
+
+### 涉及的 repositories
+
+- `PyMTLF/`
+- `nwdaf-resources/`
+- `nwdaf-docs/`：更新slice與review evidence
+
+`NWDAF/`、`adrf/`與`nrf/`預設read-only；本slice不修改protocol schema或新增
+Go-side experiment API。
+
+### 納入範圍
+
+- Optional node-local experiment config、independent validation file與record directory。
+- Mean cross-entropy validation loss與accuracy evaluator。
+- `<record-directory>/<mlCorreId>/observations.jsonl` locked append與flush。
+- Root initial／accepted-global evaluations及每-attempt selected／successful／failed
+  participant records。
+- Root Branch failure-detected／replacement-ready records，直接使用failed與replacement
+  `nfInstanceId`，不新增無runtime來源的group identifier。
+- Optional Branch domain與Leaf local validation records。
+- Controller fault-injection event、per-node record collection及canonical local
+  branch-replacement evidence。
+
+### 驗收條件
+
+- 每次Root request使用自身`mlCorreId`建立獨立資料夾，terminal cleanup不刪除records。
+- Root curve包含initial point及所有accepted global rounds；rejected attempts沒有虛構的
+  model evaluation。
+- Structured outcome可直接辨識normal、degraded與replacement恢復後的participant cohort。
+- Fault injection、Root failure detection與replacement ready由各自authoritative producer
+  記錄，timestamp可在同步時鐘的testbed上對齊。
+- Config不存在時不改變既有FL行為；配置時invalid dataset／record path明確失敗。
+- Canonical runner不再依一般文字log或單次external final accuracy作為主要learning
+  evidence。
+
+### 延後項目
+
+- 自動畫圖、集中式metrics服務與Prometheus。
+- Communication／resource／latency instrumentation。
+- Flat對照、dataset partition study與正式multi-host statistical evaluation。
+
+詳細內容見
+[Slice 7 Detailed Plan](./slices/Slice%207%20Experiment%20Metrics%20and%20Event%20Recording%20Detailed%20Plan.md)。
+
+---
+
+## 10. 執行順序
 
 ```text
 Slice 1: wire／resource lifecycle
@@ -428,6 +484,7 @@ Slice 1: wire／resource lifecycle
   -> Slice 5: protocol-driven E2E integration
   -> Slice 6: migration closure
   -> Slice 3: Branch replacement without retained-result recovery
+  -> Slice 7: experiment metrics／event recording
 ```
 
 Slice 3編號沿用原本暫緩的work unit，但目標已由retained-result lookup改為不使用舊結果
@@ -436,4 +493,4 @@ protocol integration前新增的supporting work，不代表數字順序。
 
 Slice 1、2、3、4A、4、5與6已完成審查、驗證並commit。Slice 3的Branch
 replacement、degraded training、Leaf rebind與terminal cleanup已有local real-process
-evidence；正式multi-host testbed尚未進入。
+evidence；Slice 7計畫已確認且尚未進入實作，正式multi-host testbed尚未進入。

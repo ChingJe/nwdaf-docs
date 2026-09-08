@@ -40,10 +40,14 @@ verification 與 deferred work。
   將hierarchical runtime收斂為單一protocol authority，移除assignment／preparation-result
   bundle schema、producer、consumer與legacy deployment scenario，同時保留flat／distributed
   FL及hierarchical model／result artifact regression。
+- [Slice 7 — Experiment Metrics and Event Recording](./Slice%207%20Experiment%20Metrics%20and%20Event%20Recording%20Detailed%20Plan.md)：
+  以每次procedure的`mlCorreId`建立node-local JSONL records，保存Root逐輪validation
+  loss／accuracy、round cohort與Branch failure／replacement timing，並由canonical runner
+  收集raw evidence供正式testbed後續分析。
 
 Retained-result runtime仍維持暫緩；Slice 3編號已重新用於不使用retained result的
 Branch replacement。Slice 1、2、3、4A、4、5與6均已完成審查、驗證與commit；
-正式multi-host testbed尚未進入。
+Slice 7計畫已確認且尚未進入實作，正式multi-host testbed尚未進入。
 
 ## 文件慣例
 

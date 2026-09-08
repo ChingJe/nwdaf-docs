@@ -2,8 +2,8 @@
 
 日期：2026-09-07
 
-狀態：Slice 1、2、3、4A、4、5、6 Committed；Formal Testbed Validation Pending；
-retained-result runtime暫緩
+狀態：Slice 1、2、3、4A、4、5、6 Committed；Slice 7 experiment recording計畫已確認／待commit；
+Formal Testbed Validation Pending；retained-result runtime暫緩
 
 索引：
 
@@ -13,6 +13,7 @@ retained-result runtime暫緩
 - [Protocol Extension Implementation Slice Map](./Protocol%20Extension%20Implementation%20Slice%20Map.md)
 - [Protocol Extension Implementation Review Ledger](./Protocol%20Extension%20Implementation%20Review%20Ledger.md)
 - [Slice 3 Detailed Plan](./slices/Slice%203%20Branch%20Replacement%20without%20Retained-result%20Recovery%20Detailed%20Plan.md)
+- [Slice 7 Detailed Plan](./slices/Slice%207%20Experiment%20Metrics%20and%20Event%20Recording%20Detailed%20Plan.md)
 
 設計輸入：
 
@@ -170,7 +171,8 @@ restart recovery與多個Branches同時失效仍不在本階段處理。
 - `PyMTLF/`：Topology／policy／strategy execution、local process state 與 realized
   report owner，以及controlled local training workload。
 - `nwdaf-resources/`：Real-process request／Notify evidence、negative cases 與
-  regression scenarios；dataset產生與切分由experiment工作另行提供。
+  regression scenarios；Slice 7另負責local validation dataset placement、fault
+  injection timestamp與raw record collection。
 - `nwdaf-docs/`：Canonical plan、盤點、conformance mapping 與 review evidence。
 
 目前不預期修改 NRF schema 或讓 NRF 保存 hierarchy-specific topology／policy。
@@ -288,6 +290,18 @@ component，但依目前 production trace 不預期修改其 repository。
 - 分別驗證 explicit topology、delegated／hybrid topology、normal rounds、topology
   update 與 feature rejection。
 
+### 5.10 Experiment metrics與event recording
+
+- 由各PyMTLF local config指定record directory與optional validation dataset；不將dataset
+  path或result加入Model Training protocol。
+- 每次procedure以UUIDv4 `mlCorreId`建立獨立資料夾，使用append-only JSONL保存Root
+  initial／per-accepted-round validation loss與accuracy。
+- Root另保存每個round attempt的selected／successful／failed Branch identities、failure
+  detection與replacement ready時間；fault injection時間由test controller記錄。
+- Branch／Leaf可選擇在本地保存domain／local model validation，結果不作為training gate。
+- Canonical runner收集raw records供離線分析；不在此slice加入dashboard、集中式metrics
+  service或communication instrumentation。
+
 ---
 
 ## 6. 明確非目標
@@ -301,7 +315,7 @@ component，但依目前 production trace 不預期修改其 repository。
   recovery與old Branch ownership handback。
 - NRF schema extension、application-specific topology storage 或 ranking algorithm。
 - OAM／MANO、runtime topology optimizer 或一般化self-healing。
-- Flat／hierarchical experiment metrics instrumentation。
+- Flat／hierarchical communication、resource與latency instrumentation。
 
 ---
 
@@ -312,6 +326,8 @@ component，但依目前 production trace 不預期修改其 repository。
   protocol-only migration與standard flat／distributed FL已有local real-process evidence。
 - Slice 3已完成不使用retained result的Branch replacement、degraded training、
   Leaf rebind與terminal cleanup，並已完成local real-process驗證與repository-separated commits。
+- Slice 7已建立並確認experiment metrics與event recording detailed plan，尚未進入
+  implementation。
 - Retained-result runtime維持暫緩；正式multi-host testbed仍是integration verification
   gap，目前尚未進入。
 
@@ -324,4 +340,6 @@ component，但依目前 production trace 不預期修改其 repository。
 各slice的實作與驗證證據記錄於
 [Protocol Extension Implementation Review Ledger](./Protocol%20Extension%20Implementation%20Review%20Ledger.md)；
 Slice 3的現況盤點、精確owner、round semantics、實作順序與驗收條件見
-[Slice 3 Detailed Plan](./slices/Slice%203%20Branch%20Replacement%20without%20Retained-result%20Recovery%20Detailed%20Plan.md)。
+[Slice 3 Detailed Plan](./slices/Slice%203%20Branch%20Replacement%20without%20Retained-result%20Recovery%20Detailed%20Plan.md)；
+testbed前的local validation、structured record與event evidence見
+[Slice 7 Detailed Plan](./slices/Slice%207%20Experiment%20Metrics%20and%20Event%20Recording%20Detailed%20Plan.md)。
