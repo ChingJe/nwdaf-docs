@@ -2,8 +2,9 @@
 
 日期：2026-09-07
 
-狀態：Slice 1、2、3、4A、4、5、6、7 Committed；本機實作驗證完成；
-Formal Testbed Validation Pending；completed sequence為Slice 1、2、4A、4、5、6、3、7
+狀態：Slice 1、2、3、4A、4、5、6、7與Slice 7 final-model persistence follow-up
+Committed；Formal Testbed Validation Pending；completed sequence為Slice 1、2、4A、4、
+5、6、3、7
 
 相關文件：
 
@@ -447,9 +448,11 @@ Go-side experiment API。
   participant records。
 - Root Branch failure-detected／replacement-ready records，直接使用failed與replacement
   `nfInstanceId`，不新增無runtime來源的group identifier。
+- Root在成功terminal前原樣保存最後一個accepted `ROUND_GLOBAL` bundle，並以
+  `FINAL_MODEL_SAVED`記錄round、artifact identity與size。
 - Optional Branch domain與Leaf local validation records。
-- Controller fault-injection event、per-node record collection及canonical local
-  branch-replacement evidence。
+- Controller fault-injection event、per-node record與Root final-model collection，以及
+  canonical local branch-replacement evidence。
 
 ### 驗收條件
 
@@ -462,6 +465,8 @@ Go-side experiment API。
 - Config不存在時不改變既有FL行為；配置時invalid dataset／record path明確失敗。
 - Canonical runner不再依一般文字log或單次external final accuracy作為主要learning
   evidence。
+- Workspace cleanup後仍可從procedure evidence載入final model；held-out evaluation不再
+  依賴Root暫存workspace。
 
 ### 延後項目
 
@@ -494,5 +499,6 @@ protocol integration前新增的supporting work，不代表數字順序。
 Slice 1、2、3、4A、4、5、6與7已完成審查、驗證並commit。Slice 3的Branch
 replacement、degraded training、Leaf rebind與terminal cleanup已有local real-process
 evidence；Slice 7的node-local validation、structured record、Branch lifecycle event與
-evidence collection亦已通過canonical local real-process驗證。正式multi-host testbed
-尚未進入。
+evidence collection亦已通過canonical local real-process驗證。Slice 7 final-model
+persistence follow-up已完成本機實作、驗證與repository-separated commits。正式
+multi-host testbed尚未進入。

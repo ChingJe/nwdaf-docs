@@ -2,8 +2,8 @@
 
 日期：2026-09-07
 
-狀態：Slice 1、2、3、4A、4、5、6、7 Committed；本機實作驗證完成；
-Formal Testbed Validation Pending；retained-result runtime暫緩
+狀態：Slice 1、2、3、4A、4、5、6、7與Slice 7 final-model persistence follow-up
+Committed；Formal Testbed Validation Pending；retained-result runtime暫緩
 
 索引：
 
@@ -298,6 +298,9 @@ component，但依目前 production trace 不預期修改其 repository。
   initial／per-accepted-round validation loss與accuracy。
 - Root另保存每個round attempt的selected／successful／failed Branch identities、failure
   detection與replacement ready時間；fault injection時間由test controller記錄。
+- Root成功完成training時，在相同`mlCorreId`資料夾原樣保存最後一個accepted
+  `ROUND_GLOBAL` bundle；canonical runner收集後以它執行held-out evaluation，不依賴
+  terminal TTL內的暫存workspace。
 - Branch／Leaf可選擇在本地保存domain／local model validation，結果不作為training gate。
 - Canonical runner收集raw records供離線分析；不在此slice加入dashboard、集中式metrics
   service或communication instrumentation。
@@ -330,6 +333,8 @@ component，但依目前 production trace 不預期修改其 repository。
 - Slice 7已完成node-local validation、structured JSONL record、Branch lifecycle event
   recording與canonical runner evidence collection，並已通過normal及Branch replacement
   local real-process驗證。
+- Slice 7 final-model persistence follow-up已完成本機實作、驗證與repository-separated
+  commits。
 - Retained-result runtime維持暫緩；正式multi-host testbed仍是integration verification
   gap，目前尚未進入。
 

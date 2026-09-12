@@ -2,8 +2,9 @@
 
 日期：2026-09-08
 
-狀態：Implementation Committed／External Validation Pending；本機實作驗證與提交完成；
-正式多主機testbed驗證待執行
+狀態：Implementation Committed／External Validation Pending；既有Slice 7與final-model
+persistence follow-up均已完成本機驗證及repository-separated commits；正式多主機
+testbed驗證待執行
 
 相關文件：
 
@@ -31,7 +32,9 @@ real-process runner 可以從一般文字 log 與 terminal state 確認流程跑
    貢獻 result 分別發生在何時；
 3. failure window 期間 Root 實際以哪些 Branch results 完成 degraded aggregation；
 4. 若 Branch 或 Leaf 配置自己的 local validation dataset，其 local／domain model 的
-   validation結果如何保存，供後續離線分析。
+   validation結果如何保存，供後續離線分析；
+5. Root最後一個accepted global aggregate如何在暫存workspace清除後繼續保留，供
+   held-out evaluation與後續模型分析。
 
 此功能只產生原始紀錄，不在 PyMTLF 內建圖表、統計推論或論文 claim。正式實驗可以在
 事後收集各節點檔案，自行選擇繪圖與分析方式。
@@ -100,7 +103,8 @@ real-process runner 可以從一般文字 log 與 terminal state 確認流程跑
 ```text
 <configured-record-directory>/
 └── <mlCorreId>/
-    └── observations.jsonl
+    ├── observations.jsonl
+    └── final-model.tar.gz    # 僅Root在成功完成training時產生
 ```
 
 `mlCorreId` 直接使用 Root 已產生並逐級下發的 UUIDv4，不新增 `runId`、plan version或
@@ -116,6 +120,11 @@ retention policy。
 
 每個PyMTLF process必須配置自己的node-private record directory。Process-local lock只
 保護同一process的writers，不把多個PyMTLF指向同一個`observations.jsonl`。
+
+Root在最後一個accepted round完成且training process成功關閉後、Root request標記
+`COMPLETE`前，將現有`ROUND_GLOBAL` bundle原樣複製為`final-model.tar.gz`。這份檔案
+不重新序列化model，也不依賴terminal status TTL內才存在的FL workspace。若目的檔案
+已存在，只接受內容相同的idempotent重試；不同內容視為實驗紀錄衝突。
 
 ### 3.3 JSONL 是唯一 structured evidence
 
@@ -270,7 +279,22 @@ Root只記錄有直接production evidence的兩個事件：
 preparation，且已成為該topology assignment的active Branch；不代表它已在某個Root
 round成功回傳。第一次成功貢獻以`ROOT_ROUND_OUTCOME.successfulNfInstanceIds`為準。
 
-### 5.5 Controller record
+### 5.5 `FINAL_MODEL_SAVED`
+
+Root成功保存最終模型後，在自己的`observations.jsonl`加入一筆：
+
+| 欄位 | 語意 |
+| --- | --- |
+| `roundInd` | 最後一個accepted Root global aggregate所屬round |
+| `artifactFile` | 固定為procedure directory內的`final-model.tar.gz` |
+| `artifactDigest` | 沿用該`ROUND_GLOBAL` artifact既有的SHA-256 identity |
+| `sizeBytes` | 實際保存的完整bundle bytes |
+
+此record只描述持久化結果，不新增另一套model identity或額外hash contract。若保存檔案或
+append record失敗，configured experiment run明確失敗，不能以暫存workspace URL視為
+已完成handoff。
+
+### 5.6 Controller record
 
 Test controller另外建立`controller-events.jsonl`。它不是NWDAF，不填
 `nfInstanceId`。目前只需要：
@@ -303,9 +327,12 @@ Test controller另外建立`controller-events.jsonl`。它不是NWDAF，不填
 3. Outcome accepted時，Root先保存model-ready timestamp，再對剛形成的global
    aggregate執行validation並產生`ROOT_GLOBAL` record；rejected時不產生model
    evaluation。
-4. Branch若有local validation config，則在每個accepted lower-tier aggregate完成後產生
+4. Root達到configured global round數並成功關閉training process後、標記request
+   `COMPLETE`前，原樣保存最後一個accepted aggregate，並產生`FINAL_MODEL_SAVED`
+   record。
+5. Branch若有local validation config，則在每個accepted lower-tier aggregate完成後產生
    `BRANCH_DOMAIN` record。
-5. Leaf若有local validation config，則在local training完成且model publish前產生
+6. Leaf若有local validation config，則在local training完成且model publish前產生
    `LEAF_LOCAL` record。
 
 ### 6.3 Branch failure與replacement
@@ -328,6 +355,7 @@ Canonical local runner以terminal response中的`planId`取得同一`mlCorreId`�
 ```text
 <scenario-evidence>/
 └── <mlCorreId>/
+    ├── final-model.tar.gz
     ├── nodes/
     │   ├── <root-nfInstanceId>/observations.jsonl
     │   ├── <branch-nfInstanceId>/observations.jsonl
@@ -335,8 +363,10 @@ Canonical local runner以terminal response中的`planId`取得同一`mlCorreId`�
     └── controller-events.jsonl
 ```
 
-收集時保留原始JSON lines，不改寫timestamp、round或metric。正式multi-host testbed可
-使用相同layout，但檔案搬運方式由testbed deployment決定。
+收集時保留原始JSON lines與Root保存的bundle bytes，不改寫timestamp、round、metric或
+model artifact。正式multi-host testbed可使用相同layout，但檔案搬運方式由testbed
+deployment決定。Standalone held-out evaluator改讀此持久模型，不再從Root暫存workspace
+尋找handoff artifact。
 
 ---
 
@@ -352,8 +382,8 @@ Canonical local runner以terminal response中的`planId`取得同一`mlCorreId`�
 | Root round selection／completion | Adapted：將既有outcome寫成structured record，不改policy decision |
 | Root global aggregation | Adapted：initial及每個accepted aggregate執行non-gating validation |
 | Branch replacement | Adapted：在既有confirmed state transitions產生failure／ready records |
-| Final handoff／publication | Reused without semantic change；最後一筆Root evaluation即為final curve point |
-| Resource／ADRF／workspace cleanup | Reused；experiment record獨立保存，不隨workspace清除 |
+| Final handoff／publication | Adapted：Root原樣保存最後一個accepted `ROUND_GLOBAL` bundle並記錄其identity |
+| Resource／ADRF／workspace cleanup | Reused；experiment record與final model獨立保存，不隨workspace清除 |
 | Shutdown／generation reset | Existing training cleanup維持不變；已flush records保留 |
 
 本slice不重新引入已移除的model-bundle topology metadata，也不建立平行trainer、
@@ -369,9 +399,9 @@ aggregator或replacement state machine。
 | --- | --- |
 | `src/py_mtlf/config.py` | 新增optional experiment recording與validation settings；解析relative record／dataset paths並驗證不與ephemeral workspace重疊 |
 | `src/py_mtlf/core/image_classification.py` | 擴充evaluator，以完整dataset同時計算mean cross-entropy與accuracy |
-| `src/py_mtlf/core/experiment_recording.py` | 新增single-owner recorder、typed record constructors、procedure directory與locked JSONL append |
+| `src/py_mtlf/core/experiment_recording.py` | 新增single-owner recorder、typed record constructors、procedure directory、locked JSONL append與atomic final-model copy |
 | `src/py_mtlf/app.py` | 建立／open recorder與optional local validator，注入Root、Branch、Leaf owners並在shutdown關閉 |
-| `src/py_mtlf/core/fl_root.py` | 記錄initial／accepted global evaluation、Root round outcome、Branch failure detected及replacement ready |
+| `src/py_mtlf/core/fl_root.py` | 記錄initial／accepted global evaluation、Root round outcome、Branch failure detected、replacement ready及最終模型handoff |
 | `src/py_mtlf/core/fl_branch.py` | 在每個accepted lower-tier aggregate後記錄optional domain validation |
 | `src/py_mtlf/core/fl_client.py` | 在Leaf local model完成後記錄optional local validation；不使用training final batch loss取代validation |
 | `config/fl-server-hierarchy.yaml`與relevant README | 補上experiment recording示例及local-only語意 |
@@ -384,7 +414,7 @@ standard-shaped private API或protocol module。
 | File／area | 計畫變更 |
 | --- | --- |
 | `deployments/hierarchical_fl/scripts/support.py` | Canonical config builder為各node設定獨立record directory與optional validation path |
-| `deployments/hierarchical_fl/scripts/run.py` | 預先配置training／validation files、記錄controller stop event、按terminal `planId`收集node JSONL，並以structured records驗證normal／degraded／restored windows |
+| `deployments/hierarchical_fl/scripts/run.py` | 預先配置training／validation files、記錄controller stop event、按terminal `planId`收集node JSONL與Root final model，並以structured records驗證normal／degraded／restored windows |
 | `deployments/hierarchical_fl/checks/test_support.py` | 驗證generated configs、record paths與collection layout |
 | `deployments/hierarchical_fl/README.md` | 記錄raw evidence位置與每種record的用途 |
 
@@ -410,6 +440,8 @@ runner不再以它的一次性final accuracy作為唯一learning evidence。Runn
   error log；不得改用另一份dataset或跳過該required observation。
 - Recorder建立procedure directory或append失敗時，configured experiment run視為失敗；
   不以一般log假裝補足structured evidence。
+- Root final-model copy失敗或與同一procedure既有檔案衝突時，configured experiment run
+  視為失敗；不進入成功terminal state。
 - 已成功append並flush的records不因Branch process被fail-stop而刪除。
 - 同一node若因process restart再次看到相同`mlCorreId`，只append既有檔案，不truncate；
   本slice不宣稱Root restart recovery。
@@ -429,8 +461,11 @@ runner不再以它的一次性final accuracy作為唯一learning evidence。Runn
   數值finite。
 - Recorder在同一`mlCorreId`下append多筆valid JSON lines，existing file不被truncate，
   concurrent writes不產生破損line。
+- Recorder以atomic rename原樣保存final bundle；相同內容重試具idempotency，不同內容
+  不得覆寫既有結果。
 - Root production round path產生一筆initial evaluation、每個attempt一筆outcome、每個
-  accepted aggregate一筆evaluation；rejected attempt沒有evaluation。
+  accepted aggregate一筆evaluation；rejected attempt沒有evaluation，最後只保存最終
+  accepted aggregate。
 - Root failure與replacement production path記錄真實failed／replacement
   `nfInstanceId`，不產生`branchGroup`等無來源欄位。
 - Branch production aggregation path只在accepted domain aggregate後記錄；Leaf
@@ -451,6 +486,8 @@ metric result來宣稱production observation path已驗證。
   ready與round outcomes。
 - Evidence可直接指出至少一個primary Branch成功round、至少一個degraded accepted round，
   以及至少一個replacement Branch成功round。
+- Evidence包含`final-model.tar.gz`，其round、digest與size和Root
+  `FINAL_MODEL_SAVED` record及terminal status一致；held-out evaluator直接讀取此檔案。
 - 所有Root loss／accuracy為finite，accuracy位於`[0, 1]`，recorded round identity與
   terminal `completedRounds`一致。
 - Successful teardown後仍可讀取records，ADRF terminal record count維持既有零殘留
@@ -476,6 +513,8 @@ NWDAF: 若無production diff，只執行既有required regression，不建立com
 - 每次Root training request皆以該次UUIDv4 `mlCorreId`建立獨立record directory。
 - Root record至少包含initial model及每個accepted global aggregate的validation loss與
   accuracy。
+- Root成功完成training時，procedure directory保存一份原始final `ROUND_GLOBAL` bundle；
+  workspace cleanup後仍可載入並進行held-out evaluation。
 - Root每個round attempt皆有structured cohort outcome，能辨識normal、degraded及
   replacement恢復後的training。
 - Fault injection、Root detection與replacement ready的時間分別由正確owner記錄。
@@ -514,4 +553,5 @@ NWDAF: 若無production diff，只執行既有required regression，不建立com
 5. Canonical local normal及Branch-replacement real-process verification。
 6. Initial review、test-first remediation、full verification及user review handoff。
 
-本文件已通過user review並完成實作提交；整體phase待正式多主機testbed驗證後完成。
+既有Slice 7與final-model persistence follow-up均已通過user review並完成實作提交；整體
+phase待正式多主機testbed驗證後完成。

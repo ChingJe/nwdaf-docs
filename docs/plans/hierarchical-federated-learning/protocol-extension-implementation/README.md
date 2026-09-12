@@ -2,8 +2,8 @@
 
 日期：2026-09-07
 
-狀態：Slice 1、2、3、4A、4、5、6均已commit；Slice 7 experiment recording計畫已確認／待commit；
-正式multi-host testbed尚未進入
+狀態：Slice 1、2、3、4A、4、5、6、7與Slice 7 final-model persistence follow-up均已
+commit；正式multi-host testbed尚未進入
 
 ## 文件定位
 
@@ -66,7 +66,8 @@ content digest均不再成為後續runtime contract。
   rounds、replacement subtree重建與Leaf rebind的完整實作邊界。
 - [Slice 7 — Experiment Metrics and Event Recording](./slices/Slice%207%20Experiment%20Metrics%20and%20Event%20Recording%20Detailed%20Plan.md)：
   定義node-local validation、以`mlCorreId`分批保存的JSONL record、Root round cohort及
-  Branch failure／replacement event evidence；不新增protocol欄位或集中式metrics服務。
+  Branch failure／replacement event evidence，並持久保存Root final model；不新增
+  protocol欄位或集中式metrics服務。
 
 ## 審查證據
 

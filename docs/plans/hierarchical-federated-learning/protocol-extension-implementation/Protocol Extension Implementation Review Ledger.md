@@ -2,7 +2,7 @@
 
 日期：2026-09-08
 
-狀態：Slice 1、2、3、4A、4、5、6 Committed；Formal Testbed Validation Pending
+狀態：Slice 1、2、3、4A、4、5、6、7 Committed；Formal Testbed Validation Pending
 
 相關文件：
 
@@ -15,6 +15,7 @@
 - [Slice 4 Detailed Plan](./slices/Slice%204%20Controlled%20Local%20Training%20Workload%20Detailed%20Plan.md)
 - [Slice 5 Detailed Plan](./slices/Slice%205%20Protocol-driven%20Hierarchy%20Integration%20Detailed%20Plan.md)
 - [Slice 6 Detailed Plan](./slices/Slice%206%20Migration%20and%20Regression%20Closure%20Detailed%20Plan.md)
+- [Slice 7 Detailed Plan](./slices/Slice%207%20Experiment%20Metrics%20and%20Event%20Recording%20Detailed%20Plan.md)
 
 ---
 
@@ -508,3 +509,38 @@ DELETE不會再次清理backend resource。
   `nwdaf-resources/` `da9b848`、`nwdaf-docs/` `8433b03`。
 - `delivery status`：Slice 3已完成repository-separated commits；正式multi-host testbed仍是
   未關閉的external validation，因此整體phase尚未標示為`Completed`。
+
+---
+
+## 13. Slice 7 實驗紀錄與最終模型保存
+
+### 13.1 實作結果
+
+- 各PyMTLF以`mlCorreId`建立node-local procedure directory，保存逐輪validation、Root
+  cohort及Branch failure／replacement lifecycle的structured JSONL evidence。
+- Root在最後一個accepted global aggregate完成且training process成功關閉後，將既有
+  `ROUND_GLOBAL` bundle原樣保存為`final-model.tar.gz`，並以`FINAL_MODEL_SAVED`記錄
+  round、artifact identity與size。
+- Canonical runner將Root final model與各node records收集到同一experiment evidence
+  directory，held-out evaluator直接讀取持久模型，不再依賴Root暫存workspace。
+- 保存失敗或同一procedure出現不同內容的既有final model時，不進入成功terminal state；
+  相同內容的重試維持idempotent。
+
+### 13.2 驗證與交付狀態
+
+| Repository／命令 | 結果 |
+| --- | --- |
+| `PyMTLF/.venv/bin/pytest -q` | Pass；661 passed、2 skipped、16個dependency warnings |
+| `PyMTLF/.venv/bin/ruff check .` | Pass |
+| PyMTLF `compileall` | Pass |
+| `nwdaf-resources` hierarchical checks | Pass；20 tests |
+| `nwdaf-resources` hierarchical Ruff | Pass |
+| Canonical hierarchy smoke real-process | Pass；`/tmp/nwdaf-hierarchical-fl-protocol-ws6w9ye4/summary.json` |
+| Branch replacement real-process | Pass；`/tmp/nwdaf-hierarchical-fl-protocol-1lb47dph/summary.json` |
+| Changed repositories `git diff --check` | Pass |
+
+- `closing implementation commits`：`PyMTLF/` `bdbd2a9`、`nwdaf-resources/` `24f8b63`。
+- `integration verification gap`：正式multi-host testbed尚未執行；local real-process evidence
+  不取代跨主機部署、網路failure timing與實際artifact搬運驗證。
+- `delivery status`：Slice 7與final-model persistence follow-up已完成repository-separated
+  implementation commits；整體phase維持`Formal Testbed Validation Pending`。
