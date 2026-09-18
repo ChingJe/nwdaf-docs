@@ -2,7 +2,7 @@
 
 日期：2026-09-02
 
-狀態：候選 schema 與獨立 OpenAPI artifact 已建立，待使用者審查
+狀態：候選 schema 與獨立 OpenAPI artifact 已建立；使用者審查已確認
 
 上層文件：
 

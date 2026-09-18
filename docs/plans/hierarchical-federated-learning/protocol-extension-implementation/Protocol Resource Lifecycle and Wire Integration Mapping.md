@@ -2,7 +2,7 @@
 
 日期：2026-09-02
 
-狀態：Ready for User Review／lifecycle trace、type integration 與 migration authority
+狀態：使用者審查已確認／lifecycle trace、type integration 與 migration authority
 已完成第一輪盤點
 
 2026-09-07範圍更新：Slice 3的Leaf rebind需要由PyMTLF要求containing Go NWDAF淘汰舊

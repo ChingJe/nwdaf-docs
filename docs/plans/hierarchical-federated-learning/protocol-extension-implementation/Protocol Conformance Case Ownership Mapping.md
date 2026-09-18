@@ -2,7 +2,7 @@
 
 日期：2026-09-02
 
-狀態：Ready for User Review／case owner、test seam 與 retained-result owner 已完成對照
+狀態：使用者審查已確認／case owner、test seam 與 retained-result owner 已完成對照
 
 2026-09-07範圍更新：本文件的retained-result owner與case分析只保留為
 歷史盤點，該runtime仍不實作；Slice 3已重新界定為

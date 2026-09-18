@@ -2,7 +2,7 @@
 
 日期：2026-09-02
 
-狀態：Ready for User Review／欄位與 production cutover owner 已完成初步盤點
+狀態：使用者審查已確認／欄位與 production cutover owner 已完成初步盤點
 
 相關文件：
 

@@ -4,7 +4,7 @@
 
 最後更新：2026-09-02
 
-狀態：核心語意與 participant policy 欄位已確認；candidate OpenAPI schema 待使用者審查
+狀態：核心語意與 participant policy 欄位已確認；candidate OpenAPI schema 使用者審查已確認
 
 上層文件：
 
@@ -1015,8 +1015,8 @@ Stage 3／OpenAPI mapping，包括：
   contract 使用 `403 ML_MODEL_TRAINING_REQS_NOT_MET`；`failEventReports`
   保留給 individual event failures。
 
-這些內容仍是候選設計，待使用者審查後，才視需要整合為可供 validator／
-generator 使用的完整 OpenAPI YAML。
+這些內容仍是候選設計；使用者審查已確認，並已整合至可供 validator／
+generator 使用的 [candidate OpenAPI YAML](./candidate_openapi.yaml)。
 
 ---
 

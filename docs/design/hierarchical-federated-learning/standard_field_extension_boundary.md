@@ -4,7 +4,7 @@
 
 狀態：Release 18 欄位與 procedure mapping 已完成第一輪查核；Release 19／20
 差異已確認至 `Nnwdaf_MLModelTraining` OpenAPI 與 feature table；candidate
-schema 待使用者審查
+schema 使用者審查已確認
 
 上層文件：
 

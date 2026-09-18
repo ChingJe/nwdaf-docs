@@ -4,7 +4,7 @@
 
 最後更新：2026-09-02
 
-狀態：核心設計決策已確認；candidate OpenAPI schema／artifact 待使用者審查
+狀態：核心設計決策已確認；candidate OpenAPI schema／artifact 使用者審查已確認
 
 相關文件：
 
