@@ -2,19 +2,19 @@
 
 日期：2026-09-20
 
-狀態：新版論文附錄 B 已選為後續實作目標；本文件修訂已確認，其他細節仍待逐項確認；尚未開始本批功能實作或 E0–E2b 五 seed 實驗。
+狀態：Slice 1 訂閱識別的本地實作與審查已確認；第 2 項起以既有候選 schema 為基準的設計修訂待使用者確認，其餘設計與 E0–E2b 五 seed 實驗仍待處理。
 
 本文承接 [E0–E2b 實驗情境與 Testbed 對照](./Hierarchical%20FL%20E0-E2b%20Experiments%20and%20Testbed%20Context.md)及[後續實驗能力與證據盤點](./Hierarchical%20FL%20Experiment%20Capability%20and%20Evidence%20Inventory.md)，集中維護接下來的設計討論。前兩份文件分別記錄實驗需求與現況缺口；後續對以下議題形成的設計決定，優先更新本文，不把尚未決定的方案寫成既有實作或已完成實驗。
 
-## 已選定的協定目標與遷移界線
+## 後續協定基準與論文附件界線
 
-本批工作以新版論文附錄 B 的候選 Stage-3 設計為目標：subscription／PATCH 傳遞 `flTopology`，notification 傳遞 `flTopologyReport`；instruction 與 report 都帶 `topologyVersion`，以 `candidates[].childInstruction` 逐級下發，以 `reparentInstruction` 指示替代節點接手，以 `directEdges[].edgeState` 回報直接子關係。這是**待實作的論文提案**，不是現行 3GPP schema 或已部署的 wire format。現行 `x-flTopology`／`x-flTopologyReport` 對照留在 [E1 兩版範例](./Hierarchical%20FL%20E1%20Wire%20Schema%20Flow%20Comparison.md)，不作為新功能的目標契約。
+依後續會議決定，第 2 項起沿用[既有候選 OpenAPI](../../../../design/hierarchical-federated-learning/candidate_openapi.yaml)與[欄位語意](../../../../design/hierarchical-federated-learning/candidate_openapi_schema.md)作為實作基準：subscription／PATCH 使用 `x-flTopology`，notification 使用 `x-flTopologyReport`，並保留 recursive `children`、node-level `policy`、`strategy`、`reportAfter` 及 status 語意。這是專案候選 extension，不是已採納的 3GPP 欄位；後續新增能力也須逐項確認，不因沿用 schema 就宣稱已實作。
 
-已選定目標不等於附錄 B 所有細節都已定案。附錄尚未完整定義原有 node `policy`、`strategy`、`reportAfter` 與 per-round 門檻的去向，也未分配正式 `suppFeats` feature number 或完成 presence／cardinality 規則。下階段須逐條核對現行資料產生端、Go／PyMTLF 私有邊界、對外 SBI、儲存狀態、通知與修復路徑；避免只換 JSON property 名稱，或把現有訓練設定無聲移除。實驗性舊欄位不預設永久相容讀取；若有仍在使用的接收端，再以實際需求判斷。
+論文附錄 B 的 `flTopology`／`flTopologyReport`、`topologyVersion`、`candidates[].childInstruction`、`reparentInstruction` 與 `directEdges[].edgeState` 保留為[兩版對照](./Hierarchical%20FL%20E1%20Wire%20Schema%20Flow%20Comparison.md)及論文修訂參考，**不列為本批 wire migration 目標**。若論文仍要求附件特有的欄位或證據，須另行協調論文敘述或明確決策新增機制；不能把兩版欄位視為等價，亦不預先增加相容雙格式。
 
 ## 1. 訂閱資源識別與生命週期
 
-本節細化的是 **ML Model Training 訂閱**的目標設計，尚非現行實作。以下以 `callbackRouteId` 指發起端 Go 產生的本地 callback 路由識別碼，以 `subscriptionResourceId` 指接收端 Go 在 SBI `Location` 公布的訂閱資源識別碼；兩者是本文的概念名稱，不是新增的 wire 欄位。現行程式讓接收端 Go 與其 PyMTLF 各產生一個 UUID，發起端 Go 另以 `callbackRouteId` 作為路由主鍵並回給發起端 PyMTLF；改動後，以 `subscriptionResourceId` 作為同一訂閱的正式資源 ID。`subscriptionResourceId` 只要求在**接收端 NF 的 ML Model Training 服務內**唯一；本專案接收端可繼續產生 UUIDv4，但不能據此假設不同 NF 回傳的 ID 必然唯一。跨 NF 辨識一條邊時使用「接收端 `nfInstanceId`、服務、`subscriptionResourceId`」；`mlCorreId` 是整個 FL procedure 的關聯 ID，`notifCorreId` 是通知關聯 ID，兩者都不取代訂閱資源 ID。
+本節保存 Slice 1 開工前的 **ML Model Training 訂閱**設計與當時的資料流描述；目前本地實作結果見[Slice 1 詳細計畫](./slices/Slice%201%20ML%20Model%20Training%20Subscription%20Resource%20Identity%20and%20Lifecycle%20Detailed%20Plan.md)，不把下文的「現行程式」當成最新狀態。以下以 `callbackRouteId` 指發起端 Go 產生的本地 callback 路由識別碼，以 `subscriptionResourceId` 指接收端 Go 在 SBI `Location` 公布的訂閱資源識別碼；兩者是本文的概念名稱，不是新增的 wire 欄位。原本接收端 Go 與其 PyMTLF 各產生一個 UUID，發起端 Go 另以 `callbackRouteId` 作為路由主鍵並回給發起端 PyMTLF；Slice 1 改以 `subscriptionResourceId` 作為同一訂閱的正式資源 ID。`subscriptionResourceId` 只要求在**接收端 NF 的 ML Model Training 服務內**唯一；本專案接收端可繼續產生 UUIDv4，但不能據此假設不同 NF 回傳的 ID 必然唯一。跨 NF 辨識一條邊時使用「接收端 `nfInstanceId`、服務、`subscriptionResourceId`」；`mlCorreId` 是整個 FL procedure 的關聯 ID，`notifCorreId` 是通知關聯 ID，兩者都不取代訂閱資源 ID。
 
 ### 1.1 接收端建立資源
 
@@ -50,7 +50,7 @@
 待討論：
 
 - 哪些訂閱、訓練與故障事件必須分開記錄；特別區分「發出 Create」、「收到成功回覆」、「確認參與及形成 edge」和「Root 接受拓樸」。
-- 每種事件的必要欄位與產生點：本節點及對端 `nfInstanceId`、方向、`subscriptionResourceId` 及其 owner、`mlCorreId`、時間、操作結果、原因，以及目標 `flTopology`／`flTopologyReport` 中足以解釋決策的版本、candidate、reparent instruction 與 direct-edge 摘要。
+- 每種事件的必要欄位與產生點：本節點及對端 `nfInstanceId`、方向、`subscriptionResourceId` 及其 owner、`mlCorreId`、時間、操作結果、原因，以及 `x-flTopology`／`x-flTopologyReport` 中足以解釋決策的 children、policy、status 摘要。不得憑空記錄舊 schema 未提供的 `topologyVersion` 或 `reparentInstruction`。
 - 重試、雙端觀測、跨程序時鐘與 run 資料夾的關聯方式；哪些數據只需保存原始事件，交由離線分析計算。
 
 ## 3. 拓樸狀態與接受決定
@@ -60,12 +60,12 @@
 待討論：
 
 - 初次形成及局部修復時，由哪個節點、在哪個時點記錄 instruction、realized report、接受或拒絕結果與前後快照。
-- 如何讓新版論文候選契約中的 `topologyVersion` 貫穿 Root instruction、各層 report 與 Root 接受決定，並處理過期或亂序資料。版本不同於 `roundInd`；Root 的接受決定可作為內部狀態與實驗證據，附錄 B 尚未定義專用接受通知。
+- 如何以既有 instruction／report、實際訂閱關係與 Root 決定，重建修復前後的拓樸；Root 接受決定屬內部狀態與實驗證據，不假設舊 schema 有專用接受通知。若論文仍要求 `topologyVersion` 或版本化亂序處理，須另行決策，不能當作目前協定已提供的能力。
 - 如何證明未受影響的 Root→B／C 等關係保持不變，以及未確認或失敗候選如何與 realized edges 一起呈現而不被誤算。
 
 ## 4. E2a／E2b：不同深度與部分修復
 
-現況缺口：新版論文的 recursive instruction／report 可描述不等深度的樹，但目前 Root PyMTLF 的 static `branch_groups` 與 round 執行仍以直接 Branch 和 `HIERARCHY_AGGREGATE` 為主，不能據此宣稱 E2a／E2b 已可執行。
+現況缺口：既有 recursive `children` 結構可描述不等深度的樹，但目前 Root PyMTLF 的 static `branch_groups` 與 round 執行仍以直接 Branch 和 `HIERARCHY_AGGREGATE` 為主，不能據此宣稱 E2a／E2b 已可執行。
 
 待討論：
 
@@ -84,4 +84,4 @@
 - `failure→detection→instruction→new edges ready→first accepted contribution` 各時間點由誰產生及如何對齊；控制面 API-call 數量的計數邊界如何固定。
 - 失敗或未恢復 run 的原始檔如何完整保留；在 E2a／E2b 調整接受條件時，如何明示與 E0／E1 的設定差異。
 
-以上是後續逐項討論的設計範圍，不表示各項已具備實作方案。E0／E1 的主要訓練與 Branch replacement 流程已有既有執行基礎，但使用舊契約；新增工作重點是對齊附錄 B，並取得能支持論文主張的識別、拓樸及事件證據。E2a／E2b 另需解決本文列出的執行語意。
+以上是後續逐項討論的設計範圍，不表示各項已具備實作方案。E0／E1 的主要訓練與 Branch replacement 流程已有既有執行基礎；新增工作重點是沿用既有候選 schema，補足能支持論文主張的拓樸及事件證據。E2a／E2b 另需解決本文列出的執行語意；論文附件與此實作基準的差異須在論文修訂時另行處理。

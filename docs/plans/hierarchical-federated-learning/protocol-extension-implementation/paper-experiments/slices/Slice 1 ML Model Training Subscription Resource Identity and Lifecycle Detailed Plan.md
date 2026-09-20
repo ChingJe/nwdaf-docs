@@ -15,7 +15,7 @@
 3. 建立前產生的 `callbackRouteId` 只負責通知 URI 與建立中關聯；建立後保留在正式 route 供 callback 查找，但不再冒充訂閱資源 ID。
 4. 建立、更新、刪除、通知、失敗清理及 backend reset／pending cleanup 均遵守以上區分。兩個不同接收端即使回覆相同資源 ID，也不會操作或清除彼此的訂閱。
 
-本 slice 不是逐節點事件紀錄的實作；它先提供後續紀錄可使用的真實訂閱資源身分。也不實作論文附錄 B 的 `flTopology`／`flTopologyReport`、E2a／E2b 重掛、五 seed 排程或 testbed 收集腳本。
+本 slice 不是逐節點事件紀錄的實作；它先提供後續紀錄可使用的真實訂閱資源身分。也不實作 E2a／E2b 重掛、五 seed 排程或 testbed 收集腳本。第 2 項起沿用既有 `x-flTopology`／`x-flTopologyReport` 候選 schema，不因本 slice 改動拓樸欄位。
 
 ## 2. 現況、權威來源與契約
 
@@ -210,7 +210,7 @@ Go 與 PyMTLF 在對應的現有測試中驗證實際 header、`Location`、路�
 ## 7. 明確延後與完成門檻
 
 - `future-phase handoff`：逐節點 `observations.jsonl` 訂閱事件、控制面 API-call 計數，以及 testbed 收集器對新資源 ID 的解析，屬後續證據 slice；本 slice 不把人類可讀日誌當作完成證據。
-- `future-phase handoff`：論文附錄 B `flTopology`／`flTopologyReport` wire migration、`topologyVersion`、reparent instruction、E2a／E2b mixed-depth execution 與五 seed 實驗。
+- `future-phase handoff`：以既有 `x-flTopology`／`x-flTopologyReport` 候選 schema 規劃逐節點證據、E2a／E2b mixed-depth execution 與五 seed 實驗；不預設附錄 B wire migration 或 `topologyVersion`／`reparentInstruction` 欄位。
 - `optional hardening`：跨 Go 程序重啟後的 orphan 訂閱掃描／對帳，不列入此處的資源識別驗收。
 - `integration verification gap`：正式 multi-host testbed、控制器故障注入與新實驗資料收集需在後續階段完成；本 slice 的單元／本地流程測試不替代它們。
 

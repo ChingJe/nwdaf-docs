@@ -1,5 +1,7 @@
 # Paper-first implementation audit: HFL over NWDAF
 
+Historical review note: This audit records the paper-first recommendation at the time it was written. A later meeting decision retains the existing `x-flTopology` / `x-flTopologyReport` candidate schema as the implementation baseline for experiment capabilities after Slice 1. Recommendations below to migrate the wire contract to Appendix B are superseded as implementation instructions; Appendix B remains a comparison and paper-alignment reference. The original audit findings are preserved below.
+
 Date: 2026-09-20
 Paper anchor: `HFL-NWDAF-free5GC-paper.tex` (latest workspace revision)
 Implementation inspected: `Intelligent-Systems-Lab/PyMTLF`, commit `bdbd2a9591e47d59b690f0031dfebc77f757bb91` on `feat/hierarchical-fl-protocol-extension`

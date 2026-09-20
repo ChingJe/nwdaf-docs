@@ -1,8 +1,8 @@
-# Hierarchical FL E1 傳遞 Schema 範例：現行契約與論文目標
+# Hierarchical FL E1 傳遞 Schema 範例：既有候選契約與論文附錄對照
 
-狀態：兩版對照已確認；新版論文附錄 B 已選為後續實作目標，本文不修改任一候選 schema。
+狀態：兩版對照保留作差異參考；後續實作沿用版本一的既有候選 schema，本文不修改任一候選 schema。
 
-本文用同一個 E1 情境，逐步展示**既有程式契約**與**新版論文目標契約**在 NWDAF 間傳遞的訊息：Root 原本透過 A 管理 A1／A2；A 在訓練中失效；Root 選擇預部署的 A*；A* 對原 Leaves 建立新訂閱，回報拓樸後參與後續訓練。B／C 與其 Leaves 持續使用原有訂閱。版本一依據[既有候選 OpenAPI](../../../../design/hierarchical-federated-learning/candidate_openapi.yaml)與[欄位語意](../../../../design/hierarchical-federated-learning/candidate_openapi_schema.md)，代表現有 `x-flTopology` 系列的設計；版本二依據論文 *Resilient Hierarchical Federated Learning for NWDAF: Protocol Extensions and a free5GC-Based Realization* 第 4 節及附錄 B，已選為後續實作目標。兩者都不是已採納的 3GPP extension；版本二也不是現有程式已實作的 wire format。
+本文用同一個 E1 情境，逐步展示**既有候選契約**與**新版論文附錄契約**在 NWDAF 間傳遞的訊息：Root 原本透過 A 管理 A1／A2；A 在訓練中失效；Root 選擇預部署的 A*；A* 對原 Leaves 建立新訂閱，回報拓樸後參與後續訓練。B／C 與其 Leaves 持續使用原有訂閱。版本一依據[既有候選 OpenAPI](../../../../design/hierarchical-federated-learning/candidate_openapi.yaml)與[欄位語意](../../../../design/hierarchical-federated-learning/candidate_openapi_schema.md)，是後續實作基準；版本二依據論文 *Resilient Hierarchical Federated Learning for NWDAF: Protocol Extensions and a free5GC-Based Realization* 第 4 節及附錄 B，僅保留作歷史比較與論文修訂參考。兩者都不是已採納的 3GPP extension；版本二不是現有程式已實作的 wire format，也不是本批遷移目標。
 
 本文只列出 **NWDAF ↔ NWDAF 的 `Nnwdaf_MLModelTraining` 訊息類型**，涵蓋建立、preparation 回報、正常 round、失效後的新訂閱與恢復貢獻。同一 schema 在 A1／A2 或 B／C 重複時，列出兩條 edge 的實際識別值，不複製相同的 JSON。HTTP 範例保留本情境需要的標準欄位；未展示認證、完整模型下載協定及模型二進位內容。`X_IMAGE_CLASSIFICATION` 和 `modelInterInfo` 值是本專案的實驗工作負載約定，並非 3GPP 新增的標準事件。
 
@@ -303,7 +303,7 @@ Content-Type: application/json
 
 隨後 Root → A*、A* → Leaves 重用前述 round PATCH／Notify schema 送出當前模型並取得新貢獻；沒有 `x-retainedResultReq`，本例不取用舊計算結果。
 
-## 版本二：論文附錄 B 的 `flTopology`／`flTopologyReport` 目標契約
+## 版本二：論文附錄 B 的 `flTopology`／`flTopologyReport` 比較契約
 
 論文把 topology instruction 改成 `FLTopologyInstruction`：`addressedNodeId` 指接收者，`candidates[].childInstruction` 可再逐級下發，且每份 instruction 都要求 `topologyVersion`。論文附錄沒有給 `suppFeats` feature number，也未給完整 presence／cardinality 規則；因此以下是依附錄 B 組成的**可比較訊息示意**，不是已可直接部署的完整 Stage-3 API。
 
@@ -546,4 +546,4 @@ Content-Type: application/json
 | 功能協商 | 候選 feature 3，示意 `suppFeats: "4"` | 論文要求協商但未分配 feature number；**無法產出已定案的數值** |
 | retained result | 原設計有一次性 lookup 擴充；本 E1 範例刻意未啟用 | 附錄 B 未列此擴充；不可據此推論已正式刪除 |
 
-最重要的是：**兩版都把接手指令發給新 A***，A 不會收到修復請求；舊 A→A1／A2 的資源也不會被直接改名為 A*→A1／A2。`mlCorreId`、標準模型／round 欄位以及未受影響的 Root→B／C 訂閱在兩版中維持原用途。後續以版本二作為實作目標；這份比較不把版本一的 policy／strategy semantics 自動視為附錄 B 已涵蓋，也不宣稱版本二已完成實作。
+最重要的是：**兩版都把接手指令發給新 A***，A 不會收到修復請求；舊 A→A1／A2 的資源也不會被直接改名為 A*→A1／A2。`mlCorreId`、標準模型／round 欄位以及未受影響的 Root→B／C 訂閱在兩版中維持原用途。後續以版本一作為實作基準；這份比較不把附錄 B 特有欄位當作版本一已具備的能力，也不宣稱版本二已完成實作。

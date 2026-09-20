@@ -3,7 +3,7 @@
 日期：2026-09-07
 
 狀態：Slice 1、2、3、4A、4、5、6、7與Slice 7 final-model persistence follow-up均已
-commit；論文實驗情境與能力盤點文件已確認；既有單次testbed觀測已保存，後續E0–E2b五seed實驗尚未執行
+commit；論文實驗情境與能力盤點的協定基準修訂待使用者確認；既有單次testbed觀測已保存，後續E0–E2b五seed實驗尚未執行
 
 ## 文件定位
 
@@ -14,8 +14,10 @@ commit；論文實驗情境與能力盤點文件已確認；既有單次testbed�
 分開維護。舊計畫記錄目前已跑通的 model-bundle／static orchestration
 implementation；本分類的主計畫與 Slice 文件記錄後續已完成的 `x-flTopology`／
 `x-flTopologyReport` 等 protocol-extension 實作。這些文件中的目標與非目標僅適用於
-當時的實作階段；新版論文附錄 B 的候選 `flTopology`／`flTopologyReport`、E0–E2b
-實驗需求及其能力缺口另由[論文實驗文件](./paper-experiments/)承接，目前尚非已完成的實作。
+當時的實作階段；後續論文實驗能力仍沿用既有 `x-flTopology`／`x-flTopologyReport`
+候選 schema，新版論文附錄 B 的 `flTopology`／`flTopologyReport` 僅作差異參考。
+E0–E2b 實驗需求及其能力缺口另由[論文實驗文件](./paper-experiments/)承接，目前
+尚非已完成的實作。
 Retained-result fields仍保留在candidate wire contract，但其result保存、lookup與
 舊計算結果接續維持暫緩。Slice 3只實作不使用retained result的Branch replacement：
 Root與Branch從topology各自取得direct-child policy；Branch失效當輪先依Root completion

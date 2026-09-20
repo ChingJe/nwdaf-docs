@@ -1,8 +1,8 @@
 # Hierarchical FL E0–E2b 實驗情境與 Testbed 對照
 
-狀態：依新版論文對齊的修訂已確認；E0–E2b 的五 seed 結果尚未執行或確認。
+狀態：E0–E2b 實驗情境已記錄；後續沿用既有候選 schema 的證據說明待使用者確認；五 seed 結果尚未執行或確認。
 
-本文整合既有論文第四章草稿的 testbed 對照，以及後續提出的 E0、E1、E2a、E2b 實驗要求。前者是**已執行的單次配對觀測**，後者是**尚待執行的多 seed 實驗情境**；兩者不可混成同一批結果。本文描述研究問題、條件、預期觀測與證據，不規劃 PyMTLF／NWDAF／testbed 如何實作，也不改寫當時的 scenario 或 run metadata。
+本文整合既有論文第四章草稿的 testbed 對照，以及後續提出的 E0、E1、E2a、E2b 實驗要求。前者是**已執行的單次配對觀測**，後者是**尚待執行的多 seed 實驗情境**；兩者不可混成同一批結果。後續協定實作沿用既有候選 `x-flTopology`／`x-flTopologyReport` schema；論文附錄 B 的不同欄位不是本批實作前提。本文描述研究問題、條件、預期觀測與證據，不規劃 PyMTLF／NWDAF／testbed 如何實作，也不改寫當時的 scenario 或 run metadata。
 
 ## 1. 既有論文草稿選用的配對
 
@@ -95,7 +95,7 @@ E0–E2b 沿用第 2–3 節的 Root–A/B/C–Leaves 初始部署與資料規�
 
 ### E0：無故障 baseline
 
-Root 持續與 A、B、C 訓練；各 Branch 維持原本兩個 Leaves，A* 即使預部署也不接手健康的 A。與故障組使用同一組五個 seeds、資料分割、初始模型、訓練預算與接受門檻。預期所有 accepted rounds 都有完整的 A／B／C 貢獻；初始拓樸建立後，沒有 topology-version change 或新增訂閱。逐輪 validation accuracy／loss 的平均軌跡與 95% CI，是後續 paired comparison、accuracy AUC、endpoint 與 recovery 判定的基準。若 E0 自身出現缺席或異常，也須照實保留紀錄，不能先假定每輪完整。
+Root 持續與 A、B、C 訓練；各 Branch 維持原本兩個 Leaves，A* 即使預部署也不接手健康的 A。與故障組使用同一組五個 seeds、資料分割、初始模型、訓練預算與接受門檻。預期所有 accepted rounds 都有完整的 A／B／C 貢獻；初始拓樸建立後，沒有拓樸關係變更或新增訂閱。逐輪 validation accuracy／loss 的平均軌跡與 95% CI，是後續 paired comparison、accuracy AUC、endpoint 與 recovery 判定的基準。若 E0 自身出現缺席或異常，也須照實保留紀錄，不能先假定每輪完整。
 
 ### E1：A 失效，A* 接管 A1／A2
 
@@ -119,9 +119,9 @@ A 不回來，A1 存活並直接回報 Root，A2 保持不可用。此 ablation 
 
 ### 7.1 Protocol evidence 為主要結果
 
-每個 run 都要保留是否完成重配置；跨五個 seeds 可報告成功數，例如 `5/5` 或實際較低值。證據至少能辨認：故障前後的 `topologyVersion`、Root 的 initial topology intention／後續修復 instruction、實際建立的 realized topology、Root 的接受／拒絕結果及接受後的 accepted realized topology、`mlCorreId`、舊／新 subscription IDs、未受影響的 Root→B／C edges、每輪 selected／successful／failed participant set，以及控制面 message／API-call 數量。新版論文附錄 B 把 `topologyVersion` 放在候選 `flTopology`／`flTopologyReport` 內；Root 是否接受拓樸仍是 Root 的決定，附錄沒有定義額外的接受通知。這些是**新實驗欲蒐集的證據**，不表示現行 `x-flTopology` 契約或既有單次 run 已保存上述欄位。
+每個 run 都要保留是否完成重配置；跨五個 seeds 可報告成功數，例如 `5/5` 或實際較低值。證據至少能辨認：Root 透過 `x-flTopology` 下發的 initial topology intention／後續修復 instruction、各節點 `x-flTopologyReport` 與實際訂閱關係形成的 realized topology、Root 的接受／拒絕結果及接受後的 accepted realized topology、`mlCorreId`、舊／新 subscription IDs、未受影響的 Root→B／C edges、每輪 selected／successful／failed participant set，以及控制面 message／API-call 數量。Root 接受拓樸是內部決定，不假設候選 schema 有專用接受通知。論文附錄 B 要求的 `topologyVersion` 不是既有候選 schema 欄位；若論文仍要以此作為證據，須另行對齊論文敘述或決定新增機制，不能把它當成已具備或本批必做的 wire 欄位。這些是**新實驗欲蒐集的證據**，不表示既有單次 run 已完整保存。
 
-時間線分開量測 `failure→detection`、`detection→reparent instruction`、`instruction→new subscriptions ready`、`ready→first accepted contribution`，另給 `failure→first post-reconfiguration contribution` 的整體耗時。故障注入、就緒與首次 accepted contribution 是不同事件；對被拒絕的拓樸，應明確標示不適用或未達成，不能填入虛構時間。若某 run 沒有恢復，報為 `not recovered`，並保留其事件與學習曲線。
+時間線分開量測 `failure→detection`、`detection→repair instruction`（例如發給新 parent 的 `x-flTopology` 訂閱）、`instruction→new subscriptions ready`、`ready→first accepted contribution`，另給 `failure→first post-reconfiguration contribution` 的整體耗時。故障注入、就緒與首次 accepted contribution 是不同事件；對被拒絕的拓樸，應明確標示不適用或未達成，不能填入虛構時間。若某 run 沒有恢復，報為 `not recovered`，並保留其事件與學習曲線。
 
 ### 7.2 Model metrics 為輔助結果
 
@@ -138,8 +138,8 @@ A 不回來，A1 存活並直接回報 Root，A2 保持不可用。此 ablation 
 | 來源 | 本文用途 |
 | --- | --- |
 | 本次提供的論文第三章草稿 | 對齊 initial topology intention／instruction、realized topology 與 accepted realized topology 的用語 |
-| 本次提供的論文第四章草稿 | 追溯既有單次配對的情境、術語、圖表敘事與數值；不作為新版附錄 B 的來源 |
-| `local-references/HFL-NWDAF-free5GC-paper (5).pdf` | 對齊新版論文的 E0–E2b 主實驗、附錄 B 候選欄位與目前仍屬待驗證的主張；不取代舊 run 原始紀錄 |
+| 本次提供的論文第四章草稿 | 追溯既有單次配對的情境、術語、圖表敘事與數值；不作為協定實作基準 |
+| `local-references/HFL-NWDAF-free5GC-paper (5).pdf` | 對齊新版論文的 E0–E2b 主實驗及待驗證主張；附錄 B 候選欄位僅作設計差異參考，不取代既有候選 schema 或舊 run 原始紀錄 |
 | 本次提供的 E0–E2b 實驗要求 | 決定後續實驗的研究目的、五 seed 比較、預期證據與 recovery 判定；尚未執行 |
 | `5G_NWDAF_Infrastructure/testbed.protocol-hierarchical.yaml` | VM／NWDAF／PyMTLF 對應、GPU／CPU 指派、候選優先級、Root／Branch policy 與 timeout |
 | `5G_NWDAF_Infrastructure/experiments/protocol-hierarchical/{mnist,cifar10}/` | 論文選用的兩組 scenario、資料切分、訓練參數與故障觸發設定 |
