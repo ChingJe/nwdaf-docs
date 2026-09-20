@@ -3,7 +3,7 @@
 日期：2026-09-07
 
 狀態：Slice 1、2、3、4A、4、5、6、7與Slice 7 final-model persistence follow-up均已
-commit；正式multi-host testbed尚未進入
+commit；論文實驗情境與能力盤點文件已確認；既有單次testbed觀測已保存，後續E0–E3五seed實驗尚未執行
 
 ## 文件定位
 
@@ -73,6 +73,11 @@ content digest均不再成為後續runtime contract。
 
 - [Protocol Extension Implementation Review Ledger](./Protocol%20Extension%20Implementation%20Review%20Ledger.md)：
   維護各 slice 的審查發現、修正、驗證與 commit 狀態。
+
+## 論文實驗
+
+- [論文實驗文件](./paper-experiments/)：
+  收錄 E0–E3 實驗情境、Testbed 對照及後續能力與證據盤點。
 
 ## 設計輸入
 
