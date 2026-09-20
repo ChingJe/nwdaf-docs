@@ -92,7 +92,7 @@ sequenceDiagram
     L--xA1: local result delivery fails
     A1--xR: upper-tier result absent before deadline
     R->>A2: updated subtree with child retainedResultReq and mlCorreId
-    A2->>L: establish subscriptions with mlCorreId and x-retainedResultReq
+    A2->>L: establish subscriptions with mlCorreId and retainedResultReq
     alt retained result exists
         L-->>A2: FOUND + local roundInd + mLModelInfos
     else no retained result
@@ -106,13 +106,13 @@ sequenceDiagram
 流程分成以下步驟：
 
 1. Root 對 Branch-A2 建立新的 Model Training subscription，並以
-   `x-flTopology` 提供 Area A 的 replacement subtree instruction。Root 在每個
+   `flTopology` 提供 Area A 的 replacement subtree instruction。Root 在每個
    需要查詢舊結果的 Leaf child node 加入 `retainedResultReq: true`。這個
    subscription 以既有 `suppFeats` 協商 `HierarchicalFLOrch`：
 
    ```json
    {
-     "x-flTopology": {
+     "flTopology": {
        "nfInstanceId": "branch-a2",
        "children": [
          {
@@ -142,11 +142,11 @@ sequenceDiagram
    並將該 child 回報為 `FAILED`／`FEATURE_NOT_SUPPORTED`，不能把它計入已恢復的
    topology。
 4. Branch-A2 將每個 child node 的 `retainedResultReq: true` 映射為對該 Leaf
-   subscription 的 message-level `x-retainedResultReq: true`，要求 Leaf 查找
+   subscription 的 message-level `retainedResultReq: true`，要求 Leaf 查找
    同一 `mlCorreId` 的最新已完成 local result。這是當次 Create
    operation 的一次性 request。
 5. Leaf 以 immediate report 或後續 Notify 回傳
-   `x-retainedResultStatus`：
+   `retainedResultStatus`：
    - `FOUND` 時使用既有 `roundInd` 與 `mLModelInfos` 回傳 local result。
    - `NOT_FOUND` 時明確表示本地沒有可回傳的已完成結果。
    - `FAILED` 時表示 request 已接受，但後續 lookup 本身執行失敗。
@@ -163,7 +163,7 @@ Retained-result lookup 本身不開始新的 local training。若 Root／Branch-
 決定繼續訓練，應在 lookup 完成後另外更新 subscriptions，送出正常的
 model／round instructions。Lookup request 不保留為 subscription state，後續
 update 不會自動重新查詢；若需再查，必須在新的 operation 重新攜帶
-`x-retainedResultReq: true`。
+`retainedResultReq: true`。
 
 ---
 
@@ -173,10 +173,10 @@ update 不會自動重新查詢；若需再查，必須在新的 operation 重�
 
 | 方向 | 資訊 |
 | --- | --- |
-| Root → Branch-A2 | 既有 training task／model／deadline fields、`suppFeats`、共用的 `mlCorreId`，以及 replacement subtree 的 `x-flTopology`；需要取回結果的 child nodes 帶有 `retainedResultReq` |
-| Branch-A2 → Leaves | 新 subscription 的 `notifUri`／`notifCorreId`、`suppFeats`、`mlCorreId`，以及 `x-retainedResultReq` |
-| Leaves → Branch-A2 | `x-retainedResultStatus`；`FOUND` 時搭配 local `roundInd` 與 `mLModelInfos`，`NOT_FOUND`／`FAILED` 不帶 model payload |
-| Branch-A2 → Root | `x-flTopologyReport` 所表示的 realized subtree，以及後續正常 aggregated model result |
+| Root → Branch-A2 | 既有 training task／model／deadline fields、`suppFeats`、共用的 `mlCorreId`，以及 replacement subtree 的 `flTopology`；需要取回結果的 child nodes 帶有 `retainedResultReq` |
+| Branch-A2 → Leaves | 新 subscription 的 `notifUri`／`notifCorreId`、`suppFeats`、`mlCorreId`，以及 `retainedResultReq` |
+| Leaves → Branch-A2 | `retainedResultStatus`；`FOUND` 時搭配 local `roundInd` 與 `mLModelInfos`，`NOT_FOUND`／`FAILED` 不帶 model payload |
+| Branch-A2 → Root | `flTopologyReport` 所表示的 realized subtree，以及後續正常 aggregated model result |
 
 這些訊息可以重新建立 Leaf 到 Branch-A2 的 communication path，並明確詢問
 是否存在先前已完成的 local result。
@@ -206,6 +206,6 @@ implementation state 與 recovery policy。
    被新 Branch 明確查詢並取回，而不把「沒有舊結果」誤判成 subscription
    failure。
 
-目前 `x-flTopology`、`x-retainedResultReq` 與
-`x-retainedResultStatus` 已提供這兩項需求所需的協定資訊。
+目前 `flTopology`、`retainedResultReq` 與
+`retainedResultStatus` 已提供這兩項需求所需的協定資訊。
 完整 Branch 恢復正確性則維持在後續實作設計範圍。

@@ -2,7 +2,7 @@
 
 日期：2026-09-02
 
-狀態：候選 schema 與獨立 OpenAPI artifact 已建立；使用者審查已確認
+狀態：候選 schema 的四個 payload 欄位改名已確認；Go／PyMTLF 實作尚未同步。
 
 上層文件：
 
@@ -43,16 +43,18 @@ types：
 
 | 方向 | 既有 operation／representation | 候選 properties | Producer → Consumer |
 | --- | --- | --- | --- |
-| Create | `POST /subscriptions`，`NwdafMLModelTrainSubsc` | `x-flTopology`、`x-retainedResultReq` | Parent FL Server → direct FL Client |
+| Create | `POST /subscriptions`，`NwdafMLModelTrainSubsc` | `flTopology`、`retainedResultReq` | Parent FL Server → direct FL Client |
 | Full update | `PUT /subscriptions/{subscriptionId}`，`NwdafMLModelTrainSubsc` | 同 Create | Parent FL Server → direct FL Client |
-| Partial update | `PATCH /subscriptions/{subscriptionId}`，`NwdafMLModelTrainSubscPatch` | `x-flTopology`、`x-retainedResultReq` | Parent FL Server → direct FL Client |
+| Partial update | `PATCH /subscriptions/{subscriptionId}`，`NwdafMLModelTrainSubscPatch` | `flTopology`、`retainedResultReq` | Parent FL Server → direct FL Client |
 | Disabled-child removal | `DELETE /subscriptions/{subscriptionId}` | 無新增 request property；由 parent 收到 child `enabled: false` 後觸發 | Parent／Intermediate FL Server → disabled direct FL Client |
 | Immediate report | Create／update response 的 `immReport` | 經由 `NwdafMLModelTrainNotif` 自動取得 report properties | Direct FL Client → parent FL Server |
-| Notify | 對既有 `notifUri` 執行 POST，`NwdafMLModelTrainNotif` | `x-flTopologyReport`、`x-retainedResultStatus` | Direct FL Client → parent FL Server |
+| Notify | 對既有 `notifUri` 執行 POST，`NwdafMLModelTrainNotif` | `flTopologyReport`、`retainedResultStatus` | Direct FL Client → parent FL Server |
 
-`x-flTopology` 與 `x-flTopologyReport` 是放在 message schema
-`properties` 內的 JSON payload property。它們不是直接放在 OpenAPI Schema
-Object 上、只供 tooling 解讀的 OpenAPI Specification Extension。
+`flTopology` 與 `flTopologyReport` 是放在 message schema
+`properties` 內的 JSON payload property。移除 `x-` 只更改本候選 schema
+的欄位名稱，**不表示它們已由 3GPP 定義**。它們不是直接放在 OpenAPI Schema
+Object 上、只供 tooling 解讀的 OpenAPI Specification Extension；
+`candidate_openapi.yaml` 中的 `x-stage3-rules` 等文件層擴充仍保留 `x-`。
 
 `mlCorreId`、`notifCorreId`、`roundInd`、`mLModelInfos`、`mLPreFlag`、
 `mLModelTrainInfos`、`mLTrainRepInfo` 與 `eventReq` 繼續使用既有 3GPP
@@ -94,7 +96,7 @@ children 所採用的值，且不自動向 descendants 繼承。`enabled` 只在
 decision。具有明確 default 的 `allowAdditionalCandidates` 與
 `additionalCandidatePriority` 依 protocol default 解讀；其餘未指定部分才由
 接收 node 的 local configuration 決定。Request 未指定的實際值可在
-`x-flTopologyReport` 中用同名 properties 回報。
+`flTopologyReport` 中用同名 properties 回報。
 
 | Property | Type／range | 語意 |
 | --- | --- | --- |
@@ -196,7 +198,7 @@ Root 與 Intermediate 協商成功，不代表 Intermediate 與其 direct childr
 
 TS 29.500 §6.6.2 允許 consumer 在 resource 的 supported features 尚未確定前
 先於初始 POST 傳送 feature-specific information，因此 initial Create 可以同時
-帶 `suppFeats` 與 `x-*` properties。若成功 response 的 `suppFeats` 未包含
+帶 `suppFeats` 與本候選 schema 新增的 payload properties。若成功 response 的 `suppFeats` 未包含
 feature 3，consumer 不得把該 resource 視為 hierarchical orchestration
 resource，也不得在後續 PUT／PATCH 或 Notify 套用本文 procedure；若本次
 subscription 的目的必須依賴 hierarchy，consumer 應刪除該 resource，並將
@@ -225,9 +227,9 @@ components:
   schemas:
     NwdafMLModelTrainSubsc:
       properties:
-        x-flTopology:
+        flTopology:
           $ref: '#/components/schemas/FlTopologyNode'
-        x-retainedResultReq:
+        retainedResultReq:
           type: boolean
           writeOnly: true
           description: >
@@ -237,9 +239,9 @@ components:
 
     NwdafMLModelTrainSubscPatch:
       properties:
-        x-flTopology:
+        flTopology:
           $ref: '#/components/schemas/FlTopologyNode'
-        x-retainedResultReq:
+        retainedResultReq:
           type: boolean
           writeOnly: true
           description: >
@@ -248,9 +250,9 @@ components:
 
     NwdafMLModelTrainNotif:
       properties:
-        x-flTopologyReport:
+        flTopologyReport:
           $ref: '#/components/schemas/FlTopologyReport'
-        x-retainedResultStatus:
+        retainedResultStatus:
           $ref: '#/components/schemas/RetainedResultStatus'
 ```
 
@@ -565,8 +567,8 @@ TS 29.520 Release 18 §4.6.2.4.2 與 §5.5.6.2.8 目前要求 Notify 至少包�
 加入 OpenAPI `properties`，不能讓 topology-only report、`NOT_FOUND` 或
 `FAILED` report 自動符合這項 procedure 條件。
 
-Candidate procedure 必須把 `x-flTopologyReport` 與
-`x-retainedResultStatus` 加入 notification detailed information 的合法集合。
+Candidate procedure 必須把 `flTopologyReport` 與
+`retainedResultStatus` 加入 notification detailed information 的合法集合。
 完整 artifact 將這些條件列在 `x-stage3-rules`，不以 schema-level
 `oneOf`／`not` 組合改變 generated model 的 required properties；實作者必須在
 request／Notify validation boundary 執行相同規則。本版本定義三種
@@ -596,16 +598,16 @@ composition 中的局部 required 誤展開成全域必填。完整 artifact 因
 平坦且可生成的 message model，並以 `x-stage3-rules` 記錄以下需由實作與
 Stage 3 procedure text 檢查的條件：
 
-1. Create／PUT 中若出現 `x-flTopology` 或
-   `x-retainedResultReq: true`，同一 `NwdafMLModelTrainSubsc` 必須提供
+1. Create／PUT 中若出現 `flTopology` 或
+   `retainedResultReq: true`，同一 `NwdafMLModelTrainSubsc` 必須提供
    `mlCorreId`。
 2. PATCH 不提供新的 `mlCorreId`；只有既有 resource 已屬於 FL procedure 時，
-   才能接受 `x-flTopology` 或 `x-retainedResultReq: true`。
-3. Notify 若帶有 `x-flTopologyReport` 或 `x-retainedResultStatus`，同一
+   才能接受 `flTopology` 或 `retainedResultReq: true`。
+3. Notify 若帶有 `flTopologyReport` 或 `retainedResultStatus`，同一
    `NwdafMLModelTrainNotif` 必須提供 `mlCorreId`；`notifCorreId` 仍負責 local
    subscription callback correlation。
-4. `x-flTopology` 最外層 `nfInstanceId` 必須等於接收 subscription 的 NWDAF
-   instance；`x-flTopologyReport` 最外層 identity 必須等於該
+4. `flTopology` 最外層 `nfInstanceId` 必須等於接收 subscription 的 NWDAF
+   instance；`flTopologyReport` 最外層 identity 必須等於該
    subscription／`notifCorreId` 所綁定的 direct Client NWDAF。Identity
    mismatch 以 `400 Bad Request` 拒絕。
 5. 單一 instruction 或 report subtree 中，同一 `nfInstanceId` 不得重複出現，
@@ -648,7 +650,7 @@ Stage 3 procedure text 檢查的條件：
     local FL process。Intermediate 建立下游 subscriptions 時必須維持上層明確
     指定的 `method`、`aggregation` 與 `methodParameters` contract。
     `reportAfter` 只作用於該 node 對 direct parent 的回報。
-15. `x-flTopologyReport` wrapper 不帶通知者自己的 relationship status。
+15. `flTopologyReport` wrapper 不帶通知者自己的 relationship status。
     `children[].statusTimestamp` 保留管理該 relationship 的 parent 所產生之
     時間；轉送 Intermediate 不得重寫 descendant timestamps。
 16. `children[].statusCause` 在 `FAILED` 與 `INACTIVE` 時必填，在
@@ -657,7 +659,7 @@ Stage 3 procedure text 檢查的條件：
     推測為 `ACTIVE`；未知 cause 可保留與轉送，但不得觸發已知 cause 的特定
     recovery action。
 17. 每個被接受的 Create、PUT 或 PATCH 只有在當次攜帶
-    `x-retainedResultReq: true` 時觸發一次 lookup。接收者必須回報
+    `retainedResultReq: true` 時觸發一次 lookup。接收者必須回報
     `FOUND`、`NOT_FOUND` 或 `FAILED`；回報後動作完成，不保留為 subscription
     state。若 request 在被接受前即失敗，使用該 Create／PUT／PATCH operation
     的既有 HTTP error response，不另外產生 `FAILED` outcome。
@@ -703,9 +705,9 @@ features 維持原狀。
 Release 18 PATCH 使用 `application/merge-patch+json`。因此：
 
 - 未出現在 PATCH body 的持續 extension property 維持原值。
-- `x-retainedResultReq` 是一次性 operation instruction，不參與 resource state
+- `retainedResultReq` 是一次性 operation instruction，不參與 resource state
   merge；當次為 `true` 時查詢一次，省略或為 `false` 時不查詢。
-- `x-flTopology.children[].retainedResultReq` 同樣是一次性 edge
+- `flTopology.children[].retainedResultReq` 同樣是一次性 edge
   instruction。Receiver 執行當次對應的 downstream operation 後，不將它
   保存為 upstream-assigned topology 的持續狀態。
 - Object members 依 JSON Merge Patch 合併。
@@ -728,7 +730,7 @@ selection 再次加入它。若 array 保留該 node 並設為 `enabled: true` �
 `enabled`，則表示上層明確重新啟用及指派它。
 
 一般 training round 只更新既有 `roundInd`、`mLModelInfos`、deadline 等標準
-properties，不需要重送 `x-flTopology`。只有 membership、parent／child
+properties，不需要重送 `flTopology`。只有 membership、parent／child
 relationship、policy、strategy 或 node-local instruction 改變時才更新
 topology extension。
 
@@ -777,7 +779,7 @@ Accept: application/json
     "notifMethod": "ON_EVENT_DETECTION",
     "immRep": false
   },
-  "x-flTopology": {
+  "flTopology": {
     "nfInstanceId": "10000000-0000-4000-8000-000000000001",
     "children": [
       {
@@ -834,7 +836,7 @@ Accept: application/json
 ### 6.2 Branch 回報 preparation 結果
 
 Branch 已建立三個 active direct children；一個失敗，最後一個尚未確認。這份
-Notify 可單獨以 `x-flTopologyReport` 作為 detailed information：
+Notify 可單獨以 `flTopologyReport` 作為 detailed information：
 
 ```http
 POST /callbacks/ml-model-training HTTP/1.1
@@ -844,7 +846,7 @@ Content-Type: application/json
 {
   "notifCorreId": "root-branch-a-subscription",
   "mlCorreId": "hierarchical-fl-001",
-  "x-flTopologyReport": {
+  "flTopologyReport": {
     "nfInstanceId": "10000000-0000-4000-8000-000000000001",
     "policy": {
       "allowAdditionalCandidates": true,
@@ -917,7 +919,7 @@ Host: branch-a.example.org
 Content-Type: application/merge-patch+json
 
 {
-  "x-flTopology": {
+  "flTopology": {
     "nfInstanceId": "10000000-0000-4000-8000-000000000001",
     "children": [
       {
@@ -970,7 +972,7 @@ HTTP/1.1 204 No Content
 
 Branch 將 `...101` 更新為 `INACTIVE`，以
 `statusCause: REMOVED_BY_POLICY` 說明是上層明確排除，並透過後續
-`x-flTopologyReport` 回報。
+`flTopologyReport` 回報。
 若 Leaf 回覆 `404`，Branch 同樣視為 subscription 已不存在；若 DELETE
 timeout 或發生 communication failure，Branch 仍立即將 `...101` 排除於
 eligible pool，但分別以 `RESPONSE_TIMEOUT` 或 `COMMUNICATION_FAILURE`
@@ -1007,13 +1009,13 @@ Accept: application/json
     "notifMethod": "ON_EVENT_DETECTION",
     "immRep": false
   },
-  "x-retainedResultReq": true
+  "retainedResultReq": true
 }
 ```
 
 當次 Create 只觸發一次 lookup。後續其他 subscription update 不會因
 此自動再查；若 Server 需要再次查詢，必須在新的 operation 再次
-攜帶 `x-retainedResultReq: true`。在當次 outcome 尚未回報前，不得對這個
+攜帶 `retainedResultReq: true`。在當次 outcome 尚未回報前，不得對這個
 subscription 發出另一個 lookup request；若收到未知的
 forward-compatible outcome，該次 lookup 同樣結束，但本版本不得使用其中的
 model result。只有收到前一次 `FOUND`、`NOT_FOUND`、`FAILED` 或未知 outcome
@@ -1031,7 +1033,7 @@ Content-Type: application/json
 {
   "notifCorreId": "branch-a2-leaf-a1-subscription",
   "mlCorreId": "hierarchical-fl-001",
-  "x-retainedResultStatus": "NOT_FOUND"
+  "retainedResultStatus": "NOT_FOUND"
 }
 ```
 
@@ -1045,7 +1047,7 @@ Content-Type: application/json
 {
   "notifCorreId": "branch-a2-leaf-a1-subscription",
   "mlCorreId": "hierarchical-fl-001",
-  "x-retainedResultStatus": "FAILED"
+  "retainedResultStatus": "FAILED"
 }
 ```
 
@@ -1059,7 +1061,7 @@ Content-Type: application/json
 {
   "notifCorreId": "branch-a2-leaf-a1-subscription",
   "mlCorreId": "hierarchical-fl-001",
-  "x-retainedResultStatus": "FOUND",
+  "retainedResultStatus": "FOUND",
   "roundInd": 5,
   "mLModelInfos": [
     {
@@ -1087,7 +1089,7 @@ Content-Type: application/problem+json
   "cause": "ML_MODEL_TRAINING_REQS_NOT_MET",
   "invalidParams": [
     {
-      "param": "x-flTopology.strategy.methodParameters.proximalMu",
+      "param": "flTopology.strategy.methodParameters.proximalMu",
       "reason": "The requested FedProx parameter cannot be supported."
     }
   ]
@@ -1105,7 +1107,7 @@ property path。
 獨立 OpenAPI properties 不能完整定義 hierarchical behavior。若後續整理成正式
 Stage 3 proposal，至少需要同步補充下列 procedure rules：
 
-1. `x-flTopology` 的 node policy 只管理 direct children，沒有 subtree
+1. `flTopology` 的 node policy 只管理 direct children，沒有 subtree
    inheritance。
 2. Forward `children` 是 candidate／instruction view，不等於全部已加入的
    realized topology。
@@ -1118,15 +1120,15 @@ Stage 3 proposal，至少需要同步補充下列 procedure rules：
    該 child 執行 retained-result lookup。
 5. Request／report wrapper identity 必須綁定 direct subscription peer，單一
    subtree 內的 identities 必須符合 tree uniqueness 規則。
-6. `x-flTopologyReport` 可在 preparation 或 training lifecycle 回報，且成為
+6. `flTopologyReport` 可在 preparation 或 training lifecycle 回報，且成為
    Notify 合法的 detailed information。
-7. `x-flTopologyReport` 的 candidate scope 與 timestamp ownership 依 §3.5。
+7. `flTopologyReport` 的 candidate scope 與 timestamp ownership 依 §3.5。
 8. `FAILED`／`INACTIVE` child report 必須提供 `statusCause`，其他已知 status
    不得提供；cause vocabulary 與既有 error／termination fields 的邊界依
    §3.5 與 §5。
 9. Create／PUT、PATCH 與 Notify 的 `mlCorreId` 條件依 §4.3 與 §5；每個
    local subscription 仍使用自己的 resource ID 與 `notifCorreId`。
-10. `x-retainedResultReq` 是當次 operation 的一次性 instruction，查詢同一
+10. `retainedResultReq` 是當次 operation 的一次性 instruction，查詢同一
    `mlCorreId` 的最新已完成 local result；`FOUND`／`NOT_FOUND`／`FAILED` 條件依
    §4.3，lookup 不自行開始新一輪 training，也不保留為 subscription
    state。每個 local subscription 同時最多一個 outstanding lookup，只有收到

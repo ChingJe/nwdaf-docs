@@ -40,8 +40,8 @@ x-supported-features:
 
 x-stage3-rules:
   - >
-    The x-flTopology root nfInstanceId shall identify the request receiver;
-    the x-flTopologyReport root nfInstanceId shall identify the direct Client
+    The flTopology root nfInstanceId shall identify the request receiver;
+    the flTopologyReport root nfInstanceId shall identify the direct Client
     bound to the subscription callback context.
   - >
     A topology instruction or report shall not contain duplicate nfInstanceId
@@ -55,23 +55,23 @@ x-stage3-rules:
     provide priority, and minAvailableNodes shall be greater than or equal to
     minTrainNodes.
   - >
-    retainedResultReq and x-retainedResultReq are operation-scoped and shall
+    retainedResultReq at both the node and message levels is operation-scoped and shall
     not be persisted as subscription state.
   - >
     A notification shall contain at least one of delayEventNotif,
-    mLModelInfos, termTrainReq, x-flTopologyReport or x-retainedResultStatus.
+    mLModelInfos, termTrainReq, flTopologyReport or retainedResultStatus.
     The existing mutual-exclusion rules for delayEventNotif, mLModelInfos and
     termTrainReq remain applicable.
   - >
-    A Create or PUT operation containing x-flTopology or a true
-    x-retainedResultReq shall contain mlCorreId. A PATCH operation using
+    A Create or PUT operation containing flTopology or a true
+    retainedResultReq shall contain mlCorreId. A PATCH operation using
     either extension is valid only when the existing subscription is already
     correlated with an FL procedure.
   - >
-    A notification containing x-flTopologyReport or x-retainedResultStatus
+    A notification containing flTopologyReport or retainedResultStatus
     shall contain mlCorreId.
   - >
-    When x-retainedResultStatus is FOUND, roundInd and mLModelInfos shall be
+    When retainedResultStatus is FOUND, roundInd and mLModelInfos shall be
     present. When it is NOT_FOUND or FAILED, roundInd and mLModelInfos shall
     be absent.
   - >
@@ -428,9 +428,9 @@ components:
           $ref: '../../../specs/openapi/TS29520_Nnwdaf_EventsSubscription.yaml#/components/schemas/TargetUeInformation'
         skipFlInd:
           type: boolean
-        x-flTopology:
+        flTopology:
           $ref: '#/components/schemas/FlTopologyNode'
-        x-retainedResultReq:
+        retainedResultReq:
           type: boolean
           writeOnly: true
           description: >
@@ -473,9 +473,9 @@ components:
           $ref: '../../../specs/openapi/TS29520_Nnwdaf_EventsSubscription.yaml#/components/schemas/TargetUeInformation'
         skipFlInd:
           type: boolean
-        x-flTopology:
+        flTopology:
           $ref: '#/components/schemas/FlTopologyNode'
-        x-retainedResultReq:
+        retainedResultReq:
           type: boolean
           writeOnly: true
           description: >
@@ -505,9 +505,9 @@ components:
           $ref: '../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml#/components/schemas/StatusReportInfo'
         termTrainReq:
           $ref: '../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml#/components/schemas/TermTrainCause'
-        x-flTopologyReport:
+        flTopologyReport:
           $ref: '#/components/schemas/FlTopologyReport'
-        x-retainedResultStatus:
+        retainedResultStatus:
           $ref: '#/components/schemas/RetainedResultStatus'
       required:
         - notifCorreId
@@ -776,7 +776,7 @@ components:
         suppFeats: '4'
         mlCorreId: hierarchical-fl-001
         mLPreFlag: true
-        x-flTopology:
+        flTopology:
           nfInstanceId: 10000000-0000-4000-8000-000000000001
           children:
             - nfInstanceId: 10000000-0000-4000-8000-000000000101
@@ -804,7 +804,7 @@ components:
     CandidateRemovalPatch:
       summary: Root excludes one candidate and assigns its replacement.
       value:
-        x-flTopology:
+        flTopology:
           nfInstanceId: 10000000-0000-4000-8000-000000000001
           children:
             - nfInstanceId: 10000000-0000-4000-8000-000000000106
@@ -817,7 +817,7 @@ components:
       value:
         notifCorreId: root-branch-a-subscription
         mlCorreId: hierarchical-fl-001
-        x-flTopologyReport:
+        flTopologyReport:
           nfInstanceId: 10000000-0000-4000-8000-000000000001
           policy:
             allowAdditionalCandidates: true
@@ -850,7 +850,7 @@ components:
       value:
         notifCorreId: branch-a2-leaf-a1-subscription
         mlCorreId: hierarchical-fl-001
-        x-retainedResultStatus: FOUND
+        retainedResultStatus: FOUND
         roundInd: 5
         mLModelInfos:
           - event: UE_COMMUNICATION
@@ -862,11 +862,11 @@ components:
       value:
         notifCorreId: branch-a2-leaf-a1-subscription
         mlCorreId: hierarchical-fl-001
-        x-retainedResultStatus: NOT_FOUND
+        retainedResultStatus: NOT_FOUND
 
     RetainedResultFailedNotification:
       summary: Client accepted the lookup but could not complete it.
       value:
         notifCorreId: branch-a2-leaf-a1-subscription
         mlCorreId: hierarchical-fl-001
-        x-retainedResultStatus: FAILED
+        retainedResultStatus: FAILED

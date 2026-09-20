@@ -23,7 +23,7 @@ node-level policy、training／aggregation strategy、node-local execution
 instruction、candidate priority、逐級 status report 與 retained-result lookup
 的語意。本文先固定 producer、consumer 與 lifecycle responsibility。
 Participant policy 採用 Flower 中已有對應概念的 field names；request 使用
-`x-flTopology`，Notify 使用 `x-flTopologyReport`。對應 OpenAPI type、
+`flTopology`，Notify 使用 `flTopologyReport`。對應 OpenAPI type、
 validation 與 procedure conditional mapping 已整理於
 [Candidate OpenAPI Schema](./candidate_openapi_schema.md)。
 
@@ -120,7 +120,7 @@ Method-specific parameters 不直接散落在 strategy 共通層，而是放入
 `methodParameters`：
 
 ```yaml
-x-flTopology:
+flTopology:
   nfInstanceId: branch-a
   strategy:
     method: fedProx
@@ -151,7 +151,7 @@ selected FL Clients 消費 method 所需的 training instructions，FL Server
 configuration 決定：
 
 ```yaml
-x-flTopology:
+flTopology:
   nfInstanceId: client-a
   reportAfter:
     count: 5
@@ -221,11 +221,11 @@ participant，只有轉為 `ACTIVE` 後才能進入每輪 selection。
 `children` 成員時有意義，不向 descendants 繼承，也不應放在最外層 reporting
 node。
 
-以下範例使用 `x-flTopology` 作為直接加入既有 3GPP subscription 的 extension
-entry。進入這個自定義 object 後，內部 properties 不再重複使用 `x-`：
+以下範例使用 `flTopology` 作為加入既有 3GPP subscription 的候選欄位。
+它與內部 properties 都不使用 `x-`；此命名不代表已成為 3GPP 欄位：
 
 ```yaml
-x-flTopology:
+flTopology:
   nfInstanceId: branch-a
   children:
     - nfInstanceId: client-a
@@ -272,10 +272,9 @@ x-flTopology:
     unit: round
 ```
 
-只有 `x-flTopology` 這個 3GPP schema extension entry 使用 `x-` prefix。
-`children`、`policy`、`strategy`、`reportAfter`、`retainedResultReq` 與更
-內層的 properties 都位於自定義 type 的 namespace 內，因此依 JSON／3GPP
-naming style 使用 lower camel case，不再逐層加上 `x-`。
+`flTopology` 及其 `children`、`policy`、`strategy`、`reportAfter`、
+`retainedResultReq` 等內部 properties 都採 lower camel case。只有
+OpenAPI 文件本身的規格擴充使用 `x-`，不把此前綴放入 JSON payload 欄位。
 
 ### 3.3 Additional candidates 與 selection method
 
@@ -310,7 +309,7 @@ Clients 參與某輪 training，使用 `fractionTrain: 1.0`，不增加 `all` me
 Intermediate 必須分開管理兩種 candidate set：
 
 - **Upstream-assigned set**：目前 subscription resource 的
-  `x-flTopology.children` 明確列出的 candidates。
+  `flTopology.children` 明確列出的 candidates。
 - **Locally discovered set**：Intermediate 在
   `allowAdditionalCandidates: true` 時透過 NRF discovery 自行加入的
   candidates。
@@ -319,7 +318,7 @@ Intermediate 必須分開管理兩種 candidate set：
 兩個 set，只保留一個 candidate record，並以上層明確下發的 `priority`、
 `reportAfter` 與其他 edge instructions 為準。
 
-單一 `x-flTopology` subtree 中，同一 `nfInstanceId` 不得重複出現在不同位置，
+單一 `flTopology` subtree 中，同一 `nfInstanceId` 不得重複出現在不同位置，
 也不得在自己的 descendants 再次出現。相同 parent 的 `children` 亦不得包含
 重複 identity。這些規則維持 tree semantics，並避免同一 request 同時替一個
 NWDAF 建立多個 parent relationships。Delegated selection 造成不同 Branches
@@ -460,7 +459,7 @@ Request 中出現的 children 不表示 subscriptions 已經全部建立，也�
 已經接受參與。因此 forward tree 是 candidate／instruction view；目前真正
 形成的 topology 必須依 backward report 判斷。
 
-每次 direct subscription 上的 `x-flTopology` 最外層 `nfInstanceId` 必須與
+每次 direct subscription 上的 `flTopology` 最外層 `nfInstanceId` 必須與
 接收該 subscription 的 NWDAF instance 相符。Intermediate 向下一層傳遞時，
 以對應 child node 作為新的 subtree root；不能把仍以自己為 root 的 object 原樣
 送給 child。接收者若發現最外層 identity mismatch、重複 identity 或 ancestor
@@ -478,7 +477,7 @@ cycle，應拒絕該 instruction，而不是自行猜測要使用哪個 subtree�
 與 status time；Intermediate 可以包裝 child reports，但不能把 descendant
 status 的發生時間改成自己向上通知的時間。
 
-Notify 以 `x-flTopologyReport` 承載 recursive report。最外層 wrapper 識別
+Notify 以 `flTopologyReport` 承載 recursive report。最外層 wrapper 識別
 通知者本身，並可回報它實際採用的 `policy`、`strategy` 與 `reportAfter`；
 wrapper 不替通知者產生它和 parent 之間的 relationship status。其
 `children` 才是由通知者管理的 direct-child status reports，並可遞迴包含更
@@ -497,7 +496,7 @@ node 自行決定，回報值則揭露 local decision。例如上層沒有指定
 
 ```json
 {
-  "x-flTopologyReport": {
+  "flTopologyReport": {
     "nfInstanceId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
     "reportAfter": {
       "count": 5,
@@ -511,7 +510,7 @@ node 自行決定，回報值則揭露 local decision。例如上層沒有指定
 實際採用的 `policy` 與 `strategy`。上層可依回報結果接受目前設定、透過既有
 subscription update／PATCH 再調整，或終止該 subscription。
 
-`x-flTopologyReport` 不用來同步 descendants 的 local round。通知者仍以既有
+`flTopologyReport` 不用來同步 descendants 的 local round。通知者仍以既有
 頂層 `NwdafMLModelTrainNotif.roundInd` 表示自己和 parent 之間 local FL
 process 的 round；Intermediate 內部維護 lower-tier progress 與 upper-tier
 update 的關係。
@@ -607,10 +606,10 @@ name 已固定為 `statusTimestamp`。
 | `FEATURE_NOT_SUPPORTED` | Subscription resource 未協商到執行 hierarchical orchestration 所需的 optional feature。 |
 | `OTHER` | 無法歸入上述類別。 |
 
-`statusCause` 是 `x-flTopologyReport` 內 topology relationship 的結果分類，
+`statusCause` 是 `flTopologyReport` 內 topology relationship 的結果分類，
 不取代 HTTP rejection 的 `ProblemDetails.cause`、individual event failure、
 `delayEventNotif`、`termTrainReq` 或 retained-result lookup 的
-`x-retainedResultStatus`。負責 direct-child relationship 的 parent FL Server
+`retainedResultStatus`。負責 direct-child relationship 的 parent FL Server
 產生 `statusCause`；逐級包裝 report 時與 `statusTimestamp` 一樣保留原值。
 若 direct child 使用既有 `termTrainReq: OTHERS`，parent 將它映射為
 `statusCause: OTHER`。
@@ -631,7 +630,7 @@ cause 執行特定 recovery action。
 
 ### 5.5 Training lifecycle 中的狀態更新
 
-`x-flTopologyReport` 不限定於 preparation。Topology establishment 完成後，
+`flTopologyReport` 不限定於 preparation。Topology establishment 完成後，
 一般 training round 只更新各 local FL process 的 `roundInd`、model reference、
 deadline 與結果，不需要重新建立 tree。
 
@@ -653,7 +652,7 @@ optional `retainedResultReq: true`：
 
 ```json
 {
-  "x-flTopology": {
+  "flTopology": {
     "nfInstanceId": "branch-a2",
     "children": [
       {
@@ -672,10 +671,10 @@ optional `retainedResultReq: true`：
 `retainedResultReq` 是 parent 建立對該 child 的 subscription 時所消費的
 edge-level 一次性 instruction。Parent 對該 child 建立或更新
 `NwdafMLModelTrainSubsc` 時，將它映射成 message-level optional
-`x-retainedResultReq: true`，要求接收者在當次 operation 查找並回報本地
+`retainedResultReq: true`，要求接收者在當次 operation 查找並回報本地
 針對同一 `mlCorreId` 保留的最新已完成結果。位於
-自定義 topology node 內的 property 不重複加 `x-`；直接加入既有 3GPP
-message 的 entry 才使用 `x-retainedResultReq`。
+自定義 topology node 及直接加入既有 3GPP message 的候選欄位都不加
+`x-` 前綴；兩層的 `retainedResultReq` 仍有各自的作用位置與語意。
 
 這項 instruction 不自動向 descendants 繼承。若上層希望一個 Intermediate
 向多個 direct children 查詢，就在各 child node 分別指定；省略時，接收
@@ -683,8 +682,7 @@ Intermediate 不得只因自己是新選出的 participant 而自行啟動 looku
 設計讓整棵 hierarchy 共用 `mlCorreId`，extension 不重複攜帶另一個 process
 ID。
 
-Topology node 內的 `retainedResultReq` 與 message-level
-`x-retainedResultReq` 都不是持續狀態。每次被接受的 Create、PUT 或 PATCH
+Topology node 內與 message-level 的 `retainedResultReq` 都不是持續狀態。每次被接受的 Create、PUT 或 PATCH
 operation 只有在當次攜帶 `true` 時觸發一次 lookup；省略或設為
 `false` 都表示當次 operation 不要求 lookup。回報 `FOUND`、`NOT_FOUND` 或
 `FAILED` 後動作即完成，後續其他 subscription update 不會自動
@@ -692,7 +690,7 @@ operation 只有在當次攜帶 `true` 時觸發一次 lookup；省略或設為
 同一 local subscription 同時最多只允許一個 outstanding lookup。從當次
 operation 被接受起，到 Server 透過 immediate report 或 Notify 收到
 本次 lookup outcome 為止，Server 不得對該 subscription 再發出新的
-`x-retainedResultReq: true`。若等待 outcome timeout，該 lookup 仍視為
+`retainedResultReq: true`。若等待 outcome timeout，該 lookup 仍視為
 outstanding；Server 可繼續等待或終止目前 subscription，但不得把另一個
 lookup 當成新的 outstanding operation。本版本使用
 `FOUND`／`NOT_FOUND`／`FAILED`；未知的
@@ -701,7 +699,7 @@ forward-compatible outcome 同樣結束 outstanding lookup，但不形成可用�
 `notifCorreId` 就足以關聯回報，不需要另外增加 request ID。
 
 Retained-result lookup 與新一輪 training 是兩個不同動作。
-`x-retainedResultReq: true` 時，本次 request 只執行查找，不開始 local
+`retainedResultReq: true` 時，本次 request 只執行查找，不開始 local
 training。Server 收到查詢結果後，如需繼續訓練，另外以正常的
 model／round instruction 更新 subscription 即可；不需要先清除一個持續的
 lookup state。
@@ -718,7 +716,7 @@ instruction，接收者應拒絕該 operation。
 ### 6.2 Result status
 
 回報方向在 `NwdafMLModelTrainNotif` 增加 optional
-`x-retainedResultStatus`，定義三個 lookup outcomes：
+`retainedResultStatus`，定義三個 lookup outcomes：
 
 - `FOUND`：已找到最新完成結果；同一 report 使用既有 `roundInd` 與
   `mLModelInfos` 回傳該結果。
@@ -727,7 +725,7 @@ instruction，接收者應拒絕該 operation。
 - `FAILED`：lookup operation 已被接受，但後續查詢本身失敗；不攜帶
   `roundInd` 或 model payload。
 
-當 `x-retainedResultReq: true` 時，接收者必須透過 immediate report 或後續
+當 `retainedResultReq: true` 時，接收者必須透過 immediate report 或後續
 Notify 明確回報其中一個 outcome。若 request 在被接受前即失敗，仍使用該
 Create／PUT／PATCH operation 的既有 HTTP error response，不另外回報
 `FAILED`。Server 不能只依 `mLModelInfos` 缺席或
@@ -740,7 +738,7 @@ Schema 以 forward-compatible enumeration pattern 允許解析未來新增的 ou
 `FAILED`；該值會結束目前 outstanding lookup，但其中的 model result 不得被
 本版本 procedure 使用。
 
-`x-retainedResultReq` 不要求 `eventReq.immRep` 必須為 `true`。若兩者一起
+`retainedResultReq` 不要求 `eventReq.immRep` 必須為 `true`。若兩者一起
 使用且 lookup 已完成，接收者可以在 subscription response 的 `immReport`
 回傳；否則在 subscription 建立後透過既有 Notify procedure 回報。
 
@@ -771,7 +769,7 @@ Accept: application/json
     "notifMethod": "ON_EVENT_DETECTION",
     "immRep": true
   },
-  "x-retainedResultReq": true
+  "retainedResultReq": true
 }
 ```
 
@@ -802,7 +800,7 @@ Content-Type: application/json
   "immReport": {
     "notifCorreId": "branch-b-leaf-a-subscription",
     "mlCorreId": "hierarchical-fl-001",
-    "x-retainedResultStatus": "FOUND",
+    "retainedResultStatus": "FOUND",
     "roundInd": 5,
     "mLModelInfos": [
       {
@@ -827,7 +825,7 @@ Content-Type: application/json
 {
   "notifCorreId": "branch-b-leaf-a-subscription",
   "mlCorreId": "hierarchical-fl-001",
-  "x-retainedResultStatus": "NOT_FOUND"
+  "retainedResultStatus": "NOT_FOUND"
 }
 ```
 
@@ -843,7 +841,7 @@ outcome enum 定義。
 假設 Root 對 Branch-A 提供五個有 priority 的 candidates，並提供以下 policy：
 
 ```yaml
-x-flTopology:
+flTopology:
   nfInstanceId: branch-a
   children:
     - nfInstanceId: client-a
@@ -922,7 +920,7 @@ mode。
 
 ## 8. 資訊模型摘要
 
-以下摘要 request-side `x-flTopology`、Notify-side `x-flTopologyReport`、資訊
+以下摘要 request-side `flTopology`、Notify-side `flTopologyReport`、資訊
 關係與 participant policy field names；正式 candidate type、required
 condition 與 procedure mapping 見
 [Candidate OpenAPI Schema](./candidate_openapi_schema.md)：
@@ -930,7 +928,7 @@ condition 與 procedure mapping 見
 ```text
 ML Model Training subscription
 ├── existing 3GPP task, model, timing and correlation fields
-└── x-flTopology
+└── flTopology
     └── topology node
         ├── nfInstanceId
         ├── optional candidate enabled（default true）
@@ -973,9 +971,9 @@ Hierarchical topology report
             └── child results[]
 
 Retained-result lookup
-├── x-flTopology child node.retainedResultReq
-│   └── parent maps to NwdafMLModelTrainSubsc.x-retainedResultReq
-└── NwdafMLModelTrainNotif.x-retainedResultStatus
+├── flTopology child node.retainedResultReq
+│   └── parent maps to NwdafMLModelTrainSubsc.retainedResultReq
+└── NwdafMLModelTrainNotif.retainedResultStatus
     ├── FOUND -> roundInd + mLModelInfos
     ├── NOT_FOUND
     └── FAILED
@@ -1004,8 +1002,8 @@ Stage 3／OpenAPI mapping，包括：
 - numeric ranges、conditional validation，以及 `method` 與 typed
   `methodParameters` binding；
 - Create／PUT、PATCH、Notify 與 topology-only detailed information；
-- request-side `x-retainedResultReq`、report-side
-  `x-retainedResultStatus` 與 operation-scoped lookup rules；
+- request-side `retainedResultReq`、report-side
+  `retainedResultStatus` 與 operation-scoped lookup rules；
 - candidate report scope、`statusTimestamp` ownership 與
   `statusCause` conditional requirement，以及 `enabled: false` removal
   behavior；
@@ -1033,7 +1031,7 @@ generator 使用的 [candidate OpenAPI YAML](./candidate_openapi.yaml)。
 | 2026-09-02 | Strategy 收斂為逐級傳遞的共同 `method`／`aggregation` contract；新增 node-local 且不向 descendants 原樣繼承的 `reportAfter`。 |
 | 2026-09-02 | 新增 typed `methodParameters`；`method: fedProx` 時 `methodParameters.proximalMu` 條件必填、不提供隱含 default，並以 `additionalProperties: false` 排除任意 properties。 |
 | 2026-09-02 | 確認 `reportAfter` 為 optional；直接上層可明確指定，省略時由接收 node 自行決定。 |
-| 2026-09-02 | 確認只有直接加入既有 3GPP message 的 `x-flTopology` extension entry 使用 `x-`；自定義 topology object 的內部 properties 不重複加 prefix。 |
+| 2026-09-02 | 確認只有直接加入既有 3GPP message 的 `x-flTopology` extension entry 使用 `x-`；自定義 topology object 的內部 properties 不重複加 prefix。此命名決策已由 2026-09-21 的更新取代。 |
 | 2026-09-02 | 確認 Notify 使用 `x-flTopologyReport`；report node 重用同名 `policy`、`strategy` 與 `reportAfter` 表示實際採用值，不增加 `effective*` 欄位，且不跨層回報 descendants 的 `roundInd`。 |
 | 2026-09-02 | 加入 retained-result lookup：`x-retainedResultReq` 只觸發查詢，`x-retainedResultStatus` 明確回報 `FOUND`／`NOT_FOUND`，並可使用 immediate report 或後續 Notify；完整 Branch recovery 維持不在本文範圍。 |
 | 2026-09-02 | 新增 topology node `retainedResultReq` instruction；上層以 child node 明確要求 parent 在對該 child 建立 subscription 時加入 `x-retainedResultReq`，不以新 subscription 或 `mlCorreId` 暗示 replacement behavior。 |
@@ -1044,4 +1042,5 @@ generator 使用的 [candidate OpenAPI YAML](./candidate_openapi.yaml)。
 | 2026-09-02 | 完成 candidate OpenAPI mapping，加入 per-resource `suppFeats` negotiation 與 `400`／`403` rejection mapping，並移除已完成項目的 pending 敘述。 |
 | 2026-09-02 | 為 `FAILED`／`INACTIVE` topology report node 加入必填 `statusCause`，定義最小 cause vocabulary，並與既有 `ProblemDetails.cause`、`termTrainReq` 及 retained-result outcome 分工。 |
 | 2026-09-02 | 補齊 subtree identity binding／uniqueness、priority 的 conditional requirement、policy defaults、disabled-child cleanup 與 retained-result conflict；status／cause／outcome 採 forward-compatible enumeration semantics。 |
+| 2026-09-21 | 候選 payload 欄位全面移除 `x-` 前綴；此變更僅涉及命名，不更動欄位語意或 3GPP 原有欄位。 |
 | 2026-09-02 | Retained-result outcome 加入 `FAILED`；同一 subscription 的 lookup 必須序列化，只有收到前一次 outcome 後才能開始下一次。另明確區分 `enabled: true` 的重新指派與從 replacement array 移除 node 後解除禁止的語意。 |

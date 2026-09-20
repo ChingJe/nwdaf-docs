@@ -4,7 +4,7 @@
 
 狀態：本地程式修改、測試與原始紀錄已供使用者確認，待提交核准；PyMTLF 本地測試已通過，Root→Branch→Leaf 的本機 real-process smoke 與 Branch replacement 原始紀錄已核對。既有部署腳本仍檢查舊事件名稱，兩次執行均在完成訓練後的紀錄驗證階段退出，故自動化驗收尚未通過；正式實驗仍待執行。E2a／E2b 的 mixed-depth 執行能力屬後續 Slice，不以本 Slice 宣稱完成。
 
-本計畫從 [E0–E2b 實驗要求](../Hierarchical%20FL%20E0-E2b%20Experiments%20and%20Testbed%20Context.md)出發，先確認每個節點**送出、收到、處理及回報**哪些資訊，再據此設計 JSON 紀錄。不能只保存 Root 或父節點聲稱已送出的內容；接收端實際收到的 subscription、自己的處理結果，也都是證明協定執行的原始事實。本次將重構整套實驗事件紀錄；現有 recorder 僅供盤點，不預設沿用其事件名稱、欄位或格式。本文件不修改既有 `x-flTopology`／`x-flTopologyReport` 協定，也不納入 E3。
+本計畫從 [E0–E2b 實驗要求](../Hierarchical%20FL%20E0-E2b%20Experiments%20and%20Testbed%20Context.md)出發，先確認每個節點**送出、收到、處理及回報**哪些資訊，再據此設計 JSON 紀錄。不能只保存 Root 或父節點聲稱已送出的內容；接收端實際收到的 subscription、自己的處理結果，也都是證明協定執行的原始事實。本次將重構整套實驗事件紀錄；現有 recorder 僅供盤點，不預設沿用其事件名稱、欄位或格式。本 Slice 的已完成實作仍記錄舊 `x-flTopology`／`x-flTopologyReport`；下文使用的 `flTopology`／`flTopologyReport` 是後續候選 schema 名稱，Go／PyMTLF 及事件摘錄的同步改名列入 Slice 3，不表示 Slice 2 當時已用新名稱。本文件不納入 E3。
 
 ## 1. 實驗需要回答什麼
 
@@ -28,7 +28,7 @@ Root 對自己的直接子節點是發起端；Branch **對上接收 Root 的 su
 | 本次 run 的情境、工作負載、seed、資料分割、初始模型、訓練設定與故障安排 | 實驗執行端的 run metadata | 確認同 seed 的 E0–E2b 能配對；記清 E2a／E2b 若調整 Root 接受條件，不用在每筆節點 log 重複整份設定。 |
 | 向哪個直接子節點發起 Create、更新或刪除；實際下發的訓練與拓樸內容、操作結果，以及成功建立後取得的 `subscriptionId` | 發起端 Root 或 Branch | 證明上層**要求**什麼、何時要求，並核對操作失敗或結果不明時沒有被誤算為成立的關係；操作紀錄供事後統計發起次數。 |
 | 收到哪個 Create、更新或刪除；接收時的訂閱內容、當時已知的 `subscriptionId`、本地接受／拒絕／處理失敗的結果 | 接收端 Branch 或 Leaf；E2 修復時也包括直接接收 Root 訂閱的 A1/A2 | 證明指令真的抵達並被接收端如何處理。Root 發出 A* 接手指令，不能代替 A* 收到該指令的證據；A* 發出新訂閱，也不能代替 A1/A2 實際收到的證據。 |
-| 訂閱內容中影響本次訓練的實際值：標準訓練任務／資料與模型要求、`x-flTopology` 候選與 node policy／strategy、更新時的 `roundInd` 及模型參照等 | 發起端保留送出內容；接收端保留收到內容 | 核對傳遞前後的關鍵要求，並解釋各節點為何選擇、訓練、回報或拒絕；不把 model artifact、令牌或無關 payload 複製進事件。欄位與摘錄規則見第 5 節。 |
+| 訂閱內容中影響本次訓練的實際值：標準訓練任務／資料與模型要求、`flTopology` 候選與 node policy／strategy、更新時的 `roundInd` 及模型參照等 | 發起端保留送出內容；接收端保留收到內容 | 核對傳遞前後的關鍵要求，並解釋各節點為何選擇、訓練、回報或拒絕；不把 model artifact、令牌或無關 payload 複製進事件。欄位與摘錄規則見第 5 節。 |
 | 接收端完成 preparation、確認參與，或因要求不符而拒絕；後續訂閱更新／終止造成的本地狀態變化 | 接收該訂閱的 Branch 或 Leaf | 區分「收到了訂閱」、「回覆建立成功」與「可參與訓練」；E2b 的 A2 若未完成，不能被當作已形成的邊。若結果已在相關回覆或 notification 表達，就隨該筆通訊記錄，不預設另寫一筆。 |
 | 子節點實際產生並送出的 topology report／訓練結果，以及直接父節點實際收到和採用的內容 | 報告的發出端與接收端各記自己那一側 | 讓 Leaf→Branch→Root 的逐級回報有證據；發出或排送不等於父節點已收到，也不等於該輪已被接受。 |
 | 某條直接父子關係何時經必要確認而成立、失效或被替換，對應的接收端與 `subscriptionId` | 管理該直接關係的父節點，對照接收端的處理紀錄 | 從已成立的關係重建 realized topology；以修復前後的關係與 ID 比較 A／A*、Root→A1/A2 及未受影響的 B/C，不額外寫「B/C 沒變」布林值。 |
@@ -53,13 +53,13 @@ Root 對自己的直接子節點是發起端；Branch **對上接收 Root 的 su
 
 | 分類 | 實際事件 | 直接紀錄者 | 實驗用途 |
 | --- | --- | --- | --- |
-| Model Training 通訊 | 發起訂閱建立並取得操作結果 | 發起端 Root／Branch | 留下送出的訓練要求與 `x-flTopology`、目標節點及成功後取得的 `subscriptionId`；追查 E1／E2 的新關係。 |
+| Model Training 通訊 | 發起訂閱建立並取得操作結果 | 發起端 Root／Branch | 留下送出的訓練要求與 `flTopology`、目標節點及成功後取得的 `subscriptionId`；追查 E1／E2 的新關係。 |
 | Model Training 通訊 | 收到訂閱建立並作出回覆 | 接收端 Branch／Leaf | 證明 A*、A1／A2 等節點實際收到的內容，以及本端接受、拒絕或處理失敗的結果。 |
 | Model Training 通訊 | 發起訂閱更新並取得操作結果 | 發起端 Root／Branch | 留下每輪下發的 `roundInd`／模型參照，或修復時更新的拓樸指示。 |
 | Model Training 通訊 | 收到訂閱更新並作出回覆 | 接收端 Branch／Leaf | 證明訓練或修復指示實際抵達，以及接收端如何處理。 |
 | Model Training 通訊 | 發起訂閱刪除並取得操作結果 | 發起端 Root／Branch | 追查受影響關係的清理；送出刪除不等於對端已刪除。 |
 | Model Training 通訊 | 收到訂閱刪除並作出回覆 | 接收端 Branch／Leaf；僅在要求實際抵達時 | 證明哪份接收端訂閱實際終止；失聯節點不會憑空產生接收紀錄。 |
-| Model Training 通訊 | 發出 preparation／拓樸狀態 notification | 發出端 Branch／Leaf | 留下參與結果與 `x-flTopologyReport`，包括已確認、失敗或未形成的下層關係。 |
+| Model Training 通訊 | 發出 preparation／拓樸狀態 notification | 發出端 Branch／Leaf | 留下參與結果與 `flTopologyReport`，包括已確認、失敗或未形成的下層關係。 |
 | Model Training 通訊 | 收到 preparation／拓樸狀態 notification | 直接父節點 | 證明逐級回報抵達，供 Root 重建 realized topology。 |
 | Model Training 通訊 | 發出本輪模型結果 notification | 發出端 Branch／Leaf | 證明結果實際上報，而非只完成本地計算。 |
 | Model Training 通訊 | 收到本輪模型結果 notification | 直接父節點 | 區分結果已抵達與結果已納入 accepted round。 |
@@ -74,7 +74,7 @@ Root 對自己的直接子節點是發起端；Branch **對上接收 Root 的 su
 | 模型量測與產物 | 保存完成模型 | Root | 留下最後模型的產物身分與對應輪次；使用第 5 節定義的事件與欄位。 |
 | 模型量測與產物 | 評估完成模型的 official test set | 實際執行測試的節點或實驗端 | 留下 endpoint test 結果，不與逐輪 validation 混用。 |
 
-若 Branch／Leaf 有啟用本地 validation，可另外保存其量測作診斷，但不取代 Root 的主要曲線。`x-flTopology`／`x-flTopologyReport` 仍是本專案候選擴充，不稱為 3GPP 已定義欄位。例如 A* 收到並接受 Root 的訂閱，是通訊結果；A* 選擇 A1／A2，是內部決策；向 A1／A2 建立訂閱，又是通訊。preparation 的接受／拒絕若已在回覆或 notification 表達，不再重寫一筆內部事件。
+若 Branch／Leaf 有啟用本地 validation，可另外保存其量測作診斷，但不取代 Root 的主要曲線。`flTopology`／`flTopologyReport` 仍是本專案候選擴充，不稱為 3GPP 已定義欄位。例如 A* 收到並接受 Root 的訂閱，是通訊結果；A* 選擇 A1／A2，是內部決策；向 A1／A2 建立訂閱，又是通訊。preparation 的接受／拒絕若已在回覆或 notification 表達，不再重寫一筆內部事件。
 
 ## 5. 從論文證據到三層欄位設計
 
@@ -83,7 +83,7 @@ Root 對自己的直接子節點是發起端；Branch **對上接收 Root 的 su
 | 論文要確認的事 | 原始紀錄的最小來源 | 不必另設的欄位／事件 |
 | --- | --- | --- |
 | E0–E2b 同 seed 可配對 | 執行端 run metadata；節點紀錄的 `mlCorreId` | 不在每筆節點事件複製 seed、分割及全部訓練設定。 |
-| 拓樸意圖、形成與接受不同 | 實際送出／收到的 `x-flTopology`、`x-flTopologyReport`，父節點確認的直接關係，以及 Root 對 realized topology 的接受決定 | 不虛構 wire `topologyVersion`；不把候選或訂閱建立成功直接當作 confirmed edge。 |
+| 拓樸意圖、形成與接受不同 | 實際送出／收到的 `flTopology`、`flTopologyReport`，父節點確認的直接關係，以及 Root 對 realized topology 的接受決定 | 不虛構 wire `topologyVersion`；不把候選或訂閱建立成功直接當作 confirmed edge。 |
 | 同一程序局部修復、B／C 未重建 | 每條關係的接收端 `nfInstanceId`＋真實 `subscriptionId`，以及全程訂閱操作；各節點的 `mlCorreId` | 不另記 `unaffected=true` 或第二種訂閱 ID。 |
 | 故障到首次重新貢獻的各階段 | 執行端注入時間、Root 偵測、修復 instruction 發起、各新關係確認、Root accepted round 的原始時間 | 不在線上計算 latency 或 `recovered`。 |
 | 降級與修復後仍有 accepted rounds | Root／Branch 各自的 selected／successful／failed direct-child set、`roundInd` 與 accepted 判定 | 不把 replacement ready 當作首次有效貢獻；不假設跨層 `roundInd` 相同。 |
@@ -122,11 +122,11 @@ Root 對自己的直接子節點是發起端；Branch **對上接收 Root 的 su
 
 | 事件群 | 需要補的欄位 | 證據用途與來源 |
 | --- | --- | --- |
-| 訂閱 Create／PUT／PATCH 的送出及接收 | `message`：有提供時保留 `mLEventSubscs` 的訓練任務／model interoperability、`mLModelTrainInfos`、`mLPreFlag`、`roundInd`、模型參照，以及完整 `x-flTopology`；建立／更新的結果及正式 `subscriptionId` 由第二層欄位表示 | 發起端記自己真正交給 Go 的要求；接收端記自己真正收到的表示。這可核對候選、priority、policy、strategy、report-after，以及 E1／E2 的接手或直掛指示。Model URL／ADRF 參照可記，模型檔內容與權杖不進 JSONL。 |
+| 訂閱 Create／PUT／PATCH 的送出及接收 | `message`：有提供時保留 `mLEventSubscs` 的訓練任務／model interoperability、`mLModelTrainInfos`、`mLPreFlag`、`roundInd`、模型參照，以及完整 `flTopology`；建立／更新的結果及正式 `subscriptionId` 由第二層欄位表示 | 發起端記自己真正交給 Go 的要求；接收端記自己真正收到的表示。這可核對候選、priority、policy、strategy、report-after，以及 E1／E2 的接手或直掛指示。Model URL／ADRF 參照可記，模型檔內容與權杖不進 JSONL。 |
 | 訂閱 DELETE 的送出及接收 | 第二層的接收端身分、`subscriptionId`、時間與操作結果即可；有實際 `cause` 時才補 | 比對關係是否被清理；發起端送出不證明失聯的接收端已刪除。 |
-| Preparation／拓樸 notification 的送出及接收 | `message.notifCorreId`、`message.x-flTopologyReport`；有實際 status／cause 時保留在原 report 結構中 | 逐級核對 confirmed／未形成的 descendant，並區分發出報告和上層真正收到。 |
+| Preparation／拓樸 notification 的送出及接收 | `message.notifCorreId`、`message.flTopologyReport`；有實際 status／cause 時保留在原 report 結構中 | 逐級核對 confirmed／未形成的 descendant，並區分發出報告和上層真正收到。 |
 | 模型結果 notification 的送出及接收 | `message.notifCorreId`、`message.roundInd` 及實際上報的模型資訊／模型參照與資料量 | 說明哪個 local round 的結果離開子節點、抵達直接父節點；父節點是否採用仍看自己的聚合判定。 |
-| 候選選擇、故障偵測與修復決定 | 選擇時用 `candidateNfInstanceIds`、`selectedNfInstanceIds`；偵測直接子節點故障時使用第二層的 `childNfInstanceId`，若屬某個本地 round 再附 `roundInd` | 解釋 Root 選 A* 或 Root 直掛 A1／A2；正式拓樸指令仍以相應訂閱紀錄中的 `x-flTopology` 為準，不複製成第二份 requested tree。 |
+| 候選選擇、故障偵測與修復決定 | 選擇時用 `candidateNfInstanceIds`、`selectedNfInstanceIds`；偵測直接子節點故障時使用第二層的 `childNfInstanceId`，若屬某個本地 round 再附 `roundInd` | 解釋 Root 選 A* 或 Root 直掛 A1／A2；正式拓樸指令仍以相應訂閱紀錄中的 `flTopology` 為準，不複製成第二份 requested tree。 |
 | 直接關係確認或失效 | `childNfInstanceId`、`subscriptionId`；失效原因可確認時附 `cause` | 父節點只記自己管理的直接邊，據以重建 realized topology 及比較修復前後資源；用 `EDGE_CONFIRMED`／`EDGE_UNAVAILABLE` 區分結果，不另複製 `edgeState`。 |
 | Root 接受或拒絕拓樸 | `realizedTopology`、`accepted`；拒絕原因可確認時附 `cause` | `realizedTopology` 是當時由已確認關係形成的快照，`accepted=true` 才代表 accepted realized topology；不另複製一份 `acceptedTopology`。當次適用的靜態 policy 由 run metadata 對照，不在事件重複整份設定。E2b 可比較 instruction 中的 A1／A2 與快照中真正形成的 A1。 |
 | Root／Branch 本地聚合結果 | `roundInd`、`selectedNfInstanceIds`、`successfulNfInstanceIds`、`failedNfInstanceIds`、`accepted` | 看出 B／C 支援的 degraded rounds、A* 首次出現在 accepted Root outcome，以及 E2a 中直接 Leaf 與 Branch 是否同輪參與。各層只記自己的 local round。 |
@@ -141,14 +141,14 @@ Root 對自己的直接子節點是發起端；Branch **對上接收 Root 的 su
 
 | 第 4 節事件 | §5.2 類別共用欄位 | §5.3 事件需要的欄位 |
 | --- | --- | --- |
-| 發起訂閱建立並取得操作結果 | `operation=CREATE`、`direction=SENT`、`startedAt`、`targetNfInstanceId`、`outcome`；成功取得資源後 `subscriptionId`，失敗原因可確認時 `cause` | `message` 中本端實際送出的訓練欄位與 `x-flTopology`。 |
-| 收到訂閱建立並作出回覆 | `operation=CREATE`、`direction=RECEIVED`、`startedAt`、`outcome`；可確認時 `sourceNfInstanceId`、`subscriptionId`、`cause` | `message` 中本端實際收到的訓練欄位與 `x-flTopology`。 |
-| 發起訂閱更新並取得操作結果 | `operation=PUT` 或 `PATCH`、`direction=SENT`、`startedAt`、`targetNfInstanceId`、`subscriptionId`、`outcome`；可確認時 `cause` | `message` 中本端實際送出的 `roundInd`／模型參照或修復用 `x-flTopology`。 |
+| 發起訂閱建立並取得操作結果 | `operation=CREATE`、`direction=SENT`、`startedAt`、`targetNfInstanceId`、`outcome`；成功取得資源後 `subscriptionId`，失敗原因可確認時 `cause` | `message` 中本端實際送出的訓練欄位與 `flTopology`。 |
+| 收到訂閱建立並作出回覆 | `operation=CREATE`、`direction=RECEIVED`、`startedAt`、`outcome`；可確認時 `sourceNfInstanceId`、`subscriptionId`、`cause` | `message` 中本端實際收到的訓練欄位與 `flTopology`。 |
+| 發起訂閱更新並取得操作結果 | `operation=PUT` 或 `PATCH`、`direction=SENT`、`startedAt`、`targetNfInstanceId`、`subscriptionId`、`outcome`；可確認時 `cause` | `message` 中本端實際送出的 `roundInd`／模型參照或修復用 `flTopology`。 |
 | 收到訂閱更新並作出回覆 | `operation=PUT` 或 `PATCH`、`direction=RECEIVED`、`startedAt`、`subscriptionId`、`outcome`；可確認時 `sourceNfInstanceId`、`cause` | `message` 中本端實際收到的更新欄位。 |
 | 發起訂閱刪除並取得操作結果 | `operation=DELETE`、`direction=SENT`、`startedAt`、`targetNfInstanceId`、`subscriptionId`、`outcome`；可確認時 `cause` | 無；正式資源身分與操作結果已足夠。 |
 | 收到訂閱刪除並作出回覆 | `operation=DELETE`、`direction=RECEIVED`、`startedAt`、`subscriptionId`、`outcome`；可確認時 `sourceNfInstanceId`、`cause` | 無；只記實際抵達本端的刪除。 |
-| 發出 preparation／拓樸狀態 notification | `operation=NOTIFY`、`direction=SENT`、`startedAt`、`outcome`；已知時 `targetNfInstanceId`、`subscriptionId`、`cause` | `message.notifCorreId`、`message.x-flTopologyReport`。 |
-| 收到 preparation／拓樸狀態 notification | `operation=NOTIFY`、`direction=RECEIVED`、`startedAt`、`outcome`；已知時 `sourceNfInstanceId`、`subscriptionId`、`cause` | `message.notifCorreId`、`message.x-flTopologyReport`。 |
+| 發出 preparation／拓樸狀態 notification | `operation=NOTIFY`、`direction=SENT`、`startedAt`、`outcome`；已知時 `targetNfInstanceId`、`subscriptionId`、`cause` | `message.notifCorreId`、`message.flTopologyReport`。 |
+| 收到 preparation／拓樸狀態 notification | `operation=NOTIFY`、`direction=RECEIVED`、`startedAt`、`outcome`；已知時 `sourceNfInstanceId`、`subscriptionId`、`cause` | `message.notifCorreId`、`message.flTopologyReport`。 |
 | 發出本輪模型結果 notification | `operation=NOTIFY`、`direction=SENT`、`startedAt`、`outcome`；已知時 `targetNfInstanceId`、`subscriptionId`、`cause` | `message.notifCorreId`、`message.roundInd` 與實際上報的模型資訊／參照、資料量。 |
 | 收到本輪模型結果 notification | `operation=NOTIFY`、`direction=RECEIVED`、`startedAt`、`outcome`；已知時 `sourceNfInstanceId`、`subscriptionId`、`cause` | `message.notifCorreId`、`message.roundInd` 與實際收到的模型資訊／參照、資料量。 |
 | 選定要嘗試的直接子節點候選 | 無固定的第二層欄位；若決定屬某個本地 round，使用 `roundInd` | `candidateNfInstanceIds`、`selectedNfInstanceIds`。 |
@@ -180,7 +180,7 @@ Branch／Leaf 啟用本地 validation 時，沿用「模型評估」一列的欄
 | `MODEL_EVALUATION` | 初始模型、每個 accepted Root round，或已啟用的本地／final test 評估。 |
 | `MODEL_ARTIFACT_SAVED` | Root 完成模型產物保存。 |
 
-`MODEL_TRAINING_OPERATION.message` 只保存**本節點實際送出或收到**的 wire 欄位，名稱與巢狀結構維持原狀。對 CREATE／PUT／PATCH，保留有出現的 `notifCorreId`、`suppFeats`、`mLEventSubscs`、`mLModelTrainInfos`、`mLPreFlag`、`mLTrainRepInfo`、`roundInd`、`mLModelInfos`、`x-flTopology`、`skipFlInd`、`mLAccChkFlg`；其中 `x-flTopology` 包含完整遞迴 children、priority、policy、strategy、reportAfter，不只記 node ID。對 NOTIFY，保留有出現的 `notifCorreId`、`roundInd`、`x-flTopologyReport`、`mLModelInfos`、`statusReport`、`termTrainReq`、`delayEventNotif`；`x-flTopologyReport` 保留各節點原本回報的 status／statusTimestamp／statusCause。DELETE 沒有 message body。`mlCorreId` 放在共用欄位；`mLModelInfos` 只保留 event、modelUniqueId 與實際模型參照 `mLFileAddr`／`mLModelAdrf`，不複製模型檔、`mlFile` 內容、權杖或完整回應 body。`notifUri` 會由 Go 代理改寫，不能拿兩端 URI 是否相同當作傳遞正確性的證據，故不放入摘錄。
+`MODEL_TRAINING_OPERATION.message` 只保存**本節點實際送出或收到**的 wire 欄位，名稱與巢狀結構維持原狀。對 CREATE／PUT／PATCH，保留有出現的 `notifCorreId`、`suppFeats`、`mLEventSubscs`、`mLModelTrainInfos`、`mLPreFlag`、`mLTrainRepInfo`、`roundInd`、`mLModelInfos`、`flTopology`、`skipFlInd`、`mLAccChkFlg`；其中 `flTopology` 包含完整遞迴 children、priority、policy、strategy、reportAfter，不只記 node ID。對 NOTIFY，保留有出現的 `notifCorreId`、`roundInd`、`flTopologyReport`、`mLModelInfos`、`statusReport`、`termTrainReq`、`delayEventNotif`；`flTopologyReport` 保留各節點原本回報的 status／statusTimestamp／statusCause。DELETE 沒有 message body。`mlCorreId` 放在共用欄位；`mLModelInfos` 只保留 event、modelUniqueId 與實際模型參照 `mLFileAddr`／`mLModelAdrf`，不複製模型檔、`mlFile` 內容、權杖或完整回應 body。`notifUri` 會由 Go 代理改寫，不能拿兩端 URI 是否相同當作傳遞正確性的證據，故不放入摘錄。
 
 同一個 NOTIFY 可以同時包含拓樸與模型資訊，只寫一筆實際操作紀錄，保留兩種有出現的欄位。`message` 是實驗保存的摘錄，不宣稱發送端與接收端的整個 HTTP body 逐位元相同；回應狀態及可確認的原因放在本筆 `outcome`／`cause`，不假裝成 request/notification 欄位。
 
@@ -209,7 +209,7 @@ Root 節點：
     "mLModelTrainInfos": [{"dataAvReq": {"inpEvents": [{"nwdafEvent": "UE_COMMUNICATION"}], "minNumSamples": 1, "timeWindows": [{"startTime": "2026-09-21T09:55:00Z", "stopTime": "2026-09-21T10:00:00Z"}]}, "timeAvReq": "PT300S"}],
     "mLPreFlag": true,
     "mLTrainRepInfo": {"maxResTime": 300},
-    "x-flTopology": {
+    "flTopology": {
       "nfInstanceId": "10000000-0000-4000-8000-000000000111",
       "enabled": true,
       "priority": 50,
@@ -281,7 +281,7 @@ Leaf A1 節點（A* 逐級下發，這是另一份訂閱資源）：
     "mLModelTrainInfos": [{"dataAvReq": {"inpEvents": [{"nwdafEvent": "UE_COMMUNICATION"}], "minNumSamples": 1, "timeWindows": [{"startTime": "2026-09-21T09:55:03Z", "stopTime": "2026-09-21T10:00:03Z"}]}, "timeAvReq": "PT300S"}],
     "mLPreFlag": true,
     "mLTrainRepInfo": {"maxResTime": 300},
-    "x-flTopology": {"nfInstanceId": "10000000-0000-4000-8000-000000001101", "enabled": true, "priority": 100, "strategy": {"method": "fedProx", "aggregation": "sampleWeighted", "methodParameters": {"proximalMu": 0.01}}, "reportAfter": {"count": 4, "unit": "epoch"}}
+    "flTopology": {"nfInstanceId": "10000000-0000-4000-8000-000000001101", "enabled": true, "priority": 100, "strategy": {"method": "fedProx", "aggregation": "sampleWeighted", "methodParameters": {"proximalMu": 0.01}}, "reportAfter": {"count": 4, "unit": "epoch"}}
   }
 }
 ```
@@ -315,7 +315,7 @@ Leaf A1 節點（A* 逐級下發，這是另一份訂閱資源）：
 
 | 驗收測試 | 必須核對的證據 |
 | --- | --- |
-| Root→Branch→Leaf 的 preparation | 發起端與接收端各自有一筆 CREATE 結果；相同接收端 `nfInstanceId`＋正式 `subscriptionId` 可對照；`x-flTopology` 逐級不同，`mlCorreId` 相同；Create 成功不提前產生 `EDGE_CONFIRMED`。 |
+| Root→Branch→Leaf 的 preparation | 發起端與接收端各自有一筆 CREATE 結果；相同接收端 `nfInstanceId`＋正式 `subscriptionId` 可對照；`flTopology` 逐級不同，`mlCorreId` 相同；Create 成功不提前產生 `EDGE_CONFIRMED`。 |
 | 更新、刪除及通知 | PUT／PATCH 記實際 `roundInd`／模型參照或修復 tree；DELETE 記正式 ID；NOTIFY 的發出／接收各保留 `notifCorreId`、實際 report／模型欄位與本端結果；同一邏輯通知的內部重試不重複計數。 |
 | 拒絕、逾時與識別資訊不足 | 有效 procedure 的拒絕／失敗留下真實 `outcome`／可取得的 `cause`；建立未成功時不編造 `subscriptionId`；接收端未知來源時不填 `sourceNfInstanceId`；無法歸屬 procedure 的早期解析錯誤只留一般日誌。 |
 | E0／E1 的拓樸與 round | E0 完成初始拓樸後沒有重建事件；E1 有 A→A* 的新邊、原 Root→B／C ID 延續、Root 接受修復及其後首次含 A* 的 accepted round；Root、Branch 各記自己的 local round，不跨層混用。 |
@@ -330,7 +330,7 @@ Leaf A1 節點（A* 逐級下發，這是另一份訂閱資源）：
 
 每個 run 的執行完成或失敗由實驗執行端保存，不能因缺少 final model 或 final test 紀錄就把未完成的 run 排除；這不是要在 PyMTLF 新增 run 結束事件。啟用實驗紀錄後若 JSONL 寫入失敗，該 run 不得視為證據完整的成功實驗；已寫入的紀錄仍應保留供追查。是否達到論文定義的 recovery 則在事後對照 E0 判定。E2b 的 A2 不可用條件由實驗設定與故障注入紀錄交代，節點紀錄只呈現實際嘗試、回報和已形成的關係。E2a 的 mixed-depth 參與由逐輪結果與聚合判定核對；E2b 的 class-wise model effect 若要呈現，可於訓練後以完成模型離線評估，不另增訓練期間事件。
 
-PyMTLF 可觀察到的訂閱操作次數，可在實驗後從原始紀錄計算；它不等同精確的跨 NWDAF SBI HTTP 次數或 Go 內部重試次數。若論文要後兩者，須另定量測來源。老師提及的 topology version 也不是目前 `x-flTopology`／`x-flTopologyReport` 候選 schema 的欄位；目前先保存不同時點的意圖、回報、已形成關係與 Root 接受決定，不虛構 version。
+PyMTLF 可觀察到的訂閱操作次數，可在實驗後從原始紀錄計算；它不等同精確的跨 NWDAF SBI HTTP 次數或 Go 內部重試次數。若論文要後兩者，須另定量測來源。老師提及的 topology version 也不是目前 `flTopology`／`flTopologyReport` 候選 schema 的欄位；目前先保存不同時點的意圖、回報、已形成關係與 Root 接受決定，不虛構 version。
 
 實驗後再依同 seed 的 E0 配對計算五 seed 平均與 95% CI、accuracy AUC、endpoint 差值、各段修復時間及 rounds-to-recovery。Recovery 依實驗文件所定義的 E0 95% CI 且連續兩個 accepted rounds 判定；它不是訓練期間的狀態欄位。未恢復的 run 不從分析中刪除。跨節點延遲要由實驗環境校時或交代時鐘誤差，不能只靠各節點時間戳便宣稱精確。
 

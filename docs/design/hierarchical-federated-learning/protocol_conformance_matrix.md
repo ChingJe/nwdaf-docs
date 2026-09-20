@@ -59,11 +59,11 @@ features、local candidate pool 或 outstanding lookup 的 cases，必須另外�
 
 | ID | Layer | Input／precondition | Expected result |
 | --- | --- | --- | --- |
-| `REQ-01` | Schema／decoder | `SUB_VALID` | 接受 payload，保留既有 Release 18 fields 與全部 `x-*` properties |
-| `REQ-02` | Receiver validation | Create／PUT 帶 `x-flTopology` 或 `x-retainedResultReq: true`，但省略 `mlCorreId` | `400 Bad Request`；`invalidParams` 指向 `mlCorreId` |
-| `REQ-03` | Receiver validation | PATCH 帶 `x-flTopology`，但既有 resource 沒有 FL procedure correlation | `400 Bad Request`；既有 resource 不得部分更新 |
-| `TOP-01` | Receiver validation | `x-flTopology.nfInstanceId` 等於 request receiver，subtree identities 唯一且無 cycle | 接受 topology instruction |
-| `TOP-02` | Receiver validation | Topology root identity 不等於 request receiver | `400 Bad Request`；`invalidParams` 指向 `x-flTopology.nfInstanceId` |
+| `REQ-01` | Schema／decoder | `SUB_VALID` | 接受 payload，保留既有 Release 18 fields 與本候選 schema 新增的 properties |
+| `REQ-02` | Receiver validation | Create／PUT 帶 `flTopology` 或 `retainedResultReq: true`，但省略 `mlCorreId` | `400 Bad Request`；`invalidParams` 指向 `mlCorreId` |
+| `REQ-03` | Receiver validation | PATCH 帶 `flTopology`，但既有 resource 沒有 FL procedure correlation | `400 Bad Request`；既有 resource 不得部分更新 |
+| `TOP-01` | Receiver validation | `flTopology.nfInstanceId` 等於 request receiver，subtree identities 唯一且無 cycle | 接受 topology instruction |
+| `TOP-02` | Receiver validation | Topology root identity 不等於 request receiver | `400 Bad Request`；`invalidParams` 指向 `flTopology.nfInstanceId` |
 | `TOP-03` | Receiver validation | 同一 subtree 重複 `nfInstanceId`，包含 sibling duplicate 或 ancestor cycle | `400 Bad Request`；不得建立任何 downstream subscription |
 | `TOP-04` | Receiver validation | `selectionMethod: priority`，但 enabled explicit child 沒有 `priority` | `400 Bad Request`；指向缺少 priority 的 child path |
 | `TOP-05` | Receiver validation | `minAvailableNodes < minTrainNodes` | `400 Bad Request`；既有 resource 不得部分更新 |
@@ -95,9 +95,9 @@ features、local candidate pool 或 outstanding lookup 的 cases，必須另外�
 | ID | Layer | Input／precondition | Expected result |
 | --- | --- | --- | --- |
 | `NOT-01` | Receiver validation | `NOTIFY_TOPOLOGY`，callback identity、report root 與 `mlCorreId` 均匹配 | 接受並回覆 `204 No Content` |
-| `NOT-02` | Receiver validation | Notification 沒有既有 detailed information，也沒有 `x-flTopologyReport` 或 `x-retainedResultStatus` | `400 Bad Request` |
+| `NOT-02` | Receiver validation | Notification 沒有既有 detailed information，也沒有 `flTopologyReport` 或 `retainedResultStatus` | `400 Bad Request` |
 | `NOT-03` | Receiver validation | Notification 帶 extension report，但缺少 `mlCorreId` | `400 Bad Request`；指向 `mlCorreId` |
-| `NOT-04` | Receiver validation | `x-flTopologyReport.nfInstanceId` 不等於 callback subscription 綁定的 direct Client | `400 Bad Request` |
+| `NOT-04` | Receiver validation | `flTopologyReport.nfInstanceId` 不等於 callback subscription 綁定的 direct Client | `400 Bad Request` |
 | `NOT-05` | Receiver validation | Report subtree 有 duplicate identity 或 ancestor cycle | `400 Bad Request`；不得部分套用 status |
 | `NOT-06` | Receiver validation | `FAILED`／`INACTIVE` node 缺少 `statusCause` | `400 Bad Request` |
 | `NOT-07` | Receiver validation | `UNCONFIRMED`／`DEPLOYING`／`ACTIVE` node 帶有 `statusCause` | `400 Bad Request` |
@@ -111,11 +111,11 @@ features、local candidate pool 或 outstanding lookup 的 cases，必須另外�
 | ID | Layer | Input／precondition | Expected result |
 | --- | --- | --- | --- |
 | `RET-01` | Receiver validation | `NOTIFY_FOUND` | 接受；`roundInd` 與 `mLModelInfos` 共同表示最新已完成 local result |
-| `RET-02` | Receiver validation | `x-retainedResultStatus: FOUND` 缺少 `roundInd` 或 `mLModelInfos` | `400 Bad Request` |
+| `RET-02` | Receiver validation | `retainedResultStatus: FOUND` 缺少 `roundInd` 或 `mLModelInfos` | `400 Bad Request` |
 | `RET-03` | Receiver validation | `NOTIFY_NOT_FOUND` 或 `NOTIFY_FAILED` | 接受；不得推動新一輪 training |
 | `RET-04` | Receiver validation | `NOT_FOUND`／`FAILED` 同時帶 `roundInd` 或 `mLModelInfos` | `400 Bad Request` |
-| `RET-05` | Procedure／state | Create／PUT／PATCH 帶 `x-retainedResultReq: true`，且沒有 outstanding lookup | 只啟動一次 lookup；instruction 不保存為 resource state |
-| `RET-06` | Procedure／state | Operation 省略 `x-retainedResultReq` 或設為 `false` | 不啟動 lookup |
+| `RET-05` | Procedure／state | Create／PUT／PATCH 帶 `retainedResultReq: true`，且沒有 outstanding lookup | 只啟動一次 lookup；instruction 不保存為 resource state |
+| `RET-06` | Procedure／state | Operation 省略 `retainedResultReq` 或設為 `false` | 不啟動 lookup |
 | `RET-07` | Procedure／state | 前一個 lookup 尚未收到 outcome | Consumer 不得發出下一個 lookup operation；timeout 不解除 outstanding state |
 | `RET-08` | Procedure／state | 收到 `FOUND`、`NOT_FOUND`、`FAILED` 或未知 forward-compatible outcome | 結束 outstanding lookup；只有 `FOUND` 可使用 model result，之後才可再次要求 lookup |
 

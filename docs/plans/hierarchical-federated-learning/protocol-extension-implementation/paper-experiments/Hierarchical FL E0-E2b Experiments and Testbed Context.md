@@ -2,7 +2,7 @@
 
 狀態：E0–E2b 實驗情境已記錄；後續沿用既有候選 schema 的證據說明待使用者確認；五 seed 結果尚未執行或確認。
 
-本文整合既有論文第四章草稿的 testbed 對照，以及後續提出的 E0、E1、E2a、E2b 實驗要求。前者是**已執行的單次配對觀測**，後者是**尚待執行的多 seed 實驗情境**；兩者不可混成同一批結果。後續協定實作沿用既有候選 `x-flTopology`／`x-flTopologyReport` schema；論文附錄 B 的不同欄位不是本批實作前提。本文描述研究問題、條件、預期觀測與證據，不規劃 PyMTLF／NWDAF／testbed 如何實作，也不改寫當時的 scenario 或 run metadata。
+本文整合既有論文第四章草稿的 testbed 對照，以及後續提出的 E0、E1、E2a、E2b 實驗要求。前者是**已執行的單次配對觀測**，後者是**尚待執行的多 seed 實驗情境**；兩者不可混成同一批結果。後續協定實作沿用既有候選 `flTopology`／`flTopologyReport` schema；論文附錄 B 的不同欄位不是本批實作前提。本文描述研究問題、條件、預期觀測與證據，不規劃 PyMTLF／NWDAF／testbed 如何實作，也不改寫當時的 scenario 或 run metadata。
 
 ## 1. 既有論文草稿選用的配對
 
@@ -119,9 +119,9 @@ A 不回來，A1 存活並直接回報 Root，A2 保持不可用。此 ablation 
 
 ### 7.1 Protocol evidence 為主要結果
 
-每個 run 都要保留是否完成重配置；跨五個 seeds 可報告成功數，例如 `5/5` 或實際較低值。證據至少能辨認：Root 透過 `x-flTopology` 下發的 initial topology intention／後續修復 instruction、各節點 `x-flTopologyReport` 與實際訂閱關係形成的 realized topology、Root 的接受／拒絕結果及接受後的 accepted realized topology、`mlCorreId`、舊／新 subscription IDs、未受影響的 Root→B／C edges、每輪 selected／successful／failed participant set，以及控制面 message／API-call 數量。Root 接受拓樸是內部決定，不假設候選 schema 有專用接受通知。論文附錄 B 要求的 `topologyVersion` 不是既有候選 schema 欄位；若論文仍要以此作為證據，須另行對齊論文敘述或決定新增機制，不能把它當成已具備或本批必做的 wire 欄位。這些是**新實驗欲蒐集的證據**，不表示既有單次 run 已完整保存。
+每個 run 都要保留是否完成重配置；跨五個 seeds 可報告成功數，例如 `5/5` 或實際較低值。證據至少能辨認：Root 透過 `flTopology` 下發的 initial topology intention／後續修復 instruction、各節點 `flTopologyReport` 與實際訂閱關係形成的 realized topology、Root 的接受／拒絕結果及接受後的 accepted realized topology、`mlCorreId`、舊／新 subscription IDs、未受影響的 Root→B／C edges、每輪 selected／successful／failed participant set，以及控制面 message／API-call 數量。Root 接受拓樸是內部決定，不假設候選 schema 有專用接受通知。論文附錄 B 要求的 `topologyVersion` 不是既有候選 schema 欄位；若論文仍要以此作為證據，須另行對齊論文敘述或決定新增機制，不能把它當成已具備或本批必做的 wire 欄位。這些是**新實驗欲蒐集的證據**，不表示既有單次 run 已完整保存。
 
-時間線分開量測 `failure→detection`、`detection→repair instruction`（例如發給新 parent 的 `x-flTopology` 訂閱）、`instruction→new subscriptions ready`、`ready→first accepted contribution`，另給 `failure→first post-reconfiguration contribution` 的整體耗時。故障注入、就緒與首次 accepted contribution 是不同事件；對被拒絕的拓樸，應明確標示不適用或未達成，不能填入虛構時間。若某 run 沒有恢復，報為 `not recovered`，並保留其事件與學習曲線。
+時間線分開量測 `failure→detection`、`detection→repair instruction`（例如發給新 parent 的 `flTopology` 訂閱）、`instruction→new subscriptions ready`、`ready→first accepted contribution`，另給 `failure→first post-reconfiguration contribution` 的整體耗時。故障注入、就緒與首次 accepted contribution 是不同事件；對被拒絕的拓樸，應明確標示不適用或未達成，不能填入虛構時間。若某 run 沒有恢復，報為 `not recovered`，並保留其事件與學習曲線。
 
 ### 7.2 Model metrics 為輔助結果
 

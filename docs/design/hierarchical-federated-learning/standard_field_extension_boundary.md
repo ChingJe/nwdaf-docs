@@ -164,14 +164,14 @@ correlation。`roundInd` 表示 local process round，規格沒有定義其與
   subscription 及其原因。
 
 這些欄位處理單一 FL Server／Client subscription 的 training output 與
-lifecycle event，不應在 `x-flTopologyReport` 中建立另一份 model、round、
+lifecycle event，不應在 `flTopologyReport` 中建立另一份 model、round、
 delay 或 termination payload。
 
 TS 29.520 Release 18 §5.5.6.2.8 另有重要條件：通知至少要包含
 `delayEventNotif`、`mLModelInfos` 或 `termTrainReq` 之一。現有
 `statusReport` 單獨存在也不能滿足這個條件。因此後續若允許只回報 topology
 establishment result，必須在正式 extension procedure 中定義
-`x-flTopologyReport` 如何成為合法的 notification detailed information；不能
+`flTopologyReport` 如何成為合法的 notification detailed information；不能
 假設加入 vendor property 後就自然取代既有條件。
 
 ### 4.2 既有 status 不等同於 topology status
@@ -191,7 +191,7 @@ subscription 是否建立成功，或 node 是否仍屬於 realized topology。
   Root 可見的整棵 realized topology。
 
 因此逐級回報 node status、status owner、timestamp，以及 `FAILED`／`INACTIVE`
-relationship 的分類原因仍需要 `x-flTopologyReport`。Direct Client 的 local
+relationship 的分類原因仍需要 `flTopologyReport`。Direct Client 的 local
 training 結果與 termination request 繼續使用標準欄位；parent 將
 `termTrainReq` 轉換成 recursive topology report 時，`statusCause` 保留
 `NWDAF_OVERLOAD` 或 `NOT_AVAILABLE_ML_TRAIN` 的既有 value，讓更上層能理解
@@ -256,17 +256,17 @@ Server 原本就有的 selection／aggregation 能力。
 
 | Proposed information | 新增理由 | 可重用的標準型別／欄位 |
 | --- | --- | --- |
-| `x-flTopology` | `NwdafMLModelTrainSubsc` 沒有 recursive parent／child instruction | Node identity 重用 `NfInstanceId` |
+| `flTopology` | `NwdafMLModelTrainSubsc` 沒有 recursive parent／child instruction | Node identity 重用 `NfInstanceId` |
 | `children[]` | 沒有逐級傳遞 candidate subtree 的結構 | 每個 child 的 identity 重用 `NfInstanceId` |
 | `enabled` | 只省略 child 或降低 priority 無法明確禁止 Intermediate 使用及重新發現該 candidate | `false` 時重用既有 Unsubscribe HTTP DELETE 移除已存在的 direct-child subscription |
 | `priority` | 沒有跨層 candidate ordering | 新語意 |
 | `policy` | 沒有 subordinate Server 的 selection authority、participant thresholds 與 failure acceptance contract | Data／time eligibility 繼續使用 `mLModelTrainInfos` |
 | `strategy` | 沒有 FL method、aggregation rule 與 typed method parameters | Model interoperability 不能替代此 contract |
 | `reportAfter` | 沒有 node-local work-to-upstream-report cadence | `roundInd`／`maxResTime` 不等同此語意 |
-| `x-flTopologyReport` | 沒有 recursive realized topology、逐級 node lifecycle report，以及 `FAILED`／`INACTIVE` relationship 的分類原因 | Node identity 重用 `NfInstanceId`；timestamp 重用 `DateTime`；`statusCause` 不取代 direct-child `termTrainReq` 或 HTTP `ProblemDetails.cause` |
-| `retainedResultReq` | 上層沒有欄位可要求 Intermediate 對指定 direct child 執行 retained-result lookup | 作為 `x-flTopology` child node 的一次性 instruction，由 parent 映射成下游 operation 的 `x-retainedResultReq` |
-| `x-retainedResultReq` | 新 FL Server 建立或更新 subscription 時，沒有標準欄位可明確要求 Client 查找同一 FL procedure 的最新保留結果 | Operation-scoped 一次性 trigger；結果重用既有 immediate report 或 Notify 中的 `roundInd` 與 `mLModelInfos` |
-| `x-retainedResultStatus` | 標準 notification 沒有明確區分 retained result 已找到、已完成查找但不存在，或已接受的 lookup 後續執行失敗 | `FOUND` 時重用 `roundInd` 與 `mLModelInfos`；`NOT_FOUND`／`FAILED` 不建立空 model payload |
+| `flTopologyReport` | 沒有 recursive realized topology、逐級 node lifecycle report，以及 `FAILED`／`INACTIVE` relationship 的分類原因 | Node identity 重用 `NfInstanceId`；timestamp 重用 `DateTime`；`statusCause` 不取代 direct-child `termTrainReq` 或 HTTP `ProblemDetails.cause` |
+| `flTopology.children[].retainedResultReq` | 上層沒有欄位可要求 Intermediate 對指定 direct child 執行 retained-result lookup | Topology child node 的一次性 instruction，由 parent 映射成下游 operation 的 message-level `retainedResultReq` |
+| `NwdafMLModelTrainSubsc.retainedResultReq` | 新 FL Server 建立或更新 subscription 時，沒有標準欄位可明確要求 Client 查找同一 FL procedure 的最新保留結果 | Operation-scoped 一次性 trigger；結果重用既有 immediate report 或 Notify 中的 `roundInd` 與 `mLModelInfos` |
+| `retainedResultStatus` | 標準 notification 沒有明確區分 retained result 已找到、已完成查找但不存在，或已接受的 lookup 後續執行失敗 | `FOUND` 時重用 `roundInd` 與 `mLModelInfos`；`NOT_FOUND`／`FAILED` 不建立空 model payload |
 
 Capability negotiation 不在這張表新增 property。`NwdafMLModelTrainSubsc`
 已包含 `suppFeats`，candidate 直接用它協商整組 hierarchical orchestration
@@ -278,8 +278,8 @@ feature 3 時的 bitmask 為 `"4"`。每一個 parent-to-child subscription reso
 procedure；hierarchy 是必要條件時，刪除該 resource 並以
 `FAILED`／`FEATURE_NOT_SUPPORTED` 回報 candidate establishment result。
 
-`x-flTopology` 最外層 identity 必須等於 request receiver，
-`x-flTopologyReport` wrapper identity 必須等於 subscription callback context
+`flTopology` 最外層 identity 必須等於 request receiver，
+`flTopologyReport` wrapper identity 必須等於 subscription callback context
 中的 direct Client。這項 binding 與 subtree identity uniqueness 屬於
 hierarchical procedure validation，不由 `NfInstanceId` 型別本身保證。
 
@@ -289,11 +289,11 @@ forward-compatible `anyOf` pattern。這只允許舊 schema 解析未來值，�
 report unit 仍以既有 `403 ML_MODEL_TRAINING_REQS_NOT_MET` 拒絕。
 `strategy.method` 因為綁定 typed parameters，不採 generic future string。
 
-### 6.2 `x-retainedResultReq` 與既有回報方式
+### 6.2 `retainedResultReq` 與既有回報方式
 
 在 Model Training message level，本設計新增 request-side
-`x-retainedResultReq` 與 report-side `x-retainedResultStatus`。上層若要指示
-Intermediate 對特定 direct child 使用此 trigger，則在該 `x-flTopology`
+`retainedResultReq` 與 report-side `retainedResultStatus`。上層若要指示
+Intermediate 對特定 direct child 使用此 trigger，則在該 `flTopology`
 child node 使用 `retainedResultReq`。查詢 key 重用 subscription 的 `mlCorreId`；
 `FOUND` outcome 重用 `roundInd` 與 `mLModelInfos` 承載結果，`NOT_FOUND`／
 `FAILED` 不建立空 model payload。`FAILED` 只表示 request 已被接受後，lookup
@@ -318,10 +318,10 @@ forward-compatible outcome 結束該次 lookup，但不形成可用結果。因�
 
 由於 TS 29.520 Release 18 要求 Notify 至少包含 `delayEventNotif`、
 `mLModelInfos` 或 `termTrainReq` 之一，正式 extension 必須將
-`x-retainedResultStatus` 納入合法 notification detailed information，才能
+`retainedResultStatus` 納入合法 notification detailed information，才能
 單獨表達 `NOT_FOUND` 或 `FAILED`。完整 lookup procedure 與 HTTP examples 見
 [Topology、policy 與 strategy 細節設計](./topology_policy_design.md)。
-任何攜帶 `x-flTopologyReport` 或 `x-retainedResultStatus` 的 Notify 亦必須
+任何攜帶 `flTopologyReport` 或 `retainedResultStatus` 的 Notify 亦必須
 提供 `mlCorreId`，讓 extension report 明確關聯到 hierarchy-wide procedure；
 `notifCorreId` 仍負責 local callback／subscription correlation。
 
@@ -404,4 +404,5 @@ feature number 3。
 | 2026-09-02 | 確認重用 `suppFeats` 並使用 candidate feature 3；補入 Release 18 `400`／`403` rejection mapping，以及 Release 19／20 feature numbering。 |
 | 2026-09-02 | 補充 `statusCause` 的 extension boundary：只分類 `FAILED`／`INACTIVE` topology relationship，direct-child termination 與 HTTP rejection 仍分別使用既有 `termTrainReq` 與 `ProblemDetails.cause`。 |
 | 2026-09-02 | 補充 identity binding、Notify `mlCorreId`、unsupported feature cause、`termTrainReq: OTHERS` mapping，以及 Release 18-style forward-compatible enum boundary。 |
+| 2026-09-21 | 候選 payload 欄位移除 `x-` 前綴，node-level 與 message-level `retainedResultReq` 依所在 schema 區分；標準欄位邊界與語意不變。 |
 | 2026-09-02 | Retained-result outcome 加入 `FAILED`，並確認同一 subscription 的 lookup 必須序列化；只有收到前一次 outcome 後才能開始下一次，不增加 request ID。 |

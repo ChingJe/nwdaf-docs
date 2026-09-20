@@ -2,9 +2,9 @@
 
 日期：2026-09-01
 
-最後更新：2026-09-02
+最後更新：2026-09-21
 
-狀態：核心設計決策已確認；candidate OpenAPI schema／artifact 使用者審查已確認
+狀態：核心設計決策維持；候選 payload 欄位改為無 `x-` 前綴已確認，待實作同步。
 
 相關文件：
 
@@ -212,8 +212,8 @@ direct-child subscriptions，直到達成 policy 所需條件。
 
 因此 forward instruction 表達候選者與 decision requirement；backward
 report 才表達實際嘗試結果與目前形成的 topology。未經確認、正在建立、成功、
-失敗及後續退出必須能被區分。Request 使用 `x-flTopology`，Notify 使用
-`x-flTopologyReport`；完整 status vocabulary、resolved contract report 與
+失敗及後續退出必須能被區分。Request 使用 `flTopology`，Notify 使用
+`flTopologyReport`；完整 status vocabulary、resolved contract report 與
 directional mapping 見
 [Topology、policy 與 strategy 細節設計](./topology_policy_design.md)。
 
@@ -233,10 +233,10 @@ Topology establishment 完成後，一般 training round 不重新建立 hierarc
 各 tier 保留既有 Model Training subscription resources，並更新自己的
 `roundInd`、`mLModelInfos`、deadline 與其他 round-specific information。
 
-一般 round-specific update 不需要重送 `x-flTopology`。只有 participant
+一般 round-specific update 不需要重送 `flTopology`。只有 participant
 membership、parent／child relationship、policy、strategy 或 node-local
 instruction 等 orchestration contract 改變時，才更新 topology extension。
-`x-flTopologyReport` 可以在 preparation 與 training lifecycle 持續更新，不
+`flTopologyReport` 可以在 preparation 與 training lifecycle 持續更新，不
 限定於初始建立階段。
 
 ### 4.7 Correlation 不等同於 round synchronization
@@ -251,9 +251,9 @@ Release 20 的正式欄位與相容性查核見
 ### 4.8 Retained result retrieval 使用明確的 subscription trigger
 
 Retained-result lookup 與新一輪 training 是不同動作。新 FL Server 可以在
-建立 direct-client subscription 時，以 `x-retainedResultReq` 要求查找同一
+建立 direct-client subscription 時，以 `retainedResultReq` 要求查找同一
 `mlCorreId` 的最新已完成 local result；Client 以
-`x-retainedResultStatus` 明確回報 `FOUND`、`NOT_FOUND` 或 `FAILED`。結果可
+`retainedResultStatus` 明確回報 `FOUND`、`NOT_FOUND` 或 `FAILED`。結果可
 搭配既有 immediate report 或後續 Notify 傳遞；找不到結果或已接受的 lookup
 後續執行失敗，都不改變 subscription 已成功建立的事實。這是
 operation-scoped 的一次性 request；當次 Create、PUT 或
@@ -324,10 +324,10 @@ protocol semantics：
 | Candidate expansion、priority、selection 與數量／失敗門檻 | 語意與欄位名稱已確認；candidate OpenAPI mapping 待審查 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md)；[Candidate OpenAPI Schema](./candidate_openapi_schema.md) |
 | Training／aggregation strategy | `method`／`aggregation`、typed `methodParameters` 與逐級傳遞語意已確認；candidate OpenAPI mapping 待審查 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md)；[Candidate OpenAPI Schema](./candidate_openapi_schema.md) |
 | Node-local `reportAfter` | `epoch`／`round` 語意、parent override／local decision 與 local scope 已確認；candidate OpenAPI mapping 待審查 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md)；[Candidate OpenAPI Schema](./candidate_openapi_schema.md) |
-| Topology status 與逐級回報 | `x-flTopologyReport`、status vocabulary、`FAILED`／`INACTIVE` 的 `statusCause`，以及以同名 `policy`／`strategy`／`reportAfter` 回報實際採用值的語意已確認；candidate OpenAPI mapping 待審查 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md)；[Candidate OpenAPI Schema](./candidate_openapi_schema.md) |
+| Topology status 與逐級回報 | `flTopologyReport`、status vocabulary、`FAILED`／`INACTIVE` 的 `statusCause`，以及以同名 `policy`／`strategy`／`reportAfter` 回報實際採用值的語意已確認；candidate OpenAPI mapping 待審查 | [Topology、policy 與 strategy 細節設計](./topology_policy_design.md)；[Candidate OpenAPI Schema](./candidate_openapi_schema.md) |
 | `mlCorreId` 與 local process correlation | 已確認 Release 18 至 Release 20 schema／procedure 未限制 hierarchy-wide reuse；共用 ID 是本設計的 hierarchical semantics，subscription lifecycle 與 `roundInd` 維持 local scope | 本文件 §4.7；[標準欄位與 Extension 邊界](./standard_field_extension_boundary.md) |
 | 標準欄位與 extension boundary | 已完成 Release 18 request／Notify mapping，並確認 Release 19 unsubscribe-info 與 Release 20 status report 差異；task、data、model、deadline 與 local lifecycle 優先重用既有欄位 | [標準欄位與 Extension 邊界](./standard_field_extension_boundary.md) |
-| Branch replacement 與 retained result | 完整 replacement／ownership recovery 延後；`x-retainedResultReq` lookup trigger、`x-retainedResultStatus` outcome 與既有 immediate／Notify 回報方式已確認 | 本文件 §4.8；[Topology、policy 與 strategy 細節設計](./topology_policy_design.md)；[標準欄位與 Extension 邊界](./standard_field_extension_boundary.md) |
+| Branch replacement 與 retained result | 完整 replacement／ownership recovery 延後；`retainedResultReq` lookup trigger、`retainedResultStatus` outcome 與既有 immediate／Notify 回報方式已確認 | 本文件 §4.8；[Topology、policy 與 strategy 細節設計](./topology_policy_design.md)；[標準欄位與 Extension 邊界](./standard_field_extension_boundary.md) |
 | Extension feature negotiation 與 rejection | 已確認重用 `suppFeats`、candidate feature 3，並以既有 `400`／`403` error semantics 拒絕無效或無法履行的 instruction | 本文件 §4.9；[Candidate OpenAPI Schema](./candidate_openapi_schema.md) |
 
 ---
@@ -388,3 +388,4 @@ protocol semantics：
 | 2026-09-02 | 確認整組 extension 重用 per-resource `suppFeats` negotiation，使用 candidate feature 3，並完成 schema-invalid 與無法履行 contract 的既有 `400`／`403` error mapping。 |
 | 2026-09-02 | 補齊 subtree identity binding／uniqueness、explicit 與 local candidate priority、Notify `mlCorreId`、disabled-child cleanup 與 unsupported feature failure semantics；candidate enums 採 3GPP forward-compatible pattern，`strategy.method` 維持 typed closed discriminator。 |
 | 2026-09-02 | 確認同一 subscription 的 retained-result lookup 必須序列化；只有收到前一次 outcome 後才能開始下一次，不增加 request ID。另統一 replacement array 中 explicit prohibition 的解除語意。 |
+| 2026-09-21 | 更新候選 schema 的四個頂層 payload 欄位名稱，移除 `x-` 前綴；2026-09-02 的命名決策保留為歷史紀錄。語意、`suppFeats` 協商及標準欄位均不變，Go／PyMTLF 尚待同步。 |

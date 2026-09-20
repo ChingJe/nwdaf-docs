@@ -1,8 +1,8 @@
 # Hierarchical FL E1 傳遞 Schema 範例：既有候選契約與論文附錄對照
 
-狀態：兩版對照保留作差異參考；後續實作沿用版本一的既有候選 schema，本文不修改任一候選 schema。
+狀態：兩版對照保留作歷史差異參考；版本一的範例仍展示改名前的 `x-` payload 欄位，不能直接當作目前候選 schema。後續實作沿用其遞迴拓樸語意，但 payload 欄位以更新後的候選 OpenAPI 為準。
 
-本文用同一個 E1 情境，逐步展示**既有候選契約**與**新版論文附錄契約**在 NWDAF 間傳遞的訊息：Root 原本透過 A 管理 A1／A2；A 在訓練中失效；Root 選擇預部署的 A*；A* 對原 Leaves 建立新訂閱，回報拓樸後參與後續訓練。B／C 與其 Leaves 持續使用原有訂閱。版本一依據[既有候選 OpenAPI](../../../../design/hierarchical-federated-learning/candidate_openapi.yaml)與[欄位語意](../../../../design/hierarchical-federated-learning/candidate_openapi_schema.md)，是後續實作基準；版本二依據論文 *Resilient Hierarchical Federated Learning for NWDAF: Protocol Extensions and a free5GC-Based Realization* 第 4 節及附錄 B，僅保留作歷史比較與論文修訂參考。兩者都不是已採納的 3GPP extension；版本二不是現有程式已實作的 wire format，也不是本批遷移目標。
+本文用同一個 E1 情境，逐步展示當時的**既有候選契約**與**新版論文附錄契約**在 NWDAF 間傳遞的訊息：Root 原本透過 A 管理 A1／A2；A 在訓練中失效；Root 選擇預部署的 A*；A* 對原 Leaves 建立新訂閱，回報拓樸後參與後續訓練。B／C 與其 Leaves 持續使用原有訂閱。版本一依據當時的[候選 OpenAPI](../../../../design/hierarchical-federated-learning/candidate_openapi.yaml)與[欄位語意](../../../../design/hierarchical-federated-learning/candidate_openapi_schema.md)撰寫；這兩份設計來源現已移除 payload 欄位的 `x-` 前綴，版本一範例本身未重寫。版本二依據論文 *Resilient Hierarchical Federated Learning for NWDAF: Protocol Extensions and a free5GC-Based Realization* 第 4 節及附錄 B，僅保留作歷史比較與論文修訂參考。兩者都不是已採納的 3GPP extension；版本二不是現有程式已實作的 wire format，也不是本批遷移目標。
 
 本文只列出 **NWDAF ↔ NWDAF 的 `Nnwdaf_MLModelTraining` 訊息類型**，涵蓋建立、preparation 回報、正常 round、失效後的新訂閱與恢復貢獻。同一 schema 在 A1／A2 或 B／C 重複時，列出兩條 edge 的實際識別值，不複製相同的 JSON。HTTP 範例保留本情境需要的標準欄位；未展示認證、完整模型下載協定及模型二進位內容。`X_IMAGE_CLASSIFICATION` 和 `modelInterInfo` 值是本專案的實驗工作負載約定，並非 3GPP 新增的標準事件。
 
