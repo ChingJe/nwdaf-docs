@@ -2,7 +2,7 @@
 
 日期：2026-09-20
 
-狀態：計畫已確認，待程式實作與跨節點驗證；E0–E2b 證據、三層 JSON 欄位、事件名稱、寫入邊界及驗收測試已規劃。
+狀態：本地程式修改、測試與原始紀錄已供使用者確認，待提交核准；PyMTLF 本地測試已通過，Root→Branch→Leaf 的本機 real-process smoke 與 Branch replacement 原始紀錄已核對。既有部署腳本仍檢查舊事件名稱，兩次執行均在完成訓練後的紀錄驗證階段退出，故自動化驗收尚未通過；正式實驗仍待執行。E2a／E2b 的 mixed-depth 執行能力屬後續 Slice，不以本 Slice 宣稱完成。
 
 本計畫從 [E0–E2b 實驗要求](../Hierarchical%20FL%20E0-E2b%20Experiments%20and%20Testbed%20Context.md)出發，先確認每個節點**送出、收到、處理及回報**哪些資訊，再據此設計 JSON 紀錄。不能只保存 Root 或父節點聲稱已送出的內容；接收端實際收到的 subscription、自己的處理結果，也都是證明協定執行的原始事實。本次將重構整套實驗事件紀錄；現有 recorder 僅供盤點，不預設沿用其事件名稱、欄位或格式。本文件不修改既有 `x-flTopology`／`x-flTopologyReport` 協定，也不納入 E3。
 
@@ -290,13 +290,13 @@ Leaf A1 節點（A* 逐級下發，這是另一份訂閱資源）：
 
 ### 5.7 欄位來源、傳遞邊界與預計寫入點
 
-以下是根據目前程式的**實作對照**，不是已完成的新紀錄功能。Root、Branch 作為父節點時，PyMTLF 先向自己的 Go 私有 gateway 發起操作；Go 代為呼叫子節點 Go 的 SBI；子節點 Go 將建立／更新／刪除要求交給自己的 PyMTLF。通知則由子節點 PyMTLF 經自己的 Go 送往父節點 Go，最後交給父節點 PyMTLF。每一端記自己的觀測，不以單邊紀錄替代另一端。
+以下是本地程式的**寫入位置對照**；PyMTLF 的紀錄修改已加入，跨 Go／跨節點 CREATE 的發收配對已用本機 real-process 原始紀錄核對，完整自動驗收仍待更新既有部署腳本。Root、Branch 作為父節點時，PyMTLF 先向自己的 Go 私有 gateway 發起操作；Go 代為呼叫子節點 Go 的 SBI；子節點 Go 將建立／更新／刪除要求交給自己的 PyMTLF。通知則由子節點 PyMTLF 經自己的 Go 送往父節點 Go，最後交給父節點 PyMTLF。每一端記自己的觀測，不以單邊紀錄替代另一端。
 
 | 紀錄者與操作 | 目前可取得的值及寫入位置 | 不可直接推定的值／處理 |
 | --- | --- | --- |
 | 父節點 PyMTLF 發起 Create | `FLServer._create_protocol_preparation()` 已有目標 NF、實際送出的 `NwdafMLModelTrainSubsc`、`mlCorreId` 與 Go 私有回覆 `Location`；在交給 Go 前取 `startedAt`，收到本地回覆或例外後寫一筆。Slice 1 的成功 `Location` 路徑使用接收端正式 `subscriptionId`。 | 不能把本機 Go 的 callback token 或私有 URL 整串當訂閱 ID；Go／peer 在中途拒絕時，發起端只記自己拿到的結果。 |
 | 接收端 PyMTLF 處理 Create | `api/ml_model_training.py:create_training_subscription()` 已取得經 Go 轉交的 body 與 `X-NWDAF-Subscription-Id`；進入處理時取 `startedAt`，本地 `FLClient.create()` 成功或 handler 決定拒絕時寫一筆。 | 此 API 沒有可直接採信的發起端 `nfInstanceId`，故不填猜測的 `sourceNfInstanceId`。Go／FastAPI 在送入此 handler 前就拒絕的無效內容，若不能連回有效 `mlCorreId`，只留一般錯誤紀錄。 |
-| 父節點 PyMTLF 發起 PUT／PATCH／DELETE | `FLServer` 對既有 `participant.resource_location` 的操作已有目標 participant、正式資源 ID 及 PUT／PATCH 的實際 body；在呼叫本機 Go 前取 `startedAt`，取得回覆或例外後寫一筆。 | 私有 `Location` 只是後續交給本機 Go 的位址，事件仍以正式 `subscriptionId` 加接收端身分描述該資源。 |
+| 父節點 PyMTLF 發起 PATCH／DELETE | `FLServer` 對既有 `participant.resource_location` 的操作已有目標 participant、正式資源 ID 及 PATCH 的實際 body；在呼叫本機 Go 前取 `startedAt`，取得回覆或例外後寫一筆。現有發起流程未使用 PUT；接收端 PUT 仍按下列規則紀錄。 | 私有 `Location` 只是後續交給本機 Go 的位址，事件仍以正式 `subscriptionId` 加接收端身分描述該資源。 |
 | 接收端 PyMTLF 處理 PUT／PATCH／DELETE | `api/ml_model_training.py` 的 route 已有 path `subscription_id`、更新 body 與本地結果；在呼叫 `FLClient` 前取得原資源的 `mlCorreId`，完成或拒絕後寫一筆。 | DELETE 完成後資源可能已移除，不能到寫檔時才反查 procedure；查無資源且無法關聯 procedure 的要求不硬塞入實驗 JSONL。 |
 | 子節點 PyMTLF 發出 NOTIFY | `FLClient._enqueue_delivery()` 已有通知 body、訂閱資源 ID 與 `mlCorreId`；`_deliver_until_ack()` 知道本次邏輯交付是否獲得 204／明確拒絕。在開始該邏輯交付時取 `startedAt`，獲得終局結果時寫一筆。 | 不以 Go 或 HTTP 內部重試各寫一筆來冒充新的 Model Training 操作；失聯節點尚未取得交付結果時，也不能先記 `SUCCESS`。 |
 | 父節點 PyMTLF 收到 NOTIFY | `api/ml_model_training.py:receive_training_notification()` 有實際 body；`FLServer.receive_notification()` 以 `notifCorreId` 找到本地 participant、`mlCorreId`、目標 NF 與其資源位置。接收處理開始取 `startedAt`，驗證／處理完成或拒絕後寫一筆。 | 通知 body 本身未必帶 `mlCorreId` 或正式 `subscriptionId`；應使用已存在的本地關聯，不能從 `notifUri` 猜來源。Go 在交給此 API 前拒絕的要求不虛構「PyMTLF 收到」事件。 |
@@ -336,4 +336,4 @@ PyMTLF 可觀察到的訂閱操作次數，可在實驗後從原始紀錄計算�
 
 ## 7. 後續在同一計畫補齊
 
-本文件已固定本批事件名稱、`message` 摘錄、三種角色的例子、本地寫入邊界及驗收測試。進入程式修改時仍須逐一核對每個實際呼叫路徑的可取得值，特別是拒絕／逾時、接收端通知關聯與 Root 的 topology acceptance 寫入點；不因表格列了欄位就假定程式已傳到該點。第 3 項尚未實作的 E2a／E2b Root direct-Leaf 接受與 mixed-depth 訓練不是本 Slice 的完成條件。此刻不宣稱 Slice 2 已完成或通過跨節點驗證。
+本文件已固定本批事件名稱、`message` 摘錄、三種角色的例子、本地寫入邊界及驗收測試。PyMTLF 本地程式已加入拒絕／失敗、接收端通知關聯與 Root topology acceptance 的紀錄。使用既有本機 real-process 部署腳本執行 smoke 與 Branch replacement：各節點成功 CREATE 的發出／接收紀錄，分別有 3／3 與 12／12 條能以接收端身分、正式 `subscriptionId` 及共同 `mlCorreId` 配對；replacement 紀錄包含 A 失效、兩個降級 Root rounds、A* 建立新訂閱及其後參與 accepted round，B／C 的 Root 訂閱未重建。兩次訓練均產生最後模型，但部署腳本的自動檢查仍讀取舊 `ROOT_ROUND_OUTCOME` 等事件及舊量測欄位，因此在訓練完成後退出並標記 run 失敗；不可將原始紀錄的核對說成整套自動驗收通過。第 3 項尚未實作的 E2a／E2b Root direct-Leaf 接受與 mixed-depth 訓練不是本 Slice 的完成條件；正式多 seed 實驗也仍待執行。
