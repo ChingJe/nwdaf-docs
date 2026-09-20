@@ -3,7 +3,7 @@
 日期：2026-09-07
 
 狀態：Slice 1、2、3、4A、4、5、6、7與Slice 7 final-model persistence follow-up均已
-commit；論文實驗情境與能力盤點文件已確認；既有單次testbed觀測已保存，後續E0–E3五seed實驗尚未執行
+commit；論文實驗情境與能力盤點文件已確認；既有單次testbed觀測已保存，後續E0–E2b五seed實驗尚未執行
 
 ## 文件定位
 
@@ -12,8 +12,10 @@ commit；論文實驗情境與能力盤點文件已確認；既有單次testbed�
 
 它和上一版 [Hierarchical NWDAF Federated Learning Implementation Plan](../hierarchical-fl-model-bundle-edition/Hierarchical%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)
 分開維護。舊計畫記錄目前已跑通的 model-bundle／static orchestration
-implementation；本分類則負責將已確認的 topology、policy、strategy、Notify、
-feature negotiation semantics 實作到正式 `Nnwdaf_MLModelTraining` message flow。
+implementation；本分類的主計畫與 Slice 文件記錄後續已完成的 `x-flTopology`／
+`x-flTopologyReport` 等 protocol-extension 實作。這些文件中的目標與非目標僅適用於
+當時的實作階段；新版論文附錄 B 的候選 `flTopology`／`flTopologyReport`、E0–E2b
+實驗需求及其能力缺口另由[論文實驗文件](./paper-experiments/)承接，目前尚非已完成的實作。
 Retained-result fields仍保留在candidate wire contract，但其result保存、lookup與
 舊計算結果接續維持暫緩。Slice 3只實作不使用retained result的Branch replacement：
 Root與Branch從topology各自取得direct-child policy；Branch失效當輪先依Root completion
@@ -34,7 +36,7 @@ Slice 4A只保留完整壓縮artifact bytes的SHA-256 repository key及URL/body 
 component、model／weights、scope／dataset／tensor、Notify body、topology與collection
 content digest均不再成為後續runtime contract。
 
-## 主計畫
+## 既有實作主計畫
 
 - [Hierarchical NWDAF FL Protocol Extension Implementation Plan](./Hierarchical%20NWDAF%20FL%20Protocol%20Extension%20Implementation%20Plan.md)
 
@@ -77,7 +79,7 @@ content digest均不再成為後續runtime contract。
 ## 論文實驗
 
 - [論文實驗文件](./paper-experiments/)：
-  收錄 E0–E3 實驗情境、Testbed 對照及後續能力與證據盤點。
+  收錄 E0–E2b 實驗情境、Testbed 對照及後續能力與證據盤點。
 
 ## 設計輸入
 

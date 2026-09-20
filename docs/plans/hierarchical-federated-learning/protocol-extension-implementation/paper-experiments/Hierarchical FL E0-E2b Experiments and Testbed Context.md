@@ -1,8 +1,8 @@
-# Hierarchical FL E0–E3 實驗情境與 Testbed 對照
+# Hierarchical FL E0–E2b 實驗情境與 Testbed 對照
 
-狀態：文件內容已確認；E0–E3 的五 seed 結果尚未執行或確認。
+狀態：依新版論文對齊的修訂已確認；E0–E2b 的五 seed 結果尚未執行或確認。
 
-本文整合既有論文第四章草稿的 testbed 對照，以及後續提出的 E0–E3 實驗要求。前者是**已執行的單次配對觀測**，後者是**尚待執行的多 seed 實驗情境**；兩者不可混成同一批結果。本文描述研究問題、條件、預期觀測與證據，不規劃 PyMTLF／NWDAF／testbed 如何實作，也不改寫當時的 scenario 或 run metadata。
+本文整合既有論文第四章草稿的 testbed 對照，以及後續提出的 E0、E1、E2a、E2b 實驗要求。前者是**已執行的單次配對觀測**，後者是**尚待執行的多 seed 實驗情境**；兩者不可混成同一批結果。本文描述研究問題、條件、預期觀測與證據，不規劃 PyMTLF／NWDAF／testbed 如何實作，也不改寫當時的 scenario 或 run metadata。
 
 ## 1. 既有論文草稿選用的配對
 
@@ -64,7 +64,9 @@ Testbed 的 `protocolTopology` 把 Area A 的 A 設為 priority 100、A* 設為 
 
 論文中的 accepted Root round 從 **1** 起算；`roundInd` 在底層記錄中從 **0** 起算；圖上的 round 0 是初始模型 validation，並非一次 accepted aggregation。`mlCorreId` 用於同一 run 中的 procedure correlation；它不是 subscription resource ID。A* 為 A1／A2 建立的是**新訂閱**，不是沿用 A 的下層訂閱。論文提及的 A→A1／A2 與 A*→A1／A2 subscription ID prefixes 是特定 CIFAR-10 treatment 的追蹤例子，不能當成固定配置值。
 
-既有第四章草稿將 *accuracy recovery* 定義為：替換後某次 Root validation accuracy 達到至少故障注入前一輪的值；它不等同於替換關係就緒，也不代表 treatment 的整體學習品質優於 baseline。MNIST 第 12 輪為 79.60%，第 13／14 輪為 60.60%／58.75%，A* 首次貢獻的第 15 輪為 82.20%；CIFAR-10 第 20 輪為 54.10%，第 21／22 輪為 51.30%／51.75%，第 23 輪為 55.55%。兩組皆在首次含 A* 的 accepted round 達到此舊門檻，之後繼續完成預定輪數。後續 E0–E3 改採第 7 節的 paired-baseline／95% CI 判定；舊單次結果不得套用新定義而宣稱已恢復。
+既有第四章草稿將 *accuracy recovery* 定義為：替換後某次 Root validation accuracy 達到至少故障注入前一輪的值；它不等同於替換關係就緒，也不代表 treatment 的整體學習品質優於 baseline。MNIST 第 12 輪為 79.60%，第 13／14 輪為 60.60%／58.75%，A* 首次貢獻的第 15 輪為 82.20%；CIFAR-10 第 20 輪為 54.10%，第 21／22 輪為 51.30%／51.75%，第 23 輪為 55.55%。兩組皆在首次含 A* 的 accepted round 達到此舊門檻，之後繼續完成預定輪數。新版論文預計以第 7 節的 paired-baseline／95% CI 判定 E0–E2b；舊單次結果不得套用新定義而宣稱已恢復。
+
+新版論文另列出既有單次 E1 的時間觀測：MNIST／CIFAR-10 的 failure→detection 分別為 297.87／298.01 秒、detection→replacement ready 為 0.87／0.85 秒、ready→first accepted contribution 為 14.55／18.47 秒，總計 313.29／317.33 秒。這些是舊 run 的單次值，不能作為五 seed 的延遲分布，也不能把 ready 當作已恢復貢獻。
 
 ## 5. 後續實驗的共同條件與比較關係
 
@@ -76,17 +78,16 @@ Testbed 的 `protocolTopology` 把 Area A 的 A 設為 priority 100、A* 設為 
 
 這三者描述拓樸形成或修復的不同時點；某一訓練輪實際成功貢獻的 participant set 另行紀錄，不等於 accepted realized topology。
 
-以下 E0–E3 是接下來要跑的實驗，**尚不是上節單次 run 的結果**。E0 是同一工作負載、同一 seed 的無故障對照；E1、E2a、E2b 以 E0 為配對基準。每個選用的工作負載與情境使用同一組五個 seeds；同一 seed 固定資料分割、模型初始化、local epochs、FedProx／aggregation 設定與總 accepted rounds。E0／E1 的接受門檻維持一致；E2／E3 若因 direct cohort 或存活者數量改變而需不同的接受條件，必須事先寫清楚並在分析時標示，不能假稱只改了故障類型。預期值是待驗證主張，不能寫成已達成的結果。
+以下 E0–E2b 是新版論文預計驗證的實驗，**都不是上節單次 run 的結果**。E0 是同一工作負載、同一 seed 的無故障對照；E1、E2a、E2b 以 E0 為配對基準。每個選用的工作負載與情境使用同一組五個 seeds；同一 seed 固定資料分割、模型初始化、local epochs、FedProx／aggregation 設定與總 accepted rounds。E0／E1 的接受門檻維持一致；E2a／E2b 若因 direct cohort 或存活者數量改變而需不同的接受條件，必須事先寫清楚並在分析時標示，不能假稱只改了故障類型。預期值是待驗證主張，不能寫成已達成的結果。
 
 | 情境 | 重要性 | 相對 E0 的主要變動 | 主要要證明的事 |
 | --- | --- | --- | --- |
 | E0：無故障 baseline | 必要 | 不注入故障 | 正常完整參與的學習軌跡與五 seed 變異 |
 | E1：A 故障、A* 接手 | 核心、必要 | A 停止，由預部署的 A* 接回 A1／A2 | 同一 procedure 下替換受影響 Branch，B／C 關係保持 |
-| E2a：A 故障、A1／A2 直掛 Root | 核心、強烈建議 | 不使用 A*；Area A 兩個 Leaves 上移 | 改變 hierarchy depth 且保留 Area A 全部資料 |
-| E2b：僅 A1 直掛 Root | 建議的 ablation | A 永久停止，A1 上移、A2 不可用 | 部分修復與資料覆蓋減少時的 policy 決定 |
-| E3：Leaf A1 消失 | 次要、可選 | A 保留，只失去 A1 | descendant-edge loss 的逐級回報及 degraded subtree 接受 |
+| E2a：A 故障、A1／A2 直掛 Root | 新版論文主要實驗 | 不使用 A*；Area A 兩個 Leaves 上移 | 改變 hierarchy depth 且保留 Area A 全部資料 |
+| E2b：僅 A1 直掛 Root | 新版論文主要實驗 | A 永久停止，A1 上移、A2 不可用 | 部分修復與資料覆蓋減少時的 policy 決定 |
 
-E0／E1 沿用第 2–3 節的 Root–A/B/C–Leaves 部署、資料與工作負載，E1 的故障觸發點沿用 MNIST 第 12 輪、CIFAR-10 第 20 輪後。E2a／E2b 的永久 A 故障及 E3 的 A1 故障，須在執行前固定與 E0／E1 可比較的觸發輪次；目前提供的 E2／E3 敘述沒有另定精確輪次。E3 只需選一種資料異質性較明顯的 partition，不預設兩種工作負載都跑。若 E2 使用兩種工作負載，各自仍須有同 seed 的 E0 配對。
+E0–E2b 沿用第 2–3 節的 Root–A/B/C–Leaves 初始部署與資料規格。新版論文的評估矩陣要求兩種工作負載使用相同五個配對 seeds、資料切分與訓練超參數；E1、E2a、E2b 均以 MNIST 第 12 輪、CIFAR-10 第 20 輪後作為對應的故障邊界。E2a／E2b 各自仍須有同 seed 的 E0 配對，這些新 run 尚未執行。
 
 比較單位是同工作負載、同 seed、同 accepted Root round 的結果；記錄 seed 與 run 的對應，避免把不同初始化或分割造成的差異誤作拓樸效果。E2a／E2b 改變 Root 的 direct-child 數量時，accepted participant／completion 條件必須以該情境實際 cohort 清楚表述，不能不加說明地把原三個 Branch 的比例套到新 cohort。這是實驗條件的定義，不是本文要決定的程式修改。
 
@@ -114,27 +115,21 @@ A 不回來，A1 存活並直接回報 Root，A2 保持不可用。此 ablation 
 
 若仍能持續 accepted rounds，A2 的資料卻已永久缺席。因此 accuracy／loss 或 class-specific performance 偏離 E0／E1／E2a，不能直接歸因於 protocol failure；須把 topology outcome 與資料覆蓋改變分開討論。若 Root 拒絕此部分修復，則應按實際 decision 報告，不能把它併入「已恢復」統計。
 
-### E3：Leaf A1 消失，A 維持運作
-
-在指定 accepted round 後永久停止 A1；A、A2、B、C 與其餘 Leaves 仍存活。觀察 A 是否回報自己 realized subtree 中的 A1 edge loss，Root 是否依 policy 接受只剩 A2 的 degraded Area A；Root→A／B／C 不應重建。此情境只驗證 HFL／NWDAF 的 descendant-edge report 與接受邊界，不用來主張新的 FL convergence theory。
-
-Root 的 aggregation threshold 維持 E0 設定。第 2 節所述 Branch policy 卻要求兩個 Leaves 都成功，**不足以讓 A 只憑 A2 正常完成下層聚合**。E3 若要驗證「A 保留且以 A2 繼續」，其實驗條件必須明定 A 對單一存活 Leaf 的接受方式；不能宣稱原設定不變即可跑出預期結果。模型影響取決於 A1 所持資料，可能是整體 accuracy 下降、特定類別受影響，也可能很小。若 Root 無法接受 degraded subtree，應保留拒絕結果，不從分析中移除。
-
 ## 7. 跨情境證據與分析口徑
 
 ### 7.1 Protocol evidence 為主要結果
 
-每個 run 都要保留是否完成重配置；跨五個 seeds 可報告成功數，例如 `5/5` 或實際較低值。證據至少能辨認：故障前後的 topology version 或等效變更標記、Root 的 initial topology intention／後續修復 instruction、實際建立的 realized topology、Root 的接受／拒絕結果及接受後的 accepted realized topology、`mlCorreId`、舊／新 subscription IDs、未受影響的 Root→B／C edges、每輪 selected／successful／failed participant set，以及控制面 message／API-call 數量。這些是**新實驗欲蒐集的證據**，不表示既有單次 run 已保存全部欄位，也不預設一定存在名為 `topologyVersion` 的既有欄位。
+每個 run 都要保留是否完成重配置；跨五個 seeds 可報告成功數，例如 `5/5` 或實際較低值。證據至少能辨認：故障前後的 `topologyVersion`、Root 的 initial topology intention／後續修復 instruction、實際建立的 realized topology、Root 的接受／拒絕結果及接受後的 accepted realized topology、`mlCorreId`、舊／新 subscription IDs、未受影響的 Root→B／C edges、每輪 selected／successful／failed participant set，以及控制面 message／API-call 數量。新版論文附錄 B 把 `topologyVersion` 放在候選 `flTopology`／`flTopologyReport` 內；Root 是否接受拓樸仍是 Root 的決定，附錄沒有定義額外的接受通知。這些是**新實驗欲蒐集的證據**，不表示現行 `x-flTopology` 契約或既有單次 run 已保存上述欄位。
 
-時間線分開量測 `failure→detection`、`detection→reparent instruction`、`instruction→new subscriptions ready`、`ready→first accepted contribution`，另給 `failure→first post-reconfiguration contribution` 的整體耗時。故障注入、就緒與首次 accepted contribution 是不同事件；對 E3 或被拒絕的拓樸，應明確標示不適用或未達成，不能填入虛構時間。若某 run 沒有恢復，報為 `not recovered`，並保留其事件與學習曲線。
+時間線分開量測 `failure→detection`、`detection→reparent instruction`、`instruction→new subscriptions ready`、`ready→first accepted contribution`，另給 `failure→first post-reconfiguration contribution` 的整體耗時。故障注入、就緒與首次 accepted contribution 是不同事件；對被拒絕的拓樸，應明確標示不適用或未達成，不能填入虛構時間。若某 run 沒有恢復，報為 `not recovered`，並保留其事件與學習曲線。
 
 ### 7.2 Model metrics 為輔助結果
 
-固定 held-out validation set 上，保存初始模型與每個 accepted Root round 的 accuracy／loss；五個 seeds 彙整逐輪 mean 與 95% CI。另比較固定 post-failure accepted-round window 的 accuracy AUC、最後 accepted round 的 validation endpoint accuracy／loss、與同 seed E0 的 paired 差值、rounds-to-recovery，以及 wall-clock failure-to-contribution time。Final official test 可用於 completed model 的獨立評估，不得與逐輪 validation 混為一談。資料缺席的 E2b／E3 必須同時呈現 participant／class coverage，不單靠總 accuracy 判斷協定成敗。
+固定 held-out validation set 上，保存初始模型與每個 accepted Root round 的 accuracy／loss；五個 seeds 彙整逐輪 mean 與 95% CI。另比較固定 post-failure accepted-round window 的 accuracy AUC、最後 accepted round 的 validation endpoint accuracy／loss、與同 seed E0 的 paired 差值、rounds-to-recovery，以及 wall-clock failure-to-contribution time。Final official test 可用於 completed model 的獨立評估，不得與逐輪 validation 混為一談。資料缺席的 E2b 必須同時呈現 participant／class coverage，不單靠總 accuracy 判斷協定成敗。
 
 後續實驗採老師提出的 recovery 定義：修復後 Root validation accuracy **首次進入相同工作負載之 E0 五 seed、在對應 accepted round 估計的 95% CI 範圍，且連續維持兩個 accepted rounds**。同 seed 的 E0 仍用於 paired effect comparison。Recovery 是離線分析判定，不是訓練期間的停止或接納條件。對無法修復或無法連續滿足門檻者，明確記為 `not recovered`。這個定義不同於第 4 節舊稿的「回到故障前 accuracy」。
 
-正式統計前尚需固定 95% CI 的估計方法、post-failure AUC window 與 E2／E3 的故障觸發輪次；這些屬分析／實驗規格，不在本文預先設計成 PyMTLF runtime 行為。五個 seeds 的成功率、accuracy 接近程度和 recovery rounds 均須由實際結果決定。
+正式統計前尚需固定 95% CI 的估計方法與 post-failure AUC window。這些屬分析／實驗規格，不在本文預先設計成 PyMTLF runtime 行為。五個 seeds 的成功率、accuracy 接近程度和 recovery rounds 均須由實際結果決定。
 
 ## 8. 既有證據位置與使用界線
 
@@ -143,8 +138,9 @@ Root 的 aggregation threshold 維持 E0 設定。第 2 節所述 Branch policy 
 | 來源 | 本文用途 |
 | --- | --- |
 | 本次提供的論文第三章草稿 | 對齊 initial topology intention／instruction、realized topology 與 accepted realized topology 的用語 |
-| 本次提供的論文第四章草稿 | 決定目前論文採用的情境、術語、圖表敘事與數值；尚屬草稿 |
-| 本次提供的 E0–E3 實驗要求 | 決定後續實驗的研究目的、五 seed 比較、預期證據與 recovery 判定；尚未執行 |
+| 本次提供的論文第四章草稿 | 追溯既有單次配對的情境、術語、圖表敘事與數值；不作為新版附錄 B 的來源 |
+| `local-references/HFL-NWDAF-free5GC-paper (5).pdf` | 對齊新版論文的 E0–E2b 主實驗、附錄 B 候選欄位與目前仍屬待驗證的主張；不取代舊 run 原始紀錄 |
+| 本次提供的 E0–E2b 實驗要求 | 決定後續實驗的研究目的、五 seed 比較、預期證據與 recovery 判定；尚未執行 |
 | `5G_NWDAF_Infrastructure/testbed.protocol-hierarchical.yaml` | VM／NWDAF／PyMTLF 對應、GPU／CPU 指派、候選優先級、Root／Branch policy 與 timeout |
 | `5G_NWDAF_Infrastructure/experiments/protocol-hierarchical/{mnist,cifar10}/` | 論文選用的兩組 scenario、資料切分、訓練參數與故障觸發設定 |
 | `testbed-docs/5g-nwdaf-infrastructure/plans/protocol-driven-hierarchical-fl-experiment/chapter-4-experiment-materials-draft.md` | 已保存 run 的摘要、驗證／測試曲線、故障時間線與來源清單；文件本身仍是草稿 |

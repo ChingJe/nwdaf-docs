@@ -3,7 +3,7 @@
 日期：2026-09-07
 
 狀態：Slice 1、2、3、4A、4、5、6、7與Slice 7 final-model persistence follow-up
-Committed；既有單次multi-host testbed配對觀測已保存；後續E0–E3五seed實驗尚未執行；retained-result runtime暫緩
+Committed；既有單次multi-host testbed配對觀測已保存；後續E0–E2b五seed實驗尚未執行；retained-result runtime暫緩；本次文件定位修訂已確認
 
 索引：
 
@@ -31,6 +31,14 @@ Committed；既有單次multi-host testbed配對觀測已保存；後續E0–E3�
 - [Explicit Flat 與 Hierarchical Orchestration 設定詳細計畫](../explicit-flat-hierarchical-orchestration/Explicit%20Flat%20and%20Hierarchical%20Orchestration%20Configuration%20Detailed%20Plan.md)
 
 ---
+
+## 本文件定位
+
+本文記錄已完成的 Slice 1–7 實作階段及其原定目標、範圍與驗證狀態。下文的
+`x-flTopology`／`x-flTopologyReport` 是該階段採用的既有契約；本文不表示新版論文
+附錄 B 的 `flTopology`／`flTopologyReport` 已實作。新版論文的協定目標、E0–E2b
+實驗需求與後續能力設計見[論文實驗文件](./paper-experiments/)。本文的完成狀態與
+非目標只適用於既有階段，不直接決定新版論文目標的完成度或範圍。
 
 ## 1. 背景
 
@@ -336,7 +344,7 @@ component，但依目前 production trace 不預期修改其 repository。
 - Slice 7 final-model persistence follow-up已完成本機實作、驗證與repository-separated
   commits。
 - Retained-result runtime維持暫緩；既有單次multi-host testbed配對觀測已保存，
-  後續E0–E3五seed實驗尚未執行。
+  後續E0–E2b五seed實驗尚未執行。
 
 已依
 [Model Bundle Metadata to Protocol Schema Mapping](./Model%20Bundle%20Metadata%20to%20Protocol%20Schema%20Mapping.md)
