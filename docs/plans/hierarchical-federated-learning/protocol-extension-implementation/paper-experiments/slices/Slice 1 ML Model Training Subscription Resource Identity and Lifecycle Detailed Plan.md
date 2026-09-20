@@ -2,7 +2,7 @@
 
 日期：2026-09-20
 
-狀態：詳細計畫已確認，待實作；`NWDAF`／`PyMTLF` 尚未實作本 slice。
+狀態：本地實作與審查已確認；正式多節點 testbed 整合驗證仍待執行。
 
 本文件實作範圍以[論文實驗能力設計討論 §1](../Hierarchical%20FL%20Experiment%20Capability%20Design.md)已確認的訂閱識別方向為準；[能力與證據盤點](../Hierarchical%20FL%20Experiment%20Capability%20and%20Evidence%20Inventory.md)說明其對 E0／E1 的用途。這是本批**論文實驗能力**的 Slice 1，與先前 protocol extension 的 Slice 1 無關。
 
@@ -205,7 +205,7 @@ Create 明確失敗或未取得可用的 `Location`，便不宣稱訂閱建立�
 
 Go 與 PyMTLF 在對應的現有測試中驗證實際 header、`Location`、路由 key、callback 與後續操作目標；不要求逐一覆蓋所有罕見錯誤排列。若現有本地多程序環境可用，再以兩組 NWDAF／PyMTLF 走一次 Create→Notify→PATCH／DELETE；若未執行，明列為整合驗證缺口，不冒稱 testbed 通過。
 
-正式驗證在各自儲存庫執行：`NWDAF` focused Go tests、`make test`、`make lint`、`make build`；`PyMTLF` focused pytest、全套 pytest 與既有 lint。實際指令與結果依實作時倉庫入口決定。此文件建立時只做文件檢查，尚未執行程式測試。
+正式驗證在各自儲存庫執行：`NWDAF` focused Go tests、`make test`、`make lint`、`make build`；`PyMTLF` focused pytest、全套 pytest 與既有 lint。實際指令與結果依實作時倉庫入口決定。
 
 ## 7. 明確延後與完成門檻
 
@@ -214,4 +214,4 @@ Go 與 PyMTLF 在對應的現有測試中驗證實際 header、`Location`、路�
 - `optional hardening`：跨 Go 程序重啟後的 orphan 訂閱掃描／對帳，不列入此處的資源識別驗收。
 - `integration verification gap`：正式 multi-host testbed、控制器故障注入與新實驗資料收集需在後續階段完成；本 slice 的單元／本地流程測試不替代它們。
 
-進入實作前，對照本計畫與主設計 §1，將每個驗收點映射到 production 路徑和測試。完成程式與檢查後仍保持 unstaged／uncommitted、狀態標為 `Ready for User Review`，呈現 `NWDAF` 與 `PyMTLF` 各自 diff／驗證／剩餘缺口；使用者確認審查結果後，再另行提出逐儲存庫 commit proposal。此計畫已確認，**不**表示 slice 已開始或完成。
+實作時對照本計畫與主設計 §1，將每個驗收點映射到 production 路徑和測試。使用者已確認 `NWDAF` 與 `PyMTLF` 的本地實作及審查結果；正式多節點 testbed 整合驗證不在本次本地測試結果之內。
