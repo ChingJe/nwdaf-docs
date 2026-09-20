@@ -2,7 +2,7 @@
 
 日期：2026-09-20
 
-狀態：Slice 1 訂閱識別的本地實作與審查已確認；第 2–6 項依 E0–E2b 的工作拆分已確認，詳細計畫與實作仍待進行；五 seed 實驗尚未執行。
+狀態：Slice 1 訂閱識別的本地實作與審查已確認；第 2–4 項工作邊界已確認，詳細計畫與實作仍待進行；五 seed 實驗尚未執行。
 
 本文承接 [E0–E2b 實驗情境與 Testbed 對照](./Hierarchical%20FL%20E0-E2b%20Experiments%20and%20Testbed%20Context.md)及[後續實驗能力與證據盤點](./Hierarchical%20FL%20Experiment%20Capability%20and%20Evidence%20Inventory.md)，集中維護接下來的設計討論。前兩份文件分別記錄實驗需求與現況缺口；後續對以下議題形成的設計決定，優先更新本文，不把尚未決定的方案寫成既有實作或已完成實驗。
 
@@ -43,56 +43,46 @@
 
 若 Create 回覆遺失而無法取得 peer `subscriptionResourceId`，不得憑 `callbackRouteId` 猜測資源 ID 或宣稱 edge 已建立；保留失敗／結果不明的紀錄即可。跨程序重啟後的殘留資源清理不列為本次 E0–E2b 實驗能力的完成條件。
 
-## 第 2–6 項的實作拆分
+## 第 2–4 項的實作拆分
 
-Slice 1 已處理訂閱資源識別；下列各項只描述下一步的實作範圍與驗收重點，**尚未**宣稱詳細資料流或測試計畫已定案。共同基準是現有 `x-flTopology`／`x-flTopologyReport`、目前可運作的 Root–Branch–Leaf 訓練與 A→A* replacement；不遷移至論文附錄 B，也不新增 `topologyVersion`。`requested`、`realized`、`accepted` 是不同時點的拓樸語意，不拆成獨立功能。
+Slice 1 已處理訂閱資源識別；下列各項只描述下一步的實作範圍與驗收重點，**尚未**宣稱詳細資料流或測試計畫已定案。共同基準是現有 `x-flTopology`／`x-flTopologyReport`、目前可運作的 Root–Branch–Leaf 訓練與 A→A* replacement；不遷移至論文附錄 B，也不新增 `topologyVersion`。`requested`、`realized`、`accepted` 是不同時點的拓樸語意，不拆成獨立功能。第 2 項補原始證據；第 3 項以同一實作項目完成 E2a／E2b 的直接重掛、修復接受與混合深度訓練；第 4 項處理配對輸入與實驗後分析交接。
 
 | 項目 | 主要支持的實驗 | 責任與直接產出 |
 | --- | --- | --- |
-| 2. 逐節點協定與拓樸證據 | E0–E2b | PyMTLF 記錄操作、形成結果與接受決定；必要的 Go SBI 計數另補最小邊界紀錄 |
-| 3. Root 修復時直接接回 Leaf | E2a、E2b | Root PyMTLF 以既有候選 schema 建立 Root→A1／A2 關係，保留 B／C |
-| 4. 不等深度的訓練 round | E2a、E2b | Root PyMTLF 同輪處理直接 Leaf 與 Branch aggregate，並正確下發模型 |
-| 5. 部分修復與明示的接受條件 | E2b | Root PyMTLF 在 A2 不可用時依設定判斷是否接受 A1，並繼續訓練 |
-| 6. 配對實驗輸入與原始資料交接 | E0–E2b | 確認 PyMTLF 所需的設定與輸出；testbed 負責五 seed 排程、故障注入與彙整 |
+| 2. 逐節點協定與拓樸證據 | E0–E2b | PyMTLF 記錄訂閱操作、形成結果與接受決定，不在執行時維護呼叫次數 |
+| 3. E2a／E2b 直接重掛與持續訓練 | E2a、E2b | Root PyMTLF 建立 Root→Leaf 新關係、依 policy 接受修復拓樸，並讓直接 Leaf 與 B／C 在同輪正確訓練與聚合 |
+| 4. 配對實驗輸入與原始資料交接 | E0–E2b | 確認 PyMTLF 所需的設定與輸出；testbed 負責五 seed 排程、故障注入與原始資料收集，交接後續離線分析 |
 
 ## 2. 逐節點協定與拓樸證據
 
 **現況。** 各節點可寫入以 `mlCorreId` 分目錄的 `observations.jsonl`；目前有 Root 的模型評估、round outcome、Branch failure／replacement ready 與 final model，Branch／Leaf 的模型評估則取決於本地 validation 設定。現有結構化紀錄尚不足以逐條證明訂閱建立、拓樸形成和修復。Slice 1 已讓發起端 PyMTLF 取得由接收端 Go 公布的正式訂閱資源 ID，但尚未把它寫成完整實驗事件。
 
-**要實作。** 擴充各節點 PyMTLF 的原始事件紀錄，按實際行為記錄：向哪個 NF 發起／收到訂閱 Create、更新、刪除及結果；收到的 topology instruction、回報的 topology report；preparation／參與確認後形成或失去的 direct edge；Root 依實際 report 作出的接受／拒絕決定；每輪選入、成功、失敗的 direct participants 與必要的下層結果。事件需有 UTC 時間、本節點與對端 `nfInstanceId`、方向、`mlCorreId`、可用時的 `notifCorreId`、操作結果；已取得正式 ID 的訂閱以接收端 NF 加 `subscriptionResourceId` 識別。保存足以解釋訓練任務與決策的訂閱摘要，包括適用的 `mLEventSubscs`／`modelInterInfo`、`mLModelTrainInfos` 與 `x-flTopology`／`x-flTopologyReport` 的 children、policy、status；不複製模型、憑證或整份 payload。發出 Create、收到成功回覆、確認 edge、Root 接受拓樸必須是可區分的事實；失敗嘗試不可記成 confirmed edge。Root 原有 validation／round 紀錄保留，新增事件與它們使用同一 `mlCorreId`。
+**要實作。** 擴充各節點 PyMTLF 的原始事件紀錄，按實際行為記錄：向哪個 NF 發起／收到訂閱 Create、更新、刪除及結果；收到的 topology instruction、回報的 topology report；preparation／參與確認後形成或失去的 direct edge；Root 依實際 report 作出的接受／拒絕決定；每輪選入、成功、失敗的 direct participants 與必要的下層結果。事件需有 UTC 時間、本節點 `nfInstanceId`、可確認的對端 `nfInstanceId`、方向、`mlCorreId`、可用時的 `notifCorreId`、操作結果；已取得正式 ID 的訂閱以接收端 NF 加 `subscriptionResourceId` 識別。保存足以解釋訓練任務與決策的訂閱摘要，包括適用的 `mLEventSubscs`／`modelInterInfo`、`mLModelTrainInfos` 與 `x-flTopology`／`x-flTopologyReport` 的 children、policy、status；不複製模型、憑證或整份 payload。發出 Create、收到成功回覆、確認 edge、Root 接受拓樸必須是可區分的事實；失敗嘗試不可記成 confirmed edge。Root 原有 validation／round 紀錄保留，新增事件與它們使用同一 `mlCorreId`。本項只保存逐筆事實，不新增執行時呼叫計數器；第 3 項的各個決策點沿用本項的紀錄方式。
 
-**Go 邊界。** Go 是實際 SBI 操作與 `Location` 的權威來源；PyMTLF 先記錄其私有呼叫能觀察到的結果。若論文需要精確的跨 NF API-call／message 數量或 Go 內部重試次數，須在 Go 的實際 SBI 收送邊界補可蒐集的最小計數紀錄，包含操作、方向、對端、結果及時間，再由離線分析以發送端的實際跨 NF 呼叫計數，避免收送兩端重複計入；不能把 PyMTLF 發起一次私有請求直接算成一次成功的 SBI 訊息，也不預設 Go 寫第二份 `observations.jsonl`。
+**紀錄邊界。** 發起端 PyMTLF 已能從自己的 Go 私有回應取得成功建立的正式訂閱資源 ID；本項在此記錄其發起的操作及所見結果。接收端 PyMTLF 的私有 Create 目前沒有直接提供可驗證的發起端 `nfInstanceId`；不憑接收端單筆紀錄推定對端身分，可由發起端紀錄與訂閱資源關係重建。此項不新增 Go 實驗紀錄、精確 wire-level SBI 計數或內部重試統計，也不把 PyMTLF 的操作紀錄宣稱為逐筆 SBI HTTP 傳輸證據。
 
-**驗收。** E0 可重建初次意圖、已確認的 A／B／C 與六條下層邊、Root 接受時的 realized topology；E1 可對照 A→A1/A2 與 A*→A1/A2 的新舊資源 ID、保留 Root→B/C 原 ID，並區分故障偵測、修復指令、新 edge ready 與首次 accepted A* contribution。E2a／E2b 使用同一紀錄方式，A2 未確認或失敗不算已形成 edge。拓樸前後比較由原始事件和訂閱關係重建，不假造 wire `topologyVersion`。此項的詳細計畫須以實際 producer／consumer 路徑確認每個事件的產生點及 Go 是否必須增加欄位或紀錄。
+**驗收。** E0 可重建初次意圖、已確認的 A／B／C 與六條下層邊、Root 接受時的 realized topology；E1 可對照 A→A1/A2 與 A*→A1/A2 的新舊資源 ID、保留 Root→B/C 原 ID，並區分故障偵測、修復指令、新 edge ready 與首次 accepted A* contribution。E2a／E2b 使用同一紀錄方式，A2 未確認或失敗不算已形成 edge；其實際修復與訓練行為由第 3 項實作。拓樸前後比較由原始事件和訂閱關係重建，不假造 wire `topologyVersion`。此項的詳細計畫須以實際 producer／consumer 路徑確認每個紀錄點及可取得的欄位，不擴成 Go SBI 計數工作。
 
-## 3. Root 修復時直接接回 Leaf
+## 3. E2a／E2b 直接重掛、修復接受與持續訓練
 
-**現況。** Root 的靜態拓樸是 `branch_groups`；A 失效後，既有流程只會在同一 group 中尋找替代 Branch。雖然 group 已列出 A1／A2，這是原 Branch 的下層候選，不等於 Root 已獲授權直接訂閱它們。現有 Root 的 active group／readiness 也只計算 active Branch。
+**現況。** Root 的靜態拓樸是 `branch_groups`；A 失效後，既有流程只會在同一 group 中尋找替代 Branch。雖然 group 已列出 A1／A2，這是原 Branch 的下層候選，不等於 Root 已獲授權直接訂閱它們。現有 Root 的 active group／readiness 也只計算 active Branch；每輪對所有直接參與者要求 `HIERARCHY_AGGREGATE`，以 Branch report 的下層名單驗證結果，Branch→Leaf round 則要求 `TRAINING`。因此只建立 Root→Leaf 訂閱仍不足以讓 E2a／E2b 繼續訓練。Root 初始 admission 僅接受 `complete_required`；Branch group 的 policy 是 Branch 管理下層 Leaves 的條件，不能直接拿來判斷 Root 的修復結果。
 
-**要實作。** 在 Root 的本地拓樸設定明示 A 失效且沒有 A* 時可將哪些存活 Leaves 接回 Root，以及該修復所適用的 Root direct-child 條件；不能單靠看見 `group.leaves` 就自行 reparent。Root 依既有 Go→peer Model Training Create 路徑，對 A1／A2 下發直接 Leaf 的 `x-flTopology` 指令，沿用同一 `mlCorreId`，取得各自的新 `subscriptionResourceId` 並完成 preparation／參與確認；再由 `x-flTopologyReport` 和實際邊更新 realized topology。原 A 的訂閱清理不是建立新邊的前置條件；Root→B/C 與其下層訂閱保持原狀。這是 Root PyMTLF 的選擇、訂閱與狀態調整，若 Go 既有私有 Create／peer SBI 路徑足以傳遞同一契約，不新增對外操作。
+**關係形成。** 在 Root 的本地拓樸設定明示 A 失效且沒有 A* 時可將哪些存活 Leaves 接回 Root；不能單靠看見 `group.leaves` 就自行 reparent。Root 依既有 Go→peer Model Training Create 路徑，對 A1／A2 下發直接 Leaf 的 `x-flTopology` 指令，沿用同一 `mlCorreId`，取得各自的新 `subscriptionResourceId` 並完成 preparation／參與確認；再由 `x-flTopologyReport` 和實際邊更新 realized topology。原 A 的訂閱清理不是建立新邊的前置條件；Root→B/C 與其下層訂閱保持原狀。這是 Root PyMTLF 的選擇、訂閱與狀態調整，若 Go 既有私有 Create／peer SBI 路徑足以傳遞同一契約，不新增對外操作。
 
-**驗收。** E2a 中 A 消失且沒有替代 Branch 時，Root 分別與 A1、A2 建立新訂閱，能回報 `Root→A1/A2`、`Root→B→B1/B2`、`Root→C→C1/C2` 的 realized topology；故障前後 `mlCorreId` 不變，B/C 的既有訂閱 ID 不變。E2b 中 A2 不可用時，建立失敗不應被當成 confirmed edge；是否接受只剩 A1 的拓樸由第 5 項處理。正式設定欄位及失敗後何時啟動此路徑，需在本項詳細計畫中對照現有 Root group／candidate pool 定案。
+**修復接受。** 在 Root 本地設定明確表達 direct-repair cohort 的最低可用數及 Root 這一層每輪的選擇／完成條件，與 B/C 原有 Branch-local policy 分開。Root 對實際建立的 direct edges，依 E2a 或 E2b 適用的 policy 判斷接受或拒絕；只有接受後才把修復結果作為新的 accepted realized topology。修復期間未受影響的 B/C 仍可依既有 policy 支持降級 round。E2a 的兩 Leaf 完整接回與 E2b 的一 Leaf 部分接回須使用明示、可記錄的條件；原 E0／E1 的三 Branch 設定不默默改寫。
 
-## 4. 不等深度的訓練 round
+**訓練執行。** Root 的 round 選擇、等待、結果驗證與 aggregation 按每個 direct child 的實際角色處理：B/C 回 `HIERARCHY_AGGREGATE`，直接接回的 A1／A2 回 `TRAINING`；兩種 artifact 保持原本各自的身分、`mlCorreId`、`roundInd`、training scope 驗證，並依其實際 `training_sample_count` 混合加權。Root 發布的 global model 仍由 ADRF 提供，該輪實際選入的 B/C 及 A1／A2 必須能依既有權限取得模型；Branch 對自己的 Leaves 的模型下發路徑不變。Root 在 round outcome 記錄真實 direct participant set，不能把直接 Leaf 偽裝成 Branch 或把它的結果算兩次。
 
-**現況。** Root 每輪只選 active Branch，對所有直接參與者要求 `HIERARCHY_AGGREGATE`，並以 Branch report 的下層名單驗證結果；Branch→Leaf round 則要求 `TRAINING`。因此只建立 Root→Leaf 訂閱，還不足以讓 E2a／E2b 繼續訓練。
+**驗收。** E2a 中 A 消失且沒有替代 Branch 時，Root 分別與 A1、A2 建立新訂閱，能回報 `Root→A1/A2`、`Root→B→B1/B2`、`Root→C→C1/C2` 的 realized topology；故障前後 `mlCorreId` 不變，B/C 的既有訂閱 ID 不變。兩條 direct edges 確認後，Root 依明示條件記下完整修復的接受結果，並可在同一 accepted Root round 聚合 A1、A2、B、C 的有效結果。
 
-**要實作。** Root 的 round 選擇、等待、結果驗證與 aggregation 按每個 direct child 的實際角色處理：B/C 回 `HIERARCHY_AGGREGATE`，直接接回的 A1／A2 回 `TRAINING`；兩種 artifact 保持原本各自的身分、`mlCorreId`、`roundInd`、training scope 驗證，並依其實際 `training_sample_count` 混合加權。Root 發布的 global model 仍由 ADRF 提供，該輪實際選入的 B/C 及 A1／A2 必須能依既有權限取得模型；Branch 對自己的 Leaves 的模型下發路徑不變。Root 在 round outcome 記錄真實 direct participant set，不能把直接 Leaf 偽裝成 Branch 或把它的結果算兩次。
+E2b 的 instruction 可仍列 A1／A2，但 A2 不可用或建立失敗時不算 confirmed edge；realized topology 只含 A1。Root 依明示的部分修復條件記下接受／拒絕結果：接受時後續 round 可聚合 A1、B、C，拒絕時不宣稱恢復。Root 的 `minAvailableNodes` 以修復時的 direct cohort 判斷；`minTrainNodes`、`fractionTrain`、`minCompletionRate` 在後續同層 round 正確使用，A2 的資料不再被算入該輪樣本權重。兩種情境皆須保留結果型別、身分、樣本數不合法時的既有失敗處理，且 B/C 路徑不得退化。
 
-**驗收。** E2a 在同一 accepted Root round 可以同時聚合 A1、A2、B、C 的有效結果；E2b 可聚合 A1、B、C。結果型別錯誤、身分或樣本數欄位不合法時仍沿既有失敗處理，B/C 的原路徑不得退化。詳細計畫必須逐段對照 Root 的 round dispatch、ADRF 儲存／允許清單、Go 模型取用契約、Leaf 模型取得、artifact 驗證與 round cleanup，不能只改 aggregation 函式。
+本項的詳細計畫須對照現有 Root group／candidate pool，定案 direct-repair 的本地設定與啟動時點；逐段檢查 Root round dispatch、ADRF 儲存／允許清單、Go 模型取用契約、Leaf 模型取得、artifact 驗證與 round cleanup。這是 Root 設定及狀態的擴充，不預設新的 wire 欄位，也不能只修改 aggregation 函式。
 
-## 5. 部分修復與明示的接受條件
-
-**現況。** Root 靜態設定的初始 admission 僅接受 `complete_required`，且 Root readiness 以 Branch group 數量判斷；Branch group 的 policy 是 Branch 管理下層 Leaves 的條件。E2b 所需的「Root 嘗試 A1／A2，但只確認 A1 仍接受修復」不能誤用原 Branch 的兩個 Leaves 門檻，也不能把 A2 的消失視為無條件成功。
-
-**要實作。** 在 Root 本地設定明確表達 direct-repair cohort 的最低可用數及 Root 這一層每輪的選擇／完成條件，與 B/C 原有 Branch-local policy 分開。Root 嘗試被授權的 A1／A2，保留 A2 失敗或不可用的結果，再以實際 confirmed direct edges 和對應 policy 判斷接受或拒絕；只有接受後才把修復結果作為新的 accepted realized topology。修復期間未受影響的 B/C 仍可依既有 policy 支持降級 round。E2a 的兩 Leaf 完整接回與 E2b 的一 Leaf 部分接回須使用明示、可記錄的條件；原 E0／E1 的三 Branch 設定不默默改寫。
-
-**驗收。** E2b 的 instruction 可以仍列 A1／A2，realized topology 只含 A1，Root 能記下所用 policy 和接受／拒絕結果；接受時後續訓練由 A1、B、C 繼續，拒絕時不宣稱恢復。Root 的 `minAvailableNodes`、`minTrainNodes`、`fractionTrain`、`minCompletionRate` 分母都以當時的 direct cohort 說明並測試；A2 的訓練資料不再被算入該輪樣本權重。詳細計畫須決定既有本地設定如何表達 direct-repair 條件及其啟用時點，這是設定／Root 狀態的擴充，不預設新的 wire 欄位。
-
-## 6. 配對實驗輸入與原始資料交接
+## 4. 配對實驗輸入與原始資料交接
 
 **PyMTLF 所需能力。** 確認 E0–E2b 的本地設定可逐 run 指定相同 seed 對應的資料分割、初始模型 artifact、local epochs、FedProx 與 aggregation 設定、總 accepted rounds，並在每個節點原始資料中對回 `mlCorreId`。Root 既有 initial／逐 accepted round validation、final model 和 round outcome 繼續使用；第 2 項補足 protocol 時間點，失敗或未恢復的 run 也應保留截至停止時的原始事件。若現有設定與輸出已足夠，這一項只需驗證及文件化，不為五 seed 增加新的 runtime 排程器。
 
-**實驗執行端的界線。** Testbed controller 負責五 seed 配對、MNIST 第 12 輪／CIFAR-10 第 20 輪後的故障注入、A2 是否停止、各節點檔案收集與 run metadata；離線分析負責 95% CI、AUC、paired E0 差值、recovery 判定及失敗 run 的統計。這些不是 PyMTLF 的線上決策。Controller 的故障注入時間與第 2 項的各節點 UTC 事件對齊後，才能計算 failure→detection→instruction→new edges ready→first accepted contribution；跨機器時鐘同步／誤差是 testbed 交接條件，不應由 PyMTLF 虛構時間點。
+**實驗執行端的界線。** Testbed controller 負責五 seed 配對、MNIST 第 12 輪／CIFAR-10 第 20 輪後的故障注入、A2 是否停止、各節點檔案收集與 run metadata；離線分析負責 95% CI、AUC、paired E0 差值、recovery 判定、失敗 run 統計，以及依第 2 項原始紀錄事後計算訂閱資源 Create／PUT／PATCH／DELETE 的發起次數。若分析通知，須與訂閱資源操作分開統計；發起與回覆、發送與接收不得重複計數。這是 PyMTLF 可觀察的操作次數，不宣稱精確的 SBI wire-level HTTP 呼叫數。這些都不是 PyMTLF 的線上決策或本項新增的計數功能。Controller 的故障注入時間與第 2 項的各節點 UTC 事件對齊後，才能計算 failure→detection→instruction→new edges ready→first accepted contribution；跨機器時鐘同步／誤差是 testbed 交接條件，不應由 PyMTLF 虛構時間點。
 
-**驗收。** 對同一 workload／seed 的四種情境，可以以 run metadata 和 `mlCorreId` 對齊各節點原始事件與 Root 模型曲線；設定快照明示 E2a／E2b 若採不同接受條件，不能把它寫成與 E0／E1 僅差故障類型。未恢復的 run 仍可供離線分析；舊的單次 MNIST／CIFAR-10 配對不計入新的五 seed 結果。第 2–5 項通過本地測試後，仍需另由 testbed 驗證實際跨 NF 行為，不能以本地測試替代正式實驗。
+**驗收。** 對同一 workload／seed 的四種情境，可以以 run metadata 和 `mlCorreId` 對齊各節點原始事件與 Root 模型曲線；設定快照明示 E2a／E2b 若採不同接受條件，不能把它寫成與 E0／E1 僅差故障類型。未恢復的 run 仍可供離線分析；舊的單次 MNIST／CIFAR-10 配對不計入新的五 seed 結果。第 2、3 項通過本地測試後，仍需另由 testbed 驗證實際跨 NF 行為，不能以本地測試替代正式實驗。

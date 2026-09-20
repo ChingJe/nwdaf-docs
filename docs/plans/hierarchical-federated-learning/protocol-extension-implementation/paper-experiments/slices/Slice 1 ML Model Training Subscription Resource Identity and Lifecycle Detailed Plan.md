@@ -209,7 +209,7 @@ Go 與 PyMTLF 在對應的現有測試中驗證實際 header、`Location`、路�
 
 ## 7. 明確延後與完成門檻
 
-- `future-phase handoff`：逐節點 `observations.jsonl` 訂閱事件、控制面 API-call 計數，以及 testbed 收集器對新資源 ID 的解析，屬後續證據 slice；本 slice 不把人類可讀日誌當作完成證據。
+- `future-phase handoff`：逐節點 `observations.jsonl` 訂閱操作原始事件屬後續證據工作；訂閱資源交互次數由實驗後離線統計，testbed 收集器另須對新資源 ID 正確解析。本 slice 不把人類可讀日誌當作完成證據。
 - `future-phase handoff`：以既有 `x-flTopology`／`x-flTopologyReport` 候選 schema 規劃逐節點證據、E2a／E2b mixed-depth execution 與五 seed 實驗；不預設附錄 B wire migration 或 `topologyVersion`／`reparentInstruction` 欄位。
 - `optional hardening`：跨 Go 程序重啟後的 orphan 訂閱掃描／對帳，不列入此處的資源識別驗收。
 - `integration verification gap`：正式 multi-host testbed、控制器故障注入與新實驗資料收集需在後續階段完成；本 slice 的單元／本地流程測試不替代它們。

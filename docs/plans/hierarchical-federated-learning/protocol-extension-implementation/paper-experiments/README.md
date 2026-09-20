@@ -1,6 +1,6 @@
 # Hierarchical FL 論文實驗
 
-狀態：Slice 1 已完成本地實作；第 2 項起沿用既有候選 schema 的文件調整待使用者確認；E0–E2b 五 seed 實驗尚未執行。
+狀態：Slice 1 已完成本地實作；第 2–4 項工作邊界與沿用既有候選 schema 的方向已確認，詳細計畫與實作仍待進行；E0–E2b 五 seed 實驗尚未執行。
 
 本分類後續以既有候選 `x-flTopology`／`x-flTopologyReport` schema 為實作基準；新版論文附錄 B 是另一種設計，供差異比較與論文敘述對齊，不是本批 wire migration 目標。既有 MNIST／CIFAR-10 單次配對仍是歷史觀測，不是 E0–E2b 五 seed 實驗結果。
 
