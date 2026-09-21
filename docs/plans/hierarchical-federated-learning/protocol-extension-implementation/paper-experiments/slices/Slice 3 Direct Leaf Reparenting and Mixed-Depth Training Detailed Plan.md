@@ -2,13 +2,13 @@
 
 日期：2026-09-21
 
-狀態：詳細計畫與候選 schema 命名已確認，待實作；Go／PyMTLF 合約同步、E2a／E2b 實作、本地驗證與 testbed 驗收均未開始。
+狀態：本地實作、驗證與提交已完成；正式 testbed 驗收待執行。Go／PyMTLF 的候選欄位改名、直接重掛 Leaf 與混合深度聚合，以及本地 runner 的設定與紀錄格式更新均已提交。本地真實程序已分別通過 smoke、E0、E1、E2a、E2b；正式 testbed 的五個配對 seeds、故障注入與論文統計尚未執行，不能據本地短程測試宣稱 testbed 驗收完成。
 
 本 Slice 對應 [實驗能力設計的第 3 項](../Hierarchical%20FL%20Experiment%20Capability%20Design.md)及 [E2a／E2b 實驗情境](../Hierarchical%20FL%20E0-E2b%20Experiments%20and%20Testbed%20Context.md)。本文件將已確認的行為轉成實作邊界、資料流與驗收項目。沿用原本的遞迴拓樸語意，但候選 payload 欄位統一改為 `flTopology`／`flTopologyReport`；不採用論文附件 B 的其他欄位。
 
 ### 候選 schema 命名同步
 
-本次只移除專案新增 JSON payload 欄位的 `x-` 前綴，不更動欄位型別、語意、`suppFeats` 協商或 3GPP 原有欄位。候選 OpenAPI 已改名；現有 Go／PyMTLF 仍使用舊名稱，實作時必須讓發送、接收、驗證與實驗紀錄同時切換，否則跨節點訊息無法正確處理。
+本次只移除專案新增 JSON payload 欄位的 `x-` 前綴，不更動欄位型別、語意、`suppFeats` 協商或 3GPP 原有欄位。候選 OpenAPI 已改名；Go／PyMTLF 的工作樹修改同步切換發送、接收、驗證與實驗紀錄，本地真實程序亦已完成跨程序交換驗證。
 
 | 既有 payload 欄位 | 新 payload 欄位 | 訊息位置與方向 |
 | --- | --- | --- |
@@ -71,7 +71,7 @@ A1 仍可用，A2 不可用。Root 仍嘗試接回 A1／A2，但只有實際確�
 
 ## 4. 既有流程與本 Slice 的處置
 
-目前 Root 的 `FLRootCoordinator` 以 `branch_groups` 建立 Root→Branch 訂閱，`FLServerEngine` 處理 preparation／round，失效時 `_retire_failed_branch` 移除 A 並以 `_replace_branch_group` 準備 A*。Root round 的選人、ready 門檻、模型取用名單與結果型別目前都只按 active Branch 計算；`_realized_topology` 也只呈現 active Branch reports。這是本 Slice 要延伸的既有主流程，不建立另一條獨立的 FL loop。
+實作前，Root 的 `FLRootCoordinator` 以 `branch_groups` 建立 Root→Branch 訂閱，`FLServerEngine` 處理 preparation／round，失效時 `_retire_failed_branch` 移除 A 並以 `_replace_branch_group` 準備 A*。當時 Root round 的選人、ready 門檻、模型取用名單與結果型別都只按 active Branch 計算；`_realized_topology` 也只呈現 active Branch reports。本 Slice 延伸這條既有主流程，沒有建立另一條獨立的 FL loop。
 
 | 既有階段 | 處置與本 Slice 的必要差異 |
 | --- | --- |
@@ -114,18 +114,36 @@ A1 仍可用，A2 不可用。Root 仍嘗試接回 A1／A2，但只有實際確�
 
 ## 6. 修改範圍與驗證
 
-**預計修改**：`NWDAF` 與 `PyMTLF` 先同步上述四個候選 payload 欄位名稱、解析／驗證與相關測試；`PyMTLF` 另調整靜態拓樸模型與 YAML、Root coordinator／Root 本地狀態、A1／A2 的並行 preparation 協調、共用 FL Server round 聚合及相關單元／流程測試。並行範圍限本次需重掛的 direct Leaves；不要求改變 E1 同一 Branch group 內依 priority 依序嘗試替代 Branch 候選的語意。Leaf PyMTLF 的新訂閱與舊關係停用路徑、Go NWDAF 的 private gateway／SBI Create／PATCH／notification 流程，以及 ADRF model distribution 以現有路徑為基礎；除欄位改名外，先用真實入口測試驗證，不預設增加其他修改。若測出現有跨邊界流程缺少必要資訊，先將實際缺口和影響範圍回填本計畫，再決定是否擴充，而不是私下增加欄位或 Go API。Go 邊界的依據是 `NWDAF/internal/sbi/processor/ml_model_training.go` 現有遠端 Create 路由與 PyMTLF `FLServerEngine` 的 private training 操作；本 Slice 不主張新標準欄位或 free5GC 原生支援混合深度 FL。
+**修改範圍**：`NWDAF` 與 `PyMTLF` 同步上述四個候選 payload 欄位名稱、解析／驗證與相關測試；`PyMTLF` 另調整靜態拓樸模型與 YAML、Root coordinator／Root 本地狀態、A1／A2 的並行 preparation 協調、共用 FL Server round 聚合及相關單元／流程測試。並行範圍限本次需重掛的 direct Leaves；E1 同一 Branch group 內依 priority 依序嘗試替代 Branch 候選的語意不變。為執行必要的本地真實程序驗證，`nwdaf-resources` 的 runner 也已更新：從目前的 NWDAF factory 欄位產生節點設定，改用現行 topology／紀錄欄位，並加入 E0、E2a、E2b 的短程 profile；不修改實驗室 testbed。Leaf PyMTLF 的新訂閱與舊關係停用路徑、Go NWDAF 的 private gateway／SBI Create／PATCH／notification 流程，以及 ADRF model distribution 仍使用既有路徑。Go 邊界的依據是 `NWDAF/internal/sbi/processor/ml_model_training.go` 現有遠端 Create 路由與 PyMTLF `FLServerEngine` 的 private training 操作；本 Slice 不主張新標準欄位或 free5GC 原生支援混合深度 FL。
 
 | 驗證層級 | 要直接證明的結果 |
 | --- | --- |
 | 設定與拓樸單元測試 | 缺少或填錯 `on_branch_failure` 被拒；E1/E2 模式各自選對路徑；舊 `admission` 不再作為合法本地欄位；初始 policy 門檻與 branch group 映射不變。 |
-| 候選 schema 合約測試 | Create／PUT／PATCH／Notify／`immReport` 的 Go、PyMTLF 發送與接收均使用無前綴欄位；錯誤路徑與實驗紀錄一致；舊欄位不作相容別名；E0／E1 跨程序回歸可交換新格式。 |
-| Root coordinator 決定性測試 | A 的原 confirmed Leaf 名單在 report 清除前被保存；A1／A2 的 Create 均已發出後才釋放任一 preparation 回覆，直接證明並行而非串行；即使 B／C 已滿足門檻也發起兩者。控制 A1 先成功、A2 保持等待或逾時，確認 A1 從下一輪即可被選入且 B／C 可繼續；再測兩者完成順序相反、各自成功／拒絕／逾時，結果互不污染。preparation 失敗的 participant 在 round 執行中不被違規移除；後續 direct Leaf round 失敗不誤入 Branch 修復；失效 generation 的各在途結果不重新啟用舊 run。使用可控制的回覆／同步點，不用固定 sleep 充當證明。 |
+| 候選 schema 合約測試 | 沿用現有合約測試確認 Go、PyMTLF 的 Create／PUT／PATCH／Notify／`immReport` 使用無前綴欄位，並以程式碼檢查確認沒有舊欄位相容讀取；不為每個過時欄位另設拒絕測試。E0／E1 跨程序回歸仍須證明新格式可交換。 |
+| Root coordinator 決定性測試 | 確認 A 的原 confirmed Leaf 名單在 report 清除前保存；A1／A2 的 preparation 可並行，A1 成功時不受 A2 等待或失敗阻擋，且從下一輪才可被選入；B／C 繼續貢獻。使用可控制的回覆／同步點證明主要流程，不以每個狀態排列組合各新增測試。失效 generation 與在途資源清理沿用既有機制並在審查時核對。 |
 | FL Server／artifact 測試 | 同一 Root round 同時接受 Leaf `TRAINING` 與 Branch `HIERARCHY_AGGREGATE`；錯型別、錯 `mlCorreId`／round／participant、錯 Branch subordinate set 會被拒；Leaf 不被要求 Branch subordinate set；按實際樣本數加權且不雙重計數；原 Branch→Leaf 純 `TRAINING` 路徑不退步。 |
 | 訂閱、模型與紀錄流程測試 | Root→A1／A2 的 Create／preparation 可重疊執行，且各自的 notify／round PATCH 經現有 Go-facing 路徑到達正確 Leaf；Root 的 ADRF allowlist 包含已選入的直接 Leaf／必要後代，未確認 A2 不列入；同一 `mlCorreId`、各自的新 Root→Leaf 訂閱 ID、B／C 未重建；realized／accepted topology 與事件和實際形成關係一致。需在實際 Leaf 容量設定下覆蓋原 A 訂閱尚殘留時的新訂閱、preparation 回報與舊關係停用結果。 |
 | 本地 real-process 與 testbed | 先跑無故障 E0、既有 A→A* E1 回歸，再跑 E2a、A2 於重掛前停止的 E2b；檢查 accepted Root rounds 的直接參與者、模型保存及逐節點紀錄。實驗端的五個 seeds、故障注入時點與論文統計屬後續 testbed 驗收，未跑前不可宣稱 E2a／E2b 已在 testbed 完成。 |
 
-執行階段依 `PyMTLF` 既有 lint 與 pytest 工作流，先跑上述 focused tests，再跑 full suite；Go 欄位改名須跑對應的合約／SBI 測試與建置。文件完成僅表示實作計畫已可供審查，**不代表**本 Slice 的程式、真實程序或 testbed 驗證完成。
+### 本地短程驗證設定
+
+以下是 `nwdaf-resources/deployments/hierarchical_fl` runner 的實際設定，**不是**正式論文實驗的資料量、故障輪次或訓練時長。
+
+| 項目 | 本地實際值 |
+| --- | --- |
+| 節點與拓樸 | 1 Root、3 個現役 Branch、每個 Branch 2 個 Leaves；E1 另預先部署 A*，E0／E2a／E2b 不部署 A*。 |
+| 故障處理 | E1 使用 Root 本地 `on_branch_failure: replace_branch`，A／A* 優先級分別為 100／50；E2a／E2b 使用 `reparent_leaves_to_root`。 |
+| Root policy | `minAvailableNodes=2`、`minTrainNodes=2`、`fractionTrain=1.0`、`acceptFailures=true`、`minCompletionRate=0.66`；因此 A 失效後，B／C 的兩份成功結果仍可使該輪被接受。 |
+| Branch policy | 每個 Branch 要求兩個直接 Leaves 均可用且參與：`minAvailableNodes=2`、`minTrainNodes=2`、`fractionTrain=1.0`、`acceptFailures=false`、`minCompletionRate=1.0`。 |
+| 訓練與模型 | Root 執行 4 個 rounds；`fedProx` 的 `proximalMu=0.01`，以 `sampleWeighted` 聚合。Branch 的 `reportAfter` 為 1 round，Leaf 為 2 epochs；Leaf 的 2 epochs 由新訂閱的 `reportAfter` 決定，不採用 round bundle 中預設的 `client_training.epochs=1`。Leaf 使用 batch size 16、learning rate 0.001，在 CPU 執行。 |
+| 資料與量測 | MNIST；seed 42 從官方訓練集隨機分配每個 Leaf 64 筆本地 shard。Root validation 128 筆、獨立 held-out 128 筆，兩者均從官方測試集抽取；不是正式論文實驗的資料分割。 |
+| 逾時與故障注入 | Preparation 與 round timeout 各為 60 秒。第 1 個 Root round 被接受、下一輪進入等待回報後，runner 停止 A 的 Go NWDAF 與 PyMTLF 程序；E2b 同時停止 A2 的兩個程序。 |
+
+本地真實程序結果：smoke 通過單組 Branch／Leaf 協定流程；E0 四輪均由 A／B／C 貢獻；E1 在 A 失效後由 A* 建立新關係並重新貢獻；E2a 由 Root 直接接回 A1／A2；E2b 同時嘗試接回 A1／A2，但 A2 停止服務，只有 A1 成功確認並參與後續 round。E1／E2a／E2b 均有 B／C 的降級 round 與最終模型保存證據。這些各為單次、四輪的本地流程測試；正式 testbed 的多 seed 結果仍待驗收。
+
+四次本地 run 的最終 held-out accuracy 均為 11／128（約 8.59%）。此資料量與輪數只用於驗證訂閱、故障處理、混合深度聚合及模型保存能否執行，不能用來主張學習品質或故障後 accuracy recovery。
+
+執行階段依 `PyMTLF` 既有 lint 與 pytest 工作流，先跑上述 focused tests，再跑 full suite；Go 欄位改名須跑對應的合約／SBI 測試與建置。此處的本地實作及驗證結果已供使用者確認並完成提交，**不代表**正式 testbed 驗收完成。
 
 ## 7. 範圍外
 
