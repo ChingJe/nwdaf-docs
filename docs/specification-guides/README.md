@@ -1,4 +1,4 @@
-# Specification Guides
+# 規格解讀指南
 
 此分類收錄跨越多份 3GPP Technical Specification 與 OpenAPI 的規格解讀。
 文件的目的，是先建立標準能力、角色、介面與流程邊界，再供
@@ -15,3 +15,7 @@
 
 - [NWDAF Federated Learning Release 18 規格解讀](NWDAF%20Federated%20Learning%20Release%2018%20規格解讀.md)
 - [Internal Group Resolution And Serving SMF Release 18 規格解讀](Internal%20Group%20Resolution%20And%20Serving%20SMF%20Release%2018%20規格解讀.md)
+
+## 主題分類
+
+- [NWDAF 與外部產業應用](nwdaf-vertical-application/README.md)：逐步整理應用層名詞、規格角色與 NWDAF 整合相關的解讀，目前以 Release 20 規格為研究來源。
