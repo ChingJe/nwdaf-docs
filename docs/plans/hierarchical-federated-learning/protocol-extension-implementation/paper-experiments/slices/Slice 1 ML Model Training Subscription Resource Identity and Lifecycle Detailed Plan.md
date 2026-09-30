@@ -59,7 +59,7 @@ type MLModelTrainingSubscriptionRoute struct {
 
 ### 2.2 標準與實作結構參考
 
-標準邊界：本地 Release 18 `specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml` 的 `/subscriptions` POST 要求 `201` representation 與 `Location`，後續 PUT／PATCH／DELETE 使用 `/subscriptions/{subscriptionId}`；`subscriptionId` 是 string。**不修改**公開 SBI 路徑、body、標準欄位或回應語意。`X-NWDAF-Subscription-Id` 僅是本專案接收端 Go→自身 PyMTLF 的私有 Create header，不送給其他 NWDAF。私有 outbound URL 是發起端 Go 的代理路徑，不是 peer `Location`。
+標準邊界：本地 Release 18 `specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelTraining.yaml` 的 `/subscriptions` POST 要求 `201` representation 與 `Location`，後續 PUT／PATCH／DELETE 使用 `/subscriptions/{subscriptionId}`；`subscriptionId` 是 string。**不修改**公開 SBI 路徑、body、標準欄位或回應語意。`X-NWDAF-Subscription-Id` 僅是本專案接收端 Go→自身 PyMTLF 的私有 Create header，不送給其他 NWDAF。私有 outbound URL 是發起端 Go 的代理路徑，不是 peer `Location`。
 
 free5GC 結構對照只用本地唯讀鏡像：BSF `internal/sbi/processor/subscriptions.go` 顯示資源 ID 與 `201 Location` 的公開資源關係；PCF `internal/sbi/api_httpcallback.go` 顯示 callback route 與處理器分界。具體路由狀態、私有後端契約仍以本專案程式和上述 OpenAPI 為準，不從鏡像推論相同的生命週期。
 

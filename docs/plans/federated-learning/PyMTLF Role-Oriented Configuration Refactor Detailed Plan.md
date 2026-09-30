@@ -493,7 +493,7 @@ schema並在測試中載入驗證。
 
 ### 10.1 原因與邊界
 
-[TS 29.520 §5.4.6](../../../specs/TS%2029.520/5%20API%20Definitions/5.4%20Nnwdaf_MLModelProvision%20Service%20API/5.4.6%20Data%20Model.md)
+[TS 29.520 §5.4.6](../../../specs/Rel-18/TS%2029.520/5%20API%20Definitions/5.4%20Nnwdaf_MLModelProvision%20Service%20API/5.4.6%20Data%20Model.md)
 將`modelUniqueId`定義為`Uinteger`，並要求在5GC scope內唯一。
 現有PyMTLF卻同時使用：
 

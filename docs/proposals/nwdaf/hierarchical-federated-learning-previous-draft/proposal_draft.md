@@ -306,10 +306,10 @@ Internal Group ID。這支持External-to-Internal group story，但目前實驗�
 
 來源：
 
-- [TS 23.288 §6.1.1](../../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.1%20Procedures%20for%20analytics%20exposure/6.1.1%20Analytics%20Subscribe%20and%20Unsubscribe.md)
-- [TS 23.288 §6.7.3](../../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.7%20UE%20related%20analytics/6.7.3%20UE%20Communication%20Analytics.md)
-- [TS 23.502 §4.15.6.2](../../../../specs/TS%2023.502/4%20System%20procedures/4.15%20Network%20Exposure/4.15.6%20External%20Parameter%20Provisioning/4.15.6.2%20NEF%20service%20operations%20information%20flow.md)
-- [TS 23.502 §4.15.6.3c](../../../../specs/TS%2023.502/4%20System%20procedures/4.15%20Network%20Exposure/4.15.6%20External%20Parameter%20Provisioning/4.15.6.3c%205G%20VN%20Group%20membership%20management%20parameters.md)
+- [TS 23.288 §6.1.1](../../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.1%20Procedures%20for%20analytics%20exposure/6.1.1%20Analytics%20Subscribe%20and%20Unsubscribe.md)
+- [TS 23.288 §6.7.3](../../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.7%20UE%20related%20analytics/6.7.3%20UE%20Communication%20Analytics.md)
+- [TS 23.502 §4.15.6.2](../../../../specs/Rel-18/TS%2023.502/4%20System%20procedures/4.15%20Network%20Exposure/4.15.6%20External%20Parameter%20Provisioning/4.15.6.2%20NEF%20service%20operations%20information%20flow.md)
+- [TS 23.502 §4.15.6.3c](../../../../specs/Rel-18/TS%2023.502/4%20System%20procedures/4.15%20Network%20Exposure/4.15.6%20External%20Parameter%20Provisioning/4.15.6.3c%205G%20VN%20Group%20membership%20management%20parameters.md)
 
 ### 6.2 NWDAF hierarchy與Analytics Aggregator
 
@@ -334,10 +334,10 @@ Analytics ID，而不是替每個service創造不同serving area。
 
 來源：
 
-- [TS 23.288 §5](../../../../specs/TS%2023.288/5%20Network%20Data%20Analytics%20Functional%20Description.md)
-- [TS 23.288 §6.1A](../../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.1A%20Analytics%20aggregation%20from%20multiple%20NWDAFs.md)
-- [TS 29.510 `NwdafInfo`](../../../../specs/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.45%20Type%20NwdafInfo.md)
-- [TS 29.510 `MlAnalyticsInfo`](../../../../specs/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.84%20Type%20MlAnalyticsInfo.md)
+- [TS 23.288 §5](../../../../specs/Rel-18/TS%2023.288/5%20Network%20Data%20Analytics%20Functional%20Description.md)
+- [TS 23.288 §6.1A](../../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.1A%20Analytics%20aggregation%20from%20multiple%20NWDAFs.md)
+- [TS 29.510 `NwdafInfo`](../../../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.45%20Type%20NwdafInfo.md)
+- [TS 29.510 `MlAnalyticsInfo`](../../../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.84%20Type%20MlAnalyticsInfo.md)
 
 ### 6.3 Model Provision chain
 
@@ -351,7 +351,7 @@ model、同時向Local提供model具有直接標準依據。NRF可以依Analytic
 model AoI與vendor information回傳候選MTLF；3GPP沒有規定候選者的完整ranking，
 最終selection仍屬實作政策。
 
-來源：[TS 23.288 §6.2A](../../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2A%20Procedure%20for%20ML%20Model%20Provisioning.md)。
+來源：[TS 23.288 §6.2A](../../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2A%20Procedure%20for%20ML%20Model%20Provisioning.md)。
 
 ### 6.4 Model Monitor chain
 
@@ -367,8 +367,8 @@ payload，也不把該值誤稱為regional WAPE。
 
 來源：
 
-- [TS 23.288 §6.2E](../../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2E%20MTLF-based%20ML%20Model%20Accuracy%20Monitoring.md)
-- [TS 29.520 §5.6.6](../../../../specs/TS%2029.520/5%20API%20Definitions/5.6%20Nnwdaf_MLModelMonitor%20Service%20API/5.6.6%20Data%20Model.md)
+- [TS 23.288 §6.2E](../../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2E%20MTLF-based%20ML%20Model%20Accuracy%20Monitoring.md)
+- [TS 29.520 §5.6.6](../../../../specs/Rel-18/TS%2029.520/5%20API%20Definitions/5.6%20Nnwdaf_MLModelMonitor%20Service%20API/5.6.6%20Data%20Model.md)
 
 ### 6.5 FL dual role與多process composition
 
@@ -390,8 +390,8 @@ policy都能在不更改標準SBI的情況下實作。
 
 來源：
 
-- [TS 23.288 §6.2C](../../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
-- [TS 29.510 `FlCapabilityType`](../../../../specs/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.3%20Simple%20data%20types%20and%20enumerations/6.1.6.3.19%20Enumeration%20FlCapabilityType.md)
+- [TS 23.288 §6.2C](../../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
+- [TS 29.510 `FlCapabilityType`](../../../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.3%20Simple%20data%20types%20and%20enumerations/6.1.6.3.19%20Enumeration%20FlCapabilityType.md)
 
 ## 7. Component Responsibilities與改動範圍
 

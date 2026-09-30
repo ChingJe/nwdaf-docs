@@ -1613,13 +1613,13 @@ Concurrency guards目前包括：
 
 | Feature | OpenAPI | TS procedure evidence |
 |---|---|---|
-| Events Subscription | `specs/openapi/TS29520_Nnwdaf_EventsSubscription.yaml` | TS 29.520 clauses 4.2.2.2、4.2.2.3 |
-| NRF discovery/cache | `specs/openapi/TS29510_Nnrf_NFDiscovery.yaml` | TS 29.510 clauses 5.3.2.2.1、5.3.2.2.2、6.2.6.2.2 |
-| SMF Event Exposure | `specs/openapi/TS29508_Nsmf_EventExposure.yaml` | TS 29.508 clause 4.2.3 |
-| UPF direct notification | `specs/openapi/TS29564_Nupf_EventExposure.yaml` | TS 29.508 clause 4.2.3.2 Note 2；TS 23.502 clauses 4.15.4.5.1、4.15.4.5.2 |
-| ADRF storage/retrieval | `specs/openapi/TS29575_Nadrf_DataManagement.yaml` | TS 29.575 clauses 4.2.2.2、4.2.2.5、4.2.2.6、4.2.2.8 |
-| Model Provision | `specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml` | TS 29.520 clause 4.5；TS 23.288 clauses 6.2A、6.2E.2 |
-| Model Monitor | `specs/openapi/TS29520_Nnwdaf_MLModelMonitor.yaml` | TS 29.520 clause 4.7 |
+| Events Subscription | `specs/Rel-18/openapi/TS29520_Nnwdaf_EventsSubscription.yaml` | TS 29.520 clauses 4.2.2.2、4.2.2.3 |
+| NRF discovery/cache | `specs/Rel-18/openapi/TS29510_Nnrf_NFDiscovery.yaml` | TS 29.510 clauses 5.3.2.2.1、5.3.2.2.2、6.2.6.2.2 |
+| SMF Event Exposure | `specs/Rel-18/openapi/TS29508_Nsmf_EventExposure.yaml` | TS 29.508 clause 4.2.3 |
+| UPF direct notification | `specs/Rel-18/openapi/TS29564_Nupf_EventExposure.yaml` | TS 29.508 clause 4.2.3.2 Note 2；TS 23.502 clauses 4.15.4.5.1、4.15.4.5.2 |
+| ADRF storage/retrieval | `specs/Rel-18/openapi/TS29575_Nadrf_DataManagement.yaml` | TS 29.575 clauses 4.2.2.2、4.2.2.5、4.2.2.6、4.2.2.8 |
+| Model Provision | `specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelProvision.yaml` | TS 29.520 clause 4.5；TS 23.288 clauses 6.2A、6.2E.2 |
+| Model Monitor | `specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelMonitor.yaml` | TS 29.520 clause 4.7 |
 
 OpenAPI決定path、method、field、required/optional、status與header；TS用來確認procedure intent與role
 boundary。Go/backend private path只保留active plan明列的standard-shaped properties，不代表backend是獨立NF。

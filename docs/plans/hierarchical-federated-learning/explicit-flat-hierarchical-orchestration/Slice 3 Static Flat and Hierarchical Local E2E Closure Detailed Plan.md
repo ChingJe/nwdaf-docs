@@ -12,8 +12,8 @@
 - [Slice 5 Hierarchical Rounds and Aggregation Detailed Plan](../hierarchical-fl-model-bundle-edition/Slice%205%20Hierarchical%20Rounds%20and%20Aggregation%20Detailed%20Plan.md)
 - [Slice 8 Multi-process E2E and Regression Closure Detailed Plan](../hierarchical-fl-model-bundle-edition/Slice%208%20Multi-process%20E2E%20and%20Regression%20Closure%20Detailed%20Plan.md)
 - [NWDAF Development Policy](../../../development_policy.md)
-- [Release 18 Nnwdaf ML Model Training OpenAPI](../../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
-- [Release 18 NRF NF Management OpenAPI](../../../../specs/openapi/TS29510_Nnrf_NFManagement.yaml)
+- [Release 18 Nnwdaf ML Model Training OpenAPI](../../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
+- [Release 18 NRF NF Management OpenAPI](../../../../specs/Rel-18/openapi/TS29510_Nnrf_NFManagement.yaml)
 
 ---
 

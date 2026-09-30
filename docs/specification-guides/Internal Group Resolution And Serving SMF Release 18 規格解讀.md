@@ -66,9 +66,9 @@ SUPI index。這四部分共同保證 group identity 在網路內的識別
 
 規格證據：
 
-- [TS 23.003 §28.9 Internal-Group Identifier](../../specs/TS%2023.003/28%20Numbering%2C%20addressing%20and%20identification%20for%205G%20System%20%285GS%29/28.9%20Internal-Group%20Identifier.md)
-- [TS 23.003 §19.9 IMSI-Group Identifier](../../specs/TS%2023.003/19%20Numbering%2C%20addressing%20and%20identification%20for%20the%20Evolved%20Packet%20Core%20%28EPC%29/19.9%20IMSI-Group%20Identifier.md)
-- [TS 29.571 Common Data OpenAPI `GroupId`](../../specs/openapi/TS29571_CommonData.yaml)
+- [TS 23.003 §28.9 Internal-Group Identifier](../../specs/Rel-18/TS%2023.003/28%20Numbering%2C%20addressing%20and%20identification%20for%205G%20System%20%285GS%29/28.9%20Internal-Group%20Identifier.md)
+- [TS 23.003 §19.9 IMSI-Group Identifier](../../specs/Rel-18/TS%2023.003/19%20Numbering%2C%20addressing%20and%20identification%20for%20the%20Evolved%20Packet%20Core%20%28EPC%29/19.9%20IMSI-Group%20Identifier.md)
+- [TS 29.571 Common Data OpenAPI `GroupId`](../../specs/Rel-18/openapi/TS29571_CommonData.yaml)
 
 ## 4. 完整角色邊界
 
@@ -134,9 +134,9 @@ NRF 在此只選出 UDM，不會直接回傳 SUPI list。
 
 規格證據：
 
-- [TS 29.510 Nnrf NFDiscovery OpenAPI](../../specs/openapi/TS29510_Nnrf_NFDiscovery.yaml)
-- [TS 29.510 Nnrf NFManagement OpenAPI `UdmInfo`](../../specs/openapi/TS29510_Nnrf_NFManagement.yaml)
-- [TS 23.502 §4.15.4.5.2](../../specs/TS%2023.502/4%20System%20procedures/4.15%20Network%20Exposure/4.15.4%20Core%20Network%20Internal%20Event%20Exposure/4.15.4.5%20Exposure%20of%20Events%20from%20UPF%20for%20UPF%20Data%20Collection.md)
+- [TS 29.510 Nnrf NFDiscovery OpenAPI](../../specs/Rel-18/openapi/TS29510_Nnrf_NFDiscovery.yaml)
+- [TS 29.510 Nnrf NFManagement OpenAPI `UdmInfo`](../../specs/Rel-18/openapi/TS29510_Nnrf_NFManagement.yaml)
+- [TS 23.502 §4.15.4.5.2](../../specs/Rel-18/TS%2023.502/4%20System%20procedures/4.15%20Network%20Exposure/4.15.4%20Core%20Network%20Internal%20Event%20Exposure/4.15.4.5%20Exposure%20of%20Events%20from%20UPF%20for%20UPF%20Data%20Collection.md)
 
 ## 6. 步驟二：Internal Group ID 展開為 SUPIs
 
@@ -189,11 +189,11 @@ UDR 回傳的也是 `GroupIdentifiers`。TS 29.505 的 UDR schema
 
 規格證據：
 
-- [TS 29.503 §5.2.2.2.14 Group Identifier Translation](../../specs/TS%2029.503/5%20Services%20offered%20by%20the%20UDM/5.2%20Nudm_SubscriberDataManagement%20Service/5.2.2%20Service%20Operations/5.2.2.2%20Get/5.2.2.2.14%20Group%20Identifier%20Translation.md)
-- [TS 29.503 §6.1.3.20 GroupIdentifiers resource](../../specs/TS%2029.503/6%20API%20Definitions/6.1%20Nudm_SubscriberDataManagement%20Service%20API/6.1.3%20Resources/6.1.3.20%20Resource_%20GroupIdentifiers%20%28Document%29.md)
-- [TS 29.503 Nudm SDM OpenAPI](../../specs/openapi/TS29503_Nudm_SDM.yaml)
-- [TS 29.505 §5.2.33 UDR GroupIdentifiers resource](../../specs/TS%2029.505/5%20Usage%20of%20Nudr_DataRepository%20Service/5.2%20Resources/5.2.33%20Resource_%20GroupIdentifiers.md)
-- [TS 29.505 Subscription Data OpenAPI](../../specs/openapi/TS29505_Subscription_Data.yaml)
+- [TS 29.503 §5.2.2.2.14 Group Identifier Translation](../../specs/Rel-18/TS%2029.503/5%20Services%20offered%20by%20the%20UDM/5.2%20Nudm_SubscriberDataManagement%20Service/5.2.2%20Service%20Operations/5.2.2.2%20Get/5.2.2.2.14%20Group%20Identifier%20Translation.md)
+- [TS 29.503 §6.1.3.20 GroupIdentifiers resource](../../specs/Rel-18/TS%2029.503/6%20API%20Definitions/6.1%20Nudm_SubscriberDataManagement%20Service%20API/6.1.3%20Resources/6.1.3.20%20Resource_%20GroupIdentifiers%20%28Document%29.md)
+- [TS 29.503 Nudm SDM OpenAPI](../../specs/Rel-18/openapi/TS29503_Nudm_SDM.yaml)
+- [TS 29.505 §5.2.33 UDR GroupIdentifiers resource](../../specs/Rel-18/TS%2029.505/5%20Usage%20of%20Nudr_DataRepository%20Service/5.2%20Resources/5.2.33%20Resource_%20GroupIdentifiers.md)
+- [TS 29.505 Subscription Data OpenAPI](../../specs/Rel-18/openapi/TS29505_Subscription_Data.yaml)
 
 ## 7. 步驟三：找出每個 SUPI 的 serving SMF
 
@@ -271,11 +271,11 @@ UDR 的 collection GET 在成功時可回傳空陣列的 `200 OK`；UDM
 
 規格證據：
 
-- [TS 29.503 §5.3.2.5.7 SMF registration retrieval](../../specs/TS%2029.503/5%20Services%20offered%20by%20the%20UDM/5.3%20Nudm_UEContextManagement%20Service/5.3.2%20Service%20Operations/5.3.2.5%20Get.md)
-- [TS 29.503 Nudm UECM OpenAPI](../../specs/openapi/TS29503_Nudm_UECM.yaml)
-- [TS 29.505 §5.2.8 SmfRegistrations resource](../../specs/TS%2029.505/5%20Usage%20of%20Nudr_DataRepository%20Service/5.2%20Resources/5.2.8%20Resource_%20SmfRegistrations.md)
-- [TS 29.504 Nudr DataRepository OpenAPI](../../specs/openapi/TS29504_Nudr_DR.yaml)
-- [TS 29.505 Subscription Data OpenAPI](../../specs/openapi/TS29505_Subscription_Data.yaml)
+- [TS 29.503 §5.3.2.5.7 SMF registration retrieval](../../specs/Rel-18/TS%2029.503/5%20Services%20offered%20by%20the%20UDM/5.3%20Nudm_UEContextManagement%20Service/5.3.2%20Service%20Operations/5.3.2.5%20Get.md)
+- [TS 29.503 Nudm UECM OpenAPI](../../specs/Rel-18/openapi/TS29503_Nudm_UECM.yaml)
+- [TS 29.505 §5.2.8 SmfRegistrations resource](../../specs/Rel-18/TS%2029.505/5%20Usage%20of%20Nudr_DataRepository%20Service/5.2%20Resources/5.2.8%20Resource_%20SmfRegistrations.md)
+- [TS 29.504 Nudr DataRepository OpenAPI](../../specs/Rel-18/openapi/TS29504_Nudr_DR.yaml)
+- [TS 29.505 Subscription Data OpenAPI](../../specs/Rel-18/openapi/TS29505_Subscription_Data.yaml)
 
 ## 8. 步驟四：將 SMF identity 解析成 endpoint
 
@@ -317,8 +317,8 @@ Subscriber/routing information -> NF Group ID
 
 規格證據：
 
-- [TS 29.504 §5.3 Nudr GroupIDmap service](../../specs/TS%2029.504/5%20Services%20offered%20by%20the%20UDR/5.3%20Nudr_GroupIDmap%20Service.md)
-- [TS 29.504 Nudr GroupIDmap OpenAPI](../../specs/openapi/TS29504_Nudr_GroupIDmap.yaml)
+- [TS 29.504 §5.3 Nudr GroupIDmap service](../../specs/Rel-18/TS%2029.504/5%20Services%20offered%20by%20the%20UDR/5.3%20Nudr_GroupIDmap%20Service.md)
+- [TS 29.504 Nudr GroupIDmap OpenAPI](../../specs/Rel-18/openapi/TS29504_Nudr_GroupIDmap.yaml)
 
 ## 10. 對實驗情境的標準流程摘要
 

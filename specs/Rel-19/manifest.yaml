@@ -1,0 +1,6 @@
+release: '19'
+specifications:
+- spec: TS 28.105
+  version: 19.6.0
+  path: TS 28.105/
+  source_archive: 28105-j60.zip

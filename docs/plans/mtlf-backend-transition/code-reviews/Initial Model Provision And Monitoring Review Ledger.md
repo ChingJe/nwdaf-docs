@@ -74,10 +74,10 @@ follow-up review文件。
 
 本輪以workspace-local Release 18 YAML為wire contract來源：
 
-- `nwdaf-docs/specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml`
-- `nwdaf-docs/specs/openapi/TS29520_Nnwdaf_MLModelMonitor.yaml`
-- `nwdaf-docs/specs/openapi/TS29520_Nnwdaf_EventsSubscription.yaml`
-- `nwdaf-docs/specs/openapi/TS29571_CommonData.yaml`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelProvision.yaml`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelMonitor.yaml`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29520_Nnwdaf_EventsSubscription.yaml`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29571_CommonData.yaml`
 
 其中與本輪問題直接相關的語意包括：
 

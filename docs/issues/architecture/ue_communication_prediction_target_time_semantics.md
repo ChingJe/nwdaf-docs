@@ -186,7 +186,7 @@ return models.UeCommunication{
 
 ### 1. `UeCommunication` 本身是 time-slot oriented
 
-`nwdaf-docs/specs/TS 23.288/6 Procedures to Support Network Data Analytics/6.7 UE related analytics/6.7.3 UE Communication Analytics.md`
+`nwdaf-docs/specs/Rel-18/TS 23.288/6 Procedures to Support Network Data Analytics/6.7 UE related analytics/6.7.3 UE Communication Analytics.md`
 
 `UE Communication Statistics` 寫的是：
 
@@ -202,7 +202,7 @@ return models.UeCommunication{
 
 ### 2. `TS 29.520` / OpenAPI 對 `UeCommunication` 的欄位
 
-`nwdaf-docs/specs/openapi/TS29520_Nnwdaf_EventsSubscription.yaml`
+`nwdaf-docs/specs/Rel-18/openapi/TS29520_Nnwdaf_EventsSubscription.yaml`
 
 `UeCommunication` 需要：
 

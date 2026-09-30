@@ -87,17 +87,17 @@ Phase 3已固定且與本輪直接相關的要求包括：
 
 本輪使用下列workspace-local Release 18 corpus：
 
-- `nwdaf-docs/specs/openapi/TS29508_Nsmf_EventExposure.yaml`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29508_Nsmf_EventExposure.yaml`
   - create為`POST /subscriptions`，成功201、mandatory Location及`NsmfEventExposure` representation。
   - create response沒有宣告307/308。
   - individual GET/PUT/DELETE才宣告307/308。
   - SMF notification callback request只宣告`application/json`，error allowlist包含413及415。
-- `nwdaf-docs/specs/openapi/TS29564_Nupf_EventExposure.yaml`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29564_Nupf_EventExposure.yaml`
   - UPF notification callback request只宣告`application/json`，成功204，error allowlist包含413及415。
-- `nwdaf-docs/specs/openapi/TS29575_Nadrf_DataManagement.yaml`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29575_Nadrf_DataManagement.yaml`
   - storage create成功201、mandatory Location及`NadrfDataStoreRecord` representation。
   - Phase 3使用的data notification branch要求`dataSub`與`dataNotif`同時存在。
-- `nwdaf-docs/specs/openapi/TS29571_CommonData.yaml`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29571_CommonData.yaml`
   - common error responses使用`application/problem+json`及`ProblemDetails`。
 
 ### 2.3 free5GC Exemplar Scope

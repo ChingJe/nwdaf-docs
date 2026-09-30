@@ -88,17 +88,17 @@ Phase 3與第一輪remediation已固定的相關要求包括：
 
 本輪使用下列workspace-local Release 18 corpus：
 
-- `nwdaf-docs/specs/openapi/TS29520_Nnwdaf_EventsSubscription.yaml`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29520_Nnwdaf_EventsSubscription.yaml`
   - POST request只宣告`application/json`。
   - POST error responses包含413及415。
   - POST success為201、mandatory Location及`NnwdafEventsSubscription` representation。
-- `nwdaf-docs/specs/openapi/TS29508_Nsmf_EventExposure.yaml`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29508_Nsmf_EventExposure.yaml`
   - `expiry`是optional `DateTime`。
   - create success為201、mandatory Location及`NsmfEventExposure` representation。
   - individual resource GET/PUT/DELETE宣告307/308 redirect responses。
-- `nwdaf-docs/specs/TS 29.508/4 Session Management Event Exposure Service/4.2 Service Operations/4.2.3 Nsmf_EventExposure_Subscribe Service Operation.md`
+- `nwdaf-docs/specs/Rel-18/TS 29.508/4 Session Management Event Exposure Service/4.2 Service Operations/4.2.3 Nsmf_EventExposure_Subscribe Service Operation.md`
   - request含expiry時，SMF可選擇小於或等於request的accepted expiry。
-- `nwdaf-docs/specs/TS 29.508/5 Nsmf_EventExposure API/5.6 Data Model/5.6.2 Structured data types/5.6.2.2 Type NsmfEventExposure.md`
+- `nwdaf-docs/specs/Rel-18/TS 29.508/5 Nsmf_EventExposure API/5.6 Data Model/5.6.2 Structured data types/5.6.2.2 Type NsmfEventExposure.md`
   - expiry之後SMF不再送notification且subscription失效。
   - response沒有expiry時，consumer不得自行假設expiry。
 

@@ -72,16 +72,16 @@ foundation，讓 Go、PyAnLF、PyMTLF 與整合資源對下列內容使用同一
 
 Stage 3 contract 以 local Release 18 OpenAPI 為主：
 
-- [TS 29.520 Nnwdaf ML Model Training OpenAPI](../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
-- [TS 29.520 Nnwdaf ML Model Provision OpenAPI](../../../specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
-- [TS 29.520 Nnwdaf ML Model Monitor OpenAPI](../../../specs/openapi/TS29520_Nnwdaf_MLModelMonitor.yaml)
-- [TS 29.523 ReportingInformation source OpenAPI](../../../specs/openapi/TS29523_Npcf_EventExposure.yaml)
-- [TS 29.510 NRF NFManagement OpenAPI](../../../specs/openapi/TS29510_Nnrf_NFManagement.yaml)
-- [TS 29.571 Common Data OpenAPI](../../../specs/openapi/TS29571_CommonData.yaml)
-- [TS 29.520 ML Model Training Data Model](../../../specs/TS%2029.520/5%20API%20Definitions/5.5%20Nnwdaf_MLModelTraining%20Service%20API/5.5.6%20Data%20Model.md)
-- [TS 29.520 ML Model Training Error Handling](../../../specs/TS%2029.520/5%20API%20Definitions/5.5%20Nnwdaf_MLModelTraining%20Service%20API/5.5.7%20Error%20handling.md)
-- [TS 29.510 MlAnalyticsInfo](../../../specs/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.84%20Type%20MlAnalyticsInfo.md)
-- [TS 29.510 FlCapabilityType](../../../specs/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.3%20Simple%20data%20types%20and%20enumerations/6.1.6.3.19%20Enumeration%20FlCapabilityType.md)
+- [TS 29.520 Nnwdaf ML Model Training OpenAPI](../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
+- [TS 29.520 Nnwdaf ML Model Provision OpenAPI](../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
+- [TS 29.520 Nnwdaf ML Model Monitor OpenAPI](../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelMonitor.yaml)
+- [TS 29.523 ReportingInformation source OpenAPI](../../../specs/Rel-18/openapi/TS29523_Npcf_EventExposure.yaml)
+- [TS 29.510 NRF NFManagement OpenAPI](../../../specs/Rel-18/openapi/TS29510_Nnrf_NFManagement.yaml)
+- [TS 29.571 Common Data OpenAPI](../../../specs/Rel-18/openapi/TS29571_CommonData.yaml)
+- [TS 29.520 ML Model Training Data Model](../../../specs/Rel-18/TS%2029.520/5%20API%20Definitions/5.5%20Nnwdaf_MLModelTraining%20Service%20API/5.5.6%20Data%20Model.md)
+- [TS 29.520 ML Model Training Error Handling](../../../specs/Rel-18/TS%2029.520/5%20API%20Definitions/5.5%20Nnwdaf_MLModelTraining%20Service%20API/5.5.7%20Error%20handling.md)
+- [TS 29.510 MlAnalyticsInfo](../../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.84%20Type%20MlAnalyticsInfo.md)
+- [TS 29.510 FlCapabilityType](../../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.3%20Simple%20data%20types%20and%20enumerations/6.1.6.3.19%20Enumeration%20FlCapabilityType.md)
 
 OpenAPI 決定：
 

@@ -1648,32 +1648,32 @@ proximal transmission、FedAsync 或 secure aggregation。後續若加入：
 
 | Topic | Release 18 evidence |
 | --- | --- |
-| NWDAF capability registration | [TS 29.510 `NwdafInfo`](../../specs/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.45%20Type%20NwdafInfo.md) |
-| Model／FL capability fields | [TS 29.510 `MlAnalyticsInfo`](../../specs/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.84%20Type%20MlAnalyticsInfo.md) |
-| Service endpoint profile | [TS 29.510 `NFService`](../../specs/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.3%20Type%20NFService.md) |
-| NRF discovery query | [TS 29.510 Nnrf_NFDiscovery OpenAPI](../../specs/openapi/TS29510_Nnrf_NFDiscovery.yaml) |
-| `UE_COMMUNICATION` target 與 AoI | [TS 23.288 §6.7.3](../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.7%20UE%20related%20analytics/6.7.3%20UE%20Communication%20Analytics.md) |
-| `UE_COMMUNICATION` Stage 3 target validation | [TS 29.520 Events Subscription](../../specs/TS%2029.520/4%20Services%20offered%20by%20the%20NWDAF/4.2%20Nnwdaf_EventsSubscription%20Service/4.2.2%20Service%20Operations/4.2.2.2%20Nnwdaf_EventsSubscription_Subscribe%20service%20operation/4.2.2.2.2%20Subscription%20for%20event%20notifications.md) |
-| Group-to-SUPI and per-SUPI serving-SMF procedure | [TS 23.502 §4.15.4.5](../../specs/TS%2023.502/4%20System%20procedures/4.15%20Network%20Exposure/4.15.4%20Core%20Network%20Internal%20Event%20Exposure/4.15.4.5%20Exposure%20of%20Events%20from%20UPF%20for%20UPF%20Data%20Collection.md) |
-| Group identifier mapping API | [TS 29.503 Nudm_SDM OpenAPI](../../specs/openapi/TS29503_Nudm_SDM.yaml) |
+| NWDAF capability registration | [TS 29.510 `NwdafInfo`](../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.45%20Type%20NwdafInfo.md) |
+| Model／FL capability fields | [TS 29.510 `MlAnalyticsInfo`](../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.84%20Type%20MlAnalyticsInfo.md) |
+| Service endpoint profile | [TS 29.510 `NFService`](../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.3%20Type%20NFService.md) |
+| NRF discovery query | [TS 29.510 Nnrf_NFDiscovery OpenAPI](../../specs/Rel-18/openapi/TS29510_Nnrf_NFDiscovery.yaml) |
+| `UE_COMMUNICATION` target 與 AoI | [TS 23.288 §6.7.3](../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.7%20UE%20related%20analytics/6.7.3%20UE%20Communication%20Analytics.md) |
+| `UE_COMMUNICATION` Stage 3 target validation | [TS 29.520 Events Subscription](../../specs/Rel-18/TS%2029.520/4%20Services%20offered%20by%20the%20NWDAF/4.2%20Nnwdaf_EventsSubscription%20Service/4.2.2%20Service%20Operations/4.2.2.2%20Nnwdaf_EventsSubscription_Subscribe%20service%20operation/4.2.2.2.2%20Subscription%20for%20event%20notifications.md) |
+| Group-to-SUPI and per-SUPI serving-SMF procedure | [TS 23.502 §4.15.4.5](../../specs/Rel-18/TS%2023.502/4%20System%20procedures/4.15%20Network%20Exposure/4.15.4%20Core%20Network%20Internal%20Event%20Exposure/4.15.4.5%20Exposure%20of%20Events%20from%20UPF%20for%20UPF%20Data%20Collection.md) |
+| Group identifier mapping API | [TS 29.503 Nudm_SDM OpenAPI](../../specs/Rel-18/openapi/TS29503_Nudm_SDM.yaml) |
 | Group membership and serving-SMF specification guide | [Internal Group Resolution And Serving SMF Release 18 規格解讀](../specification-guides/Internal%20Group%20Resolution%20And%20Serving%20SMF%20Release%2018%20規格解讀.md) |
-| Internal Group ID wire format | [TS 29.571 Common Data OpenAPI](../../specs/openapi/TS29571_CommonData.yaml) |
-| SMF registration lookup API | [TS 29.503 Nudm_UECM OpenAPI](../../specs/openapi/TS29503_Nudm_UECM.yaml) |
-| UDR subscription-data resources | [TS 29.505 Subscription Data OpenAPI](../../specs/openapi/TS29505_Subscription_Data.yaml) |
-| SMF direct PDU-session-to-AoI mapping and AMF-assisted fallback | [TS 23.288 §6.2.2.1](../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2%20Procedures%20for%20Data%20Collection/6.2.2%20Data%20Collection%20from%20NFs/6.2.2.1%20General.md) |
-| AMF–SMF UE Location exchange | [TS 23.502 §5.2.8.2](../../specs/TS%2023.502/5%20Network%20Function%20Service%20procedures/5.2%20Network%20Function%20services/5.2.8%20SMF%20Services/5.2.8.2%20Nsmf_PDUSession%20Service/README.md) |
-| Service Request carrying UE location to SMF | [TS 23.502 §4.2.3.2](../../specs/TS%2023.502/4%20System%20procedures/4.2%20Connection%2C%20Registration%20and%20Mobility%20Management%20procedures/4.2.3%20Service%20Request%20procedures/4.2.3.2%20UE%20Triggered%20Service%20Request.md) |
-| SMF Event Exposure and `networkArea` | [TS 29.508 Nsmf_EventExposure OpenAPI](../../specs/openapi/TS29508_Nsmf_EventExposure.yaml) |
-| `NetworkAreaInfo.tais` schema | [TS 29.554 Npcf_BDTPolicyControl OpenAPI](../../specs/openapi/TS29554_Npcf_BDTPolicyControl.yaml) |
-| AMF-assisted AoI UE-list alternative | [TS 29.518 Namf_EventExposure OpenAPI](../../specs/openapi/TS29518_Namf_EventExposure.yaml) |
-| Model provisioning procedure | [TS 23.288 §6.2A](../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2A%20Procedure%20for%20ML%20Model%20Provisioning.md) |
-| Model provisioning API | [TS 29.520 Nnwdaf_MLModelProvision OpenAPI](../../specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml) |
-| Accuracy monitoring procedure | [TS 23.288 §6.2E](../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2E%20MTLF-based%20ML%20Model%20Accuracy%20Monitoring.md) |
-| Model monitoring API | [TS 29.520 Nnwdaf_MLModelMonitor OpenAPI](../../specs/openapi/TS29520_Nnwdaf_MLModelMonitor.yaml) |
-| Federated Learning procedure | [TS 23.288 §6.2C](../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md) |
-| Model training API | [TS 29.520 Nnwdaf_MLModelTraining OpenAPI](../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml) |
-| Final validation flags and callback conditions | [TS 29.520 §5.5.6 ML Model Training data model](../../specs/TS%2029.520/5%20API%20Definitions/5.5%20Nnwdaf_MLModelTraining%20Service%20API/5.5.6%20Data%20Model.md) |
-| ADRF data retrieval procedure | [TS 29.575 §4.2](../../specs/TS%2029.575/4%20Services%20offered%20by%20the%20ADRF/4.2%20Nadrf_DataManagement%20Service/README.md) |
-| ADRF data retrieval API | [TS 29.575 Nadrf_DataManagement OpenAPI](../../specs/openapi/TS29575_Nadrf_DataManagement.yaml) |
-| ADRF ML model management procedure | [TS 29.575 §4.3](../../specs/TS%2029.575/4%20Services%20offered%20by%20the%20ADRF/4.3%20Nadrf%20_%20MLModelManagement%20Service.md) |
-| ADRF ML model management API | [TS 29.575 Nadrf_MLModelManagement OpenAPI](../../specs/openapi/TS29575_Nadrf_MLModelManagement.yaml) |
+| Internal Group ID wire format | [TS 29.571 Common Data OpenAPI](../../specs/Rel-18/openapi/TS29571_CommonData.yaml) |
+| SMF registration lookup API | [TS 29.503 Nudm_UECM OpenAPI](../../specs/Rel-18/openapi/TS29503_Nudm_UECM.yaml) |
+| UDR subscription-data resources | [TS 29.505 Subscription Data OpenAPI](../../specs/Rel-18/openapi/TS29505_Subscription_Data.yaml) |
+| SMF direct PDU-session-to-AoI mapping and AMF-assisted fallback | [TS 23.288 §6.2.2.1](../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2%20Procedures%20for%20Data%20Collection/6.2.2%20Data%20Collection%20from%20NFs/6.2.2.1%20General.md) |
+| AMF–SMF UE Location exchange | [TS 23.502 §5.2.8.2](../../specs/Rel-18/TS%2023.502/5%20Network%20Function%20Service%20procedures/5.2%20Network%20Function%20services/5.2.8%20SMF%20Services/5.2.8.2%20Nsmf_PDUSession%20Service/README.md) |
+| Service Request carrying UE location to SMF | [TS 23.502 §4.2.3.2](../../specs/Rel-18/TS%2023.502/4%20System%20procedures/4.2%20Connection%2C%20Registration%20and%20Mobility%20Management%20procedures/4.2.3%20Service%20Request%20procedures/4.2.3.2%20UE%20Triggered%20Service%20Request.md) |
+| SMF Event Exposure and `networkArea` | [TS 29.508 Nsmf_EventExposure OpenAPI](../../specs/Rel-18/openapi/TS29508_Nsmf_EventExposure.yaml) |
+| `NetworkAreaInfo.tais` schema | [TS 29.554 Npcf_BDTPolicyControl OpenAPI](../../specs/Rel-18/openapi/TS29554_Npcf_BDTPolicyControl.yaml) |
+| AMF-assisted AoI UE-list alternative | [TS 29.518 Namf_EventExposure OpenAPI](../../specs/Rel-18/openapi/TS29518_Namf_EventExposure.yaml) |
+| Model provisioning procedure | [TS 23.288 §6.2A](../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2A%20Procedure%20for%20ML%20Model%20Provisioning.md) |
+| Model provisioning API | [TS 29.520 Nnwdaf_MLModelProvision OpenAPI](../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelProvision.yaml) |
+| Accuracy monitoring procedure | [TS 23.288 §6.2E](../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2E%20MTLF-based%20ML%20Model%20Accuracy%20Monitoring.md) |
+| Model monitoring API | [TS 29.520 Nnwdaf_MLModelMonitor OpenAPI](../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelMonitor.yaml) |
+| Federated Learning procedure | [TS 23.288 §6.2C](../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md) |
+| Model training API | [TS 29.520 Nnwdaf_MLModelTraining OpenAPI](../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelTraining.yaml) |
+| Final validation flags and callback conditions | [TS 29.520 §5.5.6 ML Model Training data model](../../specs/Rel-18/TS%2029.520/5%20API%20Definitions/5.5%20Nnwdaf_MLModelTraining%20Service%20API/5.5.6%20Data%20Model.md) |
+| ADRF data retrieval procedure | [TS 29.575 §4.2](../../specs/Rel-18/TS%2029.575/4%20Services%20offered%20by%20the%20ADRF/4.2%20Nadrf_DataManagement%20Service/README.md) |
+| ADRF data retrieval API | [TS 29.575 Nadrf_DataManagement OpenAPI](../../specs/Rel-18/openapi/TS29575_Nadrf_DataManagement.yaml) |
+| ADRF ML model management procedure | [TS 29.575 §4.3](../../specs/Rel-18/TS%2029.575/4%20Services%20offered%20by%20the%20ADRF/4.3%20Nadrf%20_%20MLModelManagement%20Service.md) |
+| ADRF ML model management API | [TS 29.575 Nadrf_MLModelManagement OpenAPI](../../specs/Rel-18/openapi/TS29575_Nadrf_MLModelManagement.yaml) |

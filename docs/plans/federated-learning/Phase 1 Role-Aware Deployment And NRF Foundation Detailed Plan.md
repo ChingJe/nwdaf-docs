@@ -122,11 +122,11 @@ route，也不執行 FL round。它提供後續 Phase 2 與 Phase 3 可直接使
 
 主要 Stage 3 證據：
 
-- [TS 29.510 Nnrf NFManagement OpenAPI](../../../specs/openapi/TS29510_Nnrf_NFManagement.yaml)
-- [TS 29.510 NwdafInfo](../../../specs/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.45%20Type%20NwdafInfo.md)
-- [TS 29.510 MlAnalyticsInfo](../../../specs/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.84%20Type%20MlAnalyticsInfo.md)
-- [TS 29.510 FlCapabilityType](../../../specs/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.3%20Simple%20data%20types%20and%20enumerations/6.1.6.3.19%20Enumeration%20FlCapabilityType.md)
-- [TS 29.510 AdrfInfo](../../../specs/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.122%20Type%20AdrfInfo.md)
+- [TS 29.510 Nnrf NFManagement OpenAPI](../../../specs/Rel-18/openapi/TS29510_Nnrf_NFManagement.yaml)
+- [TS 29.510 NwdafInfo](../../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.45%20Type%20NwdafInfo.md)
+- [TS 29.510 MlAnalyticsInfo](../../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.84%20Type%20MlAnalyticsInfo.md)
+- [TS 29.510 FlCapabilityType](../../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.3%20Simple%20data%20types%20and%20enumerations/6.1.6.3.19%20Enumeration%20FlCapabilityType.md)
+- [TS 29.510 AdrfInfo](../../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.122%20Type%20AdrfInfo.md)
 
 `NwdafInfo.nwdafEvents` 表達 Events Subscription analytics capability；
 `NwdafInfo.mlAnalyticsList` 表達 Model Provision／FL 所使用的 ML
@@ -171,9 +171,9 @@ deregistration 與 listener ordering；只更換 lossless profile contract，
 
 主要證據：
 
-- [TS 29.510 Nnrf NFDiscovery OpenAPI](../../../specs/openapi/TS29510_Nnrf_NFDiscovery.yaml)
-- [TS 29.510 Search NF Instances GET](../../../specs/TS%2029.510/6%20API%20Definitions/6.2%20Nnrf_NFDiscovery%20Service%20API/6.2.3%20Resources/6.2.3.2%20Resource%20nf-instances%20(Store)/6.2.3.2.3.1%20GET.md)
-- [TS 29.510 NFDiscovery supported features](../../../specs/TS%2029.510/6%20API%20Definitions/6.2%20Nnrf_NFDiscovery%20Service%20API/6.2.9%20Features%20supported%20by%20the%20NFDiscovery%20service.md)
+- [TS 29.510 Nnrf NFDiscovery OpenAPI](../../../specs/Rel-18/openapi/TS29510_Nnrf_NFDiscovery.yaml)
+- [TS 29.510 Search NF Instances GET](../../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.2%20Nnrf_NFDiscovery%20Service%20API/6.2.3%20Resources/6.2.3.2%20Resource%20nf-instances%20(Store)/6.2.3.2.3.1%20GET.md)
+- [TS 29.510 NFDiscovery supported features](../../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.2%20Nnrf_NFDiscovery%20Service%20API/6.2.9%20Features%20supported%20by%20the%20NFDiscovery%20service.md)
 
 `GET /nnrf-disc/v1/nf-instances`：
 

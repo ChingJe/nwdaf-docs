@@ -641,13 +641,13 @@ shape，不得覆寫 NWDAF contract。
 
 核心規格證據：
 
-- [TS 23.288 §6.2C Federated Learning among Multiple NWDAFs](../../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
-- [TS 23.288 §6.2F Procedure for ML Model Training](../../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2F%20Procedure%20for%20ML%20Model%20Training.md)
-- [TS 29.520 §4.6 Nnwdaf_MLModelTraining Service](../../../../specs/TS%2029.520/4%20Services%20offered%20by%20the%20NWDAF/4.6%20Nnwdaf_MLModelTraining%20Service.md)
-- [Release 18 Nnwdaf_MLModelTraining OpenAPI](../../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
-- [Release 18 Nnwdaf_MLModelProvision OpenAPI](../../../../specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
-- [Release 18 Nnrf_NFDiscovery OpenAPI](../../../../specs/openapi/TS29510_Nnrf_NFDiscovery.yaml)
-- [Release 18 Nnrf_NFManagement OpenAPI](../../../../specs/openapi/TS29510_Nnrf_NFManagement.yaml)
+- [TS 23.288 §6.2C Federated Learning among Multiple NWDAFs](../../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
+- [TS 23.288 §6.2F Procedure for ML Model Training](../../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2F%20Procedure%20for%20ML%20Model%20Training.md)
+- [TS 29.520 §4.6 Nnwdaf_MLModelTraining Service](../../../../specs/Rel-18/TS%2029.520/4%20Services%20offered%20by%20the%20NWDAF/4.6%20Nnwdaf_MLModelTraining%20Service.md)
+- [Release 18 Nnwdaf_MLModelTraining OpenAPI](../../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
+- [Release 18 Nnwdaf_MLModelProvision OpenAPI](../../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
+- [Release 18 Nnrf_NFDiscovery OpenAPI](../../../../specs/Rel-18/openapi/TS29510_Nnrf_NFDiscovery.yaml)
+- [Release 18 Nnrf_NFManagement OpenAPI](../../../../specs/Rel-18/openapi/TS29510_Nnrf_NFManagement.yaml)
 
 ### 5.2 free5GC implementation-shape evidence
 

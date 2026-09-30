@@ -206,7 +206,7 @@ publication／cutover 期間啟動另一個 retrain。
 
 Phase 5 只要求修正本情境使用的 URL-backed single-model vertical，不要求
 一次完成整個 ADRF service。wire source of truth 固定為
-`nwdaf-docs/specs/openapi/` 的 Release 18 OpenAPI 與對應 TS text。
+`nwdaf-docs/specs/Rel-18/openapi/` 的 Release 18 OpenAPI 與對應 TS text。
 
 ---
 
@@ -214,7 +214,7 @@ Phase 5 只要求修正本情境使用的 URL-backed single-model vertical，不
 
 ### 4.1 ADRF store／retrieve
 
-[TS 29.575 Nadrf ML Model Management OpenAPI](../../../specs/openapi/TS29575_Nadrf_MLModelManagement.yaml)
+[TS 29.575 Nadrf ML Model Management OpenAPI](../../../specs/Rel-18/openapi/TS29575_Nadrf_MLModelManagement.yaml)
 定義：
 
 - `POST /mlmodel-store-records` 建立 store record；
@@ -249,16 +249,16 @@ ML_MODEL_FILE_STORED_IN_ADRF
 `modelStoreResult.storeResult=ML_MODEL_FILE_STORED_IN_ADRF` 才能通過
 publication gate。
 
-[TS 23.288 §6.2B.5–6.2B.7](../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2B%20Analytics%20Data%20and%20ML%20Model%20Repository%20procedures.md)
+[TS 23.288 §6.2B.5–6.2B.7](../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2B%20Analytics%20Data%20and%20ML%20Model%20Repository%20procedures.md)
 進一步說明：MTLF 可提供 model address 讓 ADRF 下載並本地保存；retrieval
 成功後，ADRF 回傳其所保存 model 的 identifier 與 file address。
-[TS 29.575 §4.3](../../../specs/TS%2029.575/4%20Services%20offered%20by%20the%20ADRF/4.3%20Nadrf%20_%20MLModelManagement%20Service.md)
+[TS 29.575 §4.3](../../../specs/Rel-18/TS%2029.575/4%20Services%20offered%20by%20the%20ADRF/4.3%20Nadrf%20_%20MLModelManagement%20Service.md)
 也明確把 storage、retrieval 與 removal 定義為 ADRF 的
 ML Model Management 責任。
 
 ### 4.2 Model Provision ADRF reference
 
-[TS 29.520 Nnwdaf ML Model Provision OpenAPI](../../../specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
+[TS 29.520 Nnwdaf ML Model Provision OpenAPI](../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
 定義 `MLEventNotif` 必須提供 `mLFileAddr` 或 `mLModelAdrf` 其中之一。
 `MLModelAdrf` 必須提供 `adrfId` 或 `adrfSetId`，但 `storTransId` 本身是
 optional。
@@ -275,9 +275,9 @@ Phase 5 固定 profile：
 
 ### 4.3 ADRF NRF capability
 
-[TS 29.510 Nnrf NF Discovery OpenAPI](../../../specs/openapi/TS29510_Nnrf_NFDiscovery.yaml)
+[TS 29.510 Nnrf NF Discovery OpenAPI](../../../specs/Rel-18/openapi/TS29510_Nnrf_NFDiscovery.yaml)
 定義 `ml-model-storage-ind=true` discovery query；
-[TS 29.510 Nnrf NF Management OpenAPI](../../../specs/openapi/TS29510_Nnrf_NFManagement.yaml)
+[TS 29.510 Nnrf NF Management OpenAPI](../../../specs/Rel-18/openapi/TS29510_Nnrf_NFManagement.yaml)
 的 `AdrfInfo.mlModelStorageInd` 表達 ADRF model storage／retrieval
 capability。
 

@@ -150,7 +150,7 @@ standard boundary與routing state。
 
 ### 3.2 Resource And Method Matrix
 
-依`nwdaf-docs/specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml`、
+依`nwdaf-docs/specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelProvision.yaml`、
 `TS29520_Nnwdaf_MLModelMonitor.yaml`與TS 29.520 clauses 5.4.3、5.4.5、5.6.3、5.6.5：
 
 | Resource/operation | Method and path | Success |

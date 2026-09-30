@@ -108,8 +108,8 @@ FL_SERVER_AND_CLIENT
 
 規格來源：
 
-- [TS 23.288 §6.2C](../../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
-- [TS 29.510 FlCapabilityType](../../../../specs/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.3%20Simple%20data%20types%20and%20enumerations/6.1.6.3.19%20Enumeration%20FlCapabilityType.md)
+- [TS 23.288 §6.2C](../../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
+- [TS 29.510 FlCapabilityType](../../../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.3%20Simple%20data%20types%20and%20enumerations/6.1.6.3.19%20Enumeration%20FlCapabilityType.md)
 
 ---
 
@@ -234,9 +234,9 @@ TS 23.288 §6.2C.2.2 step 4 對 training 的描述是：
 
 規格來源：
 
-- [TS 23.288 §6.2C](../../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
-- [TS 29.520 §5.5.6 Data Model](../../../../specs/TS%2029.520/5%20API%20Definitions/5.5%20Nnwdaf_MLModelTraining%20Service%20API/5.5.6%20Data%20Model.md)
-- [Release 18 OpenAPI NwdafMLModelTrainSubsc](../../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
+- [TS 23.288 §6.2C](../../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
+- [TS 29.520 §5.5.6 Data Model](../../../../specs/Rel-18/TS%2029.520/5%20API%20Definitions/5.5%20Nnwdaf_MLModelTraining%20Service%20API/5.5.6%20Data%20Model.md)
+- [Release 18 OpenAPI NwdafMLModelTrainSubsc](../../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
 
 ---
 
@@ -382,10 +382,10 @@ vendor-specific contract。
 
 規格來源：
 
-- [TS 23.288 §6.2C.2.1](../../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
-- [TS 29.520 §5.5.6.2.8 NwdafMLModelTrainNotif](../../../../specs/TS%2029.520/5%20API%20Definitions/5.5%20Nnwdaf_MLModelTraining%20Service%20API/5.5.6%20Data%20Model.md)
-- [TS 29.520 §5.4.6 Data Model](../../../../specs/TS%2029.520/5%20API%20Definitions/5.4%20Nnwdaf_MLModelProvision%20Service%20API/5.4.6%20Data%20Model.md)
-- [Release 18 OpenAPI MLModelAddr](../../../../specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
+- [TS 23.288 §6.2C.2.1](../../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
+- [TS 29.520 §5.5.6.2.8 NwdafMLModelTrainNotif](../../../../specs/Rel-18/TS%2029.520/5%20API%20Definitions/5.5%20Nnwdaf_MLModelTraining%20Service%20API/5.5.6%20Data%20Model.md)
+- [TS 29.520 §5.4.6 Data Model](../../../../specs/Rel-18/TS%2029.520/5%20API%20Definitions/5.4%20Nnwdaf_MLModelProvision%20Service%20API/5.4.6%20Data%20Model.md)
+- [Release 18 OpenAPI MLModelAddr](../../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
 
 ---
 
@@ -489,9 +489,9 @@ sequenceDiagram
 
 規格來源：
 
-- [TS 23.288 §6.2C.2.1](../../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
-- [TS 29.520 §5.5.6 Data Model](../../../../specs/TS%2029.520/5%20API%20Definitions/5.5%20Nnwdaf_MLModelTraining%20Service%20API/5.5.6%20Data%20Model.md)
-- [Release 18 OpenAPI NwdafMLModelTrainSubsc](../../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
+- [TS 23.288 §6.2C.2.1](../../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
+- [TS 29.520 §5.5.6 Data Model](../../../../specs/Rel-18/TS%2029.520/5%20API%20Definitions/5.5%20Nnwdaf_MLModelTraining%20Service%20API/5.5.6%20Data%20Model.md)
+- [Release 18 OpenAPI NwdafMLModelTrainSubsc](../../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
 
 ---
 
@@ -580,9 +580,9 @@ Upper-tier 與 lower-tier processes 各自維護 correlation 與 round state，�
 
 規格來源：
 
-- [TS 23.288 §6.2C.2.2](../../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
-- [TS 23.288 §6.2F](../../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2F%20Procedure%20for%20ML%20Model%20Training.md)
-- [TS 29.520 §4.6 Nnwdaf_MLModelTraining](../../../../specs/TS%2029.520/4%20Services%20offered%20by%20the%20NWDAF/4.6%20Nnwdaf_MLModelTraining%20Service.md)
+- [TS 23.288 §6.2C.2.2](../../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
+- [TS 23.288 §6.2F](../../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2F%20Procedure%20for%20ML%20Model%20Training.md)
+- [TS 29.520 §4.6 Nnwdaf_MLModelTraining](../../../../specs/Rel-18/TS%2029.520/4%20Services%20offered%20by%20the%20NWDAF/4.6%20Nnwdaf_MLModelTraining%20Service.md)
 
 ---
 

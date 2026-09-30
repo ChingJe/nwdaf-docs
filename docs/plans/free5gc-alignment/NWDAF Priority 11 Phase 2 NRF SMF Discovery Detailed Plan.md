@@ -109,7 +109,7 @@ The primary Release 18 references are:
 - TS 29.510 clause 6.2.6.2.3, discovery `NFProfile`
 - TS 29.510 clause 6.2.6.2.4, discovery `NFService`
 - TS 29.510 clause 6.2.8, NFDiscovery security
-- `nwdaf-docs/specs/openapi/TS29510_Nnrf_NFDiscovery.yaml`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29510_Nnrf_NFDiscovery.yaml`
 
 The Release 18 API is `Nnrf_NFDiscovery` version `1.3.4`. The basic request used
 by this phase is:
@@ -196,7 +196,7 @@ The governing references are:
 
 - TS 29.500 clause 6.7.3, OAuth 2.0 authorization between NF service consumers
   and producers
-- `nwdaf-docs/specs/openapi/TS29510_Nnrf_AccessToken.yaml`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29510_Nnrf_AccessToken.yaml`
 
 The standard contract defines NRF-issued bearer tokens through the OAuth 2.0
 client-credentials flow. The access-token request identifies the requester NF

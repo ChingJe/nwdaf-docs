@@ -232,11 +232,11 @@ Package Gate 紀錄：
 
 主要 Stage 3 證據：
 
-- [TS 29.520 Nnwdaf MLModelProvision OpenAPI](../../../specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
-- [TS 29.520 MLModelProvision HTTP resources](../../../specs/TS%2029.520/5%20API%20Definitions/5.4%20Nnwdaf_MLModelProvision%20Service%20API/5.4.3%20Resources.md)
-- [TS 29.520 MLModelProvision notifications](../../../specs/TS%2029.520/5%20API%20Definitions/5.4%20Nnwdaf_MLModelProvision%20Service%20API/5.4.5%20Notifications.md)
-- [TS 29.520 MLModelProvision feature negotiation](../../../specs/TS%2029.520/5%20API%20Definitions/5.4%20Nnwdaf_MLModelProvision%20Service%20API/5.4.8%20Feature%20negotiation.md)
-- [TS 23.288 §6.2A Model Provision procedures](../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2A%20Procedure%20for%20ML%20Model%20Provisioning.md)
+- [TS 29.520 Nnwdaf MLModelProvision OpenAPI](../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
+- [TS 29.520 MLModelProvision HTTP resources](../../../specs/Rel-18/TS%2029.520/5%20API%20Definitions/5.4%20Nnwdaf_MLModelProvision%20Service%20API/5.4.3%20Resources.md)
+- [TS 29.520 MLModelProvision notifications](../../../specs/Rel-18/TS%2029.520/5%20API%20Definitions/5.4%20Nnwdaf_MLModelProvision%20Service%20API/5.4.5%20Notifications.md)
+- [TS 29.520 MLModelProvision feature negotiation](../../../specs/Rel-18/TS%2029.520/5%20API%20Definitions/5.4%20Nnwdaf_MLModelProvision%20Service%20API/5.4.8%20Feature%20negotiation.md)
+- [TS 23.288 §6.2A Model Provision procedures](../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2A%20Procedure%20for%20ML%20Model%20Provisioning.md)
 
 標準 resource behavior：
 
@@ -292,10 +292,10 @@ Provider notification：
 
 主要 Stage 3 證據：
 
-- [TS 29.520 Nnwdaf MLModelMonitor OpenAPI](../../../specs/openapi/TS29520_Nnwdaf_MLModelMonitor.yaml)
-- [TS 29.520 MLModelMonitor HTTP resources](../../../specs/TS%2029.520/5%20API%20Definitions/5.6%20Nnwdaf_MLModelMonitor%20Service%20API/5.6.3%20Resources.md)
-- [TS 29.520 MLModelMonitor notifications](../../../specs/TS%2029.520/5%20API%20Definitions/5.6%20Nnwdaf_MLModelMonitor%20Service%20API/5.6.5%20Notifications.md)
-- [TS 23.288 §6.2E Model Accuracy Monitoring procedures](../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2E%20MTLF-based%20ML%20Model%20Accuracy%20Monitoring.md)
+- [TS 29.520 Nnwdaf MLModelMonitor OpenAPI](../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelMonitor.yaml)
+- [TS 29.520 MLModelMonitor HTTP resources](../../../specs/Rel-18/TS%2029.520/5%20API%20Definitions/5.6%20Nnwdaf_MLModelMonitor%20Service%20API/5.6.3%20Resources.md)
+- [TS 29.520 MLModelMonitor notifications](../../../specs/Rel-18/TS%2029.520/5%20API%20Definitions/5.6%20Nnwdaf_MLModelMonitor%20Service%20API/5.6.5%20Notifications.md)
+- [TS 23.288 §6.2E Model Accuracy Monitoring procedures](../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2E%20MTLF-based%20ML%20Model%20Accuracy%20Monitoring.md)
 
 Registration create：
 

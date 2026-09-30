@@ -96,20 +96,20 @@ reconciliation、queue 與資料轉換邏輯必須保留。
 
 ### 3.1 NRF discovery
 
-[3GPP TS 29.510 V18.11.0 Nnrf NFDiscovery OpenAPI](../../../specs/openapi/TS29510_Nnrf_NFDiscovery.yaml)
+[3GPP TS 29.510 V18.11.0 Nnrf NFDiscovery OpenAPI](../../../specs/Rel-18/openapi/TS29510_Nnrf_NFDiscovery.yaml)
 提供 `service-names`、`target-nf-instance-id` 與
 `internal-group-identity` query parameters。因此本計畫的兩段 UDM discovery
 都使用同一個通用 Nnrf API：第一段用 group identity 選出 serving UDM，第二段
 用已知 UDM instance ID 取得其 UECM service endpoint，不建立 project-specific
 UDM discovery schema。
 
-[3GPP TS 29.510 V18.11.0 Nnrf NFManagement OpenAPI](../../../specs/openapi/TS29510_Nnrf_NFManagement.yaml)
+[3GPP TS 29.510 V18.11.0 Nnrf NFManagement OpenAPI](../../../specs/Rel-18/openapi/TS29510_Nnrf_NFManagement.yaml)
 中的 UDM profile 可表達 Internal Group ID ranges；實驗 config 必須使 UDM
 registration 與實際 provisioned group 相符。
 
 ### 3.2 Internal Group ID 與 UDM SDM
 
-[3GPP TS 29.503 V18.13.0 Nudm SDM OpenAPI](../../../specs/openapi/TS29503_Nudm_SDM.yaml)
+[3GPP TS 29.503 V18.13.0 Nudm SDM OpenAPI](../../../specs/Rel-18/openapi/TS29503_Nudm_SDM.yaml)
 定義：
 
 ```http
@@ -121,8 +121,8 @@ GET /group-data/group-identifiers?int-group-id={groupId}&ue-id-ind=true
 group 或資料時需保存 `GROUP_IDENTIFIER_NOT_FOUND`／`DATA_NOT_FOUND`
 語意，不可改成 `200` 加空 body。
 
-[3GPP TS 29.504 V18.13.0 Nudr DR OpenAPI](../../../specs/openapi/TS29504_Nudr_DR.yaml)
-與 [3GPP TS 29.505 V18.7.0 Subscription Data OpenAPI](../../../specs/openapi/TS29505_Subscription_Data.yaml)
+[3GPP TS 29.504 V18.13.0 Nudr DR OpenAPI](../../../specs/Rel-18/openapi/TS29504_Nudr_DR.yaml)
+與 [3GPP TS 29.505 V18.7.0 Subscription Data OpenAPI](../../../specs/Rel-18/openapi/TS29505_Subscription_Data.yaml)
 定義 UDM 對 UDR 使用：
 
 ```http
@@ -134,7 +134,7 @@ UDR representation 可含 `allowedAfIds`；UDM 對 NWDAF 回應時只投影 Nudm
 
 ### 3.3 Serving SMF registration
 
-[3GPP TS 29.503 V18.9.0 Nudm UECM OpenAPI](../../../specs/openapi/TS29503_Nudm_UECM.yaml)
+[3GPP TS 29.503 V18.9.0 Nudm UECM OpenAPI](../../../specs/Rel-18/openapi/TS29503_Nudm_UECM.yaml)
 定義：
 
 ```http
@@ -156,13 +156,13 @@ UDR 回傳 `SmfRegList` array，UDM 依 DNN／S-NSSAI 篩選後轉為含
 
 ### 3.4 Nsmf Event Exposure 與 AoI
 
-[3GPP TS 29.508 V18.9.0 Nsmf Event Exposure OpenAPI](../../../specs/openapi/TS29508_Nsmf_EventExposure.yaml)
+[3GPP TS 29.508 V18.9.0 Nsmf Event Exposure OpenAPI](../../../specs/Rel-18/openapi/TS29508_Nsmf_EventExposure.yaml)
 規定 subscription create 使用 `POST /subscriptions`，成功為 `201 Created`，
 包含 `Location` header 與 `NsmfEventExposure` representation；delete 成功為
 `204 No Content`。`networkArea` 位於每一筆 `eventSubs[]`，不是 top-level
 extension。
 
-[3GPP TS 23.502 V18 §4.15.4.5](../../../specs/TS%2023.502/4%20System%20procedures/4.15%20Network%20Exposure/4.15.4%20Core%20Network%20Internal%20Event%20Exposure/4.15.4.5%20Exposure%20of%20Events%20from%20UPF%20for%20UPF%20Data%20Collection.md)
+[3GPP TS 23.502 V18 §4.15.4.5](../../../specs/Rel-18/TS%2023.502/4%20System%20procedures/4.15%20Network%20Exposure/4.15.4%20Core%20Network%20Internal%20Event%20Exposure/4.15.4.5%20Exposure%20of%20Events%20from%20UPF%20for%20UPF%20Data%20Collection.md)
 說明 consumer 經 SMF 訂閱 UPF event 並帶 AoI 時，SMF 只在 UE 位於 AoI
 內時啟動 UPF subscription，UE 離開後停止。規格允許 SMF 使用既有
 PDU Session procedure 傳入的位置；AMF Event Exposure 是可用的強化方式，
@@ -170,13 +170,13 @@ PDU Session procedure 傳入的位置；AMF Event Exposure 是可用的強化方
 
 ### 3.5 ADRF stored-data specification 與 ML event scope
 
-[3GPP TS 29.575 V18.11.0 Nadrf Data Management OpenAPI](../../../specs/openapi/TS29575_Nadrf_DataManagement.yaml)
+[3GPP TS 29.575 V18.11.0 Nadrf Data Management OpenAPI](../../../specs/Rel-18/openapi/TS29575_Nadrf_DataManagement.yaml)
 定義 `NadrfStoredDataSpec`，以 `dataSpec`（`DataSubscription`）與
 `timePeriod`（`TimeWindow`）共同描述一段 stored data。其中
 `DataSubscription.smfDataSub` 直接使用 TS 29.508 `NsmfEventExposure`，因此
 descriptor 不需要另外發明 SMF data selector。
 
-[3GPP TS 29.520 V18.13.0 Nnwdaf ML Model Provision OpenAPI](../../../specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
+[3GPP TS 29.520 V18.13.0 Nnwdaf ML Model Provision OpenAPI](../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
 定義 `MLEventSubscription`，包含 `mLEvent`、`mLEventFilter`、`tgtUe` 與選填
 target period。Descriptor 使用這個 model 保存 training data 所服務的
 analytics scope，而不是 hand-written `semanticScope`。

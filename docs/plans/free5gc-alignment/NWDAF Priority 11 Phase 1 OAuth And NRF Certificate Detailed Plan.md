@@ -75,9 +75,9 @@ Local normative sources:
 - Release 18 TS 29.510 clauses 6.1.8 and 6.3 for NFManagement authorization
   and the Access Token service
 - Release 18 TS 29.520 clause 5.1.9 for Events Subscription scopes
-- `nwdaf-docs/specs/openapi/TS29510_Nnrf_AccessToken.yaml`
-- `nwdaf-docs/specs/openapi/TS29510_Nnrf_NFManagement.yaml`
-- `nwdaf-docs/specs/openapi/TS29520_Nnwdaf_EventsSubscription.yaml`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29510_Nnrf_AccessToken.yaml`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29510_Nnrf_NFManagement.yaml`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29520_Nnwdaf_EventsSubscription.yaml`
 
 Generated contract baseline:
 

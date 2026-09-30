@@ -130,19 +130,19 @@ decision for NWDAF.
 
 The primary local references are:
 
-- `nwdaf-docs/specs/TS 23.502/`:
+- `nwdaf-docs/specs/Rel-18/TS 23.502/`:
   - clause 4.17.1, NF registration
   - clause 4.17.3, NF deregistration
   - clause 5.2.7.2, NRF service operations and NWDAF registration information
-- `nwdaf-docs/specs/TS 29.510/`:
+- `nwdaf-docs/specs/Rel-18/TS 29.510/`:
   - clause 5.2.2.2, NFRegister
   - clause 5.2.2.3, NFUpdate and heartbeat
   - clause 5.2.2.4, NFDeregister
   - clause 6.1.8, NFManagement authorization
   - Annex B, NF profile change reporting
-- `nwdaf-docs/specs/openapi/TS29510_Nnrf_NFManagement.yaml`
-- `nwdaf-docs/specs/openapi/TS29571_CommonData.yaml`
-- `nwdaf-docs/specs/openapi/TS29520_Nnwdaf_EventsSubscription.yaml`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29510_Nnrf_NFManagement.yaml`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29571_CommonData.yaml`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29520_Nnwdaf_EventsSubscription.yaml`
 
 The included TS 29.510 text and NFManagement YAML are version 18.11.0. They are
 the normative Stage 3 baseline for this plan.

@@ -54,8 +54,8 @@ NWDAF 建立 ML Model Training subscription。
 
 規格依據：
 
-- [TS 23.288 §6.2C.2.1 與 §6.2C.2.2](../../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
-- [TS 29.520 §4.6 Nnwdaf_MLModelTraining Service](../../../../specs/TS%2029.520/4%20Services%20offered%20by%20the%20NWDAF/4.6%20Nnwdaf_MLModelTraining%20Service.md)
+- [TS 23.288 §6.2C.2.1 與 §6.2C.2.2](../../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
+- [TS 29.520 §4.6 Nnwdaf_MLModelTraining Service](../../../../specs/Rel-18/TS%2029.520/4%20Services%20offered%20by%20the%20NWDAF/4.6%20Nnwdaf_MLModelTraining%20Service.md)
 
 ### 2.2 Hierarchical topology 中的 Branch
 
@@ -98,8 +98,8 @@ FL_SERVER_AND_CLIENT
 
 規格依據：
 
-- [TS 23.288 §6.2C.2.1 Registration and Discovery](../../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
-- [TS 29.510 FlCapabilityType](../../../../specs/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.3%20Simple%20data%20types%20and%20enumerations/6.1.6.3.19%20Enumeration%20FlCapabilityType.md)
+- [TS 23.288 §6.2C.2.1 Registration and Discovery](../../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
+- [TS 29.510 FlCapabilityType](../../../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.3%20Simple%20data%20types%20and%20enumerations/6.1.6.3.19%20Enumeration%20FlCapabilityType.md)
 
 ---
 
@@ -156,8 +156,8 @@ capability 適用哪裡」。
 
 規格依據：
 
-- [TS 29.510 NwdafInfo](../../../../specs/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.45%20Type%20NwdafInfo.md)
-- [TS 29.510 MlAnalyticsInfo](../../../../specs/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.84%20Type%20MlAnalyticsInfo.md)
+- [TS 29.510 NwdafInfo](../../../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.45%20Type%20NwdafInfo.md)
+- [TS 29.510 MlAnalyticsInfo](../../../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.84%20Type%20MlAnalyticsInfo.md)
 
 ---
 
@@ -285,7 +285,7 @@ capability，符合 schema 的分組方式。
 
 規格依據：
 
-- [TS 29.510 NF Discovery GET：ml-analytics-info-list](../../../../specs/TS%2029.510/6%20API%20Definitions/6.2%20Nnrf_NFDiscovery%20Service%20API/6.2.3%20Resources/6.2.3.2%20Resource%20nf-instances%20(Store)/6.2.3.2.3.1%20GET.md)
+- [TS 29.510 NF Discovery GET：ml-analytics-info-list](../../../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.2%20Nnrf_NFDiscovery%20Service%20API/6.2.3%20Resources/6.2.3.2%20Resource%20nf-instances%20(Store)/6.2.3.2.3.1%20GET.md)
 
 ### 6.2 Branch candidate query 範例
 
@@ -409,9 +409,9 @@ discovery 後自行選擇 Branch 和建立 topology。
 
 規格依據：
 
-- [TS 29.510 NF Discovery GET](../../../../specs/TS%2029.510/6%20API%20Definitions/6.2%20Nnrf_NFDiscovery%20Service%20API/6.2.3%20Resources/6.2.3.2%20Resource%20nf-instances%20(Store)/6.2.3.2.3.1%20GET.md)
-- [TS 29.510 SearchResult](../../../../specs/TS%2029.510/6%20API%20Definitions/6.2%20Nnrf_NFDiscovery%20Service%20API/6.2.6%20Data%20Model/6.2.6.2%20Structured%20data%20types/6.2.6.2.2%20Type%20SearchResult.md)
-- [Release 18 Nnrf_NFDiscovery OpenAPI](../../../../specs/openapi/TS29510_Nnrf_NFDiscovery.yaml)
+- [TS 29.510 NF Discovery GET](../../../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.2%20Nnrf_NFDiscovery%20Service%20API/6.2.3%20Resources/6.2.3.2%20Resource%20nf-instances%20(Store)/6.2.3.2.3.1%20GET.md)
+- [TS 29.510 SearchResult](../../../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.2%20Nnrf_NFDiscovery%20Service%20API/6.2.6%20Data%20Model/6.2.6.2%20Structured%20data%20types/6.2.6.2.2%20Type%20SearchResult.md)
+- [Release 18 Nnrf_NFDiscovery OpenAPI](../../../../specs/Rel-18/openapi/TS29510_Nnrf_NFDiscovery.yaml)
 
 ---
 

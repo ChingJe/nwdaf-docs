@@ -9,12 +9,12 @@
 - [Explicit Flat and Hierarchical Orchestration Configuration Detailed Plan](./Explicit%20Flat%20and%20Hierarchical%20Orchestration%20Configuration%20Detailed%20Plan.md)
 - [Slice 1：Explicit Orchestration 與 Static／Manual Training 詳細計畫](./Slice%201%20Explicit%20Orchestration%20and%20Static%20Manual%20Product%20Flow%20Detailed%20Plan.md)
 - [NWDAF Development Policy](../../../development_policy.md)
-- [Release 18 Nsmf Event Exposure OpenAPI](../../../../specs/openapi/TS29508_Nsmf_EventExposure.yaml)
-- [Release 18 Nupf Event Exposure OpenAPI](../../../../specs/openapi/TS29564_Nupf_EventExposure.yaml)
-- [Release 18 Nadrf Data Management OpenAPI](../../../../specs/openapi/TS29575_Nadrf_DataManagement.yaml)
-- [Release 18 Nudm SDM OpenAPI](../../../../specs/openapi/TS29503_Nudm_SDM.yaml)
-- [Release 18 Nudm UECM OpenAPI](../../../../specs/openapi/TS29503_Nudm_UECM.yaml)
-- [TS 23.288 §6.2.2.2 Data Collection from NFs](../../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2%20Procedures%20for%20Data%20Collection/6.2.2%20Data%20Collection%20from%20NFs/6.2.2.2%20Procedure%20for%20Data%20Collection%20from%20NFs.md)
+- [Release 18 Nsmf Event Exposure OpenAPI](../../../../specs/Rel-18/openapi/TS29508_Nsmf_EventExposure.yaml)
+- [Release 18 Nupf Event Exposure OpenAPI](../../../../specs/Rel-18/openapi/TS29564_Nupf_EventExposure.yaml)
+- [Release 18 Nadrf Data Management OpenAPI](../../../../specs/Rel-18/openapi/TS29575_Nadrf_DataManagement.yaml)
+- [Release 18 Nudm SDM OpenAPI](../../../../specs/Rel-18/openapi/TS29503_Nudm_SDM.yaml)
+- [Release 18 Nudm UECM OpenAPI](../../../../specs/Rel-18/openapi/TS29503_Nudm_UECM.yaml)
+- [TS 23.288 §6.2.2.2 Data Collection from NFs](../../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2%20Procedures%20for%20Data%20Collection/6.2.2%20Data%20Collection%20from%20NFs/6.2.2.2%20Procedure%20for%20Data%20Collection%20from%20NFs.md)
 
 ---
 

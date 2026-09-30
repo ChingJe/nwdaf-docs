@@ -48,19 +48,19 @@ Release 的相鄰版本；例如目前兩份 TS 29.574 YAML 標示 V18.11.0。
 
 本地證據入口：
 
-- [TS 23.288 §5：NWDAF functional description](../../specs/TS%2023.288/5%20Network%20Data%20Analytics%20Functional%20Description.md)
-- [TS 23.288 §6.2C：Federated Learning among Multiple NWDAFs](../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
-- [TS 23.288 §6.2F：Procedure for ML Model Training](../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2F%20Procedure%20for%20ML%20Model%20Training.md)
-- [TS 29.552 §5.10：Federated Learning signalling flow](../../specs/TS%2029.552/5%20Signalling%20Flows%20for%20the%20Network%20Data%20Analytics%20Framework/5.10%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
-- [TS 29.552 §5.6A：ML Model Training procedures](../../specs/TS%2029.552/5%20Signalling%20Flows%20for%20the%20Network%20Data%20Analytics%20Framework/5.6A%20ML%20Model%20Training%20procedures.md)
-- [TS 29.510 Nnrf_NFManagement OpenAPI](../../specs/openapi/TS29510_Nnrf_NFManagement.yaml)
-- [TS 29.510 Nnrf_NFDiscovery OpenAPI](../../specs/openapi/TS29510_Nnrf_NFDiscovery.yaml)
-- [TS 29.520 Nnwdaf_MLModelTraining OpenAPI](../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
-- [TS 29.520 Nnwdaf_DataManagement OpenAPI](../../specs/openapi/TS29520_Nnwdaf_DataManagement.yaml)
-- [TS 29.574 Ndccf_DataManagement OpenAPI](../../specs/openapi/TS29574_Ndccf_DataManagement.yaml)
-- [TS 29.574 Ndccf_ContextManagement OpenAPI](../../specs/openapi/TS29574_Ndccf_ContextManagement.yaml)
-- [TS 29.575 Nadrf_DataManagement OpenAPI](../../specs/openapi/TS29575_Nadrf_DataManagement.yaml)
-- [TS 29.575 Nadrf_MLModelManagement OpenAPI](../../specs/openapi/TS29575_Nadrf_MLModelManagement.yaml)
+- [TS 23.288 §5：NWDAF functional description](../../specs/Rel-18/TS%2023.288/5%20Network%20Data%20Analytics%20Functional%20Description.md)
+- [TS 23.288 §6.2C：Federated Learning among Multiple NWDAFs](../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
+- [TS 23.288 §6.2F：Procedure for ML Model Training](../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2F%20Procedure%20for%20ML%20Model%20Training.md)
+- [TS 29.552 §5.10：Federated Learning signalling flow](../../specs/Rel-18/TS%2029.552/5%20Signalling%20Flows%20for%20the%20Network%20Data%20Analytics%20Framework/5.10%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
+- [TS 29.552 §5.6A：ML Model Training procedures](../../specs/Rel-18/TS%2029.552/5%20Signalling%20Flows%20for%20the%20Network%20Data%20Analytics%20Framework/5.6A%20ML%20Model%20Training%20procedures.md)
+- [TS 29.510 Nnrf_NFManagement OpenAPI](../../specs/Rel-18/openapi/TS29510_Nnrf_NFManagement.yaml)
+- [TS 29.510 Nnrf_NFDiscovery OpenAPI](../../specs/Rel-18/openapi/TS29510_Nnrf_NFDiscovery.yaml)
+- [TS 29.520 Nnwdaf_MLModelTraining OpenAPI](../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
+- [TS 29.520 Nnwdaf_DataManagement OpenAPI](../../specs/Rel-18/openapi/TS29520_Nnwdaf_DataManagement.yaml)
+- [TS 29.574 Ndccf_DataManagement OpenAPI](../../specs/Rel-18/openapi/TS29574_Ndccf_DataManagement.yaml)
+- [TS 29.574 Ndccf_ContextManagement OpenAPI](../../specs/Rel-18/openapi/TS29574_Ndccf_ContextManagement.yaml)
+- [TS 29.575 Nadrf_DataManagement OpenAPI](../../specs/Rel-18/openapi/TS29575_Nadrf_DataManagement.yaml)
+- [TS 29.575 Nadrf_MLModelManagement OpenAPI](../../specs/Rel-18/openapi/TS29575_Nadrf_MLModelManagement.yaml)
 
 ## 3. 先建立正確的整體心智模型
 
@@ -155,8 +155,8 @@ TS 23.288 §5.3 定義一個 FL process 包含：
 
 證據：
 
-- [TS 23.288 §5.3](../../specs/TS%2023.288/5%20Network%20Data%20Analytics%20Functional%20Description.md)
-- [TS 23.288 §6.2C.1](../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
+- [TS 23.288 §5.3](../../specs/Rel-18/TS%2023.288/5%20Network%20Data%20Analytics%20Functional%20Description.md)
+- [TS 23.288 §6.2C.1](../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
 
 ### 4.2 AnLF 不需要知道模型是否經由 FL 訓練
 
@@ -199,7 +199,7 @@ FL discovery 是兩件不同的事。
 
 證據：
 
-- [TS 29.510 §5.2.2.2 NFRegister](../../specs/TS%2029.510/5%20Services%20Offered%20by%20the%20NRF/5.2%20Nnrf_NFManagement%20Service/5.2.2%20Service%20Operations/5.2.2.2%20NFRegister.md)
+- [TS 29.510 §5.2.2.2 NFRegister](../../specs/Rel-18/TS%2029.510/5%20Services%20Offered%20by%20the%20NRF/5.2%20Nnrf_NFManagement%20Service/5.2.2%20Service%20Operations/5.2.2.2%20NFRegister.md)
 
 ### 5.2 NWDAF 的分析、模型提供與 FL capability profile
 
@@ -359,10 +359,10 @@ FL 能力。模型可能來自本地訓練或集中式訓練；提供模型本�
 
 證據：
 
-- [TS 29.510 `NwdafInfo`](../../specs/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.45%20Type%20NwdafInfo.md)
-- [TS 29.510 `MlAnalyticsInfo`](../../specs/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.84%20Type%20MlAnalyticsInfo.md)
-- [TS 29.510 `NFService`](../../specs/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.3%20Type%20NFService.md)
-- [TS 23.288 §5.2 NWDAF Discovery and Selection](../../specs/TS%2023.288/5%20Network%20Data%20Analytics%20Functional%20Description.md)
+- [TS 29.510 `NwdafInfo`](../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.45%20Type%20NwdafInfo.md)
+- [TS 29.510 `MlAnalyticsInfo`](../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.84%20Type%20MlAnalyticsInfo.md)
+- [TS 29.510 `NFService`](../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.3%20Type%20NFService.md)
+- [TS 23.288 §5.2 NWDAF Discovery and Selection](../../specs/Rel-18/TS%2023.288/5%20Network%20Data%20Analytics%20Functional%20Description.md)
 
 ### 5.3 Analytics 與模型提供者 discovery
 
@@ -423,8 +423,8 @@ NRF discovery
 
 證據：
 
-- [TS 29.510 Nnrf_NFDiscovery OpenAPI](../../specs/openapi/TS29510_Nnrf_NFDiscovery.yaml)
-- [TS 29.520 Nnwdaf_MLModelProvision OpenAPI](../../specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
+- [TS 29.510 Nnrf_NFDiscovery OpenAPI](../../specs/Rel-18/openapi/TS29510_Nnrf_NFDiscovery.yaml)
+- [TS 29.520 Nnwdaf_MLModelProvision OpenAPI](../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
 
 ### 5.4 FL Server discovery
 
@@ -501,8 +501,8 @@ Server/Client discovery 使用，但 cache key 必須包含完整 query 語意�
 
 證據：
 
-- [TS 29.510 §5.3.2.2 NFDiscover](../../specs/TS%2029.510/5%20Services%20Offered%20by%20the%20NRF/5.3%20Nnrf_NFDiscovery%20Service/5.3.2%20Service%20Operations/5.3.2.2%20NFDiscover.md)
-- [TS 29.510 Nnrf_NFDiscovery OpenAPI](../../specs/openapi/TS29510_Nnrf_NFDiscovery.yaml)
+- [TS 29.510 §5.3.2.2 NFDiscover](../../specs/Rel-18/TS%2029.510/5%20Services%20Offered%20by%20the%20NRF/5.3%20Nnrf_NFDiscovery%20Service/5.3.2%20Service%20Operations/5.3.2.2%20NFDiscover.md)
+- [TS 29.510 Nnrf_NFDiscovery OpenAPI](../../specs/Rel-18/openapi/TS29510_Nnrf_NFDiscovery.yaml)
 
 ### 5.7 ADRF 也能透過 NRF 發現
 
@@ -534,8 +534,8 @@ Training/Model Provision message 必須帶出實際 ADRF reference。
 
 證據：
 
-- [TS 23.501 §6.3.20 ADRF discovery and selection](../../specs/TS%2023.501/6%20Network%20Functions/6.3%20Principles%20for%20Network%20Function%20and%20Network%20Function%20Service%20discovery%20and%20selection/6.3.20%20ADRF%20discovery%20and%20selection.md)
-- [TS 29.510 `AdrfInfo`](../../specs/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.122%20Type%20AdrfInfo.md)
+- [TS 23.501 §6.3.20 ADRF discovery and selection](../../specs/Rel-18/TS%2023.501/6%20Network%20Functions/6.3%20Principles%20for%20Network%20Function%20and%20Network%20Function%20Service%20discovery%20and%20selection/6.3.20%20ADRF%20discovery%20and%20selection.md)
+- [TS 29.510 `AdrfInfo`](../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.122%20Type%20AdrfInfo.md)
 
 ## 6. Model Provision 與 FL 的關係
 
@@ -557,8 +557,8 @@ Training/Model Provision message 必須帶出實際 ADRF reference。
 
 證據：
 
-- [TS 23.288 §6.2A Procedure for ML Model Provisioning](../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2A%20Procedure%20for%20ML%20Model%20Provisioning.md)
-- [TS 29.520 Nnwdaf_MLModelProvision OpenAPI](../../specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
+- [TS 23.288 §6.2A Procedure for ML Model Provisioning](../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2A%20Procedure%20for%20ML%20Model%20Provisioning.md)
+- [TS 29.520 Nnwdaf_MLModelProvision OpenAPI](../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
 
 ### 6.2 FL 流程中的位置
 
@@ -701,9 +701,9 @@ local／interim model 都應使用：
 
 證據：
 
-- [TS 23.288 §6.2F](../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2F%20Procedure%20for%20ML%20Model%20Training.md)
-- [TS 29.520 Nnwdaf_MLModelTraining OpenAPI](../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
-- [TS 29.520 Nnwdaf_MLModelProvision OpenAPI](../../specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
+- [TS 23.288 §6.2F](../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2F%20Procedure%20for%20ML%20Model%20Training.md)
+- [TS 29.520 Nnwdaf_MLModelTraining OpenAPI](../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
+- [TS 29.520 Nnwdaf_MLModelProvision OpenAPI](../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
 
 概念範例：
 
@@ -1461,8 +1461,8 @@ FL process，NRF profile 不足以表達這件事；這時
 
 證據：
 
-- [TS 29.520 §4.6 Nnwdaf_MLModelTraining](../../specs/TS%2029.520/4%20Services%20offered%20by%20the%20NWDAF/4.6%20Nnwdaf_MLModelTraining%20Service.md)
-- [TS 29.520 Nnwdaf_MLModelTraining OpenAPI](../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
+- [TS 29.520 §4.6 Nnwdaf_MLModelTraining](../../specs/Rel-18/TS%2029.520/4%20Services%20offered%20by%20the%20NWDAF/4.6%20Nnwdaf_MLModelTraining%20Service.md)
+- [TS 29.520 Nnwdaf_MLModelTraining OpenAPI](../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
 
 ## 8. 模型、參數、梯度與 FedAvg：標準到底傳了什麼
 
@@ -1610,12 +1610,12 @@ data source、另一個 NWDAF 或 ADRF 取資料，不要求所有 FL 部署都�
 
 證據：
 
-- [TS 23.288 §5A Data Collection Coordination and Delivery](../../specs/TS%2023.288/5A%20Data%20Collection%20Coordination%20and%20Delivery%20Functional%20Description.md)
-- [TS 23.288 §6.2.6.3 Data Collection using DCCF](../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2%20Procedures%20for%20Data%20Collection/6.2.6%20Enhanced%20Procedures%20for%20Data%20Collection/6.2.6.3%20Data%20Collection%20using%20DCCF/README.md)
-- [TS 29.574 §4.2 Ndccf_DataManagement](../../specs/TS%2029.574/4%20Services%20offered%20by%20the%20DCCF/4.2%20Ndccf_DataManagement%20Service/README.md)
-- [TS 29.574 §4.3 Ndccf_ContextManagement](../../specs/TS%2029.574/4%20Services%20offered%20by%20the%20DCCF/4.3%20Ndccf_ContextManagement%20Service.md)
-- [Ndccf_DataManagement OpenAPI](../../specs/openapi/TS29574_Ndccf_DataManagement.yaml)
-- [Ndccf_ContextManagement OpenAPI](../../specs/openapi/TS29574_Ndccf_ContextManagement.yaml)
+- [TS 23.288 §5A Data Collection Coordination and Delivery](../../specs/Rel-18/TS%2023.288/5A%20Data%20Collection%20Coordination%20and%20Delivery%20Functional%20Description.md)
+- [TS 23.288 §6.2.6.3 Data Collection using DCCF](../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2%20Procedures%20for%20Data%20Collection/6.2.6%20Enhanced%20Procedures%20for%20Data%20Collection/6.2.6.3%20Data%20Collection%20using%20DCCF/README.md)
+- [TS 29.574 §4.2 Ndccf_DataManagement](../../specs/Rel-18/TS%2029.574/4%20Services%20offered%20by%20the%20DCCF/4.2%20Ndccf_DataManagement%20Service/README.md)
+- [TS 29.574 §4.3 Ndccf_ContextManagement](../../specs/Rel-18/TS%2029.574/4%20Services%20offered%20by%20the%20DCCF/4.3%20Ndccf_ContextManagement%20Service.md)
+- [Ndccf_DataManagement OpenAPI](../../specs/Rel-18/openapi/TS29574_Ndccf_DataManagement.yaml)
+- [Ndccf_ContextManagement OpenAPI](../../specs/Rel-18/openapi/TS29574_Ndccf_ContextManagement.yaml)
 
 ## 10. Nnwdaf_DataManagement 是什麼
 
@@ -1634,7 +1634,7 @@ DCCF 或 ADRF 遞迴收集。
 
 證據：
 
-- [TS 23.288 §6.2.6.2 Procedure for Data Collection from NWDAF](../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2%20Procedures%20for%20Data%20Collection/6.2.6%20Enhanced%20Procedures%20for%20Data%20Collection/6.2.6.2%20Procedure%20for%20Data%20Collection%20from%20NWDAF.md)
+- [TS 23.288 §6.2.6.2 Procedure for Data Collection from NWDAF](../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2%20Procedures%20for%20Data%20Collection/6.2.6%20Enhanced%20Procedures%20for%20Data%20Collection/6.2.6.2%20Procedure%20for%20Data%20Collection%20from%20NWDAF.md)
 
 ### 10.2 Subscription 表達什麼
 
@@ -1695,8 +1695,8 @@ database。
 
 證據：
 
-- [TS 23.288 §7.4 Nnwdaf_DataManagement](../../specs/TS%2023.288/7%20Nnwdaf%20Services%20Description/7.4%20Nnwdaf_DataManagement%20Service.md)
-- [TS 29.520 Nnwdaf_DataManagement OpenAPI](../../specs/openapi/TS29520_Nnwdaf_DataManagement.yaml)
+- [TS 23.288 §7.4 Nnwdaf_DataManagement](../../specs/Rel-18/TS%2023.288/7%20Nnwdaf%20Services%20Description/7.4%20Nnwdaf_DataManagement%20Service.md)
+- [TS 29.520 Nnwdaf_DataManagement OpenAPI](../../specs/Rel-18/openapi/TS29520_Nnwdaf_DataManagement.yaml)
 
 ## 11. Nadrf_DataManagement 是什麼
 
@@ -1897,9 +1897,9 @@ authorization policy 維護該關係；或者由 NWDAF/DCCF 代為 retrieval，
 
 證據：
 
-- [TS 23.288 §6.2B Analytics Data and ML Model Repository](../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2B%20Analytics%20Data%20and%20ML%20Model%20Repository%20procedures.md)
-- [TS 29.575 Nadrf_DataManagement Service](../../specs/TS%2029.575/4%20Services%20offered%20by%20the%20ADRF/4.2%20Nadrf_DataManagement%20Service/README.md)
-- [TS 29.575 Nadrf_DataManagement OpenAPI](../../specs/openapi/TS29575_Nadrf_DataManagement.yaml)
+- [TS 23.288 §6.2B Analytics Data and ML Model Repository](../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2B%20Analytics%20Data%20and%20ML%20Model%20Repository%20procedures.md)
+- [TS 29.575 Nadrf_DataManagement Service](../../specs/Rel-18/TS%2029.575/4%20Services%20offered%20by%20the%20ADRF/4.2%20Nadrf_DataManagement%20Service/README.md)
+- [TS 29.575 Nadrf_DataManagement OpenAPI](../../specs/Rel-18/openapi/TS29575_Nadrf_DataManagement.yaml)
 
 ## 12. Nadrf_MLModelManagement 是什麼
 
@@ -2037,8 +2037,8 @@ sequenceDiagram
 
 證據：
 
-- [TS 29.575 §4.3 Nadrf_MLModelManagement](../../specs/TS%2029.575/4%20Services%20offered%20by%20the%20ADRF/4.3%20Nadrf%20_%20MLModelManagement%20Service.md)
-- [TS 29.575 Nadrf_MLModelManagement OpenAPI](../../specs/openapi/TS29575_Nadrf_MLModelManagement.yaml)
+- [TS 29.575 §4.3 Nadrf_MLModelManagement](../../specs/Rel-18/TS%2029.575/4%20Services%20offered%20by%20the%20ADRF/4.3%20Nadrf%20_%20MLModelManagement%20Service.md)
+- [TS 29.575 Nadrf_MLModelManagement OpenAPI](../../specs/Rel-18/openapi/TS29575_Nadrf_MLModelManagement.yaml)
 
 ## 13. 一條完整的 Release 18 FL 參考流程
 
@@ -2056,8 +2056,8 @@ resource，成功回 `200 OK` 或 `204 No Content`；結束 subscription
 
 證據：
 
-- [TS 29.552 §5.10 Federated Learning among Multiple NWDAFs](../../specs/TS%2029.552/5%20Signalling%20Flows%20for%20the%20Network%20Data%20Analytics%20Framework/5.10%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
-- [TS 29.552 §5.6A ML Model Training procedures](../../specs/TS%2029.552/5%20Signalling%20Flows%20for%20the%20Network%20Data%20Analytics%20Framework/5.6A%20ML%20Model%20Training%20procedures.md)
+- [TS 29.552 §5.10 Federated Learning among Multiple NWDAFs](../../specs/Rel-18/TS%2029.552/5%20Signalling%20Flows%20for%20the%20Network%20Data%20Analytics%20Framework/5.10%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
+- [TS 29.552 §5.6A ML Model Training procedures](../../specs/Rel-18/TS%2029.552/5%20Signalling%20Flows%20for%20the%20Network%20Data%20Analytics%20Framework/5.6A%20ML%20Model%20Training%20procedures.md)
 
 ### 13.1 先分清楚 service endpoint 與 callback
 
@@ -2412,13 +2412,13 @@ ID 篩選的標準 query parameter。因此不能把
 
 證據：
 
-- [TS 29.520 §5.4.6 Data Model](../../specs/TS%2029.520/5%20API%20Definitions/5.4%20Nnwdaf_MLModelProvision%20Service%20API/5.4.6%20Data%20Model.md)
-- [TS 29.571 §5.2.2 Simple Data Types](../../specs/TS%2029.571/5%20Common%20Data%20Types/5.2%20Data%20Types%20for%20Generic%20Usage/5.2.2%20Simple%20Data%20Types.md)
-- [Nnwdaf_MLModelProvision OpenAPI](../../specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
-- [Nnwdaf_MLModelTraining OpenAPI](../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
-- [Nnwdaf_MLModelMonitor OpenAPI](../../specs/openapi/TS29520_Nnwdaf_MLModelMonitor.yaml)
-- [TS 29.575 §5.2.6 Data Model](../../specs/TS%2029.575/5%20API%20Definitions/5.2%20Nadrf_MLModelManagement%20Service%20API/5.2.6%20Data%20Model.md)
-- [Nadrf_MLModelManagement OpenAPI](../../specs/openapi/TS29575_Nadrf_MLModelManagement.yaml)
+- [TS 29.520 §5.4.6 Data Model](../../specs/Rel-18/TS%2029.520/5%20API%20Definitions/5.4%20Nnwdaf_MLModelProvision%20Service%20API/5.4.6%20Data%20Model.md)
+- [TS 29.571 §5.2.2 Simple Data Types](../../specs/Rel-18/TS%2029.571/5%20Common%20Data%20Types/5.2%20Data%20Types%20for%20Generic%20Usage/5.2.2%20Simple%20Data%20Types.md)
+- [Nnwdaf_MLModelProvision OpenAPI](../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
+- [Nnwdaf_MLModelTraining OpenAPI](../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
+- [Nnwdaf_MLModelMonitor OpenAPI](../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelMonitor.yaml)
+- [TS 29.575 §5.2.6 Data Model](../../specs/Rel-18/TS%2029.575/5%20API%20Definitions/5.2%20Nadrf_MLModelManagement%20Service%20API/5.2.6%20Data%20Model.md)
+- [Nadrf_MLModelManagement OpenAPI](../../specs/Rel-18/openapi/TS29575_Nadrf_MLModelManagement.yaml)
 
 ## 15. 介面選擇速查
 
@@ -2516,10 +2516,10 @@ validation record中追蹤。與本文件核心 FL Training contract直接相關
 
 證據：
 
-- [本地 OpenAPI corpus 說明](../../specs/openapi/README.md)
+- [本地 OpenAPI corpus 說明](../../specs/Rel-18/openapi/README.md)
 - [本地規格總覽](../../specs/README.md)
-- [TS 29.523 `ReportingInformation`](../../specs/TS%2029.523/5%20Npcf_EventExposure%20Service%20API/5.6%20Data%20Model/5.6.2%20Structured%20data%20types.md)
-- [TS 29.523 official OpenAPI](../../specs/openapi/TS29523_Npcf_EventExposure.yaml)
+- [TS 29.523 `ReportingInformation`](../../specs/Rel-18/TS%2029.523/5%20Npcf_EventExposure%20Service%20API/5.6%20Data%20Model/5.6.2%20Structured%20data%20types.md)
+- [TS 29.523 official OpenAPI](../../specs/Rel-18/openapi/TS29523_Npcf_EventExposure.yaml)
 
 ### 17.2 free5GC OpenAPI 版本落差
 
@@ -2570,18 +2570,18 @@ certificate trust 與 SBA authorization 還會引用 TS 33.501/33.310。
 
 | 主題 | 主要證據 |
 | --- | --- |
-| FL 角色、HFL 限制、資料不交換 | [TS 23.288 §5.3](../../specs/TS%2023.288/5%20Network%20Data%20Analytics%20Functional%20Description.md) |
-| FL registration/discovery/preparation | [TS 23.288 §6.2C.2.1](../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md) |
-| FL rounds、aggregation、delay、maintenance | [TS 23.288 §6.2C.2.2–2.3](../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md) |
-| Training inputs/outputs | [TS 23.288 §6.2F](../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2F%20Procedure%20for%20ML%20Model%20Training.md) |
-| Training service semantics | [TS 23.288 §7.10](../../specs/TS%2023.288/7%20Nnwdaf%20Services%20Description/7.10%20Nnwdaf_MLModelTraining%20Service.md) |
-| Training HTTP/status/schema | [TS 29.520 §4.6](../../specs/TS%2029.520/4%20Services%20offered%20by%20the%20NWDAF/4.6%20Nnwdaf_MLModelTraining%20Service.md)、[OpenAPI](../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml) |
-| FL 完整 Stage 3 訊息序列 | [TS 29.552 §5.10](../../specs/TS%2029.552/5%20Signalling%20Flows%20for%20the%20Network%20Data%20Analytics%20Framework/5.10%20Federated%20Learning%20among%20Multiple%20NWDAFs.md) |
-| NRF registration | [TS 29.510 §5.2.2.2](../../specs/TS%2029.510/5%20Services%20Offered%20by%20the%20NRF/5.2%20Nnrf_NFManagement%20Service/5.2.2%20Service%20Operations/5.2.2.2%20NFRegister.md) |
-| NRF discovery/cache | [TS 29.510 §5.3.2.2](../../specs/TS%2029.510/5%20Services%20Offered%20by%20the%20NRF/5.3%20Nnrf_NFDiscovery%20Service/5.3.2%20Service%20Operations/5.3.2.2%20NFDiscover.md) |
-| FL capability schema | [TS 29.510 `MlAnalyticsInfo`](../../specs/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.84%20Type%20MlAnalyticsInfo.md) |
-| NWDAF 間資料取得 | [TS 23.288 §6.2.6.2](../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2%20Procedures%20for%20Data%20Collection/6.2.6%20Enhanced%20Procedures%20for%20Data%20Collection/6.2.6.2%20Procedure%20for%20Data%20Collection%20from%20NWDAF.md) |
-| NWDAF DataManagement schema | [TS 29.520 OpenAPI](../../specs/openapi/TS29520_Nnwdaf_DataManagement.yaml) |
-| DCCF data/context management | [TS 29.574 §4](../../specs/TS%2029.574/4%20Services%20offered%20by%20the%20DCCF/README.md)、[DataManagement OpenAPI](../../specs/openapi/TS29574_Ndccf_DataManagement.yaml)、[ContextManagement OpenAPI](../../specs/openapi/TS29574_Ndccf_ContextManagement.yaml) |
-| ADRF data repository | [TS 23.288 §6.2B](../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2B%20Analytics%20Data%20and%20ML%20Model%20Repository%20procedures.md)、[TS 29.575 OpenAPI](../../specs/openapi/TS29575_Nadrf_DataManagement.yaml) |
-| ADRF model repository | [TS 29.575 §4.3](../../specs/TS%2029.575/4%20Services%20offered%20by%20the%20ADRF/4.3%20Nadrf%20_%20MLModelManagement%20Service.md)、[OpenAPI](../../specs/openapi/TS29575_Nadrf_MLModelManagement.yaml) |
+| FL 角色、HFL 限制、資料不交換 | [TS 23.288 §5.3](../../specs/Rel-18/TS%2023.288/5%20Network%20Data%20Analytics%20Functional%20Description.md) |
+| FL registration/discovery/preparation | [TS 23.288 §6.2C.2.1](../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md) |
+| FL rounds、aggregation、delay、maintenance | [TS 23.288 §6.2C.2.2–2.3](../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md) |
+| Training inputs/outputs | [TS 23.288 §6.2F](../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2F%20Procedure%20for%20ML%20Model%20Training.md) |
+| Training service semantics | [TS 23.288 §7.10](../../specs/Rel-18/TS%2023.288/7%20Nnwdaf%20Services%20Description/7.10%20Nnwdaf_MLModelTraining%20Service.md) |
+| Training HTTP/status/schema | [TS 29.520 §4.6](../../specs/Rel-18/TS%2029.520/4%20Services%20offered%20by%20the%20NWDAF/4.6%20Nnwdaf_MLModelTraining%20Service.md)、[OpenAPI](../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelTraining.yaml) |
+| FL 完整 Stage 3 訊息序列 | [TS 29.552 §5.10](../../specs/Rel-18/TS%2029.552/5%20Signalling%20Flows%20for%20the%20Network%20Data%20Analytics%20Framework/5.10%20Federated%20Learning%20among%20Multiple%20NWDAFs.md) |
+| NRF registration | [TS 29.510 §5.2.2.2](../../specs/Rel-18/TS%2029.510/5%20Services%20Offered%20by%20the%20NRF/5.2%20Nnrf_NFManagement%20Service/5.2.2%20Service%20Operations/5.2.2.2%20NFRegister.md) |
+| NRF discovery/cache | [TS 29.510 §5.3.2.2](../../specs/Rel-18/TS%2029.510/5%20Services%20Offered%20by%20the%20NRF/5.3%20Nnrf_NFDiscovery%20Service/5.3.2%20Service%20Operations/5.3.2.2%20NFDiscover.md) |
+| FL capability schema | [TS 29.510 `MlAnalyticsInfo`](../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.84%20Type%20MlAnalyticsInfo.md) |
+| NWDAF 間資料取得 | [TS 23.288 §6.2.6.2](../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2%20Procedures%20for%20Data%20Collection/6.2.6%20Enhanced%20Procedures%20for%20Data%20Collection/6.2.6.2%20Procedure%20for%20Data%20Collection%20from%20NWDAF.md) |
+| NWDAF DataManagement schema | [TS 29.520 OpenAPI](../../specs/Rel-18/openapi/TS29520_Nnwdaf_DataManagement.yaml) |
+| DCCF data/context management | [TS 29.574 §4](../../specs/Rel-18/TS%2029.574/4%20Services%20offered%20by%20the%20DCCF/README.md)、[DataManagement OpenAPI](../../specs/Rel-18/openapi/TS29574_Ndccf_DataManagement.yaml)、[ContextManagement OpenAPI](../../specs/Rel-18/openapi/TS29574_Ndccf_ContextManagement.yaml) |
+| ADRF data repository | [TS 23.288 §6.2B](../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2B%20Analytics%20Data%20and%20ML%20Model%20Repository%20procedures.md)、[TS 29.575 OpenAPI](../../specs/Rel-18/openapi/TS29575_Nadrf_DataManagement.yaml) |
+| ADRF model repository | [TS 29.575 §4.3](../../specs/Rel-18/TS%2029.575/4%20Services%20offered%20by%20the%20ADRF/4.3%20Nadrf%20_%20MLModelManagement%20Service.md)、[OpenAPI](../../specs/Rel-18/openapi/TS29575_Nadrf_MLModelManagement.yaml) |

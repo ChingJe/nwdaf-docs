@@ -317,7 +317,7 @@ for _, item := range notification.NotificationItems {
 - `NotificationItem` struct (Nupf)
 
 應優先使用本地 corpus 已收錄的
-`specs/openapi/TS29564_Nupf_EventExposure.yaml` 生成；若目前 generator 無法處理，
+`specs/Rel-18/openapi/TS29564_Nupf_EventExposure.yaml` 生成；若目前 generator 無法處理，
 再評估手動實作。
 
 ---

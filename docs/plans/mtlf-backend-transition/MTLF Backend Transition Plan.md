@@ -54,9 +54,9 @@ Phase依feature組織。同一feature需要Go、PyAnLF與PyMTLF共同調整時�
 標準behavior與wire contract依下列順序核對：
 
 1. `NWDAF/`目前實際dependency與generated models
-2. `nwdaf-docs/specs/openapi/`中的Release 18 OpenAPI attachment
-3. `nwdaf-docs/specs/TS 29.510`、`TS 29.520`、`TS 29.508`、`TS 29.564`、`TS 29.575`
-4. `nwdaf-docs/specs/TS 23.288`
+2. `nwdaf-docs/specs/Rel-18/openapi/`中的Release 18 OpenAPI attachment
+3. `nwdaf-docs/specs/Rel-18/TS 29.510`、`TS 29.520`、`TS 29.508`、`TS 29.564`、`TS 29.575`
+4. `nwdaf-docs/specs/Rel-18/TS 23.288`
 5. local free5GC reference implementation
 
 每份detailed plan只要描述標準method、path、request/response、callback或業務status code，就必須在相鄰段落

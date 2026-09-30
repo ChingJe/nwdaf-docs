@@ -143,8 +143,8 @@ Release 18 OpenAPI 定義：
 
 證據：
 
-- [TS 29.520 ML Model Training OpenAPI](../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
-- [TS 29.520 §5.5 ML Model Training API](../../../specs/TS%2029.520/5%20API%20Definitions/5.5%20Nnwdaf_MLModelTraining%20Service%20API/README.md)
+- [TS 29.520 ML Model Training OpenAPI](../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
+- [TS 29.520 §5.5 ML Model Training API](../../../specs/Rel-18/TS%2029.520/5%20API%20Definitions/5.5%20Nnwdaf_MLModelTraining%20Service%20API/README.md)
 
 ### 4.2 Preparation
 
@@ -185,8 +185,8 @@ preparation extension procedure。
 
 證據：
 
-- [TS 23.288 §6.2F.1–6.2F.2](../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2F%20Procedure%20for%20ML%20Model%20Training.md)
-- [TS 29.552 §5.10.2.2 Preparation](../../../specs/TS%2029.552/5%20Signalling%20Flows%20for%20the%20Network%20Data%20Analytics%20Framework/5.10%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
+- [TS 23.288 §6.2F.1–6.2F.2](../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2F%20Procedure%20for%20ML%20Model%20Training.md)
+- [TS 29.552 §5.10.2.2 Preparation](../../../specs/Rel-18/TS%2029.552/5%20Signalling%20Flows%20for%20the%20Network%20Data%20Analytics%20Framework/5.10%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
 
 ### 4.3 Multi-round execution
 
@@ -222,7 +222,7 @@ completed base
 
 證據：
 
-- [TS 29.552 §5.10.2.1 steps 4–8](../../../specs/TS%2029.552/5%20Signalling%20Flows%20for%20the%20Network%20Data%20Analytics%20Framework/5.10%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
+- [TS 29.552 §5.10.2.1 steps 4–8](../../../specs/Rel-18/TS%2029.552/5%20Signalling%20Flows%20for%20the%20Network%20Data%20Analytics%20Framework/5.10%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
 
 ### 4.4 Training notification 與 sample count
 
@@ -254,7 +254,7 @@ sample count。FedAvg 所需的 exact count 使用 Phase 0 project-private
 
 證據：
 
-- [TS 29.520 §5.5.7 Error handling](../../../specs/TS%2029.520/5%20API%20Definitions/5.5%20Nnwdaf_MLModelTraining%20Service%20API/5.5.7%20Error%20handling.md)
+- [TS 29.520 §5.5.7 Error handling](../../../specs/Rel-18/TS%2029.520/5%20API%20Definitions/5.5%20Nnwdaf_MLModelTraining%20Service%20API/5.5.7%20Error%20handling.md)
 
 ### 4.6 free5GC implementation-shape evidence
 

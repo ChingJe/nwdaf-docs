@@ -128,17 +128,17 @@ dataset profile 產生，以提供可重複的 stable-to-degraded stimulus。
 
 ### 4.1 Analytics 與資料蒐集
 
-- [3GPP TS 29.520 V18.13.0 Nnwdaf Events Subscription OpenAPI](../../../specs/openapi/TS29520_Nnwdaf_EventsSubscription.yaml)
+- [3GPP TS 29.520 V18.13.0 Nnwdaf Events Subscription OpenAPI](../../../specs/Rel-18/openapi/TS29520_Nnwdaf_EventsSubscription.yaml)
   定義 analytics subscription 的標準 resource、callback 與
   `UE_COMMUNICATION` payload shape。
-- [3GPP TS 23.502 V18.14.0 §4.15.4.5](../../../specs/TS%2023.502/4%20System%20procedures/4.15%20Network%20Exposure/4.15.4%20Core%20Network%20Internal%20Event%20Exposure/4.15.4.5%20Exposure%20of%20Events%20from%20UPF%20for%20UPF%20Data%20Collection.md)
+- [3GPP TS 23.502 V18.14.0 §4.15.4.5](../../../specs/Rel-18/TS%2023.502/4%20System%20procedures/4.15%20Network%20Exposure/4.15.4%20Core%20Network%20Internal%20Event%20Exposure/4.15.4.5%20Exposure%20of%20Events%20from%20UPF%20for%20UPF%20Data%20Collection.md)
   說明 NWDAF 經 SMF 訂閱 UPF event、使用 AoI，以及 UE 進出 AoI 時的
   downstream subscription 語意。
-- [3GPP TS 29.508 V18.9.0 Nsmf Event Exposure OpenAPI](../../../specs/openapi/TS29508_Nsmf_EventExposure.yaml)
+- [3GPP TS 29.508 V18.9.0 Nsmf Event Exposure OpenAPI](../../../specs/Rel-18/openapi/TS29508_Nsmf_EventExposure.yaml)
   規定 create 使用 `POST /subscriptions`，成功為 `201 Created` 並回
   `Location`；delete 成功為 `204 No Content`，`networkArea` 位於
   `eventSubs[]`。
-- [3GPP TS 29.575 V18.11.0 Nadrf Data Management OpenAPI](../../../specs/openapi/TS29575_Nadrf_DataManagement.yaml)
+- [3GPP TS 29.575 V18.11.0 Nadrf Data Management OpenAPI](../../../specs/Rel-18/openapi/TS29575_Nadrf_DataManagement.yaml)
   定義 data-store record、retrieval subscription、fetch instruction 與相關
   status。Phase 7 不發明第二套 raw-data query schema。
 
@@ -147,13 +147,13 @@ Phase 7 的受控 Parquet stimulus、TAI-A／B 固定資料分布與 stable／de
 
 ### 4.2 Model Provision 與 Model Monitor
 
-- [3GPP TS 23.288 V18.13.0 §6.2A](../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2A%20Procedure%20for%20ML%20Model%20Provisioning.md)
+- [3GPP TS 23.288 V18.13.0 §6.2A](../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2A%20Procedure%20for%20ML%20Model%20Provisioning.md)
   定義 MTLF 向 AnLF 提供模型的程序語意。
-- [3GPP TS 29.520 V18.13.0 Nnwdaf ML Model Provision OpenAPI](../../../specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
+- [3GPP TS 29.520 V18.13.0 Nnwdaf ML Model Provision OpenAPI](../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
   定義 subscription create／replace／delete 與 notification；create 成功為
   `201 Created` 並含 `Location`，callback 成功接受為 `204 No Content`。
-- [3GPP TS 23.288 V18.13.0 §6.2E](../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2E%20MTLF-based%20ML%20Model%20Accuracy%20Monitoring.md)
-  與 [3GPP TS 29.520 V18.13.0 Nnwdaf ML Model Monitor OpenAPI](../../../specs/openapi/TS29520_Nnwdaf_MLModelMonitor.yaml)
+- [3GPP TS 23.288 V18.13.0 §6.2E](../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2E%20MTLF-based%20ML%20Model%20Accuracy%20Monitoring.md)
+  與 [3GPP TS 29.520 V18.13.0 Nnwdaf ML Model Monitor OpenAPI](../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelMonitor.yaml)
   定義 monitor registration、subscription、notification 與 model accuracy
   information。`consumerId` 用 NF instance identity 關聯 consumer；本 profile
   使用 `deviation` 傳遞 WAPE。
@@ -165,12 +165,12 @@ inference／ground-truth matching 產生 WAPE，不能因為 WAPE 是 private po
 
 ### 4.3 ML Model Training
 
-- [3GPP TS 23.288 V18.13.0 §6.2C](../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
+- [3GPP TS 23.288 V18.13.0 §6.2C](../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
   描述 multiple NWDAFs 的 FL 角色與程序。
-- [3GPP TS 23.288 V18.13.0 §6.2F](../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2F%20Procedure%20for%20ML%20Model%20Training.md)
+- [3GPP TS 23.288 V18.13.0 §6.2F](../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2F%20Procedure%20for%20ML%20Model%20Training.md)
   定義 preparation、training、accuracy check、delay 與 termination 的 stage-2
   行為。
-- [3GPP TS 29.520 V18.14.0 Nnwdaf ML Model Training OpenAPI](../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
+- [3GPP TS 29.520 V18.14.0 Nnwdaf ML Model Training OpenAPI](../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
   定義 subscription `POST`、individual resource 的 `PUT`／`PATCH`／`DELETE`、
   callback 以及 `mLPreFlag`、`mLAccChkFlg`、`skipFlInd`、`roundInd`、
   `maxResTime` 等欄位。Create 成功為 `201 Created` 並含 `Location`；callback
@@ -182,7 +182,7 @@ exact sample count，`samplRatio` 只保留其標準「採樣比例」語意。
 
 ### 4.4 ADRF final model publication
 
-[3GPP TS 29.575 V18.7.0 Nadrf ML Model Management OpenAPI](../../../specs/openapi/TS29575_Nadrf_MLModelManagement.yaml)
+[3GPP TS 29.575 V18.7.0 Nadrf ML Model Management OpenAPI](../../../specs/Rel-18/openapi/TS29575_Nadrf_MLModelManagement.yaml)
 定義 `POST /mlmodel-store-records`、`MLModelInfo`、`modelUniqueId`、
 `storeTransId` 與 retrieval。C 在 final candidate 完成後配置正式
 `modelUniqueId`；round artifacts 不因 Training schema 重用 `MLEventNotif`

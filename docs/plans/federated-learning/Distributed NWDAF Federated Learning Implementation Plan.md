@@ -280,13 +280,13 @@ value、success body與 `ProblemDetails`都必須沿用對應 OpenAPI名稱及
 
 證據：
 
-- [TS 29.510 Nnrf_NFManagement OpenAPI](../../../specs/openapi/TS29510_Nnrf_NFManagement.yaml)
-- [TS 29.510 Nnrf_NFDiscovery OpenAPI](../../../specs/openapi/TS29510_Nnrf_NFDiscovery.yaml)
-- [TS 29.510 `NwdafInfo`](../../../specs/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.45%20Type%20NwdafInfo.md)
-- [TS 29.510 `MlAnalyticsInfo`](../../../specs/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.84%20Type%20MlAnalyticsInfo.md)
-- [TS 29.510 NF Discovery GET and matching rules](../../../specs/TS%2029.510/6%20API%20Definitions/6.2%20Nnrf_NFDiscovery%20Service%20API/6.2.3%20Resources/6.2.3.2%20Resource%20nf-instances%20%28Store%29/6.2.3.2.3.1%20GET.md)
-- [TS 29.510 NFDiscovery features](../../../specs/TS%2029.510/6%20API%20Definitions/6.2%20Nnrf_NFDiscovery%20Service%20API/6.2.9%20Features%20supported%20by%20the%20NFDiscovery%20service.md)
-- [TS 23.288 §6.2C](../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
+- [TS 29.510 Nnrf_NFManagement OpenAPI](../../../specs/Rel-18/openapi/TS29510_Nnrf_NFManagement.yaml)
+- [TS 29.510 Nnrf_NFDiscovery OpenAPI](../../../specs/Rel-18/openapi/TS29510_Nnrf_NFDiscovery.yaml)
+- [TS 29.510 `NwdafInfo`](../../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.45%20Type%20NwdafInfo.md)
+- [TS 29.510 `MlAnalyticsInfo`](../../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.1%20Nnrf_NFManagement%20Service%20API/6.1.6%20Data%20Model/6.1.6.2%20Structured%20data%20types/6.1.6.2.84%20Type%20MlAnalyticsInfo.md)
+- [TS 29.510 NF Discovery GET and matching rules](../../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.2%20Nnrf_NFDiscovery%20Service%20API/6.2.3%20Resources/6.2.3.2%20Resource%20nf-instances%20%28Store%29/6.2.3.2.3.1%20GET.md)
+- [TS 29.510 NFDiscovery features](../../../specs/Rel-18/TS%2029.510/6%20API%20Definitions/6.2%20Nnrf_NFDiscovery%20Service%20API/6.2.9%20Features%20supported%20by%20the%20NFDiscovery%20service.md)
+- [TS 23.288 §6.2C](../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
 
 ### 4.2 Model Provision 與 Model Monitor
 
@@ -313,11 +313,11 @@ Monitor notification 只使用 `modelId + deviation` 表達 observation；
 
 證據：
 
-- [TS 29.520 Model Provision OpenAPI](../../../specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
-- [TS 29.520 Model Monitor OpenAPI](../../../specs/openapi/TS29520_Nnwdaf_MLModelMonitor.yaml)
-- [TS 29.520 §5.4.6 Model Provision Data Model](../../../specs/TS%2029.520/5%20API%20Definitions/5.4%20Nnwdaf_MLModelProvision%20Service%20API/5.4.6%20Data%20Model.md)
-- [TS 23.288 §6.2A](../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2A%20Procedure%20for%20ML%20Model%20Provisioning.md)
-- [TS 23.288 §6.2E](../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2E%20MTLF-based%20ML%20Model%20Accuracy%20Monitoring.md)
+- [TS 29.520 Model Provision OpenAPI](../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
+- [TS 29.520 Model Monitor OpenAPI](../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelMonitor.yaml)
+- [TS 29.520 §5.4.6 Model Provision Data Model](../../../specs/Rel-18/TS%2029.520/5%20API%20Definitions/5.4%20Nnwdaf_MLModelProvision%20Service%20API/5.4.6%20Data%20Model.md)
+- [TS 23.288 §6.2A](../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2A%20Procedure%20for%20ML%20Model%20Provisioning.md)
+- [TS 23.288 §6.2E](../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2E%20MTLF-based%20ML%20Model%20Accuracy%20Monitoring.md)
 
 ### 4.3 ML Model Training
 
@@ -393,11 +393,11 @@ state 預期的 `roundInd`。PUT body可驗證 `mlCorreId` 不變；PATCH schema
 
 證據：
 
-- [TS 29.520 ML Model Training OpenAPI](../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
-- [TS 23.288 §6.2F](../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2F%20Procedure%20for%20ML%20Model%20Training.md)
-- [TS 29.552 §5.10](../../../specs/TS%2029.552/5%20Signalling%20Flows%20for%20the%20Network%20Data%20Analytics%20Framework/5.10%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
-- [TS 29.520 §5.5.6 Data Model](../../../specs/TS%2029.520/5%20API%20Definitions/5.5%20Nnwdaf_MLModelTraining%20Service%20API/5.5.6%20Data%20Model.md)
-- [TS 29.520 §5.5.7 Error handling](../../../specs/TS%2029.520/5%20API%20Definitions/5.5%20Nnwdaf_MLModelTraining%20Service%20API/5.5.7%20Error%20handling.md)
+- [TS 29.520 ML Model Training OpenAPI](../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
+- [TS 23.288 §6.2F](../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2F%20Procedure%20for%20ML%20Model%20Training.md)
+- [TS 29.552 §5.10](../../../specs/Rel-18/TS%2029.552/5%20Signalling%20Flows%20for%20the%20Network%20Data%20Analytics%20Framework/5.10%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
+- [TS 29.520 §5.5.6 Data Model](../../../specs/Rel-18/TS%2029.520/5%20API%20Definitions/5.5%20Nnwdaf_MLModelTraining%20Service%20API/5.5.6%20Data%20Model.md)
+- [TS 29.520 §5.5.7 Error handling](../../../specs/Rel-18/TS%2029.520/5%20API%20Definitions/5.5%20Nnwdaf_MLModelTraining%20Service%20API/5.5.7%20Error%20handling.md)
 
 ### 4.4 ADRF
 
@@ -415,7 +415,7 @@ DELETE retrieval subscription
 ```
 
 `FetchInstruction.fetchUri` 雖為通知中的 mandatory 欄位，但
-[TS 29.575 §4.2.2.8](../../../specs/TS%2029.575/4%20Services%20offered%20by%20the%20ADRF/4.2%20Nadrf_DataManagement%20Service/4.2.2%20Service%20Operations/4.2.2.8%20Nadrf_DataManagement_RetrievalNotify%20service%20operation.md)
+[TS 29.575 §4.2.2.8](../../../specs/Rel-18/TS%2029.575/4%20Services%20offered%20by%20the%20ADRF/4.2%20Nadrf_DataManagement%20Service/4.2.2%20Service%20Operations/4.2.2.8%20Nadrf_DataManagement_RetrievalNotify%20service%20operation.md)
 明確說明 ADRF retrieval 中 consumer 實際不需要依賴該 URI。PyMTLF
 以已選定的 ADRF `apiRoot` 組合標準
 `/nadrf-datamanagement/v1/data-store-records` resource，並以
@@ -461,9 +461,9 @@ team ADRF 沒有可信 requester identity，這只是 access metadata，不宣�
 
 證據：
 
-- [TS 29.575 Data Management OpenAPI](../../../specs/openapi/TS29575_Nadrf_DataManagement.yaml)
-- [TS 29.575 ML Model Management OpenAPI](../../../specs/openapi/TS29575_Nadrf_MLModelManagement.yaml)
-- [TS 23.288 §6.2B](../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2B%20Analytics%20Data%20and%20ML%20Model%20Repository%20procedures.md)
+- [TS 29.575 Data Management OpenAPI](../../../specs/Rel-18/openapi/TS29575_Nadrf_DataManagement.yaml)
+- [TS 29.575 ML Model Management OpenAPI](../../../specs/Rel-18/openapi/TS29575_Nadrf_MLModelManagement.yaml)
+- [TS 23.288 §6.2B](../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2B%20Analytics%20Data%20and%20ML%20Model%20Repository%20procedures.md)
 
 ### 4.5 HTTP 共通約束
 
@@ -547,9 +547,9 @@ contract 定義。
 
 規格依據：
 
-- [TS 23.288 §6.2F ML Model Training](../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2F%20Procedure%20for%20ML%20Model%20Training.md)：request 可提供 Model Accuracy Check Flag 與 skip current FL round indication；
-- [TS 29.520 §5.5.6 Training data model](../../../specs/TS%2029.520/5%20API%20Definitions/5.5%20Nnwdaf_MLModelTraining%20Service%20API/5.5.6%20Data%20Model.md)：定義 `mLAccChkFlg`、`skipFlInd`、`mLModelInfos`、`statusReport` 與 notification conditional rule；
-- [TS 29.520 ML Model Training OpenAPI](../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)：定義 PUT／PATCH body 與 callback schema。
+- [TS 23.288 §6.2F ML Model Training](../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2F%20Procedure%20for%20ML%20Model%20Training.md)：request 可提供 Model Accuracy Check Flag 與 skip current FL round indication；
+- [TS 29.520 §5.5.6 Training data model](../../../specs/Rel-18/TS%2029.520/5%20API%20Definitions/5.5%20Nnwdaf_MLModelTraining%20Service%20API/5.5.6%20Data%20Model.md)：定義 `mLAccChkFlg`、`skipFlInd`、`mLModelInfos`、`statusReport` 與 notification conditional rule；
+- [TS 29.520 ML Model Training OpenAPI](../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)：定義 PUT／PATCH body 與 callback schema。
 
 ### 5.2 Remote model provider identity
 
@@ -602,7 +602,7 @@ negotiation。
 ### 5.4 Numeric model identity、ownership 與 restart
 
 `modelUniqueId` 是非負整數，且規格要求在 5GC scope 內唯一。Release 18
-沒有中央配號 API。[TS 29.520 §5.4.6](../../../specs/TS%2029.520/5%20API%20Definitions/5.4%20Nnwdaf_MLModelProvision%20Service%20API/5.4.6%20Data%20Model.md)
+沒有中央配號 API。[TS 29.520 §5.4.6](../../../specs/Rel-18/TS%2029.520/5%20API%20Definitions/5.4%20Nnwdaf_MLModelProvision%20Service%20API/5.4.6%20Data%20Model.md)
 明確定義該identifier shall be unique within 5GC scope；ADRF也可只以
 `modelUniqueId`取回模型，因此provider-local duplicate ID不能由private
 namespace合法化。
@@ -1773,13 +1773,13 @@ Phase 2–5 平行；它不阻擋使用預先存入 ADRF 的 FL-first E2E，但�
 
 規格證據：
 
-- [TS 29.503 Nudm SDM OpenAPI](../../../specs/openapi/TS29503_Nudm_SDM.yaml)
-- [TS 29.503 Nudm UECM OpenAPI](../../../specs/openapi/TS29503_Nudm_UECM.yaml)
-- [TS 29.504 Nudr Data Repository OpenAPI](../../../specs/openapi/TS29504_Nudr_DR.yaml)
-- [TS 29.505 Subscription Data OpenAPI](../../../specs/openapi/TS29505_Subscription_Data.yaml)
-- [TS 29.508 Nsmf Event Exposure OpenAPI](../../../specs/openapi/TS29508_Nsmf_EventExposure.yaml)
-- [TS 23.288 §6.2.2.1](../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2%20Procedures%20for%20Data%20Collection/6.2.2%20Data%20Collection%20from%20NFs/6.2.2.1%20General.md)
-- [TS 23.502 §4.15.4.5](../../../specs/TS%2023.502/4%20System%20procedures/4.15%20Network%20Exposure/4.15.4%20Core%20Network%20Internal%20Event%20Exposure/4.15.4.5%20Exposure%20of%20Events%20from%20UPF%20for%20UPF%20Data%20Collection.md)
+- [TS 29.503 Nudm SDM OpenAPI](../../../specs/Rel-18/openapi/TS29503_Nudm_SDM.yaml)
+- [TS 29.503 Nudm UECM OpenAPI](../../../specs/Rel-18/openapi/TS29503_Nudm_UECM.yaml)
+- [TS 29.504 Nudr Data Repository OpenAPI](../../../specs/Rel-18/openapi/TS29504_Nudr_DR.yaml)
+- [TS 29.505 Subscription Data OpenAPI](../../../specs/Rel-18/openapi/TS29505_Subscription_Data.yaml)
+- [TS 29.508 Nsmf Event Exposure OpenAPI](../../../specs/Rel-18/openapi/TS29508_Nsmf_EventExposure.yaml)
+- [TS 23.288 §6.2.2.1](../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2%20Procedures%20for%20Data%20Collection/6.2.2%20Data%20Collection%20from%20NFs/6.2.2.1%20General.md)
+- [TS 23.502 §4.15.4.5](../../../specs/Rel-18/TS%2023.502/4%20System%20procedures/4.15%20Network%20Exposure/4.15.4%20Core%20Network%20Internal%20Event%20Exposure/4.15.4.5%20Exposure%20of%20Events%20from%20UPF%20for%20UPF%20Data%20Collection.md)
 - [Internal Group Resolution And Serving SMF Release 18 規格解讀](../../specification-guides/Internal%20Group%20Resolution%20And%20Serving%20SMF%20Release%2018%20規格解讀.md)
 
 ### 14.0 Pre-implementation gap and resolution

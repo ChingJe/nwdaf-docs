@@ -229,15 +229,15 @@ notification 並成功排入 bounded worker 後回 `204 No Content`。`204` 只�
 
 ### 3.7 本地規格來源
 
-- `specs/TS 23.288/6 Procedures to Support Network Data Analytics/6.2A Procedure for ML Model Provisioning.md`
-- `specs/TS 23.288/6 Procedures to Support Network Data Analytics/6.2E MTLF-based ML Model Accuracy Monitoring.md`
-- `specs/TS 23.288/7 Nnwdaf Services Description/7.9 Nnwdaf_MLModelMonitor Service.md`
-- `specs/TS 23.288/6 Procedures to Support Network Data Analytics/6.2F Procedure for ML Model Training.md`
-- `specs/TS 29.520/4 Services offered by the NWDAF/4.5 Nnwdaf_MLModelProvision Service.md`
-- `specs/TS 29.520/4 Services offered by the NWDAF/4.6 Nnwdaf_MLModelTraining Service.md`
-- `specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml`
-- `specs/openapi/TS29520_Nnwdaf_MLModelMonitor.yaml`
-- `specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml`
+- `specs/Rel-18/TS 23.288/6 Procedures to Support Network Data Analytics/6.2A Procedure for ML Model Provisioning.md`
+- `specs/Rel-18/TS 23.288/6 Procedures to Support Network Data Analytics/6.2E MTLF-based ML Model Accuracy Monitoring.md`
+- `specs/Rel-18/TS 23.288/7 Nnwdaf Services Description/7.9 Nnwdaf_MLModelMonitor Service.md`
+- `specs/Rel-18/TS 23.288/6 Procedures to Support Network Data Analytics/6.2F Procedure for ML Model Training.md`
+- `specs/Rel-18/TS 29.520/4 Services offered by the NWDAF/4.5 Nnwdaf_MLModelProvision Service.md`
+- `specs/Rel-18/TS 29.520/4 Services offered by the NWDAF/4.6 Nnwdaf_MLModelTraining Service.md`
+- `specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelProvision.yaml`
+- `specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelMonitor.yaml`
+- `specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelTraining.yaml`
 
 ---
 

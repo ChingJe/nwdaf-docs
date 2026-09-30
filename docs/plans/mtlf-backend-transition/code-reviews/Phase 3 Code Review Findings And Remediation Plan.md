@@ -53,10 +53,10 @@ Reviewed implementation repositories:
 
 本review使用下列local Release 18 sources：
 
-- `nwdaf-docs/specs/openapi/TS29520_Nnwdaf_EventsSubscription.yaml`
-- `nwdaf-docs/specs/TS 29.520/4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/`
-- `nwdaf-docs/specs/openapi/TS29508_Nsmf_EventExposure.yaml`
-- `nwdaf-docs/specs/openapi/TS29564_Nupf_EventExposure.yaml`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29520_Nnwdaf_EventsSubscription.yaml`
+- `nwdaf-docs/specs/Rel-18/TS 29.520/4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29508_Nsmf_EventExposure.yaml`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29564_Nupf_EventExposure.yaml`
 - `nwdaf-docs/docs/plans/mtlf-backend-transition/Phase 3 Analytics Subscription Routing.md`
 
 Phase 3已固定的相關要求包括：

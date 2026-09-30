@@ -152,8 +152,8 @@ ML Model Training subscription 定位為 preparation。實際情境可再加入
 
 規格來源：
 
-- [TS 29.520 §5.5.6 Data Model](../../../../specs/TS%2029.520/5%20API%20Definitions/5.5%20Nnwdaf_MLModelTraining%20Service%20API/5.5.6%20Data%20Model.md)
-- [Release 18 OpenAPI `NwdafMLModelTrainSubsc`](../../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
+- [TS 29.520 §5.5.6 Data Model](../../../../specs/Rel-18/TS%2029.520/5%20API%20Definitions/5.5%20Nnwdaf_MLModelTraining%20Service%20API/5.5.6%20Data%20Model.md)
+- [Release 18 OpenAPI `NwdafMLModelTrainSubsc`](../../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
 
 ### 3.3 Model file address
 
@@ -179,8 +179,8 @@ format 的空間，但**沒有直接定義** model file 可用來建立 hierarch
 
 規格來源：
 
-- [TS 29.520 §5.4.6 Data Model](../../../../specs/TS%2029.520/5%20API%20Definitions/5.4%20Nnwdaf_MLModelProvision%20Service%20API/5.4.6%20Data%20Model.md)
-- [Release 18 OpenAPI `MLModelAddr`](../../../../specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
+- [TS 29.520 §5.4.6 Data Model](../../../../specs/Rel-18/TS%2029.520/5%20API%20Definitions/5.4%20Nnwdaf_MLModelProvision%20Service%20API/5.4.6%20Data%20Model.md)
+- [Release 18 OpenAPI `MLModelAddr`](../../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
 
 ### 3.4 本設計新增的 model bundle contract
 
@@ -234,7 +234,7 @@ packaging metadata，不取代模型，也不改變 `mLModelUrl` 的 SBI 型別�
 每一層仍須經過標準 discovery／preparation，不能把 manifest 本身視為 Client 已獲准
 參與 FL 的證明。
 
-規格來源：[TS 23.288 §6.2C.2.1](../../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
+規格來源：[TS 23.288 §6.2C.2.1](../../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
 
 ## 4. Topology establishment overview
 
@@ -428,8 +428,8 @@ details。TS 29.520 將 `mLModelUrl` 定義為 ML Model file 的 URL，並將 No
 
 規格來源：
 
-- [TS 23.288 §6.2C.2.1](../../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
-- [TS 29.520 §5.5.6.2.8 `NwdafMLModelTrainNotif`](../../../../specs/TS%2029.520/5%20API%20Definitions/5.5%20Nnwdaf_MLModelTraining%20Service%20API/5.5.6%20Data%20Model.md)
+- [TS 23.288 §6.2C.2.1](../../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
+- [TS 29.520 §5.5.6.2.8 `NwdafMLModelTrainNotif`](../../../../specs/Rel-18/TS%2029.520/5%20API%20Definitions/5.5%20Nnwdaf_MLModelTraining%20Service%20API/5.5.6%20Data%20Model.md)
 
 ## 7. Topology admission policies
 
@@ -566,9 +566,9 @@ standards-aligned lifecycle；規格並未要求 preparation 建立的 subscript
 
 規格來源：
 
-- [TS 23.288 §6.2C.2.2](../../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
-- [TS 23.288 §6.2F](../../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2F%20Procedure%20for%20ML%20Model%20Training.md)
-- [TS 29.520 §4.6 Nnwdaf_MLModelTraining Service](../../../../specs/TS%2029.520/4%20Services%20offered%20by%20the%20NWDAF/4.6%20Nnwdaf_MLModelTraining%20Service.md)
+- [TS 23.288 §6.2C.2.2](../../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
+- [TS 23.288 §6.2F](../../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2F%20Procedure%20for%20ML%20Model%20Training.md)
+- [TS 29.520 §4.6 Nnwdaf_MLModelTraining Service](../../../../specs/Rel-18/TS%2029.520/4%20Services%20offered%20by%20the%20NWDAF/4.6%20Nnwdaf_MLModelTraining%20Service.md)
 
 ```mermaid
 sequenceDiagram

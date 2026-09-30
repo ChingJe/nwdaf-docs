@@ -52,18 +52,18 @@ dataset retrieval、local retraining 與 updated model reprovision 的主要 ver
 
 | 行為 | 本地證據 | 本階段約束 |
 |---|---|---|
-| SMF Event Exposure create/update/delete | `specs/openapi/TS29508_Nsmf_EventExposure.yaml`；TS 29.508 clause 4.2.3 | create 維持 `POST`／`201 + Location`；delete 維持 `DELETE`，不得為測試建立平行 custom operation |
+| SMF Event Exposure create/update/delete | `specs/Rel-18/openapi/TS29508_Nsmf_EventExposure.yaml`；TS 29.508 clause 4.2.3 | create 維持 `POST`／`201 + Location`；delete 維持 `DELETE`，不得為測試建立平行 custom operation |
 | R18經SMF訂閱、UPF直接通知consumer | TS 29.508 V18.11.0 clause 4.2.3.2 Note 2；TS 23.502 V18.14.0 clauses 4.15.4.5.1、4.15.4.5.2 steps 3–5 | `UPF_EVENT`允許SMF做third-party Nupf subscription；SMF把Nsmf的consumer address/correlation傳給UPF，UPF直接通知PyAnLF |
 | SMF notification callback | 同一 OpenAPI callback；TS 29.508 clause 4.2.2.2 | consumer 成功接受 notification 回 `204` |
-| UPF Event Exposure create/delete/callback | `specs/openapi/TS29564_Nupf_EventExposure.yaml`；TS 29.564 clauses 5.2.2.2.2、6.1.5.2 | SMF以Nupf `eventNotifyUri`及`notifyCorrelationId`傳遞實際consumer資訊；UPF callback成功回`204` |
-| ADRF storage | `specs/openapi/TS29575_Nadrf_DataManagement.yaml`；TS 29.575 clause 4.2.2.2 | `POST /data-store-records` 成功回 `201 + Location` |
+| UPF Event Exposure create/delete/callback | `specs/Rel-18/openapi/TS29564_Nupf_EventExposure.yaml`；TS 29.564 clauses 5.2.2.2.2、6.1.5.2 | SMF以Nupf `eventNotifyUri`及`notifyCorrelationId`傳遞實際consumer資訊；UPF callback成功回`204` |
+| ADRF storage | `specs/Rel-18/openapi/TS29575_Nadrf_DataManagement.yaml`；TS 29.575 clause 4.2.2.2 | `POST /data-store-records` 成功回 `201 + Location` |
 | ADRF retrieval subscription | 同一 OpenAPI；TS 29.575 clause 4.2.2.6 | create 成功回 `201 + Location`，resource Location 必須可供後續 delete |
 | ADRF fetch notification | 同一 OpenAPI；TS 29.575 clause 4.2.2.8 | Go 只在成功交付 MTLF backend 後回 `204`；backend unavailable 不得假裝成功 |
 | ADRF direct retrieval | 同一 OpenAPI；TS 29.575 clause 4.2.2.5 | PyMTLF 依 fetch instruction 直接 `GET`；`200` 有資料、`204` 無資料 |
-| NRF discovery/cache | `specs/openapi/TS29510_Nnrf_NFDiscovery.yaml`；TS 29.510 clauses 5.3.2.2.1、5.3.2.2.2、6.2.6.2.2 | 使用標準 query 與 `SearchResult`；有效期內可共用 Go cache |
+| NRF discovery/cache | `specs/Rel-18/openapi/TS29510_Nnrf_NFDiscovery.yaml`；TS 29.510 clauses 5.3.2.2.1、5.3.2.2.2、6.2.6.2.2 | 使用標準 query 與 `SearchResult`；有效期內可共用 Go cache |
 | ML Model Provision/Monitor | `TS29520_Nnwdaf_MLModelProvision.yaml`、`TS29520_Nnwdaf_MLModelMonitor.yaml`；TS 29.520 clauses 4.5、4.7 | package 整理不得改變既有標準 payload、method、status 或 Location semantics |
 
-`nwdaf-docs/specs/openapi/README.md` 已記錄 Release 18 corpus 與尚未收錄的 external `$ref`。因此本階段
+`nwdaf-docs/specs/Rel-18/openapi/README.md` 已記錄 Release 18 corpus 與尚未收錄的 external `$ref`。因此本階段
 不得在未驗證 dependency closure 的前提下，把「可從單一 YAML 看到 schema」等同於「可以安全替換整個
 free5GC OpenAPI module」。
 

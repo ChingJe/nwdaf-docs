@@ -236,11 +236,11 @@ selected callback and peer-response paths but did not lock the complete Phase
 
 The applicable Release 18 OpenAPI sources remain:
 
-- `specs/openapi/TS29520_Nnwdaf_EventsSubscription.yaml`
-- `specs/openapi/TS29510_Nnrf_NFDiscovery.yaml`
-- `specs/openapi/TS29508_Nsmf_EventExposure.yaml`
-- `specs/openapi/TS29564_Nupf_EventExposure.yaml`
-- `specs/openapi/TS29575_Nadrf_DataManagement.yaml`
+- `specs/Rel-18/openapi/TS29520_Nnwdaf_EventsSubscription.yaml`
+- `specs/Rel-18/openapi/TS29510_Nnrf_NFDiscovery.yaml`
+- `specs/Rel-18/openapi/TS29508_Nsmf_EventExposure.yaml`
+- `specs/Rel-18/openapi/TS29564_Nupf_EventExposure.yaml`
+- `specs/Rel-18/openapi/TS29575_Nadrf_DataManagement.yaml`
 
 ### Required Remediation
 

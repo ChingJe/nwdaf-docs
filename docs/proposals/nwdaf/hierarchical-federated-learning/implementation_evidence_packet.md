@@ -279,12 +279,12 @@ dynamic topology或performance claim。
 
 | 證據入口 | 本輪用途 |
 | --- | --- |
-| [TS 23.288 §6.2C](<../../../../specs/TS 23.288/6 Procedures to Support Network Data Analytics/6.2C Federated Learning among Multiple NWDAFs.md>) | FL registration／discovery、preparation、round與maintenance procedure |
-| [TS 29.520 §4.6](<../../../../specs/TS 29.520/4 Services offered by the NWDAF/4.6 Nnwdaf_MLModelTraining Service.md>) | Training subscription／notification HTTP behavior |
-| [Nnwdaf ML Model Training OpenAPI](../../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml) | `mLPreFlag`、`mLModelInfos`、`statusReport`與`termTrainReq` schema |
-| [Nnwdaf ML Model Provision OpenAPI](../../../../specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml) | `MLEventNotif`與`MLModelAddr.mLModelUrl` schema |
-| [NRF NF Management OpenAPI](../../../../specs/openapi/TS29510_Nnrf_NFManagement.yaml) | `NwdafInfo`、`MlAnalyticsInfo`與`FlCapabilityType` |
-| [NRF NF Discovery OpenAPI](../../../../specs/openapi/TS29510_Nnrf_NFDiscovery.yaml) | exact-instance、service與ML analytics discovery query |
+| [TS 23.288 §6.2C](<../../../../specs/Rel-18/TS 23.288/6 Procedures to Support Network Data Analytics/6.2C Federated Learning among Multiple NWDAFs.md>) | FL registration／discovery、preparation、round與maintenance procedure |
+| [TS 29.520 §4.6](<../../../../specs/Rel-18/TS 29.520/4 Services offered by the NWDAF/4.6 Nnwdaf_MLModelTraining Service.md>) | Training subscription／notification HTTP behavior |
+| [Nnwdaf ML Model Training OpenAPI](../../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelTraining.yaml) | `mLPreFlag`、`mLModelInfos`、`statusReport`與`termTrainReq` schema |
+| [Nnwdaf ML Model Provision OpenAPI](../../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelProvision.yaml) | `MLEventNotif`與`MLModelAddr.mLModelUrl` schema |
+| [NRF NF Management OpenAPI](../../../../specs/Rel-18/openapi/TS29510_Nnrf_NFManagement.yaml) | `NwdafInfo`、`MlAnalyticsInfo`與`FlCapabilityType` |
+| [NRF NF Discovery OpenAPI](../../../../specs/Rel-18/openapi/TS29510_Nnrf_NFDiscovery.yaml) | exact-instance、service與ML analytics discovery query |
 
 ### 5.2 P1：Branch dual role／upper-lower FL process composition
 

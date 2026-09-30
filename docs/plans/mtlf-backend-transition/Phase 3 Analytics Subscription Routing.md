@@ -55,31 +55,31 @@ event或reporting algorithm。
 
 本計畫使用workspace-local Release 18 corpus：
 
-- `nwdaf-docs/specs/openapi/TS29520_Nnwdaf_EventsSubscription.yaml`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29520_Nnwdaf_EventsSubscription.yaml`
   - API attachment version `1.3.3`
-- `nwdaf-docs/specs/TS 29.520/4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/`
+- `nwdaf-docs/specs/Rel-18/TS 29.520/4 Services offered by the NWDAF/4.2 Nnwdaf_EventsSubscription Service/`
   - `4.2.2 Service Operations/4.2.2.2 Nnwdaf_EventsSubscription_Subscribe service operation/4.2.2.2.2 Subscription for event notifications.md`
   - `4.2.2 Service Operations/4.2.2.2 Nnwdaf_EventsSubscription_Subscribe service operation/4.2.2.2.3 Update subscription for event notifications.md`
   - `4.2.2 Service Operations/4.2.2.3 Nnwdaf_EventsSubscription_Unsubscribe service operation.md`
   - `4.2.2 Service Operations/4.2.2.4 Nnwdaf_EventsSubscription_Notify service operation.md`
-- `nwdaf-docs/specs/openapi/TS29510_Nnrf_NFDiscovery.yaml`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29510_Nnrf_NFDiscovery.yaml`
   - API attachment version `1.3.4`
-- `nwdaf-docs/specs/TS 29.510/5 Services Offered by the NRF/5.3 Nnrf_NFDiscovery Service/`
+- `nwdaf-docs/specs/Rel-18/TS 29.510/5 Services Offered by the NRF/5.3 Nnrf_NFDiscovery Service/`
   - `5.3.2 Service Operations/5.3.2.2 NFDiscover.md`
-- `nwdaf-docs/specs/openapi/TS29508_Nsmf_EventExposure.yaml`
-- `nwdaf-docs/specs/TS 29.508/4 Session Management Event Exposure Service/`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29508_Nsmf_EventExposure.yaml`
+- `nwdaf-docs/specs/Rel-18/TS 29.508/4 Session Management Event Exposure Service/`
   - `4.2 Service Operations/4.2.2 Nsmf_EventExposure_Notify Service Operation.md`
   - `4.2 Service Operations/4.2.3 Nsmf_EventExposure_Subscribe Service Operation.md`
   - `4.2 Service Operations/4.2.4 Nsmf_EventExposure_UnSubscribe Service Operation.md`
-- `nwdaf-docs/specs/openapi/TS29564_Nupf_EventExposure.yaml`
-- `nwdaf-docs/specs/TS 29.564/5 Services offered by the UPF/5.2 Nupf_EventExposure Service.md`
-- `nwdaf-docs/specs/TS 29.564/6 API Definitions/6.1 Nupf_EventExposure Service API/`
-- `nwdaf-docs/specs/openapi/TS29575_Nadrf_DataManagement.yaml`
-- `nwdaf-docs/specs/TS 29.575/4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29564_Nupf_EventExposure.yaml`
+- `nwdaf-docs/specs/Rel-18/TS 29.564/5 Services offered by the UPF/5.2 Nupf_EventExposure Service.md`
+- `nwdaf-docs/specs/Rel-18/TS 29.564/6 API Definitions/6.1 Nupf_EventExposure Service API/`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29575_Nadrf_DataManagement.yaml`
+- `nwdaf-docs/specs/Rel-18/TS 29.575/4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/`
   - `4.2.2 Service Operations/4.2.2.2 Nadrf_DataManagement_StorageRequest service operation.md`
-- `nwdaf-docs/specs/TS 23.288/6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/`
+- `nwdaf-docs/specs/Rel-18/TS 23.288/6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/`
   - `6.2.2 Data Collection from NFs/6.2.2.2 Procedure for Data Collection from NFs.md`
-- `nwdaf-docs/specs/TS 23.502/4 System procedures/4.15 Network Exposure/4.15.4 Core Network Internal Event Exposure/`
+- `nwdaf-docs/specs/Rel-18/TS 23.502/4 System procedures/4.15 Network Exposure/4.15.4 Core Network Internal Event Exposure/`
   - `4.15.4.5 Exposure of Events from UPF for UPF Data Collection.md`, clause 4.15.4.5.2
 
 ### 2.2 Current Implementation Sources

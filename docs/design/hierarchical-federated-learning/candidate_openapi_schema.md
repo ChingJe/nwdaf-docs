@@ -1185,6 +1185,6 @@ Stage 3 proposal，至少需要同步補充下列 procedure rules：
   numbering。
 - TS 29.571 Release 18 `NfInstanceId`、`DateTime` 與 `Uinteger` common data
   types。
-- [Release 18 Nnwdaf_MLModelTraining OpenAPI](../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
-- [Release 18 Nnwdaf_MLModelProvision OpenAPI](../../../specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
+- [Release 18 Nnwdaf_MLModelTraining OpenAPI](../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
+- [Release 18 Nnwdaf_MLModelProvision OpenAPI](../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
 - [標準欄位與 Extension 邊界](./standard_field_extension_boundary.md)

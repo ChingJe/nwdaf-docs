@@ -1,0 +1,90 @@
+release: '18'
+specifications:
+- spec: TS 23.003
+  version: 18.8.0
+  path: TS 23.003/
+  source_archive: 23003-i80.zip
+- spec: TS 23.288
+  version: 18.13.0
+  path: TS 23.288/
+  source_archive: 23288-id0.zip
+- spec: TS 23.501
+  version: 18.12.0
+  path: TS 23.501/
+  source_archive: 23501-ic0.zip
+- spec: TS 23.502
+  version: 18.14.0
+  path: TS 23.502/
+  source_archive: 23502-ie0.zip
+- spec: TS 29.122
+  version: 18.10.0
+  path: TS 29.122/
+  source_archive: 29122-ia0.zip
+- spec: TS 29.500
+  version: 18.10.0
+  path: TS 29.500/
+  source_archive: 29500-ia0.zip
+- spec: TS 29.502
+  version: 18.11.0
+  path: TS 29.502/
+  source_archive: 29502-ib0.zip
+- spec: TS 29.503
+  version: 18.13.0
+  path: TS 29.503/
+  source_archive: 29503-id0.zip
+- spec: TS 29.504
+  version: 18.13.0
+  path: TS 29.504/
+  source_archive: 29504-id0.zip
+- spec: TS 29.505
+  version: 18.8.0
+  path: TS 29.505/
+  source_archive: 29505-i80.zip
+- spec: TS 29.508
+  version: 18.11.0
+  path: TS 29.508/
+  source_archive: 29508-ib0.zip
+- spec: TS 29.510
+  version: 18.11.0
+  path: TS 29.510/
+  source_archive: 29510-ib0.zip
+- spec: TS 29.518
+  version: 18.14.0
+  path: TS 29.518/
+  source_archive: 29518-ie0.zip
+- spec: TS 29.520
+  version: 18.14.0
+  path: TS 29.520/
+  source_archive: 29520-ie0.zip
+- spec: TS 29.523
+  version: 18.7.0
+  path: TS 29.523/
+  source_archive: 29523-i70.zip
+- spec: TS 29.552
+  version: 18.7.0
+  path: TS 29.552/
+  source_archive: 29552-i70.zip
+- spec: TS 29.554
+  version: 18.3.0
+  path: TS 29.554/
+  source_archive: 29554-i30.zip
+- spec: TS 29.564
+  version: 18.7.0
+  path: TS 29.564/
+  source_archive: 29564-i70.zip
+- spec: TS 29.571
+  version: 18.12.0
+  path: TS 29.571/
+  source_archive: 29571-ic0.zip
+- spec: TS 29.574
+  version: 18.12.0
+  path: TS 29.574/
+  source_archive: 29574-ic0.zip
+- spec: TS 29.575
+  version: 18.11.0
+  path: TS 29.575/
+  source_archive: 29575-ib0(1).zip
+- spec: TS 29.576
+  version: 18.8.0
+  path: TS 29.576/
+  source_archive: 29576-i80.zip

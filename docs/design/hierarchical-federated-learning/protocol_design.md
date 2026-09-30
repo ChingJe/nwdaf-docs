@@ -345,11 +345,11 @@ protocol semantics：
 
 ## 8. 證據來源
 
-- [TS 23.288 Release 18 §6.2C Federated Learning among Multiple NWDAFs](../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
-- [TS 23.288 Release 18 §6.2F Procedure for ML Model Training](../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2F%20Procedure%20for%20ML%20Model%20Training.md)
-- [TS 29.520 Release 18 Nnwdaf_MLModelTraining OpenAPI](../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
-- [TS 29.520 Release 18 Nnwdaf_MLModelProvision OpenAPI](../../../specs/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
-- [TS 29.500 Release 18 §6.6 Extensibility Mechanisms](../../../specs/TS%2029.500/6%20General%20Functionalities%20in%20Service%20Based%20Architecture/6.6%20Extensibility%20Mechanisms.md)
+- [TS 23.288 Release 18 §6.2C Federated Learning among Multiple NWDAFs](../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2C%20Federated%20Learning%20among%20Multiple%20NWDAFs.md)
+- [TS 23.288 Release 18 §6.2F Procedure for ML Model Training](../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2F%20Procedure%20for%20ML%20Model%20Training.md)
+- [TS 29.520 Release 18 Nnwdaf_MLModelTraining OpenAPI](../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
+- [TS 29.520 Release 18 Nnwdaf_MLModelProvision OpenAPI](../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelProvision.yaml)
+- [TS 29.500 Release 18 §6.6 Extensibility Mechanisms](../../../specs/Rel-18/TS%2029.500/6%20General%20Functionalities%20in%20Service%20Based%20Architecture/6.6%20Extensibility%20Mechanisms.md)
 - [3GPP official Release 18 `TS29520_Nnwdaf_MLModelTraining.yaml`](https://forge.3gpp.org/rep/all/5G_APIs/-/blob/REL-18/TS29520_Nnwdaf_MLModelTraining.yaml)
 - [3GPP official Release 19 `TS29520_Nnwdaf_MLModelTraining.yaml`](https://forge.3gpp.org/rep/all/5G_APIs/-/blob/REL-19/TS29520_Nnwdaf_MLModelTraining.yaml)
 - [3GPP official Release 20 `TS29520_Nnwdaf_MLModelTraining.yaml`](https://forge.3gpp.org/rep/all/5G_APIs/-/blob/REL-20/TS29520_Nnwdaf_MLModelTraining.yaml)

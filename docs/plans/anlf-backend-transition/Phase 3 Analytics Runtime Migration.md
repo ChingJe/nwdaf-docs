@@ -95,11 +95,11 @@ accuracy workflow 明確保留給 Phase 4。本 phase 只應提供 Phase 4 未�
 8. `PyAnLF/src/py_anlf/core/runtime_manager.py`
 9. `PyAnLF/src/py_anlf/core/predictor.py`
 10. `PyAnLF/src/py_anlf/sbi/routers/analytics.py`
-11. `nwdaf-docs/specs/TS 23.288/6 Procedures to Support Network Data Analytics/6.1 Procedures for analytics exposure/README.md`
-12. `nwdaf-docs/specs/TS 23.288/6 Procedures to Support Network Data Analytics/6.1 Procedures for analytics exposure/6.1.3 Contents of Analytics Exposure.md`
-13. `nwdaf-docs/specs/TS 23.288/7 Nnwdaf Services Description/7.2 Nnwdaf_AnalyticsSubscription Service.md`
-14. `nwdaf-docs/specs/openapi/TS29520_Nnwdaf_EventsSubscription.yaml`
-15. `nwdaf-docs/specs/openapi/README.md`（本計畫撰寫時曾記錄尚未收錄的
+11. `nwdaf-docs/specs/Rel-18/TS 23.288/6 Procedures to Support Network Data Analytics/6.1 Procedures for analytics exposure/README.md`
+12. `nwdaf-docs/specs/Rel-18/TS 23.288/6 Procedures to Support Network Data Analytics/6.1 Procedures for analytics exposure/6.1.3 Contents of Analytics Exposure.md`
+13. `nwdaf-docs/specs/Rel-18/TS 23.288/7 Nnwdaf Services Description/7.2 Nnwdaf_AnalyticsSubscription Service.md`
+14. `nwdaf-docs/specs/Rel-18/openapi/TS29520_Nnwdaf_EventsSubscription.yaml`
+15. `nwdaf-docs/specs/Rel-18/openapi/README.md`（本計畫撰寫時曾記錄尚未收錄的
     `TS29523_Npcf_EventExposure.yaml`；現行 corpus 已補入）
 16. `resources/references/free5gc-main/NFs/pcf/internal/sbi/server.go`
 17. `resources/references/free5gc-main/NFs/pcf/internal/sbi/api_httpcallback.go`

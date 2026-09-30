@@ -12,10 +12,10 @@
 - [Hierarchical NWDAF Federated Learning Implementation Plan](../hierarchical-fl-model-bundle-edition/Hierarchical%20NWDAF%20Federated%20Learning%20Implementation%20Plan.md)
 - [Slice 8 Multi-process E2E and Regression Closure Detailed Plan](../hierarchical-fl-model-bundle-edition/Slice%208%20Multi-process%20E2E%20and%20Regression%20Closure%20Detailed%20Plan.md)
 - [NWDAF Development Policy](../../../development_policy.md)
-- [Release 18 Nsmf Event Exposure OpenAPI](../../../../specs/openapi/TS29508_Nsmf_EventExposure.yaml)
-- [Release 18 Nupf Event Exposure OpenAPI](../../../../specs/openapi/TS29564_Nupf_EventExposure.yaml)
-- [Release 18 Nnwdaf ML Model Training OpenAPI](../../../../specs/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
-- [TS 23.288 §6.2.2.2 Data Collection from NFs](../../../../specs/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2%20Procedures%20for%20Data%20Collection/6.2.2%20Data%20Collection%20from%20NFs/6.2.2.2%20Procedure%20for%20Data%20Collection%20from%20NFs.md)
+- [Release 18 Nsmf Event Exposure OpenAPI](../../../../specs/Rel-18/openapi/TS29508_Nsmf_EventExposure.yaml)
+- [Release 18 Nupf Event Exposure OpenAPI](../../../../specs/Rel-18/openapi/TS29564_Nupf_EventExposure.yaml)
+- [Release 18 Nnwdaf ML Model Training OpenAPI](../../../../specs/Rel-18/openapi/TS29520_Nnwdaf_MLModelTraining.yaml)
+- [TS 23.288 §6.2.2.2 Data Collection from NFs](../../../../specs/Rel-18/TS%2023.288/6%20Procedures%20to%20Support%20Network%20Data%20Analytics/6.2%20Procedures%20for%20Data%20Collection/6.2.2%20Data%20Collection%20from%20NFs/6.2.2.2%20Procedure%20for%20Data%20Collection%20from%20NFs.md)
 
 ---
 

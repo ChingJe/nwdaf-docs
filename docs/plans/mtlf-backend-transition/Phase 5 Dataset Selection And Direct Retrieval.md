@@ -135,20 +135,20 @@ Both paths:
 
 Relevant local normative sources:
 
-- `nwdaf-docs/specs/TS 23.288/6 Procedures to Support Network Data Analytics/6.2E MTLF-based ML Model Accuracy Monitoring.md`
-- `nwdaf-docs/specs/TS 23.288/6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.9 User consent for analytics.md`
-- `nwdaf-docs/specs/TS 29.575/4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/`
-- `nwdaf-docs/specs/TS 29.575/5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.6 Data Model.md`
-- `nwdaf-docs/specs/TS 29.510/5 Services Offered by the NRF/5.3 Nnrf_NFDiscovery Service/5.3.2 Service Operations/5.3.2.2 NFDiscover.md`
-- `nwdaf-docs/specs/TS 29.510/6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.2 Type SearchResult.md`
-- `nwdaf-docs/specs/TS 23.501/6 Network Functions/6.3 Principles for Network Function and Network Function Service discovery and selection/6.3.1 General.md`
-- `nwdaf-docs/specs/TS 29.576/4 Services offered by the MFAF.md`
-- `nwdaf-docs/specs/TS 29.576/5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md`
-- `nwdaf-docs/specs/openapi/TS29122_CommonData.yaml`
-- `nwdaf-docs/specs/openapi/TS29575_Nadrf_DataManagement.yaml`
-- `nwdaf-docs/specs/openapi/TS29576_Nmfaf_3caDataManagement.yaml`
-- `nwdaf-docs/specs/openapi/TS29510_Nnrf_NFDiscovery.yaml`
-- `nwdaf-docs/specs/openapi/TS29510_Nnrf_NFManagement.yaml`
+- `nwdaf-docs/specs/Rel-18/TS 23.288/6 Procedures to Support Network Data Analytics/6.2E MTLF-based ML Model Accuracy Monitoring.md`
+- `nwdaf-docs/specs/Rel-18/TS 23.288/6 Procedures to Support Network Data Analytics/6.2 Procedures for Data Collection/6.2.9 User consent for analytics.md`
+- `nwdaf-docs/specs/Rel-18/TS 29.575/4 Services offered by the ADRF/4.2 Nadrf_DataManagement Service/4.2.2 Service Operations/`
+- `nwdaf-docs/specs/Rel-18/TS 29.575/5 API Definitions/5.1 Nadrf_DataManagement Service API/5.1.6 Data Model.md`
+- `nwdaf-docs/specs/Rel-18/TS 29.510/5 Services Offered by the NRF/5.3 Nnrf_NFDiscovery Service/5.3.2 Service Operations/5.3.2.2 NFDiscover.md`
+- `nwdaf-docs/specs/Rel-18/TS 29.510/6 API Definitions/6.2 Nnrf_NFDiscovery Service API/6.2.6 Data Model/6.2.6.2 Structured data types/6.2.6.2.2 Type SearchResult.md`
+- `nwdaf-docs/specs/Rel-18/TS 23.501/6 Network Functions/6.3 Principles for Network Function and Network Function Service discovery and selection/6.3.1 General.md`
+- `nwdaf-docs/specs/Rel-18/TS 29.576/4 Services offered by the MFAF.md`
+- `nwdaf-docs/specs/Rel-18/TS 29.576/5 API Definitions/5.2 Nmfaf_3caDataManagement Service API.md`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29122_CommonData.yaml`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29575_Nadrf_DataManagement.yaml`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29576_Nmfaf_3caDataManagement.yaml`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29510_Nnrf_NFDiscovery.yaml`
+- `nwdaf-docs/specs/Rel-18/openapi/TS29510_Nnrf_NFManagement.yaml`
 
 ### 3.2 Generic NRF Discovery And Cache Contract
 
@@ -261,8 +261,8 @@ callback contract私自縮成只有fetch IDs。PyMTLF coordinator依建立該sub
    declared error。這區分standard body shape與本次subscription選定的procedure semantics。
 
 `FetchInstruction`的authoritative `$ref`指向
-`nwdaf-docs/specs/openapi/TS29576_Nmfaf_3caDataManagement.yaml`；`timePeriod`指向
-`nwdaf-docs/specs/openapi/TS29122_CommonData.yaml#/components/schemas/TimeWindow`。兩份exact Release 18
+`nwdaf-docs/specs/Rel-18/openapi/TS29576_Nmfaf_3caDataManagement.yaml`；`timePeriod`指向
+`nwdaf-docs/specs/Rel-18/openapi/TS29122_CommonData.yaml#/components/schemas/TimeWindow`。兩份exact Release 18
 attachments目前都已納入local corpus，正式約束為：
 
 - `FetchInstruction` required `fetchUri`及non-empty `fetchCorrIds`，optional `expiry`。
