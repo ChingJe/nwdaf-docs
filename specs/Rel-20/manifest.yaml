@@ -4,6 +4,10 @@ specifications:
   version: 20.2.0
   path: TS 23.288/
   source_archive: 23288-k20.zip
+- spec: TS 23.434
+  version: 20.1.0
+  path: TS 23.434/
+  source_archive: 23434-k10.zip
 - spec: TS 23.436
   version: 20.2.0
   path: TS 23.436/
