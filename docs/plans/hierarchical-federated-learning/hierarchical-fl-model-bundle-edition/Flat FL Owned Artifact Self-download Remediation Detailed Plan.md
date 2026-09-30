@@ -323,7 +323,7 @@ type refactor、download cache 或 resilience 改善依 policy 分類記錄。
 8. PyMTLF full pytest、Ruff 與 `git diff --check` 通過；
 9. flat isolated real-process E2E 通過；
 10. hierarchy smoke manual-success regression 通過；
-11. mandatory review、targeted remediation 與 fresh-read plan-conformance gate 完成；
+11. mandatory review、targeted remediation 與 [最終符合性核對](../../../development-policy/review.md#final-conformance-check) 完成；依 [載入與證據沿用條件](../../../development_policy.md#loading-and-evidence-reuse) 在壓縮後重讀對應規則與相關計畫，變更或缺口時補查；
 12. implementation record 保存 exact commands、results、revisions、skips 與 remaining gaps；
 13. working-tree diff 保持 unstaged、uncommitted並由使用者完成 IDE review；
 14. review confirmation 後另行提出第二批 repository-separated commit proposal，取得對該精確

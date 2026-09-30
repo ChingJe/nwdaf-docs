@@ -715,8 +715,8 @@ environment 與 production failure。
 - 對完整 Slice diff 執行 mandatory initial review；
 - 對納入範圍的 findings 執行 test-first remediation；
 - 每次 remediation 後執行 targeted follow-up review；
-- 執行 fresh-read policy／plan conformance gate；
-- 執行完整 repository commands 與 required E2E scenarios；
+- 依 [最終符合性核對](../../../development-policy/review.md#final-conformance-check) 核對既有 map 與當前要求；
+- 確認完整 repository commands 與 required E2E scenarios 的證據覆蓋最終內容；依 [證據沿用條件](../../../development_policy.md#loading-and-evidence-reuse) 補讀與補驗，保留本計畫明訂的修正後 testbed 重測要求；
 - 完成 implementation record，並保留 IDE 可直接審查的 unstaged working-tree diff；
 - 等待使用者確認 review 結果後，才更新 completion state 並提出
   repository-separated commit proposal。
@@ -1013,7 +1013,7 @@ Slice 8 只有在下列必要項目都有直接證據後才能標為完成：
 20. required support tests、repository checks、builds 與 E2E commands 通過；
 21. E2E 發現的 production defect 已由 direct repository test 與 mandatory review
     關閉，或由已核准的 decision gate 明確阻擋；
-22. final fresh-read plan-conformance map 沒有未完成的 normative item；
+22. [最終符合性核對](../../../development-policy/review.md#final-conformance-check) 後的 map 沒有未完成的 normative item；依 [載入條件](../../../development_policy.md#loading-and-evidence-reuse) 在壓縮後重讀對應規則與相關計畫，變更或缺口時補查；
 23. implementation record 列出 exact commands、results、預計 commit split、environment 與
     未執行層級；
 24. 使用者已審查 IDE 中的 unstaged working-tree diff 並確認本機 E2E 批次的 review 結果；

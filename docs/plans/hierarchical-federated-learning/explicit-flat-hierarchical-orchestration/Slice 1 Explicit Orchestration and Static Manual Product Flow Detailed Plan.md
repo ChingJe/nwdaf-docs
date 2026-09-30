@@ -365,8 +365,8 @@ training request GET回`404`。
 4. 實作static flat topology、scope composition、exact discovery與dispatch fencing。
 5. 實作Flat coordinator與manual lifecycle，讓Server只接受explicit execution input。
 6. 適配Root common contract、generic API、old route removal與active caller migration。
-7. 執行 focused／full verification、mandatory initial review、test-first remediation 與 fresh-read conformance
-   gate，保留unstaged diff供user review。
+7. 完成必要的 focused／full verification、mandatory initial review、test-first remediation 與
+   [最終符合性核對](../../../development-policy/review.md#final-conformance-check)，保留 unstaged diff 供 user review。
 
 每個checkpoint先建立或確認deterministic failing test。若需要提前加入Slice 2 collection behavior、改動Go
 NWDAF或改變standard-shaped contract，停止進decision gate。
@@ -514,13 +514,13 @@ Confirmed in-scope finding依development policy test-first remediation並做targ
 
 交付user review前：
 
-1. 從disk完整重讀development policy與本Slice；
-2. 依 current text 重建 conformance map；
-3. 執行§11.5 commands；
-4. 對每個Satisfied item定位production path、direct test與command result；
-5. 檢查 affected repository status、完整 unstaged diff 與 unrelated changes；
-6. 完整重讀本文件並與父計畫／同系列 sibling比對，完成繁體中文language consistency pass；
-7. 保持`Ready for User Review`，不stage、不commit、不標Completed。
+1. 依 [載入與證據沿用條件](../../../development_policy.md#loading-and-evidence-reuse) 掌握當前適用規則與本 Slice 要求；壓縮後重讀對應規則與相關計畫原文，要求變更或資訊不足時補查；
+2. 以既有 conformance map 核對所有當前 normative items，補足變更或缺口；
+3. 確認 §11.5 commands 的結果覆蓋最終內容，沿用仍有效的驗證；內容或條件變更時執行必要檢查；
+4. 對每個 Satisfied item 定位 production path、direct test 與 command result；
+5. 確認 affected repository 的 intended diff 與 unrelated changes；後續交付沿用已完成的差異 review，Git 操作時核對實際範圍；
+6. 對最終 changed documents 完成 [完整語言檢查](../../../development-policy/documentation.md#language)，結果可支持後續 proposal 與提交；
+7. 使用者 review 確認前保持 `Ready for User Review`，不 stage、不 commit、不標 Completed；明確要求提交目前成果時，依 [Delivery](../../../development-policy/delivery.md#review-confirmation-and-document-status) 同步文件狀態並提出 proposal。
 
 交付必須列affected repositories、diff summary、tests、open Slice 2／3與testbed gaps、conformance state與
 unrelated changes。User review 確認後才另行準備 repository-separated commit proposal。

@@ -642,8 +642,8 @@ Gate 先進 decision gate。
 7. 實作DatasetCoordinator descriptor origin selection、absolute-window fitting與no-fallback regressions。
 8. 以獨立private-collection runner擴充nwdaf-resources support flow，並執行local cross-process
    success／failure／restart／cleanup scenarios；hierarchical smoke／aggregation profiles保持Slice 1／3用途。
-9. 執行 full repository verification、mandatory initial review、test-first remediation 與 fresh-read final
-   conformance gate；保留 unstaged diffs 供 user review。
+9. 完成必要的 full repository verification、mandatory initial review、test-first remediation 與
+   [最終符合性核對](../../../development-policy/review.md#final-conformance-check)；保留 unstaged diffs 供 user review。
 
 每checkpoint先建立deterministic failing test。若需要Root fan-out、user-consent UDM procedure、lease renewal、
 public SBI或peer repository change，停止進decision gate。
@@ -822,13 +822,13 @@ fan-out、consent retrieval、lease renewal、public contract或peer repository 
 
 交付user review前：
 
-1. 從disk完整重讀development policy與本Slice；
-2. 依 latest text 重建全部 normative conformance map；
-3. 執行§13.6 commands，分別記錄PyMTLF、NWDAF、resources結果；
-4. 對每個Satisfied item定位production path、direct test與command；
-5. 檢查每個affected repository status、完整unstaged diff與unrelated changes；
-6. 重新完整讀取本文件並與父計畫／Slice 1／同系列sibling比對，完成繁體中文language pass；
-7. 狀態保持`Ready for User Review`，不stage、不commit、不標Completed。
+1. 依 [載入與證據沿用條件](../../../development_policy.md#loading-and-evidence-reuse) 掌握當前適用規則與本 Slice 要求；壓縮後重讀對應規則與相關計畫原文，要求變更或資訊不足時補查；
+2. 以既有 conformance map 核對全部當前 normative items，補足變更或缺口；
+3. 確認 §13.6 commands 的結果覆蓋最終內容，分別保留 PyMTLF、NWDAF、resources 證據；內容或條件變更時執行必要檢查；
+4. 對每個 Satisfied item 定位 production path、direct test 與 command；
+5. 確認各 affected repository 的 intended diff 與 unrelated changes；後續交付沿用已完成的差異 review，Git 操作時核對實際範圍；
+6. 對最終 changed documents 完成 [完整語言檢查](../../../development-policy/documentation.md#language)，結果可支持後續 proposal 與提交；
+7. 使用者 review 確認前保持 `Ready for User Review`，不 stage、不 commit、不標 Completed；明確要求提交目前成果時，依 [Delivery](../../../development-policy/delivery.md#review-confirmation-and-document-status) 同步文件狀態並提出 proposal。
 
 交接內容列出 affected repositories、diff summary、actual tests、support-vs-real integration boundary、open
 testbed／consent gaps、conformance state 與 unrelated changes。User review 確認後才準備

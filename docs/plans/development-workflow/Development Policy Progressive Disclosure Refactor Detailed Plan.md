@@ -2,7 +2,7 @@
 
 日期：2026-09-30
 
-狀態：計畫審查已同意；計畫文件提交已批准；尚未執行 policy 或 AGENTS.md 重構。
+狀態：重構完成（`Completed`）；文件 review 與驗證已完成，`User Review Confirmed`、`Commit Approved`；尚未 push。
 
 ## 1. 目的與本次交付邊界
 
@@ -14,8 +14,8 @@ review 與驗證要求。採用 skills 的漸進式揭露方式，不建立新�
 需求變更或證據缺口觸發。已完成的 review 與驗證可以支持後續交付；批准是
 操作授權，不是重新開始整套流程。規則以正向適用條件描述，保留授權與驗收深度。
 
-本次授權只涵蓋規劃與撰寫本文件及分類索引；不代表已授權執行本計畫中的重構，
-也不授權 stage、commit 或 push。未來執行仍需使用者指示，交付與 Git 操作仍走各自閘門。
+計畫撰寫階段的授權只涵蓋本文件及分類索引；使用者後續已明確要求「開始進行重構」，
+因此目前執行下述文件重構。此授權不包含 stage、commit 或 push，交付與 Git 操作仍走各自閘門。
 
 相關來源：
 
@@ -31,7 +31,7 @@ review 與驗證要求。採用 skills 的漸進式揭露方式，不建立新�
 
 ### 2.1 文件現況
 
-- `development_policy.md` 目前有 825 行、12 大節，包含規劃、架構、契約、語言、
+- 重構前的 `development_policy.md` 有 825 行、12 大節，包含規劃、架構、契約、語言、
   remediation、decision gate、finding admission、review、build、證據與交付流程。
 - `AGENTS.md` 同時包含 repository map、task routing 與大量詳細 policy 規則。
 - 多份 plans 已引用 `development_policy.md`，部分仍在使用的計畫明確要求完整重讀。
@@ -421,9 +421,52 @@ review-only 不授權修正、缺少規範不能跳過、必須提權的命令�
 
 ## 11. 目前交付狀態
 
-- 本次文件範圍為本詳細計畫與分類 README；計畫已納入需求驅動載入、壓縮後規則與
-  計畫重讀、證據沿用、commit 請求的 review 確認與文件狀態同步。
-- AGENTS、development policy、既有 plans 與 production repository 尚未依本計畫修改。
-- 使用者已明確要求提交本計畫，計畫 review 已確認；本次文件提交 proposal 已批准。
-- 正式規範重構尚未開始，重構驗收 A1–A13 尚未執行。
-- 已批准的提交範圍僅包含本詳細計畫與分類 README；push 尚未授權。
+### 11.1 計畫與重構的授權狀態
+
+- 計畫與分類 README 已由使用者審查並批准，以 `4880398` 提交；尚未 push。
+- 使用者已授權執行本重構，並以「好，這次實作完整，可以commit結果」確認目前交付成果的 review。
+- 使用者已批准本次單一 commit 的 16 份文件範圍及完整 subject／body；本次狀態為 `Completed`、`User Review Confirmed`、`Commit Approved`，push 尚未取得授權。
+- workspace 根目錄不是 Git repository；`AGENTS.md` 已在本地修改，不包含於 docs repository 的任何 commit。
+- `docs/specification-guides/README.md` 與 `docs/specification-guides/nwdaf-vertical-application/` 是既有無關變更，本次未修改，也不納入後續提交範圍。
+
+### 11.2 實際修改與引用處理
+
+- `AGENTS.md` 合併 repository 地圖與 routing，從 324 行縮為 99 行；保留授權、唯讀邊界、提權與 skill 觸發底線。
+- `development_policy.md` 保留入口路徑，從 825 行縮為 154 行；詳細規則移入六個模組，入口持有唯一完整路由與共通 decision gate。
+- 六個模組分別承接 planning、architecture、implementation、review、documentation、delivery，依第 5 節完成原規則與獨有例外的反向核對。
+- 正式入口與模組明訂一般續行沿用、壓縮後按任務重讀規則及相關計畫、實質變更／資訊缺口時補查，以及驗證與授權事件的分工。
+- 六份 caller 計畫的有效載入／最終核對指令已改用新入口及穩定 heading：explicit orchestration Slice 1–3、model-bundle Slice 8、Flat FL self-download remediation、protocol extension Slice 2。
+- 已滿足的 conformance rows、已勾選的歷史 checklist、implementation record 與 review ledger 保持原文；搜尋剩餘 fresh-read 命中均屬這些歷史紀錄、此計畫的來源對照，或高優先級指令例外。
+- 原 required commands、E2E／testbed matrix、修正後精確 revision 重測與 production acceptance 未更動；只調整讀取及有效證據沿用方式。
+- repository README 與本分類索引連到正式入口，不複製六模組路由；未新增 helper、manifest、hash、安裝機制或依賴，也未修改 production code／skill。
+
+### 11.3 文件驗證與驗收核對
+
+| 驗收 | 結果與證據 |
+| --- | --- |
+| A1 | 已滿足：原 repository／reference 角色完整保留於 AGENTS 單一地圖 |
+| A2 | 已滿足：入口與六模組存在；新增本地連結及 heading 經直接查閱核對 |
+| A3 | 已滿足：第 5 節原 12 節與 AGENTS 獨有要求均由指定 owner 持有；baseline、Python／private 邊界與 hash 例外保留 |
+| A4 | 已滿足：review-only、continue、proposal 前批准、scope／message 變更、push／歷史操作及提權情境均維持原授權底線 |
+| A5 | 已滿足：第 6.2 節各情境人工沿入口追蹤，分析只用證據原則，其他模組按責任及條件載入 |
+| A6 | 已滿足：普通續行、新邊界、規則變更與壓縮恢復路徑已核對；有／無 active plan 都能恢復適用要求，不另造恢復紀錄 |
+| A7 | 已滿足：有效 caller 已遷移；歷史紀錄未改寫，未發現仍依賴舊 policy section anchor 的 caller |
+| A8 | 已滿足：入口 scope 對齊八個 implementation repositories，NWDAF 專用命令／三 repo commit 格式與 free5GC 排除條件保留 |
+| A9 | 已滿足：新增檔案僅六份 policy 模組，未建立工具或追蹤系統 |
+| A10 | Git／diff 檢查通過，使用者 review 交付時 intended changes 未暫存；文件檢查結果於交付訊息回報 |
+| A11 | 已滿足：明確 commit 請求確認當前成果 review，先同步文件狀態再 proposal；本次精確 proposal 已獲批准，stage／commit 限於批准範圍 |
+| A12 | 已滿足：內容、依賴、工具／環境、驗收變更按影響補驗；無關狀態更新沿用 production 證據，批准範圍變更重新提案 |
+| A13 | 已滿足：載入、最終 conformance、文件檢查、full verification 與 Git scope 檢查的觸發方式已統一 |
+
+直接執行 `git diff --check`，並以 `git diff --no-index --check` 分別涵蓋六份新模組及
+AGENTS 原始暫存副本與現行檔案；均無 whitespace diagnostics。人工檢查完整 intended diff、
+新文件、路由、唯一規則 owner、引用與授權情境；沒有執行 Go／Python code tests，因為本次只改文件。
+
+人工核對支持的是文件可導覽、規則完整與授權一致，不代表已驗證未來每個 agent 的實際載入行為。
+後續以兩個獨立 subagent 分別使用舊版與新版規則，唯讀試跑相同的 repository 導覽、
+缺陷 review、同題追問與 commit 授權情境。兩組的關鍵判斷與授權邊界一致；同題追問時，
+舊版重讀兩次，新版沿用已讀規則、新增讀取為零。這是小型情境試跑，未測實際壓縮恢復、
+Git 寫入或完整跨 repository 任務，不視為全面等效或實際 token 成本的保證。
+
+目前沒有未修正的本切片文件 finding；本切片已完成，使用者 review 與提交方案均已批准。
+本次成果以批准的單一 commit 保存；push 尚未取得授權，不在本次操作範圍。

@@ -736,7 +736,7 @@ Implementation期間只更新本plan status、同一phase review ledger及必要
 1. 執行PyMTLF focused及full gates。
 2. 執行unchanged Go NRF boundary checks。
 3. 對照Slice 2 conformance table逐項建立production-path→test evidence map。
-4. 依Final Completion Re-read Gate重新讀development policy與本plan。
+4. 依 [最終符合性核對](../../../../development-policy/review.md#final-conformance-check) 核對既有 map 與當前要求；按 [載入與證據沿用條件](../../../../development_policy.md#loading-and-evidence-reuse) 在壓縮後重讀對應規則與相關計畫，變更或缺口時補讀與補驗。
 5. 保持working tree unstaged／uncommitted，交由user review。
 
 ---
@@ -944,8 +944,7 @@ Slice 2只有在下列條件全部成立後才能進入implementation `Ready for
 6. §5每個baseline stage disposition與final diff一致；
 7. §11 focused、full及unchanged-boundary checks完成，或gap明確分類；
 8. Mandatory initial review與所有in-scope remediation完成；
-9. 依Final Completion Re-read Gate重新讀取current development policy與本plan，完成
-   final conformance map；
+9. 依 [最終符合性核對](../../../../development-policy/review.md#final-conformance-check) 完成 final conformance map，沿用有效要求對照與驗證證據；變更或資訊缺口按 [載入條件](../../../../development_policy.md#loading-and-evidence-reuse) 補查；
 10. Intended changes保持unstaged／uncommitted並交由user review。
 11. NRF discovery snapshot的`validityPeriod`／`validUntil`、scope、freshness gate與
     successful refresh reconciliation均已實作並具direct tests；過期的NRF-derived

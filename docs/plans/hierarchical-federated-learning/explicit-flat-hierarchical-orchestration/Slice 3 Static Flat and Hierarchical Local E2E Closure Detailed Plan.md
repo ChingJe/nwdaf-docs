@@ -460,7 +460,7 @@ temporary root與本次啟動的processes；不得編輯、checkout或刪除repo
 11. 執行兩條新scenario、production flat isolated與existing HFL FedProx regressions。
 12. 執行PyMTLF／resources focused與full verification，完成mandatory initial review。
 13. 依finding admission gate對in-scope defect作test-first remediation與targeted follow-up review。
-14. 重新完整讀取development policy與本文件，重建final conformance，再執行final full verification。
+14. 依 [最終符合性核對](../../../development-policy/review.md#final-conformance-check) 核對既有 map 與當前要求，確保 required full verification 覆蓋最終內容；變更或證據缺口時補讀與補驗。
 15. 更新implementation record與狀態為`Ready for User Review`，保持所有changes unstaged／uncommitted。
 
 ## 13. 驗證矩陣
@@ -648,7 +648,7 @@ testbed blocker。
 
 只有在使用者確認本計畫後才開始 production implementation。開始時：
 
-1. 重新讀取 workspace instructions、development policy 與本文件；
+1. 依 [需求驅動載入](../../../development_policy.md#loading-and-evidence-reuse) 掌握適用 workspace instructions、policy 模組與本文件要求；一般續行沿用有效上下文，壓縮後重讀相關原文；
 2. 確認三個預計修改 repositories clean 或辨識 unrelated user changes；
 3. 建立 §14 working conformance map；
 4. 重新確認 artifact producers／consumers 與 runner helper ownership；
@@ -659,12 +659,12 @@ testbed blocker。
 Implementation 與 focused verification 後立即執行 mandatory initial review。所有 in-scope findings 依
 policy 完成 test-first remediation 與 targeted follow-up review 後：
 
-1. 從 disk 重新完整讀取 development policy 與本文件；
-2. 逐項重建 §14 final conformance；
-3. 執行 §13 全部適用 commands；
+1. 依 [載入與證據沿用條件](../../../development_policy.md#loading-and-evidence-reuse) 確認當前適用規則與本文件要求；壓縮後重讀對應規則與相關計畫原文，變更或資訊不足時補查；
+2. 以既有 §14 conformance map 逐項核對最終內容，補足變更與缺口；
+3. 確認 §13 全部適用 commands 的結果覆蓋最終內容；內容、依賴、環境或要求變更時執行必要檢查，否則沿用結果；
 4. 更新 actual commands、results、summary paths、revisions、support boundaries 與 open gaps；
-5. 完整重讀 changed docs 並執行繁體中文 language consistency pass；
-6. 狀態改為 `Ready for User Review`，保持所有 intended changes unstaged／uncommitted 供 IDE 檢視。
+5. 對最終 changed docs 完成 [完整語言檢查](../../../development-policy/documentation.md#language)，結果可支持後續 proposal 與提交；
+6. 使用者 review 確認前保持 `Ready for User Review` 與 intended changes unstaged／uncommitted；明確要求提交目前成果時，依 [Delivery](../../../development-policy/delivery.md#review-confirmation-and-document-status) 同步文件狀態並提出 proposal，Git 操作時核對實際批准範圍。
 
 ### 17.3 Commit 與 testbed 閘門
 

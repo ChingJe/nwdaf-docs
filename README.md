@@ -19,5 +19,5 @@ schema。使用 OpenAPI YAML 前，應先檢查該 release 的 `openapi/README.m
 
 長期開發規範可參考：
 
-- [`docs/development_policy.md`](./docs/development_policy.md)
+- [`docs/development_policy.md`](./docs/development_policy.md)：開發規範入口，依目前任務導向適用的規則模組，沿用仍有效的驗證與審查結果。
 - [`docs/spec_conversion.md`](./docs/spec_conversion.md)
