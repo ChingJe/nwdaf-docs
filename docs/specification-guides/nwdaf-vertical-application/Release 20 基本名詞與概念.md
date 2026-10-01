@@ -104,7 +104,7 @@ TS 23.434 §3.1 將 vertical application 定義為服務特定 vertical 的應�
 VAL 全名為 Vertical Application Layer，代表產業應用本身所在的層。
 Vertical application 描述應用的類型；VAL 則描述這類應用在功能架構中的位置。
 
-### 2.1 VAL client：應用的客戶端功能
+### 2.1. VAL client：應用的客戶端功能
 
 VAL client 是提供 vertical application 客戶端功能的角色。
 在通用 on-network 架構中，它位於 UE，也就是終端設備上，
@@ -115,7 +115,7 @@ VAL client 是提供 vertical application 客戶端功能的角色。
 **對照巡檢例子：** 巡檢 App 中取得照片、查詢巡檢紀錄、呈現辨識結果的應用功能，
 在這個例子裡屬於 VAL client。這些具體業務功能是例子設定，並非 TS 23.434 要求的功能清單。
 
-### 2.2 VAL server：應用的伺服器端功能
+### 2.2. VAL server：應用的伺服器端功能
 
 VAL server 是提供特定 VAL service 伺服器端應用功能的角色。
 它與 VAL client 互動，也可使用 SEAL server 提供的支援服務。
@@ -147,7 +147,7 @@ TS 23.434 的 SEAL 全名為 Service Enabler Architecture Layer for Verticals，
 TS 23.434 §3.1 將 SEAL service 定義為可供多個 vertical application 使用的共用服務，
 例如位置管理或群組管理。§6.2 描述 SEAL 向 VAL 提供這些服務的通用架構。
 
-### 3.1 SEAL client：終端上的共用服務支援功能
+### 3.1. SEAL client：終端上的共用服務支援功能
 
 SEAL client 提供某一項 SEAL 服務的客戶端功能，支援 VAL client，
 並與提供該服務的 SEAL server 互動。
@@ -159,7 +159,7 @@ SEAL client 提供某一項 SEAL 服務的客戶端功能，支援 VAL client，
 SDK 可先理解為讓其他軟體使用某項功能的開發套件。
 這說明 SEAL client 可以落實為終端應用使用的軟體套件；這是規格允許的一種提供方式。
 
-### 3.2 SEAL server：提供共用服務的伺服器端功能
+### 3.2. SEAL server：提供共用服務的伺服器端功能
 
 SEAL server 提供某一項 SEAL 服務的伺服器端功能，
 支援 VAL server 使用該服務，也與相應的 SEAL client 互動。
@@ -177,7 +177,7 @@ ADAES 與 AIMLE server 都以 SEAL server 的身分提供各自的服務。
 後端使用 AIMLE server 提供的服務時，就是在使用一項 SEAL 共用支援服務。
 SEAL 是組織這類服務的框架名稱；例子裡執行推論等工作的功能實體叫 AIMLE server。
 
-### 3.3 兩側如何互動
+### 3.3. 兩側如何互動
 
 TS 23.434 §6.2 用三種關係描述這些角色：
 
@@ -199,7 +199,7 @@ ADAES 指提供這項能力的 server，負責蒐集所需資料並提供應用�
 可以先把它理解為：應用提出分析需求，由 ADAES 取得相關輸入並產生分析結果。
 因此，ADAE 是能力與服務的名稱，ADAES 則是承擔分析工作及對外互動的功能實體。
 
-### 4.1 ADAEC：支援終端應用使用分析服務的客戶端功能
+### 4.1. ADAEC：支援終端應用使用分析服務的客戶端功能
 
 ADAEC 指 Application Data Analytics Enabler Client，即 ADAE 的客戶端功能實體。
 它透過 ADAE-C 向 VAL client 提供分析支援功能，並透過 ADAE-UU 與 ADAES 互動。
@@ -231,7 +231,7 @@ ADAES 再用於應用效能分析。可以先用「B、C 的體驗比 A 慢」�
 這次量的是巡檢後端，也就是 VAL server 的服務體驗；它與前面照片推論的任務分開理解。
 服務體驗回報的內容與流程有 §8.9 支持，三個終端及其數值則是例子設定。
 
-### 4.2 ADAES：取得輸入並提供應用層分析的伺服器端功能
+### 4.2. ADAES：取得輸入並提供應用層分析的伺服器端功能
 
 輸入可來自應用、終端、網路或其他支援服務，實際來源依分析類型與程序而定。
 規格明確描述的分析例子包括應用效能、位置準確度與碰撞偵測。
@@ -264,7 +264,7 @@ AIMLE 指 AI/ML Enablement，提供協助應用執行 AI/ML 操作的服務。
 名稱本身指能力與服務集合；AIMLE client 與 AIMLE server 才是承擔相應功能的實體。
 可以先理解為：應用提出 AI/ML 需求，AIMLE 提供取得模型、安排訓練、執行推論等支援。
 
-### 5.1 AIMLE 提供哪些基本支援
+### 5.1. AIMLE 提供哪些基本支援
 
 - **模型訓練**：使用資料調整模型參數，使模型學習如何完成指定任務。
 - **模型推論**：使用模型處理輸入，得到預測或其他推論結果。
@@ -279,7 +279,7 @@ AIMLE 指 AI/ML Enablement，提供協助應用執行 AI/ML 操作的服務。
 保存或查找辨識模型資訊，是「模型管理」。三者是不同操作，
 不需要每拍一張照片都重新訓練模型。
 
-### 5.2 AIMLE client：終端應用的 AI/ML 支援功能
+### 5.2. AIMLE client：終端應用的 AI/ML 支援功能
 
 **定位：** AIMLE client 是支援 AIMLE 服務的客戶端功能實體。
 在 TS 23.482 §5.2.1 的 on-network 架構中，它位於 UE，
@@ -319,7 +319,7 @@ AIMLE client 表示協助該應用使用或參與 AI/ML 操作的支援功能。
 
 來源：[TS 23.482 §5.2.1 與 §5.2.3.2](../../../specs/Rel-20/TS%2023.482/5%20Application%20architecture%20for%20enabling%20AI%20and%20ML%20services.md)、[§6.9 與 §6.18](../../../specs/Rel-20/TS%2023.482/6%20AIMLE%20Functional%20Description.md)、[§8.7](../../../specs/Rel-20/TS%2023.482/8%20Procedures%20and%20information%20flows/8.7%20AIMLE%20client%20registration.md)、[§8.12.2.1](../../../specs/Rel-20/TS%2023.482/8%20Procedures%20and%20information%20flows/8.12%20HFL%20training.md)、[§8.36](../../../specs/Rel-20/TS%2023.482/8%20Procedures%20and%20information%20flows/8.36%20ML%20model%20inference.md)。
 
-### 5.3 AIMLE server：提供與協調 AI/ML 支援服務的伺服器端功能
+### 5.3. AIMLE server：提供與協調 AI/ML 支援服務的伺服器端功能
 
 **定位：** AIMLE server 是提供 AIMLE 服務的伺服器端功能實體。
 它與 AIMLE client、VAL server、3GPP 網路及其他 SEAL 服務互動。
@@ -353,7 +353,7 @@ TS 23.482 §5.2.3.1 明確說明功能實體不等於指定實體設備；
 
 來源：[TS 23.482 §5.2.1.1 與 §5.2.3](../../../specs/Rel-20/TS%2023.482/5%20Application%20architecture%20for%20enabling%20AI%20and%20ML%20services.md)、[§6.1、§6.2、§6.6–§6.10 與 §6.34](../../../specs/Rel-20/TS%2023.482/6%20AIMLE%20Functional%20Description.md)、[§8.12.2.1](../../../specs/Rel-20/TS%2023.482/8%20Procedures%20and%20information%20flows/8.12%20HFL%20training.md)。
 
-### 5.4 從互動關係看四個角色
+### 5.4. 從互動關係看四個角色
 
 下圖依 TS 23.482 §5.2.1 與 §5.2.4 簡化，只表示 on-network 架構中的功能角色及互動關係。
 方框不代表必須分開部署的設備，連線也不代表某個請求必須走過的完整順序。
@@ -380,7 +380,7 @@ VAL client／server 描述應用本身；AIMLE client／server 描述 AI/ML 支�
 
 來源：[TS 23.482 §5.2.1 與 §5.2.4](../../../specs/Rel-20/TS%2023.482/5%20Application%20architecture%20for%20enabling%20AI%20and%20ML%20services.md)。
 
-### 5.5 規格中的例子：多個終端一起參與模型訓練
+### 5.5. 規格中的例子：多個終端一起參與模型訓練
 
 TS 23.482 §8.12.2.1 的 HFL（Horizontal Federated Learning，水平聯邦學習）程序，
 可以用來看清楚各角色如何分工。這裡只解讀該程序的基本過程，
@@ -424,7 +424,7 @@ TS 23.482 §3.1 明確允許 FL client 功能由具備該能力的 AIMLE client 
 
 來源：[TS 23.482 §8.12.2.1](../../../specs/Rel-20/TS%2023.482/8%20Procedures%20and%20information%20flows/8.12%20HFL%20training.md)、[§3.1](../../../specs/Rel-20/TS%2023.482/3%20Definitions%20of%20terms,%20symbols%20and%20abbreviations.md)。
 
-### 5.6 AIMLE 與 ADAES 如何分工
+### 5.6. AIMLE 與 ADAES 如何分工
 
 ADAES 負責提供應用層分析；若分析需要 ML 支援，可以使用 AIMLE server 的服務。
 例如，TS 23.436 §5.2.4 描述 ADAES 依 VAL 的 ML-enabled analytics 需求，

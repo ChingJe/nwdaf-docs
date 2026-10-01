@@ -5,7 +5,7 @@ NWDAF 是 5GC 的網路分析功能。外部應用可以由應用側承擔 AF �
 
 本文依據本地 Release 20 Stage 2 規格。例子用於說明功能，不代表已選定產業應用或研究方案。
 
-## 1 NWDAF 與外部應用的互動入口
+## 1. NWDAF 與外部應用的互動入口
 
 外部應用若要使用 NWDAF 的分析能力，可以由應用側承擔 AF，
 也就是 Application Function 的角色，透過標準定義的程序請求或訂閱分析。
@@ -28,9 +28,9 @@ NEF 是 Network Exposure Function，負責網路能力暴露、授權、限制�
 
 依據：[TS 23.288 §4][nwdaf-architecture]、[§6.1.1][analytics-exposure]、[TS 23.436 §5.2.2][adae-architecture]、[TS 23.482 §8.14.2.5.2][aimle-assistance]。
 
-## 2 應用側的角色與定位
+## 2. 應用側的角色與定位
 
-### 2.1 SEAL 提供應用可共用的支援服務
+### 2.1. SEAL 提供應用可共用的支援服務
 
 SEAL 是 **Service Enabler Architecture Layer for Verticals**，是支援產業應用的架構框架。
 它把多種應用可共用的支援功能定義成服務，例如位置管理、群組管理與應用資料分析。
@@ -41,7 +41,7 @@ SEAL 的各項服務由相應的 client 與 server 功能提供，終端側的 c
 
 依據：[TS 23.434 §1][seal-scope]、[§3.1–3.2][seal-definitions]、[§6.4.2][seal-roles]、[§8.3.1][seal-deployment]。
 
-### 2.2 從 SDK 理解 client 與 server 的分工
+### 2.2. 從 SDK 理解 client 與 server 的分工
 
 具體而言，SEAL 提供者可以把終端側的支援功能做成 SDK，讓應用整合使用。
 SDK 是 **Software Development Kit（軟體開發套件）**；
@@ -85,7 +85,7 @@ server 的部署位置也有彈性。SEAL server 可位於營運者、VAL 服務
 
 依據：[TS 23.434 §6.4.1–6.4.2][seal-roles]、[§8.2–8.3][seal-deployment]、[TS 23.436 §1][adae-scope]、[§3.2][adae-definitions]、[§5][adae-architecture]、[TS 23.482 §3.3][aimle-definitions]、[§5.2][aimle-architecture]。
 
-### 2.3 應用支援服務與 NWDAF 的角色關係
+### 2.3. 應用支援服務與 NWDAF 的角色關係
 
 **NWDAF（Network Data Analytics Function，網路資料分析功能）** 是
 5GC（5G Core，5G 核心網路）中的 NF（Network Function，網路功能）；
@@ -129,12 +129,12 @@ AF 方框是同一功能的另一種角色視角，不要求額外部署一台 A
 
 依據：[TS 23.434 §6.4][seal-roles]、[§8.2][seal-deployment]、[TS 23.436 §5][adae-architecture]、[TS 23.482 §5.2][aimle-architecture]、[§8.14.2.5.2][aimle-assistance]。
 
-## 3 規格中的情境與互動流程
+## 3. 規格中的情境與互動流程
 
 以下兩個例子分別呈現 ADAES 與 AIMLE 如何使用 NWDAF 的網路分析。
 它們是規格程序的簡化說明，不代表已選定的研究應用。
 
-### 3.1 ADAES 提供指定切片的應用延遲分析
+### 3.1. ADAES 提供指定切片的應用延遲分析
 
 假設應用後端想知道，在指定區域與未來時間內，使用某個網路切片時的端到端延遲。
 TS 23.436 §8.3.2 描述的互動可簡化為：
@@ -184,7 +184,7 @@ ADAES 再提供應用層的結果；因此應用分析不只是把 NWDAF 的通�
 
 依據：[TS 23.436 §8.3.2][adae-slice]、[TS 23.288 §6.1.1.2][analytics-exposure]。
 
-### 3.2 AIMLE 選擇適合參與模型訓練的終端
+### 3.2. AIMLE 選擇適合參與模型訓練的終端
 
 假設 VAL server 準備進行模型訓練，需要找出具有所需資料與能力的 AIMLE clients。
 這裡採用 TS 23.482 §8.9.1 的 AIMLE server selection 模式，由 AIMLE server 依條件選擇參與端。
@@ -205,7 +205,7 @@ ADAES 再提供應用層的結果；因此應用分析不只是把 NWDAF 的通�
 
 依據：[TS 23.482 §8.9.1–8.9.2.1][aimle-selection]。
 
-## 4 ADAES 與 AIMLE 的服務分工
+## 4. ADAES 與 AIMLE 的服務分工
 
 ADAES 與 AIMLE 依對外提供的服務責任區分，兩者都可以涉及預測。
 
@@ -223,7 +223,7 @@ AnLF 是 NWDAF 產生分析的能力，MTLF 是其模型訓練能力；
 
 依據：[TS 23.288 §5.1][nwdaf-general]、[TS 23.436 §5.2.4][adae-architecture]；成員能力分析的條文與操作見[ADAES 與 AIMLE 的關係第 4 節](Release%2020%20ADAES%20與%20AIMLE%20的關係.md#4-aimle-也可以使用-adaes-的分析)。
 
-## 5 NWDAF 在應用分析與聯合模型計算中的參與方式
+## 5. NWDAF 在應用分析與聯合模型計算中的參與方式
 
 應用使用 NWDAF 的分析結果，與 NWDAF 實際參與聯合模型計算，是不同的參與方式。
 
@@ -245,7 +245,7 @@ client 訓練本地模型並回報中間結果，server 協調與組合結果；
 
 依據：[TS 23.288 §6.2H.1][vfl-general]、[§6.2H.2.3][vfl-training]、[§6.2H.2.4][vfl-inference]、[§6.2.8.2][ue-app-collection]。
 
-## 6 AIMLE 與 NWDAF 協作的研究構想
+## 6. AIMLE 與 NWDAF 協作的研究構想
 
 標準已定義 NWDAF／AF VFL 程序；AIMLE 如何與這套程序對接，仍需要設計與驗證。
 

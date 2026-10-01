@@ -9,7 +9,7 @@ ADAES 提供應用層分析，AIMLE 提供模型訓練、推論及參與端管�
 本文以本地 Release 20 的 Stage 2 規格為主要依據；引用外部 Stage 3 時另列版本。
 說明情境不代表已選定的研究方向。
 
-## 1 先分清 SEAL 與兩種服務角色
+## 1. 先分清 SEAL 與兩種服務角色
 
 SEAL 是 Service Enabler Architecture Layer for Verticals，提供產業應用可共用的支援能力。
 VAL client／server 表示應用本身的功能；SEAL client／server 表示提供支援服務的功能。
@@ -32,7 +32,7 @@ AIMLE client、ADAE client 則是對應服務的客戶端功能，詳細定位�
 
 依據：[TS 23.434 §6.4](../../../specs/Rel-20/TS%2023.434/6%20Generic%20functional%20model%20for%20SEAL%20services/6.4%20Functional%20entities%20description.md)、[TS 23.436 §1](../../../specs/Rel-20/TS%2023.436/1%20Scope.md)、[§3.2](../../../specs/Rel-20/TS%2023.436/3%20Definitions%20of%20terms%20and%20abbreviations.md)、[§5.4.3](../../../specs/Rel-20/TS%2023.436/5%20Application%20architecture%20for%20ADAES.md)、[TS 23.482 §1](../../../specs/Rel-20/TS%2023.482/1%20Scope.md)、[§5.2.1.1 與 §5.2.3](../../../specs/Rel-20/TS%2023.482/5%20Application%20architecture%20for%20enabling%20AI%20and%20ML%20services.md)。
 
-## 2 主要差別是請求哪一種標準服務
+## 2. 主要差別是請求哪一種標準服務
 
 向 ADAES 請求分析時，消費者指定分析項目與目標，例如某個應用使用指定切片時的效能。
 ADAES 負責產生該分析項目的結果。向 AIMLE server 請求訓練或推論時，
@@ -53,7 +53,7 @@ ADAES 負責產生該分析項目的結果。向 AIMLE server 請求訓練或推
 
 依據：[TS 23.436 §9.2.4](../../../specs/Rel-20/TS%2023.436/9%20ADAE%20layer%20APIs/9.2%20ADAE%20server%20APIs.md)、[TS 23.482 §9.2.3](../../../specs/Rel-20/TS%2023.482/9%20AIMLE%20APIs/9.2%20AIMLE%20server%20APIs/9.2.3%20ML%20model%20training%20API.md)、[§8.3](../../../specs/Rel-20/TS%2023.482/8%20Procedures%20and%20information%20flows/8.3%20ML%20model%20training.md)、[§9.2.30](../../../specs/Rel-20/TS%2023.482/9%20AIMLE%20APIs/9.2%20AIMLE%20server%20APIs/9.2.30%20ML%20model%20inference%20API.md)、[§8.36](../../../specs/Rel-20/TS%2023.482/8%20Procedures%20and%20information%20flows/8.36%20ML%20model%20inference.md)。
 
-## 3 ADAES 可以使用 AIMLE 的服務
+## 3. ADAES 可以使用 AIMLE 的服務
 
 可以用「應用後端需要應用效能預測」理解這種協作。
 例如，應用希望知道指定切片下、指定區域與未來時間範圍內的端到端延遲。
@@ -80,7 +80,7 @@ NWDAF 分析與 VAL session 效能分析來產生結果。
 
 依據：[TS 23.436 §5.2.4 與 §5.4.3](../../../specs/Rel-20/TS%2023.436/5%20Application%20architecture%20for%20ADAES.md)、[§8.3.2](../../../specs/Rel-20/TS%2023.436/8%20Procedures%20and%20information%20flows/8.3%20Procedure%20on%20support%20for%20slice-specific%20application%20performance%20analytics.md)、[TS 23.482 §9.2.3](../../../specs/Rel-20/TS%2023.482/9%20AIMLE%20APIs/9.2%20AIMLE%20server%20APIs/9.2.3%20ML%20model%20training%20API.md)。
 
-## 4 AIMLE 也可以使用 ADAES 的分析
+## 4. AIMLE 也可以使用 ADAES 的分析
 
 反方向的規格例子是 **Application Layer AI/ML Member Capability Analytics**。
 AIMLE server 可以向 ADAES 請求或訂閱 AI/ML 成員能力分析，
@@ -102,7 +102,7 @@ Get 程序以已有分析資料為前提，並允許依程序再次取得分析�
 
 依據：[TS 23.436 §6.12](../../../specs/Rel-20/TS%2023.436/6%20ADAE%20layer%20Functional%20Description.md)、[§8.16.2 與 §8.16.3.8–§8.16.3.9](../../../specs/Rel-20/TS%2023.436/8%20Procedures%20and%20information%20flows/8.16%20Procedure%20for%20Application%20Layer%20AI%20and%20ML%20Member%20Capability%20Analytics.md)、[§9.2.15](../../../specs/Rel-20/TS%2023.436/9%20ADAE%20layer%20APIs/9.2%20ADAE%20server%20APIs.md)。
 
-## 5 用一張圖理解直接使用與雙向協作
+## 5. 用一張圖理解直接使用與雙向協作
 
 下圖只表示服務需求的方向，省略回應、通知、資料來源與客戶端。
 不同箭頭來自不同規格程序，不代表每個任務都要依序經過所有角色。
@@ -136,7 +136,7 @@ flowchart LR
 例如資料與分析結果的組織、分析項目語意及訂閱通知。
 這是依服務契約做的實作推論；規格沒有宣告 AIMLE 推論 API 等同於所有 ADAE 分析 API。
 
-## 6 兩者都能處理需求但請求必須符合操作定義
+## 6. 兩者都能處理需求但請求必須符合操作定義
 
 不能把兩者理解成「AIMLE 接受高階需求，ADAES 要求使用者先拆好所有步驟」。
 TS 23.436 §8.16.2.1 明確描述 ADAES 把 analytics event ID 映射為資料收集事件與資料來源，
@@ -153,7 +153,7 @@ AIMLE 也能依需求選擇模型。TS 23.482 §8.36.2 允許在只有模型推�
 
 依據：[TS 23.436 §8.16.2.1](../../../specs/Rel-20/TS%2023.436/8%20Procedures%20and%20information%20flows/8.16%20Procedure%20for%20Application%20Layer%20AI%20and%20ML%20Member%20Capability%20Analytics.md)、[TS 23.482 §8.3.3.1](../../../specs/Rel-20/TS%2023.482/8%20Procedures%20and%20information%20flows/8.3%20ML%20model%20training.md)、[§8.36.2–§8.36.3.1](../../../specs/Rel-20/TS%2023.482/8%20Procedures%20and%20information%20flows/8.36%20ML%20model%20inference.md)。
 
-## 7 操作名稱與實際傳輸 schema 要分開看
+## 7. 操作名稱與實際傳輸 schema 要分開看
 
 Stage 2 定義功能、角色、流程與資訊元素；Stage 3 進一步定義 HTTP 操作、
 資料型別、回應及通知等傳輸契約。規格定義服務能力與互動方式，內部演算法與軟體仍需實作。
@@ -175,7 +175,7 @@ JSON 請求 schema 為 `TrainRequest`，成功回應為 `200 OK` 與 `MlModelTra
 本地目前沒有上述三份 Stage 3 與配套 YAML；
 每一項 Release 20 操作的傳輸對應與 schema 依賴，仍需逐項核對。
 
-## 8 找到彼此需要服務發現或已知入口
+## 8. 找到彼此需要服務發現或已知入口
 
 同屬 SEAL 不會讓兩個 server 自動知道彼此地址。
 需要分清楚「找到 API 的地址」與「選出適合任務的 AIMLE server」。
