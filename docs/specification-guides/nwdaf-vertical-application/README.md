@@ -17,6 +17,7 @@
 - [Release 20 基本名詞與概念](Release%2020%20基本名詞與概念.md)：從巡檢 App 的照片辨識例子開始，對照 VAL、SEAL、ADAE、AIMLE 的定位與 client／server 分工；再用查詢變慢、多端訓練等情境解釋輸入、互動與輸出，附規格依據。
 - [Release 20 ADAES 與 AIMLE 的關係](Release%2020%20ADAES%20與%20AIMLE%20的關係.md)：釐清 SEAL 中的服務定位、直接使用與雙向協作，以規格操作說明功能重疊與分工，並區分傳輸 schema、服務發現及仍待核對的範圍。
 - [Release 20 NWDAF 與應用支援服務的關聯與互動](Release%2020%20NWDAF%20與應用支援服務的關聯與互動.md)：對照 NWDAF、VAL、SEAL 與 AF 的角色，分別說明 ADAES／AIMLE 使用網路分析、應用資料收集與 NWDAF／AF VFL，區分標準程序、可能組合及對接條件。
+- [Release 20 NWDAF 與應用層互動會議筆記](Release%2020%20NWDAF%20與應用層互動會議筆記.md)：會議報告初版，從 NWDAF／AF 的標準互動入口開始，搭配三張圖介紹角色、分析流程與 VFL 研究構想，附圖解與規格出處。
 
 ## 規格來源與範圍
 
