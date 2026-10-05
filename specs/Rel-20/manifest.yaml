@@ -1,5 +1,9 @@
 release: '20'
 specifications:
+- spec: TS 23.222
+  version: 20.1.0
+  path: TS 23.222/
+  source_archive: 23222-k10.zip
 - spec: TS 23.288
   version: 20.2.0
   path: TS 23.288/
@@ -16,6 +20,34 @@ specifications:
   version: 20.3.0
   path: TS 23.482/
   source_archive: 23482-k30.zip
+- spec: TS 23.558
+  version: 20.3.0
+  path: TS 23.558/
+  source_archive: 23558-k30.zip
+- spec: TS 24.558
+  version: 20.0.0
+  path: TS 24.558/
+  source_archive: 24558-k00.zip
+- spec: TS 24.560
+  version: 20.1.0
+  path: TS 24.560/
+  source_archive: 24560-k10.zip
+- spec: TS 29.222
+  version: 20.1.0
+  path: TS 29.222/
+  source_archive: 29222-k10.zip
+- spec: TS 29.482
+  version: 20.1.0
+  path: TS 29.482/
+  source_archive: 29482-k10.zip
+- spec: TS 29.549
+  version: 20.1.0
+  path: TS 29.549/
+  source_archive: 29549-k10.zip
+- spec: TS 29.558
+  version: 20.0.0
+  path: TS 29.558/
+  source_archive: 29558-k00.zip
 - spec: TR 23.700-04
   version: 20.0.0
   path: TR 23.700-04/

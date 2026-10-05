@@ -1,0 +1,149 @@
+# Release 20 OpenAPI attachments
+
+Official package attachments are copied byte-for-byte, without schema rewriting.
+
+## Supplied packages
+
+- **TS 24.558**, `24558-k00.zip` (6 YAML files):
+  - [TS24558_Eecs_ServiceProvisioning.yaml](TS24558_Eecs_ServiceProvisioning.yaml)
+  - [TS24558_Eees_ACREvents.yaml](TS24558_Eees_ACREvents.yaml)
+  - [TS24558_Eees_AppContextRelocation.yaml](TS24558_Eees_AppContextRelocation.yaml)
+  - [TS24558_Eees_EASDiscovery.yaml](TS24558_Eees_EASDiscovery.yaml)
+  - [TS24558_Eees_EASInformationProvisioning.yaml](TS24558_Eees_EASInformationProvisioning.yaml)
+  - [TS24558_Eees_EECRegistration.yaml](TS24558_Eees_EECRegistration.yaml)
+- **TS 24.560**, `24560-k10.zip` (11 YAML files):
+  - [TS24560_Aimlec_AIMLEClientParticipation.yaml](TS24560_Aimlec_AIMLEClientParticipation.yaml)
+  - [TS24560_Aimlec_AIMLEClientServiceOperations.yaml](TS24560_Aimlec_AIMLEClientServiceOperations.yaml)
+  - [TS24560_Aimlec_AimlTaskTransfer.yaml](TS24560_Aimlec_AimlTaskTransfer.yaml)
+  - [TS24560_Aimlec_ClientDataProcessing.yaml](TS24560_Aimlec_ClientDataProcessing.yaml)
+  - [TS24560_Aimlec_FLGroupIndication.yaml](TS24560_Aimlec_FLGroupIndication.yaml)
+  - [TS24560_Aimlec_HFLTraining.yaml](TS24560_Aimlec_HFLTraining.yaml)
+  - [TS24560_Aimlec_MLModTngCapEva.yaml](TS24560_Aimlec_MLModTngCapEva.yaml)
+  - [TS24560_Aimles_AIMLEClientRegistration.yaml](TS24560_Aimles_AIMLEClientRegistration.yaml)
+  - [TS24560_Aimles_AimlTaskTransfer.yaml](TS24560_Aimles_AimlTaskTransfer.yaml)
+  - [TS24560_Aimles_SplitOpPipeline.yaml](TS24560_Aimles_SplitOpPipeline.yaml)
+  - [TS24560_Aimles_UeTLModelSelectionAssistance.yaml](TS24560_Aimles_UeTLModelSelectionAssistance.yaml)
+- **TS 29.222**, `29222-k10.zip` (12 YAML files):
+  - [TS29222_AEF_Security_API.yaml](TS29222_AEF_Security_API.yaml)
+  - [TS29222_CAPIF_API_Invoker_Management_API.yaml](TS29222_CAPIF_API_Invoker_Management_API.yaml)
+  - [TS29222_CAPIF_API_Provider_Management_API.yaml](TS29222_CAPIF_API_Provider_Management_API.yaml)
+  - [TS29222_CAPIF_Access_Control_Policy_API.yaml](TS29222_CAPIF_Access_Control_Policy_API.yaml)
+  - [TS29222_CAPIF_Auditing_API.yaml](TS29222_CAPIF_Auditing_API.yaml)
+  - [TS29222_CAPIF_Discover_Service_API.yaml](TS29222_CAPIF_Discover_Service_API.yaml)
+  - [TS29222_CAPIF_Events_API.yaml](TS29222_CAPIF_Events_API.yaml)
+  - [TS29222_CAPIF_Logging_API_Invocation_API.yaml](TS29222_CAPIF_Logging_API_Invocation_API.yaml)
+  - [TS29222_CAPIF_Open_Discover_Service_API.yaml](TS29222_CAPIF_Open_Discover_Service_API.yaml)
+  - [TS29222_CAPIF_Publish_Service_API.yaml](TS29222_CAPIF_Publish_Service_API.yaml)
+  - [TS29222_CAPIF_Routing_Info_API.yaml](TS29222_CAPIF_Routing_Info_API.yaml)
+  - [TS29222_CAPIF_Security_API.yaml](TS29222_CAPIF_Security_API.yaml)
+- **TS 29.482**, `29482-k10.zip` (23 YAML files):
+  - [TS29482_AIMLES_AIMLEClientDiscovery.yaml](TS29482_AIMLES_AIMLEClientDiscovery.yaml)
+  - [TS29482_AIMLES_AIMLEClientSelection.yaml](TS29482_AIMLES_AIMLEClientSelection.yaml)
+  - [TS29482_AIMLES_AIMLEServiceOperationsManagement.yaml](TS29482_AIMLES_AIMLEServiceOperationsManagement.yaml)
+  - [TS29482_AIMLES_AssistedMLModelSelection.yaml](TS29482_AIMLES_AssistedMLModelSelection.yaml)
+  - [TS29482_AIMLES_ContextTransfer.yaml](TS29482_AIMLES_ContextTransfer.yaml)
+  - [TS29482_AIMLES_DataManagement.yaml](TS29482_AIMLES_DataManagement.yaml)
+  - [TS29482_AIMLES_FLMember.yaml](TS29482_AIMLES_FLMember.yaml)
+  - [TS29482_AIMLES_FLMemberGroupSupport.yaml](TS29482_AIMLES_FLMemberGroupSupport.yaml)
+  - [TS29482_AIMLES_HierarchicalComputingAssist.yaml](TS29482_AIMLES_HierarchicalComputingAssist.yaml)
+  - [TS29482_AIMLES_MLModelMaintenance.yaml](TS29482_AIMLES_MLModelMaintenance.yaml)
+  - [TS29482_AIMLES_MLModelPerfEvaluation.yaml](TS29482_AIMLES_MLModelPerfEvaluation.yaml)
+  - [TS29482_AIMLES_MLModelPerfMonitor.yaml](TS29482_AIMLES_MLModelPerfMonitor.yaml)
+  - [TS29482_AIMLES_MLModelRetrieval.yaml](TS29482_AIMLES_MLModelRetrieval.yaml)
+  - [TS29482_AIMLES_MLModelTraining.yaml](TS29482_AIMLES_MLModelTraining.yaml)
+  - [TS29482_AIMLES_MLModelUpdate.yaml](TS29482_AIMLES_MLModelUpdate.yaml)
+  - [TS29482_AIMLES_ServerDiscovery.yaml](TS29482_AIMLES_ServerDiscovery.yaml)
+  - [TS29482_AIMLES_SplitOpEvent.yaml](TS29482_AIMLES_SplitOpEvent.yaml)
+  - [TS29482_AIMLES_SplitOpNodeRegistration.yaml](TS29482_AIMLES_SplitOpNodeRegistration.yaml)
+  - [TS29482_AIMLES_TLModelSelectionAssistance.yaml](TS29482_AIMLES_TLModelSelectionAssistance.yaml)
+  - [TS29482_MLR_FLEvents.yaml](TS29482_MLR_FLEvents.yaml)
+  - [TS29482_MLR_FLMember.yaml](TS29482_MLR_FLMember.yaml)
+  - [TS29482_MLR_MLModelManagement.yaml](TS29482_MLR_MLModelManagement.yaml)
+  - [TS29482_MLR_ModelInformationDiscovery.yaml](TS29482_MLR_ModelInformationDiscovery.yaml)
+- **TS 29.549**, `29549-k10.zip` (39 YAML files):
+  - [TS29549_SS_AADRF_DataManagement.yaml](TS29549_SS_AADRF_DataManagement.yaml)
+  - [TS29549_SS_ADAE_AIMLEClientEnergySustainablityAnalytics.yaml](TS29549_SS_ADAE_AIMLEClientEnergySustainablityAnalytics.yaml)
+  - [TS29549_SS_ADAE_AIMLEnergyConsumptionAnalytics.yaml](TS29549_SS_ADAE_AIMLEnergyConsumptionAnalytics.yaml)
+  - [TS29549_SS_ADAE_AIMLMemberCapabilityAnalytics.yaml](TS29549_SS_ADAE_AIMLMemberCapabilityAnalytics.yaml)
+  - [TS29549_SS_ADAE_CollisionDetectionAnalytics.yaml](TS29549_SS_ADAE_CollisionDetectionAnalytics.yaml)
+  - [TS29549_SS_ADAE_DN_energy_analytics.yaml](TS29549_SS_ADAE_DN_energy_analytics.yaml)
+  - [TS29549_SS_ADAE_EdgeLoadAnalytics.yaml](TS29549_SS_ADAE_EdgeLoadAnalytics.yaml)
+  - [TS29549_SS_ADAE_LocationAccuracyAnalytics.yaml](TS29549_SS_ADAE_LocationAccuracyAnalytics.yaml)
+  - [TS29549_SS_ADAE_LocationRelatedUeGroupAnalytics.yaml](TS29549_SS_ADAE_LocationRelatedUeGroupAnalytics.yaml)
+  - [TS29549_SS_ADAE_ServerToServerPerformanceAnalytics.yaml](TS29549_SS_ADAE_ServerToServerPerformanceAnalytics.yaml)
+  - [TS29549_SS_ADAE_ServiceApiAnalytics.yaml](TS29549_SS_ADAE_ServiceApiAnalytics.yaml)
+  - [TS29549_SS_ADAE_SlicePerformanceAnalytics.yaml](TS29549_SS_ADAE_SlicePerformanceAnalytics.yaml)
+  - [TS29549_SS_ADAE_SliceUsagePatternAnalytics.yaml](TS29549_SS_ADAE_SliceUsagePatternAnalytics.yaml)
+  - [TS29549_SS_ADAE_Ue2UePerformanceAnalytics.yaml](TS29549_SS_ADAE_Ue2UePerformanceAnalytics.yaml)
+  - [TS29549_SS_ADAE_UeRatConnectivityAnalytics.yaml](TS29549_SS_ADAE_UeRatConnectivityAnalytics.yaml)
+  - [TS29549_SS_ADAE_VALPerformanceAnalytics.yaml](TS29549_SS_ADAE_VALPerformanceAnalytics.yaml)
+  - [TS29549_SS_ADCCF_DataCollection.yaml](TS29549_SS_ADCCF_DataCollection.yaml)
+  - [TS29549_SS_ASCAIInfoRetrieval.yaml](TS29549_SS_ASCAIInfoRetrieval.yaml)
+  - [TS29549_SS_ConfirmLocation.yaml](TS29549_SS_ConfirmLocation.yaml)
+  - [TS29549_SS_DADiscovery.yaml](TS29549_SS_DADiscovery.yaml)
+  - [TS29549_SS_DAMediaManagement.yaml](TS29549_SS_DAMediaManagement.yaml)
+  - [TS29549_SS_DAProfileManagement.yaml](TS29549_SS_DAProfileManagement.yaml)
+  - [TS29549_SS_DAUsageReport.yaml](TS29549_SS_DAUsageReport.yaml)
+  - [TS29549_SS_Events.yaml](TS29549_SS_Events.yaml)
+  - [TS29549_SS_GroupManagement.yaml](TS29549_SS_GroupManagement.yaml)
+  - [TS29549_SS_IdmParameterProvisioning.yaml](TS29549_SS_IdmParameterProvisioning.yaml)
+  - [TS29549_SS_KMParametersProvisioning.yaml](TS29549_SS_KMParametersProvisioning.yaml)
+  - [TS29549_SS_KeyInfoRetrieval.yaml](TS29549_SS_KeyInfoRetrieval.yaml)
+  - [TS29549_SS_LocationAreaInfoRetrieval.yaml](TS29549_SS_LocationAreaInfoRetrieval.yaml)
+  - [TS29549_SS_LocationHistoryInfoEvent.yaml](TS29549_SS_LocationHistoryInfoEvent.yaml)
+  - [TS29549_SS_LocationReporting.yaml](TS29549_SS_LocationReporting.yaml)
+  - [TS29549_SS_MMetaConnectivityRequirement.yaml](TS29549_SS_MMetaConnectivityRequirement.yaml)
+  - [TS29549_SS_NetworkResourceAdaptation.yaml](TS29549_SS_NetworkResourceAdaptation.yaml)
+  - [TS29549_SS_NetworkResourceMonitoring.yaml](TS29549_SS_NetworkResourceMonitoring.yaml)
+  - [TS29549_SS_SLPositioningManagement.yaml](TS29549_SS_SLPositioningManagement.yaml)
+  - [TS29549_SS_UserProfileRetrieval.yaml](TS29549_SS_UserProfileRetrieval.yaml)
+  - [TS29549_SS_VALServiceAreaConfiguration.yaml](TS29549_SS_VALServiceAreaConfiguration.yaml)
+  - [TS29549_SS_VALServiceData.yaml](TS29549_SS_VALServiceData.yaml)
+  - [TS29549_SS_ValUeConfiguration.yaml](TS29549_SS_ValUeConfiguration.yaml)
+- **TS 29.558**, `29558-k00.zip` (19 YAML files):
+  - [TS29558_Ecas_SelectedEES.yaml](TS29558_Ecas_SelectedEES.yaml)
+  - [TS29558_Eecs_ACREvents.yaml](TS29558_Eecs_ACREvents.yaml)
+  - [TS29558_Eecs_EASInfoManagement.yaml](TS29558_Eecs_EASInfoManagement.yaml)
+  - [TS29558_Eecs_ECSDiscovery.yaml](TS29558_Eecs_ECSDiscovery.yaml)
+  - [TS29558_Eecs_ECSServiceProvisioning.yaml](TS29558_Eecs_ECSServiceProvisioning.yaml)
+  - [TS29558_Eecs_EESRegistration.yaml](TS29558_Eecs_EESRegistration.yaml)
+  - [TS29558_Eecs_TargetEESDiscovery.yaml](TS29558_Eecs_TargetEESDiscovery.yaml)
+  - [TS29558_Eees_ACRManagementEvent.yaml](TS29558_Eees_ACRManagementEvent.yaml)
+  - [TS29558_Eees_ACRParameterInformation.yaml](TS29558_Eees_ACRParameterInformation.yaml)
+  - [TS29558_Eees_ACRStatusUpdate.yaml](TS29558_Eees_ACRStatusUpdate.yaml)
+  - [TS29558_Eees_AppClientInformation.yaml](TS29558_Eees_AppClientInformation.yaml)
+  - [TS29558_Eees_CommonEASAnnouncement.yaml](TS29558_Eees_CommonEASAnnouncement.yaml)
+  - [TS29558_Eees_EASRegistration.yaml](TS29558_Eees_EASRegistration.yaml)
+  - [TS29558_Eees_EECContextRelocation.yaml](TS29558_Eees_EECContextRelocation.yaml)
+  - [TS29558_Eees_EELManagedACR.yaml](TS29558_Eees_EELManagedACR.yaml)
+  - [TS29558_Eees_SessionWithQoS.yaml](TS29558_Eees_SessionWithQoS.yaml)
+  - [TS29558_Eees_TrafficInfluenceEAS.yaml](TS29558_Eees_TrafficInfluenceEAS.yaml)
+  - [TS29558_Eees_UEIdentifier.yaml](TS29558_Eees_UEIdentifier.yaml)
+  - [TS29558_Eees_UELocation.yaml](TS29558_Eees_UELocation.yaml)
+
+## External dependencies and release isolation
+
+All files in this directory belong to Release 20. Missing external `$ref` targets are listed below. They remain unresolved; same-named files from another release must not be substituted automatically. This directory is an attachment collection, not a complete bundled API dependency set.
+
+- `TS29122_AsSessionWithQoS.yaml`
+- `TS29122_CommonData.yaml`
+- `TS29122_CpProvisioning.yaml`
+- `TS29122_GMDviaMBMSbyMB2.yaml`
+- `TS29122_MonitoringEvent.yaml`
+- `TS29122_PfdManagement.yaml`
+- `TS29257_UAE_ChangeUSSManagement.yaml`
+- `TS29435_NSCE_PolicyManagement.yaml`
+- `TS29486_VAE_FileDistribution.yaml`
+- `TS29503_Nudm_SDM.yaml`
+- `TS29508_Nsmf_EventExposure.yaml`
+- `TS29510_Nnrf_NFManagement.yaml`
+- `TS29514_Npcf_PolicyAuthorization.yaml`
+- `TS29520_Nnwdaf_EventsSubscription.yaml`
+- `TS29522_AnalyticsExposure.yaml`
+- `TS29523_Npcf_EventExposure.yaml`
+- `TS29548_SDD_Transmission.yaml`
+- `TS29548_SDD_TransmissionQualityMeasurement.yaml`
+- `TS29571_CommonData.yaml`
+- `TS29572_Nlmf_Location.yaml`
+
+Word-to-Markdown conversion may not preserve the indentation of OpenAPI listings in Annexes. Use these official YAML attachments for machine-readable schemas.

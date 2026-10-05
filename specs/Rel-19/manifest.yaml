@@ -1,6 +1,22 @@
 release: '19'
 specifications:
+- spec: TS 24.546
+  version: 19.5.0
+  path: TS 24.546/
+  source_archive: 24546-j50.zip
+- spec: TS 24.547
+  version: 19.0.0
+  path: TS 24.547/
+  source_archive: 24547-j00.zip
+- spec: TS 24.559
+  version: 19.4.1
+  path: TS 24.559/
+  source_archive: 24559-j41.zip
 - spec: TS 28.105
   version: 19.6.0
   path: TS 28.105/
   source_archive: 28105-j60.zip
+- spec: TS 33.434
+  version: 19.0.0
+  path: TS 33.434/
+  source_archive: 33434-j00.zip

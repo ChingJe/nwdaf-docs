@@ -8,8 +8,8 @@ attachments and schema dependencies from different releases remain isolated.
 | Release | Status | Specifications | Entry point |
 |---|---|---:|---|
 | Release 18 | Primary implementation corpus | 22 | [Rel-18](Rel-18/README.md) |
-| Release 19 | Supplemental research corpus | 1 | [Rel-19](Rel-19/README.md) |
-| Release 20 | Reference corpus | 5 | [Rel-20](Rel-20/README.md) |
+| Release 19 | Supplemental research corpus | 5 | [Rel-19](Rel-19/README.md) |
+| Release 20 | Reference corpus | 13 | [Rel-20](Rel-20/README.md) |
 
 ## Layout rules
 

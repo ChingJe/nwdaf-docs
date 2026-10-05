@@ -1,0 +1,708 @@
+---
+spec: TS 29.482
+version: 20.1.0
+release: '20'
+clause: A.24
+title: A.24 AIMLES_ServerDiscovery API
+source_archive: 29482-k10.zip
+source_document: 29482-k10.docx
+content_origin: 3gpp-source
+---
+
+# A.24 AIMLES_ServerDiscovery API
+
+openapi: 3.0.0
+
+info:
+
+title: AIMLES_ServerDiscovery
+
+version: 1.0.0-alpha.1
+
+description: \|
+
+API for AIMLE Server Discovery Service.
+
+© 2026, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
+
+All rights reserved.
+
+externalDocs:
+
+description: \>
+
+3GPP TS 29.482 V20.1.0; Artificial Intelligence Machine Learning Enablement
+
+(AIMLE) Services; Stage 3.
+
+url: https://www.3gpp.org/ftp/Specs/archive/29_series/29.482/
+
+servers:
+
+\- url: '{apiRoot}/aimles-servdisc/v1'
+
+variables:
+
+apiRoot:
+
+default: https://example.com
+
+description: apiRoot as defined in clause 6.5 of 3GPP TS 29.549
+
+security:
+
+\- {}
+
+\- oAuth2ClientCredentials: \[\]
+
+paths:
+
+/servers:
+
+get:
+
+summary: Discover the AIMLE Servers according to the filtering criteria.
+
+operationId: DiscoverAimleServers
+
+tags:
+
+\- AIMLE Server Discovery (Collection)
+
+parameters:
+
+\- name: serv-filt-criteria
+
+in: query
+
+description: \>
+
+Represents the AIMLE server(s) discovery filtering criteria.
+
+required: true
+
+content:
+
+application/json:
+
+schema:
+
+\$ref: '#/components/schemas/ServerDiscCriteria'
+
+\- name: supp-feats
+
+in: query
+
+description: \>
+
+Contains supported features information, used to negotiate the applicability
+
+of optional features. This query parameter shall be present only if feature
+
+negotiation needs to take place.
+
+schema:
+
+\$ref: 'TS29571_CommonData.yaml#/components/schemas/SupportedFeatures'
+
+responses:
+
+'200':
+
+description: \>
+
+OK. The response body contains the AIMLE Server(s) matching the query
+
+filtering criteria.
+
+content:
+
+application/json:
+
+schema:
+
+\$ref: '#/components/schemas/ServerDiscResp'
+
+'307':
+
+\$ref: 'TS29122_CommonData.yaml#/components/responses/307'
+
+'308':
+
+\$ref: 'TS29122_CommonData.yaml#/components/responses/308'
+
+'400':
+
+\$ref: 'TS29122_CommonData.yaml#/components/responses/400'
+
+'401':
+
+\$ref: 'TS29122_CommonData.yaml#/components/responses/401'
+
+'403':
+
+\$ref: 'TS29122_CommonData.yaml#/components/responses/403'
+
+'404':
+
+\$ref: 'TS29122_CommonData.yaml#/components/responses/404'
+
+'406':
+
+\$ref: 'TS29122_CommonData.yaml#/components/responses/406'
+
+'429':
+
+\$ref: 'TS29122_CommonData.yaml#/components/responses/429'
+
+'500':
+
+\$ref: 'TS29122_CommonData.yaml#/components/responses/500'
+
+'503':
+
+\$ref: 'TS29122_CommonData.yaml#/components/responses/503'
+
+default:
+
+\$ref: 'TS29122_CommonData.yaml#/components/responses/default'
+
+components:
+
+securitySchemes:
+
+oAuth2ClientCredentials:
+
+type: oauth2
+
+flows:
+
+clientCredentials:
+
+tokenUrl: '{tokenUrl}'
+
+scopes: {}
+
+schemas:
+
+ServerDiscCriteria:
+
+description: \>
+
+Represents the discovery criteria for discovering suitable AIMLE servers
+
+for AI/ML operations.
+
+type: object
+
+properties:
+
+locInfo:
+
+\$ref: 'TS29122_MonitoringEvent.yaml#/components/schemas/LocationInfo'
+
+valServiceId:
+
+type: string
+
+taskTypes:
+
+type: array
+
+items:
+
+\$ref: '#/components/schemas/TaskType'
+
+minItems: 1
+
+modelIds:
+
+type: array
+
+items:
+
+type: string
+
+minItems: 1
+
+availSched:
+
+\$ref: 'TS29122_CpProvisioning.yaml#/components/schemas/ScheduledCommunicationTime'
+
+processingCapability:
+
+\$ref: '#/components/schemas/ProcessingCapability'
+
+inferenceTaskReq:
+
+\$ref: '#/components/schemas/InferenceTaskReq'
+
+anyOf:
+
+\- required: \[locInfo\]
+
+\- required: \[valServiceId\]
+
+\- required: \[taskTypes\]
+
+\- required: \[modelIds\]
+
+\- required: \[availSched\]
+
+\- required: \[processingCapability\]
+
+ServerDiscResp:
+
+description: Represents the AIMLE Server discovery response.
+
+type: object
+
+properties:
+
+aimleServers:
+
+type: array
+
+items:
+
+\$ref: '#/components/schemas/ServerInfo'
+
+minItems: 0
+
+required:
+
+\- aimleServers
+
+ServerEndpoint:
+
+description: \>
+
+Represents the endpoints and supported interface profile of the AIMLE server.
+
+type: object
+
+properties:
+
+apiUri:
+
+\$ref: 'TS29122_CommonData.yaml#/components/schemas/Uri'
+
+apiVersion:
+
+type: string
+
+authScheme:
+
+\$ref: '#/components/schemas/AuthScheme'
+
+required:
+
+\- apiUri
+
+ServerInfo:
+
+description: Represents the information of a discovered AIMLE server.
+
+type: object
+
+properties:
+
+serverId:
+
+type: string
+
+endpoint:
+
+\$ref: '#/components/schemas/ServerEndpoint'
+
+modelIds:
+
+type: array
+
+items:
+
+type: string
+
+minItems: 1
+
+processingCapability:
+
+\$ref: '#/components/schemas/ProcessingCapability'
+
+functionalCapability:
+
+\$ref: '#/components/schemas/FunctionalCapability'
+
+performanceProfile:
+
+\$ref: '#/components/schemas/PerformanceProfile'
+
+availSched:
+
+\$ref: 'TS29122_CpProvisioning.yaml#/components/schemas/ScheduledCommunicationTime'
+
+required:
+
+\- serverId
+
+\- endpoint
+
+FunctionalCapability:
+
+description: \>
+
+Represents the functional capabilities of the AIMLE server, such as supported
+
+modalities, maximum input/output length, supported quantizations, and
+
+streaming/batch support.
+
+type: object
+
+properties:
+
+modalities:
+
+type: array
+
+items:
+
+\$ref: '#/components/schemas/Modality'
+
+minItems: 1
+
+maxInputLength:
+
+\$ref: 'TS29571_CommonData.yaml#/components/schemas/Uinteger'
+
+maxOutputLength:
+
+\$ref: 'TS29571_CommonData.yaml#/components/schemas/Uinteger'
+
+quantizations:
+
+type: array
+
+items:
+
+type: string
+
+minItems: 1
+
+streamingSupport:
+
+type: boolean
+
+batchSupport:
+
+type: boolean
+
+InferenceTaskReq:
+
+description: \>
+
+Represents the requirements related to the inference task type.
+
+type: object
+
+properties:
+
+modalities:
+
+type: array
+
+items:
+
+\$ref: '#/components/schemas/Modality'
+
+minItems: 1
+
+precision:
+
+type: array
+
+items:
+
+\$ref: '#/components/schemas/Precision'
+
+minItems: 1
+
+perfReq:
+
+\$ref: '#/components/schemas/PerformanceReq'
+
+anyOf:
+
+\- required: \[modalities\]
+
+\- required: \[precision\]
+
+\- required: \[perfReq\]
+
+PerformanceReq:
+
+description: \>
+
+Represents the performance requirements for the inference task.
+
+type: object
+
+properties:
+
+targetLatency:
+
+\$ref: 'TS29122_CommonData.yaml#/components/schemas/DurationSec'
+
+throughput:
+
+\$ref: 'TS29571_CommonData.yaml#/components/schemas/Uinteger'
+
+concurrencyReq:
+
+\$ref: 'TS29571_CommonData.yaml#/components/schemas/Uinteger'
+
+batchSize:
+
+\$ref: 'TS29571_CommonData.yaml#/components/schemas/Uinteger'
+
+confidReporting:
+
+type: boolean
+
+anyOf:
+
+\- required: \[targetLatency\]
+
+\- required: \[throughput\]
+
+\- required: \[concurrencyReq\]
+
+\- required: \[batchSize\]
+
+\- required: \[confidReporting\]
+
+ProcessingCapability:
+
+description: \>
+
+Represents the processing capability (e.g., CPU/GPU/memory) of the AIMLE server.
+
+type: object
+
+properties:
+
+cpuInfo:
+
+type: string
+
+gpuInfo:
+
+type: string
+
+memorySize:
+
+\$ref: 'TS29571_CommonData.yaml#/components/schemas/Uinteger'
+
+memoryUnit:
+
+type: string
+
+PerformanceProfile:
+
+description: \>
+
+Represents the performance parameters of the AIMLE server, such as latency
+
+ranges, throughput, and concurrency limits.
+
+type: object
+
+properties:
+
+latencyRange:
+
+\$ref: '#/components/schemas/LatencyRange'
+
+maxConcurrency:
+
+\$ref: 'TS29571_CommonData.yaml#/components/schemas/Uinteger'
+
+throughput:
+
+\$ref: 'TS29571_CommonData.yaml#/components/schemas/Uinteger'
+
+LatencyRange:
+
+description: Represents the supported latency range of the AIMLE server.
+
+type: object
+
+properties:
+
+minLatency:
+
+\$ref: 'TS29122_CommonData.yaml#/components/schemas/DurationSec'
+
+maxLatency:
+
+\$ref: 'TS29122_CommonData.yaml#/components/schemas/DurationSec'
+
+\#
+
+\# SIMPLE DATA TYPES
+
+\#
+
+\#
+
+\# ENUMERATIONS
+
+\#
+
+TaskType:
+
+anyOf:
+
+\- type: string
+
+enum:
+
+\- INFERENCE
+
+\- TESTING
+
+\- TRAINING
+
+\- MODEL_SPLIT
+
+\- type: string
+
+description: \>
+
+This string provides forward-compatibility with future extensions to the enumeration and
+
+is not used to encode content defined in the present version of this API.
+
+description: \|
+
+Represents the supported AI/ML operations.
+
+Possible values are:
+
+\- INFERENCE: Indicates that the supported operation is model inference.
+
+\- TESTING: Indicates that the supported operation is model testing.
+
+\- TRAINING: Indicates that the supported operation is model training.
+
+\- MODEL_SPLIT: Indicates that the supported operation is model split operation.
+
+Modality:
+
+anyOf:
+
+\- type: string
+
+enum:
+
+\- AUDIO
+
+\- IMAGE
+
+\- SENSOR
+
+\- TEXT
+
+\- VIDEO
+
+\- type: string
+
+description: \>
+
+This string provides forward-compatibility with future extensions to the enumeration and
+
+is not used to encode content defined in the present version of this API.
+
+description: \|
+
+Represents a modality supported by the AIMLE server or required for an inference task.
+
+Possible values are:
+
+\- AUDIO: Indicates that the supported modality is audio.
+
+\- IMAGE: Indicates that the supported modality is image.
+
+\- SENSOR: Indicates that the supported modality is sensor.
+
+\- TEXT: Indicates that the supported modality is text.
+
+\- VIDEO: Indicates that the supported modality is video.
+
+Precision:
+
+anyOf:
+
+\- type: string
+
+enum:
+
+\- FP16
+
+\- FP32
+
+\- INT8
+
+\- type: string
+
+description: \>
+
+This string provides forward-compatibility with future extensions to the enumeration and
+
+is not used to encode content defined in the present version of this API.
+
+description: \|
+
+Represents the required precision of the inference task.
+
+Possible values are:
+
+\- FP16: Indicates that the supported precision is 16-bit floating point precision.
+
+\- FP32: Indicates that the supported precision is 32-bit floating point precision.
+
+\- INT8: Indicates that the supported precision is 8-bit integer precision.
+
+AuthScheme:
+
+anyOf:
+
+\- type: string
+
+enum:
+
+\- OAUTH2
+
+\- TLS_CERT
+
+\- API_KEY
+
+\- type: string
+
+description: \>
+
+This string provides forward-compatibility with future extensions to the enumeration and
+
+is not used to encode content defined in the present version of this API.
+
+description: \|
+
+Represents the authentication scheme supported by the AIMLE server.
+
+Possible values are:
+
+\- OAUTH2: Indicates that the supported authentication is OAuth 2.0.
+
+\- TLS_CERT: Indicates the certificate-based authentication.
+
+\- API_KEY: Indicates the API-key based authentication.
