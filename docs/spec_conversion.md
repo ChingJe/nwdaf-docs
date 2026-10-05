@@ -108,7 +108,15 @@ specifications:
 - 收錄的 YAML 可以解析。
 - OpenAPI `$ref` 不會被錯誤地跨 release 解析。
 - 抽查複雜表格、Annex、圖片、text box 與曾修正的 heading。
-- `git diff --check` 通過。
+- 自行產生或編輯的 Markdown、索引與 manifest 通過 `git diff --check`。
+
+格式檢查須排除依原樣保留要求收錄的官方附件。官方 YAML、ABNF 或 XML 原有的
+CRLF、行尾空白與縮排不視為轉換缺陷，不為消除格式診斷而修改。附件仍須完成
+適用的解析及來源內容保留檢查。
+
+檢查輸出只列出新增、可處理的問題；已確認的來源格式特性或已記錄的限制以簡短
+說明帶過，避免重複列出大量已知診斷。沿用仍適用的驗證結果，重跑條件依
+[Development Policy](development_policy.md#evidence-applicability)。
 
 不產生永久的 validation JSON、command log、environment snapshot、文字相似度
 報告、視覺分級或 hash 清單。若某份規格仍有實際閱讀限制，直接記在該 release

@@ -22,6 +22,10 @@ references are selected only for the relevant Go/standardized boundary.
 - Prefer existing owners and direct behavior over speculative abstractions and
   nonessential helpers. New hash-level validation or integrity manifests need
   a contract requirement or explicit user decision.
+- Prefer existing tools and direct commands. Create helper scripts, temporary
+  files, or reports only when needed to transform data, preserve complex input
+  safely, or meet a confirmed task requirement. Do not add auxiliary workflows
+  around simple operations.
 - Match claims to direct evidence. Separate implemented behavior, verification,
   external acceptance, user review, and Git authorization.
 
@@ -90,11 +94,20 @@ edit needs document checks, not rerunning unrelated production tests. Required
 full commands still need evidence for the final state; focused checks do not
 replace them.
 
+Do not repeat verification without a specific reason: a relevant material
+change, a previous failure, an uncovered requirement, or concrete evidence that
+the previous result no longer applies. Proposals, approvals, commits, pushes,
+and conversation continuation do not themselves invalidate existing results.
+When another check is needed, cover the affected scope; broaden it only when
+the change, findings, or acceptance requirements justify doing so.
+
 Keep evidence in working context, necessary plan records, and concise handoffs;
-no new registry is needed. Final conformance reconciles all current commitments
-using the working map and valid results, returning to original passages for
-changes or gaps. Worktree and staged-content checks at Git operations establish
-actual scope; output full diffs only as differences and risk warrant.
+do not create extra checklists, audit records, or evidence registries merely to
+demonstrate compliance with these reuse rules. Final conformance reconciles all
+current commitments using the working map and valid results, returning to
+original passages for changes or gaps. Worktree and staged-content checks at
+Git operations establish actual scope; output full diffs only as differences
+and risk warrant.
 
 ## Evidence And Reference Order
 

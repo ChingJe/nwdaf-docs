@@ -61,6 +61,17 @@ the content and conditions. Proposal and approval do not restart tests,
 language passes, full reviews, or full-diff reporting. New relevant differences
 require corresponding review/verification and any necessary reapproval.
 
+At Git delivery, check only newly relevant state: the actual staged scope,
+the commit result, and the push result, plus any required branch or outgoing
+commit information not already established. Reuse unchanged content validation.
+Do not repeatedly print the same status, log, or full diff between steps unless
+an intervening change or unresolved question makes another inspection necessary.
+
+Pass simple commit messages directly to Git with correctly quoted arguments.
+Use a temporary message file only when complex content or tool constraints
+justify it. Do not add a separate verification step solely to check that the
+message file was created.
+
 A required Git checkpoint is tracked as `pending user approval`, separately
 from non-Git conformance; it is neither implementation evidence nor permission.
 Report resulting commit hashes after committing.
