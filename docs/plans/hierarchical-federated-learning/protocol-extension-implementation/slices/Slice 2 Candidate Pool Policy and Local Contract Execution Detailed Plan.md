@@ -736,7 +736,7 @@ Implementation期間只更新本plan status、同一phase review ledger及必要
 1. 執行PyMTLF focused及full gates。
 2. 執行unchanged Go NRF boundary checks。
 3. 對照Slice 2 conformance table逐項建立production-path→test evidence map。
-4. 依 [最終符合性核對](../../../../development-policy/review.md#final-conformance-check) 核對既有 map 與當前要求；按 [載入與證據沿用條件](../../../../development_policy.md#loading-and-evidence-reuse) 在壓縮後重讀對應規則與相關計畫，變更或缺口時補讀與補驗。
+4. 依 [最終符合性核對](../../../../development-policy/review.md#final-conformance-check) 核對當前要求與證據；資料不足或要求變更時依 [載入條件](../../../../development_policy.md#loading-and-evidence-reuse) 補查。
 5. 保持working tree unstaged／uncommitted，交由user review。
 
 ---
@@ -862,7 +862,7 @@ checks需在review handoff逐項列出，不能以full suite總數取代focused 
 - `nwdaf-docs/`另行保存plan status與review evidence，不與production commit混合。
 - Implementation完成後先保留unstaged／uncommitted diff，回報affected files、diff
   summary、focused／full verification與remaining gaps。
-- User確認review後才提出完整commit proposal；review確認不等於commit或push授權。
+- 使用者 review、狀態更新與 Git 授權依 [Delivery](../../../../development-policy/delivery.md)。
 - 若實作需要修改`NWDAF/`、candidate schema或production config contract，原commit
   split與slice boundary失效，必須先更新計畫並取得user direction。
 
@@ -871,11 +871,11 @@ checks需在review handoff逐項列出，不能以full suite總數取代focused 
 ```text
 PyMTLF candidate/policy local execution
   -> user review
-  -> PyMTLF commit proposal
+  -> PyMTLF commit when requested
 
 nwdaf-docs Slice 2 evidence/status
   -> separate user review
-  -> separate documentation commit proposal
+  -> separate documentation commit when requested
 ```
 
 ---

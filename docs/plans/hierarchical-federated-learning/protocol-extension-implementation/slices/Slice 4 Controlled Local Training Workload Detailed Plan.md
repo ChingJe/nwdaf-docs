@@ -603,8 +603,7 @@ implementation。不得為了讓image classification通過而弱化所有bundle�
 
 本slice只有在local dataset loading、profile-aware artifact／training flow、真實local
 aggregation、held-out evaluation、traffic regression與local smoke全部完成後，才可進入
-`Ready for User Review`。User確認review後仍需另外提出commit proposal；未經commit核准
-不得stage或commit。
+`Ready for User Review`。使用者 review、狀態更新與 Git 操作依 [Delivery](../../../../development-policy/delivery.md)。
 
 Slice 4完成後，Slice 5可假設每個需要local training的Client都能依共同config template
 讀取其deployment掛載的local shard。Slice 5只需處理protocol resource、topology、model

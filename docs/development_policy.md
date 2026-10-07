@@ -1,167 +1,93 @@
 # NWDAF Development Policy
 
-This is the workspace's development-policy entry and loading guide. Detailed
-rules have one owner in the modules below; use the applicable ones for the
-current task rather than treating the corpus as a single required reading.
+This entry routes workspace development, analysis, documentation, and delivery
+to the rules for the task. The repository map is in the workspace `AGENTS.md`.
+Detailed rules have one owner; plans define task-specific behavior and acceptance.
+Generic workflow descriptions in plans defer to the current shared policy;
+their task-specific acceptance criteria remain binding.
 
 ## Scope And Common Principles
 
-Use this policy for implementation in `NWDAF/`, `PyAnLF/`, `PyMTLF/`, `nrf/`,
-`smf-nwdaf-ext/`, `udm/`, `udr/`, and `adrf/`, and for implementation-oriented
-plans under `nwdaf-docs/docs/plans/`. Its common evidence, documentation, review,
-and delivery rules also apply to workspace analysis and documentation work.
-Repository-specific commands and message rules retain their explicit scope.
+These policies cover `NWDAF/`, `PyAnLF/`, `PyMTLF/`, `nrf/`, `smf-nwdaf-ext/`,
+`udm/`, `udr/`, `adrf/`, and the workspace's supporting code and documentation.
+Repository-specific commands retain their explicit scope.
 
-The workspace guide establishes repository boundaries, authorization, safety,
-and free5GC skill triggers. This entry routes detailed policy; technical skill
-references are selected only for the relevant Go/standardized boundary.
+Complete the requested work within its agreed boundaries. Prefer established
+owners and existing tools; unrelated refactoring and speculative hardening do
+not expand the task. Current user instructions take precedence over older
+workflow requirements in plans or skills.
 
-- Make a right-sized, complete approved slice; preserve behavior unless
-  explicitly replaced. Classify unrelated refactoring, future work, and
-  speculative hardening instead of expanding scope.
-- Prefer existing owners and direct behavior over speculative abstractions and
-  nonessential helpers. New hash-level validation or integrity manifests need
-  a contract requirement or explicit user decision.
-- Prefer existing tools and direct commands. Create helper scripts, temporary
-  files, or reports only when needed to transform data, preserve complex input
-  safely, or meet a confirmed task requirement. Do not add auxiliary workflows
-  around simple operations.
-- Match claims to direct evidence. Separate implemented behavior, verification,
-  external acceptance, user review, and Git authorization.
+## Workspace Boundaries And Execution
+
+Repositories are independent. Preserve unrelated user changes and modify both
+sides of a contract only when the requested behavior requires it. Reference
+trees are read-only unless the user authorizes modification.
+
+Discussion, diagnosis, and review authorize inspection and reporting.
+Implementation requests authorize in-scope edits and verification. Git
+authorization and document-status transitions belong to
+[Delivery](development-policy/delivery.md).
+
+Use elevated permissions for network operations and all script/code execution,
+including helpers, tests, and local services. This includes execution touching
+networking, namespaces, iptables, installation, or paths outside the workspace.
+Changing tools does not bypass required permissions.
 
 ## Task Routing
 
-Read each applicable module in full when first needed. Combine modules for a
-task spanning concerns; links inside a module apply when their stated condition
-arises, not as an unconditional chain loading the whole corpus.
-
-| Current concern/action | Applicable rules |
+| Concern | Reference |
 | --- | --- |
-| Local specification/code questions | Evidence principles below; inspect relevant sources directly |
-| Substantial implementation plan | [Planning](development-policy/planning.md) + [Documentation](development-policy/documentation.md) |
-| Small approved internal code change | [Implementation](development-policy/implementation.md); add Planning for substantial slice/flow changes |
-| Existing production-flow extension | Planning + Implementation; add Architecture for ownership/contract decisions |
-| New package, ownership, cross-boundary design or feasibility advice | [Architecture](development-policy/architecture.md); add Planning for plans, Implementation for code edits |
-| Requested code review | [Review](development-policy/review.md); add Architecture for boundary decisions |
-| Authorized implementation-finding remediation | Review + Implementation; use decision gates for broader changes |
-| Documentation edits/review | Documentation; add Review for findings or completion conformance |
-| Completion and user-review handoff | Review + [Delivery](development-policy/delivery.md) |
-| Commit proposal, approved stage/commit, push/history operation | Delivery; add Documentation when editing record statuses |
-| Context-compaction recovery | Reload applicable instructions/modules and relevant active-plan contents as below |
+| Substantial implementation scope, baseline, or acceptance | [Planning](development-policy/planning.md) |
+| Code changes, defect remediation, or repository test commands | [Implementation](development-policy/implementation.md) |
+| Test targets, design, scope, or stopping conditions | [Testing](development-policy/testing.md) |
+| Ownership, package placement, cross-boundary design, or feasibility | [Architecture](development-policy/architecture.md) |
+| Independent code/test review, findings, or plan conformance | [Review](development-policy/review.md) |
+| Document language, ownership, or navigation | [Documentation](development-policy/documentation.md) |
+| User-review handoff, commit, push, or status updates | [Delivery](development-policy/delivery.md) |
 
 ## Loading And Evidence Reuse
 
-A continuous work unit retains its objective, phase, repository boundaries, and
-architecture through follow-ups such as “continue”, remediation, or targeted
-review. Use already-read applicable rules and the established evidence map in
-that context. A new concern/action loads any missing module, not a new full
-repository orientation.
-
-Read or supplement sources when entering the concern for the first time,
-recovering from context compaction, changing task/repository/technical boundary,
-learning that a rule or plan changed, or lacking context for a reliable decision.
-Read technical evidence directly when needed for the current conclusion.
-Higher-priority runtime/skill instructions requiring a fresh read still apply.
+Read the sections relevant to the current decision. Follow references when
+their subject applies; a link does not make the entire linked document required
+reading. Use established context through ordinary follow-ups.
 
 ### Recovery After Context Compaction
 
-Use the latest user goal and summary to locate the task, repository, slice, and
-stage, then reestablish the basis from original sources:
-
-1. Reread applicable workspace instructions, this entry, and the modules for
-   the current task/stage.
-2. Reread relevant active-plan goals, scope, decisions, acceptance criteria,
-   required commands, progress, and open items; include parent commitments
-   needed by this slice.
-3. Reconcile summarized work with those sources, actual authorization, and
-   evidence before continuing.
-
-The summary navigates; original rules and plans establish requirements. Expand
-reading as needed for recovery. With no active plan, restore the user request
-and applicable rules without inventing a plan or recovery record. Recovery
-reading does not automatically invalidate prior tests or reviews.
+Use the summary to recover the objective, scope, decisions, progress, and open
+items. Consult original instructions, plans, or evidence where context is
+missing, uncertain, or changed. Recovery does not require a new plan or record.
 
 ### Evidence Applicability
 
-Review, focused/full verification, and full-document language checks apply to
-the content, dependencies, tools/environment, and acceptance requirements they
-covered. Reuse them for unchanged relevant conditions, including proposal and
-approval follow-ups.
-
-When relevant content/conditions materially change or applicability is uncertain,
-check the affected scope and any required full verification. A plan-status-only
-edit needs document checks, not rerunning unrelated production tests. Required
-full commands still need evidence for the final state; focused checks do not
-replace them.
-
-Do not repeat verification without a specific reason: a relevant material
-change, a previous failure, an uncovered requirement, or concrete evidence that
-the previous result no longer applies. Proposals, approvals, commits, pushes,
-and conversation continuation do not themselves invalidate existing results.
-When another check is needed, cover the affected scope; broaden it only when
-the change, findings, or acceptance requirements justify doing so.
-
-Keep evidence in working context, necessary plan records, and concise handoffs;
-do not create extra checklists, audit records, or evidence registries merely to
-demonstrate compliance with these reuse rules. Final conformance reconciles all
-current commitments using the working map and valid results, returning to
-original passages for changes or gaps. Worktree and staged-content checks at
-Git operations establish actual scope; output full diffs only as differences
-and risk warrant.
+Verification follows the changed behavior and acceptance criteria. Existing
+results cover unchanged relevant content and conditions; changed inputs or an
+unresolved failure may require new evidence.
 
 ## Evidence And Reference Order
 
-Use the minimum sufficient local evidence, including constraints and
-counterevidence, in this order unless current upstream information is required:
+Use the target code and tests to establish implementation behavior, and the
+active plan for agreed decisions. For standardized behavior, use the relevant
+release's OpenAPI and TS corpus under `specs/`. Release 18 is the implementation
+baseline; Release 19/20 material applies when the task concerns those releases.
+The release's OpenAPI README identifies external dependency coverage.
 
-1. target repository production paths and direct tests;
-2. active plan and confirmed decisions;
-3. Release 18 OpenAPI YAML under `../specs/Rel-18/openapi/`;
-4. relevant Release 18 TS text under `../specs/Rel-18/`;
-5. applicable free5GC skill references;
-6. generated free5GC OpenAPI code under workspace `resources/openapi/openapi/`;
-7. exemplars under workspace `resources/references/free5gc-main/`.
+OpenAPI defines paths, methods, fields, statuses, headers, and schemas; TS
+defines procedure intent and roles. Generated code and free5GC exemplars show
+implementation patterns without overriding those contracts. Local mirrors do
+not establish the latest upstream behavior.
 
-Release 18 is the implementation baseline. Use Release 19/20 material only for
-tasks needing that release and keep release distinctions explicit. Read the
-selected release's OpenAPI README before assuming external dependencies exist.
-
-OpenAPI defines paths, methods, fields, status codes, headers, and schemas;
-TS defines procedure intent and role boundaries; exemplars guide implementation
-shape without overriding contracts. Distinguish these from provenance records
-and generated code. Local mirrors are not evidence of latest upstream behavior.
-
-Label specification-defined behavior, observed implementation, inference, and
-proposed design. For decisive field semantics or procedure legality, cite the
-exact clause and shortest necessary quotation. Answer the exact question
-concisely with necessary caveats; brevity does not reduce investigation depth.
-Cross-boundary design advice uses Architecture even without edits.
+Distinguish specification-defined behavior, observed implementation, inference,
+and proposed design. Cite the decisive clause or code for technical conclusions,
+including material counterevidence or uncertainty. Keep answers focused on the
+question; investigation depth does not require a long response.
 
 ## Decision Gates
 
-Continue ordinary local choices preserving approved scope, owners, contracts,
-and acceptance. Stop and request a decision when completion requires:
+Continue ordinary implementation choices within the user's scope. Ask when a
+decision is needed to change agreed ownership, architecture, external contracts,
+product behavior, dependencies, or acceptance; to implement another phase; or
+to replace an agreed strategy whose assumptions no longer hold. Required
+permissions and genuinely missing inputs may also need user action.
 
-- changing agreed ownership, architecture, data flow, or state flow;
-- changing external or explicitly standard-shaped contracts;
-- adding an external dependency, service, or persistence mechanism;
-- weakening/dropping acceptance or required verification;
-- implementing another phase's behavior;
-- choosing meaningful product behaviors with different outcomes;
-- proceeding without required specifications, dependencies, permissions,
-  tooling, or environment;
-- replacing the strategy because a core assumption is false.
-
-Optional cleanup/hardening or future work alone is not a blocker. For a genuine
-gate, report the original plan/assumption, exact contradiction, realistic
-options, recommendation/tradeoffs, and whether the plan must change first.
-
-## Working Sequence
-
-Define the slice and baseline when needed, establish conformance, implement and
-focus verification, then perform the initial review. Close admitted findings
-through authorized remediation and targeted review. Reconcile final conformance
-and required verification, then hand off for user review with changes unstaged.
-Delivery separately handles review confirmation, status synchronization, commit
-proposal/approval, and authorized Git operations. Each stage adds its own
-responsibility while reusing applicable evidence from earlier stages.
+Describe the concrete conflict and available choices. Optional cleanup,
+speculative hardening, and future work alone do not block the current task.

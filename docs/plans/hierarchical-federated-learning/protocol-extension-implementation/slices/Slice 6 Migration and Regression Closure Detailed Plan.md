@@ -482,9 +482,7 @@ PyMTLF/.venv/bin/python \
 3. `nwdaf-docs/`：Slice 6 plan／review evidence與上層狀態更新；
 4. `NWDAF/`：只有出現經確認且在本slice範圍內的dead compatibility code才另提commit。
 
-實作完成後先保持unstaged diff，回報affected repositories、diff summary、測試
-結果與remaining gaps，等待user review。Review確認後再提出完整commit proposal；不得
-因本plan核准而直接commit或push。
+實作交付時說明 affected repositories、diff summary、測試結果與 remaining gaps；使用者 review、狀態更新與 Git 操作依 [Delivery](../../../../development-policy/delivery.md)。
 
 ---
 

@@ -22,13 +22,12 @@ behavior and acceptance criteria, not automatically implementing adjacent
 phases, speculative resilience, unused legacy cleanup, unconfirmed integration
 risks, or a broader architecture refactor.
 
-A project phase may contain several slices. Finish and verify one slice and
-prepare its user-review handoff before expanding into another cross-cutting
-flow; keep multi-repository work reviewable.
+A project phase may contain several slices. Keep their scope and evidence
+individually reviewable while progressing through the work the user authorized.
 
-For a substantial slice, establish the working conformance map described in
-[Review And Conformance](review.md#plan-conformance) before implementation.
-Narrative commitments count alongside checklists and acceptance tables.
+For a substantial slice, make acceptance traceable using
+[Review And Conformance](review.md#plan-conformance). Explicit commitments in
+prose count alongside checklists and acceptance tables.
 
 ## Existing-Flow Extension
 

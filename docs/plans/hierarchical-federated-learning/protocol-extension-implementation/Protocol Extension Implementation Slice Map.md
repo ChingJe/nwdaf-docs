@@ -23,7 +23,7 @@ Committed；Formal Testbed Validation Pending；completed sequence為Slice 1、2
   明確拒絕，不得被靜默忽略。
 - Legacy model-bundle HFL在 protocol-driven E2E成立前保持可回歸。
 - 同一 execution只能使用 legacy bundle或 protocol contract其中一個 authority。
-- 每個 slice完成後先保留 unstaged diff供 user review，再另行提出 commit proposal。
+- 各 slice 的使用者 review、狀態更新與 Git 操作依 [Delivery](../../../development-policy/delivery.md)。
 
 ---
 

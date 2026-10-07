@@ -948,16 +948,7 @@ POST／GET／DELETE，PUT則由NWDAF consumer與PyMTLF round owner的transport t
 change set。各repository必須分別保留unstaged diff供user review，不能因其中一個通過
 就宣稱整個slice完成。
 
-Commit proposal前必須提供：
-
-- 每個repository的diff summary與included files；
-- focused／full verification結果；
-- real-process evidence與未執行項目；
-- production code與test code review findings；
-- 完整commit split與messages；
-- 排除的pre-existing／unrelated changes。
-
-User確認review後仍需另行批准commit；commit approval不等於push approval。
+交付時應說明各 repository 的變更、必要驗證結果、real-process evidence 與未完成項目。使用者 review、狀態更新與 Git 操作依 [Delivery](../../../../development-policy/delivery.md)。
 
 ---
 

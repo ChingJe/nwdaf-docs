@@ -543,8 +543,7 @@ flat FedAvg與Root／Branches／四-Leaf HFL FedProx兩條獨立private-collecti
 recomputation、production flat isolated rerun、existing HFL FedProx／lifecycle regressions與完整local
 evidence。兩條scenario不作cross-topology equivalence claim，並維持`Testbed Validation Pending`。
 
-三個 Slice 各自完成 implementation、direct verification、mandatory review 與 user review 後才可提出各
-repository commit proposal；不得累積成一個跨 repository 大 commit。
+三個 Slice 的實作與驗收分別依各自要求判定；使用者 review、狀態更新與各 repository 的 Git 操作依 [Delivery](../../../development-policy/delivery.md)。
 
 ## 12. 驗證矩陣
 
@@ -736,6 +735,6 @@ private collection 的 blocker。Real SMF／UPF 與 testbed execution 是 `integ
 2. 每個 Slice 從最新文件建立 normative conformance map；
 3. 重新確認 target revisions、working trees 與 active callers；
 4. 依 Slice 順序實作、direct verification、mandatory review 與 user review；
-5. 每個 repository commit 前另行提出完整 commit proposal 並取得明確核准；
+5. Git 授權與提交格式依 [Delivery](../../../development-policy/delivery.md)；
 6. Static Flat external validation已完成required execution、testbed user review與verified record commit；Static
    HFL繼續保留`Testbed Validation Pending`，不提前關閉整體external acceptance。

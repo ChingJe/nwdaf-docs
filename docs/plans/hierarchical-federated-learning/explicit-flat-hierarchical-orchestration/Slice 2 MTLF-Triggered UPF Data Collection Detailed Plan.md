@@ -42,7 +42,7 @@ MongoDB，再以 local `TrainingDataDescriptor` 交給既有 `DatasetCoordinator
 8. Containing NWDAF的MTLF-private server提供必要UDM、SMF與ADRF relay，並重用existing
    handler→processor→consumer structure。
 9. Local cross-process verification使用support SMF與callback replay，並明確保留real SMF／UPF testbed gap。
-10. 所有changes保持unstaged／uncommitted供user review；commit approval為獨立gate。
+10. 使用者 review 與 Git 交付依 [Delivery](../../../development-policy/delivery.md)。
 
 本 Slice 不實作Root collection fan-out、不執行flat／HFL numerical comparison、不新增HFL FedAvg，也不
 修改 SMF、UPF、UDM、UDR、NRF、ADRF 或 PyAnLF production repositories。這些預期不修改的 component
@@ -642,11 +642,9 @@ Gate 先進 decision gate。
 7. 實作DatasetCoordinator descriptor origin selection、absolute-window fitting與no-fallback regressions。
 8. 以獨立private-collection runner擴充nwdaf-resources support flow，並執行local cross-process
    success／failure／restart／cleanup scenarios；hierarchical smoke／aggregation profiles保持Slice 1／3用途。
-9. 完成必要的 full repository verification、mandatory initial review、test-first remediation 與
-   [最終符合性核對](../../../development-policy/review.md#final-conformance-check)；保留 unstaged diffs 供 user review。
+9. 完成本計畫的必要驗證，並依 [Review](../../../development-policy/review.md) 確認實作與驗收符合要求；交付依 [Delivery](../../../development-policy/delivery.md)。
 
-每checkpoint先建立deterministic failing test。若需要Root fan-out、user-consent UDM procedure、lease renewal、
-public SBI或peer repository change，停止進decision gate。
+若需要 Root fan-out、user-consent UDM procedure、lease renewal、public SBI 或 peer repository change，須先確認範圍與設計決策。
 
 ## 13. 直接驗證矩陣
 
@@ -815,24 +813,13 @@ Focused implementation tests 通過後，立即 review 三個 repository 的完�
 - tests直接跑required owner／entry point，不用mock bypass claimed boundary；
 - unchanged peer repositories確實沒有unauthorized changes。
 
-Confirmed in-scope finding依development policy test-first remediation並做targeted follow-up review。需要Root
-fan-out、consent retrieval、lease renewal、public contract或peer repository change時進decision gate。
+已確認的範圍內缺陷依 [Implementation](../../../development-policy/implementation.md#defect-remediation) 修正與驗證。需要 Root fan-out、consent retrieval、lease renewal、public contract 或 peer repository change 時，仍須先確認範圍與設計決策。
 
 ### 15.2 最終閘門
 
-交付user review前：
+交付時，所有當前 normative items 應能對應到 production path、direct test 與 command result，且 §13.6 的必要驗證涵蓋最終內容。分別保留 PyMTLF、NWDAF 與 resources 的證據，明確記錄 support 與 real integration 的界線，以及 testbed／consent 的開放項目。
 
-1. 依 [載入與證據沿用條件](../../../development_policy.md#loading-and-evidence-reuse) 掌握當前適用規則與本 Slice 要求；壓縮後重讀對應規則與相關計畫原文，要求變更或資訊不足時補查；
-2. 以既有 conformance map 核對全部當前 normative items，補足變更或缺口；
-3. 確認 §13.6 commands 的結果覆蓋最終內容，分別保留 PyMTLF、NWDAF、resources 證據；內容或條件變更時執行必要檢查；
-4. 對每個 Satisfied item 定位 production path、direct test 與 command；
-5. 確認各 affected repository 的 intended diff 與 unrelated changes；後續交付沿用已完成的差異 review，Git 操作時核對實際範圍；
-6. 對最終 changed documents 完成 [完整語言檢查](../../../development-policy/documentation.md#language)，結果可支持後續 proposal 與提交；
-7. 使用者 review 確認前保持 `Ready for User Review`，不 stage、不 commit、不標 Completed；明確要求提交目前成果時，依 [Delivery](../../../development-policy/delivery.md#review-confirmation-and-document-status) 同步文件狀態並提出 proposal。
-
-交接內容列出 affected repositories、diff summary、actual tests、support-vs-real integration boundary、open
-testbed／consent gaps、conformance state 與 unrelated changes。User review 確認後才準備
-repository-separated commit proposal。
+符合性與文件要求分別依 [Review](../../../development-policy/review.md#plan-conformance) 與 [Documentation](../../../development-policy/documentation.md)；使用者 review、狀態更新與 Git 操作統一依 [Delivery](../../../development-policy/delivery.md)。
 
 ## 16. 明確延後項目
 

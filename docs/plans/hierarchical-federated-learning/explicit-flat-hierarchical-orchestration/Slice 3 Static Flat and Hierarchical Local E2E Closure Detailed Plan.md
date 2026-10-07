@@ -458,8 +458,8 @@ temporary root與本次啟動的processes；不得編輯、checkout或刪除repo
    helpers 與 HFL topology owners。
 10. 加入 Branch／Root independent recomputation、lineage、effective counts與cleanup checks。
 11. 執行兩條新scenario、production flat isolated與existing HFL FedProx regressions。
-12. 執行PyMTLF／resources focused與full verification，完成mandatory initial review。
-13. 依finding admission gate對in-scope defect作test-first remediation與targeted follow-up review。
+12. 完成 PyMTLF／resources 的必要驗證，並依 [Review](../../../development-policy/review.md) 審查實作。
+13. 範圍內缺陷依 [Implementation](../../../development-policy/implementation.md#defect-remediation) 修正與驗證。
 14. 依 [最終符合性核對](../../../development-policy/review.md#final-conformance-check) 核對既有 map 與當前要求，確保 required full verification 覆蓋最終內容；變更或證據缺口時補讀與補驗。
 15. 更新implementation record與狀態為`Ready for User Review`，保持所有changes unstaged／uncommitted。
 
@@ -648,7 +648,7 @@ testbed blocker。
 
 只有在使用者確認本計畫後才開始 production implementation。開始時：
 
-1. 依 [需求驅動載入](../../../development_policy.md#loading-and-evidence-reuse) 掌握適用 workspace instructions、policy 模組與本文件要求；一般續行沿用有效上下文，壓縮後重讀相關原文；
+1. 依 [需求驅動載入](../../../development_policy.md#loading-and-evidence-reuse) 掌握本文件要求與當前決策所需的規則；
 2. 確認三個預計修改 repositories clean 或辨識 unrelated user changes；
 3. 建立 §14 working conformance map；
 4. 重新確認 artifact producers／consumers 與 runner helper ownership；
@@ -656,20 +656,13 @@ testbed blocker。
 
 ### 17.2 可交付審查的閘門
 
-Implementation 與 focused verification 後立即執行 mandatory initial review。所有 in-scope findings 依
-policy 完成 test-first remediation 與 targeted follow-up review 後：
+§14 的當前 normative items 應有對應證據，且 §13 的必要驗證涵蓋最終內容。實作紀錄應反映 actual commands、results、summary paths、revisions、support boundaries 與 open gaps。
 
-1. 依 [載入與證據沿用條件](../../../development_policy.md#loading-and-evidence-reuse) 確認當前適用規則與本文件要求；壓縮後重讀對應規則與相關計畫原文，變更或資訊不足時補查；
-2. 以既有 §14 conformance map 逐項核對最終內容，補足變更與缺口；
-3. 確認 §13 全部適用 commands 的結果覆蓋最終內容；內容、依賴、環境或要求變更時執行必要檢查，否則沿用結果；
-4. 更新 actual commands、results、summary paths、revisions、support boundaries 與 open gaps；
-5. 對最終 changed docs 完成 [完整語言檢查](../../../development-policy/documentation.md#language)，結果可支持後續 proposal 與提交；
-6. 使用者 review 確認前保持 `Ready for User Review` 與 intended changes unstaged／uncommitted；明確要求提交目前成果時，依 [Delivery](../../../development-policy/delivery.md#review-confirmation-and-document-status) 同步文件狀態並提出 proposal，Git 操作時核對實際批准範圍。
+缺陷修正與符合性依 [Implementation](../../../development-policy/implementation.md#defect-remediation) 與 [Review](../../../development-policy/review.md#plan-conformance)；文件要求依 [Documentation](../../../development-policy/documentation.md)。使用者 review 與狀態更新統一依 [Delivery](../../../development-policy/delivery.md)。
 
 ### 17.3 Commit 與 testbed 閘門
 
-User review確認不代表commit approval。Review確認後另提出`PyMTLF`、`nwdaf-resources`、`nwdaf-docs`
-repository-separated commit proposal，取得明確核准後才stage與commit；push另需獨立授權。
+`PyMTLF`、`nwdaf-resources` 與 `nwdaf-docs` 的提交授權、repository 邊界及 push 依 [Delivery](../../../development-policy/delivery.md)。
 
 Local commits只固定可部署revisions。只有後續將這些exact revisions部署到testbed，完成事前另行確認的
 real SMF／UPF／UE／cross-VM scenario matrix、保存record並由使用者確認evidence後，父計畫才能由

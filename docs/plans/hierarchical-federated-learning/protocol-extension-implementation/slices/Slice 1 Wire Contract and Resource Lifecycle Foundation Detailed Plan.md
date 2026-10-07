@@ -634,7 +634,7 @@ review handoff中逐項列出。
   另一個repository，避免同時累積兩個大型production diff。
 - `nwdaf-docs/`只更新plan status、conformance evidence與review ledger，另成文件
   commit。
-- Commit message與split需在user確認review後另行提出；本plan不構成commit approval。
+- Git 授權、提交拆分與 message 格式依 [Delivery](../../../../development-policy/delivery.md)。
 
 建議production順序為：
 

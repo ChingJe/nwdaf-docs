@@ -24,26 +24,17 @@ values, and direct quotations do not change the selected prose language.
 Headings, sentences, explanations, table labels, checklists, captions, and
 decision/status prose use it consistently.
 
-Before declaring changed documentation ready, reviewed, or complete, reopen
-and inspect the entire final changed document for language consistency. Include
-headings, paragraphs, tables, captions, checklists, statuses, and decision records;
-compare at least one current sibling for an established series. This is separate
-from technical review, formatting, and diff checks. Grammatical mixed-language
-prose or familiar terminology does not excuse inconsistency.
-
-This completed pass supports later proposal/commit delivery under the
-[evidence-reuse conditions](../development_policy.md#loading-and-evidence-reuse).
-Subsequent content changes require the corresponding language check; approval
-or a new conversation turn alone does not. Report selected language, selection
-evidence, and the pass result only in the final user-facing conversation, not
-in the target document, implementation record, review ledger, or commit message.
+Review changed prose in context for language consistency. Consult sibling
+documents when the series convention is needed to choose language or style.
+Language and technical content can be reviewed together; a small edit does not
+require a separate full-document language pass or a language-check report.
 
 ## Document Ownership
 
-Update the canonical plan/policy first. Workspace routing belongs in `AGENTS.md`;
-shared policy and loading routes belong in the policy entry; detailed stable
-rules belong in their modules; phase-specific decisions belong in the phase
-plan. Link evidence instead of copying entire parent documents.
+Workspace environment and reference routing belong in `AGENTS.md`; shared
+boundaries and policy selection belong in the policy entry; detailed rules
+belong in their modules. Plans own task-specific decisions and acceptance,
+and link to shared workflow rules rather than restating them.
 
 Create/update a durable review record only if requested by the user or required
 by the active plan. Maintain one ledger per implementation phase, recording
@@ -58,12 +49,7 @@ history to consolidate old files. Current statuses are synchronized at the
 
 ## Verification
 
-Inspect intended changes, local navigation targets/headings, and document
-requirements. Run `git diff --check`; directly read untracked new documents and
-check them with `git diff --no-index --check /dev/null <new-file>`. Interpret
-diagnostics, since a difference exit code is not itself a whitespace failure.
-
-Documentation-only changes may skip Go/Python tests; state that they were not
-run. Reuse still-applicable checks and supplement affected content when it
-changes. Worktree/staged checks at Git operations confirm actual approved
-scope rather than restarting document review.
+Confirm that changed content meets the requirements and affected links remain
+usable. Official specifications and attachments follow
+[Specification Conversion](../spec_conversion.md). Prose-only changes do not
+need application tests.

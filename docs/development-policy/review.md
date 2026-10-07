@@ -8,13 +8,10 @@ User-review handoff uses [Delivery](delivery.md).
 
 ## Finding Admission
 
-A finding belongs to the current slice when all four conditions hold:
-
-1. Code evidence, deterministic reproduction, or direct specification
-   contradiction confirms the behavior.
-2. It occurs on a currently supported path.
-3. It violates an explicit current-slice acceptance criterion.
-4. It is not assigned to a future phase.
+A finding belongs to the current task when direct evidence confirms a defect
+in the behavior or documents under review. Relate it to the user requirement,
+supported behavior, applicable contract, or acceptance criterion it violates.
+Work explicitly assigned to a future phase remains outside the current slice.
 
 Otherwise use the [out-of-scope classifications](planning.md#out-of-scope-work).
 For an admitted finding, remediate if the work fits the authorized slice;
@@ -41,14 +38,44 @@ the current phase.
 
 ## Initial Review
 
-After implementation and focused verification, perform one initial review as
-the uninterrupted next step, before final full verification or the implementation
-commit checkpoint. No separate user request is needed within an authorized
-implementation task.
+The implementer is unrestricted. After completing code changes and necessary
+verification, the implementer launches an independent subagent to review the
+production code, test code, and acceptance evidence. Self-checks do not replace
+this review. Test-only code changes also require independent review; prose-only
+changes do not require a subagent unless the user requests one.
+
+Give the reviewer the task scope, requirement/source locations, changed files,
+and available verification results and gaps. The reviewer inspects primary
+evidence directly and forms its own conclusions rather than approving the
+implementer's summary. Review is read-only; the implementer handles fixes.
+The reviewer does not delegate another reviewer. If independent review is
+unavailable, report the gap rather than claiming self-review as its replacement.
 
 Inspect the complete slice diff, agreed plan and acceptance criteria, baseline
 stage dispositions, direct call paths/lifecycle dependencies, relevant standard
 and free5GC evidence, tests, and skipped verification as applicable.
+
+Use existing valid results. Additional execution needs a concrete question or
+gap; review does not automatically trigger another test run.
+
+## Test Code Review
+
+Review tests added or modified by the task and existing tests directly relied
+on for its acceptance, using [Testing](testing.md). Assess:
+
+- whether each test protects a requirement, contract, or confirmed regression;
+- whether its assertions would catch the target failure and check the required
+  outcome rather than only an incidental call or implementation detail;
+- whether expected values have an independent basis and mocks, fixtures, or
+  test-only paths bypass the behavior claimed as verified;
+- whether coverage duplicates existing protection or introduces unnecessary
+  fixtures, abstractions, or test infrastructure.
+
+Read the test code and available evidence first. Additional experiments need a
+specific doubt; proving every test by deliberately breaking production code is
+not required. Repair evidence gaps affecting current acceptance, and remove or
+merge current-change tests that add no useful protection. Do not expand review
+into unrelated repository-wide test cleanup or require a per-test review ledger.
 
 ## Plan Conformance
 
@@ -67,26 +94,24 @@ plan change. Inspect all applicable directions:
 3. baseline to plan: stages and shared semantic representations have explicit
    dispositions and retain their claimed invariants.
 
-Repository-wide test success does not establish criterion coverage. Tests must
-exercise the exact production owner, entry point, lifecycle state, and outcome
-named by the requirement. A mock replacing the claimed behavior, an adjacent
-operation/state/phase, a call-only assertion without the required downstream
-effect/fencing, or unverified composition of tests is indirect evidence.
-
-Mocks outside the behavior under review remain valid. Shared mechanisms count
-when tests explicitly run the required entry point and state through them.
-Required connecting contracts need explicit verification.
+Repository-wide test success does not establish criterion coverage. Assess
+whether evidence directly establishes each claimed behavior using
+[test evidence design](testing.md#design-effective-evidence). Indirect evidence
+does not close a requirement for a specific production path or outcome.
 
 Missing, unverified, silently deferred, or inference-only requirements remain
-open and block a completion claim or completed implementation-commit checkpoint.
+open and block a claim that those requirements are complete.
 Focused commands cannot replace plan-required full commands without an approved
 plan change; report an omitted command as an open verification gap.
 
 ## Follow-up Review
 
-After each authorized in-scope remediation and focused verification, review its
-diff, the finding's direct dependencies, regression tests, and directly affected
-behavior. Continue this targeted loop until closure or a genuine blocker.
+For code review findings, the implementer returns fixes needing re-review to
+the same independent reviewer. Review the fix's diff, direct dependencies,
+regression coverage, and affected behavior. Close the finding when the fix and
+required verification establish that the defect is addressed. If the original
+reviewer is unavailable, a replacement uses the existing findings and evidence
+for the same focused scope.
 
 A new full repository review requires an explicit user request or concrete
 evidence from remediation of a broader P0/P1 regression. Adjacent issues go to
@@ -104,13 +129,13 @@ or gaps prompt targeted reading and verification under the
 
 Ensure required final full verification covers the final state. Keep missing
 or indirect evidence open until directly verified or explicitly deferred.
-For documentation changes, use the full-content
-[language check](documentation.md#language) on the final changed content.
+For documentation changes, apply the relevant
+[documentation requirements](documentation.md).
 
 If behavior is implemented but required evidence is open, report
 implementation-complete and verification-incomplete. Green test suites do not
-override that distinction. A pending Git approval is tracked separately from
-non-Git conformance; it grants no operation authority.
+override that distinction. Git authorization and status updates follow
+[Delivery](delivery.md).
 
 ## Review Output
 
