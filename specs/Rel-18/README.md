@@ -28,6 +28,10 @@ This corpus is organized for progressive loading by development agents. All list
 | [TS 29.574](TS%2029.574/README.md) | 18.12.0 | Full | DCCF data subscription, notification, fetch, transfer and data-collection-profile APIs |
 | [TS 29.575](TS%2029.575/README.md) | 18.11.0 | Full | ADRF data/analytics and ML model management APIs |
 | [TS 29.576](TS%2029.576/README.md) | 18.8.0 | Full | MFAF configuration, fetch and notification services for messaging-framework-based data delivery |
+| [TR 23.700-36](TR%2023.700-36/README.md) | 18.1.0 | Full | Study report (TR): Application Data Analytics Enablement Service key issues, architecture, candidate solutions and conclusions |
+| [TR 23.700-80](TR%2023.700-80/README.md) | 18.0.0 | Full | Study report (TR): 5G System support for AI/ML-based services key issues, candidate solutions, evaluation and conclusions |
+
+TR 23.700-36 and TR 23.700-80 are study reports (Technical Reports). They record study-phase analysis and do not constitute Release 18 implementation requirements.
 
 ## Common workflow: identifiers, NF profiles and API fields
 

@@ -20,3 +20,11 @@ specifications:
   version: 19.0.0
   path: TS 33.434/
   source_archive: 33434-j00.zip
+- spec: TR 23.700-82
+  version: 19.1.0
+  path: TR 23.700-82/
+  source_archive: 23700-82-j10.zip
+- spec: TR 23.700-84
+  version: 19.0.0
+  path: TR 23.700-84/
+  source_archive: 23700-84-j00.zip

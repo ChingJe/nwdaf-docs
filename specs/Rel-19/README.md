@@ -7,6 +7,8 @@
 | [TS 24.559](TS%2024.559/README.md) | 19.4.1 | Application Data Analytics Enablement Service protocol |
 | [TS 28.105](TS%2028.105/README.md) | 19.6.0 | AI/ML management, including Rel-19 federated-learning management additions |
 | [TS 33.434](TS%2033.434/README.md) | 19.0.0 | SEAL security mechanisms for verticals |
+| [TR 23.700-82](TR%2023.700-82/README.md) | 19.1.0 | Study on application-layer support for AI/ML services |
+| [TR 23.700-84](TR%2023.700-84/README.md) | 19.0.0 | Study on enhanced core-network support for AI/ML |
 
 > These files are supplemental to the Release 18 implementation corpus and must not be cited as Release 18 requirements.
 
