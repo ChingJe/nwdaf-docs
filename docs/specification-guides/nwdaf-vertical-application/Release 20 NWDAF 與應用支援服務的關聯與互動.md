@@ -81,7 +81,7 @@ TS 23.482 §8.9.2.1 明確允許 AIMLE server 使用 NWDAF 的能力，例如 UE
 
 「利用移動預測判斷某個端點是否適合參與」是這項能力的說明用解讀；規格並未在此指定一套固定的篩選演算法。 NWDAF 提供移動分析，**不是 NWDAF 直接管理 AIMLE client set**。若實際同意參與的 client 少於請求的最低數量，程序不會配置 client set identifier，並回覆失敗。
 
-這條路徑需要能把 AIMLE client 對應到相關 UE，並具有取得其分析的權限。 AIMLE client ID 不等於 SUPI／GPSI 等網路 UE 識別碼；本段條文不足以單獨決定所有部署中的識別碼映射與暴露方式。
+這條路徑需要能把 AIMLE client 對應到相關 UE，並具有取得其分析的權限。 TS 23.482 §7.3 只說 AIMLE client ID 唯一識別一個 AIMLE client，沒有規定它與 SUPI／GPSI 的對應；本段條文不足以單獨決定所有部署中的識別碼映射與暴露方式。
 
 依據：[TS 23.482 §8.9.2.1][aimle-selection]、[TS 23.288 §6.7.2][ue-mobility]。
 
@@ -166,7 +166,7 @@ AF 作為 VFL server 時，推論可以由 AF 內部服務邏輯觸發，不一�
 
 兩者使用相似的學習概念，但定義了不同角色與程序。 TS 23.482 §8.18.2 描述 AIMLE server 協調 UE 上的 AIMLE clients；§8.18.2b 另外描述 AIMLE 支援 VAL servers 之間的樣本對齊與任務啟動。它們不能直接視為 TS 23.288 的 NWDAF／AF VFL 服務。§8.18.2 也註明，AIMLE server 如何協調成員執行 VFL 訓練不在此 Release 的範圍內。
 
-**可能的實作組合，尚非這些條文明定的通用對接：** 同一後端可以考慮承擔 AIMLE server 與 AF 的功能，再依各自契約與 NWDAF 協作。但必須確認能力、樣本／特徵 ID、模型與中間結果格式、 ML task identity／VFL correlation ID 的關係，以及授權與任務失敗的處理。目前不能把這種組合當成已完成標準映射或可直接互通的設計。
+**可能的實作組合，尚非這些條文明定的通用對接：** AIMLE server 作為 AF 使用 NEF 是 TS 23.482 的明文（§8.14.2.5.2、§8.5.3a），但用途限於 PDTQ、QoS 監看與能源資訊；作為 AF 參與 TS 23.288 的 VFL 則沒有任何條文提到。同一後端可以考慮承擔 AIMLE server 與 AF 的功能，再依各自契約與 NWDAF 協作。但必須確認能力、樣本／特徵 ID、模型與中間結果格式、 ML task identity／VFL correlation ID 的關係，以及授權與任務失敗的處理。目前不能把這種組合當成已完成標準映射或可直接互通的設計。
 
 依據：[TS 23.482 §8.18.2、§8.18.2b][aimle-vfl]，對照 [TS 23.288 §6.2H][vfl-general]。
 
@@ -181,6 +181,14 @@ ADAES 也可依架構使用 AIMLE 支援 ML-enabled analytics。所以「ADAES �
 服務發現也應分開看：NWDAF 的能力與核心網路發現使用 NRF；上述 trusted AF 與 VFL 程序也明確涉及 NRF，untrusted AF 則透過 NEF 路徑。 SEAL API 的 CAPIF 發現與 AIMLE server 發現是另外的服務程序，不能以「SEAL 有自己的發現」推論其不會在網路側使用 NRF／NEF。
 
 依據：[TS 23.436 §5.2.4][adae-architecture]、[TS 23.288 §5.1][nwdaf-general]、[§6.2.8.2][ue-app-collection]、[§6.2H.2.1][vfl-discovery]；SEAL 發現細節見[關係文件第 8 節](Release%2020%20ADAES%20與%20AIMLE%20的關係.md#8-找到彼此需要服務發現或已知入口)。
+
+## 修正與補充紀錄（2026-10-13）
+
+依全文比對的結果補充三點，依據見[應用層與核心網路的 ML 01 機制總覽](應用層與核心網路的%20ML%2001%20機制總覽.md)：
+
+- 第 4 節原本寫「AIMLE client ID 不等於 SUPI／GPSI 等網路 UE 識別碼」。規格只是沒有規定兩者的對應，「不等於」是推論，已改寫。規格唯一規定的應用側識別碼到 GPSI 的對應，是 VFL 樣本的 UE 識別碼（TS 23.482 §8.4.2、§8.18.2b）。
+- 第 7 節原本把「同一後端承擔 AIMLE server 與 AF」整個放在可能的實作組合。已補上：AIMLE server 作為 AF 使用 NEF 是規格明文，只是用途很窄。
+- 本文的四種互動沒有涵蓋 TS 23.501 §5.46「5GC 協助應用層的 AI/ML」。這個機制由 NEF 提供成員篩選等協助，整理在上述文件的第 2 節。
 
 ## 規格來源
 

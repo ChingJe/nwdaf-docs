@@ -16,7 +16,7 @@ SEAL 是 Service Enabler Architecture Layer for Verticals，提供產業應用�
 | ADAES／ADAE server | 提供應用層資料分析的 SEAL server 角色 | 提供特定分析項目的統計或預測 |
 | AIMLE server | 提供 AI/ML 支援的 SEAL server 角色 | 處理模型與 AI/ML 任務、協調參與端 |
 
-這些名稱描述功能責任。它們不指定必須有幾台機器或幾個獨立程式。 AIMLE client、ADAE client 則是對應服務的客戶端功能，詳細定位可接續閱讀[基本名詞與概念](Release%2020%20基本名詞與概念.md)。
+這些名稱描述功能責任。它們不指定必須有幾台機器或幾個獨立程式。 AIMLE client、ADAE client 則是對應服務的客戶端功能，通用定位見 [SEAL 01 定位與通用模型](Release%2020%20SEAL%2001%20定位與通用模型.md)，具體例子見 [ADAE 與 AIMLE 的角色與例子](Release%2020%20ADAE%20與%20AIMLE%20的角色與例子.md)。
 
 依據：[TS 23.434 §6.4](../../../specs/Rel-20/TS%2023.434/6%20Generic%20functional%20model%20for%20SEAL%20services/6.4%20Functional%20entities%20description.md)、[TS 23.436 §1](../../../specs/Rel-20/TS%2023.436/1%20Scope.md)、[§3.2](../../../specs/Rel-20/TS%2023.436/3%20Definitions%20of%20terms%20and%20abbreviations.md)、[§5.4.3](../../../specs/Rel-20/TS%2023.436/5%20Application%20architecture%20for%20ADAES.md)、[TS 23.482 §1](../../../specs/Rel-20/TS%2023.482/1%20Scope.md)、[§5.2.1.1 與 §5.2.3](../../../specs/Rel-20/TS%2023.482/5%20Application%20architecture%20for%20enabling%20AI%20and%20ML%20services.md)。
 
@@ -107,17 +107,20 @@ AIMLE 也能依需求選擇模型。TS 23.482 §8.36.2 允許在只有模型推�
 
 Stage 2 定義功能、角色、流程與資訊元素；Stage 3 進一步定義 HTTP 操作、資料型別、回應及通知等傳輸契約。規格定義服務能力與互動方式，內部演算法與軟體仍需實作。
 
-目前已查閱的對應 Stage 3 為下列 **Release 19** 版本：
+本地規格庫已有下列 Stage 3，可直接對照：
 
-| 規格及已查版本 | 本文確認的範圍 |
+| 規格及本地版本 | 本文確認的範圍 |
 | --- | --- |
-| [TS 24.559 V19.4.1](https://www.etsi.org/deliver/etsi_ts/124500_124599/124559/19.04.01_60/ts_124559v190401p.pdf) | ADAES 協定與 API；Annex A 提供 OpenAPI，部分 schema 引用其他 YAML |
-| [TS 29.482 V19.1.1](https://www.etsi.org/deliver/etsi_ts/129400_129499/129482/19.01.01_60/ts_129482v190101p.pdf) | AIMLE server／ML repository 服務 API，包含模型訓練的 OpenAPI |
-| [TS 24.560 V19.2.0](https://www.etsi.org/deliver/etsi_ts/124500_124599/124560/19.02.00_60/ts_124560v190200p.pdf) | AIMLE 協定，包含 client 註冊、參與及 HFL 訓練等 API／OpenAPI |
+| [TS 29.549 V20.1.0](../../../specs/Rel-20/TS%2029.549/README.md) | SEAL server API，包含 ADAE 的各項分析 API 與 OpenAPI |
+| [TS 29.482 V20.1.0](../../../specs/Rel-20/TS%2029.482/README.md) | AIMLE server／ML repository 服務 API，包含模型訓練的 OpenAPI |
+| [TS 24.560 V20.1.0](../../../specs/Rel-20/TS%2024.560/README.md) | AIMLE 協定，包含 client 註冊、參與及 HFL 訓練等 API／OpenAPI |
+| [TS 24.559 V19.4.1](../../../specs/Rel-19/TS%2024.559/README.md) | ADAE 協定；本地只有 Release 19 版本 |
 
-例如，TS 29.482 §6.1.8、Annex A.19 把模型訓練定義為`POST {apiRoot}/aimles-trn/v1/request-train`。 JSON 請求 schema 為 `TrainRequest`，成功回應為 `200 OK` 與 `MlModelTrainResp`，後續通知使用 `MlModelTrainNotif`。取得初始成功回應不等於整個訓練已完成。
+例如，Release 20 的 TS 29.482 §6.1.8 與 `TS29482_AIMLES_MLModelTraining.yaml` 把模型訓練定義為 `POST {apiRoot}/aimles-trn/v1/request-train`。JSON 請求 schema 為 `TrainRequest`，成功回應為 `200 OK` 與 `MlModelTrainResp`，後續通知使用 `MlModelTrainNotif`。取得初始成功回應不等於整個訓練已完成。
 
-這些已查版本不代表最新版本，也不能直接覆蓋本地 Release 20 的所有新增操作。本地目前沒有上述三份 Stage 3 與配套 YAML；每一項 Release 20 操作的傳輸對應與 schema 依賴，仍需逐項核對。
+本文只核對了這一項操作。其他 Release 20 操作的傳輸對應與 schema 依賴，仍需逐項核對；TS 24.559 也要注意 Release 19 與 Release 20 Stage 2 之間的差異。
+
+**修正紀錄（2026-10-12）：** 本節原先引用外部的 Release 19 Stage 3，並註明本地沒有這些規格。本地規格庫之後已加入上表的版本，因此改為引用本地檔案；上述模型訓練的路徑與 schema 名稱已用本地 Release 20 的 OpenAPI 重新確認，內容與原先引用的 Release 19 版本一致。
 
 ## 8. 找到彼此需要服務發現或已知入口
 

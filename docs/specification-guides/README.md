@@ -18,4 +18,4 @@
 
 ## 主題分類
 
-- [NWDAF 與外部產業應用](nwdaf-vertical-application/README.md)：逐步整理應用層名詞、規格角色與 NWDAF 整合相關的解讀，目前以 Release 20 規格為研究來源。
+- [NWDAF 與外部產業應用](nwdaf-vertical-application/README.md)：以 SEAL 為主軸，整理應用支援層的架構、ADAE 與 AIMLE 的定位，以及與 NWDAF 整合相關的解讀，目前以 Release 20 規格為研究來源。

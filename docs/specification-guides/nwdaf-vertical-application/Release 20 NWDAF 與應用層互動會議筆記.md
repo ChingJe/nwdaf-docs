@@ -234,7 +234,8 @@ TS 23.288 §6.2H.2.1.2 NOTE 2 明確允許 AF 使用非標準 Analytics ID 啟�
 
 ## 延伸閱讀與規格版本
 
-- [基本名詞與概念](Release%2020%20基本名詞與概念.md)：client／server 定位與具體操作例子。
+- [SEAL 01 定位與通用模型](Release%2020%20SEAL%2001%20定位與通用模型.md)：VAL、SEAL 與 client／server 的通用定位。
+- [ADAE 與 AIMLE 的角色與例子](Release%2020%20ADAE%20與%20AIMLE%20的角色與例子.md)：ADAE、AIMLE 的 client／server 分工與具體操作例子。
 - [ADAES 與 AIMLE 的關係](Release%2020%20ADAES%20與%20AIMLE%20的關係.md)：服務契約、可選協作、傳輸 schema 與服務發現。
 - [NWDAF 與應用支援服務的關聯與互動](Release%2020%20NWDAF%20與應用支援服務的關聯與互動.md)：資料收集、分析暴露與 VFL 的詳細路徑。
 
