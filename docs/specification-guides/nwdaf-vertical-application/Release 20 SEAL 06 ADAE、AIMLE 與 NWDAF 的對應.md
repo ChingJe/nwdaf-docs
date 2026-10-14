@@ -126,7 +126,7 @@ flowchart LR
 
 ## 6. 接下來讀什麼
 
-本系列的主線到此結束。以下輔助文件保留了各服務的內容與程序細節：
+AIMLE 內部怎麼運作，包括一次聯邦學習從頭到尾的流程，見[第 07 篇][seal-07]。以下輔助文件保留了各服務的內容與程序細節：
 
 - [ADAE 與 AIMLE 的角色與例子][roles-doc]：用巡檢 App 的情境說明 ADAE、AIMLE 各自的 client 與 server 做什麼。
 - [ADAES 與 AIMLE 的關係][relation-doc]：兩者的服務契約差異與雙向協作。
@@ -142,6 +142,7 @@ TS 23.434 V20.1.0：[§19][s19]、[§20][s20]。TS 23.436 V20.2.0：[§5][adae5]
 [seal-02]: Release%2020%20SEAL%2002%20服務模板與位置管理.md
 [seal-03]: Release%2020%20SEAL%2003%20與核心網路的互動.md
 [seal-05]: Release%2020%20SEAL%2005%20提供者、部署與識別碼.md
+[seal-07]: Release%2020%20SEAL%2007%20AIMLE%20怎麼運作.md
 [roles-doc]: Release%2020%20ADAE%20與%20AIMLE%20的角色與例子.md
 [relation-doc]: Release%2020%20ADAES%20與%20AIMLE%20的關係.md
 [nwdaf-doc]: Release%2020%20NWDAF%20與應用支援服務的關聯與互動.md

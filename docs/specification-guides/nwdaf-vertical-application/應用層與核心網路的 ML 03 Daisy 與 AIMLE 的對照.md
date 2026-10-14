@@ -65,7 +65,7 @@ Role#3 的原文是：「the AIMLE is not performing part of the ML operational 
 | --- | --- | --- |
 | Daisy 的位置 | AIMLE server | 應用層，呼叫 AIMLE |
 | 對應的角色 | Role#1 或 Role#2：AIMLE 執行流程 | Role#3：流程由 VAL 提供 |
-| Daisy 要實作的 AIMLE 部分 | AIMLE server 的 API（提供方） | 呼叫 AIMLE API 的一方（使用方），經 AIMLE-S |
+| Daisy 要實作的 AIMLE 部分 | AIMLE server 的 API（提供方） | 呼叫 AIMLE API 的一方（使用方），經 AIML-S |
 | AIMLE server 由誰提供 | Daisy 自己 | 另一個 AIMLE 實作，或和 Daisy 放在一起的模組 |
 | Daisy 自有的功能 | AIMLE 的擴充，不能稱為 AIMLE（第 6 節） | 應用邏輯，不在規格範圍內 |
 
