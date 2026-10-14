@@ -17,6 +17,7 @@ Daisy 另有一個給 NWDAF 的 MTLF 使用的 `NWDAF-daisy` 分支。它是舊�
 先講結論：
 
 - **角色對得上。** Master、Zone、Client 分別對應中央 AIMLE server、邊緣 AIMLE server、AIMLE client。
+- **Daisy 也可以看成使用 AIMLE 的應用（VAL）。** 規格的 Role#3 由 VAL 提供訓練流程，AIMLE 只管成員。這樣看，Daisy 自有的功能是應用邏輯，不在規格範圍內。兩種看法可以並存。
 - **Daisy 缺的是管理面。** AIMLE 要求的 client 描述、查詢、徵詢同意、模型倉庫，Daisy 都沒有。
 - **Daisy 的特色不會遺失。** 階層、非同步、安全聚合、演算法抽換，都落在 AIMLE 沒有規定的範圍。但這些特色在 AIMLE 的介面上也看不出來。
 - **真正的衝突只有連線方向。** Daisy 是 client 連 server，AIMLE 是 server 連 client。
@@ -34,9 +35,43 @@ Daisy 另有一個給 NWDAF 的 MTLF 使用的 `NWDAF-daisy` 分支。它是舊�
 | Client | AIMLE client | 可以併入 UE 上的應用程式 |
 | 沒有對應 | ML repository | Daisy 的模型只是 Master 本機的一個檔案 |
 
-AIMLE 的規格另外描述了一種定位：AIMLE 不執行訓練流程，只負責成員的註冊、查詢、分組、選擇，訓練流程由上層自己做（Annex C 的 Role#3）。**解讀：** 這正好是「Daisy 保留自己的訓練，AIMLE 只管成員」的寫法。
+上表是「Daisy 本身就是 AIMLE」的看法，也是 10 月 8 日會議中經理的說法。規格還容許另一種看法，見 1.1。
 
-依據：[TS 23.482 §5][a5]、[Annex A][aA]、[Annex C][aC]。
+### 1.1 另一種看法：Daisy 當成使用 AIMLE 的應用
+
+TS 23.482 Annex C 列出 AIMLE 在 ML 生命週期中的三種角色：
+
+| 角色 | 規格的描述 | 對應的程序 |
+| --- | --- | --- |
+| Role#1 | 使用者完全交給 AIMLE，AIMLE 執行整個流程，決定要交付的模型 | §8.20 |
+| Role#2 | 使用者自己做一部分，其餘由 AIMLE 協助，例如訓練由 AIMLE 處理 | §8.3、§8.12 等 |
+| Role#3 | AIMLE 不執行流程，流程由 VAL 提供。AIMLE 負責找出、註冊、儲存、分組、選擇執行 ML 操作的對象 | §8.4、§8.7 至 §8.10 等 |
+
+Role#3 的原文是：「the AIMLE is not performing part of the ML operational workflow; however it serves as a platform to enable the AI/ML apps to utilize ML operational workflows which are provided by VAL.」
+
+**解讀：** Role#3 幾乎就是「Daisy 自己訓練，AIMLE 幫它管成員」。依照這個角色，Daisy 位在應用層（VAL），Daisy 自有的功能是應用邏輯。TS 23.434 §6.2 NOTE 2 寫明「The functionalities and reference points of the vertical application layer are out of scope」，所以這些功能不受 SEAL 規格約束，第 6 節「能不能稱為 AIMLE」的問題也就不存在。
+
+這個看法有一個前提。VAL 的定義都綁在某個產業的某項服務上（TS 23.434 §3.1）：
+
+- Vertical application：「An application catering to a specific vertical」
+- VAL server：「the server application function of a specific VAL service」
+- VAL system：「The collection of applications, services, and enabling capabilities required to support a VAL service」
+
+**解讀：** Daisy 是通用的 FL 框架，單獨看時不是 VAL。它被部署給某個應用使用時，例如替巡檢 App 訓練模型，就成為那個應用的 VAL server 端的一部分，或者說是那個 VAL system 裡的一項能力。
+
+兩種看法的差別：
+
+| | Daisy 當 AIMLE | Daisy 當 VAL |
+| --- | --- | --- |
+| Daisy 的位置 | AIMLE server | 應用層，呼叫 AIMLE |
+| 對應的角色 | Role#1 或 Role#2：AIMLE 執行流程 | Role#3：流程由 VAL 提供 |
+| Daisy 要實作的 AIMLE 部分 | AIMLE server 的 API（提供方） | 呼叫 AIMLE API 的一方（使用方），經 AIMLE-S |
+| AIMLE server 由誰提供 | Daisy 自己 | 另一個 AIMLE 實作，或和 Daisy 放在一起的模組 |
+| Daisy 自有的功能 | AIMLE 的擴充，不能稱為 AIMLE（第 6 節） | 應用邏輯，不在規格範圍內 |
+
+兩種看法不互斥。Annex A.5 寫明「The AIMLE server can be co-located with the VAL server (e.g. AI server) in a single physical entity or deployed in different physical entities.」**解讀：** 同一套軟體可以一部分扮演 AIMLE server，另一部分扮演使用它的 VAL。採用哪一種看法，要由經理決定。
+
+依據：[TS 23.482 §5][a5]、[Annex A][aA]、[Annex C][aC]；[TS 23.434 §3.1][s434d]、[§6.2][s434m]。
 
 ## 2. Daisy 要新增的東西
 
@@ -136,7 +171,7 @@ Daisy 補上 AIMLE 的介面之後，仍會保留 AIMLE 沒有的功能，例如
 
 ### 6.2 擴充出來的功能算不算 AIMLE
 
-判斷的單位是功能，不是整個 Daisy。同一套 Daisy 可以一部分是 AIMLE，一部分是自己的擴充。
+判斷的單位是功能，不是整個 Daisy。同一套 Daisy 可以一部分是 AIMLE，一部分是自己的擴充。本節以「Daisy 當 AIMLE」的看法為前提；若採 1.1 的「Daisy 當 VAL」，自有的功能屬於應用邏輯，不需要這樣判斷。
 
 | 情況 | 能不能稱為 AIMLE | Daisy 的例子 |
 | --- | --- | --- |
@@ -238,13 +273,13 @@ AIMLE server 有幾個決定需要自己沒有的資訊。規格對資訊來源�
 
 | 規格 | 本地版本 | 本篇用到的部分 |
 | --- | --- | --- |
-| TS 23.482 | V20.3.0（Release 20） | 第 4、5 章，§8.3、§8.4、§8.6 至 §8.13、§8.20、§8.24、§8.27、§8.28、Annex A、Annex C |
+| TS 23.482 | V20.3.0（Release 20） | 第 4、5 章，§8.3、§8.4、§8.6 至 §8.13、§8.20、§8.24、§8.27、§8.28、Annex A（含 A.5）、Annex C（C.2 至 C.4） |
 | TS 29.482、TS 24.560 | V20.1.0（Release 20） | 上列程序對應的 API 與資料模型 |
 | OpenAPI | Release 20 | `TS29482_*`、`TS24560_*` 共 34 個檔 |
 | TS 29.549 | V20.1.0（Release 20） | §6.5.1、§6.8：SEAL API 的版本與功能協商 |
 | TS 29.122、TS 29.500 | V18.10.0（Release 18） | TS 29.122 §5.2.7、§5.2.13，TS 29.500 §6.6：功能協商與廠商擴充 |
 | TS 23.222 | V20.1.0（Release 20） | §6.2：第三方的 service API |
-| TS 23.434 | V20.1.0（Release 20） | §6.1：SEAL 服務的列舉 |
+| TS 23.434 | V20.1.0（Release 20） | §3.1：VAL 的定義；§6.1：SEAL 服務的列舉；§6.2：VAL 層不在規格範圍 |
 
 Daisy 的原始碼在工作區的 `resources/daisy/`，不在本倉庫內，所以只列路徑、不設連結。
 
@@ -275,3 +310,5 @@ Daisy 的原始碼在工作區的 `resources/daisy/`，不在本倉庫內，所�
 [s222]: ../../../specs/Rel-20/TS%2023.222/6%20Functional%20model/6.2%20Functional%20model%20description.md
 [s434]: ../../../specs/Rel-20/TS%2023.434/6%20Generic%20functional%20model%20for%20SEAL%20services/6.1%20General.md
 [oapi]: ../../../specs/Rel-20/openapi/README.md
+[s434d]: ../../../specs/Rel-20/TS%2023.434/3%20Definitions,%20symbols%20and%20abbreviations.md
+[s434m]: ../../../specs/Rel-20/TS%2023.434/6%20Generic%20functional%20model%20for%20SEAL%20services/6.2%20On-network%20functional%20model%20description.md

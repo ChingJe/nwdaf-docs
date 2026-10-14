@@ -1,6 +1,6 @@
 # Release 20 SEAL 05 提供者、部署與識別碼
 
-本篇回答一個問題：**SEAL 由誰提供、放在哪裡、用什麼名字稱呼使用者和終端。** 前幾篇談的是功能，本篇談功能落到實際組織與網域時的樣子。
+本篇回答一個問題：**SEAL 由誰提供、放在哪裡、提供時要做到多少、用什麼名字稱呼使用者和終端。** 前幾篇談的是功能，本篇談功能落到實際組織與網域時的樣子。
 
 本文依據本地 TS 23.434 V20.1.0。前置閱讀是[第 01 篇][seal-01]與[第 03 篇][seal-03]。
 
@@ -86,14 +86,36 @@
 
 會議當時的討論與尚未解開的部分，見[2026-10-01 會議議題與後續探索][meeting]第 1 節。
 
+## 7. 提供 SEAL 服務要做到多少
+
+第 6 節是從使用者的角度問。本節換成提供者的角度：自己實作一個 SEAL server，要做到多少才算數。
+
+規格沒有「必須做滿哪些」的清單。能確定的只有下列四點。
+
+| 問題 | 規格怎麼寫 | 依據 |
+| --- | --- | --- |
+| 要不要做齊所有服務 | 不用。每項服務各有自己的 server 與 client，服務之間透過 SEAL-X 互相使用 | TS 23.434 §6.2 |
+| 第 4 章的需求是不是必做清單 | 不是（解讀，見下方）。條文的主詞是「The SEAL」，不是「the SEAL server」 | TS 23.434 §4.1.2、§4.2.2 |
+| 一項服務裡要實作哪些 API | 沒有規定。TS 29.549 第 5 章只列出各服務的 API 與操作，整章沒有任何 shall support 或 may support 的句子 | TS 29.549 §5 |
+| 一定要做到的 | API 的存取保護。使用 CAPIF 時，要支援 CAPIF 規定的功能與至少一種認證方式；不使用 CAPIF 時，要支援 TLS 雙向認證與 OAuth 2.0 | TS 29.549 §8.1、§9.2 |
+
+最後一列在 Stage 2 寫成一律要符合 CAPIF（§4.1.2-f），和 Stage 3 的寫法有落差，見[第 04 篇][seal-04]第 4 節。
+
+**解讀：** 第 4 章包含「The SEAL shall leverage the satellite connectivity」（§4.1.2-g），也包含只在電信網路內、只在網路外、兩者同時三種部署（§4.2.2）。這些不可能每個部署都做到，所以應該看成整份規格要涵蓋的範圍，不是每個實作的必做清單。
+
+**解讀：** 程序裡的 shall 是條件式的。實作了某個程序，就要照該程序與資料模型的規定；沒有實作的程序，不受它的條文約束。AIMLE 的情況相同，見[應用層與核心網路的 ML 03][ml-03]第 2 節與第 6 節。綜合上面幾點，照標準方式提供某項服務的功能，就算提供了這項 SEAL 服務，而且可以只提供這項服務的一部分 API。
+
+**未能確認：** 3GPP 是否有 SEAL 的符合性測試規格，本地沒有。各服務另外的協定規格（TS 24.5xx 系列）只有部分在本地，沒有逐一檢查。
+
 ## 規格來源
 
-TS 23.434 V20.1.0：[§3.1][s3]、[§4.1.2 與 §4.2.2][s4]、[§5][s5]、[§7][s7]、[§8][s8]、[§14.2.4.3][s142]、[§14.3.3][s1433]。
+TS 23.434 V20.1.0：[§3.1][s3]、[§4.1.2 與 §4.2.2][s4]、[§5][s5]、[§6.2][s62]、[§7][s7]、[§8][s8]、[§14.2.4.3][s142]、[§14.3.3][s1433]。TS 29.549 V20.1.0：[§5][p5]、[§8][p8]、[§9][p9]。
 
 [seal-01]: Release%2020%20SEAL%2001%20定位與通用模型.md
 [seal-03]: Release%2020%20SEAL%2003%20與核心網路的互動.md
 [seal-04]: Release%2020%20SEAL%2004%20服務%20API%20與%20CAPIF.md
 [meeting]: 2026-10-01%20會議議題與後續探索.md
+[ml-03]: 應用層與核心網路的%20ML%2003%20Daisy%20與%20AIMLE%20的對照.md
 [s3]: ../../../specs/Rel-20/TS%2023.434/3%20Definitions,%20symbols%20and%20abbreviations.md
 [s4]: ../../../specs/Rel-20/TS%2023.434/4%20Architectural%20requirements.md
 [s5]: ../../../specs/Rel-20/TS%2023.434/5%20Involved%20business%20relationships.md
@@ -101,3 +123,7 @@ TS 23.434 V20.1.0：[§3.1][s3]、[§4.1.2 與 §4.2.2][s4]、[§5][s5]、[§7][
 [s8]: ../../../specs/Rel-20/TS%2023.434/8%20Application%20of%20functional%20model%20to%20deployments.md
 [s142]: ../../../specs/Rel-20/TS%2023.434/14%20Network%20resource%20management/14.2%20Functional%20model%20for%20network%20resource%20management.md
 [s1433]: ../../../specs/Rel-20/TS%2023.434/14%20Network%20resource%20management/14.3%20Procedures%20and%20information%20flows%20for%20network%20resource%20management/14.3.3%20Unicast%20resource%20management.md
+[s62]: ../../../specs/Rel-20/TS%2023.434/6%20Generic%20functional%20model%20for%20SEAL%20services/6.2%20On-network%20functional%20model%20description.md
+[p5]: ../../../specs/Rel-20/TS%2029.549/5%20Services%20offered%20by%20the%20SEAL%20servers/README.md
+[p8]: ../../../specs/Rel-20/TS%2029.549/8%20Using%20Common%20API%20Framework.md
+[p9]: ../../../specs/Rel-20/TS%2029.549/9%20Security.md
